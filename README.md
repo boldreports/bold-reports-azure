@@ -18,6 +18,3 @@ New Bold Reports On-Premise Edition Azure App Service Deployment can be done by 
 
 * [Documentation](https://redirect.boldbi.com/?id=4007)
 * [Feature tour](https://www.boldreports.com/features)
-* [Support](https://www.syncfusion.com/support/directtrac/incidents)
-* [Forum](https://www.syncfusion.com/forums/report)
-* [KB](https://www.syncfusion.com/kb/report)
