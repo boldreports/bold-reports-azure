@@ -4,7 +4,7 @@
  
  Deploying of Bold Reports On-Premise Edition can be done in Windows and Azure App Service.
 
- Learn how to deploy the Bold Reports On-Premise Edition in Windows client and server OS machines [here](https://help.syncfusion.com/report-platform/report-server/installation-and-deployment).
+ Learn how to deploy the Bold Reports On-Premise Edition in Windows client and server OS machines [here](https://redirect.boldbi.com/?id=4017).
 
 ## Deploy Bold Reports On-Premise Edition as Azure Web App using ARM Template
 
@@ -12,12 +12,9 @@ This repository holds the Azure App Service package of the Bold Reports which yo
 
 >**Note**: This repository holds Bold Reports Azure App Service package from version v1.1.0.x
 
-New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://help.syncfusion.com/report-platform/report-server/azure-deployment/app-service/arm-template).
+New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://redirect.boldbi.com/?id=4018).
 
 ## Reference Link
 
-* [Documentation](https://help.syncfusion.com/report-platform/overview)
-* [Feature tour](https://www.syncfusion.com/products/report)
-* [Support](https://www.syncfusion.com/support/directtrac/incidents)
-* [Forum](https://www.syncfusion.com/forums/report)
-* [KB](https://www.syncfusion.com/kb/report)
+* [Documentation](https://redirect.boldbi.com/?id=4007)
+* [Feature tour](https://www.boldreports.com/features)
