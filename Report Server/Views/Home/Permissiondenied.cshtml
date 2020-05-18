@@ -1,0 +1,47 @@
+﻿@using System.Configuration
+@{
+    var globalAppSettings = new TenantHandler().GetTenantConfig();
+    ViewBag.Title = "[[[Permission Denied]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.MessageBox = false;
+    var cdnLink = ConfigurationManager.AppSettings["CdnLink"].TrimEnd('/');
+    var requestUrl = HttpContext.Current.Request.Url.AbsolutePath.ToString().ToLower();
+    var reportsPageUrl = Url.Action("Reports", "Reports");
+}
+@Html.Partial("~/Views/Shared/_LoaderIcon.cshtml")
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/bootstrapjs")
+}
+@section styles{
+    @Styles.Render("~/bundles/styles/error-page-new")
+}
+@section MainSection{
+    <div class="error-page-outer dashbord-denied">
+        <div class="error-page-content">
+            <div class="error-inside">
+                <div class="error-image-center-2">
+                    <img src="@GlobalAppSettings.CdnDomain/static/error-pages/v1/access-denied.svg" class="error-image-2">
+                </div>
+                <div class="error-type">[[[Access Denied]]]</div>
+                @if (requestUrl.IndexOf(reportsPageUrl, StringComparison.OrdinalIgnoreCase) != -1)
+                {
+                    <div class="error-text">
+                        [[[You do not have permission to view this report.]]]<br>[[[Please contact your administrator.]]]
+                    </div>
+                }
+                else
+                {
+                    <div class="error-text">
+                        [[[You do not have permission to view this page.]]]<br>[[[Please contact your administrator.]]]
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (requestUrl.IndexOf(reportsPageUrl, StringComparison.OrdinalIgnoreCase) != -1)
+    {
+        <div class="dashboard-permission-denied">
+            @Html.Partial("../Shared/_Footer", new ViewDataDictionary { { "appsettings", globalAppSettings } })
+        </div>
+    }
+}
+

@@ -1,0 +1,602 @@
+﻿@import "../themes/_light.scss";
+@import "../core/_typography.scss";
+@import "../core/_variables.scss";
+@import "../components/_buttons.scss","../components/_textboxes.scss";
+
+%text-style-decoration {
+    color: $primary-black;
+    font-family: $primary-font;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+}
+
+input[type=button] {
+    height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
+    color: $white;
+    border: 1px solid $primary;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+
+    body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        font-family: $primary-font !important;
+
+        .add-dataset-dialog-wrapper {
+            width: 100%;
+            height: 100%;
+
+            #popup-container {
+                padding: 0 !important;
+                width: 100%;
+                height: 100%;
+
+                .modal-header {
+                    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+                    background-color: $white;
+                    height: 50px;
+                    padding: 0 !important;
+                    border: none;
+
+                    .add-dataset-popup-title {
+                        padding: 25px 0 0 18px;
+                        line-height: 0;
+                        float: left;
+
+                        label {
+                            width: 102px;
+                            height: 15px;
+                            letter-spacing: 0.33px;
+                            margin: 0;
+                        }
+                    }
+
+                    .selector {
+                        position: relative;
+                        width: 400px;
+                        margin: auto;
+
+                        .selector-icons {
+                            height: 28px;
+                            margin-left: 160px;
+
+                            .selector-panel {
+                                float: left;
+                                padding: 7px 0 0 0;
+
+                                .circle {
+                                    border-radius: 50%;
+                                    width: 14px;
+                                    height: 14px;
+                                    border: solid 2px $grey-400;
+                                    background-color: $white;
+                                    float: left;
+                                }
+
+                                .hr-tag {
+                                    width: 90px;
+                                    margin-left: 14px;
+                                    margin-top: 4px;
+                                    border: solid 2px $grey-400;
+                                }
+                            }
+                        }
+
+                        .selector-content {
+                            margin-left: 100px;
+                            height: 16px;
+                            font-weight: 500;
+                            line-height: 1.6;
+                            letter-spacing: 0.3px;
+                            text-align: left;
+                            color: $grey-700;
+
+                            .site-creation {
+                                width: 75px;
+                                padding-right: 50px;
+                            }
+
+                            .select-database {
+                                width: 91px;
+                                padding-right: 18px;
+                            }
+
+                            .select-intermediate-database {
+                                padding-right: 18px;
+                            }
+
+                            .administrator {
+                                width: 82px;
+                            }
+                        }
+
+                        .selectedClass {
+                            border-color: $primary !important;
+                        }
+
+                        .selectedContent {
+                            color: $primary !important;
+                        }
+
+                        .selectedOval {
+                            .hr-tag {
+                                border: 2px solid $primary !important;
+                            }
+
+                            .circle {
+                                background-color: $primary !important;
+                            }
+                        }
+                    }
+
+                    .icons {
+                        padding: 18px 18px 0 18px;
+                        float: right;
+                        width: 50px;
+
+                        #add-dataset-close {
+                            color: $grey-800;
+                            float: left;
+                            font-family: $primary-font;
+                            background: transparent;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .icon-alignment {
+                        margin-left: 265px !important;
+                    }
+
+                    .content-alignment {
+                        margin-left: 230px !important;
+                    }
+                }
+
+                .modal-dataset-body-creation {
+                    display: none;
+                }
+
+                .modal-dataset-body, .modal-dataset-body-creation {
+                    background-color: $grey-100;
+                    padding: 0 24px !important;
+                    height: 100%;
+
+                    #dialog-header {
+                        height: 74px;
+                        border-radius: 4px;
+                        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+                        padding: 14px 30px;
+                        display: none;
+                        background-color: $white;
+                        width: 464px;
+                        margin: auto;
+                        margin-top: 24px;
+                        position: relative;
+
+                        .text-header-content {
+                            letter-spacing: 0.3px;
+                            float: left;
+                        }
+
+                        .header-description {
+                            padding-left: 37px;
+                            height: 21px;
+                            font-weight: 500;
+                            letter-spacing: 0.35px;
+                            margin-top: -2px;
+                        }
+
+                        .header-label {
+                            color: $grey-700;
+                            margin: 0;
+                            padding-bottom: 11px;
+                        }
+                    }
+
+                    #dialog-body {
+                        width: 600px;
+                        margin: 0 auto;
+                        position: relative;
+
+                        .dialog-body-div {
+                            border-radius: 6px;
+                            box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
+                            background-color: $white;
+                            display: inline-block;
+                            margin: 24px 0 !important;
+                            width: 600px;
+
+                            .datasource-options {
+                                padding-top: 20px;
+                                padding-bottom: 20px;
+                                box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
+
+                                .txt-holder {
+                                    .new-datasource, .existing-datasource {
+                                        display: inline-block;
+
+                                        label {
+                                            margin-bottom: 0px;
+                                        }
+                                    }
+
+                                    .new-datasource {
+                                        padding-left: 50px;
+                                    }
+
+                                    .existing-datasource {
+                                        float: right;
+                                        padding-right: 50px;
+                                    }
+                                }
+                            }
+
+                            .dataset-options {
+                                padding-top: 20px;
+                                padding-bottom: 20px;
+                                box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
+
+                                .created-dataset-details {
+                                    margin-left: 30px;
+
+                                    #created-dataset-name {
+                                        height: 24px;
+                                        font-size: 16px;
+                                        font-weight: 500;
+                                        font-stretch: normal;
+                                        font-style: normal;
+                                        line-height: normal;
+                                        letter-spacing: 0.4px;
+                                    }
+
+                                    #created-dataset-type {
+                                        height: 18px;
+                                        font-size: 12px;
+                                        font-weight: normal;
+                                        font-stretch: normal;
+                                        font-style: normal;
+                                        line-height: normal;
+                                        letter-spacing: 0.3px;
+                                        margin-top: 8px;
+                                        color: $grey-700;
+                                    }
+                                }
+                            }
+
+                            .dataset-dialog-content {
+                                #addItemForm {
+                                    table {
+                                        margin-bottom: 30px;
+
+                                        tr {
+                                            .field-label {
+                                                display: block;
+                                                margin-bottom: 8px;
+                                                margin-top: 24px;
+                                                letter-spacing: 0.3px;
+                                            }
+
+                                            td:nth-child(1) {
+                                                textarea {
+                                                    resize: none;
+                                                }
+
+                                                .e-radiobtn-wrap {
+                                                    margin-top: 2px;
+                                                }
+                                            }
+                                        }
+
+                                        .validation-message {
+                                            color: $validation-text-color;
+                                            font-size: $validation-text-size + 2;
+                                            position: absolute;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .datasource-dialog-content {
+                                #new-datasource-dialog-content {
+                                    overflow-y: scroll;
+                                }
+
+                                #existing-datasource-dialog-content {
+                                    display: none;
+                                    //style for Search box
+                                    #search-area {
+                                        padding: 20px 50px;
+                                        float: left;
+                                        width: 100%;
+
+                                        input[type="text"] {
+                                            padding: 3px 8px;
+                                            width: 100%;
+                                            height: 32px;
+                                            border-radius: 4px;
+                                            border: solid 1px $grey-500;
+                                            @extend %text-style-decoration;
+                                            line-height: 1.5;
+                                            letter-spacing: 0.3px;
+                                        }
+
+                                        .su-search {
+                                            width: 12px;
+                                            height: 12px;
+                                            position: absolute;
+                                            margin-top: 10px;
+                                            font-size: 12px;
+                                            color: $grey-700;
+                                            border: 0 !important;
+                                            right: 60px;
+                                        }
+
+                                        .su-search-alignment {
+                                            margin-left: 338px;
+                                        }
+
+                                        .close-icon {
+                                            font-size: map-get($app-text-size, sm);
+                                            width: 12px;
+                                            height: 12px;
+                                            position: absolute;
+                                            margin-top: 10px;
+                                            border: 0 !important;
+                                            right: 60px;
+                                        }
+
+                                        .search-bar {
+                                            width: 100%;
+                                            float: left;
+                                        }
+                                    }
+
+                                    #add_datasource_grid {
+                                        width: 100% !important;
+                                        border: none;
+
+                                        .e-gridheader {
+                                            border: none;
+                                            display: none;
+                                        }
+
+                                        .e-gridcontent {
+                                            table {
+                                                border-collapse: collapse !important;
+                                                position: relative;
+                                            }
+
+                                            tr {
+                                                height: 36px;
+                                                text-align: left !important;
+
+                                                td {
+                                                    .e.active {
+                                                        background: $blue;
+                                                    }
+                                                }
+                                            }
+
+                                            .item-name {
+                                                height: 15px;
+                                                @extend %text-style-decoration;
+                                                letter-spacing: 0.33px;
+                                                font-size: 13px;
+                                                font-weight: bold;
+                                                font-stretch: normal;
+                                                font-style: normal;
+                                                line-height: normal;
+                                                letter-spacing: 0.33px;
+                                            }
+
+                                            .email-id {
+                                                color: $grey-700;
+                                                margin-top: 8px;
+                                            }
+
+                                            .e-table {
+                                                .e-row {
+                                                    .e-rowcell {
+                                                        padding-left: 0;
+                                                        padding-right: 0;
+
+                                                        .selected-row-indicator.su-tick {
+                                                            font-size: 20px;
+                                                            color: $primary;
+                                                        }
+                                                    }
+                                                }
+
+                                                .e-row.e-hover{
+                                                    background: $white !important;
+                                                }
+
+                                                td.emptyrecord {
+                                                    padding-left: 55px;
+                                                    font-size: 14px;
+                                                }
+                                            }
+
+                                            .option-icon {
+                                                top: 0px !important;
+                                            }
+                                        }
+
+                                        .e-pagerstatusbar {
+                                            display: none !important;
+                                        }
+                                        //style for grid scrollbar
+                                        .e-scrollbar.e-vscrollbar {
+                                            width: 10px !important;
+
+                                            .e-vscroll {
+                                                border: none;
+                                                float: right;
+                                                vertical-align: top;
+                                                width: inherit;
+
+                                                .e-vup, .e-vdown {
+                                                    display: none !important;
+                                                    height: 0 !important;
+                                                }
+
+                                                .e-vhandlespace {
+                                                    background: $white;
+                                                    height: 100% !important;
+
+                                                    .e-vhandle {
+                                                        width: 4px !important;
+                                                        background-color: $grey-500;
+                                                    }
+                                                }
+
+                                                .e-icon {
+                                                    position: relative;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    #validation-datasource-select-error {
+                                        display: none;
+                                        font-size: 12px;
+                                        padding-left: 30px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #dialog-body-footer {
+                    height: 64px;
+                    border-radius: 0 0 4px 4px;
+                    background-color: $white;
+                    position: fixed;
+                    bottom: 0;
+                    border-top: 2px solid $grey-400;
+                    padding: 16px 23px;
+                    text-align: center;
+                    float: left;
+
+                    #details-back {
+                        width: 162px;
+                        line-height: 1.54;
+                        letter-spacing: 0.3px;
+                        display: none;
+                        color: $primary-black;
+                        background-color: $white;
+                        border: 1px solid $grey-500;
+                    }
+
+                    #dataset-connect {
+                        width: 418px;
+                        line-height: 1.54;
+                        letter-spacing: 0.3px;
+                    }
+
+                    #datasource-create {
+                        width: 418px;
+                        line-height: 1.54;
+                        letter-spacing: 0.3px;
+                    }
+
+                    #datasource-update {
+                        width: 418px;
+                        line-height: 1.54;
+                        letter-spacing: .3px;
+                    }
+                    
+                    .next-alignment {
+                        width: 230px !important;
+                        margin-left: 24px !important;
+                    }
+
+                    #move-to-next {
+                        width: 190px;
+                        margin-left: 30px;
+                        display: none;
+                    }
+
+                    #move-to-next.connect-button-style {
+                        width: 418px;
+                        line-height: 1.54;
+                        letter-spacing: 0.3px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.display-none {
+    display: none;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+
+.close-icon.su-inner-close {
+    display: none;
+}
+
+//placeholder color for grid
+::-webkit-input-placeholder {
+    color: $grey-700;
+}
+
+::-moz-placeholder {
+    color: $grey-700;
+}
+
+.placeholder {
+    color: $grey-700;
+}
+
+@media screen and (min-width: 0px) {
+    html {
+        body {
+
+            .selector-content {
+                font-size: map-get($app-text-size, "xs");
+            }
+
+            .header-description {
+                font-size: map-get($app-text-size, "md");
+            }
+
+            #header-title {
+                font-size: map-get($app-text-size, "lg");
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    html {
+        body {
+            .selector-icons {
+                margin-left: 120px !important;
+            }
+
+            .selector-panel {
+                width: 125px !important;
+
+                .hr-tag {
+                    width: 110px !important;
+                }
+            }
+        }
+    }
+}
