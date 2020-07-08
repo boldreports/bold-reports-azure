@@ -1,0 +1,85 @@
+﻿@{
+    var globalAppSettings = new TenantHandler().GetTenantConfig();
+    var isMobile = DeviceDetection.IsMobile;
+    ViewBag.Title = "[[[Datasets]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManageDatasets);
+    var itemPermissions = ViewBag.ItemAddOptions as Dictionary<ItemType, bool>;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+}
+
+@model List<ItemDetail>
+
+@section styles{
+    @Styles.Render("~/bundles/styles/datasets")
+}
+
+@section scripts{
+
+    @(!isMobile ? Scripts.Render("~/bundles/scripts/dataset-page") : Scripts.Render("~/bundles/scripts/dataset-page-mobile"))
+    <script>
+        var createDatasourceIframeUrl = "@Url.Action("Connection", "DataSourceDesigner")";
+        var datasetId = "@ViewBag.DatasetId";
+        var datasetName = "@ViewBag.DatasetName";
+        var designerInstallationHelpUrl = "@(ServerAppConfig.DocumentationUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DesignerInstallation))";
+
+        $(document).ready(function () {
+            $("#search-items").val("");
+            if (datasetId != "" && datasetId != undefined && datasetName != "" && datasetName != undefined) {
+                var newUrl = window.location.origin + rootUrlAction + "/datasets";
+                history.pushState({}, "", newUrl);
+                SuccessAlert(window.Server.App.LocalizationContent.AddDataset, window.Server.App.LocalizationContent.AddDatasetSuccess, 7000);
+            }
+        });
+    </script>
+}
+@section MainSection{
+    @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Dataset) && itemsCount[ItemType.Dataset] > 0)
+    {
+        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container">
+            <input type="hidden" class="page-name" data-content="[[[DATASETS]]]">
+            @if (!isMobile)
+            {
+                <div class="import-area col-lg-12 admin-page-header">
+                    <h2 class="page-title col-lg-6">[[[DATASETS]]]</h2>
+                    @if (itemPermissions[ItemType.Dataset])
+                    {
+                        <button type="button" id="create-dataset-connection" class="pull-right primary-button">[[[Create Dataset]]]</button>
+                    }
+                </div>
+                <div class="admin-page-body">
+                    <div id="search-area" class="pull-right">
+                        <input type="text" id="search-items" class="pull-left no-margin" placeholder="[[[Search datasets]]]" />
+                        <span class="su close-icon su-inner-close pull-left no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-item pull-left no-margin" title="[[[Search datasets]]]"></span>
+                    </div>
+
+                    <div class="grid-container grid">
+                        @Html.Partial("../Items/_ItemsGrid", new ViewDataDictionary { { "gridName", "datasets" }, { "Permissions", @itemPermissions } })
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="grid-container grid">
+                    @Html.Partial("../Items/_ItemsGridForMobile", new ViewDataDictionary { { "gridName", "datasets" } })
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        @Html.Partial("../DefaultPages/DefaultPages", new ViewDataDictionary { { "Permissions", itemPermissions }, { "ItemsCount", itemsCount }, { "ItemType", ItemType.Dataset } })
+    }
+    <div id="datasource-edit-popup" style="display:none;">
+        <iframe id="datasource-edit-popup-iframe" class="datasource-popup-frame"></iframe>
+    </div>
+    <div id="popup-container" style="display:none" class="no-padding">
+        <iframe id="scheduler-popup-iframe" class="datasource-popup-frame"></iframe>
+    </div>
+
+    @if (!isMobile)
+    {
+        @Html.Partial("../Items/_AddItems")
+        @Html.Partial("../Items/_ItemVersion")
+    }
+}

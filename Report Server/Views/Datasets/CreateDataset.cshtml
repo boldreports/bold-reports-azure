@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>[[[Add Dataset]]]</title>
+    @Styles.Render("~/bundles/styles/createdataset")
+    @Scripts.Render("~/bundles/scripts/localizationcontent")
+    @Scripts.Render("~/bundles/scripts/createdataset")
+    @Scripts.Render("~/bundles/scripts/add-datasource")
+    <script>
+        var addDatasetUrl = "@Url.Action("AddSharedDataset", "Datasets")";
+        var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
+        var getExistingDatasourcesUrl = "@Url.Action("GetItems", "DataSources")";
+        var userPermission = "@CreateAccess";
+        var itemtype = "@ViewBag.itemtype";
+    </script>
+</head>
+<body>
+    <div class="add-dataset-dialog-wrapper">
+        <div class="col-lg-12 no-padding" id="popup-container" data-spy="scroll">
+            <div class="modal-header no-margin col-sm-12 no-padding">
+                <div class="add-dataset-popup-title">
+                    <label style="width:250px;">[[[Add Dataset]]]</label>
+                </div>
+                <div class="title icons">
+                    <a href="javascript:void(0);" class="popup-close" title="[[[Close]]]">
+                        <span id="add-dataset-close" class="su su-close pull-right"></span>
+                    </a>
+                </div>
+                <div class="another-div">
+                    <div class="selector no-padding">
+                        <div class="selector-icons">
+                            <div class="selector-panel" id="creationsite">
+                                <div class="circle selectedClass">
+                                </div>
+                                <div class="hr-tag"> </div>
+                            </div>
+                            <div class="selector-panel" id="selectiondb">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                        <div class="selector-content">
+                            <span class="site-creation selectedContent">[[[Connect]]]</span>
+                            <span class="select-database">[[[SELECT DATA]]]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-dataset-body col-xs-12 no-padding dataset-body">
+                <div id="dialog-body">
+                    <div class="dialog-body-div">
+                        <div class="datasource-options">
+                            <div class="txt-holder center-align">
+                                @if (!CreateAccess)
+                                {
+                                    <div class="new-datasource">
+                                        <input type="radio" id="new-datasource" class="css-radio" name="datasourceType" value="new-datasource" checked='checked' disabled="disabled"/>
+                                        <label for="new-datasource"><span class="text">[[[Create New Datasource]]]</span></label>
+                                    </div>
+                                    <div class="existing-datasource">
+                                        <input type="radio" id="existing-datasource" class="css-radio" name="datasourceType" value="existing-datasource" />
+                                        <label for="existing-datasource"><span class="text">[[[Use Existing Datasource]]]</span></label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="new-datasource">
+                                        <input type="radio" id="new-datasource" class="css-radio" name="datasourceType" value="new-datasource" checked='checked' />
+                                        <label for="new-datasource"><span class="text">[[[Create New Datasource]]]</span></label>
+                                    </div>
+                                    <div class="existing-datasource">
+                                        <input type="radio" id="existing-datasource" class="css-radio" name="datasourceType" value="existing-datasource" />
+                                        <label for="existing-datasource"><span class="text">[[[Use Existing Datasource]]]</span></label>
+                                    </div>
+                                }
+
+                            </div>
+                                </div>
+                        <div class="datasource-dialog-content">
+                            <div id="new-datasource-dialog-content">
+                                @{
+                                    if (@CreateAccess)
+                                    {
+                                        Html.RenderAction("AddDataSource", "DataSources");
+                                    }
+                                }
+                            </div>
+                            <div id="existing-datasource-dialog-content">
+                                <script type="text/x-jsrender" id="admin-template">
+                                    <span class="item-name grid-content" title="{{:Name}}" target="_blank">
+                                        {{:Name}}
+                                    </span>
+                                    <input id="selected-datasource-id" type="hidden" value="{{:Id}}">
+                                </script>
+                                <script type="text/x-jsrender" id="admin-checkbox-row-template">
+                                    <span class="selected-row-indicator"></span>
+                                </script>
+                                <div id="search-area">
+                                    <div class="search-bar">
+                                        <input type="text" class="pull-left" id="search-datasource-grid" placeholder="[[[Search datasource]]]" />
+                                        <span class="su su-inner-close close-icon" id="clear-search" title="[[[Clear search]]]"></span>
+                                        <span class="su su-search search-icon" title="[[[Search]]]"></span>
+                                    </div>
+                                </div>
+                                <div id="add_datasource_grid">
+                                </div>
+                                <span type="text" id="validation-datasource-select-error" class="validation-message">[[[Please select a datasource.]]]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-dataset-body-creation col-xs-12 no-padding dataset-body">
+                <div id="dialog-body">
+                    <div class="dialog-body-div">
+                        <div class="dataset-options">
+                            <div class="created-dataset-details">
+                                <div id="created-dataset-name"></div>
+                                <div id="created-dataset-type"></div>
+                            </div>
+                        </div>
+                        <div class="dataset-dialog-content">
+                            <form name="addItemForm" id="addItemForm" autocomplete="off">
+                                <table width="100%" cellspacing="10px" cellpadding="0" border="0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-10">
+                                                <span class="field-label">[[[Name]]] *</span>
+                                                <span>
+                                                    <input type="text" id="file_name" autofocus name="dataSetName" maxlength="255" class="form-control edit-datasetname-field text" tabindex="1" placeholder="[[[Dataset name]]]">
+                                                    <span id="validate-name" class="validation-message text"></span>
+                                                    <div id="plugin_validation" class="validation-message text"></div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-xs-10">
+                                                <span class="field-label">[[[Description]]]</span>
+                                                <textarea style="resize: none;" name="description" class="form-control text" id="file-description" maxlength="1024" tabindex="2" placeholder="[[[Dataset description]]]"></textarea>
+                                                <span class="notification help-text">
+                                                    <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <form action="@Url.Action("DatasetDesigner", "Reports")" id="create-report-form" method="POST" target="_blank">
+                                <input id="dataset-description" name="description" type="hidden" value="">
+                                <input id="dataset-name" name="datasetName" type="hidden" value="">
+                                <input id="datasource-name" name="datasourceName" type="hidden" value="">
+                                <input id="is-edit-datasource" name="isEdit" type="hidden" value="false">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer col-xs-12 col-lg-12 col-xs-12 col-sm-12" id="dialog-body-footer">
+                <input id="details-back" type="button" value="[[[Back]]]" tabindex="6" class=".sf-secondary-button button-left back-button">
+                <input id="dataset-connect" type="button" value="[[[Connect]]]" tabindex="4" class="sf-primary-button">
+                <input type="button" id="move-to-next" value="[[[Proceed to Designer]]]" class="sf-primary-button proceed-button" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>
