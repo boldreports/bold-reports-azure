@@ -1,0 +1,529 @@
+﻿@import (reference) "Mixins.less";
+
+.permission-popup {
+    .modal(@app-text-size, @textbox-height);
+
+    .modal {
+        display: block;
+        position: absolute;
+
+        .modal-dialog {
+            height: 500px;
+            margin: 0 !important;
+            padding: 0;
+            width: 100%;
+
+            .modal-content {
+                height: 500px;
+
+                .modal-body {
+                    height: 400px;
+                    max-height: 400px;
+                    padding: 10px;
+
+                    .nav-tabs {
+                        .users-tab {
+                            margin-left: 20px;
+                        }
+
+                        li {
+                            a {
+                                color: @primary-text-color;
+                            }
+                        }
+
+                        .active {
+                            a {
+                                color: @primary-btn-bg;
+                            }
+                        }
+                    }
+
+                    .assigned-permission {
+                        height: 35px;
+
+                        h4 {
+                            padding-top: 8px;
+                            font-size: @app-text-size;
+                        }
+                    }
+
+                    .bs-deselect-all, .bs-select-all {
+                        display: none;
+                    }
+
+                    .disabled {
+                        display: none;
+                        font-size: 0;
+                        height: 0;
+                    }
+
+                    .hide-option {
+                        cursor: default;
+                        display: none;
+                        font-size: 0;
+                        height: 0;
+
+                        span {
+                            color: @profile-border-color !important;
+                        }
+                    }
+
+                    .bs-deselect-all-custom, .bs-select-all-custom {
+                        font-size: @app-text-size;
+                        color: @primary-btn-bg;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .bs-select-all-custom .bs-select-custom-tick {
+                        display: none;
+                    }
+
+                    .bs-deselect-all-custom .bs-select-custom-tick {
+                        display: inline;
+                        float: right;
+                        margin-right: 30px;
+                    }
+
+                    .bs-actionsbox:hover, .bs-select-all-custom :hover {
+                        cursor: pointer;
+                    }
+
+                    .permission-container-padding {
+                        padding: 20px 0;
+
+                        #item-user-permission-container, #item-group-permission-container {
+                            margin-top: 10px;
+                        }
+                    }
+
+                    .tab-header-menu {
+                        background: transparent;
+                    }
+
+                    .bootstrap-select {
+                        width: 265px;
+                        padding: 0 !important;
+                    }
+
+                    .header-menu {
+                        background: @secondary-btn-bg none repeat scroll 0px 0px;
+                        padding: 10px;
+                        width: 100%;
+                        z-index: 9;
+                        float: left;
+                        margin: 0px;
+
+                        .header-tab {
+                            font-size: @app-text-size;
+                            padding-left: 30px;
+                            padding-right: 50px;
+                            float: left;
+                            margin-top: 8px;
+                        }
+                    }
+
+                    .user-group {
+                        padding: 10px 0;
+                        padding-left: 0px !important;
+                        margin-left: -4px;
+                    }
+
+                    #permission-container {
+                        padding-left: 0px !important;
+
+                        #itempermissiongridstring_CustomFDlg .e-dlgfields {
+                            .e-btncontainer > div {
+                                margin-left: -66px;
+                            }
+                        }
+                    }
+                    
+                    .dropdown-menu {
+                        padding: 3px !important;
+
+                        li {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            width: 240px;
+
+                            a {
+                                background: none;
+                                background-color: transparent;
+
+                                .text {
+                                    color: @primary-text-color;
+                                    float: left;
+                                    font-size: @app-text-size;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    width: 195px;
+                                }
+
+                                .check-mark {
+                                    font-size: @app-text-size;
+                                    left: 210px;
+                                }
+
+                                &:hover {
+                                    background: none;
+                                }
+                            }
+
+                            &:hover {
+                                background-color: @dropdown-hover;
+                            }
+
+                            &:focus, &:active {
+                                background-color: @dropdown-selected;
+                            }
+                        }
+
+                        .check-mark {
+                            margin: 0 !important;
+                        }
+
+                        .selected {
+                            background-color: @dropdown-selected;
+
+                            &:hover {
+                                background-color: @dropdown-selected;
+                            }
+                        }
+                    }
+
+                    #access-selection-container {
+                        padding-right: 0px !important;
+
+                        .dropdown-menu {
+
+                            li {
+                                width: 270px !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.permissions {
+    .modal(@app-large-text-size,@textbox-lg-height);
+
+    .modal {
+        .modal-dialog {
+            .modal-content {
+                .modal-body {
+                    .assigned-permission {
+                        h4 {
+                            font-size: @app-large-text-size;
+                        }
+                    }
+
+                    .bs-deselect-all-custom, .bs-select-all-custom {
+                        font-size: @app-large-text-size;
+                    }
+
+                    .header-menu {
+                        .header-tab {
+                            font-size: @app-large-text-size;
+                        }
+                    }
+
+                    .dropdown-menu {
+                        li {
+                            a {
+                                .text, .check-mark {
+                                    font-size: @app-large-text-size;
+                                }
+
+                                &:hover, &:focus, &:active {
+                                    .text, .check-mark {
+                                        font-size: @app-large-text-size;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.e-dialog {
+    .dialogbox();
+
+    .validation-message {
+        float: left;
+        margin: 0 10px;
+
+        span {
+            float: left;
+            font-size: 11px;
+            padding: 10px;
+        }
+    }
+
+    .modal-body {
+        padding: 0px;
+
+        .form-control {
+            font-size: @app-text-size;
+            width: 301px;
+            height: @btn-height-normal;
+            line-height: normal;
+        }
+
+        .app-textbox-label {
+            margin-top: 8px;
+            font-weight: 400;
+            padding-right: 50px;
+        }
+
+        .form-padding {
+            padding: 10px;
+        }
+
+        .useradd-validation-messages {
+            color: @validation-text-color;
+            display: block;
+            font-size: @app-text-size;
+            margin-bottom: -16px;
+        }
+
+        .placeholder {
+            height: @textbox-height + 2;
+            padding-left: 12px;
+            position: absolute;
+            top: 0;
+            line-height: @textbox-height;
+            color: @placeholder-color;
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+
+    #base-container #user-list-container {
+        #search-area {
+            input[type="text"] {
+                height: @textbox-lg-height;
+            }
+
+            .close-icon {
+                height: @textbox-lg-height;
+            }
+
+            .su-search {
+                height: @textbox-lg-height;
+            }
+        }
+    }
+
+    .e-dialog .modal-dialog .modal-content .modal-header {
+        .modal-title, a.close {
+            font-size: @app-large-text-size + 2;
+            filter: none !important;
+        }
+    }
+
+    .e-dialog {
+        .validation-message {
+            span {
+                font-size: @validation-large-text-size;
+            }
+        }
+
+        .modal-body {
+            .form-control {
+                font-size: @app-large-text-size;
+                height: @textbox-lg-height;
+            }
+
+            .app-textbox-label {
+                font-size: @app-large-text-size;
+            }
+
+            .useradd-validation-messages {
+                font-size: @validation-large-text-size;
+            }
+
+            .placeholder {
+                line-height: @textbox-height + 4;
+            }
+        }
+    }
+
+    #singleuser-delete-confirmation .modal-dialog .modal-body .delete-msg, #user-delete-confirmation .modal-dialog .modal-body .delete-msg {
+        font-size: @app-large-text-size;
+    }
+
+    #popup-container #confirm-modal .modal-dialog #movable-dialog {
+        .modal-header {
+            .modal-title, a.close {
+                font-size: @app-large-text-size + 2;
+                filter: none !important;
+            }
+
+            .subhead-menu {
+                font-size: @app-large-text-size;
+            }
+        }
+
+        .modal-body {
+            font-size: @app-large-text-size;
+
+            .form-control {
+                font-size: @app-large-text-size;
+                height: @textbox-lg-height;
+            }
+
+            .group-validation {
+                font-size: @validation-large-text-size;
+            }
+
+            .notification {
+                font-size: @validation-large-text-size;
+            }
+        }
+    }
+}
+
+#share-with-tab {
+    margin-top: 30px;
+}
+
+#user-tab-nav {
+    #share-to {
+        width: 140px;
+        text-align: center;
+    }
+
+    #share-with {
+        margin-left: -2px;
+        width: 140px;
+        text-align: center;
+    }
+}
+
+#messageBox_wrapper {
+    height: auto !important;
+
+    .e-dialog-scroller {
+        height: 150px;
+
+        #messageBox {
+            height: 100% !important;
+            width: 100% !important;
+
+            .message-content {
+                margin: 0px;
+                height: 60px;
+                display: table-cell;
+                vertical-align: middle;
+                width: 450px;
+            }
+        }
+    }
+}
+
+#limit-user_wrapper {
+    height: 160px !important;
+
+    .modal {
+        display: block !important;
+        position: absolute;
+        height: auto !important;
+
+        .modal-dialog {
+            height: auto;
+            margin: 0 !important;
+            padding: 0;
+            width: 100%;
+
+            .modal-content {
+                height: auto;
+
+                .modal-body {
+                    height: auto;
+                    max-height: 400px;
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
+
+.no-results-create-user {
+    cursor: pointer;
+}
+
+.share-to-padding {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.share-popup {
+    margin-top: 35px;
+
+    #report-link {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .dashboard-link-lable {
+            margin-bottom: 10px;
+        }
+
+        input#item-link {
+            overflow: hidden;
+            border-radius: 4px 0 0 4px;
+            resize: none;
+            width: 93%;
+            float: left;
+            border-right: medium none;
+        }
+
+        #item-link-copy {
+            border-radius: 0 4px 4px 0;
+            float: left;
+            border-left: medium none;
+            cursor: pointer;
+            padding-left: 24px;
+            padding-top: 10px;
+            width: 7%;
+        }
+
+        #item-link-copy.focusdiv {
+            box-shadow: 0 0 2px 0 @focus;
+            -moz-box-shadow: 0 0 2px 0 @focus;
+            -webkit-box-shadow: 0 0 2px 0 @focus;
+            border-top: 1px solid @focus;
+            border-right: 1px solid @focus;
+            border-bottom: 1px solid @focus;
+        }
+    }
+
+    .notes {
+        margin-top: 10px;
+
+        .notes-head {
+            margin-bottom: 10px;
+            padding: 0 !important;
+        }
+
+        .sharing-permissions-dashboard-link {
+            padding: 0 !important;
+        }
+    }
+
+    .share-button {
+        margin-top: 10px;
+    }
+}
