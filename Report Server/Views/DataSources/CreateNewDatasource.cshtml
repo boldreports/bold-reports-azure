@@ -1,0 +1,173 @@
+﻿@{
+    Layout = null;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>[[[Create Datasource]]]</title>
+    @Styles.Render("~/bundles/styles/createdataset")
+    @Scripts.Render("~/bundles/scripts/localizationcontent")
+    @Scripts.Render("~/bundles/scripts/createdataset")
+     @if (ViewBag.Action == "create")
+     {
+        @Scripts.Render("~/bundles/scripts/add-datasource")
+     }
+    @if (ViewBag.Action == "update")
+    {
+        @Scripts.Render("~/bundles/scripts/edit-datasource")
+    }
+    <script>
+        var addDatasetUrl = "@Url.Action("AddSharedDataset", "Datasets")";
+        var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
+        var getExistingDatasourcesUrl = "@Url.Action("GetItems", "DataSources")";
+        var editdatasource = "@Url.Action("editdatasource", "datasources")";
+        var userPermission = "@CreateAccess";
+        var itemtype = "@ViewBag.itemtype";
+    </script>
+</head>
+<body>
+    <div class="add-dataset-dialog-wrapper">
+        <div class="col-lg-12 no-padding" id="popup-container" data-spy="scroll">
+            <div class="modal-header no-margin col-sm-12 no-padding">
+                @{
+                    if (ViewBag.Action == "create")
+                    {
+                        <div class="add-dataset-popup-title">
+                            <label style="width:250px;">[[[Create Datasource]]]</label>
+                        </div>
+                    }
+                    if (ViewBag.Action == "update")
+                    {
+                        <div class="add-dataset-popup-title">
+                            <label style="width:250px;">[[[Update Datasource]]]</label>
+                        </div>
+                    }
+                }
+
+                <div class="title icons">
+                    <a href="javascript:void(0);" class="popup-close" title="[[[Close]]]">
+                        <span id="add-dataset-close" class="su su-close pull-right"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-dataset-body col-xs-12 no-padding dataset-body">
+                <div id="dialog-body">
+                    <div class="dialog-body-div">
+                        <div class="datasource-dialog-content">
+                            <div id="new-datasource-dialog-content">
+                                @{
+                                    Html.RenderAction("AddDataSource", "DataSources");
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer col-xs-12 col-lg-12 col-xs-12 col-sm-12" id="dialog-body-footer">
+                <input id="details-back" type="button" value="[[[Back]]]" tabindex="6" class=".sf-secondary-button button-left back-button">
+                @{
+                    if (ViewBag.Action == "create")
+                    {
+                        <input id="datasource-create" type="button" value="[[[Create]]]" tabindex="4" class="sf-primary-button">
+                    }
+                    if (ViewBag.Action == "update")
+                    {
+                        <input id="datasource-update" type="button" value="[[[Update]]]" onclick="updateDataSource()" tabindex="4" class="sf-primary-button">
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@if (ViewBag.Action == "update")
+{
+    <script>
+    $(function () {
+        parent.$("#datasource-edit-popup_wrapper").ejWaitingPopup("hide");
+        
+        $(document).on("change", "#enable_windows_prompt", function () {
+            onCheckboxChange();
+        });
+
+        $(document).on("change", "#enable_impersonate", function () {
+            onCheckboxChange();
+        });
+
+        $(document).on("change", "#enable_windows_stored", function () {
+            onCheckboxChange();
+        });
+
+        $(document).on("change", "#connect_option_prompt", function () {
+            onConnectionTypeChange("connect_option_prompt");
+        });
+
+        $(document).on("change", "#connect_option_store", function () {
+            onConnectionTypeChange("connect_option_store");
+        });
+
+        $(document).on("change", "#connect_option_windows", function () {
+            onConnectionTypeChange("connect_option_windows");
+        });
+
+        $(document).on("change", "#connect_option_none", function () {
+            onConnectionTypeChange("connect_option_none");
+        });
+
+        createEditDataSourcePopup(@Html.Raw(Json.Encode(ViewData["dataSourceInfo"])),@Html.Raw(Json.Encode(ViewData["dataSourceDefinition"])));
+
+        $("#datasource-type").on("change", function (e) {
+            if ($("#datasource-type").val() != "XML" && $("#new_datasource_connectionstring").val() != "") {
+                var connectUsing = $('input:radio[name=connect_using]:checked').val().toLowerCase();
+                if (connectUsing === "store" && ($("#connection_stored_username").val() === "" || $("#connection_stored_password").val() === "")) {
+                    $("#test_connection").attr("disabled", "disabled");
+                }
+                else {
+                    $("#test_connection").removeAttr("disabled");
+                }
+            } else {
+                $("#test_connection").attr("disabled", "disabled");
+            }
+            dataSourceEditValidation();
+        });
+
+        $(document).on("keyup", ".edit-text-fields", function (e) {
+            if ($(this).attr("id") === "new_datasource_name") {
+                if (window.editData.Name !== $(this).val()) {
+                    window.editData.IsNameChanged = true;
+                }
+                else {
+                    window.editData.IsNameChanged = false;
+                }
+            }
+            if ($(this).attr("id") === "new_datasource_description") {
+                if (window.editData.Description !== $(this).val()) {
+                    window.editData.IsDescriptionChanged = true;
+                }
+                else {
+                    window.editData.IsDescriptionChanged = false;
+                }
+            }
+            dataSourceEditValidation();
+        });
+        $(document).on("keyup", "#new_datasource_connectionstring", function (e) {
+            if ($("#datasource-type").val() != "XML" && $("#new_datasource_connectionstring").val() != "") {
+                var connectUsing = $('input:radio[name=connect_using]:checked').val().toLowerCase();
+                if (connectUsing === "store" && ($("#connection_stored_username").val() === "" || $("#connection_stored_password").val() === "")) {
+                    $("#test_connection").attr("disabled", "disabled");
+                }
+                else {
+                    $("#test_connection").removeAttr("disabled");
+                }
+            } else {
+                $("#test_connection").attr("disabled", "disabled");
+            }
+            dataSourceEditValidation();
+        });
+        window.parent.$("#datasource-edit-popup_wrapper").ejWaitingPopup("hide");
+    });
+    </script>
+}
