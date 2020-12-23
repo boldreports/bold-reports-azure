@@ -52,6 +52,26 @@
     <title>
         @ViewBag.Title
     </title>
+    <!-- Google Tag Manager -->
+    <script>
+
+        (function (w, d, s, l, i) {
+
+            w[l] = w[l] || []; w[l].push({
+
+                'gtm.start':
+
+                    new Date().getTime(), event: 'gtm.js'
+
+            }); var f = d.getElementsByTagName(s)[0],
+
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+
+        })(window, document, 'script', 'dataLayer', 'GTM-K73VBT8');
+    </script>
+    <!-- End Google Tag Manager -->
     <style>
         html, body {
             height: 100%;
@@ -117,6 +137,13 @@
 </head>
 
 <body ng-app="serverApp" class="clearfix" id="body">
+    <div hidden id="reports-analytics" data-queue="Bold Reports - Demos - OnPremise"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K73VBT8"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     @if (!(ViewBag.HidePageLoader != null && ViewBag.HidePageLoader))
     {
         <div class="loader-blue loader-icon" id="layout-body-loader-icon">
@@ -290,48 +317,49 @@
                 </section>
             }
         }
-                <div id="content-area" class="clearfix col-xs-12">
-                    <div class="suspension-warning" style="display:none">
-                        <div class="warning-content"></div>
+        <div id="content-area" class="clearfix col-xs-12">
+            <div class="suspension-warning" style="display:none">
+                <div class="warning-content"></div>
+            </div>
+            @{
+                if (!DeviceDetection.IsMobile)
+                {
+                    <div class="user-warning" style="display:none">
+                        <div class="user-warning-content"></div>
                     </div>
-                    @{
-                        if (!DeviceDetection.IsMobile) {
-                            <div class="user-warning" style="display:none">
-                                <div class="user-warning-content"></div>
-                            </div>
-                        }
-                    }
-                    @RenderSection("MainSection", true)
-                    <div id="success-alert">
-                        <div id="image-container">
-                            <div class="image-holder">
-                                <span class="su su-tick" alt="[[[Success Icon]]]"></span>
-                            </div>
-                        </div>
-                        <div id="message">
-                            <h1 id="message-header"></h1>
-                            <span id="message-content"></span>
-                        </div>
-                    </div>
-                    <div id="warning-alert">
-                        <div id="image-container">
-                            <span class="su su-warning-alt" alt="[[[Warning Icon]]]"></span>
-                        </div>
-                        <div id="message" class="div-close">
-                            <h1 id="message-header"></h1>
-                            <span id="message-content"></span>
-                        </div>
-                        <div class="close-div">
-                            <span id="close-content">[[[Close]]]</span>
-                        </div>
-                    </div>
-                    <div id="mobile-alert">
-                        <span id="message"></span>
-                    </div>
-                    <div id="progress-alert-container">
-
+                }
+            }
+            @RenderSection("MainSection", true)
+            <div id="success-alert">
+                <div id="image-container">
+                    <div class="image-holder">
+                        <span class="su su-tick" alt="[[[Success Icon]]]"></span>
                     </div>
                 </div>
+                <div id="message">
+                    <h1 id="message-header"></h1>
+                    <span id="message-content"></span>
+                </div>
+            </div>
+            <div id="warning-alert">
+                <div id="image-container">
+                    <span class="su su-warning-alt" alt="[[[Warning Icon]]]"></span>
+                </div>
+                <div id="message" class="div-close">
+                    <h1 id="message-header"></h1>
+                    <span id="message-content"></span>
+                </div>
+                <div class="close-div">
+                    <span id="close-content">[[[Close]]]</span>
+                </div>
+            </div>
+            <div id="mobile-alert">
+                <span id="message"></span>
+            </div>
+            <div id="progress-alert-container">
+
+            </div>
+        </div>
         @{
             if ((requestUrl.IndexOf(dashboardsPageUrl, StringComparison.OrdinalIgnoreCase) == -1 && requestUrl.IndexOf(widgetsPageUrl, StringComparison.OrdinalIgnoreCase) == -1))
             {

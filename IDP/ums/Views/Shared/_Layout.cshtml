@@ -13,6 +13,17 @@
     <title>
         @ViewBag.Title
     </title>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-K73VBT8');</script>
+    <!-- End Google Tag Manager -->
     @if (!CloudAppConfig.IsSelfHosted)
     {
         <link rel="icon" href="@GlobalAppSettings.CdnDomain/static/company/@GlobalAppSettings.Branding/logo/v1/@IconFileNames.Favicon" />
@@ -107,6 +118,13 @@
     </script>
 </head>
 <body ng-app="serverApp" class="clearfix col-xs-12 no-padding" id="body" style="background-image: url('@GlobalAppSettings.SystemSettings.CDNLink/images/common/waitingpopup.gif'); background-color: #fff; background-repeat: no-repeat; background-position: center center;">
+    <div hidden id="reports-analytics" data-queue="Bold Reports - Demos - OnPremise"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K73VBT8"
+                                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="server-app-container" style="@appContainerStyle">
         <section id="header-area" class="mobile-visible">
             <div class="header-bar col-lg-12 col-md-12 col-sm-12">

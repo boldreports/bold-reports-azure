@@ -10,6 +10,7 @@
     var tenantAppConfiguration = new TenantAppConfiguration(globalAppSettings);
     var language = Context.GetPrincipalAppLanguageForRequest().GetCultureInfo();
     var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var currentUserName = HttpContext.Current.User.Identity.Name;
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var tourCookie = Request.Cookies["syncfusion.reports.designer.tour"];
     var tourObj = new TourCookie();
@@ -160,6 +161,7 @@
         .e-rptdesigner.e-publish-btn-wrapper .e-btn {
             padding: 0px;
             line-height: 0px;
+            border-color: blue;
         }
 
         .e-rptdesigner.e-publish-btn-wrapper .e-icon.e-arrow-sans-down:before {
@@ -258,6 +260,26 @@
             font-style: normal !important;
         }
     </style>
+    <!-- Google Tag Manager -->
+    <script>
+
+        (function (w, d, s, l, i) {
+
+            w[l] = w[l] || []; w[l].push({
+
+                'gtm.start':
+
+                    new Date().getTime(), event: 'gtm.js'
+
+            }); var f = d.getElementsByTagName(s)[0],
+
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+
+        })(window, document, 'script', 'dataLayer', 'GTM-K73VBT8');
+    </script>
+    <!-- End Google Tag Manager -->
 
     <script>
         var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
@@ -280,6 +302,8 @@
         isDraft = isDraft.toLowerCase();
         var isAdmin = "@ViewBag.IsAdmin";
         isAdmin = isAdmin.toLowerCase();
+        var currentUserEmailId = "@currentUserName";
+        currentUserEmailId = currentUserEmailId.toLowerCase();
         var canMarkReportAsPublic = "@ViewBag.CanMarkReportAsPublic";
         canMarkReportAsPublic = canMarkReportAsPublic.toLowerCase();
         var enableCreateCategory = "@ViewBag.EnableCreateCategory";
@@ -725,34 +749,58 @@
                 'vertical-align': 'middle',
                 'text-align': 'center'
             });
-            var publishBtn = ej.buildTag('button.e-designer-fontfamily', "[[[Publish]]]", {
-            }, {
-                    'id': controlId + '_design_header_publish_btn'
+            if (currentUserEmailId == "guest@boldreports.com") {
+                var publishDiv = ej.buildTag('div.e-rptdesigner e-publish-btn-wrapper', '', {
+                    'display': 'table-cell',
+                    'vertical-align': 'middle',
+                    'text-align': 'center'
                 });
-            var ulTag = ej.buildTag('ul.e-publish-menu-ul e-designer-fontfamily', '', {
-            }, {
-                    'id': controlId + '_design_header_publish_ul'
-                });
-            var liTag = ej.buildTag('li', '', {
-            }, {
-                });
-            var spanTag = ej.buildTag('a', "[[[Publish As]]]", {
-            }, {});
-            ulTag.append(liTag);
-            liTag.append(spanTag);
-            publishDiv.append(publishBtn, ulTag);
-            publishContainer.append(publishDiv);
-            divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
 
-            publishBtn.ejSplitButton({
-                targetID: controlId + '_design_header_publish_ul',
-                size: "small",
-                height: "28px",
-                showRoundedCorner: true,
-                click: $.proxy(browseReport, this, true),
-                itemSelected: $.proxy(browseReport, this, false)
-            });
+                var publishBtn = ej.buildTag('button.e-designer-fontfamily', '[[[Publish As]]]', {
+                }, {});
+                publishDiv.append(publishBtn);
+                publishContainer.append(publishDiv);
+                divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
+
+                publishBtn.ejButton(
+                    {
+                        width: "100px",
+                        height: "28px",
+                        size: "large",
+                        click: $.proxy(browseReport, this, false)
+                    });
+            }
+            else {
+                    var publishBtn = ej.buildTag('button.e-designer-fontfamily', "[[[Publish]]]", {
+                    }, {
+                        'id': controlId + '_design_header_publish_btn'
+                    });
+                    var ulTag = ej.buildTag('ul.e-publish-menu-ul e-designer-fontfamily', '', {
+                    }, {
+                        'id': controlId + '_design_header_publish_ul'
+                    });
+                    var liTag = ej.buildTag('li', '', {
+                    }, {
+                    });
+                    var spanTag = ej.buildTag('a', "[[[Publish As]]]", {
+                    }, {});
+                    ulTag.append(liTag);
+                    liTag.append(spanTag);
+                    publishDiv.append(publishBtn, ulTag);
+                    publishContainer.append(publishDiv);
+                    divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
+
+                    publishBtn.ejSplitButton({
+                        targetID: controlId + '_design_header_publish_ul',
+                        size: "small",
+                        height: "28px",
+                        showRoundedCorner: true,
+                        click: $.proxy(browseReport, this, true),
+                        itemSelected: $.proxy(browseReport, this, false)
+                    });
+            }
         }
+
 
         function designViewChange(args) {
             if (args && args.currentTarget) {
@@ -905,6 +953,13 @@
     </script>
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
+    <div hidden id="reports-analytics" data-queue="Bold Reports - Demos - OnPremise"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K73VBT8"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="container"></div>
     <div id="toast-message-container"></div>
     @if (ViewBag.isEdit)
@@ -917,11 +972,11 @@
         </div>
     }
     @*@if (showTour)
-    {
-        @Styles.Render("~/bundles/styles/reports-tour")
-        Html.RenderPartial("~/Views/Shared/_DesignerTour.cshtml");
-        @Scripts.Render("~/bundles/scripts/reports-tour")
-    }*@
+        {
+            @Styles.Render("~/bundles/styles/reports-tour")
+            Html.RenderPartial("~/Views/Shared/_DesignerTour.cshtml");
+            @Scripts.Render("~/bundles/scripts/reports-tour")
+        }*@
 
     @Html.Partial("../Items/_AddCategory", new ViewDataDictionary { { "IsReportDesigner", true } });
 </body>

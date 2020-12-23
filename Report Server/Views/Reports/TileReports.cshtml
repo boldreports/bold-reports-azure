@@ -449,7 +449,7 @@
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanWrite && !isTablet">
+                                                    <li ng-if="currentUserId != 2 && dashboardItem.CanWrite && !isTablet">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>
                                                             <span>[[[Update]]]</span>

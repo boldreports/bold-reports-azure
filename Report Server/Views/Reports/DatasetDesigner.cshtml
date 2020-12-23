@@ -19,6 +19,7 @@
     var cdnLink = globalAppSettings.SystemSettings.CDNLink;
     var faviconLogo = globalAppSettings.SystemSettings.FavIcon;
     var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+    var currentUserName = HttpContext.Current.User.Identity.Name;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -100,7 +101,9 @@
         var datasetName = "@Html.Raw(ViewBag.datasetName)";
         var description = "@Html.Raw(ViewBag.description)";
         var isEdit = "@ViewBag.isEdit";
-		var datasource = "@Html.Raw(ViewBag.datasourceName)";
+        var datasource = "@Html.Raw(ViewBag.datasourceName)";
+        var currentUserEmailId = "@currentUserName";
+        currentUserEmailId = currentUserEmailId.toLowerCase();
         isEdit = isEdit.toLowerCase();
 
 		if(isEdit === "true"){
@@ -151,17 +154,19 @@
 		}
       }
 
-	  function renderQueryToolbar(args) {
-    var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
-    var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save]]]", {}, { id: ctrlId + '_query_save_btn' });
-    $divsave.append(saveButton);
-    $(args.target).find('#' + ctrlId + '_div_dataset_save').before($divsave);
-    saveButton.ejButton({
-        width: '78px', showRoundedCorner: false, size: 'mini',
-        contentType: ej.ContentType.TextOnly, 'height': '25px',
-        'click': $.proxy(this.saveQueryDataSet, this)
-    });
-}
+        function renderQueryToolbar(args) {
+            if (currentUserEmailId != "guest@boldreports.com") {
+                var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
+                var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save]]]", {}, { id: ctrlId + '_query_save_btn' });
+                $divsave.append(saveButton);
+                $(args.target).find('#' + ctrlId + '_div_dataset_save').before($divsave);
+                saveButton.ejButton({
+                    width: '78px', showRoundedCorner: false, size: 'mini',
+                    contentType: ej.ContentType.TextOnly, 'height': '25px',
+                    'click': $.proxy(this.saveQueryDataSet, this)
+                });
+            }
+        }
 
 function saveQueryDataSet(event) {
     var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');

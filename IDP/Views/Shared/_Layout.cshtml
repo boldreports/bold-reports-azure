@@ -26,6 +26,17 @@
     <title>
         @ViewBag.Title
     </title>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-K73VBT8');</script>
+    <!-- End Google Tag Manager -->
     <style>
 
         .loader-icon {
@@ -174,15 +185,22 @@
     }
 </head>
 <body ng-app="serverApp" class="clearfix" id="body" style="background-image: url('@GlobalAppSettings.SystemSettings.CDNLink/images/common/waitingpopup.gif');background-color: #fff; background-repeat: no-repeat; background-position: center center;">
+    <div hidden id="reports-analytics" data-queue="Bold Reports - Demos - OnPremise"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K73VBT8"
+                                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="server-app-container" style="opacity: 0">
         <section id="header-area" class="mobile-visible">
             <div class="header-bar col-lg-12 col-md-12 col-sm-12">
                 @if (!isWelcomePage)
                 {
-                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
-                        <span>
-                            <i class="su su-mobile-menu-icon"></i>
-                        </span>
+    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+        <span>
+            <i class="su su-mobile-menu-icon"></i>
+        </span>
                     </div>
                 }
                 <div class="org-name-wrapper">
@@ -239,19 +257,19 @@
         {
             @Html.Partial("../Shared/_Footer")
         }
-        else
-        {
+            else
+            {
             @Html.Partial("../Shared/_FooterOnPremise")
         }
 
         @if (includeMessageBox)
         {
             <div id="messageBox">
-                <div class="message-header"></div>
-                <div class="message-box-close"></div>
-                <div class="message-content text-center"></div>
-                <div class="message-box-btn-holder"></div>
-            </div>
+    <div class="message-header"></div>
+    <div class="message-box-close"></div>
+    <div class="message-content text-center"></div>
+    <div class="message-box-btn-holder"></div>
+    </div>
         }
     </div>
 
@@ -275,9 +293,9 @@
                 <a href="@Url.Action("getusernotifications", "notification")">
                     <span id="notification_area_icon" class="su su-notification-alert pull-left">
                         @*@if (notificationCount != 0)
-                        {
-                            <span id="notification-indicator"></span>
-                        }*@
+                            {
+                                <span id="notification-indicator"></span>
+                            }*@
                     </span>
                 </a>
             </div>
