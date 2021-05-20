@@ -28,6 +28,7 @@
     ".NETCoreApp,Version=v5.0": {
       "Syncfusion.Server.Reports/3.1.31": {
         "dependencies": {
+          "Azure.Extensions.AspNetCore.DataProtection.Blobs": "1.2.0",
           "Bold.Licensing": "3.1.31",
           "BoldReports.Data.Csv": "3.1.31",
           "BoldReports.Data.Excel": "3.1.31",
@@ -369,48 +370,65 @@
           "lib/netstandard2.0/AWSSDK.Core.dll": {}
         }
       },
-      "Azure.Core/1.2.2": {
+      "Azure.Core/1.4.1": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.0.0",
           "System.Buffers": "4.5.0",
           "System.Diagnostics.DiagnosticSource": "4.6.0",
           "System.Memory": "4.5.3",
           "System.Numerics.Vectors": "4.5.0",
+          "System.Text.Json": "4.7.2",
           "System.Threading.Tasks.Extensions": "4.5.3"
         },
         "runtime": {
           "lib/netstandard2.0/Azure.Core.dll": {
-            "assemblyVersion": "1.2.2.0",
-            "fileVersion": "1.200.220.30402"
+            "assemblyVersion": "1.4.1.0",
+            "fileVersion": "1.400.120.41802"
           }
         },
         "compile": {
           "lib/netstandard2.0/Azure.Core.dll": {}
         }
       },
-      "Azure.Storage.Blobs/12.4.4": {
+      "Azure.Extensions.AspNetCore.DataProtection.Blobs/1.2.0": {
         "dependencies": {
-          "Azure.Core": "1.2.2",
-          "Azure.Storage.Common": "12.4.3"
+          "Azure.Storage.Blobs": "12.6.0",
+          "Microsoft.AspNetCore.DataProtection": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Azure.Extensions.AspNetCore.DataProtection.Blobs.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.200.20.61604"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Azure.Extensions.AspNetCore.DataProtection.Blobs.dll": {}
+        }
+      },
+      "Azure.Storage.Blobs/12.6.0": {
+        "dependencies": {
+          "Azure.Core": "1.4.1",
+          "Azure.Storage.Common": "12.5.2",
+          "System.Text.Json": "4.7.2"
         },
         "runtime": {
           "lib/netstandard2.0/Azure.Storage.Blobs.dll": {
-            "assemblyVersion": "12.4.4.0",
-            "fileVersion": "12.400.420.30405"
+            "assemblyVersion": "12.6.0.0",
+            "fileVersion": "12.600.20.43102"
           }
         },
         "compile": {
           "lib/netstandard2.0/Azure.Storage.Blobs.dll": {}
         }
       },
-      "Azure.Storage.Common/12.4.3": {
+      "Azure.Storage.Common/12.5.2": {
         "dependencies": {
-          "Azure.Core": "1.2.2"
+          "Azure.Core": "1.4.1"
         },
         "runtime": {
           "lib/netstandard2.0/Azure.Storage.Common.dll": {
-            "assemblyVersion": "12.4.3.0",
-            "fileVersion": "12.400.320.30405"
+            "assemblyVersion": "12.5.2.0",
+            "fileVersion": "12.500.220.43102"
           }
         },
         "compile": {
@@ -3419,7 +3437,7 @@
       },
       "Syncfusion.Server.Base.Resources.Storage/3.1.31": {
         "dependencies": {
-          "Azure.Storage.Blobs": "12.4.4",
+          "Azure.Storage.Blobs": "12.6.0",
           "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.8",
           "Syncfusion.Server.Base.ActiveDirectory": "3.1.31",
           "Syncfusion.Server.Base.DataClasses": "3.1.31",
@@ -5193,26 +5211,33 @@
       "path": "awssdk.core/3.3.104.31",
       "hashPath": "awssdk.core.3.3.104.31.nupkg.sha512"
     },
-    "Azure.Core/1.2.2": {
+    "Azure.Core/1.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-KVnvNS0XLCrrOP5Ei1hsCQ2BBseO5ScVG2kk8exsH5cWHk7Tkv9VXfxHJ1v0WA6I9I+bcBwtgYV7LGF/H8W5Ng==",
-      "path": "azure.core/1.2.2",
-      "hashPath": "azure.core.1.2.2.nupkg.sha512"
+      "sha512": "sha512-6LbGLiZwlU6SfOaINCfrQ+f91bRWZ8XvB90Qfm69x1t3z+5D4jmXnQiuPYPZcgtxFjPKA3IwyHGuDZRkSo1Urg==",
+      "path": "azure.core/1.4.1",
+      "hashPath": "azure.core.1.4.1.nupkg.sha512"
     },
-    "Azure.Storage.Blobs/12.4.4": {
+    "Azure.Extensions.AspNetCore.DataProtection.Blobs/1.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-mXRyqZlHUiVuCmGdRbuHBEOLAbA3YwSYSrjKtAsqL7q/A34aiGpL84IhegwR4SdGAqhG0v7WnRMAoQN2ShIPpg==",
-      "path": "azure.storage.blobs/12.4.4",
-      "hashPath": "azure.storage.blobs.12.4.4.nupkg.sha512"
+      "sha512": "sha512-A8npN89ZxRKT4Ld4aXdEVdoAFnh97XFvYPHZYSKfmOnnbdrSIcg4QxRy4q4SotI7PGyxnEMGU0FZ7Mq1Pem3oA==",
+      "path": "azure.extensions.aspnetcore.dataprotection.blobs/1.2.0",
+      "hashPath": "azure.extensions.aspnetcore.dataprotection.blobs.1.2.0.nupkg.sha512"
     },
-    "Azure.Storage.Common/12.4.3": {
+    "Azure.Storage.Blobs/12.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1IeuPon/PhFTF4YPxRVK/nlMcWL+dt28W8fULJpZVqU7e6pUkovEhKfp+nsO8SnR7cb2+LrIPhGzdlJ0bAcX5w==",
-      "path": "azure.storage.common/12.4.3",
-      "hashPath": "azure.storage.common.12.4.3.nupkg.sha512"
+      "sha512": "sha512-dyrUge8qg6MeI9kln5GPWm232iF+u/BpN2pkzaHUYltqkvqTv9EDIXuG7dYYVCX5ZrOQoiN+Cl42qEQSC/cLXA==",
+      "path": "azure.storage.blobs/12.6.0",
+      "hashPath": "azure.storage.blobs.12.6.0.nupkg.sha512"
+    },
+    "Azure.Storage.Common/12.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Sd6C0TgGkzEHcNv95jO52vN1TroTrBRCJJOCog6NEfUoAnmxUus4j9QraDfITvxIIMdyKg7WXB6vX58Bq2/WaQ==",
+      "path": "azure.storage.common/12.5.2",
+      "hashPath": "azure.storage.common.12.5.2.nupkg.sha512"
     },
     "BarcodeLib/2.2.6": {
       "type": "package",
@@ -5224,49 +5249,49 @@
     "Bold.Licensing/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-jzScz3CN0PEQsU34O0NbhWZb7gDouE1+Z9cIQ6CQyoRvVH3b8YcsiC0JgAf6uc2XlArB4DqVEaddgIC3dnBnlw==",
+      "sha512": "sha512-nGe3JydPZAnGa88aaeK6frYUSz7RDXotfP4kbsoKoD2EYFuT49/lxeJr+XMUMiaRwxmgj8ylDCOVxHwo2XZkhQ==",
       "path": "bold.licensing/3.1.31",
       "hashPath": "bold.licensing.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.Csv/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Gi1dZxsZu1uVHJT9MaIrnjN0p/2k7m8kzDpx7ycBKZGQqE/IXTAMZnzfXgaKdtKOlqEwANh3M2Evr6xmCTuNgw==",
+      "sha512": "sha512-fTuWLA+cudFP5bTx3l5lPuKFfqT1HZNdQvbyjSNVyM2jazsr2kOd6CM5naFVkVEJ50mhPUYHV0i8oX5Pkv4J8g==",
       "path": "boldreports.data.csv/3.1.31",
       "hashPath": "boldreports.data.csv.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.Excel/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-PokJ6P9ApliH2bdhqos5FkWyb6TbR2vak166y5exC8eeIyyrlsBM2CrVRQrSod8vnSjxdMstwCu8EN1uwfY1kw==",
+      "sha512": "sha512-YAj4iFb7rH5jO/qT6KwvhaObpP5DUpOEXbxrGIWLxqYtNmZC5Yy3GZ7NeaWssdum00/nOxBprHjW26VGPeqB+Q==",
       "path": "boldreports.data.excel/3.1.31",
       "hashPath": "boldreports.data.excel.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.WebData/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-uQ36L8vDYg3Ae9Xp3LwAp3unXZQt3MScgwqnERXV4w37NE8bZnpwO6hmv0XGnTck23QHAUos3Z184YFGuV7eCA==",
+      "sha512": "sha512-+OuGDhH7jn47qwEV5359xxTDb6ajfHp8hbZ1kkrbsRWahk9W6u6MgCr95uOAmYzKkur/EX9Ui8+KoprFZF/iqA==",
       "path": "boldreports.data.webdata/3.1.31",
       "hashPath": "boldreports.data.webdata.3.1.31.nupkg.sha512"
     },
     "BoldReports.Extensions.BarcodeCRI/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VfuvzvxoddSDeBnu9z/gEQiCoX/TIXeAibj6mrFREvGxspatbXwHPCuHzZ2QoDJRJsWvms06L3Gjvd76sckFyQ==",
+      "sha512": "sha512-HBdOX5kB9FOy1787yrrRRR34uYRCZMRHUz1vy5FvyunQvXFFTC+IgEZd9IkMk2i5uf+ioiGk8XmhDE/N4vkJwQ==",
       "path": "boldreports.extensions.barcodecri/3.1.31",
       "hashPath": "boldreports.extensions.barcodecri.3.1.31.nupkg.sha512"
     },
     "BoldReports.Net.Core/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OAqR4cbB1ry4eEzHnpX4rNhrfHiZFF++aX/DtnaJA5YV7BZ0JL5Pk9mKq14mot1jfi+G0PDPTp6O5SC/EHKi0Q==",
+      "sha512": "sha512-jEFxA6PBvuqo3KAxEsdV9aqYumSvPAaY7m2zhi51+hSSZeWWRMGmraImxcZ19eIhheX43UkgXpzuI0Am8Gu0Cg==",
       "path": "boldreports.net.core/3.1.31",
       "hashPath": "boldreports.net.core.3.1.31.nupkg.sha512"
     },
     "BoldReports.Web/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VcFuNiPpoS1QNC1cJbocbbmiLQovXCtZGhOWOzsKI6TNeN7Gbw+JDYfMq2XVjbSyGf9ygUsBoqJY9aZHAFPpxQ==",
+      "sha512": "sha512-l95JelhbHLM/eSJPLXYEu2f7LcWpJ7cnWk60ThNP0/2gQn893h/jZhl4qIZq4VwE79mr3Nb6jMV1uwhSs5FAKA==",
       "path": "boldreports.web/3.1.31",
       "hashPath": "boldreports.web.3.1.31.nupkg.sha512"
     },

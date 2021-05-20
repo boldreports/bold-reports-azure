@@ -6,6 +6,7 @@
     var resetSecret = "[[[Reset Secret]]]";
     var fileName = !string.IsNullOrEmpty(ViewBag.fileName) ? ViewBag.fileName : "[[[Browse file path (.json)]]]";
     var showDownloadLink = embedEnabled ? "display:block" : "display:none";
+    var branding = GlobalAppSettings.Branding;
 }
 
 @section styles{

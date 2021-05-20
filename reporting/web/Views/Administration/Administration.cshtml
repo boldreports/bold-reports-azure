@@ -4,15 +4,14 @@
 
     ViewBag.Title = "[[[Administration]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
-	var requestUrl = new Uri(Context.Request.GetDisplayUrl());
-	var isADPage = requestUrl.ToString().IndexOf("/administration/user-directory-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
-	var isEmailPage = requestUrl.ToString().IndexOf("e-mail-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
-	var isAccountsPage = requestUrl.ToString().IndexOf("user-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isADPage = requestUrl.ToString().IndexOf("/administration/user-directory-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var isEmailPage = requestUrl.ToString().IndexOf("e-mail-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var isAccountsPage = requestUrl.ToString().IndexOf("user-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
     ViewBag.HelpSiteUrl = isEmailPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.EmailSettings) : isADPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AzureAdSettings) :
          isAccountsPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AccountSiteSettings) : GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SiteSettings);
     var isSitesPage = requestUrl.ToString().IndexOf("/administration/site", StringComparison.CurrentCultureIgnoreCase) > 0 || requestUrl.ToString().IndexOf("/administration", StringComparison.CurrentCultureIgnoreCase) > 0;
-    var isAzureApplication = ServerAppConfig.AppSettings.IsAzureApplication;
-
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
 }
 
 @section styles{

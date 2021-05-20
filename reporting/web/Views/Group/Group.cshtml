@@ -3,7 +3,7 @@
 
     ViewBag.Title = "[[[Groups]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManageGroups);
-    var isAzureApplication = ServerAppConfig.AppSettings.IsAzureApplication;
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 

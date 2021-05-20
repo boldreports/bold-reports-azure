@@ -1,11 +1,11 @@
 ﻿@{
     Layout = null;
     var displayName = GlobalAppSettings.BrandingDisplayName;
-    var connectionType = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdP:AzureBlobConnectionType"];
-    var storageAccountName = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdP:AzureBlobStorageAccountName"];
-    var accessKey = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdP:AzureBlobStorageAccessKey"];
-    var blobServiceEndpoint = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdP:AzureBlobServiceEndpoint"];
-    var containerName = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdP:AzureBlobContainerName"];
+    var connectionType = GlobalAppSettings.Configuration["IdP:AzureBlobConnectionType"];
+    var storageAccountName = GlobalAppSettings.Configuration["IdP:AzureBlobStorageAccountName"];
+    var accessKey = GlobalAppSettings.Configuration["IdP:AzureBlobStorageAccessKey"];
+    var blobServiceEndpoint = GlobalAppSettings.Configuration["IdP:AzureBlobServiceEndpoint"];
+    var containerName = GlobalAppSettings.Configuration["IdP:AzureBlobContainerName"];
     var hasDRMConfiguration = ViewBag.HasDRMConfiguration ? "true" : "false";
     var hasDbConfiguration = ViewBag.HasDbConfiguration ? "true" : "false";
     var productName = ViewBag.TenantType == TenantType.BoldBIOnPremise ? "Embedded" : "On-Premise";
@@ -74,7 +74,7 @@
         var selfHosted = ("@ViewBag.selfHosted".toLowerCase() === "true");
         var connectionType = "@connectionType";
         var storageAccountName = "@storageAccountName";
-        var accessKey = "@accessKey";
+        var accessKey = "@Html.Raw(accessKey)";
         var blobServiceEndpoint = "@blobServiceEndpoint";
         var containerName = "@containerName";
         var updateLicenseKeyUrl = "@Url.Action("ApplyLicenseKey", "ServerConfiguration")";

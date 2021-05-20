@@ -325,7 +325,11 @@
             biStorePopoverContent: "[[[This database is to store data pulled from files and web data sources to visualize them in dashboards.]]]",
             reportStorePopoverContent: "[[[This database is to store data pulled from files and web data sources to visualize them in reports.]]]",
             biServerPopoverContent: "[[[This database is to store metadata such as dashboards, users, and their permissions.]]]",
-            reportServerPopoverContent: "[[[This database is to store metadata such as reports, users, and their permissions.]]]"
+            reportServerPopoverContent: "[[[This database is to store metadata such as reports, users, and their permissions.]]]",
+
+            //Api keys
+            ClicktoView: "[[[Click to view]]]",
+            ClicktoHide: "[[[Click to hide]]]"
         }
     }
 };

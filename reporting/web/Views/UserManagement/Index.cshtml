@@ -5,7 +5,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     ViewBag.Title = "[[[Users List]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManageUsers);
-    var isAzureApplication = ServerAppConfig.AppSettings.IsAzureApplication;
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var enableWindowsAD = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
 }

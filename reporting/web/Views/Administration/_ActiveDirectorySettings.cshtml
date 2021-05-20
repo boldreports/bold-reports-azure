@@ -4,7 +4,7 @@
     var oauthRegEx = @"/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/";
     var authControl = ViewBag.AuthControl as List<TenantAuthControl>;
     authControl = authControl != null && authControl.Count > 0 ? authControl : null;
-    var isAzureApplication = ServerAppConfig.AppSettings.IsAzureApplication;
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
 
 }
 
