@@ -826,7 +826,7 @@
                 <button type="submit" id="update-oauth-settings" class="primary-button pull-right update-auth-settings" ng-disabled="oauthSettingsForm.$invalid">[[[Save]]]</button>
                 <button type="submit" id="update-openid-settings" class="primary-button pull-right update-auth-settings" ng-disabled="openidSettingsForm.$invalid">[[[Save]]]</button>
             }
-            <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button pull-right @((ServerAppConfig.IsSelfHosted && isAzureApplication) ? string.Empty : ServerAppConfig.IsSelfHosted ? "hidden" : string.Empty )" ng-disabled="azureAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
+            <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button pull-right @(!ServerAppConfig.IsSelfHosted ? string.Empty : ServerAppConfig.IsSelfHosted && isAzureApplication ? string.Empty : "hidden" )" ng-disabled="azureAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
             <button type="button" title="" id="save-db-settings" disabled="disabled" name="UpdateSystemSettings" class="primary-button pull-right">[[[Save]]]</button>
             <button type="button" id="connect-database" class="primary-button pull-right connect-database-button" disabled="disabled">[[[Next]]]</button>
             <button type="button" id="change-connection" class="primary-button  pull-right">[[[Back]]]</button>
