@@ -14,7 +14,14 @@
       "NET",
       "NET5_0",
       "NETCOREAPP",
-      "NETCOREAPP3_1"
+      "NET5_0_OR_GREATER",
+      "NETCOREAPP1_0_OR_GREATER",
+      "NETCOREAPP1_1_OR_GREATER",
+      "NETCOREAPP2_0_OR_GREATER",
+      "NETCOREAPP2_1_OR_GREATER",
+      "NETCOREAPP2_2_OR_GREATER",
+      "NETCOREAPP3_0_OR_GREATER",
+      "NETCOREAPP3_1_OR_GREATER"
     ],
     "languageVersion": "9.0",
     "platform": "AnyCPU",
@@ -28,7 +35,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "BoldReports.Server.Services/3.1.31": {
+      "BoldReports.Server.Services/1.1.1": {
         "dependencies": {
           "Azure.Storage.Blobs": "12.4.4",
           "Bold.Licensing": "3.1.31",
@@ -183,6 +190,7 @@
           "System.Buffers.Reference": "5.0.0.0",
           "System.Collections.Concurrent": "5.0.0.0",
           "System.Collections.Reference": "5.0.0.0",
+          "System.Collections.Immutable.Reference": "5.0.0.0",
           "System.Collections.NonGeneric": "5.0.0.0",
           "System.Collections.Specialized": "5.0.0.0",
           "System.ComponentModel.Annotations.Reference": "5.0.0.0",
@@ -235,7 +243,6 @@
           "System.Linq.Parallel": "5.0.0.0",
           "System.Linq.Queryable": "5.0.0.0",
           "System.Memory.Reference": "5.0.0.0",
-          "System.Net.Connections": "5.0.0.0",
           "System.Net": "4.0.0.0",
           "System.Net.Http": "5.0.0.0",
           "System.Net.Http.Json": "5.0.0.0",
@@ -263,6 +270,7 @@
           "System.Reflection.Emit.ILGeneration.Reference": "5.0.0.0",
           "System.Reflection.Emit.Lightweight.Reference": "5.0.0.0",
           "System.Reflection.Extensions.Reference": "5.0.0.0",
+          "System.Reflection.Metadata.Reference": "5.0.0.0",
           "System.Reflection.Primitives.Reference": "5.0.0.0",
           "System.Reflection.TypeExtensions.Reference": "5.0.0.0",
           "System.Resources.Reader": "5.0.0.0",
@@ -1682,12 +1690,6 @@
         }
       },
       "System.Collections.Immutable/5.0.0": {
-        "runtime": {
-          "lib/netstandard2.0/System.Collections.Immutable.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.20.51904"
-          }
-        },
         "compile": {
           "lib/netstandard2.0/System.Collections.Immutable.dll": {}
         }
@@ -2269,12 +2271,6 @@
         }
       },
       "System.Reflection.Metadata/5.0.0": {
-        "runtime": {
-          "lib/netstandard2.0/System.Reflection.Metadata.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.20.51904"
-          }
-        },
         "compile": {
           "lib/netstandard2.0/System.Reflection.Metadata.dll": {}
         }
@@ -3392,6 +3388,12 @@
         },
         "compileOnly": true
       },
+      "System.Collections.Immutable.Reference/5.0.0.0": {
+        "compile": {
+          "System.Collections.Immutable.dll": {}
+        },
+        "compileOnly": true
+      },
       "System.Collections.NonGeneric/5.0.0.0": {
         "compile": {
           "System.Collections.NonGeneric.dll": {}
@@ -3704,12 +3706,6 @@
         },
         "compileOnly": true
       },
-      "System.Net.Connections/5.0.0.0": {
-        "compile": {
-          "System.Net.Connections.dll": {}
-        },
-        "compileOnly": true
-      },
       "System.Net/4.0.0.0": {
         "compile": {
           "System.Net.dll": {}
@@ -3869,6 +3865,12 @@
       "System.Reflection.Extensions.Reference/5.0.0.0": {
         "compile": {
           "System.Reflection.Extensions.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.Reflection.Metadata.Reference/5.0.0.0": {
+        "compile": {
+          "System.Reflection.Metadata.dll": {}
         },
         "compileOnly": true
       },
@@ -4289,7 +4291,7 @@
     }
   },
   "libraries": {
-    "BoldReports.Server.Services/3.1.31": {
+    "BoldReports.Server.Services/1.1.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -4325,56 +4327,56 @@
     "Bold.Licensing/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nGe3JydPZAnGa88aaeK6frYUSz7RDXotfP4kbsoKoD2EYFuT49/lxeJr+XMUMiaRwxmgj8ylDCOVxHwo2XZkhQ==",
+      "sha512": "sha512-Wh5pTO6xmA/E9jo92I5I0uHU9r/yixUZ6K00BSN3xLcExNje3MYGpDwmfnJU1sZjE9RyrlzjAqmsFnH5WLaAXA==",
       "path": "bold.licensing/3.1.31",
       "hashPath": "bold.licensing.3.1.31.nupkg.sha512"
     },
     "BoldReports.Base.Logger/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-X2V595XI06ZdhfHg6ZFN7fFUyA8ZoTox0UpS8KUuORqYKT19XpdE+QiEMYKgrUFWLi5wTauL3bIZWyH8K12Vgg==",
+      "sha512": "sha512-SDGuYAbuiU2HGuf8ocvI6qK0Ir1KZHOakKrOb5YaC6slRwmcqmHOr0ckQVT90MBM3nysw+W0CE0VM1TUw/xN1Q==",
       "path": "boldreports.base.logger/3.1.31",
       "hashPath": "boldreports.base.logger.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.Csv/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fTuWLA+cudFP5bTx3l5lPuKFfqT1HZNdQvbyjSNVyM2jazsr2kOd6CM5naFVkVEJ50mhPUYHV0i8oX5Pkv4J8g==",
+      "sha512": "sha512-8rNWtKUpXyKUkT7dDEP79t8IYLyD4ts6xnJaYaSeKp1dJpH9SmxbwnlrbMxYVj9L3/euBtIA9DSpsW6Grtw+YQ==",
       "path": "boldreports.data.csv/3.1.31",
       "hashPath": "boldreports.data.csv.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.Excel/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-YAj4iFb7rH5jO/qT6KwvhaObpP5DUpOEXbxrGIWLxqYtNmZC5Yy3GZ7NeaWssdum00/nOxBprHjW26VGPeqB+Q==",
+      "sha512": "sha512-bRDSpjoFFpV8zkJFenioQDj8cTdFsJPJZulCSLpCPoI+d6jACLwdm+JuAZ+n9k9oM0XXWIndzkNN1edP6ne/CQ==",
       "path": "boldreports.data.excel/3.1.31",
       "hashPath": "boldreports.data.excel.3.1.31.nupkg.sha512"
     },
     "BoldReports.Data.WebData/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+OuGDhH7jn47qwEV5359xxTDb6ajfHp8hbZ1kkrbsRWahk9W6u6MgCr95uOAmYzKkur/EX9Ui8+KoprFZF/iqA==",
+      "sha512": "sha512-rfnnf7+S48i8wTpJWg4zH89WxY+j3War2CMoMxCxMc5/1/aj4cRiPAHvsk5q5SNpkonCn3TTV2lfJtS1DU5Pdg==",
       "path": "boldreports.data.webdata/3.1.31",
       "hashPath": "boldreports.data.webdata.3.1.31.nupkg.sha512"
     },
     "BoldReports.Extensions.BarcodeCRI/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HBdOX5kB9FOy1787yrrRRR34uYRCZMRHUz1vy5FvyunQvXFFTC+IgEZd9IkMk2i5uf+ioiGk8XmhDE/N4vkJwQ==",
+      "sha512": "sha512-UpJG+67HzlNdD8RuQ8sUtCbWS+e2AD2H5b+QLdh4CzyG55pCtp+6fdAf96ZxYiQGNtnE9tw35TKgepnXN4D07Q==",
       "path": "boldreports.extensions.barcodecri/3.1.31",
       "hashPath": "boldreports.extensions.barcodecri.3.1.31.nupkg.sha512"
     },
     "BoldReports.Net.Core/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-jEFxA6PBvuqo3KAxEsdV9aqYumSvPAaY7m2zhi51+hSSZeWWRMGmraImxcZ19eIhheX43UkgXpzuI0Am8Gu0Cg==",
+      "sha512": "sha512-xSKTIOCA1JBLq8Y2MxvNAQ1tqa+Fa03OWVyp3qCmznGsf8maOYTSghAfMrl41atIrWVKJ8tQM6sZ8/wh/yiOYw==",
       "path": "boldreports.net.core/3.1.31",
       "hashPath": "boldreports.net.core.3.1.31.nupkg.sha512"
     },
     "BoldReports.Web/3.1.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-l95JelhbHLM/eSJPLXYEu2f7LcWpJ7cnWk60ThNP0/2gQn893h/jZhl4qIZq4VwE79mr3Nb6jMV1uwhSs5FAKA==",
+      "sha512": "sha512-M9HfK3yBZd1TlqOUbmr9FL8QqmHBqjBuP9dNP+Jo5KT+FeuMzSMUshCNkKOIn9L/cbm2sJuTplGCTvImdJ/DjA==",
       "path": "boldreports.web/3.1.31",
       "hashPath": "boldreports.web.3.1.31.nupkg.sha512"
     },
@@ -6408,6 +6410,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "System.Collections.Immutable.Reference/5.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Collections.NonGeneric/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -6668,11 +6675,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Net.Connections/5.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "System.Net/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -6804,6 +6806,11 @@
       "sha512": ""
     },
     "System.Reflection.Extensions.Reference/5.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Reflection.Metadata.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
