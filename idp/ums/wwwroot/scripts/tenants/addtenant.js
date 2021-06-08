@@ -1519,7 +1519,7 @@ function nextToStoragePage() {
             $("#details-next").removeClass("intermediate-db2").addClass("data-security");
         }
         else {
-            $("#details-next").removeClass("intermediate-db").addClass("data-security");
+            $("#details-next").removeClass("intermediate-db").addClass("user");
         }
         $("#details-next").removeAttr("disabled").addClass("next-alignment");
     }

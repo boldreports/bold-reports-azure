@@ -49,7 +49,7 @@
 
             window.dateFormat = "@dateFormat";
             var fulldata = @Html.Raw(Json.Serialize(ViewBag.UserDetail));
-            editUser(fulldata, "@dateFormat";);
+            editUser(fulldata, "@dateFormat");
             if (@ViewBag.EditUserProfile > 0) {
                 $("#edit").trigger("click");
                 if (showDropdown == "show") {
