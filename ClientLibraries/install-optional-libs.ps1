@@ -8,7 +8,7 @@ Param(
     [string]$clientlibraryextractpath = "Libraries"
 )
 
-$rootPath = "../bold-services/reporting"
+$rootPath = "../reporting"
 $pluginDirectories = "api","jobs","web","reportservice"
 $apijson="${rootPath}/api/appsettings.Production.json;"
 $jobsjson="${rootPath}/jobs/appsettings.Production.json;"
@@ -20,13 +20,13 @@ $mysqlassemblies=""
 $postgresqlassemblies=""
 $oracleassemblies=""
 $Clientcollection = $ClientLibraries.Split(",")
-
+try {
 Foreach ($name in $Clientcollection)
 {
 Switch ($name)
 {
 "mysql"{
-mysqlassemblies="${name}=BoldReports.Data.MySQL;MemSQL;MariaDB;"
+$mysqlassemblies="${name}=BoldReports.Data.MySQL;MemSQL;MariaDB;"
 Foreach ($dirname in $pluginDirectories)
 {
 $destination="$rootPath/$dirname"
@@ -36,7 +36,7 @@ Copy-Item -Path $clientlibraryextractpath/MySqlConnector.dll -Destination $desti
 echo "mysql libraries are installed"
 }
 "oracle" {
-oracleassemblies="${name}=BoldReports.Data.Oracle;"
+$oracleassemblies="${name}=BoldReports.Data.Oracle;"
 Foreach ($dirname in $pluginDirectories)
 {
 $destination="$rootPath/$dirname"
@@ -46,7 +46,7 @@ Copy-Item -Path $clientlibraryextractpath/Oracle.ManagedDataAccess.dll -Destinat
 echo "oracle libraries are installed"
 }
 "postgresql"{
-postgresqlassemblies="${name}=BoldReports.Data.PostgreSQL;"
+$postgresqlassemblies="${name}=BoldReports.Data.PostgreSQL;"
 Foreach ($dirname in $pluginDirectories)
 {
 $destination="$rootPath/$dirname"
@@ -61,3 +61,12 @@ echo "postgresql libraries are installed"
 $clientLibraries="$mysqlassemblies$oracleassemblies$postgresqlassemblies"
 dotnet clientlibraryutility/ClientLibraryUtil.dll $clientLibraries $jsonfiles
 echo "client libraries are updated"
+}
+catch {
+    if($PSItem.Exception.Message.ToLower().Contains('used by another process')) {
+     'Exception: ' + $PSItem.Exception.Message
+     echo 'File Lock Exception Occurred: Please stop the site and try it'
+    } else {
+     'Exception: ' + $PSItem.Exception.Message
+    }    
+}
