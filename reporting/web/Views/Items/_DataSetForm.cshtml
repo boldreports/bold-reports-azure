@@ -1,0 +1,43 @@
+﻿<script>
+    let isDataSetExistUrl = "@Url.Action("IsDatasetExists", "DataSets")";
+</script>
+<div class="dataset-form-scroller rs-scroller">
+    <div class="dataset-form-header">
+        {{dataSourceName}}
+    </div>
+    <div class="dataset-form-container">
+        <form action="@Url.Action("DatasetDesigner", "Reports")" class="dataset-form" method="POST" target="_blank">
+            <table unselectable="on" class="dataset-form-name-container">
+                <tr>
+                    <td><label class="e-designer-title-label">DataSet Name</label></td>
+                    <td>
+                        <span class="e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip e-rptdesigner-tab-focus" tabindex="0" data-title=""></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input class="e-textbox e-designer-content-label dataset-form-name" name="datasetName" type="text" spellcheck="false" aria-label="Name">
+                    </td>
+                </tr>
+            </table>
+            <table unselectable="on" class="dataset-form-desc-container">
+                <tr>
+                    <td><label class="e-designer-title-label">Description (Optional)</label></td>
+                    <td>
+                        <span class="e-rptdesigner-error-icon e-rptdesigner-errorinfo e-error-tip e-rptdesigner-tab-focus" tabindex="0" data-title=""></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea class="e-textarea e-ejinputtext e-designer-content-label e-designer-constr-textarea dataset-form-desc" name="description"
+                                  type="textarea" maxlength="1024" spellcheck="false" aria-multiline="true" aria-label="Description"></textarea>
+                        <div class="descname-info">*1024 characters maximum</div>
+                    </td>
+                </tr>
+            </table>
+            <input class="dataset-form-datasource-name" name="datasourceName" type="hidden" value={{dataSourceName}}>
+            <input class="dataset-form-edit-value" name="isEdit" type="hidden" value=false>
+        </form>
+    </div>
+</div>
+

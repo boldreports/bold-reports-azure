@@ -1,0 +1,18 @@
+﻿<div class="cds-header-container" ng-controller="connectDataSetHeaderCtrl">
+    <div class="cds-header-left">
+        <div class="cds-header">Add Dataset</div>
+    </div>
+    <div class="cds-header-breadcrumb">
+        <div class="cds-header-breadcrumb-selector selected">
+            <div class="cds-header-breadcrumb-icon" ng-class="(!isDataSourceList && useExistingDataSource) ? 'selected' : ''"></div>
+            <div class="cds-header-breadcrumb-header">SELECT DATA</div>
+        </div>
+        <div class="cds-header-breadcrumb-progress" ng-class="(!isDataSourceList && useExistingDataSource) ? 'selected' : ''"></div>
+        <div class="cds-header-breadcrumb-connector" ng-class="(!isDataSourceList && useExistingDataSource) ? 'selected' : ''">
+            <div class="cds-header-breadcrumb-icon"></div>
+            <div class="cds-header-breadcrumb-header">CONNECT</div>
+        </div>
+    </div>
+    <div ng-click="onCloseBtnClick($event)" class="cds-header-close-btn"></div>
+</div>
+

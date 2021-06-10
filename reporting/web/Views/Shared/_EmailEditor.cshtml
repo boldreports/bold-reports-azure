@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<!DOCTYPE html>
+<html>
+
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.css" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" />
+</environment>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+    <div id="email-editor-panel" class="admin-page-body">
+        <div class="sub-text-div-container">
+            <div>
+                <spam>[[[Subject]]]</spam>
+            </div>
+            <div>
+                <input type="text" class="form-control" id="sub_email-text-box" />
+            </div>
+        </div>
+        <div class="sub-body-label">[[[Body]]]</div>
+        <div class="col-sm-12 col-xs-12 no-padding" id="selected-users-container">
+            <textarea id="rte-post" class="form-control comment-area" maxlength="4000"></textarea>
+            <div class="hidden">
+                <textarea id="temp" class="hidden"></textarea>
+                <div id="toRemoveCulture"></div>
+            </div>
+            <div class="var-drop-box col-xs-12" style="width:220px;">
+                <select id="variable-drop-box" data-live-search="true" title='[[[variables]]]' name="" class="selectpicker" style="width:183px;" data-size="7" data-none-results-text="[[[No results match]]]">
+                    @foreach (CustomEmailTemplate val in Enum.GetValues(typeof(CustomEmailTemplate)))
+                    {
+                        <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                    }
+                    <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.min.js"></script>
+</environment>
+

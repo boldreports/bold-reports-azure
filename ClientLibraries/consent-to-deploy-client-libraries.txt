@@ -1,0 +1,23 @@
+Consent to deploy client libraries 
+
+By giving consent to install client libraries to connect with Oracle, PostgreSQL, MySQL, you can use the following libraries in Bold Reports. Bold Reports uses these client libraries to connect with their respective SQL database variants. Read about the licenses of each library to give consent for usage.
+
+---
+Oracle.ManagedDataAccess - Oracle License [https://www.oracle.com/downloads/licenses/distribution-license.html]
+Oracle
+---
+Npgsql 4.0.0 - PostgreSQL License [https://github.com/npgsql/npgsql/blob/main/LICENSE]
+PostgreSQL
+---
+MySQLConnector 1.1.0- MIT License [https://github.com/mysql-net/MySqlConnector/blob/master/LICENSE]
+MySQL
+MemSQL
+MariaDB
+---
+
+Command to install client libraries from kudu console:
+
+Find the names of client libraries which needs to be passed as a comma separated string for an arguement in install-optional.libs.sh.
+
+e.g.
+.\install-optional-libs.ps1 -ClientLibraries "oracle,postgresql,mysql"

@@ -1,0 +1,19 @@
+﻿<div class="cd-header-container" ng-controller="connectDataHeaderCtrl">
+    <div class="cd-header-left">
+        <div ng-if="selectedDataConnector && !datasetCreation" class="cd-header-back-btn" ng-click="onBackBtnClick()"></div>
+        <div class="cd-header">Add Data Source</div>
+    </div>
+    <div class="cd-header-breadcrumb">
+        <div class="cd-header-breadcrumb-selector selected">
+            <div class="cd-header-breadcrumb-icon" ng-class="selectedDataConnector ? 'selected' : ''"></div>
+            <div class="cd-header-breadcrumb-header">SELECT CONNECTOR</div>
+        </div>
+        <div class="cd-header-breadcrumb-progress" ng-class="selectedDataConnector ? 'selected' : ''"></div>
+        <div class="cd-header-breadcrumb-connector" ng-class="selectedDataConnector ? 'selected' : ''">
+            <div class="cd-header-breadcrumb-icon"></div>
+            <div class="cd-header-breadcrumb-header">CONNECT</div>
+        </div>
+    </div>
+    <div ng-click="onCloseBtnClick($event)" class="cd-header-close-btn"></div>
+</div>
+

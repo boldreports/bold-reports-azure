@@ -1,0 +1,36 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    ViewBag.Title = globalAppSettings.SystemSettings.OrganizationName + " - [[[Categories]]]";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@model List<ItemDetail>
+<script>
+    var deleteConfirmUrl = "@Url.Action("deleteconfirmation", "items")";
+</script>
+
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/category-page.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/category-page.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/category-page.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/category-page.min.js"></script>
+    </environment>
+}
+<div id="itemGridHeading">
+    [[[Categories]]]
+    <div class="pull-right">
+        <span class="su su-add items-add" onclick="openAddOptions()"></span>
+    </div>
+</div>
+<div id="itemGridContainer">
+    @await Html.PartialAsync("../Items/_ItemsGrid", new ViewDataDictionary(ViewData) { { "gridName", "category" } })
+</div>
+<div id="EditCategoryPopup">
+    <iframe id="EditCategoryPopup_iframe" class="categoryDialog"></iframe>
+</div>
+@await Html.PartialAsync("../Items/_AddItems")
