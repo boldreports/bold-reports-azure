@@ -1,4 +1,5 @@
 ﻿﻿@{
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var globalAppSettings = _globalAppSettings;
     var defaultPath = ViewBag.Path;
 }
@@ -77,6 +78,8 @@
             </div>
         </div>
     </div>
+    @if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
+    {
     <div class="branding-sub-section admin-page-body">
         <h3 class="title col-xs-12  sub-section-heading blur-whitelable-content">[[[Save as file]]]</h3>
         <div class="mail-attachment col-sm-12 col-xs-12 no-padding no-margin">
@@ -97,4 +100,5 @@
             </div>
         </div>
     </div>
+    }
 </form>
