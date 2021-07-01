@@ -1,0 +1,130 @@
+﻿@using System.Globalization;
+﻿@using System.Runtime.InteropServices;
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+
+    var tenantAppConfiguration = new TenantAppConfiguration(globalAppSettings);
+    var language = CultureInfo.CurrentCulture.Name;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+
+    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <title>Create Data Source - @globalAppSettings.SystemSettings.OrganizationName</title>
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
+        </environment>      
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" />
+        </environment>
+    }
+    else
+    {
+        @*<link href="@ServerAppConfig.ReportServiceCdnLink/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />*@
+        @*<script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/extension.config.js'></script>
+            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/ssas.data.js'></script>*@
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" />
+        </environment>
+        @*<link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-base.css" rel="stylesheet" />
+            <link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-notifications.css" rel="stylesheet" />*@
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js"></script>
+        </environment>
+    }
+    <script>
+        let isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
+        let isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        let datasource = "@Url.Action("DataSources", "DataSources")";
+        let isWindows = @Json.Serialize(@isWindowsPlatform);
+        var dataConnectorPath = isSelfHosted ? "@reportServerResourceUrl" + "/cdn/scripts/datasource/dataconnectors.json" : "https://cdn.boldreports.com/static/essentialjs/scripts/datasources/dataconnectors.json";
+    </script>
+</head>
+<body class="cd" ng-app="createDataSourceApp">
+    <div class="loader-blue loader-icon cd-loader" id="layout-body-loader-icon">
+        <svg class="circular">
+            <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
+
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+    </environment>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
+    <div class="cd-container" ng-controller="createDataSourceCtrl">
+        @{ Html.RenderPartial("~/Views/DataSources/CreateDataSource/_Header.cshtml"); }
+        <div class="cd-connector-list rs-scroller" ng-style="{'display': selectedDataConnector ? 'none' : 'block'}">
+            @{ Html.RenderPartial("~/Views/DataSources/CreateDataSource/_ConnectorsList.cshtml"); }
+        </div>
+        <div class="cd-connector" ng-if="selectedDataConnector">
+            @{ Html.RenderPartial("~/Views/DataSources/CreateDataSource/_Connector.cshtml"); }
+        </div>
+
+        <div class="dc-toast"></div>
+
+    </div>
+</body>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource.min.js"></script>
+</environment>
+</html>
