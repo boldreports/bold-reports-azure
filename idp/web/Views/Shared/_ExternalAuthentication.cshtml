@@ -78,7 +78,7 @@
                     {
                         foreach (var auth in authSettings)
                         {
-                            if (auth.AuthProvider == AuthProvider.WindowsAD && EnvironmentHelper.IsWindows())
+                            if (auth.AuthProvider == AuthProvider.WindowsAD && EnvironmentHelper.IsWindows() && !GlobalAppSettings.IsAzureApplication )
                             {
                                 <form id="login-button-windows" class="external-login-buttons">
                                     <button class="windows-ad-login link-button button-style @windowsADclass" type="submit">
