@@ -1,0 +1,40 @@
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = (Context.Request.PathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink).TrimEnd('/');
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Site Suspended - @GlobalAppSettings.BrandingDisplayName</title>
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="~/cdn/css/layout.css" />
+        <link rel="stylesheet" asp-append-version="true" href="~/cdn/css/error-page.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="~/cdn/css/layout.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="~/cdn/css/error-page.min.css" />
+    </environment>
+
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+    <link rel="icon" href="@globalAppSettings.SystemSettings.FavIcon" onerror="if (this.href != '@globalAppSettings.SystemSettings.CDNLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon') this.href = '@globalAppSettings.SystemSettings.CDNLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon';" />
+</head>
+<body>
+    <div class="suspended-container-bg">
+        <div class="suspended-conatiner" id="suspended-conatiner">
+            <div id="suspended-main-div">
+                <div class="suspended-logo">
+                    <img src="@Url.Content("~/content/images/static/error-pages/v1/suspended.svg")" />
+                </div>
+                <div class="suspended-secondary-div">
+                    <div class="suspended-page-title">
+                        Suspended
+                    </div>
+                    <div class="suspended-page-content">Subscription to the Reports has been suspended. Please contact your System Administrator for more details.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
