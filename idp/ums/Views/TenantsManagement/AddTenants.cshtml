@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
     var item = "dashboards";
     var baseUrl = CloudAppConfig.InternalAppBIUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
@@ -7,6 +7,7 @@
     var baseUri = new Uri(GlobalAppSettings.SystemSettings.BaseUrl);
     var url = baseUri.Authority;
     var storageType = ViewBag.StorageType != null ? ViewBag.StorageType : 0;
+	var siteProtocol = baseUri.Scheme;
 
     if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
     {
@@ -24,8 +25,8 @@
     }
     var protocolTypes = new List<SelectListItem>
 {
-        new SelectListItem { Text = "http", Value = "http", Selected = !GlobalAppSettings.SystemSettings.IsSecureConnection },
-        new SelectListItem { Text = "https", Value = "https", Selected = GlobalAppSettings.SystemSettings.IsSecureConnection }
+        new SelectListItem { Text = "http", Value = "http", Selected = siteProtocol == "http" },
+        new SelectListItem { Text = "https", Value = "https", Selected = siteProtocol == "https" }
     };
     var useSiteIdentifier = CloudAppConfig.UseSiteIdentifier;
 }
