@@ -45,10 +45,10 @@
                 </hgroup>
             </div>
             <div class="col-md-6 col-xs-12 col-sm-6 col-xs-12 no-padding">
-                <input type="button" title="[[[Add Permission to the user]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button pull-right" />
+                <input type="button" title="[[[Add Permission to the user]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button app-btn-primary pull-right" />
                 @if (!ViewBag.IsAdUser)
                 {
-                    <a type="button" class="link-button pull-right margin-right" href="@Url.Action("ViewProfile", "UserManagement")?id=@ViewBag.UserId">[[[View Profile]]]</a>
+                    <a type="button" class="link-button app-btn-link pull-right margin-right" href="@Url.Action("ViewProfile", "UserManagement")?id=@ViewBag.UserId">[[[View Profile]]]</a>
                 }
             </div>
         </div>

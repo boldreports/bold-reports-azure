@@ -138,14 +138,14 @@
                 <h2 class="page-title"><span ng-bind="allGroupDetails.GroupName" title="{{allGroupDetails.GroupName}}"></span></h2>
             </hgroup>
             <div class="col-md-6 col-xs-12 group-buttons pull-right no-padding">
-                <a type="button" class="link-button manage-permissions" title="" href="@Url.Action("grouppermission", "permission")?groupId=@ViewBag.groupId">[[[Manage Permissions]]]</a>
+                <a type="button" class="link-button app-btn-link manage-permissions" title="" href="@Url.Action("grouppermission", "permission")?groupId=@ViewBag.groupId">[[[Manage Permissions]]]</a>
                 @if (!ViewBag.IsActiveDirectory && !ViewBag.IsAzureADGroup)
                 {
-                    <a type="button" class="link-button" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
+                    <a type="button" class="link-button app-btn-link" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
                 }
                 @if (ViewBag.groupId != 1)
                 {
-                    <input type="button" class="critical-action-button delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
+                    <input type="button" class="critical-action-button app-btn-danger delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
                 }
             </div>
         </div>

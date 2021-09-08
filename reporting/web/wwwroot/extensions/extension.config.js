@@ -1,11 +1,4 @@
-var dataExtensions = [
-    {
-        className: 'SASSDataSource',
-        name: 'Microsoft SQL Server Analysis Services',
-        imageClass: 'e-reportdesigner-datasource-ssas',
-        displayName: 'SSAS'
-    }
-];
+var dataExtensions = [];
 var cloudDataExtensions = [
     {
         className: 'SASSDataSource',

@@ -22,6 +22,9 @@ var TM = {
             SSOSettings: "[[[SSO Settings]]]",
             SSOSettingsUpdated: "[[[SSO settings have been updated.]]]",
             SSOSettingsUpdateError: "[[[Error while updating settings.]]]",
+            Configuration: "[[[Configuration]]]",
+            ConfigurationUpdated: "[[[Configuration have been updated.]]]",
+            ConfigurationUpdateError: "[[[Error while updating the configuration.]]]",
             WindowsAdSettings: "[[[Windows AD Settings]]]",
             WindowsAdSettingsUpdated: "[[[Windows AD settings have been updated.]]]",
             WindowsAdSettingsUpdateError: "[[[Error while updating settings.]]]",
@@ -53,11 +56,15 @@ var TM = {
             SiteSettingsUpdateFalied: "[[[Error while updating settings.]]]",
             ADSettings: "[[[Active Directory Settings]]]",
             IsValidUrl: "[[[Please enter valid URL]]]",
+            IsValidEndpoint: "[[[Please enter valid blob service endpoint]]]",
             EnterName: "[[[Please enter the name.]]]",
             InvalidEmailAddress: "[[[Invalid email address]]]",
             Urlvalidator: "[[[Please enter URL]]]",
             AzureADSettings: "[[[Azure Active Directory Settings]]]",
             PasswordPlaceholder: "[[[Password]]]",
+            CopyRightValidator: "[[[Please enter the copy right information text]]]",
+            MySqlPortInfo: "[[[Specify the TCP port number that the server is listening for connections. The default port number is 3306.]]]",
+            postgresPortInfo: "[[[Specify the TCP port number that the server is listening for connections. The default port number is 5432.]]]",
 
             //Offlinelicenupdate.js
             InvalidLicFileFormat: "[[[Invalid file type. Please select .lic format only]]]",
@@ -165,7 +172,7 @@ var TM = {
             OracleAvoidLeadingTrailingSpace: "[[[leading and trailing spaces.]]]",
             PostgresqlAvoidLeadingTrailingSpace: "[[[and leading spaces and trailing spaces.]]]",
             FirstNameValidator: "[[[Please enter first name.]]]",
-            ServerNamevalidator: "[[[Please enter Server name.]]]",
+            ServerNamevalidator: "[[[Please enter server name.]]]",
             DatabaseValidator: "[[[Please enter database name.]]]",
             PortValidator: "[[[Please enter Port number.]]]",
             InvalidPassword: "[[[Invalid password]]]",
@@ -218,6 +225,8 @@ var TM = {
             TenantwithoutSiteIdentifier: "[[[You cannot configure this site without site identifier]]]",
             InvalidDomain: "[[[We are unable to connect to the given domain.]]]",
             DisAllowTenantIdentifier: "[[[Site identifier is not allowed, since it is restricted in global configuration.]]]",
+            BoldBIDataSecurityNote: "[[[You can configure the isolation code and attribute for this site later.]]]",
+            BoldReportsDataSecurityNote: "[[[You can configure attribute for this site later.]]]",
 
             //ViewSite.js
             AddAdministrators: "[[[Add Administrators]]]",
@@ -339,7 +348,6 @@ var TM = {
             UploadFont: "[[[Upload Font]]]",
             BrowseFont: "[[[Browse file path (.woff2)]]]",
             FontSettings: "[[[Font Settings]]]"
-
         }
     }
 };

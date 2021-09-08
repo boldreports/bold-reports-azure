@@ -80,7 +80,9 @@ $(document).ready(function () {
                 "application-id-uri-info",
                 "uri-info",
                 "tenantName-info",
-                "mobile-clientId-info"
+                "mobile-clientId-info",
+                "oauth-logout-info",
+                "openid-logout-info"
             ];
 
             if (jQuery.inArray(e.target.id, popoverIds) === -1) {
@@ -321,9 +323,7 @@ $(document).ready(function () {
             else if (name === "azuread") {
                 scope.ssoSettingsForm.$setUntouched();
                 scope.ssoSettingsForm.$setPristine();
-                $("span.validation-message").addClass("ng-hide");
             }
-
             updateAuthSettingsButton.prop("disabled", false);
         } else {
             if (name === "oauth" && scope.oauthSettingsForm.$invalid) {
@@ -343,6 +343,7 @@ $(document).ready(function () {
             }
         }
 
+        $("span.validation-message").addClass("ng-hide");
         $("#token-method-type").selectpicker("refresh");
         $("#user-info-method-type").selectpicker("refresh");
         $(".group-import-provider-type").selectpicker("refresh");
@@ -363,8 +364,8 @@ $(document).ready(function () {
     function OAuthOpenIdImageValidation(e) {
         var authLogo = e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? scope.oauthLogoUrl : (e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority" ? scope.openidLogoUrl : scope.jwtLogoUrl);
         if (authLogo === null || authLogo === undefined || authLogo === '') {
-            e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? $("#oauth-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo) : ((e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority") ? $("#openid-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo)
-                : $("#jwt-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo));
+            e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? $("#oauth-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo) : ((e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority") ? $("#openid-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo)
+                : $("#jwt-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo));
         }
 
         scope.$apply(function () {
@@ -606,6 +607,7 @@ $(document).ready(function () {
                         UserInfoFirstname: $("input[name='userInfoFirstname']").val().trim(),
                         UserInfoLastname: $("input[name='userInfoLastname']").val().trim(),
                         Logo: $("input[name='oauthLogo']").val().trim(),
+                        LogoutEndPoint: $("input[name='oauthLogoutEndpoint']").val().trim(),
                         GroupImportSettings: getGroupImportSettings("oauth")
                     }
                 };
@@ -624,6 +626,7 @@ $(document).ready(function () {
                         Identifier: $("input[name='openidIdentifier']").val().trim(),
                         Authority: $("input[name='openidAuthority']").val().trim(),
                         Logo: $("input[name='openidLogo']").val().trim(),
+                        LogoutUrl: $("input[name='openidLogoutUrl']").val().trim(),
                         GroupImportSettings: getGroupImportSettings("openid")
                     }
                 };
@@ -837,24 +840,17 @@ function getDefaultAuthDisplayName(provider) {
 }
 
 function fnCopySigningKey(inputId, buttonId) {
-    var copyText = $(inputId);
-    copyText.select();
-    document.execCommand("copy");
-    if (copyText.val() == "") {
-        if (typeof (navigator.clipboard) == 'undefined') {
-            var tempElement = document.createElement("textarea");
-            tempElement.value = signingKey;
-            document.body.appendChild(tempElement);
-            tempElement.focus();
-            tempElement.select();
-            document.execCommand("copy");
-            tempElement.remove();
-        }
-        else {
-            navigator.clipboard.writeText(signingKey);
-        }
-
+    if (typeof (navigator.clipboard) != 'undefined') {
+        var value = $(inputId).val();
+        navigator.clipboard.writeText(value)
     }
+    else {
+        var copyText = $(inputId);
+        copyText.attr("type", "text").select();
+        document.execCommand("copy");
+        copyText.attr("type", "password");
+    }
+
     setTimeout(function () {
         $(buttonId).attr("data-original-title", "Copied");
         $(buttonId).tooltip('show');
@@ -864,15 +860,6 @@ function fnCopySigningKey(inputId, buttonId) {
         $(buttonId).tooltip();
     }, 3000);
 }
-
-$(document).on("mousedown", ".show-hide-password", function () {
-    $(this).siblings("input").attr('type', 'text');
-    $("#jwt-signing-key").val(signingKey);
-});
-
-$(document).on("mouseup", ".show-hide-password", function () {
-    $("#jwt-signing-key").val("");
-});
 
 function signingKeyConfirmationDlg() {
     ej.base.enableRipple(true);
@@ -905,7 +892,7 @@ function fnRegenerateSigningKey() {
         success: function (data) {
             if (data != false) {
                 SuccessAlert(window.TM.App.LocalizationContent.RegenerateKey, window.TM.App.LocalizationContent.RegenerateKeySuccess, 7000);
-                signingKey = data;
+                $("#jwt-signing-key").val(data);
             } else {
                 WarningAlert(window.TM.App.LocalizationContent.RegenerateKey, window.TM.App.LocalizationContent.RegenerateKeyError, 7000);
             }

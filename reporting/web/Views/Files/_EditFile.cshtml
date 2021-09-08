@@ -18,10 +18,12 @@
         </title>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-files.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-files.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-files.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-files.min.js"></script>
         </environment>
         <script>
@@ -126,8 +128,8 @@
                 <div class="dialog-footer">
                     <div class="pull-right">
                         <input type="submit" class="hide-content" style="display: none;" />
-                        <input type="button" title="" class="btn primary-button" value="[[[Update]]]" id="publish_file" onclick="validateNewFileForm()" disabled tabindex="4">
-                        <input type="button" title="" class="btn secondary-button" id="cancelEditFile" onclick="closeEditFilePopup()" value="[[[Cancel]]]" tabindex="4">
+                        <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" onclick="validateNewFileForm()" disabled tabindex="4">
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditFile" onclick="closeEditFilePopup()" value="[[[Cancel]]]" tabindex="4">
                     </div>
                 </div>
             </div>
@@ -151,10 +153,12 @@ else
     <head>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-files.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-files.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-files.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-files.min.js"></script>
         </environment>
 

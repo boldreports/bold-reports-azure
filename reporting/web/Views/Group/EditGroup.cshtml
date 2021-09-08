@@ -165,9 +165,9 @@
 
                 @if (Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
                 {
-                    <input id="delete-button" type="button" class="critical-action-button deletegroup delete pull-right" title="" data-groupid="@Context.Request.Query["groupId"]" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
+                    <input id="delete-button" type="button" class="critical-action-button app-btn-danger deletegroup delete pull-right" title="" data-groupid="@Context.Request.Query["groupId"]" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
                 }
-                <a type="button" class="link-button pull-right" title="" href="@Url.Action("grouppermission","permission")?groupId=@Context.Request.Query["groupId"]">[[[Manage Permissions]]]</a>
+                <a type="button" class="link-button app-btn-link pull-right" title="" href="@Url.Action("grouppermission","permission")?groupId=@Context.Request.Query["groupId"]">[[[Manage Permissions]]]</a>
             </div>
         </div>
 
@@ -192,7 +192,7 @@
                 <div class="group-info-label col-md-4 col-xs-6 pull-left"></div>
                 <div class="col-md-4 col-xs-5 pull-left pull-right padding-right margin-left">
                     <span id="group-edit-confirmation"></span>
-                    <input id="group-title-container-save-button" title="" class="group-save-button pull-right primary-button small-inner-margin no-margin" type="button" value="[[[Save]]]" name="save">
+                    <input id="group-title-container-save-button" title="" class="group-save-button pull-right primary-button app-btn-primary small-inner-margin no-margin" type="button" value="[[[Save]]]" name="save">
                 </div>
             </form>
             <input type="hidden" name="hiddengroupId" id="hidden-group-id" value="@Context.Request.Query["groupId"]" />
@@ -204,7 +204,7 @@
                             <option ng-repeat="user in allUsers| orderBy:'DisplayName'" value="{{user.UserId}}" title="{{user.DisplayName}}">{{user.DisplayName}}</option>
                         </select>
                     </div>
-                    <input id="user-save-button" disabled="" title="[[[Add selected user(s) to the group]]]" class="group-save-button primary-button" type="button" value="[[[Add]]]" name="save" />
+                    <input id="user-save-button" disabled="" title="[[[Add selected user(s) to the group]]]" class="group-save-button primary-button app-btn-primary" type="button" value="[[[Add]]]" name="save" />
                     <div id="search-area">
                         <input type="text" id="search-group-users" placeholder="[[[Search users]]]" autocomplete="off" />
                         <span class="su su-inner-close close-icon" id="clear-search" title="[[[Clear search]]]"></span>

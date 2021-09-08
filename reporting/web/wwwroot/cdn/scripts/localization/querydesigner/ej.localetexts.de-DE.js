@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['de-DE'] = {
             specifyQuery: 'Geben Sie die Datensatzabfrage an',
             selectTable: 'Wählen Sie die Tabelle aus, um den Datensatz zu speichern',
             queryFailed: 'Datensatz konnte die Abfrage der ausgewählten Tabelle nicht speichern',
+            refreshFailed: 'Das Dataset {datasetName} konnte nicht aktualisiert werden, es erfordert einen oder mehrere Eingabewerte. Bitte bearbeiten und speichern Sie den Datensatz.',
             tableProcedure: 'Datensatz konnte die ausgewählte Tabellenprozedur nicht abrufen',
             deleteTableFailure: 'Fehler beim Löschen der ausgewählten Tabelle',
             joinTableFailure: 'Fehler beim Verknüpfen der ausgewählten Tabellen',

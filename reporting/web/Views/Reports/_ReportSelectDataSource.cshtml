@@ -28,11 +28,13 @@
         }
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-datasource.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-datasource.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-datasource.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-datasource.min.js"></script>
@@ -51,8 +53,8 @@
                 <div class='new-datasource-popup-btns datasource-btns'>
                     <div id="datasource_validation" style="color: #A94442; display: none; height: 0;"></div>
                     <div class='create-datasource-btns pull-right'>
-                        <input type='button' value='[[[Select]]]' id='publish_datasource' onclick="onSubmitDataSource()" class='btn primary-button right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
-                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button NoStyleCloseClick' onclick="closeNewDataSourcePopup()" tabindex="16">
+                        <input type='button' value='[[[Select]]]' id='publish_datasource' onclick="onSubmitDataSource()" class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
+                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewDataSourcePopup()" tabindex="16">
                     </div>
                 </div>
             </div>

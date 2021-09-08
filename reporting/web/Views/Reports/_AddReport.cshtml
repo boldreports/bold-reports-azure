@@ -38,14 +38,18 @@
             }
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.min.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 </head>
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
@@ -178,15 +182,15 @@
             @{
                     if (ViewBag.Action == "Create")
                     {
-                        <input type="button" title="" value="[[[Create]]]" id="create-report-in-designer" class="btn primary-button small-right-margin"disabled>
+                        <input type="button" title="" value="[[[Create]]]" id="create-report-in-designer" class="btn primary-button app-btn-primary small-right-margin"disabled>
                     }
 
                     else if (ViewBag.Action == "Upload")
                     {
-                        <input type="button" title="" value="[[[Save]]]" id="publish_report" onclick="addRDLReport()" class="btn primary-button small-right-margin" disabled>
+                        <input type="button" title="" value="[[[Save]]]" id="publish_report" onclick="addRDLReport()" class="btn primary-button app-btn-primary small-right-margin" disabled>
                     }
                 }                
-                <input type="button" title="" value="[[[Cancel]]]" class="btn secondary-button NoStyleCloseClick" onclick="closeNewRDLAddPopup()">
+                <input type="button" title="" value="[[[Cancel]]]" class="btn secondary-button app-btn-secondary NoStyleCloseClick" onclick="closeNewRDLAddPopup()">
             </div>
         </div>
     </div>

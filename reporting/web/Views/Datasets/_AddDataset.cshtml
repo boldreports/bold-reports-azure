@@ -23,12 +23,16 @@
         }
     </style>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-datasets.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-datasets.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-datasets.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-datasets.min.js"></script>
     </environment>
@@ -155,13 +159,13 @@
                     <div class="pull-right">
                         @if (ViewBag.Action == "Create")
                         {
-                            <input type='button' title="" value="[[[Create]]]" id="create-report-dataset" class="btn primary-button small-right-margin" disabled="disabled">
+                            <input type='button' title="" value="[[[Create]]]" id="create-report-dataset" class="btn primary-button app-btn-primary small-right-margin" disabled="disabled">
                         }
                         else if (ViewBag.Action == "Upload")
                         {
-                            <input type="button" title="" class="btn primary-button" id="publish_file" onclick="addDataSet()" value="[[[Save]]]" tabindex="4" disabled />
+                            <input type="button" title="" class="btn primary-button app-btn-primary" id="publish_file" onclick="addDataSet()" value="[[[Save]]]" tabindex="4" disabled />
                         }
-                        <input type="button" title="" class="btn secondary-button" id="cancelAddDataSet" onclick="closeNewDatasetAddPopup()" value="[[[Cancel]]]" tabindex="5">
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddDataSet" onclick="closeNewDatasetAddPopup()" value="[[[Cancel]]]" tabindex="5">
                         <input type="submit" class="hide-content" style="display: none;" />
                     </div>
                 </div>

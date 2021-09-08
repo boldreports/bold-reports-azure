@@ -75,7 +75,7 @@ function handleApplyLicense(addButtonObj, evt) {
             $.ajax({
                 type: "POST",
                 url: updateLicenseKeyUrl,
-                data: { licenseKey: evt.originalEvent.data.licenseKey, refreshToken: refreshToken, licenseType: "1", boldLicenseToken: boldLicenseToken },
+                data: { licenseKey: evt.originalEvent.data.licenseKey, refreshToken: refreshToken, licenseType: "1", boldLicenseToken: boldLicenseToken, currentUrl: window.location.origin },
                 beforeSend: showWaitingPopup($(".startup-page-container-body")),
                 success: function (result) {
                     if (result.Status) {
@@ -156,12 +156,15 @@ function sendData(data, url) {
                             $("#plan-name-container").removeClass("display-none");
                         }
 
-                        if (data.ExpiryDate !== undefined && !isEmptyOrSpaces(data.ExpiryDate)) {
-                            $("#expiry-date").html(data.ExpiryDate);
-                            $("#expiry-date-container").removeClass("display-none");
+                        if (!data.IsPerpetualLicense) {
+                            if (data.ExpiryDate !== undefined && !isEmptyOrSpaces(data.ExpiryDate)) {
+                                $("#expiry-date").html(data.ExpiryDate);
+                                $("#expiry-date-container").removeClass("display-none");
+                            }
                         }
 
                         if (data.TenantStatus !== undefined && !isEmptyOrSpaces(data.TenantStatus)) {
+     
                             $("#tenant-status").html(data.TenantStatus);
                             $("#tenant-status-container").removeClass("display-none");
 
@@ -170,6 +173,11 @@ function sendData(data, url) {
                             }
                             else if (data.TenantStatus == "Trial") {
                                 $("#tenant-status").addClass("trial");
+                            }
+
+                            if (data.IsPerpetualLicense) {
+                                $("#tenant-status").html("Perpetual")
+                                $("#tenant-status").addClass("active");
                             }
                         }
 
@@ -213,7 +221,7 @@ function confirmLicenseUpdate() {
         $.ajax({
             type: "POST",
             url: updateLicenseKeyUrl,
-            data: { licenseKey: licenseKey, licenseType: "2" },
+            data: { licenseKey: licenseKey, licenseType: "2", currentUrl: window.location.origin  },
             beforeSend: showWaitingPopup($(".startup-page-container-body")),
             success: function (result) {
                 if (result.Status) {

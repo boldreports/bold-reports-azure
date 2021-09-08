@@ -168,6 +168,10 @@ $(document).ready(function () {
     $(document).on("click", ".auth-login-button", function () {
         $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
     });
+
+    if (typeof isWindowADDefaultAuth != 'undefined' && isWindowADDefaultAuth.toLowerCase() === "true") {
+        $("#login-button-windows").click();
+    }
 });
 
 function FormValidate() {
@@ -213,7 +217,12 @@ function FormValidate() {
                             }
                         } else {
                             $(".login-fields .email").addClass("has-error");
-                            $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.InvalidAccount);
+                            if (result.DirectoryType != 0 && !result.Status) {
+                                $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.NotActivated);
+                            }
+                            else {
+                                $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.InvalidAccount);
+                            }
                             $(".e-outline").addClass("e-error");
                         }
                     }

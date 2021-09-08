@@ -1,4 +1,4 @@
-@{
+﻿@{
     Layout = null;
     var item = "dashboards";
     var baseUrl = CloudAppConfig.InternalAppBIUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
@@ -7,21 +7,39 @@
     var baseUri = new Uri(GlobalAppSettings.SystemSettings.BaseUrl);
     var url = baseUri.Authority;
     var storageType = ViewBag.StorageType != null ? ViewBag.StorageType : 0;
-	var siteProtocol = baseUri.Scheme;
+    var siteDomain = url;
+    var siteProtocol = baseUri.Scheme;
+    var biUrl = !string.IsNullOrWhiteSpace(CloudAppConfig.InternalAppBIUrl) ? new Uri(CloudAppConfig.InternalAppBIUrl) : new Uri(baseUri + "bi");
+    var reportUrl = !string.IsNullOrWhiteSpace(CloudAppConfig.InternalAppReportUrl) ? new Uri(CloudAppConfig.InternalAppReportUrl) : new Uri(baseUri + "reporting");
+    var biScheme = baseUri.Scheme;
+    var reportScheme = baseUri.Scheme;
+    var biDomain = baseUri.Authority;
+    var reportDomain = baseUri.Authority;
 
     if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
     {
         item = "dashboards";
         baseUrl = CloudAppConfig.InternalAppBIUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
-        var biUrl = new Uri(CloudAppConfig.InternalAppBIUrl);
+        siteDomain = biUrl.Authority;
+        siteProtocol = biUrl.Scheme;
         boldBIPath = biUrl != null ? biUrl.LocalPath.ToString() : "/bi";
     }
     else if (!ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
     {
         item = "reports";
         baseUrl = CloudAppConfig.InternalAppReportUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
-        var reportUrl = new Uri(CloudAppConfig.InternalAppReportUrl);
+        siteDomain = reportUrl.Authority;
+        siteProtocol = reportUrl.Scheme;
         boldReportPath = reportUrl != null ? reportUrl.LocalPath.ToString() : "/reporting";
+    }
+    else if (ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
+    {
+        biScheme = biUrl.Scheme;
+        reportScheme = reportUrl.Scheme;
+        biDomain = biUrl.Authority;
+        reportDomain = reportUrl.Authority;
+        boldBIPath = biUrl.LocalPath.ToString();
+        boldReportPath = reportUrl.LocalPath.ToString();
     }
     var protocolTypes = new List<SelectListItem>
 {
@@ -29,16 +47,22 @@
         new SelectListItem { Text = "https", Value = "https", Selected = siteProtocol == "https" }
     };
     var useSiteIdentifier = CloudAppConfig.UseSiteIdentifier;
+    var sqlParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
+    var postgresSQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.PostgreSQL_Connection_Parameters);
+    var mySQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MySQL_Connection_Parameters);
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <title>[[[Add Tenants]]]</title>
 
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+
     <link rel="stylesheet" href="~/bundles/css/addtenantiframe.css" asp-append-version="true" />
     <script src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
     <script src="~/bundles/js/addtenantiframe.js" asp-append-version="true"></script>
@@ -65,6 +89,7 @@
         var addTenantsUrl = "@Url.Action("AddTenant", "ServerConfiguration")";
         var getTenantDetailsUrl = "@Url.Action("GetTenantInfo", "TenantsManagement")";
         var blobDetails = "@Url.Action("GetAzureDetails", "TenantsManagement")";
+        var blobExist = "@Url.Action("IsBlobExists", "ServerConfiguration")";
         var updateTenantDetailsUrl = "@Url.Action("UpdateTenantInfo", "TenantsManagement")";
         var checkDatabaseExistForServerUrl = "@Url.Action("CheckDatabaseExistsForServer", "ServerConfiguration")";
         var checkHealthStatusUrl = "@Url.Action("CheckServerHealthStatus","TenantsManagement")";
@@ -76,6 +101,13 @@
         var selfHosted = ("@ViewBag.selfHosted".toLowerCase() === "true");
         var isCommonLogin = ("@(ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)".toLowerCase() === "true");
         var useSiteIdentifierEnable = "@useSiteIdentifier".toLowerCase() === "true";
+        var sqlParameter = "@sqlParameter";
+        var postgresSQLParameter = "@postgresSQLParameter";
+        var mySQLParameter = "@mySQLParameter";
+        var biScheme = "@biScheme";
+        var reportScheme = "@reportScheme";
+        var biDomain = "@biDomain";
+        var reportDomain = "@reportDomain";
 
         $(document).ready(function () {
             $("#database-type").on("change", function () {
@@ -122,10 +154,10 @@
                             </div>
                             @if (ViewBag.IsBoldBIMultiTenant)
                             {
-                                <div class="selector-panel" id="selection-data-security">
-                                    <div class="circle"></div>
-                                    <div class="hr-tag"> </div>
-                                </div>
+                            <div class="selector-panel" id="selection-data-security">
+                                <div class="circle"></div>
+                                <div class="hr-tag"> </div>
+                            </div>
                             }
                             <div class="selector-panel" id="selectionadmin">
                                 <div class="circle"></div>
@@ -136,12 +168,12 @@
                             <span class="select-database">[[[SELECT DATABASE]]]</span>
                             @if (ViewBag.IsBoldBIMultiTenant)
                             {
-                                <span class="select-intermediate-database">[[[SELECT DATA STORE]]]</span>
+                            <span class="select-intermediate-database">[[[SELECT DATA STORE]]]</span>
                             }
                             <span class="select-storage">[[[SELECT STORAGE]]]</span>
                             @if (ViewBag.IsBoldBIMultiTenant)
                             {
-                                <span class="get-data-security">[[[DATA SECURITY]]]</span>
+                            <span class="get-data-security">[[[DATA SECURITY]]]</span>
                             }
                             <span class="administrator">[[[ADMINISTRATOR]]]</span>
                         </div>
@@ -228,7 +260,7 @@
                                             <span class="startup-validation validation-txt-errors" id="tenant-name-validation-error"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding domain hide">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding domain">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
                                             <label class="text-content">[[[Domain]]]</label>
                                         </div>
@@ -239,24 +271,19 @@
                                                     id = "enable-ssl",
                                                     @class = "selectpicker",
                                                     data_live_search = "false",
-                                                    disabled = true
                                                 })
                                             </div>
                                             <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding domain-text">
-                                                <input type="text" id="input-domain" name="domainname" class="form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Domain]]]" value="@baseUri.Authority" disabled />
+                                                <input type="text" id="input-domain" name="domainname" class="form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Domain]]]" value="@siteDomain"/>
                                                 <span class="startup-validation validation-txt-errors" id="domain-validation-error"></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div id="new-domain-div" class="material-checkbox selfhosted center-align hide">
-                                        @Html.CheckBox("newdomain", false)
-                                        <label for="newdomain" class="">[[[Use Custom Domain]]]</label>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding site-url-identifier hide">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding site-identifier">
                                             <label class="text-content">[[[Site Identifier]]]</label>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder site-identifier-div center-align input-alignment no-padding">
                                             <input type="text" id="tenant-identifier" name="tenantidentifier" class=" form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Site identifier]]]" />
                                             <div id="site-identifier-check" class="material-checkbox selfhosted center-align site-identifier-check hide">
                                                 @Html.CheckBox("identifier", false)
@@ -267,7 +294,7 @@
                                                 [[[The site identifier should be unique, and it is part of your site URL.]]]
                                                 <div class="url-part">
                                                     <span>[[[i.e ]]]</span>
-                                                    <span class="site-url no-padding" data-toggle="popover" data-html="true" data-placement="top" data-container="body" data-content="">
+                                                    <span class="site-url no-padding" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="top" data-container="body" data-content="">
                                                         <span class="site-domain">@GlobalAppSettings.SystemSettings.BaseUrl</span>
                                                         <span class="site-default-text text-content"></span>
                                                         <span class="site-id-name"></span>

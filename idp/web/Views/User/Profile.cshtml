@@ -1,7 +1,8 @@
 ﻿@using Syncfusion.Server.Base;
 @using Syncfusion.Server.Base.DataClasses;
 @using System.Security.Claims;
-@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Http.Extensions;
 @using Newtonsoft.Json;
 
 @inject IJsonHelper Json;
@@ -31,6 +32,7 @@
     var tenantSitesUrl = "/" + @CloudAppConfig.TenantManagementUrl.Trim('/') + "/sites";
     var isEmailActivation = GlobalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation;
     var dateFormat = string.IsNullOrWhiteSpace(_clientDateTimeInfo.ClientDateTime.DateFormat) ? GlobalAppSettings.SystemSettings.DateFormat : _clientDateTimeInfo.ClientDateTime.DateFormat;
+    AdminType adminType = (AdminType)Enum.Parse(typeof(AdminType), Context.Session.GetString("AdminType"));
 }
 
 @section styles{
@@ -49,13 +51,14 @@
         var updatepasswordUrl = "@Url.Action("updatepassword", "User")";
         var rootUrl = "@Url.Content("~/")";
         var rootBaseUrl = "@Url.Content("~/").TrimEnd('/')";
-        var isEmailActivation = "@isEmailActivation"
+        var isEmailActivation = "@isEmailActivation";
         if (rootBaseUrl.toLowerCase() == "/")
             rootBaseUrl = "";
         var deleteavatarUrl = "@Url.Action("deleteavatar", "User")";
         var getdefaultavatarUrl = "@Url.Action("getdefaultavatar", "User")";
         var prepareDataUrl = "@Url.Action("PrepareUserData","User")";
         var downloadDataUrl = "@Url.Action("DownloadUserData", "User")";
+        var updateUserProfile = "@Url.Action("UpdateUserProfile", "User")";
         var userId = "@userDetail.UserId";
         var requestUrl = "@requestUrl";
         var isEditUserPreferenceLanguage = @Html.Raw(Json.Serialize(ViewBag.EditLanguage));
@@ -120,9 +123,7 @@
                     {
                         <a href="@Url.Action("EditPassword","User")" class="link-button pull-right edit-password" title="">[[[Change password]]]</a>
                     }
-
-                    <a href="@tenantSitesUrl" class="link-button pull-right" title="">[[[My Sites]]]</a>
-
+                    <a href="@tenantHomePage" class="link-button pull-right" title="">[[[My Sites]]]</a>
                     @*<div class="pull-right">
                             <button class="dropdown-toggle primary-button" data-toggle="dropdown">
                                 <span>Manage Account </span>
@@ -212,20 +213,20 @@
                             </div>
                         </div>
                         @*<div class="form-group no-padding line-spacing" id="group-div">
-        <label class="label-panel text-right app-textbox-label">
-            Groups
-        </label>
-        <div class="col-sm-5 col-xs-12 group-list">
-               @{
-                    for (var group = 0; group < ViewBag.GroupList.Count; group++)
-                 {
-                        <div  id="groups" class="content-size" title="@ViewBag.GroupList[group].Name" data-html="false" data-container="body" data-toggle="tooltip" data-placement="auto top" >
-                            @ViewBag.GroupList[group].Name
-                        </div>
-                    }
-                }
-            </div>
-        </div>*@
+                            <label class="label-panel text-right app-textbox-label">
+                                Groups
+                            </label>
+                            <div class="col-sm-5 col-xs-12 group-list">
+                                   @{
+                                        for (var group = 0; group < ViewBag.GroupList.Count; group++)
+                                     {
+                                            <div  id="groups" class="content-size" title="@ViewBag.GroupList[group].Name" data-html="false" data-container="body" data-toggle="tooltip" data-placement="auto top" >
+                                                @ViewBag.GroupList[group].Name
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>*@
                     </form>
                 </div>
 
@@ -302,10 +303,7 @@
                     }
 
                     <div id="edit-button" class="col-sm-3 col-xs-12 no-padding">
-                        @if (userDetail.DirectoryTypeId == DirectoryType.Local)
-                        {
-                            <input type="button" class="secondary-button pull-right" id="edit-language" title="" value="[[[Edit preference]]]">
-                        }
+                        <input type="button" class="secondary-button pull-right" id="edit-language" title="" value="[[[Edit preference]]]">
 
                         @if (returnUrl != null)
                         {

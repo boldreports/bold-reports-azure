@@ -46,7 +46,7 @@ var SASSDataSource = (function () {
         this.renderTextBoxItem(this.getLocale('promptLabel'), this.id + '_sass_prompt', false, sassConfigTable, this.controlWidth);
         this.renderTextBoxItem(this.getLocale('userName'), this.id + '_sass_usr', false, sassConfigTable, this.controlWidth);
         this.renderTextBoxItem(this.getLocale('password'), this.id + '_sass_pswd', true, sassConfigTable, this.controlWidth);
-        this.renderCheckboxItem(this.getLocale('savePassword'), this.id + '_psql_save_password', sassConfigTable, null, this);
+        this.renderCheckboxItem(this.getLocale('savePassword'), this.id + '_psql_save_password', sassConfigTable, null, this, 'right');
         if ($('#' + this.id + '_sass_authtype')) {
             this.authType = $('#' + this.id + '_sass_authtype');
             this.ejAuthDrpdwn = this.authType.data('ejDropDownList');
@@ -192,10 +192,9 @@ var SASSDataSource = (function () {
                 reportData.ConnectionProperties.PassWord = password;
                 reportData.ConnectionProperties.EmbedCredentials = true;
             }
-            else if ((this.ejAuthDrpdwn.getSelectedValue() === 'sqlServer' && !this.ejSassSavePasswrd.model.checked) || this.ejAuthDrpdwn.getSelectedValue() === 'prompt') {
-                reportData.ConnectionProperties.Prompt = (!ej.isNullOrUndefined(this.promptCont)
-                    && this.promptCont.val().length > 0)
-                    ? this.promptCont.val() : 'Specify the Username and Password for DataSource: ' + reportData.Name;
+            else if (this.ejAuthDrpdwn.getSelectedValue() === 'sqlServer' && !this.ejSassSavePasswrd.model.checked) {
+                reportData.ConnectionProperties.UserName = usrName;
+                reportData.ConnectionProperties.PassWord = password;
             }
             return reportData;
         }
@@ -311,10 +310,8 @@ var SASSDataSource = (function () {
             this.updateValidationMsg(this.sassConfig, this.connString.attr('id'), this.getLocale('alertConnectionString'));
         }
         if (this.authType) {
-            var selectedIndex = this.ejAuthDrpdwn.model.selectedIndex ? this.ejAuthDrpdwn.model.selectedIndex.toString() : '0';
             this.updateRow(this.sassConfig, this.authType.attr('id'), this.getLocale('authenticationType'));
-            this.ejAuthDrpdwn.setModel({ 'dataSource': this.getDropdownValues() });
-            this.ejAuthDrpdwn.option({ 'selectedIndex': selectedIndex });
+            this.ejAuthDrpdwn.setModel({ 'dataSource': this.getDropdownValues(), 'selectedIndex': '0' });
         }
         if (this.promptCont) {
             this.updateRow(this.sassConfig, this.promptCont.attr('id'), this.getLocale('promptLabel'));
@@ -374,9 +371,10 @@ var SASSDataSource = (function () {
         });
         coltxt.append(txtbox);
     };
-    SASSDataSource.prototype.renderCheckboxItem = function (name, id, target, fnction, context) {
-        var row = ej.buildEle('tr', '', '', {}, { 'id': id + '_tr' });
-        var col = ej.buildEle('td', '', '', { 'padding': '0px 7px 1px 3px' }, { 'unselectable': 'on' });
+    SASSDataSource.prototype.renderCheckboxItem = function (name, id, target, fnction, context, align) {
+        if (align === void 0) { align = 'Left'; }
+        var row = $('<tr id=' + id + '_tr' + '></tr>');
+        var col = $('<td unselectable=\'on\' style=\'padding-right:7px\' align=' + align + '></td>');
         row.append(col);
         target.append(row);
         var chkBox = ej.buildTag('input', '', {}, { 'type': 'checkbox', 'id': id });

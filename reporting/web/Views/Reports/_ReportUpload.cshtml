@@ -13,10 +13,14 @@
         [[[New RDL popup]]]
     </title>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-report.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-report.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-report.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-report.min.js"></script>
     </environment>
@@ -76,7 +80,7 @@
         });
     </script>
 </head>
-<body style="background-color:white" onload="load();">
+<body onload="load();">
     <form name="uploadReportForm" id="upload-form" method="post" onsubmit="return onUploadReport();" action="@Url.Action("UploadReport", "Reports")" enctype="multipart/form-data">
         <label for="browse_file" class="trigger-file-input-wrapper-report"></label>
         <span>
@@ -93,7 +97,7 @@
         {
             <input type="hidden" name="previousFileName" value="none" />
         }
-        <input id="rdl_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button" disabled data-previous-filename="none" />
+        <input id="rdl_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button app-btn-primary" disabled data-previous-filename="none" />
     </form>
 </body>
 </html>

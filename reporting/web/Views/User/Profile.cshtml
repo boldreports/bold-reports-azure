@@ -15,7 +15,7 @@
     var isPasswordUpdateSuccess = ViewBag.IsPasswordUpdateSuccess;
     var isPasswordUpdateFailure = ViewBag.IsPasswordUpdateFailure;
     var idpreferenceId = Context.Session.GetString("idpReferenceId") != null ? Context.Session.GetString("idpReferenceId").ToString() : string.Empty;
-    var idPUrl = ServerAppConfig.InternalAppIdpUrl;
+    var idPUrl = globalAppSettings.SystemSettings.IDPUrl;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.UserProfile);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
@@ -130,7 +130,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 button-section">
                     @if (!ViewBag.IsAdUser)
                     {
-                        <a href="@idpChangePasswordUrl" class="link-button pull-right edit-password" title="">[[[Change Password]]]</a>
+                        <a href="@idpChangePasswordUrl" class="link-button app-btn-link pull-right edit-password" title="">[[[Change Password]]]</a>
                     }
                 </div>
             </div>
@@ -252,9 +252,9 @@
                 @if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
                 {
                     <div id="edit-button" class="col-sm-3 col-xs-12 no-padding">
-                        <input type="button" class="secondary-button pull-right" id="edit" title="" value="[[[Edit]]]">
-                        <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
-                        <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveProfile()" value="[[[Save]]]">
+                        <input type="button" class="secondary-button app-btn-secondary pull-right" id="edit" title="" value="[[[Edit]]]">
+                        <input type="button" class="secondary-button app-btn-secondary pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
+                        <input type="button" class="primary-button app-btn-primary pull-right inactive-content" id="save-button" title="" onclick="SaveProfile()" value="[[[Save]]]">
                     </div>
                 }
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">

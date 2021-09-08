@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
         report: 'Informe',
         url: 'URL',
         linkUrl: 'Enlace URL al elemento de informe',
-        none: 'Ninguna'
+        none: 'Ninguna',
+        linkBookmark: 'Marcador'
     },
     linkReport: {
         reportCaption: 'Informe',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         categoryName: 'Enlazar',
         linkReport: 'Informe de enlace',
+        URL: 'URL',
         appearance: {
             categoryName: 'Apariencia',
             styleTooltip: 'Estilo',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
             customAttributes: 'Atributos personalizados',
-            zIndex: 'ÍndiceZ'
+            zIndex: 'ÍndiceZ',
+            bookmark: 'Marcador'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Sin datos',
             caption: 'Mensaje',
             hidden: 'Ocultar sin datos',
-            borderStyle: 'Estilo de borde',
+            showBorder: 'Mostrar borde',
             borderColor: 'Color del borde',
             borderSize: 'Tamaño del borde',
             fontLabel: 'Fuente',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 size: 'Tamaño de fuente',
                 style: 'Estilo de fuente',
                 weight: 'Peso de fuente'
-            },
-            positiontypes: {
-                topLeft: 'Arriba a la izquierda',
-                topCenter: 'Centro Superior',
-                topRight: 'Parte superior derecha',
-                rightTop: 'Justo arriba',
-                rightCenter: 'Centro de la derecha',
-                rightBottom: 'Boton derecho',
-                bottomLeft: 'BottomLeft',
-                bottomCenter: 'Parte inferior central',
-                bottomRight: 'Abajo a la derecha',
-                leftTop: 'LeftTop',
-                leftCenter: 'Centro izquierda',
-                leftBottom: 'Abajo a la izquierda'
             },
             fontStyle: {
                 label: 'Estilo de fuente',
@@ -674,29 +663,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     extraBold: 'Extra Negrita',
                     heavy: 'Pesado',
                 }
-            },
-            textDecoration: {
-                categoryName: 'Decoración de texto',
-                defaultStyle: 'Defecto',
-                none: 'Ninguna',
-                underline: 'Subrayar',
-                overline: 'Sobre la línea',
-                lineThrough: 'Línea a través'
-            },
-            border: {
-                default: 'Frontera',
-                left: 'Izquierda',
-                top: 'Parte superior',
-                right: 'Derecha',
-                bottom: 'Fondo'
-            },
-            borderStyles: {
-                solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
-            },
+            }
         },
         basicSettings: {
             categoryName: 'Ajustes básicos',
@@ -860,6 +827,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             documentMap: 'Mapa del documento',
             customAttributes: 'Atributos personalizados',
             alertHeader: 'Informe de tabla',
+            bookmark: 'Marcador',
             alertMessage: 'Formato de atributos personalizados no válido Ejemplo de formato correcto: \'AttrName1 = Value1, AttrName2 = Value2 \'.'
         },
         seriesSettings: {
@@ -983,7 +951,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
         miscellaneous: {
             categoryName: 'Diverso',
             documentMap: 'Mapa del documento',
-            customAttributes: 'Atributos personalizados'
+            customAttributes: 'Atributos personalizados',
+            bookmark: 'Marcador'
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
@@ -1073,7 +1042,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Diverso',
             customattributes: 'Atributos personalizados',
             documentMap: 'Mapa del documento',
-            pageName: 'Nombre de la página'
+            pageName: 'Nombre de la página',
+            bookmark: 'Marcador'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1465,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             keepTogether: 'Mantenerse juntos',
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
-            customAttributes: 'Atributos personalizados'
+            customAttributes: 'Atributos personalizados',
+            bookmark: 'Marcador'
         },
         fontStyleTooltip: 'Estilo',
         fontWeightTooltip: 'Peso',
@@ -1617,7 +1588,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             pageName: 'Nombre de la página',
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
-            customAttributes: 'Atributos personalizados'
+            customAttributes: 'Atributos personalizados',
+            bookmark: 'Marcador'
         },
         dataElement: {
             categoryName: 'Elemento de datos',
@@ -1771,6 +1743,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             connectDatasource: 'Conectar fuente de datos',
             datasourceType: 'Elige el tipo para conectarte',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Almacenamiento de datos SQL de Azure',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1755,11 @@ ej.ReportDesigner.Locale['es-ES'] = {
             mysqlLabel: 'MySQL',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Compartido'
+            sharedLabel: 'Compartido',
+            cdataLabel: 'CDATA',
+            snowflakeLabel: 'Copo de nieve',
+            ssasLabel: 'Servicios de análisis de Microsoft SQL',
+            verticaLabel: 'Vertica'
         },
         datasourceConnection: {
             newConnection: 'NUEVA CONEXIÓN',
@@ -2053,20 +2030,59 @@ ej.ReportDesigner.Locale['es-ES'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: 'Cadena de conexión',
-            authenticationType: 'tipo de autenticación',
-            authentication: 'Autenticación',
-            prompt: 'Rápida',
-            none: 'Ninguna',
+            serverName: 'Nombre del servidor',
+            port: 'Puerto',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            promptLabel: 'Mensaje de texto',
             savePassword: 'Guardar contraseña',
+            database: 'Base de datos',
+            basicSwitch: 'Opciones basicas',
+            advanceSwitch: 'Opciones avanzadas',
+            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
+            switchLabel: 'AdvancePanel de fuente de datos',
             alertMessage: {
-                alertConnectionString: 'Especifique la cadena de conexión',
-                alertPrompt: 'Especificar el texto del mensaje',
-                alertUserName: 'Especifique el nombre de usuario',
-                alertPassword: 'Especifique la contraseña'
+                userName: 'Especifique el nombre de usuario',
+                password: 'Especifique la contraseña',
+                serverName: 'Especifique el nombre del servidor',
+                port: 'Especifique el número de puerto',
+                database: 'Especifique el nombre de la base de datos'
+            }
+        },
+        snowflakeDatasource: {
+            serverName: 'Nombre del servidor',
+            serverWatermark: 'Ejemplo',
+            database: 'Base de datos',
+            userName: 'Nombre de usuario',
+            password: 'Contraseña',
+            savePassword: 'Guardar contraseña',
+            basicSwitch: 'Opciones basicas',
+            advanceSwitch: 'Opciones avanzadas',
+            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
+            switchLabel: 'AdvancePanel de fuente de datos',
+            alertMessage: {
+                serverName: 'Especifique el nombre del servidor',
+                userName: 'Especifique el nombre de usuario',
+                password: 'Especifique la contraseña',
+                database: 'Especifique el nombre de la base de datos'
+            }
+        },
+        verticaDatasource: {
+            serverName: 'Nombre del servidor',
+            database: 'Base de datos',
+            userName: 'Nombre de usuario',
+            password: 'Contraseña',
+            port: 'Puerto',
+            savePassword: 'Guardar contraseña',
+            basicSwitch: 'Opciones basicas',
+            advanceSwitch: 'Opciones avanzadas',
+            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
+            switchLabel: 'AdvancePanel de fuente de datos',
+            alertMessage: {
+                serverName: 'Especifique el nombre del servidor',
+                userName: 'Especifique el nombre de usuario',
+                password: 'Especifique la contraseña',
+                port: 'Especifique el número de puerto',
+                database: 'Especifique el nombre de la base de datos'
             }
         },
         sharedDatasource: {
@@ -3105,6 +3121,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         link: 'Enlazar',
         linkReport: 'Informe de enlace',
+        URL: 'URL',
         position: {
             categoryName: 'Posición',
             label: 'Posición',
@@ -3126,7 +3143,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             canShrink: 'Puede reducir',
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
-            customAttributes: 'Atributos personalizados'
+            customAttributes: 'Atributos personalizados',
+            bookmark: 'Marcador'
         },
         paragraphSettings: {
             categoryName: 'Configuración de párrafo',
@@ -3310,7 +3328,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         miscellaneous: {
             categoryName: 'Diverso',
-            toolTip: 'Información sobre herramientas'
+            toolTip: 'Información sobre herramientas',
+            bookmark: 'Marcador'
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
@@ -3435,6 +3454,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             customAttributes: 'Atributos personalizados',
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
+            bookmark: 'Marcador'
         },
         headers: {
             categoryName: 'encabezamiento',
@@ -3852,6 +3872,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 specifyQuery: 'Especifique la consulta DataSet',
                 selectTable: 'Seleccione la tabla para guardar el conjunto de datos',
                 queryFailed: 'Conjunto de datos no pudo guardar la consulta de la tabla seleccionada',
+                refreshFailed: 'No se pudo actualizar el conjunto de datos {datasetName}, requiere uno o más valores de entrada. Edite y guarde el conjunto de datos.',
                 tableProcedure: 'Conjunto de datos no pudo recuperar el procedimiento de tabla seleccionado',
                 deleteTableFailure: 'Error al eliminar la tabla seleccionada',
                 joinTableFailure: 'Error al unir las tablas seleccionadas',
@@ -4023,7 +4044,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             sort: 'Ordena',
             group: 'Grupos',
             expression: 'Expresión',
-            aggregate: 'Agregar'
+            aggregate: 'Agregar',
+            none: 'Ninguna'
         },
         validationMessage: 'El tipo de gráfico no es compatible con el diseñador.'
     },
@@ -4431,7 +4453,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryMiscellaneous: 'Diverso',
             toolTip: 'Información sobre herramientas',
             documentMap: 'Mapa del documento',
-            customAttributes: 'Atributos personalizados'
+            customAttributes: 'Atributos personalizados',
+            bookmark: 'Marcador'
         },
         spatial: {
             categoryName: 'Espacial',

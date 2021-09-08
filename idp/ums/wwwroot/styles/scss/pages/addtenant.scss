@@ -1,11 +1,10 @@
-﻿@import "../themes/_light.scss";
-@import "../extender.scss";
+﻿@import "../extender.scss";
 @import "../core/_typography.scss";
 @import "../core/_variables.scss";
 @import "../mixins/_checkbox.scss","../components/_buttons.scss","../components/_textboxes.scss","../core/_resolution.scss";
 
 %text-style-decoration {
-    color: $primary-black;
+    color: $primary-text-color;
     font-family: $primary-font;
     font-weight: normal;
     font-style: normal;
@@ -21,6 +20,7 @@ html {
         overflow: hidden;
         width: 100%;
         height: 100%;
+        color: $primary-text-color;
         font-family: $primary-font !important;
 
         .add-tenant-dialog-wrapper {
@@ -34,7 +34,7 @@ html {
 
                 .modal-header {
                     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-                    background-color: $white;
+                    background-color: $admin-container-bg;
                     height: 50px;
                     padding: 0 !important;
                     border: none;
@@ -70,7 +70,7 @@ html {
                                     border-radius: 50%;
                                     width: 14px;
                                     height: 14px;
-                                    border: solid 2px $grey-400;
+                                    border: solid 2px $grey-200;
                                     background-color: $white;
                                     float: left;
                                 }
@@ -79,7 +79,7 @@ html {
                                     width: 90px;
                                     margin-left: 14px;
                                     margin-top: 4px;
-                                    border: solid 2px $grey-400;
+                                    border: solid 2px $grey-200;
                                 }
                             }
                         }
@@ -122,21 +122,31 @@ html {
                         }
 
                         .selectedClass {
-                            border-color: $primary !important;
+                            border-color: $primary-color !important;
                         }
 
                         .selectedContent {
-                            color: $primary !important;
+                            color: $primary-color !important;
                         }
 
                         .selectedOval {
                             .hr-tag {
-                                border: 2px solid $primary !important;
+                                border: 2px solid $primary-color !important;
                             }
 
                             .circle {
-                                background-color: $primary !important;
+                                background-color: $primary-color !important;
                             }
+                        }
+                    }
+
+                    .reports-selector {
+                        .selector-icons {
+                            margin-left: 120px !important;
+                        }
+
+                        .selector-content {
+                            margin-left: 90px !important;
                         }
                     }
 
@@ -146,7 +156,7 @@ html {
                         width: 50px;
 
                         #add-tenant-close {
-                            color: $grey-800;
+                            color: $primary-text-color;
                             float: left;
                             height: 14px;
                             width: 14px;
@@ -169,7 +179,7 @@ html {
                 }
 
                 .modal-tenant-body {
-                    background-color: $grey-100;
+                    background-color: $admin-container-bg;
                     padding: 0 24px !important;
 
                     #dialog-header {
@@ -178,7 +188,7 @@ html {
                         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
                         padding: 14px 30px;
                         display: none;
-                        background-color: $white;
+                        background-color: $admin-page-bg;
                         width: 464px;
                         margin: auto;
                         margin-top: 24px;
@@ -209,7 +219,7 @@ html {
 
                         #used-tenant-identifier {
                             padding-left: 47px;
-                            color: $primary;
+                            color: $primary-color;
                             overflow: hidden;
                             white-space: nowrap;
                             text-overflow: ellipsis;
@@ -224,8 +234,9 @@ html {
 
                         .dialog-body-div {
                             border-radius: 6px;
+                            border: 1px solid $startup-container-border-color;
                             box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
-                            background-color: $white;
+                            background-color: $admin-page-bg;
                             margin: 24px 0 !important;
                             padding-top: 24px;
                             float: left;
@@ -234,6 +245,10 @@ html {
                             .text-content {
                                 @extend %text-style-decoration;
                                 letter-spacing: 0.3px;
+                            }
+
+                            .db-fields {
+                                color: $primary-black;
                             }
 
                             #dialog-body-header {
@@ -275,11 +290,11 @@ html {
 
                                     .branding-type {
                                         .dropdown-toggle {
-                                            border-color: #ccc !important;
+                                            border-color: $grey-400 !important;
                                             opacity: 0.65 !important;
 
                                             .filter-option {
-                                                color: #333 !important;
+                                                color: $primary-black !important;
                                             }
                                         }
 
@@ -310,6 +325,10 @@ html {
 
                                     .site-url-identifier, .site-name, .domain, .branding-type {
                                         padding-top: 24px !important;
+
+                                        .site-identifier-div {
+                                            min-height: 96px;
+                                        }
                                     }
 
                                     .empty-validation-error {
@@ -392,21 +411,6 @@ html {
                                         position: absolute !important;
                                     }
 
-                                    #new-domain-div {
-                                        padding-top: 20px !important;
-                                        display: inline-block;
-
-                                        label {
-                                            &::before {
-                                                top: 23px;
-                                            }
-
-                                            &::after {
-                                                top: 24px;
-                                            }
-                                        }
-                                    }
-
                                     #site-identifier-check {
                                         margin-top: 5px;
 
@@ -448,7 +452,7 @@ html {
 
                                         .disabled {
                                             cursor: not-allowed;
-                                            background: $grey-300;
+                                            background: $grey-80;
                                         }
 
                                         #database-type-dropdown {
@@ -479,7 +483,7 @@ html {
                                         width: 400px !important;
 
                                         .report-content {
-                                            padding-top: 200px !important;
+                                            padding-top: 154px !important;
                                             text-align: center;
                                             margin-bottom: 14px;
                                             margin-top: 70px;
@@ -568,7 +572,7 @@ html {
 
                                             tr {
                                                 height: 62px;
-                                                border-bottom: 2px solid $grey-400;
+                                                border-bottom: 2px solid $grey-200;
                                                 text-align: left !important;
 
                                                 td {
@@ -675,7 +679,7 @@ html {
                 #dialog-body-footer {
                     height: 64px;
                     border-radius: 0 0 4px 4px;
-                    background-color: $white;
+                    background-color: $admin-container-bg;
                     position: fixed;
                     bottom: 0;
                     border-top: 2px solid $grey-400;
@@ -772,7 +776,7 @@ html {
                 }
 
                 .add-site-attribute {
-                    color: $primary;
+                    color: $primary-color;
                     cursor: pointer;
                     display: inline-block;
                     font-family: $primary-font !important;
@@ -782,7 +786,7 @@ html {
                 }
 
                 .su-add:before {
-                    color: $primary;
+                    color: $primary-color;
                     font-family: 'server' !important;
                     font-size: map-get($app-text-size, sm);
                     margin-right: 4px;
@@ -800,8 +804,31 @@ html {
                 }
 
                 p {
-                    font-size: map-get($app-text-size, xs);
+                    font-size: map-get($app-text-size, sm);
                 }
+            }
+        }
+
+        #database-type-dropdown {
+            .popover {
+                left: -144px !important;
+            }
+        }
+
+        .username-field {
+            .popover {
+                left: -151px !important;
+            }
+        }
+
+        .secure-sql {
+            .info-icon {
+                margin-left: 5px;
+                cursor: pointer;
+            }
+
+            .popover {
+                left: -125px !important;
             }
         }
     }
@@ -836,7 +863,7 @@ html {
         height: 24px;
         border: none;
         border-radius: 4px;
-        background-color: $grey-300;
+        background-color: $grey-80;
         @extend %text-style-decoration;
         line-height: 1.5;
         letter-spacing: 0.3px;
@@ -884,7 +911,7 @@ html {
     }
 
     .su-sort {
-        color: $grey-700;
+        color: $grey-500;
         width: 15px;
         height: 15px;
         font-size: 17px;
@@ -950,6 +977,16 @@ html {
                 margin-left: 85px !important;
             }
 
+            .reports-selector {
+                .selector-icons {
+                    margin-left: 166px !important;
+                }
+
+                .selector-content {
+                    margin-left: 130px !important;
+                }
+            }
+
             .content-alignment {
                 margin-left: 230px !important;
             }
@@ -960,6 +997,30 @@ html {
 
             #header-title {
                 font-size: map-get($app-text-size, "lg")+2;
+            }
+
+            #database-type-dropdown {
+                .popover {
+                    left: -133px !important;
+                }
+            }
+
+            .username-field {
+                .popover {
+                    left: -141px !important;
+                }
+            }
+
+            .branding-type {
+                .popover {
+                    left: -125px !important;
+                }
+            }
+
+            .secure-sql{
+                .popover{
+                    left: -114px !important;
+                }
             }
         }
     }

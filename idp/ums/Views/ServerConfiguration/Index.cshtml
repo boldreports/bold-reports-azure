@@ -11,7 +11,11 @@
     var productName = ViewBag.TenantType == TenantType.BoldBIOnPremise ? "Embedded" : "On-Premise";
     var helpLinkData = ViewBag.TenantType == TenantType.BoldBIOnPremise ? "Embedded BI" : "Enterprise Reporting";
     var pathbase = Context.Request.PathBase;
-    var serverUserHelp = $"[[[Please refer to <a href='{HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.ServerDataStoreConfiguration)}'>this</a> documentation to know about what are the permissions need to be assigned to allow {helpLinkData} to connect and use the database.]]]";
+    var serverUserHelp = $"[[[Please refer to <a target='_blank' href='{HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.IdDatabaseConfiguration, ViewBag.TenantType)}'>this</a> documentation to know about what are the permissions need to be assigned to allow {helpLinkData} to connect and use the database.]]]";
+    var sqlParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
+    var postgresSQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.PostgreSQL_Connection_Parameters);
+    var mySQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MySQL_Connection_Parameters);
+
 }
 <!DOCTYPE html>
 <html>
@@ -37,6 +41,8 @@
     }
 
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+
     <link rel="stylesheet" href="~/bundles/css/system-configuration.css" asp-append-version="true" />
 
     <script src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
@@ -81,28 +87,9 @@
         var updateLicenseKeyUrl = "@Url.Action("ApplyLicenseKey", "ServerConfiguration")";
         var validateLicenseKeyUrl = "@Url.Action("ValidateLicenseKey", "ServerConfiguration")";
         var hasDRMConfiguration = "@ViewBag.HasDRMConfiguration";
-
-     setInterval(function () {
-            $.ajax({
-                type: "GET",
-                url: progressStatusUrl,
-                success: function (result) {
-                    $(".deployment-status").text(result.Message);
-                    $(".progressBar-container .progress-bar").width(result.Percentage);
-                    if (result.Percentage == "100%") {
-                        $.ajax({
-                            type: "POST",
-                            url: deleteStatusUrl,
-                            success: function (data) {
-                                if (data) {
-                                    $(".progressBar-container .progress-bar").width("10%")
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-        }, 3000);
+        var sqlParameter = "@sqlParameter";
+        var postgresSQLParameter = "@postgresSQLParameter";
+        var mySQLParameter = "@mySQLParameter";
 
         $(document).ready(function () {
             $(document).click(function (e) {
@@ -260,12 +247,12 @@
                                     <option value="windows">[[[Windows authentication]]]</option>
                                 </select>
                                 <div id="auth-type-info" class="hide">
-                                    <p>[[[Please refer to]]] <a href="@HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.WindowsAuthentication)">[[[this]]]</a> [[[documentation to configure]]] @GlobalAppSettings.BrandingDisplayName [[[with Windows Authentication.]]]</p>
+                                    <p>[[[Please refer to]]] <a target="_blank" href="@HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.WindowsAuthentication)">[[[this]]]</a> [[[documentation to configure]]] @GlobalAppSettings.BrandingDisplayName [[[with Windows Authentication.]]]</p>
                                 </div>
                             </div>
                             <div class="txt-holder center-align port-num hidden">
                                 <label class="field-label">[[[Port number]]]</label>
-                                <span tabindex="0" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" data-content="[[[Specify the TCP port number that the server is listening for connections. The default port number is 5432.]]]"></span>
+                                <span tabindex="0" id="txt-portnumber-info" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" data-content=""></span>
                                 <input type="text" id="txt-portnumber" name="portnumber" class="form-control system-settings-startup-page-fields db-fields" placeholder="[[[Port number]]]" />
                                 <span class="startup-validation validation-txt-errors"></span>
                             </div>
@@ -277,7 +264,7 @@
                             </div>
                             <div class="txt-holder center-align">
                                 <label class="field-label">[[[Username]]]</label>
-                                <span tabindex="0" id="db-username-info" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" data-html="true" data-content="@serverUserHelp"></span>
+                                <span tabindex="0" id="db-username-info" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focu" data-html="true" data-content="@serverUserHelp"></span>
                                 <input type="text" id="txt-login" name="username" class="form-control system-settings-startup-page-fields db-fields" placeholder="[[[Username]]]" />
                                 <span class="startup-validation validation-txt-errors"></span>
                             </div>
@@ -287,7 +274,7 @@
                                 <input type="password" class="fake-password" name="fake_passwordfield_to_turnoff_autocomplete">
                                 <input type="password" id="txt-password-db" name="password" class="form-control system-settings-startup-page-fields db-fields" placeholder="[[[Password]]]" autocomplete="off" />
                                 <span id="password-field" class="startup-validation validation-txt-errors"></span>
-                                <div class="su su-eye show-hide-password"></div>
+                                <div class="su su-show show-hide-password"></div>
                             </div>
                             <div class="txt-holder center-align">
                                 <div class="new-db">
@@ -297,14 +284,14 @@
                                 <div class="existing-db">
                                     <input type="radio" id="existing-db" class="css-radio" name="databaseType" value="1" />
                                     <label for="existing-db"><span class="text">[[[Existing database]]]</span></label>
+                                    <span tabindex="0" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" data-content="[[[Database name is not case-sensitive in Windows but is case-sensitive in most varieties of Unix operating systems.]]]"></span>
                                 </div>
                             </div>
                             <div class="txt-holder database-name center-align">
                                 <label class="field-label">[[[Database name]]]</label>
-                                <input type="text" id="txt-dbname" name="dbname" class="form-control system-settings-startup-page-fields dbname-fields db-fields" placeholder="[[[Database name]]]" />
+                                <input type="text" id="txt-dbname" name="dbname" class="form-control system-settings-startup-page-fields dbname-fields db-fields" onkeyup="return forceToLower(this);" placeholder="[[[Database name]]]" />
                                 <span class="startup-validation validation-txt-errors"></span>
                                 <div class="show-hide-password"></div>
-                                <span class="database-error validation-txt-errors"></span>
                             </div>
                             <div class="sql-server-existing-db center-align">
                                 <div class="txt-holder databse-dropdown text-wrap database-dropdown-margin center-align">
@@ -312,12 +299,19 @@
                                     <input type="text" id="database-name" name="databaseName" class="form-control system-settings-startup-page-fields db-fields" placeholder="[[[Existing database name]]]" />
                                     <span class="startup-validation validation-txt-errors"></span>
                                     <div class="show-hide-password"></div>
-                                    <span class="database-error validation-txt-errors"></span>
                                 </div>
                             </div>
-                            <div class="secure-sql material-checkbox selfhosted center-align">
+                            <div class="txt-holder center-align additonal-parameters">
+                                <label class="field-label">[[[Additional Parameters (Optional)]]]</label>
+                                <input type="text" id="additional-parameter" name="additionalparameter" class="form-control system-settings-startup-page-fields db-fields" placeholder="[[[Additional Paramaters]]]" />
+                                <span class="startup-validation validation-txt-errors"></span>
+                                <span class="database-error validation-txt-errors"></span>
+                                <div class="note-additional-parameter"><b>[[[Note]]]:</b> [[[Additional parameters override input values in the above form.]]] [[[Please refer to]]] <a target="_blank" href='@sqlParameter'>[[[this]]]</a>[[[ documentation for connection string parameters.]]]</div>
+                            </div>
+                            <div class="secure-sql material-checkbox selfhosted center-align txt-holder no-padding">
                                 @Html.CheckBox("secure-sql-connection", false)
                                 <label for="secure-sql-connection" class="">[[[Enable SSL]]]</label>
+                                <span tabindex="0" class="info-icon su su-info ssl-help" role="button" data-toggle="popover" data-placement="top" data-trigger="click" data-html="true" data-content="[[[Enable this if the database server is SSL configured. It uses SSL encryption for all data transmitted between the client and the server.]]]"></span>
                             </div>
                         </form>
 

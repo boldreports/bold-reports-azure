@@ -43,7 +43,7 @@
             <div class="login-options" style="display: @(TempData["errorPasswordStatus"] != null ? "block" : "none" )">
                 <div id="remember-me" class="material-checkbox">
                     @Html.CheckBox("remember", new { @class = "material-checkbox pull-left", @id = "remember" })
-                    @Html.Label("remember", "Remember me", new { @class = "disable-text-select", @id = "remember-label" })
+                    @Html.Label("remember", "[[[Remember me]]]", new { @class = "disable-text-select", @id = "remember-label" })
                 </div>
             </div>
             <input type="hidden" name="clientId" value="@ViewBag.ClientId" />

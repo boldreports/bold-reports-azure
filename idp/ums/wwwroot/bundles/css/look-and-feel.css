@@ -13,28 +13,30 @@
   padding: 0;
   padding: 20px 20px 20px 30px; }
   .admin-page-container .admin-page-header {
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid #eeeeee;
     margin: 0 0 20px 0;
     padding: 0 0 20px 0; }
     .admin-page-container .admin-page-header .back-button {
-      color: #7C7C7C;
+      color: #808080;
       font-size: 20px;
       line-height: 1;
       margin-top: -3px;
       padding: 0px 10px 0px 0px; }
     .admin-page-container .admin-page-header .page-title {
       font-size: 14px;
+      color: var(--colorText);
       font-weight: 700;
       padding-left: 0px;
       margin-bottom: 5px;
       margin-top: 0; }
     .admin-page-container .admin-page-header .page-description {
+      color: #1a1a1a;
       margin: 0;
       padding: 0;
       font-size: 12px; }
   .admin-page-container .admin-page-body {
-    background-color: #FFF;
-    border: 1px solid #DCE1E5;
+    background-color: var(--surface);
+    border: 1px solid #eeeeee;
     border-radius: 4px;
     font-size: 12px;
     float: left;
@@ -46,6 +48,7 @@
     .admin-page-container .admin-page-body .input-field-wrapper {
       margin-bottom: 15px; }
     .admin-page-container .admin-page-body .app-textbox-label {
+      color: var(--colorText);
       font-size: 12px;
       font-weight: normal;
       line-height: 28px;
@@ -54,7 +57,7 @@
     .admin-page-container .admin-page-body #txt_welcome_note {
       resize: vertical; }
     .admin-page-container .admin-page-body .info-text {
-      color: #7C7C7C;
+      color: #808080;
       font-size: 11px; }
     .admin-page-container .admin-page-body .field-container {
       margin-bottom: 8px;
@@ -66,7 +69,7 @@
       font-size: 12px;
       height: 28px; }
     .admin-page-container .admin-page-body .validation-errors, .admin-page-container .admin-page-body .validation-message {
-      color: #d9534f;
+      color: var(--danger);
       font-size: 10px; }
     .admin-page-container .admin-page-body .show-hide-password {
       cursor: pointer;
@@ -139,19 +142,20 @@
   outline: none !important; }
 
 #look-and-feel-container #look-and-feel-body .add-new-font {
-  padding: 0px;
+  padding: 5px 0px 0px 0px;
   font-size: 12px; }
   #look-and-feel-container #look-and-feel-body .add-new-font #woff-upload {
-    color: #0565ff; }
+    color: var(--colorPrimary); }
 
 #font-upload-dialog_wrapper .modal-dialog {
   margin: 0 auto;
   padding: 0;
-  border-radius: 2px; }
+  border-radius: 2px;
+  color: var(--colorText); }
   #font-upload-dialog_wrapper .modal-dialog .modal-content {
     border: none; }
     #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-header {
-      background: #FFF;
+      background: var(--surface);
       padding: 10px;
       width: 100%;
       z-index: 9;
@@ -172,12 +176,12 @@
         #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-header a.close:hover {
           color: #1a1a1a; }
     #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-body {
-      background: #FFF;
+      background: var(--surface);
       font-size: 12px;
       padding: 10px; }
     #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-footer {
-      background: #F2F2F2;
-      border-top: 1px solid #e5e5e5;
+      background: #f2f2f2;
+      border-top: 1px solid #cccccc;
       padding: 10px; }
       #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-footer .primary-button, #font-upload-dialog_wrapper .modal-dialog .modal-content .modal-footer .critical-action-button {
         margin-right: 10px; }
@@ -204,7 +208,7 @@
   padding-bottom: 20px; }
 
 #font-upload-dialog_wrapper .fontupload-validation-messages {
-  color: #d9534f;
+  color: var(--danger);
   display: block;
   font-size: 12px;
   margin-bottom: -16px; }
@@ -218,13 +222,13 @@
   overflow: hidden;
   resize: none;
   width: 80%;
-  border: 1px solid #CCCCCC;
-  background-color: #FFF;
+  border: 1px solid #cccccc;
+  background-color: var(--surface);
   cursor: default; }
 
 #font-upload-dialog_wrapper .upload-file-btn {
-  background-color: #FFF;
-  border: 1px solid #CCCCCC;
+  background-color: var(--surface);
+  border: 1px solid #cccccc;
   height: 28px;
   line-height: 1;
   padding: 1px 1px 7px 1px;

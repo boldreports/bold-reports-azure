@@ -529,7 +529,7 @@ function SaveProfile() {
     if (isValid) {
         ShowWaitingProgress("#content-area", "show");
         doAjaxPost('POST',
-            "/user/updateuserprofile",
+            updateUserProfile,
             {
                 username: $('#user-username').val(),
                 email: $("#user-email").val(),
@@ -664,12 +664,13 @@ function SaveUserPreference() {
                         $("<form action='" + result.Data.returnUrl + "'><input type='hidden' name='token' value='" + result.Data.token + "'></form>").appendTo('body').submit().remove();
                     } else {
                         ShowWaitingProgress("#content-area", "hide");
-                        SetCookie();
                         SuccessAlert(window.Server.App.LocalizationContent.UpdateAccountPreference, result.Data.value, 7000);
+                        location.reload();
                     }
                 } else {
                     ShowWaitingProgress("#content-area", "hide");
                     WarningAlert(window.Server.App.LocalizationContent.UpdateAccountPreference, result.Data.value, 7000);
+                    location.reload();
                 }
             }
         );

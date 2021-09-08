@@ -1,14 +1,7 @@
-ALTER TABLE [BOLDTC_Tenant] ALTER  COLUMN TenantIdentifier nvarchar(255) NULL
+ALTER TABLE [BOLDTC_TenantInfo] ADD AdditionalParameters nvarchar(max) NULL;
 
-ALTER TABLE [BOLDTC_Tenant] ADD UseSiteIdentifier bit NOT NULL DEFAULT '1';
+ALTER TABLE [BOLDTC_TenantInfo] ADD ImDbAdditionalParameters nvarchar(max) NULL;
 
-WITH TOP1 AS
-(
-SELECT Top 1 *
-FROM BOLDTC_TenantInfo
-WHERE [BOLDTC_TenantInfo].TenantTypeId = 4 AND [BOLDTC_TenantInfo].TenantStatus = 13
-ORDER BY [BOLDTC_TenantInfo].CreatedDate asc
-)
+ALTER TABLE BOLDTC_OAuthToken ADD Id int identity(1,1) not null;
 
-UPDATE TOP1 SET IsMaster = 1
-;
+ALTER TABLE BOLDTC_OAuthToken add CONSTRAINT PK_BOLDTC_OAUTHTOKEN primary key(Id);

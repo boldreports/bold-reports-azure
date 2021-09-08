@@ -8,7 +8,7 @@ $startup-header-height: 70px;
 $startup-element-border-radius: 6px;
 
 %form-field-container {
-    background: $white;
+    background: $admin-page-bg;
     border-radius: $startup-element-border-radius;
     box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
     padding: 0px 24px 16px 24px;
@@ -29,7 +29,7 @@ $startup-element-border-radius: 6px;
 
 %link-header {
     font-size: 16px;
-    color: $primary-black;
+    color: $primary-text-color;
     letter-spacing: 0.75px;
     line-height: 30px;
 }
@@ -48,7 +48,7 @@ $startup-element-border-radius: 6px;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
-    color: $primary-black;
+    color: $primary-text-color;
 }
 
 %need-help-content-styles {
@@ -65,14 +65,25 @@ $startup-element-border-radius: 6px;
     font-family: var(--font-family);
 }
 
+html {
+    height: 100%;
+}
+
 body {
-    background-color: $grey-100;
+    background-color: $admin-container-bg;
     padding-bottom: $startup-header-height;
     min-width: 950px;
+    color: $primary-text-color;
+    height: 100%;
 
     .popover {
+        background: $admin-page-bg;
         word-wrap: break-word;
         max-width: 450px;
+
+        .arrow::after {
+            border-top-color: $admin-page-bg !important;
+        }
     }
 
     header.startup-header {
@@ -170,7 +181,7 @@ body {
 
                                 &.first-content {
                                     font-size: 18px;
-                                    color: $primary-black;
+                                    color: $primary-text-color;
                                     letter-spacing: 0.84px;
                                     line-height: 30px;
                                     margin-top: 40px;
@@ -372,8 +383,8 @@ body {
                                         -webkit-appearance: none;
                                         float: right;
                                         margin: 0 0 0 10px;
-                                        color: $primary-bg-color;
-                                        border: 1px solid $primary-btn-border-color;
+                                        color: $admin-page-bg;
+                                        border: 1px solid $primary-border;
                                         border-radius: 4px;
                                     }
 
@@ -505,7 +516,7 @@ body {
                             margin: 0 auto;
 
                             .progress-bar {
-                                background-color: $primary;
+                                background-color: $primary-color;
                                 border-radius: 5px;
                             }
                         }
@@ -515,7 +526,7 @@ body {
                         margin-top: 20px;
                         display: block;
                         letter-spacing: 0.65px;
-                        color: $grey-700;
+                        color: $primary-text-color;
                     }
                 }
 
@@ -564,10 +575,12 @@ body {
                 .field-label {
                     letter-spacing: 0.56px;
                     margin-bottom: 8px;
+                    color: $primary-text-color;
                 }
 
                 .secure-sql {
                     margin-top: 24px;
+                    color: $primary-text-color;
 
                     &.material-checkbox label {
                         &::before {
@@ -628,7 +641,23 @@ body {
 
                             .existing-db {
                                 margin-left: 100px;
+
+                                .popover{
+                                    width: 200%;
+
+                                    .arrow{
+                                        top: auto;
+                                    }
+                                }
                             }
+
+                            .note-additional-parameter {
+                                padding-top: 20px
+                            }
+                        }
+
+                        .additional-parameters {
+                            padding-top: 32px !important;
                         }
 
                         .sql-server-existing-db {
@@ -654,6 +683,10 @@ body {
                         }
                     }
 
+                    .system-settings-tenant-configuration-field {
+                        border: 1px solid $startup-container-border-color;
+                    }
+
                     @extend %button-holder-style;
 
                     .sqlce-content {
@@ -663,7 +696,8 @@ body {
 
                     .database-error {
                         a {
-                            color: $primary;
+                            color: $primary-color;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -685,9 +719,10 @@ body {
                 }
 
                 .content-value {
-                    text-align: center;
+                    text-align: left;
                     margin-bottom: 10px;
                     padding-top: 24px;
+                    color: $primary-text-color;
                 }
 
                 .report-content {
@@ -711,9 +746,12 @@ body {
                 }
 
                 .storage-block {
-                    .blob-error-message {
-                        color: #a94442;
-                        font-size: 12px;
+                    .azure-validation {
+                        margin-bottom: 10px;
+                        .blob-error-message {
+                            color: $validation-text-color;
+                            font-size: 12px;
+                        }
                     }
 
                     #blob-storage-form {
@@ -724,7 +762,7 @@ body {
 
                         .validation-txt-errors {
                             font-size: 12px;
-                            color: #a94442;
+                            color: $validation-text-color;
                         }
 
                         .form-div {
@@ -759,31 +797,45 @@ body {
 
             .show-hide-password {
                 right: 15px;
-                bottom: 9px;
+                bottom: 4px;
+                font-size: 22px;
+                position: absolute;
+            }
+
+            .tooltip {
+                .tooltip-inner {
+                    word-break: break-all !important;
+                    white-space: pre !important;
+                    max-width: none !important;
+                }
+
+                .tooltip.top .tooltip-arrow {
+                    bottom: 1px !important;
+                }
             }
         }
     }
 }
 
-    @media all and (max-width: 1399px) {
-        .system-startUp-settings-bg {
-            .startup-page-conatiner {
-                #system-settings-general {
-                    #system-settings-db-selection-container, #system-settings-tenant-container {
-                        .system-settings-db-selection-field, .system-settings-tenant-configuration-field {
-                            width: 450px !important;
-                        }
-                    }
-                }
-
-                #system-settings-user-account-container {
-                    #admin-account-fields-container {
+@media all and (max-width: 1399px) {
+    .system-startUp-settings-bg {
+        .startup-page-conatiner {
+            #system-settings-general {
+                #system-settings-db-selection-container, #system-settings-tenant-container {
+                    .system-settings-db-selection-field, .system-settings-tenant-configuration-field {
                         width: 450px !important;
                     }
                 }
             }
+
+            #system-settings-user-account-container {
+                #admin-account-fields-container {
+                    width: 450px !important;
+                }
+            }
         }
     }
+}
 
 #new-password + .popover {
     background: $primary-black;
@@ -862,7 +914,7 @@ body {
     .message-header {
         font-size: map-get($app-text-size, md);
         padding: 10px;
-        background-color: $grey-200;
+        background-color: $grey-60;
 
         span {
             .su-login-error {
@@ -876,16 +928,17 @@ body {
     }
 
     .message-box-close {
-        color: $primary-black;
+        color: $grey-700;
         cursor: pointer;
         font-size: 10px;
         opacity: 0.7;
         position: absolute;
         right: 15px;
         top: 13px;
+        opacity: 1;
 
         &:hover {
-            color: $primary-btn-hover-color;
+            color: $icon-hover-color;
         }
     }
 
@@ -909,7 +962,7 @@ body {
         right: 0;
         width: 100%;
         text-align: center;
-        background-color: $grey-200;
+        background-color: $grey-60;
 
         .secondary-button {
             @include button(28px, 90px, "secondary");

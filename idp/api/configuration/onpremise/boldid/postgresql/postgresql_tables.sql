@@ -330,6 +330,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	DatabaseType int Default 0,
 	BlobConnectionString varchar(1026),
 	ConnectionString varchar(1026),
+	AdditionalParameters varchar(1026),
 	MaintenanceDatabase varchar(255) NULL,
 	TenantSQLServerId int,
 	ElasticPoolId int,
@@ -338,6 +339,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	ImDbSqlServerId int,
 	ImDbElasticPoolId int,
 	ImDbMaintenanceDatabase varchar(255) NULL,
+	ImDbAdditionalParameters varchar(1026),
 	TenantStatus int NOT NULL,
 	BillingAddressId uuid,
 	StatusUpdatedDate timestamp NOT NULL,
@@ -477,9 +479,11 @@ CREATE TABLE BOLDTC_SqlServerType (
 )
 ;
 CREATE TABLE BOLDTC_OAuthToken (
+     Id SERIAL NOT NULL,
 	 Token varchar (1026) NULL,
 	 Ticket varchar (1026) NULL,
-	 ModifiedDate timestamp  NULL
+	 ModifiedDate timestamp  NULL,
+  CONSTRAINT PK_BOLDTC_OAUTHTOKEN PRIMARY KEY (Id)
 )
 ;
 CREATE TABLE BOLDTC_InternalApps (

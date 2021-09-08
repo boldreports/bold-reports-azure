@@ -168,6 +168,10 @@ $(document).ready(function () {
     $(document).on("click", ".auth-login-button", function () {
         $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
     });
+
+    if (typeof isWindowADDefaultAuth != 'undefined' && isWindowADDefaultAuth.toLowerCase() === "true") {
+        $("#login-button-windows").click();
+    }
 });
 
 function FormValidate() {
@@ -213,7 +217,12 @@ function FormValidate() {
                             }
                         } else {
                             $(".login-fields .email").addClass("has-error");
-                            $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.InvalidAccount);
+                            if (result.DirectoryType != 0 && !result.Status) {
+                                $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.NotActivated);
+                            }
+                            else {
+                                $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.InvalidAccount);
+                            }
                             $(".e-outline").addClass("e-error");
                         }
                     }
@@ -324,13 +333,13 @@ $(document).on("ready", function () {
     $(".show-hide-password").on("click", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
-            $(this).removeClass('su-show');
-            $(this).addClass('su-hide');
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings().find("input").attr('type', 'password');
-            $(this).removeClass('su-hide');
-            $(this).addClass('su-show');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 

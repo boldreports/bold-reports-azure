@@ -19,15 +19,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
 <environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.css" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.js"></script>
     <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.min.css" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.min.css" />
     <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.min.js"></script>
     <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js"></script>
@@ -41,7 +45,7 @@
             <span class="PopupTitle"><b>[[[Export Report]]]</b></span>
             <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
         </div>
-        <div class="col-xs-1 no-padding" style="right:-75px">
+        <div class="col-xs-1 no-padding" style="right:-65px">
             <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose"><span id="ExportClose" class="su su-close"></span></a>
         </div>
     </div>

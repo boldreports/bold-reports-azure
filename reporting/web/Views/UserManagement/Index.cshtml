@@ -237,13 +237,13 @@
                     <li class="dropdown no-padding">
                         @if (new DeviceDetection(Context).IsMobile)
                         {
-                            <button class="primary-button" id="new-user-dropdown" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
-                                [[[New User]]]
-                            </button>
+                        <button class="primary-button app-btn-primary" id="new-user-dropdown" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
+                            [[[New User]]]
+                        </button>
                         }
                         else
                         {
-                            <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
+                            <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
                                 <span>[[[New User]]] </span>
                                 <span class="caret"></span>
                             </button>
@@ -288,7 +288,7 @@
                     @if (((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.AzureAD != null) || ((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.CustomDatabaseUserCount != null) || (ViewBag.AzureAD != null && ViewBag.CustomDatabaseUserCount != null))
                     {
                         <li class="dropdown no-padding">
-                            <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Users]]]">
+                            <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Users]]]">
                                 <span>[[[Synchronize]]] </span>
                                 <span class="caret"></span>
                             </button>
@@ -329,26 +329,27 @@
                         if (ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted && !isAzureApplication)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeUsers", "UserManagement")" class="link-button synchronize-users" title="[[[Synchronize users with Active Directory]]]" data-toggle="tooltip" data-placement="left">[[[Active Directory Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeUsers", "UserManagement")" class="link-button app-btn-link synchronize-users" title="[[[Synchronize users with Active Directory]]]" data-toggle="tooltip" data-placement="left">[[[Active Directory Synchronization]]]</a>
                             </li>
                         }
                         if (ViewBag.AzureAD != null)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeAzureUsers", "UserManagement")" class="link-button synchronize-azure-users" title="[[[Synchronize users with Azure AD]]]" data-toggle="tooltip" data-placement="left">[[[Azure AD Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeAzureUsers", "UserManagement")" class="link-button app-btn-link synchronize-azure-users" title="[[[Synchronize users with Azure AD]]]" data-toggle="tooltip" data-placement="left">[[[Azure AD Synchronization]]]</a>
                             </li>
                         }
                         if (ViewBag.CustomDatabaseUserCount != null)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" class="link-button synchronize-database-users" title="[[[Synchronize users with Custom Database]]]" data-toggle="tooltip" data-placement="left">[[[Database Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" class="link-button app-btn-link synchronize-database-users" title="[[[Synchronize users with Custom Database]]]" data-toggle="tooltip" data-placement="left">[[[Database Synchronization]]]</a>
                             </li>
                         }
                     }
-                    <li class="flying-add hide" id="add-user-in-group">
-                        <button class="critical-action-button user-delete-button" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user">[[[Delete User]]]</button>
-                        <button class="secondary-button user-add-group" title="[[[Assign a group to selected users]]]">[[[Assign Group]]]</button>
-                    </li>
+                <li class="flying-add hide" id="add-user-in-group">
+                    <button class="critical-action-button app-btn-danger user-delete-button" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user">[[[Delete User]]]</button>
+                    <button class="secondary-button app-btn-secondary user-add-group" title="[[[Assign a group to selected users]]]">[[[Assign Group]]]</button>
+
+                </li>
                 </ul>
             </div>
         </div>

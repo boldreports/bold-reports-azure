@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['en-US'] = {
             specifyQuery: 'Specify the DataSet query',
             selectTable: 'Select the table to save the DataSet',
             queryFailed: 'DataSet failed to save the Query of selected table',
+            refreshFailed: 'Failed to refresh the dataset {datasetName}, it requires one or more input values. Please edit and save the dataset.',
             tableProcedure: 'DataSet failed to retrieve the selected table procedure',
             confirmPermission: 'Retrieved huge records, rendering will take time. Would you like to load anyway ?',
             deleteTableFailure: 'Failed to delete the selected table',

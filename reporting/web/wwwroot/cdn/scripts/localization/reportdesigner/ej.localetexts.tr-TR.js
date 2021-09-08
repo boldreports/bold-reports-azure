@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         report: 'Bildiri',
         url: 'URL',
         linkUrl: 'URL\'yi Rapor öğesine bağlayın',
-        none: 'Orta'
+        none: 'Orta',
+        linkBookmark: 'Yer imi'
     },
     linkReport: {
         reportCaption: 'Bildiri',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         categoryName: 'Bağlantı',
         linkReport: 'Bağlantı Raporu',
+        URL: 'URL',
         appearance: {
             categoryName: 'Görünüm',
             styleTooltip: 'Tarzı',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             customAttributes: 'Özel Nitelikler',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            zIndex: 'ZEndeksi'
+            zIndex: 'ZEndeksi',
+            bookmark: 'Yer imi'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryName: 'Veri yok',
             caption: 'İleti',
             hidden: 'Verileri Gizle',
-            borderStyle: 'Kenarlık Stili',
+            showBorder: 'Kenarlığı Göster',
             borderColor: 'Sınır rengi',
             borderSize: 'Kenarlık boyutu',
             fontLabel: 'Yazı tipi',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 size: 'Yazı Boyutu',
                 style: 'Yazı stili',
                 weight: 'Yazı Tipi Ağırlığı'
-            },
-            positiontypes: {
-                topLeft: 'Sol üst',
-                topCenter: 'Üst merkez',
-                topRight: 'Sağ üst',
-                rightTop: 'Sağ üst',
-                rightCenter: 'Sağ Merkez',
-                rightBottom: 'Sağ Alt',
-                bottomLeft: 'Sol alt',
-                bottomCenter: 'Alt merkez',
-                bottomRight: 'Sağ alt',
-                leftTop: 'Sol üst',
-                leftCenter: 'Sol Merkez',
-                leftBottom: 'Sol alt'
             },
             fontStyle: {
                 label: 'Yazı stili',
@@ -674,28 +663,6 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                     extraBold: 'Ekstra Kalın',
                     heavy: 'Ağır',
                 }
-            },
-            textDecoration: {
-                categoryName: 'Metin Süsleme',
-                defaultStyle: 'Varsayılan',
-                none: 'Orta',
-                underline: 'Altını çizmek',
-                overline: 'Üst çizgi',
-                lineThrough: 'Hat boyunca'
-            },
-            border: {
-                default: 'Kenarlık',
-                left: 'Ayrıldı',
-                top: 'Üst',
-                right: 'Sağ',
-                bottom: 'Alt'
-            },
-            borderStyles: {
-                solid: 'Katı',
-                none: 'Orta',
-                double: 'Çift',
-                dashed: 'Kesikli',
-                dotted: 'Noktalı'
             }
         },
         basicSettings: {
@@ -860,6 +827,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
             alertHeader: 'Grafik Raporu Öğesi',
+            bookmark: 'Yer imi',
             alertMessage: 'Geçersiz özel özellikler biçimi. Doğru format örneği: \'AttrName1 = Value1, AttrName2 = Value2 \'.'
         },
         seriesSettings: {
@@ -983,7 +951,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         miscellaneous: {
             categoryName: 'Çeşitli',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         styleTooltip: 'Tarzı',
         colorTooltip: 'Renk',
@@ -1073,7 +1042,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryName: 'Çeşitli',
             customattributes: 'Özel Nitelikler',
             documentMap: 'Belge Haritası',
-            pageName: 'Sayfa ismi'
+            pageName: 'Sayfa ismi',
+            bookmark: 'Yer imi'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1465,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             keepTogether: 'Birlikte Tutun',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         fontStyleTooltip: 'Tarzı',
         fontWeightTooltip: 'Ağırlık',
@@ -1617,7 +1588,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             pageName: 'Sayfa ismi',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         dataElement: {
             categoryName: 'Veri Öğesi',
@@ -1771,6 +1743,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             connectDatasource: 'DataSource\'a bağlanın',
             datasourceType: 'Bağlanacak türü seçin',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL Veri Ambarı',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1755,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             mysqlLabel: 'MySQL',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Paylaşılan'
+            sharedLabel: 'Paylaşılan',
+            cdataLabel: 'CDATA',
+            snowflakeLabel: 'kar tanesi',
+            ssasLabel: 'Microsoft SQL Analiz Hizmetleri',
+            verticaLabel: 'Vertika'
         },
         datasourceConnection: {
             newConnection: 'YENİ BAĞLANTI',
@@ -2053,20 +2030,59 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: 'Bağlantı dizisi',
-            authenticationType: 'Kimlik Doğrulama Türü',
-            authentication: 'Authenticationkimlik doğrulama',
-            prompt: 'Komut istemi',
-            none: 'Yok',
+            serverName: 'Sunucu adı',
+            port: 'Liman',
             userName: 'Kullanıcı adı',
             password: 'Parola',
-            promptLabel: 'İstem Metni',
             savePassword: 'Şifreyi kaydet',
+            database: 'Veri tabanı',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource AdvancePanel',
             alertMessage: {
-                alertConnectionString: 'Bağlantı dizesini belirtin',
-                alertPrompt: 'İstem Metnini Belirtin',
-                alertUserName: 'Kullanıcı Adını Belirtin',
-                alertPassword: 'Şifreyi belirtin'
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Şifreyi belirtin',
+                serverName: 'Sunucu adını belirtin',
+                port: 'Bağlantı noktası numarasını belirtin',
+                database: 'Veritabanı adını belirtin',
+            }
+        },
+        snowflakeDatasource: {
+            serverName: 'Sunucu adı',
+            serverWatermark: 'Misal',
+            database: 'Veri tabanı',
+            userName: 'Kullanıcı adı',
+            password: 'Parola',
+            savePassword: 'Şifreyi kaydet',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource Gelişmiş Paneli',
+            alertMessage: {
+                serverName: 'Sunucu adını belirtin',
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Parolayı belirtin',
+                database: 'Veritabanı adını belirtin'
+            }
+        },
+        verticaDatasource: {
+            serverName: 'Sunucu adı',
+            database: 'Veri tabanı',
+            userName: 'Kullanıcı adı',
+            password: 'Parola',
+            port: 'Liman',
+            savePassword: 'Şifreyi kaydet',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource Gelişmiş Paneli',
+            alertMessage: {
+                serverName: 'Sunucu adını belirtin',
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Parolayı belirtin',
+                port: 'Bağlantı noktası numarasını belirtin',
+                database: 'Veritabanı adını belirtin'
             }
         },
         sharedDatasource: {
@@ -3107,6 +3123,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         link: 'Bağlantı',
         linkReport: 'Bağlantı Raporu',
+        URL: 'URL',
         position: {
             categoryName: 'Durum',
             label: 'Durum',
@@ -3128,7 +3145,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             canShrink: 'Küçültebilir',
             toolTip: 'Araç ipucu',
             customAttributes: 'Özel Nitelikler',
-            documentMap: 'Belge Haritası'
+            documentMap: 'Belge Haritası',
+            bookmark: 'Yer imi'
         },
         paragraphSettings: {
             categoryName: 'Paragraf Ayarları',
@@ -3312,7 +3330,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         miscellaneous: {
             categoryName: 'Çeşitli',
-            toolTip: 'Araç ipucu'
+            toolTip: 'Araç ipucu',
+            bookmark: 'Yer imi'
         },
         styleTooltip: 'Tarzı',
         colorTooltip: 'Renk',
@@ -3436,7 +3455,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             keepTogether: 'Birlikte Tutun',
             customAttributes: 'Özel Nitelikler',
             toolTip: 'Araç ipucu',
-            documentMap: 'Belge Haritası'
+            documentMap: 'Belge Haritası',
+            bookmark: 'Yer imi'
         },
         headers: {
             categoryName: 'Başlıklar',
@@ -3854,6 +3874,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 specifyQuery: 'DataSet sorgusunu belirtin',
                 selectTable: 'DataSet\'i kaydetmek için tabloyu seçin',
                 queryFailed: 'DataSet, seçili tablonun Sorgusunu kaydedemedi',
+                refreshFailed: '{datasetName} veri kümesi yenilenemedi, bir veya daha fazla giriş değeri gerektiriyor. Lütfen veri kümesini düzenleyin ve kaydedin.',
                 tableProcedure: 'DataSet, seçilen tablo prosedürünü alamadı',
                 deleteTableFailure: 'Seçili tablo silinemedi',
                 joinTableFailure: 'Seçili tablolara katılma başarısız oldu',
@@ -4025,7 +4046,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             sort: 'Sıralar',
             group: 'Gruplar',
             expression: 'İfade',
-            aggregate: 'Agrega'
+            aggregate: 'Agrega',
+            none: 'Yok'
         },
         validationMessage: 'Tasarımcıda grafik türü desteklenmez.'
     },
@@ -4432,7 +4454,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryMiscellaneous: 'Çeşitli',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         spatial: {
             categoryName: 'Mekansal',

@@ -19,14 +19,18 @@
         var deleteuserPermissionUrl = "@Url.Action("DeleteUserPermission", "permission")";
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/adduserpermission.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/adduserpermission.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/adduserpermission.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/adduserpermission.min.js"></script>
     </environment>
@@ -100,8 +104,8 @@
                                 <span class="checkbox-text">[[[Add another]]]</span>
                             </label>
                         </div>
-                        <input type="button" name="Save" value="[[[Add]]]" class="primary-button" id="save-permission" />
-                        <input type="button" id="cancel-group" class="secondary-button popup-close" value="[[[Cancel]]]" />
+                        <input type="button" name="Save" value="[[[Add]]]" class="primary-button app-btn-primary" id="save-permission" />
+                        <input type="button" id="cancel-group" class="secondary-button app-btn-secondary popup-close" value="[[[Cancel]]]" />
                     </div>
                 </div>
             </div>

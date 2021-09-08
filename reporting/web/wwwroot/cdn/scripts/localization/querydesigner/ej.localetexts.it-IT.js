@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['it-IT'] = {
             specifyQuery: 'Specificare la query DataSet',
             selectTable: 'Selezionare la tabella per salvare il DataSet',
             queryFailed: 'DataSet non � riuscito a salvare la query della tabella selezionata',
+            refreshFailed: 'Impossibile aggiornare il set di dati {datasetName}, richiede uno o più valori di input. Modifica e salva il set di dati.',
             tableProcedure: 'DataSet non � riuscito a recuperare la procedura della tabella selezionata',
             deleteTableFailure: 'Impossibile eliminare la tabella selezionata',
             joinTableFailure: 'Impossibile unire le tabelle selezionate',

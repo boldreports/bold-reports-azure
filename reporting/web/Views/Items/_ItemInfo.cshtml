@@ -46,10 +46,10 @@
     </div>
     <div class="fluent-popup-footer">
         <div class="col-xs-12" ng-show="showDashboardLinkButton">
-            <a href="{{viewDashboardUrl(ItemDetail.Id, ItemDetail.CategoryName, ItemDetail.Name, ItemDetail.IsDraft)}}" class="link-button" target="_blank" title="">{{GetInfoButtonText(ItemDetail.IsDraft)}}</a>
+            <a href="{{viewDashboardUrl(ItemDetail.Id, ItemDetail.CategoryName, ItemDetail.Name, ItemDetail.IsDraft)}}" class="link-button app-btn-link" target="_blank" title="">{{GetInfoButtonText(ItemDetail.IsDraft)}}</a>
         </div>
         <div class="col-xs-12 ng-hide" ng-show="!showDashboardLinkButton">
-            <button class="secondary-button" ng-click="closeItemInfo()" title="">[[[Close]]]</button>
+            <button class="secondary-button app-btn-secondary" ng-click="closeItemInfo()" title="">[[[Close]]]</button>
         </div>
     </div>
 </div>

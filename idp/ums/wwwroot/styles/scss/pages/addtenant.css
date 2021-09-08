@@ -19,16 +19,16 @@ html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog
   padding: 0 15px; }
   .sf-button:disabled {
     cursor: default;
-    background-color: #D2D7DE; }
+    background-color: #cccccc; }
 
 .sf-primary-button {
-  background: #0565ff; }
+  background: var(--colorPrimary); }
 
 .sf-secondary-button {
   background: #fff; }
 
 .sf-danger-button {
-  background: #ff3b30; }
+  background: var(--danger); }
 
 .sf-rounded-button {
   -moz-border-radius: 50%;
@@ -37,7 +37,7 @@ html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog
   border-radius: 50%; }
 
 body .form-control:focus, body input[type="text"]:focus {
-  border-color: #0565ff !important;
+  border-color: var(--colorPrimary) !important;
   box-shadow: none !important;
   outline: none !important;
   transition: all .3s linear; }
@@ -52,17 +52,17 @@ body .form-control ~ .focusdiv, body input[type="text"] ~ .focusdiv {
   border-color: transparent; }
 
 body .has-error .form-control:focus {
-  border-color: #ff3b30 !important;
+  border-color: var(--danger) !important;
   box-shadow: none !important;
   outline: none !important;
   transition: all .3s linear; }
 
 body input[type="text"]:focus ~ .su-search {
-  border: 1px solid #0565ff !important;
+  border: 1px solid var(--colorPrimary) !important;
   border-left: 0px !important; }
 
 body input[type="text"]:focus ~ .close-icon {
-  border: 1px solid #0565ff !important;
+  border: 1px solid var(--colorPrimary) !important;
   border-left: 0px !important; }
 
 @media screen and (min-width: 0px) {
@@ -75,7 +75,7 @@ body input[type="text"]:focus ~ .close-icon {
       font-size: 12px; }
     body .validation-txt-errors {
       font-size: 12px;
-      color: #a94442; } }
+      color: var(--danger); } }
 
 @media screen and (min-width: 1400px) {
   body {
@@ -87,10 +87,10 @@ body input[type="text"]:focus ~ .close-icon {
       font-size: 14px; }
     body .validation-txt-errors {
       font-size: 12px;
-      color: #a94442; } }
+      color: var(--danger); } }
 
 html body .add-tenant-dialog-wrapper #popup-container .modal-header .add-tenant-popup-title label, html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selector-content, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-header .text-header-content, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-header .header-description, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div .text-content, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-header, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .item-name, html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-back, html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-next, #search-area input[type="text"] {
-  color: #333;
+  color: var(--colorText);
   font-family: var(--font-family);
   font-weight: normal;
   font-style: normal;
@@ -104,6 +104,7 @@ html {
     overflow: hidden;
     width: 100%;
     height: 100%;
+    color: var(--colorText);
     font-family: var(--font-family) !important; }
     html body .add-tenant-dialog-wrapper {
       width: 100%;
@@ -114,7 +115,7 @@ html {
         height: 100%; }
         html body .add-tenant-dialog-wrapper #popup-container .modal-header {
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-          background-color: #fff;
+          background-color: var(--background);
           height: 50px;
           padding: 0 !important;
           border: none; }
@@ -156,7 +157,7 @@ html {
               line-height: 1.6;
               letter-spacing: 0.3px;
               text-align: left;
-              color: #808080; }
+              color: #4d4d4d; }
               html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selector-content .site-creation {
                 width: 75px;
                 padding-right: 18px; }
@@ -172,19 +173,23 @@ html {
               html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selector-content .administrator {
                 width: 82px; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selectedClass {
-              border-color: #0565ff !important; }
+              border-color: var(--colorPrimary) !important; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selectedContent {
-              color: #0565ff !important; }
+              color: var(--colorPrimary) !important; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selectedOval .hr-tag {
-              border: 2px solid #0565ff !important; }
+              border: 2px solid var(--colorPrimary) !important; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector .selectedOval .circle {
-              background-color: #0565ff !important; }
+              background-color: var(--colorPrimary) !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .reports-selector .selector-icons {
+            margin-left: 120px !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .reports-selector .selector-content {
+            margin-left: 90px !important; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .icons {
             padding: 18px 18px 0 18px;
             float: right;
             width: 50px; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-header .icons #add-tenant-close {
-              color: #4d4d4d;
+              color: var(--colorText);
               float: left;
               height: 14px;
               width: 14px;
@@ -197,7 +202,7 @@ html {
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector-alignment {
             width: 870px !important; }
         html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body {
-          background-color: #f9f9f9;
+          background-color: var(--background);
           padding: 0 24px !important; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-header {
             height: 74px;
@@ -205,7 +210,7 @@ html {
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
             padding: 14px 30px;
             display: none;
-            background-color: #fff;
+            background-color: var(--surface);
             width: 464px;
             margin: auto;
             margin-top: 24px;
@@ -221,12 +226,12 @@ html {
               letter-spacing: 0.35px;
               margin-top: -2px; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-header .header-label {
-              color: #808080;
+              color: #4d4d4d;
               margin: 0;
               padding-bottom: 11px; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-header #used-tenant-identifier {
               padding-left: 47px;
-              color: #0565ff;
+              color: var(--colorPrimary);
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
@@ -237,14 +242,17 @@ html {
             position: relative; }
             html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div {
               border-radius: 6px;
+              border: 1px solid #eeeeee;
               box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
-              background-color: #fff;
+              background-color: var(--surface);
               margin: 24px 0 !important;
               padding-top: 24px;
               float: left;
               width: 464px; }
               html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div .text-content {
                 letter-spacing: 0.3px; }
+              html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div .db-fields {
+                color: #333; }
               html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-header {
                 text-align: center; }
                 html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-header #header-logo {
@@ -270,7 +278,7 @@ html {
                 html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form {
                   width: 100%; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .branding-type .dropdown-toggle {
-                    border-color: #ccc !important;
+                    border-color: #999999 !important;
                     opacity: 0.65 !important; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .branding-type .dropdown-toggle .filter-option {
                       color: #333 !important; }
@@ -290,6 +298,8 @@ html {
                     line-height: 1.54; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .site-url-identifier, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .site-name, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .branding-type {
                     padding-top: 24px !important; }
+                    html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .site-url-identifier .site-identifier-div, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .site-name .site-identifier-div, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain .site-identifier-div, html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .branding-type .site-identifier-div {
+                      min-height: 96px; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .empty-validation-error {
                     padding-top: 15px !important; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #tenant-name {
@@ -299,7 +309,7 @@ html {
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .input-group-addon {
                       border: 0;
                       padding: 0 !important;
-                      background-color: #cccccc; }
+                      background-color: #999999; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .bootstrap-select {
                       border: 0;
                       padding: 0;
@@ -336,15 +346,8 @@ html {
                       padding-top: 0 !important; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .validation-txt-errors {
                     display: none;
-                    color: #a94442;
+                    color: var(--danger);
                     position: absolute !important; }
-                  html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #new-domain-div {
-                    padding-top: 20px !important;
-                    display: inline-block; }
-                    html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #new-domain-div label::before {
-                      top: 23px; }
-                    html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #new-domain-div label::after {
-                      top: 24px; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #site-identifier-check {
                     margin-top: 5px; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form #site-identifier-check label::before {
@@ -382,7 +385,7 @@ html {
                   padding: 0;
                   width: 400px !important; }
                   html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .storage-form #system-settings-filestorage-container .report-content {
-                    padding-top: 200px !important;
+                    padding-top: 154px !important;
                     text-align: center;
                     margin-bottom: 14px;
                     margin-top: 70px;
@@ -437,12 +440,12 @@ html {
                         border-bottom: 2px solid #cccccc;
                         text-align: left !important; }
                         html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent tr td .e.active {
-                          background: #0565ff; }
+                          background: var(--colorPrimary); }
                       html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .item-name {
                         height: 15px;
                         letter-spacing: 0.33px; }
                       html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .email-id {
-                        color: #808080;
+                        color: #4d4d4d;
                         margin-top: 8px; }
                       html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .e-table .e-row .e-rowcell {
                         padding-left: 0;
@@ -478,7 +481,7 @@ html {
                       height: 18px;
                       width: 18px;
                       background-color: transparent;
-                      border: 2px solid #b3b3b3;
+                      border: 2px solid #808080;
                       top: 0px;
                       z-index: 1;
                       margin-top: 7px;
@@ -495,17 +498,17 @@ html {
                       top: 0;
                       width: 18px;
                       height: 18px;
-                      border: 1.5px solid #0565ff;
-                      background-color: #0565ff;
+                      border: 1.5px solid var(--colorPrimary);
+                      background-color: var(--colorPrimary);
                       z-index: 0;
                       margin-top: 7px;
                       margin-bottom: 2px; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .material-checkbox:disabled + input + label::after {
-                      background-color: #b3b3b3;
-                      border: 1px solid #b3b3b3; }
+                      background-color: #808080;
+                      border: 1px solid #808080; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .material-checkbox:not(:checked):disabled + input + label::after {
                       background-color: white;
-                      border: 1px solid #b3b3b3; }
+                      border: 1px solid #808080; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .material-checkbox:not(:checked), html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-gridcontent .material-checkbox:checked {
                       position: absolute;
                       left: -9999px;
@@ -530,7 +533,7 @@ html {
                           height: 100% !important; }
                           html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-scrollbar.e-vscrollbar .e-vscroll .e-vhandlespace .e-vhandle {
                             width: 4px !important;
-                            background-color: #b3b3b3; }
+                            background-color: #808080; }
                         html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-user-form #add_admins_grid .e-scrollbar.e-vscrollbar .e-vscroll .e-icon {
                           position: relative; }
               html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div .grid-alignment {
@@ -545,20 +548,20 @@ html {
         html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer {
           height: 64px;
           border-radius: 0 0 4px 4px;
-          background-color: #fff;
+          background-color: var(--background);
           position: fixed;
           bottom: 0;
-          border-top: 2px solid #cccccc;
+          border-top: 2px solid #999999;
           padding: 16px 23px;
           text-align: center;
           float: left; }
           html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-back {
-            background-color: #fff;
-            border-color: #b3b3b3;
+            background-color: var(--colorSecondary);
+            border-color: #cccccc;
             border: 1px solid;
             border-radius: 4px;
             box-sizing: border-box;
-            color: #333;
+            color: var(--colorOnSecondary);
             cursor: pointer;
             display: inline-block;
             font-weight: 600;
@@ -571,7 +574,7 @@ html {
             letter-spacing: 0.3px;
             display: none; }
             html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-back:hover {
-              background-color: #eeeeee; }
+              background-color: #f9f9f9; }
             html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-back:disabled {
               background-color: #f2f2f2;
               border: 1px solid #cccccc;
@@ -579,12 +582,12 @@ html {
               color: #999999;
               cursor: default; }
           html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-next {
-            background-color: #0565ff;
-            border-color: #0450cc;
+            background-color: var(--colorPrimary);
+            border-color: #cccccc;
             border: 1px solid;
             border-radius: 4px;
             box-sizing: border-box;
-            color: #fff;
+            color: var(--colorOnPrimary);
             cursor: pointer;
             display: inline-block;
             font-weight: 600;
@@ -596,7 +599,7 @@ html {
             line-height: 1.54;
             letter-spacing: 0.3px; }
             html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-next:hover {
-              background-color: #1882ff; }
+              background-color: #007aff; }
             html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-next:disabled {
               background-color: #f2f2f2;
               border: 1px solid #cccccc;
@@ -637,7 +640,7 @@ html {
       height: 18px;
       width: 18px;
       background-color: transparent;
-      border: 2px solid #b3b3b3;
+      border: 2px solid #808080;
       top: 0px;
       z-index: 1;
       margin-top: 7px;
@@ -654,17 +657,17 @@ html {
       top: 0;
       width: 18px;
       height: 18px;
-      border: 1.5px solid #0565ff;
-      background-color: #0565ff;
+      border: 1.5px solid var(--colorPrimary);
+      background-color: var(--colorPrimary);
       z-index: 0;
       margin-top: 7px;
       margin-bottom: 2px; }
     html body #custom-attribute-dialog .material-checkbox:disabled + input + label::after {
-      background-color: #b3b3b3;
-      border: 1px solid #b3b3b3; }
+      background-color: #808080;
+      border: 1px solid #808080; }
     html body #custom-attribute-dialog .material-checkbox:not(:checked):disabled + input + label::after {
       background-color: white;
-      border: 1px solid #b3b3b3; }
+      border: 1px solid #808080; }
     html body #custom-attribute-dialog .material-checkbox:not(:checked), html body #custom-attribute-dialog .material-checkbox:checked {
       position: absolute;
       left: -9999px;
@@ -690,9 +693,9 @@ html {
         height: 28px;
         min-width: 220px; }
       html body .data-security-container .isolation-code-container .has-error {
-        border-color: #ff3b30; }
+        border-color: var(--danger); }
       html body .data-security-container .isolation-code-container #isolation-code-validation {
-        color: #ff3b30;
+        color: var(--danger);
         font-size: 12px;
         position: absolute; }
     html body .data-security-container .attribute-header {
@@ -703,7 +706,7 @@ html {
         font-size: 16px;
         margin: 0; }
       html body .data-security-container .attribute-header .add-site-attribute {
-        color: #0565ff;
+        color: var(--colorPrimary);
         cursor: pointer;
         display: inline-block;
         font-family: var(--font-family) !important;
@@ -711,7 +714,7 @@ html {
         font-weight: bold;
         margin-right: 10px; }
       html body .data-security-container .attribute-header .su-add:before {
-        color: #0565ff;
+        color: var(--colorPrimary);
         font-family: 'server' !important;
         font-size: 12px;
         margin-right: 4px; }
@@ -723,7 +726,16 @@ html {
         font-size: 12px;
         margin: 0 0 10px 0; }
       html body .data-security-container .notes-container p {
-        font-size: 10px; }
+        font-size: 12px; }
+    html body #database-type-dropdown .popover {
+      left: -144px !important; }
+    html body .username-field .popover {
+      left: -151px !important; }
+    html body .secure-sql .info-icon {
+      margin-left: 5px;
+      cursor: pointer; }
+    html body .secure-sql .popover {
+      left: -125px !important; }
 
 #add_admins_grid_stringDlg_wrapper .e-scroller {
   overflow-y: auto; }
@@ -759,7 +771,7 @@ html {
     margin-left: -20px;
     margin-top: 6px;
     font-size: 12px;
-    color: #808080;
+    color: #4d4d4d;
     border: 0 !important; }
   #search-area .su-search-alignment {
     margin-left: 338px; }
@@ -789,13 +801,13 @@ html {
   display: none; }
 
 ::-webkit-input-placeholder {
-  color: #808080; }
+  color: #4d4d4d; }
 
 ::-moz-placeholder {
-  color: #808080; }
+  color: #4d4d4d; }
 
 .placeholder {
-  color: #808080; }
+  color: #4d4d4d; }
 
 @media screen and (min-width: 0px) {
   html body .selector-content {
@@ -817,12 +829,24 @@ html {
   html body .selector-content {
     font-size: 12px;
     margin-left: 85px !important; }
+  html body .reports-selector .selector-icons {
+    margin-left: 166px !important; }
+  html body .reports-selector .selector-content {
+    margin-left: 130px !important; }
   html body .content-alignment {
     margin-left: 230px !important; }
   html body .header-description {
     font-size: 16px; }
   html body #header-title {
-    font-size: 18px; } }
+    font-size: 18px; }
+  html body #database-type-dropdown .popover {
+    left: -133px !important; }
+  html body .username-field .popover {
+    left: -141px !important; }
+  html body .branding-type .popover {
+    left: -125px !important; }
+  html body .secure-sql .popover {
+    left: -114px !important; } }
 
 .bootstrap-select.btn-group > .disabled {
   cursor: default; }

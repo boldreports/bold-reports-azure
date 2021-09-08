@@ -14,10 +14,12 @@
         @ViewBag.Title
     </title>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-category.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-category.min.js"></script>
     </environment>
@@ -80,8 +82,8 @@
     </form>
     <div class="category-btns dialog-footer">
         <div class="pull-right">
-            <input type="submit" title="" class="btn primary-button" value="[[[Add]]]" tabindex="3" onclick="addItemValidate()">
-            <input type="button" title="" class="btn secondary-button" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="4">
+            <input type="submit" title="" class="btn primary-button app-btn-primary" value="[[[Add]]]" tabindex="3" onclick="addItemValidate()">
+            <input type="button" title="" class="btn secondary-button app-btn-secondary" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="4">
         </div>
     </div>
     }

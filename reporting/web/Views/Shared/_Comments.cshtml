@@ -2,10 +2,11 @@
 @{
     Layout = null;
     var globalAppSettings = _globalAppSettings;
-    var idPUrl = ServerAppConfig.InternalAppIdpUrl;
+    var idPUrl = globalAppSettings.SystemSettings.IDPUrl;
     var isItemWatched = ViewBag.IsWatched != null ? ViewBag.IsWatched : false;
     var userId = ViewBag.UserId;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var rootUrl = Context.Request.RouteValues["tenantName"] != null ? (Context.Request.PathBase + "/" + ServerAppConfig.TenantIdentifierPrefix + "/" + Context.Request.RouteValues["tenantName"]).TrimEnd('/') : Context.Request.PathBase.ToString();
 }
 
 <!DOCTYPE html>
@@ -15,10 +16,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
 
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/comments-page.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/comments-page.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 
 
@@ -26,7 +31,7 @@
 
 
     <script>
-    var rootUrl = "@Url.Action("", "")";
+    var rootUrl = "@rootUrl";
     var getAllCommentsUrl = { "web": "@Url.Action("GetAllComments","comments")", "api": "/comments/operation" };
     var addCommentUrl = { "web": "@Url.Action("AddComment", "comments")", "api": "/comments/operation" };
 
@@ -37,7 +42,7 @@
     var unWatchUrl = { "web": "@Url.Action("UnWatch", "items")", "api":  "/items/un-watch" };
     var userMentionDataSourceUrl = { "web": "@Url.Action("GetUserMentionSuggestionList", "comments")", "api": "/comments/user-mention-list" };
     var watchUrl = { "web": "@Url.Action("Watch", "items")", "api": "/items/watch" };
-    var idpUrl = "@ServerAppConfig.InternalAppIdpUrl";
+    var idpUrl = "@globalAppSettings.SystemSettings.IDPUrl";
     var avatarUrl = "@idPUrl/User/Avatar";
     var i_am_ie9 = false;
     var getdefaultavatarUrl="@Url.Action("getdefaultavatar", "User")";
@@ -96,8 +101,8 @@
             <div class="post-watch col-xs-12 no-right-padding no-left-padding">
 
                 <div class="col-xs-12 col-md-6 no-right-padding pull-right">
-                    <button class="secondary-button pull-right header-comment-close">[[[Cancel]]]</button>
-                    <input id="post-comment" class="primary-button pull-right" value="[[[Post]]]" type="submit">
+                    <button class="secondary-button app-btn-secondary pull-right header-comment-close">[[[Cancel]]]</button>
+                    <input id="post-comment" class="primary-button app-btn-primary pull-right" value="[[[Post]]]" type="submit">
                 </div>
             </div>
         </div>

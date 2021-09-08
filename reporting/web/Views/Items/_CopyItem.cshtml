@@ -209,7 +209,7 @@
                     <span class="SuccessMessage"></span>
                     @*@{ if (ViewBag.Action == "Copy")
                         {
-                            <input type="button" id="copyreport_advance_button" title="" class="app-button app-secondary-button PopupClose" value="[[[Advanced]]]" onclick="enableAdvanceOption()" />
+                            <input type="button" id="copyreport_advance_button" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Advanced]]]" onclick="enableAdvanceOption()" />
                         }
                     }*@
                 </div>
@@ -217,14 +217,14 @@
                     @{
                         if (ViewBag.Action == "Copy")
                         {
-                            <input type="button" title="" id="CopyButton" class="app-button app-primary-button" value="[[[Copy]]]" />
+                            <input type="button" title="" id="CopyButton" class="app-button app-primary-button app-btn-primary" value="[[[Copy]]]" />
                         }
                         else if (ViewBag.Action == "Clone")
                         {
-                            <input type="button" id="CloneButton" title="" class="app-button app-primary-button" value="[[[Clone]]]" />
+                            <input type="button" id="CloneButton" title="" class="app-button app-primary-button app-btn-primary" value="[[[Clone]]]" />
                         }
                     }
-                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button PopupClose" value="[[[Cancel]]]" />
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Cancel]]]" />
                 </div>
             </div>
 
@@ -237,7 +237,7 @@
                 </div>
                 <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
                     <div class="col-xs-12 no-padding text-center">
-                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button" value="[[[OK]]]" />
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
                     </div>
                 </div>
             </div>

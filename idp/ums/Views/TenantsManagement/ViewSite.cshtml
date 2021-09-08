@@ -17,7 +17,6 @@
     <meta name="add-ump-app-users-link" content="@Url.Action("GetUsersForTenantAccess", "TenantsManagement")?tenantInfoId=" />
     <meta name="provide-app-access-link" content="@Url.Action("GrantUserAccessforTenant", "TenantsManagement")?tenantInfoId=" />
     <meta name="remove-app-access-link" content="@Url.Action("RemoveUserAccessfromTenant", "TenantsManagement")?tenantInfoId=" />
-    <meta name="show-client-secret" content="@Model.ClientSecret.ToString()" />
 
     <script src="~/bundles/js/sites.js" asp-append-version="true"></script>
     <script type="text/x-jsrender" id="commandstemplate">
@@ -170,10 +169,10 @@
                             <a href="#users-tab" aria-controls="users-tab" role="tab" data-toggle="tab">[[[Users]]]</a>
                         </li>
                     }
-                    @if (Model.TenantTypeId == (int)TenantType.BoldBIOnPremise && Model.TenantStatus == TenantStatus.Active)
+                    @if (Model.TenantStatus == TenantStatus.Active && Model.TenantTypeId == (int)TenantType.BoldBIOnPremise)
                     {
                         <li role="presentation" class="@isIsolationCodeTab" id="data-security">
-                            <a href="#data-security-tab" aria-controls="data-security-tab" role="tab" data-toggle="tab">[[[Isolation Code]]]</a>
+                             <a href="#data-security-tab" aria-controls="data-security-tab" role="tab" data-toggle="tab">[[[Isolation Code]]]</a>
                         </li>
                         <li role="presentation" class="@isAttributesTab" id="custom-attribute">
                             <a href="#custom-attribute-tab" aria-controls="custom-attribute-tab" role="tab" data-toggle="tab">[[[Attributes]]]</a>
