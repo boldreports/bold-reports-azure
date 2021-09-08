@@ -2,8 +2,8 @@
 @{
     var userId = _identityResponse.User.UserId;
     var isMobile = new DeviceDetection(Context).IsMobile;
-    var idPAvatarUrl = ServerAppConfig.InternalAppIdpUrl + "/User/Avatar";
     var globalAppSettings = _globalAppSettings;
+    var idPAvatarUrl = globalAppSettings.SystemSettings.IDPUrl + "/User/Avatar";
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     ViewBag.Title = "[[[Support Incidents]]] - Syncfusion Dashboards";
     ViewBag.helpSiteUrl = "/?id=3&mode=cloud";

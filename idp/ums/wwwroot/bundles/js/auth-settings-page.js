@@ -100,21 +100,16 @@
 this.setWidth(),this.$lis&&this.$searchbox.trigger("propertychange"),this.$element.trigger("refreshed.bs.select")},hide:function(){this.$newElement.hide()},show:function(){this.$newElement.show()},remove:function(){this.$newElement.remove(),this.$element.remove()},destroy:function(){this.$newElement.before(this.$element).remove(),this.$bsContainer?this.$bsContainer.remove():this.$menu.remove(),this.$element.off(".bs.select").removeData("selectpicker").removeClass("bs-select-hidden selectpicker")}};var m=a.fn.selectpicker;a.fn.selectpicker=c,a.fn.selectpicker.Constructor=l,a.fn.selectpicker.noConflict=function(){return a.fn.selectpicker=m,this},a(document).data("keycount",0).on("keydown.bs.select",'.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input',l.prototype.keydown).on("focusin.modal",'.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input',function(a){a.stopPropagation()}),a(window).on("load.bs.select.data-api",function(){a(".selectpicker").each(function(){var b=a(this);c.call(b,b.data())})})}(a)});
 //# sourceMappingURL=bootstrap-select.js.map
 $(document).on("ready", function () {
-    $(".show-hide-password").on("mousedown", function () {
+    $(".show-hide-password").on("click", function () {
         if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
+            $(this).siblings("input").attr('type', 'text').val();
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings("input").attr('type', 'password');
-        }
-    });
-
-    $(".show-hide-password").on("mouseup", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
-        }
-        else {
-            $(this).siblings("input").attr('type', 'password');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 
@@ -136,11 +131,9 @@ $(document).on("ready", function () {
         }
     });
 
-    $(".show-hide-password").mouseleave(function () {
-        $(this).siblings("input").attr('type', 'password');
-    });
-
+  
     if (window.innerWidth < 1041) {
+
         $(".show-hide-password").on("click", function () {
             if ($(this).siblings("input").is(":password")) {
                 $(this).siblings("input").attr('type', 'text');
@@ -233,7 +226,9 @@ $(document).ready(function () {
                 "application-id-uri-info",
                 "uri-info",
                 "tenantName-info",
-                "mobile-clientId-info"
+                "mobile-clientId-info",
+                "oauth-logout-info",
+                "openid-logout-info"
             ];
 
             if (jQuery.inArray(e.target.id, popoverIds) === -1) {
@@ -474,9 +469,7 @@ $(document).ready(function () {
             else if (name === "azuread") {
                 scope.ssoSettingsForm.$setUntouched();
                 scope.ssoSettingsForm.$setPristine();
-                $("span.validation-message").addClass("ng-hide");
             }
-
             updateAuthSettingsButton.prop("disabled", false);
         } else {
             if (name === "oauth" && scope.oauthSettingsForm.$invalid) {
@@ -496,6 +489,7 @@ $(document).ready(function () {
             }
         }
 
+        $("span.validation-message").addClass("ng-hide");
         $("#token-method-type").selectpicker("refresh");
         $("#user-info-method-type").selectpicker("refresh");
         $(".group-import-provider-type").selectpicker("refresh");
@@ -516,8 +510,8 @@ $(document).ready(function () {
     function OAuthOpenIdImageValidation(e) {
         var authLogo = e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? scope.oauthLogoUrl : (e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority" ? scope.openidLogoUrl : scope.jwtLogoUrl);
         if (authLogo === null || authLogo === undefined || authLogo === '') {
-            e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? $("#oauth-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo) : ((e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority") ? $("#openid-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo)
-                : $("#jwt-image-upload-box").siblings(".validation-message").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo));
+            e.currentTarget.name === "oauthLogoUrl" || e.currentTarget.name === "oauthProviderName" || e.currentTarget.name === "oauthAuthorizationEP" ? $("#oauth-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo) : ((e.currentTarget.name === "openidLogoUrl" || e.currentTarget.name === "openidProviderName" || e.currentTarget.name === "openidAuthority") ? $("#openid-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo)
+                : $("#jwt-image-upload-box").siblings(".validation-message").removeClass("ng-hide").html(window.TM.App.LocalizationContent.SelectAuthProviderLogo));
         }
 
         scope.$apply(function () {
@@ -759,6 +753,7 @@ $(document).ready(function () {
                         UserInfoFirstname: $("input[name='userInfoFirstname']").val().trim(),
                         UserInfoLastname: $("input[name='userInfoLastname']").val().trim(),
                         Logo: $("input[name='oauthLogo']").val().trim(),
+                        LogoutEndPoint: $("input[name='oauthLogoutEndpoint']").val().trim(),
                         GroupImportSettings: getGroupImportSettings("oauth")
                     }
                 };
@@ -777,6 +772,7 @@ $(document).ready(function () {
                         Identifier: $("input[name='openidIdentifier']").val().trim(),
                         Authority: $("input[name='openidAuthority']").val().trim(),
                         Logo: $("input[name='openidLogo']").val().trim(),
+                        LogoutUrl: $("input[name='openidLogoutUrl']").val().trim(),
                         GroupImportSettings: getGroupImportSettings("openid")
                     }
                 };
@@ -990,24 +986,17 @@ function getDefaultAuthDisplayName(provider) {
 }
 
 function fnCopySigningKey(inputId, buttonId) {
-    var copyText = $(inputId);
-    copyText.select();
-    document.execCommand("copy");
-    if (copyText.val() == "") {
-        if (typeof (navigator.clipboard) == 'undefined') {
-            var tempElement = document.createElement("textarea");
-            tempElement.value = signingKey;
-            document.body.appendChild(tempElement);
-            tempElement.focus();
-            tempElement.select();
-            document.execCommand("copy");
-            tempElement.remove();
-        }
-        else {
-            navigator.clipboard.writeText(signingKey);
-        }
-
+    if (typeof (navigator.clipboard) != 'undefined') {
+        var value = $(inputId).val();
+        navigator.clipboard.writeText(value)
     }
+    else {
+        var copyText = $(inputId);
+        copyText.attr("type", "text").select();
+        document.execCommand("copy");
+        copyText.attr("type", "password");
+    }
+
     setTimeout(function () {
         $(buttonId).attr("data-original-title", "Copied");
         $(buttonId).tooltip('show');
@@ -1017,15 +1006,6 @@ function fnCopySigningKey(inputId, buttonId) {
         $(buttonId).tooltip();
     }, 3000);
 }
-
-$(document).on("mousedown", ".show-hide-password", function () {
-    $(this).siblings("input").attr('type', 'text');
-    $("#jwt-signing-key").val(signingKey);
-});
-
-$(document).on("mouseup", ".show-hide-password", function () {
-    $("#jwt-signing-key").val("");
-});
 
 function signingKeyConfirmationDlg() {
     ej.base.enableRipple(true);
@@ -1058,7 +1038,7 @@ function fnRegenerateSigningKey() {
         success: function (data) {
             if (data != false) {
                 SuccessAlert(window.TM.App.LocalizationContent.RegenerateKey, window.TM.App.LocalizationContent.RegenerateKeySuccess, 7000);
-                signingKey = data;
+                $("#jwt-signing-key").val(data);
             } else {
                 WarningAlert(window.TM.App.LocalizationContent.RegenerateKey, window.TM.App.LocalizationContent.RegenerateKeyError, 7000);
             }

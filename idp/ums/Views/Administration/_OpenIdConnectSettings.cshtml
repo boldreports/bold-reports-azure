@@ -80,7 +80,7 @@
                     <div class="col-md-5 no-margin form-input-field" ng-class="(openidSettingsForm.openidClientSecret.$dirty && openidSettingsForm.openidClientSecret.$invalid) ? 'has-error' : ''">
                         <input type="password" class="form-control col-md-6 no-margin" ng-model="openidClientSecret" ng-init="openidClientSecret='@ViewBag.OpenIDSettings.OIDCAuthSettings.ClientSecret'" name="openidClientSecret" placeholder="[[[Client Secret]]]" id="openid-client-secret" data-ng-disabled="!openidIsEnabled" required />
                         <span class="validation-message" ng-show="openidSettingsForm.openidClientSecret.$error.required && openidSettingsForm.openidClientSecret.$dirty && openidIsEnabled">[[[Please enter the client secret.]]]</span>
-                        <div class="show-hide-password su su-eye"></div>
+                        <div class="show-hide-password su su-show"></div>
                     </div>
                 </div>
             </div>
@@ -92,6 +92,16 @@
                         <span class="validation-message" ng-show="openidSettingsForm.openidIdentifier.$error.required && openidSettingsForm.openidIdentifier.$dirty && openidIsEnabled">[[[Please enter the Identifier.]]]</span>
                     </div>
                     <span id="openid-identifier-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[These claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Provide the JSON key to identify the unique identity (email) of the user.]]]"></span>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="col-md-12 no-padding no-margin">
+                    <label class="app-textbox-label col-md-3 no-margin">[[[Logout Endpoint]]]</label>
+                    <div class="col-md-5 no-margin form-input-field" ng-class="(openidSettingsForm.openidLogoutUrl.$dirty && openidSettingsForm.openidLogoutUrl.$invalid) ? 'has-error' : ''">
+                        <input type="text" class="form-control col-md-6 no-margin" ng-model="openidLogoutUrl" ng-init="openidLogoutUrl='@ViewBag.OpenIDSettings.OIDCAuthSettings.LogoutUrl'" name="openidLogoutUrl" placeholder="[[[Logout Endpoint (Optional)]]]" id="openid-logout url" ng-pattern="@oauthRegEx" data-ng-disabled="!openidIsEnabled" />
+                        <span class="validation-message" ng-show="openidSettingsForm.openidLogoutUrl.$error.pattern && openidSettingsForm.openidLogoutUrl.$dirty && openidIsEnabled">[[[Please enter a valid logout endpoint.]]]</span>
+                    </div>
+                    <span id="openid-logout-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[We support logout endpoints that have static request parameters.]]]"></span>
                 </div>
             </div>
             <div class="col-md-12 form-group">

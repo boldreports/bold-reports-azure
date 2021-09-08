@@ -12,14 +12,18 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <style>
         body {
@@ -32,7 +36,7 @@
 </head>
 <body class="schedule-dialog">
     <script>
-        var manageLicenseUrl = "@(ServerAppConfig.IsSelfHosted ? ServerAppConfig.InternalAppIdpUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
+        var manageLicenseUrl = "@(ServerAppConfig.IsSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
         var contactUsUrl = "https://www.@(GlobalAppSettings.BrandingDomain)/contact";
     </script>
     <input type="hidden" data-item-type="dashboard" id="itemType" />
@@ -119,11 +123,18 @@
                             </div>
                             <div class="col-sm-6 col-xs-6 filename-dropdown">
                                 <select id="file-template-variable-drop-box" data-live-search="true" title="[[[Select variables]]]" name="" class="selectpicker file-template" style="width:183px;" data-size="7" multiple="" data-none-results-text="[[[No results match]]]">
-                                    @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
+                                    @if (Enum.GetValues(typeof(CustomFileTemplate)).Length > 0)
                                     {
-                                        <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                                        @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
+                                        {
+                                            <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                                        }
                                     }
-                                    <option value=""  selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                                    else
+                                    {
+                                        <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                                    }
+
                                 </select>
                                 <span id="export-filename-error-message" class="ErrorMessage validate-error">[[[Please select variables for export filename]]]</span>
                             </div>
@@ -198,14 +209,14 @@
                 </div>
                 <div class="modal-footer col-xs-12">
                     <div class="col-sm-12 col-xs-12 no-margin" id="next-container">
-                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button pull-left button-left">
-                        <input id="schedule-next-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button leftmargin pull-right">
-                        <input id="schedule-next" title="[[[Next]]]" type="button" value="[[[Next]]]" tabindex="4" class="primary-button pull-right">
+                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button app-btn-secondary pull-left button-left">
+                        <input id="schedule-next-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button app-btn-secondary leftmargin pull-right">
+                        <input id="schedule-next" title="[[[Next]]]" type="button" value="[[[Next]]]" tabindex="4" class="primary-button app-btn-primary pull-right">
                     </div>
                     <div id="submit-container" class="col-sm-12 col-xs-4 no-margin">
-                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button pull-left button-left">
-                        <input id="schedule-submit-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button leftmargin pull-right button-right">
-                        <input id="schedule-submit" title="[[[Schedule]]]" type="button" value="[[[Schedule]]]" tabindex="4" class="primary-button pull-right button-right">
+                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button app-btn-secondary pull-left button-left">
+                        <input id="schedule-submit-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button app-btn-secondary leftmargin pull-right button-right">
+                        <input id="schedule-submit" title="[[[Schedule]]]" type="button" value="[[[Schedule]]]" tabindex="4" class="primary-button app-btn-primary pull-right button-right">
                     </div>
                 </div>
             </div>

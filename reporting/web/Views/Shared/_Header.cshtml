@@ -12,7 +12,7 @@
     var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink + "/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.MainLogo;
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
     var absolutePath = requestUrl.AbsolutePath;
-    var idPUrl = ServerAppConfig.InternalAppIdpUrl;
+    var idPUrl = globalAppSettings.SystemSettings.IDPUrl;
     var isMobile = new DeviceDetection(Context).IsMobile;
     var navigationUrl = Url.Action("Index", "Home");
 }
@@ -137,7 +137,7 @@
         </div>
        
         <div class="pull-right" id="concierge-support-request" data-toggle="tooltip" data-placement="bottom">
-            <button class="primary-button pull-right request-concierge-support" data-toggle="tooltip" title="[[[We answer all your questions.]]]" data-placement="bottom">[[[New Support Request]]]</button>
+            <button class="primary-button app-btn-primary pull-right request-concierge-support" data-toggle="tooltip" title="[[[We answer all your questions.]]]" data-placement="bottom">[[[New Support Request]]]</button>
         </div>
     }
 

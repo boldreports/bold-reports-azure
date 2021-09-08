@@ -169,7 +169,7 @@
                 <div class="dashboard-action-container col-xs-12 no-padding">
                     <div class="col-xs-5 col-lg-4 no-padding category-info-container" ng-show="!isMobile">
                         <span class="col-xs-12 no-padding">
-                            <span class="dashboard-category-name" ng-bind="activeMenuLabel" data-container="body" data-toggle="dashboard-list-tooltip" data-original-title="{{activeMenuLabel}}">[[[All Reports]]]</span>
+                            <span class="dashboard-category-name" ng-bind="activeMenuLabel" data-container="body" data-toggle="dashboard-list-tooltip" data-original-title="{{activeMenuLabel}}" data-placement="bottom">[[[All Reports]]]</span>
                             <span class="dashboard-count ng-hide" ng-show="dashboardDataBindComplete">({{totalDashboardCount}} {{totalDashboardCount ==1 ? "[[[report]]]" : "[[[reports]]]"}})</span>
                         </span>
                         <span class="dashboard-category-owner pull-left" ng-bind="categoryCreatedBy"></span>
@@ -591,7 +591,7 @@
                             <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No drafts were found that match your search. Try modifying your search.]]]</span>
                         </div>
                         <div class="create-buttton">
-                            <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button">[[[Create Report]]]</button>
+                            <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button app-btn-primary">[[[Create Report]]]</button>
                         </div>
                     </div>
                 </div>
@@ -643,8 +643,8 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="app-button app-primary-button" data-dismiss="modal" ng-click="onSortApplyClicked()">[[[Apply]]]</button>
-                        <button type="button" class="app-button app-secondary-button" data-dismiss="modal">Close</button>
+                        <button type="button" class="app-button app-primary-button app-btn-primary" data-dismiss="modal" ng-click="onSortApplyClicked()">[[[Apply]]]</button>
+                        <button type="button" class="app-button app-secondary-button app-btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

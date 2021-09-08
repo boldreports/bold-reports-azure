@@ -7,7 +7,7 @@
     var showContactSales = Context.Request.Cookies["unlock.features"] == null;
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
-    var manageLicenseSettingsUrl = isSelfHosted ? ServerAppConfig.InternalAppIdpUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : globalAppSettings.SystemSettings.BaseUrl + "/administration/subscription";
+    var manageLicenseSettingsUrl = isSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : globalAppSettings.SystemSettings.BaseUrl + "/administration/subscription";
 }
 
 @section styles{
@@ -68,7 +68,7 @@
                 if (showContactSales)
                 {
                     <p id="feature-paragraph-content" class="cloud-hosted-feature">[[[Enterprise features come with additional pricing. We will get back to you with a personalized offer.]]]</p>
-                    <button id="contact-sales-team" class="sf-primary-button">[[[Yes, I’m interested]]]</button>
+                    <button id="contact-sales-team" class="sf-primary-button app-btn-primary">[[[Yes, I’m interested]]]</button>
                 }
                 else
                 {

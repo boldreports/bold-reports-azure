@@ -256,17 +256,24 @@ function onChangePasswordClick() {
 
     ShowWaitingProgress("#content-area", "show");
     doAjaxPost('POST', "/user/updatepassword", { oldpassword: $("#old-password").val(), newpassword: $("#new-password").val(), confirmpassword: $("#confirm-password").val(), returnurl: $("#hidden-return-url").val() },
-        function(result) {
+        function (result) {
             $("#old-password").val("");
+            $("#old-password").closest("div").removeClass("e-valid-input");
+            $("#old-password").closest("div").addClass("e-input-focus");
             $("#new-password").val("");
+            $("#new-password").closest("div").removeClass("e-valid-input");
+            $("#new-password").closest("div").addClass("e-input-focus");
             $("#confirm-password").val("");
+            $("#confirm-password").closest("div").removeClass("e-valid-input");
+            $("#confirm-password").closest("div").addClass("e-input-focus");
             $("#password_policy_rules").remove();
             $("#confirm-password-section").removeAttr("style");
             $("#change-password-btn").css("margin-top", "0px");
             if (!result.Data.status && result.Data.key == "password") {
                 ShowWaitingProgress("#content-area", "hide");
                 $("#old-password-validate").html(result.Data.value);
-                $("#old-password-validate").closest("div").prev("div").addClass("has-error");
+                $("#old-password-validate").css("display", "block")
+                $("#old-password").closest("div").addClass("e-error");
             }
             else if (!result.Data.status && result.Data.key == "error") {
                 ShowWaitingProgress("#content-area", "hide");
@@ -287,13 +294,13 @@ $(document).on("ready", function () {
     $(".show-hide-password").on("click", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
-            $(this).removeClass('su-show');
-            $(this).addClass('su-hide');
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings().find("input").attr('type', 'password');
-            $(this).removeClass('su-hide');
-            $(this).addClass('su-show');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 

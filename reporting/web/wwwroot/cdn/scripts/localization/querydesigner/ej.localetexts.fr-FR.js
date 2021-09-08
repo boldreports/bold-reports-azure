@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['fr-FR'] = {
             specifyQuery: 'Spécifiez la requête de jeu de données',
             selectTable: 'Sélectionnez la table pour enregistrer le jeu de données',
             queryFailed: 'Le jeu de données n\'a pas pu enregistrer la requête de la table sélectionnée',
+            refreshFailed: 'Échec de l\'actualisation de l\'ensemble de données {datasetName}, il nécessite une ou plusieurs valeurs d\'entrée.Veuillez modifier et enregistrer l\'ensemble de données.',
             tableProcedure: 'Le groupe de données n\'a pas pu récupérer la procédure de table sélectionnée',
             deleteTableFailure: 'Impossible de supprimer la table sélectionnée',
             joinTableFailure: 'Impossible de joindre les tables sélectionnées',

@@ -201,7 +201,7 @@
         {{/if}}
 
         {{if ~checkMobile()}}
-        {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(permissionData[ItemType.Dataset].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
         <li>
             <a href="javascript:void(0);" title="" class="change-datasource" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-action="ChangeDataSource">
                 <i class="su su-copy"></i>

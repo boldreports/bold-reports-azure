@@ -17,7 +17,7 @@
 }
 
 @section styles{
-    <link rel="stylesheet" href="~/bundles/css/user-management-profile.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/bundles/css/user-management-profile.css" asp-append-version="true" />
 }
 
 @section scripts{
@@ -48,7 +48,7 @@
             $("#status-dom").hide();
 
             window.dateFormat = "@dateFormat";
-            var fulldata = @Html.Raw(Json.Serialize(ViewBag.UserDetail));
+            var fulldata = JSON.parse($("#user-detail").html());
             editUser(fulldata, "@dateFormat");
             if (@ViewBag.EditUserProfile > 0) {
                 $("#edit").trigger("click");
@@ -87,7 +87,7 @@
 @section MainSection {
     @if (!CloudAppConfig.IsSelfHosted)
     {
-    @await Html.PartialAsync("_UserMenu")
+        @await Html.PartialAsync("_UserMenu")
     }
     <div id="view-user-profile">
         <div id="view-profile-info">
@@ -188,22 +188,44 @@
                                 <span id="contact-validation" class="alert-messages validation-message"></span>
                             </div>
                         </div>
+                        <div class="form-group no-padding margin-top10" id="activation-status-div">
+                            <label class="label-panel text-right app-textbox-label">[[[Email Verification]]]</label>
+                            @if (userDetail.IsActivated)
+                            {
+                                <div id="completed-status" class="col-sm-5 col-xs-12 group-list">
+                                    <span class="label label-success">[[[Completed]]]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="pending-status" class="col-sm-5 col-xs-12 group-list"><span class="label label-warning">[[[Pending]]]</span></div>
+                            }
+                        </div>
+                        <div class="form-group no-padding margin-top10" id="status-div">
+                            <label class="label-panel text-right app-textbox-label">[[[Status]]]</label>
+                            <div id="status-show" class="col-sm-5 col-xs-12 group-list">
+                                <span class="user-status">@(userDetail.IsActive ? "Active" : "Inactive")</span>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 @*@if (!ViewBag.IsAdUser)
-                    {
-                        <div id="edit-button">
-                            <input type="button" class="secondary-button pull-right" id="edit" title="" value="Edit Profile">
-                            <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="Cancel">
-                            <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="Save">
-                        </div>
-                    }*@
+            {
+                <div id="edit-button">
+                    <input type="button" class="secondary-button pull-right" id="edit" title="" value="Edit Profile">
+                    <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="Cancel">
+                    <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="Save">
+                </div>
+            }*@
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                     <h5 id="updation-validation-message"></h5>
                 </div>
             </div>
             <input type="hidden" id="image" value="" />
             <input type="hidden" id="user-id" value="@ViewBag.UserDetail.UserId" />
+            <div id="user-detail" style="display:none">
+                @Html.Raw(Json.Serialize(ViewBag.UserDetail))
+            </div>
         </div>
         @if (CloudAppConfig.IsSelfHosted && ViewBag.AdminType == AdminType.SuperAdmin && (userDetail.DirectoryTypeId == DirectoryType.Local || userDetail.DirectoryTypeId == DirectoryType.ExternalDatabase))
         {
@@ -219,7 +241,7 @@
                                 <div class="col-xs-6 col-sm-7 col-md-7 col-lg-8 password-section">
                                     @Html.Password("fake-password", new { id = "fake-password", @class = "fake-password-avoid-autocomplete" })
                                     @Html.Password("new-password", "", new { @class = "form-control password-fields-user-profile-edit", id = "new-password", name = "new-password", maxlength = "4000" })
-                                    <span class="su su-eye view-green show-hide-password"></span>
+                                    <span class="su su-show view-green show-hide-password"></span>
                                     <span id="new-password-validate" class="password-validate-holder"></span>
                                 </div>
                             </div>
@@ -230,7 +252,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-7 col-md-7 col-lg-8 confirm-section password-section">
                                     @Html.Password("confirm-password", "", new { @class = "form-control password-fields-user-profile-edit", id = "confirm-password", name = "confirm-password", maxlength = "4000" })
-                                    <span class="su su-eye view-green show-hide-password"></span>
+                                    <span class="su su-show view-green show-hide-password"></span>
                                     <span id="confirm-password-validate" class="password-validate-holder"></span>
                                 </div>
                             </div>

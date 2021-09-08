@@ -446,6 +446,7 @@ CREATE TABLE [BOLDTC_TenantInfo] (
 	DatabaseType int Default 0,
 	BlobConnectionString nvarchar(max),
 	ConnectionString nvarchar(max),
+	AdditionalParameters nvarchar(max),
 	MaintenanceDatabase nvarchar(255) NULL,
 	TenantSQLServerId int,
 	ElasticPoolId int,
@@ -454,6 +455,7 @@ CREATE TABLE [BOLDTC_TenantInfo] (
 	ImDbSqlServerId int,
 	ImDbElasticPoolId int,
 	ImDbMaintenanceDatabase nvarchar(255) NULL,
+	ImDbAdditionalParameters nvarchar(max),
 	TenantStatus int NOT NULL,
 	BillingAddressId uniqueidentifier,
 	StatusUpdatedDate datetime NOT NULL,
@@ -640,9 +642,12 @@ CREATE TABLE [BOLDTC_SqlServerType] (
 )
 ;
 CREATE TABLE [dbo].[BOLDTC_OAuthToken](
+    [Id] int IDENTITY(1,1) NOT NULL,
 	[Token] [nvarchar](max) NULL,
 	[Ticket] [nvarchar](max) NULL,
-	[ModifiedDate] [datetime] NULL
+	[ModifiedDate] [datetime] NULL,
+	CONSTRAINT [PK_BOLDTC_OAUTHTOKEN] PRIMARY KEY CLUSTERED
+	  (  [Id] ASC  ) WITH (IGNORE_DUP_KEY = OFF)
 )
 ;
 CREATE TABLE [dbo].[BOLDTC_InternalApps](

@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['es-ES'] = {
             specifyQuery: 'Especifique la consulta del conjunto de datos.',
             selectTable: 'Seleccione la tabla para guardar el conjunto de datos',
             queryFailed: 'El conjunto de datos no pudo guardar la consulta de la tabla seleccionada',
+            refreshFailed: 'No se pudo actualizar el conjunto de datos {datasetName}, requiere uno o más valores de entrada. Edite y guarde el conjunto de datos.',
             tableProcedure: 'El conjunto de datos no pudo recuperar el procedimiento de tabla seleccionado',
             deleteTableFailure: 'Error al eliminar la tabla seleccionada',
             joinTableFailure: 'Error al unir las tablas seleccionadas',

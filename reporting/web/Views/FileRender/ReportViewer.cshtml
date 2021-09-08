@@ -44,10 +44,14 @@
     @if (!isMobile)
     {
         <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
     }
     else
@@ -110,7 +114,7 @@
             </environment>
         }
         <script src="@reportServerResourceUrl/cdn/scripts/localization/reportviewer/ej.localetexts.@string.Concat(language,".js")"></script>
-        <script src="@reportServerResourceUrl/cdn/scripts/essentialjs/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
     }
     else
     {
@@ -354,7 +358,7 @@
      var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
 
      var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
-     var addViewUrl = { "web": "@Url.Action("onfiltersave", "ReportViews")", "api": "/items/views/add" };
+     var addViewUrl = { "web": "@Url.Action("OnFilterSave", "ReportViews")", "api": "/items/views/add" };
      var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
      var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
      var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
@@ -695,7 +699,7 @@
                 }
                 $("#nofilters").css("display", "none");
                 $("#save-lable-section label").html("");
-                link = '<a class="saved-view-link txt-overflow" href="/' +
+                link = '<a class="saved-view-link txt-overflow" href="' +
                     pageurl +
                     '?viewid=' +
                     viewId +

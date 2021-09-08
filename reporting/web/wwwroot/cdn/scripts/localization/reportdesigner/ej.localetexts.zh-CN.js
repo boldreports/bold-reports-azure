@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         report: '报告',
         url: '网址',
         linkUrl: '将网址链接到报告项',
-        none: '没有'
+        none: '没有',
+        linkBookmark: '书签'
     },
     linkReport: {
         reportCaption: '报告',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         categoryName: '链接',
         linkReport: '链接报告',
+        URL: '网址',
         appearance: {
             categoryName: '出现',
             styleTooltip: '樣式',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             toolTip: '工具提示',
             documentMap: '文件图',
             customAttributes: '自定义属性',
-            zIndex: '指数'
+            zIndex: '指数',
+            bookmark: '书签'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '没有数据信息',
             caption: '信息',
             hidden: '隐藏任何数据',
-            borderStyle: '边框样式',
+            showBorder: '显示边框',
             borderColor: '边框颜色',
             borderSize: '边框尺寸',
             fontLabel: '字形',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 size: '字體大小',
                 style: '字體樣式',
                 weight: '字體粗細'
-            },
-            positiontypes: {
-                topLeft: '左上方',
-                topCenter: '顶尖中心',
-                topRight: '右上',
-                rightTop: '右上角',
-                rightCenter: '正确的中心',
-                rightBottom: '右下',
-                bottomLeft: '左下方',
-                bottomCenter: '底部中心',
-                bottomRight: '底部右侧',
-                leftTop: '左上方',
-                leftCenter: '左中心',
-                leftBottom: '左下'
             },
             fontStyle: {
                 label: '字体样式',
@@ -674,28 +663,6 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                     extraBold: '特大号',
                     heavy: '重',
                 }
-            },
-            textDecoration: {
-                categoryName: '文本装饰',
-                defaultStyle: '默认',
-                none: '没有',
-                underline: '强调',
-                overline: '上划线',
-                lineThrough: '通过'
-            },
-            border: {
-                default: '边境',
-                left: '剩下',
-                top: '最佳',
-                right: '对',
-                bottom: '底部'
-            },
-            borderStyles: {
-                solid: '固体',
-                none: '没有',
-                double: '双',
-                dashed: '虚线',
-                dotted: '带点'
             }
         },
         basicSettings: {
@@ -860,6 +827,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             documentMap: '文件图',
             customAttributes: '自定义属性',
             alertHeader: '圖表報告項目',
+            bookmark: '书签',
             alertMessage: '自定义属性格式无效。正确的格式示例：\'AttrName1 = Value1，AttrName2 = Value2 \'.'
         },
         seriesSettings: {
@@ -984,6 +952,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '杂',
             customAttributes: '自定义属性',
             documentMap: '文件图',
+            bookmark: '书签'
         },
         styleTooltip: '樣式',
         colorTooltip: '顏色',
@@ -1073,7 +1042,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '杂',
             customattributes: '自定义属性',
             documentMap: '文件图',
-            pageName: '页面名称'
+            pageName: '页面名称',
+            bookmark: '书签'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1465,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             keepTogether: '保持在一起',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         fontStyleTooltip: '樣式',
         fontWeightTooltip: '重量',
@@ -1617,7 +1588,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             pageName: '页面名称',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         dataElement: {
             categoryName: '数据元素',
@@ -1771,6 +1743,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             connectDatasource: '连接数据源',
             datasourceType: '选择要连接的类型',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL 數據倉庫',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1755,11 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             mysqlLabel: '的MySQL',
             mariadbLabel: '玛丽亚数据库',
             memsqlLabel: '内存SQL',
-            sharedLabel: '共享'
+            sharedLabel: '共享',
+            cdataLabel: '数据',
+            snowflakeLabel: '雪花',
+            ssasLabel: 'Microsoft SQL 分析服务',
+            verticaLabel: '维蒂卡'
         },
         datasourceConnection: {
             newConnection: '新的连接',
@@ -2053,20 +2030,59 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: '连接字符串',
-            authenticationType: '验证类型',
-            authentication: '认证方式',
-            prompt: '提示',
-            none: '没有',
+            serverName: '服务器名称',
+            port: '港口',
             userName: '用户名',
             password: '密码',
-            promptLabel: '提示文字',
             savePassword: '保存密码',
+            database: '数据库',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
             alertMessage: {
-                alertConnectionString: '指定连接字符串',
-                alertPrompt: '指定提示文字',
-                alertUserName: '指定用户名',
-                alertPassword: '指定密码'
+                userName: '指定用户名',
+                password: '指定密码',
+                serverName: '指定服务器名称',
+                port: '指定端口号',
+                database: '指定数据库名称',
+            }
+        },
+        snowflakeDatasource: {
+            serverName: '服务器名称',
+            serverWatermark: '例子',
+            database: '数据库',
+            userName: '用户名',
+            password: '密码',
+            savePassword: '保存密码',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
+            alertMessage: {
+                serverName: '指定服务器名称',
+                userName: '指定用户名',
+                password: '指定密码',
+                database: '指定数据库名称'
+            }
+        },
+        verticaDatasource: {
+            serverName: '服务器名称',
+            port: '港口',
+            database: '数据库',
+            userName: '用户名',
+            password: '密码',
+            savePassword: '保存密码',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
+            alertMessage: {
+                serverName: '指定服务器名称',
+                userName: '指定用户名',
+                password: '指定密码',
+                port: '指定端口号',
+                database: '指定数据库名称'
             }
         },
         sharedDatasource: {
@@ -3103,6 +3119,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         link: '链接',
         linkReport: '链接报告',
+        URL: '网址',
         position: {
             categoryName: '位置',
             label: '位置',
@@ -3124,7 +3141,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             canShrink: '可以收缩',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         paragraphSettings: {
             categoryName: '段落设置',
@@ -3308,7 +3326,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         miscellaneous: {
             categoryName: '杂',
-            toolTip: '工具提示'
+            toolTip: '工具提示',
+            bookmark: '书签'
         },
         styleTooltip: '樣式',
         colorTooltip: '顏色',
@@ -3432,7 +3451,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             keepTogether: '保持在一起',
             customAttributes: '自定义属性',
             toolTip: '工具提示',
-            documentMap: '文件图'
+            documentMap: '文件图',
+            bookmark: '书签'
         },
         headers: {
             categoryName: '标头',
@@ -3851,6 +3871,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 specifyQuery: '指定 数据集 查询',
                 selectTable: '选择表来保存 数据集',
                 queryFailed: '数据集 无法保存所选表的查询',
+                refreshFailed: '未能刷新数据集 {datasetName}，它需要一个或多个输入值。 请编辑并保存数据集。',
                 tableProcedure: '数据集 无法检索选定的表过程',
                 deleteTableFailure: '删除所选表失败',
                 joinTableFailure: '无法加入所选表格',
@@ -4022,7 +4043,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             sort: '排序',
             group: '组',
             expression: '表达',
-            aggregate: '骨料'
+            aggregate: '骨料',
+            none: '没有任何'
         },
         validationMessage: '设计器中不支持图表类型.'
     },
@@ -4430,7 +4452,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryMiscellaneous: '杂',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         spatial: {
             categoryName: '空间空间',

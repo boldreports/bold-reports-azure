@@ -12,9 +12,11 @@
 
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/save-view.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/save-view.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     @if (ViewBag.ViewerType == "v2")
     {
@@ -72,8 +74,8 @@
         </form>
         <div class="col-xs-12 dialog-footer no-right-padding no-left-padding" id="action-button-division">
             <div class="rightAlign">
-                <input type="button" title="" id="save-button" class="btn primary-button" value=[[[Save]]] />
-                <input type="button" id="cancel-button" title="" class="btn secondary-button" value="[[[Cancel]]]" onclick="closeSaveViewPopup()" />
+                <input type="button" title="" id="save-button" class="btn primary-button app-btn-primary" value=[[[Save]]] />
+                <input type="button" id="cancel-button" title="" class="btn secondary-button app-btn-secondary" value="[[[Cancel]]]" onclick="closeSaveViewPopup()" />
             </div>
         </div>
     </div>

@@ -44,6 +44,28 @@
                 }
                 return false;
             }
+
+            setInterval(function () {
+                $.ajax({
+                    type: "GET",
+                    url: progressStatusUrl,
+                    success: function (result) {
+                        $(".deployment-status").text(result.Message);
+                        $(".progressBar-container .progress-bar").width(result.Percentage);
+                        if (result.Percentage == "100%") {
+                            $.ajax({
+                                type: "POST",
+                                url: deleteStatusUrl,
+                                success: function (data) {
+                                    if (data) {
+                                        $(".progressBar-container .progress-bar").width("10%")
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }, 3000);
         }
 
         $scope.init = function () {
@@ -90,7 +112,7 @@
             <input type="text" class="display-none">
             <input type="password" class="fake-password" name="fake_passwordfield_to_turnoff_autocomplete">
             <input type="password" tabindex="4" id="new-password" class="form-control" placeholder="[[[Password]]]" name="password" autocomplete="off" maxlength="85" data-toggle="popover" data-title="[[[Password must contain:]]]" data-trigger="focus" data-html="true" data-content="@passwordRules" data-placement="left" />
-            <span class="su su-eye show-hide-password"></span>
+            <span class="su su-show show-hide-password"></span>
             <div class="startup-validation validation-txt-errors" id="new-password"></div>
         </div>
 
@@ -98,7 +120,7 @@
             <label class="field-label">[[[Confirm password]]]</label>
             <input type="text" class="display-none">
             <input type="password" tabindex="5" id="txt-confirm-password" class="form-control" placeholder="[[[Confirm password]]]" name="confirm" autocomplete="off" maxlength="85" />
-            <span class="su su-eye show-hide-password"></span>
+            <span class="su su-show show-hide-password"></span>
             <div class="startup-validation validation-txt-errors" id="confirm-password"></div>
         </div>
         <div class="btn-holder" id="admin-account-submit-container">

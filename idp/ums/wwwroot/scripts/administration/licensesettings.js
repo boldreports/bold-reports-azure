@@ -79,7 +79,7 @@ function handleApplyLicense(addButtonObj, evt) {
             $.ajax({
                 type: "POST",
                 url: updateLicenseKeyUrl,
-                data: { licenseKey: evt.originalEvent.data.licenseKey, refreshToken: refreshToken, licenseType: "1", boldLicenseToken: boldLicenseToken },
+                data: { licenseKey: evt.originalEvent.data.licenseKey, refreshToken: refreshToken, licenseType: "1", boldLicenseToken: boldLicenseToken, currentUrl: window.location.origin },
                 beforeSend: showWaitingPopup($("#server-app-container")),
                 success: function (result) {
                     if (result.Status) {
@@ -123,54 +123,4 @@ function licenseWindow(element, windowHeight, windowWidth) {
     showWaitingPopup($("#server-app-container"));
     windowRef = window.open(element.attr("license-service-url") + "&origin=" + window.location.origin, "", "height=" + windowHeight, "width=" + windowWidth);
     timer = setInterval($.proxy(checkWindowRef, 500, addButtonObj));
-}
-
-function copyToClipboard(elementId) {
-    var elem = document.getElementById(elementId)
-    // create hidden text element, if it doesn't already exist
-    var targetElementId = "hidden-copy-text";
-    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
-    var start, end;
-    if (isInput) {
-        // can just use the original source element for the selection and copy
-        targetElement = elem;
-        start = elem.selectionStart;
-        end = elem.selectionEnd;
-    } else {
-        // must use a temporary form element for the selection and copy
-        targetElement = document.getElementById(targetElementId);
-        if (!targetElement) {
-            var targetElement = document.createElement("textarea");
-            targetElement.style.position = "absolute";
-            targetElement.style.left = "-9999px";
-            targetElement.id = targetElementId;
-            document.body.appendChild(targetElement);
-        }
-        targetElement.textContent = elem.textContent;
-    }
-    // select the content
-    var currentFocus = document.activeElement;
-    targetElement.focus();
-    targetElement.setSelectionRange(0, targetElement.value.length);
-
-    // copy the selection
-    var done;
-    try {
-        done = document.execCommand("copy");
-    } catch (e) {
-        done = false;
-    }
-    // restore original focus
-    if (currentFocus && typeof currentFocus.focus === "function") {
-        currentFocus.focus();
-    }
-
-    if (isInput) {
-        // restore prior selection
-        elem.setSelectionRange(start, end);
-    } else {
-        // clear temporary content
-        targetElement.textContent = "";
-    }
-    return done;
 }

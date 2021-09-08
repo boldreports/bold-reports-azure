@@ -111,9 +111,11 @@ function sendData(data, url) {
                             $("#plan-name-container").removeClass("display-none");
                         }
 
-                        if (data.ExpiryDate !== undefined && !isEmptyOrSpaces(data.ExpiryDate)) {
-                            $("#expiry-date").html(data.ExpiryDate);
-                            $("#expiry-date-container").removeClass("display-none");
+                        if (!data.IsPerpetualLicense) {
+                            if (data.ExpiryDate !== undefined && !isEmptyOrSpaces(data.ExpiryDate)) {
+                                $("#expiry-date").html(data.ExpiryDate);
+                                $("#expiry-date-container").removeClass("display-none");
+                            }
                         }
 
                         if (data.TenantStatus !== undefined && !isEmptyOrSpaces(data.TenantStatus)) {
@@ -125,6 +127,11 @@ function sendData(data, url) {
                             }
                             else if (data.TenantStatus == "Trial") {
                                 $("#tenant-status").addClass("trial");
+                            }
+
+                            if (data.IsPerpetualLicense) {
+                                $("#tenant-status").html("Perpetual")
+                                $("#tenant-status").addClass("active-status");
                             }
                         }
 
@@ -172,7 +179,7 @@ function confirmLicenseUpdate() {
         $.ajax({
             type: "POST",
             url: updateLicenseKeyUrl,
-            data: { licenseKey: licenseKey, licenseType: "2" },
+            data: { licenseKey: licenseKey, licenseType: "2", currentUrl: window.location.origin },
             beforeSend: showWaitingPopup($("#offline-license-update-dialog")),
             success: function (result) {
                 if ($("#license-selection-container").length != 0) {

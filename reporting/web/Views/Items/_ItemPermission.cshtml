@@ -43,10 +43,14 @@
     </script>
 
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/itempermission.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itempermission.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/itempermission.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itempermission.min.js"></script>
     </environment>
@@ -111,7 +115,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 button-area share-button pull-right share-to-padding">
-                                        <input name="Save" value="[[[Share]]]" class="primary-button pull-right" id="save-permission" disabled="true" type="button">
+                                        <input name="Save" value="[[[Share]]]" class="primary-button app-btn-primary pull-right" id="save-permission" disabled="true" type="button">
                                     </div>
                                     @if (ViewBag.ItemType.ToString() == ItemType.Slideshow.ToString() || ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString())
                                     {
@@ -185,7 +189,7 @@
 
                 <div class="modal-footer">
                     <div class="col-lg-12 margin-top no-padding">
-                        <input type="button" id="close-button" title="[[[Close]]]" class="secondary-button pull-right itempermission-popup-close" value="[[[Close]]]" />
+                        <input type="button" id="close-button" title="[[[Close]]]" class="secondary-button app-btn-secondary pull-right itempermission-popup-close" value="[[[Close]]]" />
                     </div>
                 </div>
             </div>

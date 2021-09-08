@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['tr-TR'] = {
             specifyQuery: 'DataSet sorgusunu belirtin',
             selectTable: 'DataSet\'i kaydetmek için tabloyu seçin',
             queryFailed: 'DataSet, seçili tablonun Sorgusunu kaydedemedi',
+            refreshFailed: '{datasetName} veri kümesi yenilenemedi, bir veya daha fazla giriş değeri gerektiriyor. Lütfen veri kümesini düzenleyin ve kaydedin.',
             tableProcedure: 'DataSet, seçilen tablo prosedürünü alamadı',
             deleteTableFailure: 'Seçili tablo silinemedi',
             joinTableFailure: 'Seçili tablolara katılma başarısız oldu',

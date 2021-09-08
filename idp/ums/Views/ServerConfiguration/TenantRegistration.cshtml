@@ -5,6 +5,10 @@
     var pathbase = Context.Request.PathBase;
     var useSiteIdentifier = CloudAppConfig.UseSiteIdentifier;
     var maintenanceDatabaseValue = ViewBag.MaintenanceDatabase == null ? "postgres" : ViewBag.MaintenanceDatabase;
+    var additionalParameters = ViewBag.AdditionalParameters;
+    var sqlParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
+    var postgresSQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.PostgreSQL_Connection_Parameters);
+    var mySQLParameter = HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MySQL_Connection_Parameters);
 }
 <!DOCTYPE html>
 <html>
@@ -20,7 +24,10 @@
 
     <title>[[[Welcome to ]]]@GlobalAppSettings.BrandingDisplayName</title>
     <link rel="icon" href="@Url.Content("/images/" + GlobalAppSettings.Branding + "/application/favicon.ico")" />
+
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+
     <link rel="stylesheet" href="~/bundles/css/site-settings.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/bundles/css/system-configuration.css" asp-append-version="true" />
 
@@ -61,6 +68,10 @@
         var boldBIUrl = "@CloudAppConfig.InternalAppBIUrl/@CloudAppConfig.TenantIdentifierPrefix/";
         var checkTenantIdentifierExistUrl = "@Url.Action("CheckTenantNameIdentifierExist", "TenantsManagement")";
         var useSiteIdentifier = "@useSiteIdentifier".toLowerCase() === "true";
+        var additionalParameters = "@additionalParameters";
+        var sqlParameter = "@sqlParameter";
+        var postgresSQLParameter = "@postgresSQLParameter";
+        var mySQLParameter = "@mySQLParameter";
 
         $(document).ready(function () {
             $("#database-type").on("change", function () {
@@ -87,6 +98,8 @@
                         $("#check-windows").val(configuredDatabaseSettings.AuthenticationType === 0 ? "windows" : "sql").selectpicker("refresh").trigger("change");
                         $("#txt-login").val(configuredDatabaseSettings.UserName);
                         $("#txt-password-db").val(configuredDatabaseSettings.Password);
+                        $("#additional-parameter").val(additionalParameters);
+                        $(".note-additional-parameter a").attr("href", sqlParameter);
                         break;
 
                     case "PostgreSQL":
@@ -99,6 +112,8 @@
                         $("#txt-portnumber").val(configuredDatabaseSettings.Port);
                         $("#txt-login").val(configuredDatabaseSettings.UserName);
                         $("#txt-password-db").val(configuredDatabaseSettings.Password);
+                        $("#additional-parameter").val(additionalParameters);
+                        $(".note-additional-parameter a").attr("href", postgresSQLParameter);
                         break;
 
                     case "MySQL":
@@ -106,10 +121,13 @@
                         $("#mysql-odbc-dropdown").removeClass("hide").addClass("show");
                         $("#database-type").val(serverType).selectpicker("refresh").trigger("change");
                         $("#txt-servername").val(configuredDatabaseSettings.ServerName);
+                        $("#txt-portnumber").val(configuredDatabaseSettings.Port);
                         $("#txt-login").attr("disabled", false);
                         $("#txt-password-db").attr("disabled", false);
                         $("#txt-login").val(configuredDatabaseSettings.UserName);
                         $("#txt-password-db").val(configuredDatabaseSettings.Password);
+                        $("#additional-parameter").val(additionalParameters);
+                        $(".note-additional-parameter a").attr("href", mySQLParameter);
                         break;
 
                     case "MSSQLCE":
@@ -130,7 +148,8 @@
             }
             else {
                 $(".tenant-identifier").addClass("hide");
-                $(".site-full-url").attr("data-content", $(".site-base-url").text().replace("/site/",''));
+                $(".site-base-url").text($(".site-base-url").text().replace("/site/", ''));
+                $(".site-full-url").attr("data-content", $(".site-base-url").text());
             }
 
             $("[data-toggle='popover']").popover({

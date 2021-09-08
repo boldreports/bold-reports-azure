@@ -27,10 +27,12 @@
 
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-files.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-files.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-files.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-files.min.js"></script>
     </environment>
   
@@ -112,8 +114,8 @@
 
                 <div class="dialog-footer">
                     <div class="pull-right">
-                        <input type="button" title="" class="btn primary-button" id="publish-file" onclick="addfileValidate()" tabindex="4" value="[[[Add]]]" />
-                        <input type="button" title="" class="btn secondary-button" id="cancelAddFile" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="5">
+                        <input type="button" title="" class="btn primary-button app-btn-primary" id="publish-file" onclick="addfileValidate()" tabindex="4" value="[[[Add]]]" />
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddFile" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="5">
                         <input type="submit" class="hide-content" style="display: none;" />
                     </div>
                 </div>
@@ -128,10 +130,12 @@ else
 <head>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-files.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-files.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-files.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-files.min.js"></script>
     </environment>
     <script>

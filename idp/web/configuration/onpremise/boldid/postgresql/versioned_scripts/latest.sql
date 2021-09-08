@@ -1,14 +1,9 @@
-﻿ALTER TABLE BOLDTC_Tenant ALTER COLUMN TenantIdentifier DROP NOT NULL;
+﻿ALTER TABLE BOLDTC_TenantInfo ADD AdditionalParameters varchar(1026) NULL;
 
-ALTER TABLE BOLDTC_Tenant ADD UseSiteIdentifier smallint NOT NULL DEFAULT 1;
+ALTER TABLE BOLDTC_TenantInfo ADD ImDbAdditionalParameters varchar(1026) NULL;
 
-WITH cte AS (
-   SELECT id, row_number() OVER (ORDER BY BOLDTC_TenantInfo.CreatedDate DESC NULLS LAST) AS rn
-   FROM   BOLDTC_TenantInfo   
-   ORDER  BY BOLDTC_TenantInfo.CreatedDate ASC NULLS LAST
-   LIMIT  1
-   )
-UPDATE BOLDTC_TenantInfo a
-SET IsMaster = 1
-FROM cte
-WHERE cte.id = a.id;
+ALTER TABLE  BOLDTC_AuthSettings ALTER COLUMN Settings Type varchar(4000);
+
+ALTER TABLE BOLDTC_OAuthToken ADD Id SERIAL NOT NULL;
+
+ALTER TABLE BOLDTC_OAuthToken add CONSTRAINT PK_BOLDTC_OAUTHTOKEN primary key(Id);

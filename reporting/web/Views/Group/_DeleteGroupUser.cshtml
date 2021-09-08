@@ -11,10 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/EditDelete.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/DeleteGroupUser.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/EditDelete.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/DeleteGroupUser.min.js"></script>
     </environment>
     <script>
@@ -54,8 +56,8 @@
                     <input type="hidden" id="hidden-group-id" value="@ViewBag.groupId" />
                 </div>
                 <div class="col-xs-8 no-padding pull-right margin-top">
-                    <input type="button" id="delete-user" class="critical-action-button margin-right" value="[[[Yes]]]" />
-                    <input type="button" id="cancel-group" class="secondary-button popup-close" value="[[[No]]]" />
+                    <input type="button" id="delete-user" class="critical-action-button app-btn-danger margin-right" value="[[[Yes]]]" />
+                    <input type="button" id="cancel-group" class="secondary-button app-btn-secondary popup-close" value="[[[No]]]" />
                 </div>
             </div>
         </div>

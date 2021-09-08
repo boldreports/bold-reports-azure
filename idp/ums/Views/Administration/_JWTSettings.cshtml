@@ -76,10 +76,10 @@
                 <div class="col-md-12 no-padding no-margin">
                     <label class="app-textbox-label col-md-3 no-margin">[[[Signing Key]]]</label>
                     <div class="col-md-5 no-margin form-input-field" ng-class="(jwtSettingsForm.jwtSigningKey.$dirty && jwtSettingsForm.jwtSigningKey.$invalid) ? 'has-error' : ''">
-                        <input type="password" id="jwt-signing-key" readonly="" class="form-control col-md-6 no-margin signing-key-values @(enableSigningKeyOptions ? "signing-key-width" : string.Empty)" name="jwtSigningKey" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" />
+                        <input type="password" id="jwt-signing-key" readonly="" class="form-control col-md-6 no-margin signing-key-values @(enableSigningKeyOptions ? "signing-key-width" : string.Empty)" name="jwtSigningKey" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" value="@ViewBag.JwtSettings.JwtSettings.SigningKey" />
                         <button class="su su-copy copy-signing-key-values @(enableSigningKeyOptions ? string.Empty : "display-none")" id="copy-signing-key" onclick="fnCopySigningKey('#jwt-signing-key','#copy-signing-key')" data-toggle="tooltip" data-original-title="[[[Click to copy]]]"></button>
-                        <button class="su su-eye show-hide-password copy-signing-key-values @(enableSigningKeyOptions ? string.Empty : "display-none")" id="show-signing-key" data-toggle="tooltip" data-original-title="[[[Click to view]]]"></button>
-                        <button class="su su-sync text focus copy-signing-key-values @(enableSigningKeyOptions ? string.Empty : "display-none")" id="generate-signing-key" onclick="onRegenerateSigningKeyDialogOpen()" data-toggle="tooltip" data-original-title="[[[Click to Regenerate]]]"></button>
+                        <button class="su su-show show-hide-password copy-signing-key-values @(enableSigningKeyOptions ? string.Empty : "display-none")" id="show-signing-key" data-toggle="tooltip" data-original-title="[[[Click to view]]]"></button>
+                        <button class="su su-sync text focus copy-signing-key-values @(enableSigningKeyOptions ? string.Empty : "display-none")" id="generate-signing-key" onclick="onRegenerateSigningKeyDialogOpen()" data-toggle="tooltip" data-original-title="[[[Click to Regenerate]]]" data-trigger="hover"></button>
                     </div>
                 </div>
             </div>

@@ -41,9 +41,10 @@
 </head>
 <body>
     <div class="col-xs-12 data-security-container no-padding">
+        <div class="isolation-part @(ViewBag.IsBoldBIMultiTenant ? "" : "hide")">
         <h5>[[[Isolation Code]]]</h5>
         <label class="col-xs-5 app-textbox-label enable-isolation-code no-padding">
-            [[[Enable IsolationCode]]]
+            [[[Enable Isolation Code]]]
         </label>
         <div class="col-md-2 text-left switch-align isolation-loader no-padding">
             <span class="material-switch text-left" onclick="enableIsolationCode()">
@@ -60,6 +61,7 @@
                 </div>
             </div>
         </div>
+            </div>
         <div class="col-xs-12 attribute-header no-padding">
             <h5>[[[Attributes]]]</h5>
             <span class="su-add add-site-attribute" onclick="openCustomAttributeDialog(null,'addtenant')">[[[ADD]]]</span>
@@ -78,8 +80,15 @@
             </div>
         </script>
         <div class="notes-container">
-            <h5>[[[Notes]]]</h5>
-            <p>[[[You can configure the isolation code and attribute for this tenant later.]]]</p>
+            <h5>[[[Note:]]]</h5>
+            @if (ViewBag.IsBoldBIMultiTenant)
+            {
+                <p class="data-security-note">[[[You can configure the isolation code and attribute for this site later.]]]</p>
+            }
+            else
+            {
+                <p class="data-security-note">[[[You can configure attribute for this site later.]]]</p>
+            }
         </div>
     </div>
     @await Html.PartialAsync("_AddCustomAttribue")

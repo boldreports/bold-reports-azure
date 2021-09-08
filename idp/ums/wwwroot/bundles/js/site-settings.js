@@ -283,6 +283,7 @@ $(document).ready(function () {
     var mainFileName;
     var favName;
     var currentDate = $.now();
+    var prevLang = $("#language").val();
     if ($("#time_format").is(":checked")) {
         $(".time").html(window.TM.App.LocalizationContent.TimeFormatTrue);
     } else {
@@ -312,6 +313,7 @@ $(document).ready(function () {
                 $("#upload-login-image-textbox").closest("div").addClass("has-error");
                 $("#upload-login-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='login-screen']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = loginFileExtension == ".svg" ? loginFileExtension : ".png";
@@ -323,6 +325,7 @@ $(document).ready(function () {
             $("#upload-login-image-textbox").closest("div").removeClass("has-error");
             $("#upload-login-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='login-screen']").tooltip("hide");
         }
     });
 
@@ -346,6 +349,7 @@ $(document).ready(function () {
                 $("#upload-main-screen-image-textbox").closest("div").addClass("has-error");
                 $("#upload-main-screen-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='header-logo']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = mainFileExtension == ".svg" ? mainFileExtension : ".png";
@@ -357,6 +361,7 @@ $(document).ready(function () {
             $("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
             $("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='header-logo']").tooltip("hide");
         }
     });
 
@@ -380,6 +385,7 @@ $(document).ready(function () {
                 $("#upload-favicon-image-textbox").closest("div").addClass("has-error");
                 $("#upload-favicon-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='favicon']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = favExtension == ".svg" ? favExtension : ".png";
@@ -391,6 +397,7 @@ $(document).ready(function () {
             $("#upload-favicon-image-textbox").closest("div").removeClass("has-error");
             $("#upload-favicon-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='favicon']").tooltip("hide");
         }
     });
 
@@ -415,6 +422,7 @@ $(document).ready(function () {
                 $("#upload-emaillogo-textbox").closest("div").addClass("has-error");
                 $("#upload-emaillogo-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='email-logo']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = emailFileExtension == ".svg" ? emailFileExtension : ".png";
@@ -426,8 +434,46 @@ $(document).ready(function () {
             $("#upload-emaillogo-image-textbox").closest("div").removeClass("has-error");
             $("#upload-emaillogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='email-logo']").tooltip("hide");
         }
 
+    });
+
+    $("#upload-poweredlogo-image").ejUploadbox({
+
+        saveUrl: window.fileUploadUrl + "?imageType=poweredlogo&&timeStamp=" + currentDate,
+        autoUpload: true,
+        showFileDetails: false,
+        buttonText: { browse: ".  .  ." },
+        extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
+        height: window.innerWidth <= 1366 ? 26 : 30,
+        begin: function () {
+            ShowWaitingProgress("#content-area", "show");
+        },
+        fileSelect: function (e) {
+            poweredFileExtension = e.files[0].extension.toLowerCase();
+            poweredFileName = e.files[0].name;
+        },
+        error: function () {
+            if (poweredFileExtension !== ".png" && poweredFileExtension !== ".jpg" && poweredFileExtension !== ".jpeg" && poweredFileExtension !== ".svg") {
+                $("#upload-poweredlogo-image-textbox").addClass("validation-error-image").val(window.TM.App.LocalizationContent.InValidFileFormat);
+                $("#upload-poweredlogo-image-textbox").closest("div").addClass("has-error");
+                $("#upload-poweredlogo-image-textbox").parent().find(".e-box").addClass("upload-error-border");
+            }
+            $("#image-container").find(".tooltip-container[data-image='powered-logo']").tooltip("hide");
+        },
+        complete: function () {
+            var fileExtension = poweredFileExtension == ".svg" ? poweredFileExtension : ".png";
+            window.SystemSettingsProperties.PoweredByLogo = "powered_logo_" + currentDate + fileExtension;
+            var imageUrl = window.baseRootUrl + "content/images/application/" + "powered_logo_" + currentDate + fileExtension + "?v=" + $.now();
+            $("#display-powered-logo").attr("src", imageUrl);
+            $("#upload-poweredlogo-image-textbox").removeClass("ValidationErrorImage").val(poweredFileName);
+            $("#upload-poweredlogo-image-textbox").removeClass("validation-error-image");
+            $("#upload-poweredlogo-image-textbox").closest("div").removeClass("has-error");
+            $("#upload-poweredlogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+            ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='powered-logo']").tooltip("hide");
+        }
     });
 
     $("div.date-format-radio input[type=radio]").each(function () {
@@ -465,7 +511,7 @@ $(document).ready(function () {
             isUrlChange = true;
         }
         var isReloadPage = false;
-        if ($("#enable-ssl").val() != $("#scheme_value").attr("data-value") || $("#site_url").attr("data-original-value") !== $("#site_url").val()) {
+        if ($("#enable-ssl").val() != $("#scheme_value").attr("data-value") || $("#site_url").attr("data-original-value") !== $("#site_url").val() || prevLang != $("#language").val()) {
             isReloadPage = true;
         }
         var siteURL = $("#site_url").val();
@@ -499,9 +545,10 @@ $(document).ready(function () {
             MainScreenLogo: window.SystemSettingsProperties.MainScreenLogo,
             FavIcon: window.SystemSettingsProperties.FavIcon,
             EmailLogo: window.SystemSettingsProperties.EmailLogo,
+            PoweredByLogo: window.SystemSettingsProperties.PoweredByLogo,
             WelcomeNoteText: $("#txt_welcome_note").val(),
             TimeZone: $("#time-zone").val(),
-            DateFormat: $("input:radio[name=date_format]:checked").val(),
+            DateFormat: $("#date-format").val(),
             MailSettingsAddress: $("#mail-user-name").val(),
             MailSettingsAuthType: parseInt($("#mail-authentication-type").val()),
             MailSettingsUserName: parseInt($("#mail-authentication-type").val()) === 1 ? $("#sender-user-name").val() : "",
@@ -517,14 +564,15 @@ $(document).ready(function () {
             Language: $("#language").val(),
             IsEnablePoweredBySyncfusion: $("#enablepoweredbysyncfusion").is(":checked"),
             IsEnableCopyrightInfo: $("#enablecopyrightinfo").is(":checked"),
-            TimeFormat: $("#time_format").is(":checked")
+            CopyrightInformation: $("#site-copyright").val(),
+            TimeFormat: $("#time_format").val()
         };
 
         $.ajax({
             type: "POST",
             url: window.updateSystemSettingsUrl,
             data: { systemSettingsData: JSON.stringify(systemSettingsData) },
-            beforeSend: ShowWaitingProgress("#content-area", "show"),
+            beforeSend: showWaitingPopup($("#server-app-container")),
             success: function (result) {
                 if (isReloadPage) {
                     if (isUrlChange) {
@@ -535,6 +583,8 @@ $(document).ready(function () {
                     }
                 } else {
                     $("#application-logo").attr("src", window.baseRootUrl + "content/images/application/" + systemSettingsData.MainScreenLogo);
+                    $("#poweredbysyncfusion img").attr("src", window.baseRootUrl + "content/images/application/" + systemSettingsData.PoweredByLogo);
+                    $("#copyrightinfo").html(systemSettingsData.CopyrightInformation);
                     var link = document.createElement("link");
                     link.type = "image/x-icon";
                     link.rel = "shortcut icon";
@@ -545,28 +595,28 @@ $(document).ready(function () {
                 }
 
                 if (result.status) {
-                    if ($("#enablepoweredbysyncfusion").is(":checked")) {
-                        $("#poweredbysyncfusion").removeClass("hide").addClass("show");
-                    } else {
-                        $("#poweredbysyncfusion").removeClass("show").addClass("hide");
-                    }
-                    if ($("#enablecopyrightinfo").is(":checked")) {
-                        $("#copyrightinfo").removeClass("hide").addClass("show");
-                    } else {
-                        $("#copyrightinfo").removeClass("show").addClass("hide");
-                    }
-                    if ($("#enablepoweredbysyncfusion").is(":checked") && $("#enablecopyrightinfo").is(":checked")) {
-                        $("#footer-separator").removeClass("hide").addClass("show");
-                    } else {
-                        $("#footer-separator").removeClass("show").addClass("hide");
-                    }
-                    SuccessAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdated, 7000);
-                    SetCookie();
+                        if ($("#enablepoweredbysyncfusion").is(":checked")) {
+                            $("#poweredbysyncfusion").removeClass("hide").addClass("show");
+                        } else {
+                            $("#poweredbysyncfusion").removeClass("show").addClass("hide");
+                        }
+                        if ($("#enablecopyrightinfo").is(":checked")) {
+                            $("#copyrightinfo").removeClass("hide").addClass("show");
+                        } else {
+                            $("#copyrightinfo").removeClass("show").addClass("hide");
+                        }
+                        if ($("#enablepoweredbysyncfusion").is(":checked") && $("#enablecopyrightinfo").is(":checked")) {
+                            $("#footer-separator").removeClass("hide").addClass("show");
+                        } else {
+                            $("#footer-separator").removeClass("show").addClass("hide");
+                        }
+                        SuccessAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdated, 7000);
+                        SetCookie();
                 } else {
                     WarningAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdateFalied, 7000);
                     $(".error-message, .success-message").css("display", "none");
                 }
-                ShowWaitingProgress("#content-area", "hide");
+                hideWaitingPopup($("#server-app-container"));
             }
         });
     });
@@ -643,6 +693,10 @@ $(document).ready(function () {
             "site_url": {
                 isRequired: true,
                 isValidUrl: true
+            },
+            "copy_right_info": {
+                isRequired: true,
+                maxlength: 255
             }
         },
         highlight: function (element) {
@@ -650,14 +704,27 @@ $(document).ready(function () {
         },
         unhighlight: function (element) {
             $(element).closest("div").removeClass("has-error");
-            $(element).parent().parent().next().next().find("span.validation-errors").html("");
+            if (element.id == "site-copyright") {
+                $(element).parent().find("span.validation-errors").html("");
+            }
+            else {
+                $(element).parent().parent().next().find("span.validation-errors").html("");
+            }
         },
         errorPlacement: function (error, element) {
-            $(element).parent().parent().next().next().find("span.validation-errors").html(error);
+            if (element.attr("id") == "site-copyright") {
+                $(element).parent().find("span.validation-errors").html(error);
+            }
+            else {
+                $(element).parent().parent().next().find("span.validation-errors").html(error);
+            }
         },
         messages: {
             "site_url": {
                 isRequired: window.TM.App.LocalizationContent.Urlvalidator
+            },
+            "copy_right_info": {
+                isRequired: window.TM.App.LocalizationContent.CopyRightValidator
             }
         }
     });
@@ -841,9 +908,11 @@ $(document).ready(function () {
     $(document).on("change", "#enablecopyrightinfo", function () {
         if ($("#enablecopyrightinfo").is(":checked") == false) {
             $("#copyrightinfo").removeClass("show").hide();
+            $("#site-copyright").attr('disabled', 'disabled');
         }
         else {
             $("#copyrightinfo").removeClass("hide").show();
+            $("#site-copyright").removeAttr('disabled');
         }
         addFooterSeparator();
     });
@@ -962,6 +1031,9 @@ function RemoveUploadBoxError() {
     $("#upload-favicon-image-textbox").removeClass("ValidationErrorImage").val(window.TM.App.LocalizationContent.BrowsePath);
     $("#upload-favicon-image-textbox").closest("div").removeClass("has-error");
     $("#upload-favicon-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+    $("#upload-poweredogo-image-textbox").removeClass("ValidationErrorImage").val(window.TM.App.LocalizationContent.BrowsePath);
+    $("#upload-poweredogo-image-textbox").closest("div").removeClass("has-error");
+    $("#upload-poweredogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
 }
 
 function parseURL(str) {
@@ -1071,21 +1143,16 @@ function addFooterSeparator() {
     }
 }
 $(document).on("ready", function () {
-    $(".show-hide-password").on("mousedown", function () {
+    $(".show-hide-password").on("click", function () {
         if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
+            $(this).siblings("input").attr('type', 'text').val();
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings("input").attr('type', 'password');
-        }
-    });
-
-    $(".show-hide-password").on("mouseup", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
-        }
-        else {
-            $(this).siblings("input").attr('type', 'password');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 
@@ -1107,11 +1174,9 @@ $(document).on("ready", function () {
         }
     });
 
-    $(".show-hide-password").mouseleave(function () {
-        $(this).siblings("input").attr('type', 'password');
-    });
-
+  
     if (window.innerWidth < 1041) {
+
         $(".show-hide-password").on("click", function () {
             if ($(this).siblings("input").is(":password")) {
                 $(this).siblings("input").attr('type', 'text');

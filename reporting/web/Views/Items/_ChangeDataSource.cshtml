@@ -10,7 +10,6 @@
     var addDatasetUrl = "@Url.Action("AddSharedDataset", "DataSets")";
     var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
     var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "Datasets")";
-    var isDatasourceChanged = false;
     var oldDatasetID = "";
 
     function load() {
@@ -110,8 +109,8 @@
                     <span class="SuccessMessage"></span>
                 </div>
                 <div class="col-xs-6 rightAlign">
-                    <input type="button" title="" id="copy_dataset_button" class="app-button app-primary-button" onclick="addDataSet()" value="[[[Save]]]" />
-                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button PopupClose" value="[[[Cancel]]]" />
+                    <input type="button" title="" id="copy_dataset_button" class="app-button app-primary-button app-btn-primary" onclick="addDataSet()" value="[[[Save]]]" />
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Cancel]]]" />
                 </div>
             </div>
         }
@@ -123,17 +122,11 @@
                 </div>
                 <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
                     <div class="col-xs-12 no-padding text-center">
-                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button" value="[[[OK]]]" />
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
                     </div>
                 </div>
             </div>
         }
-        <environment include="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js"></script>
-        </environment>
-        <environment exclude="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js"></script>
-        </environment>
     </div>
     <script>
         $(document).ready(function () {
@@ -157,9 +150,6 @@
         for (var dataSource = 0; dataSource < sharedDataSource.length; dataSource++) {
             $("#sharedDataSourceList" + dataSource).selectpicker("refresh");
         }
-        $('.datasource-picker').on('change', function () {
-            isDatasourceChanged = true;
-        });
         window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
                     });
     </script>

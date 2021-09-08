@@ -33,10 +33,12 @@
         var dashboardsUrl = "@Url.Action("reports", "reports")";
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-category.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-category.min.js"></script>
     </environment>

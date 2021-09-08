@@ -240,7 +240,7 @@
             <div id="group-header" class="col-lg-8 col-md-8 col-sm-6 col-xs-12 no-padding">
                 <ul class="pull-right col-lg-12 no-padding no-margin groups-menu">
                     <li class="dropdown">
-                        <button class="dropdown-toggle primary-button pull-right" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new group]]]">
+                        <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new group]]]">
                             <span>[[[New Group]]] </span>
                             <span class="caret"></span>
                         </button>
@@ -273,7 +273,7 @@
                     @if ((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.AzureAD != null)
                     {
                         <li class="dropdown">
-                            <button class="dropdown-toggle primary-button pull-right" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Groups]]]">
+                            <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Groups]]]">
                                 <span>[[[Synchronize]]] </span>
                                 <span class="caret"></span>
                             </button>
@@ -304,7 +304,7 @@
                         if (ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted && !isAzureApplication)
                         {
                             <li>
-                                <a href="@Url.Action("ActiveDirectoryGroup","group")" class="link-button pull-right synchronize-groups" title="[[[Synchronize groups with Active Directory]]]">
+                                <a href="@Url.Action("ActiveDirectoryGroup","group")" class="link-button app-btn-link pull-right synchronize-groups" title="[[[Synchronize groups with Active Directory]]]">
                                     [[[Active Directory Synchronization]]]
                                 </a>
                             </li>
@@ -313,14 +313,14 @@
                         if (ViewBag.AzureAD != null)
                         {
                             <li>
-                                <a href="@Url.Action("AzureADGroup", "group")" class="link-button pull-right synchronize-groups" title="[[[Synchronize groups with Azure AD]]]">
+                                <a href="@Url.Action("AzureADGroup", "group")" class="link-button app-btn-link pull-right synchronize-groups" title="[[[Synchronize groups with Azure AD]]]">
                                     [[[Azure AD Synchronization]]]
                                 </a>
                             </li>
                         }
                     }
                     <li class="flying-add hide" id="add-user-in-groups">
-                        <button class="critical-action-button group-delete-button" title="[[[Delete selected Groups]]]" data-directory-type="@((int)DirectoryType.AzureAD)" data-groupid="1">[[[Delete Groups]]]</button>
+                        <button class="critical-action-button app-btn-danger group-delete-button" title="[[[Delete selected Groups]]]" data-directory-type="@((int)DirectoryType.AzureAD)" data-groupid="1">[[[Delete Groups]]]</button>
                     </li>
                 </ul>
                 <input type="hidden" name="GroupCount" id="group-count-text" value="@ViewBag.groupCount" />

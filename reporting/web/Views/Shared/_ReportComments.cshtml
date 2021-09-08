@@ -1,7 +1,7 @@
 ﻿@{
-    var umsUrl = ServerAppConfig.InternalAppIdpUrl;
-    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
     var globalAppSettings = _globalAppSettings;
+    var umsUrl = globalAppSettings.SystemSettings.IDPUrl;
+    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 
@@ -11,9 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/Comments-page.css" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/Comments-page.min.css" />
     </environment>
     <script>
@@ -63,8 +65,8 @@
             <div class="post-watch col-xs-12 no-right-padding no-left-padding">
 
                 <div class="col-xs-7 col-md-6 no-right-padding pull-right">
-                    <button class="btn secondary-button header-comment-close">[[[Cancel]]]</button>
-                    <input id="post-comment" class="btn primary-button" value="[[[Post]]]" type="submit">
+                    <button class="btn secondary-button app-btn-secondary header-comment-close">[[[Cancel]]]</button>
+                    <input id="post-comment" class="btn primary-button app-btn-primary" value="[[[Post]]]" type="submit">
                 </div>
             </div>
         </div>

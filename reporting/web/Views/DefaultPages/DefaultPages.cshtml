@@ -30,7 +30,7 @@
             <p class="default-pages-message">[[[Report Server is a web-based report management solution that provides an end-to-end solution for creating, storing, managing, sharing, and]]] <br /> [[[scheduling reports from any desktop or mobile browser.]]]</p>
             if (!isMobile && model != null && model.ContainsKey(ItemType.Report) && model[ItemType.Report])
             {
-                <button class="sf-primary-button" data-action="create-items">[[[Create my first Report]]]</button>
+                <button class="sf-primary-button app-btn-primary" data-action="create-items">[[[Create my first Report]]]</button>
                 <div class="dashboard-notification">
                     <img class="stacked-column" src="@(GlobalAppSettings.CdnDomain)/static/default-pages/v1/report-notification.svg">
                     <div class="dashboard-main">
@@ -52,7 +52,7 @@
             <p class="default-pages-message">[[[Build your data source from]]] Microsoft SQL Server, Oracle, OLEDB, ODBC, <br /> Web API, MySQL, PostgreSQL,[[[ and more.]]]</p>
             if (!isMobile && model != null && model.ContainsKey(ItemType.Datasource) && model[ItemType.Datasource])
             {
-                 <button class="cd-btn sf-primary-button" value="datasource-but">[[[Create my first Data Source]]]</button>
+                 <button class="cd-btn sf-primary-button app-btn-primary" value="datasource-but">[[[Create my first Data Source]]]</button>
             }
         }
         else if (itemType == ItemType.Dataset)
@@ -60,7 +60,7 @@
             <p class="default-pages-message">[[[A data set is a collection of data. Most commonly, a data set corresponds to the contents of a]]] <br /> [[[single database table, or a single statistical data matrix.]]]</p>
             if (!isMobile && model != null && model.ContainsKey(ItemType.Dataset) && model[ItemType.Dataset])
             {
-                 <button class="cds-btn sf-primary-button">[[[Create my first Dataset]]]</button>
+                 <button class="cds-btn sf-primary-button app-btn-primary">[[[Create my first Dataset]]]</button>
             }
         }
         else if (itemType == ItemType.Schedule)
@@ -83,12 +83,12 @@
                 {
                     if (model != null && model.ContainsKey(ItemType.Schedule) && model[ItemType.Schedule])
                     {
-                        <button class="sf-primary-button create-schedule">[[[Create Schedule]]]</button>
+                        <button class="sf-primary-button app-btn-primary create-schedule">[[[Create Schedule]]]</button>
                     }
                 }
                 else if (model != null && model.ContainsKey(ItemType.Report) && model[ItemType.Report])
                 {
-                    <button class="sf-primary-button" data-action="create-items">[[[Create Report]]]</button>
+                    <button class="sf-primary-button app-btn-primary" data-action="create-items">[[[Create Report]]]</button>
                 }
             }
         }

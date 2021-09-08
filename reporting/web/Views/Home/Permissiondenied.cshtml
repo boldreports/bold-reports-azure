@@ -3,7 +3,7 @@
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = "[[[Permission Denied]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
-    var cdnLink = ConfigurationManager.AppSettings["CdnLink"].TrimEnd('/');
+    var cdnLink = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
     var url = new Uri(Context.Request.GetDisplayUrl());
     var requestUrl = url.AbsolutePath.ToString().ToLower();
     var reportsPageUrl = Url.Action("Reports", "Reports");

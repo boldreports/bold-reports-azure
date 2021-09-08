@@ -38,9 +38,9 @@
     </script>
     <script type="text/x-jsrender" id="application-tenant-template">
         {{if TenantType == "@((int)TenantType.BoldBIOnPremise)"}}
-        <span>[[[Embedded BI]]]</span>
+        <span>Embedded BI</span>
         {{else TenantType == "@((int)TenantType.BoldReportsOnPremise)"}}
-    <span>[[[Enterprise Reporting]]]</span>
+    <span>Enterprise Reporting</span>
         {{/if}}
     </script>
 
@@ -189,6 +189,7 @@
                         headerText: "[[[Status]]]",
                         width: 110,
                         allowFiltering: false,
+                        allowSorting: false,
                         field: "IsActive"
                     },
                     @if (adminType == AdminType.SuperAdmin)

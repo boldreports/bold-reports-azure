@@ -15,7 +15,7 @@
     var groupList = ViewBag.GroupList;
     ViewBag.Title = " [[[User Profile]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     var idpreferenceId = Context.Session.GetString("idpReferenceId") != null ? Context.Session.GetString("idpReferenceId").ToString() : string.Empty;
-    var idPUrl = ServerAppConfig.InternalAppIdpUrl;
+    var idPUrl = globalAppSettings.SystemSettings.IDPUrl;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.EditUsers);
 }
 
@@ -114,9 +114,9 @@
                     <div class="col-md-6 col-xs-12 col-sm-6 col-xs-12 no-padding">
                         @if (userDetail.Email.ToLower() != ViewBag.LoggedUser.ToLower())
                         {
-                            @*<input class="primary-button password-save-button pull-right @showDeactivateButton" type="button" id="deactivate-button-click" value="[[[Deactivate User]]]" title="" />
-                                <input class="primary-button pull-right @showResendButton" type="button" id="resend-button-click" value="[[[Resend Activation Code]]]" title="" />
-                                <input class="primary-button password-save-button pull-right @showActivationButton" type="button" id="activate-button-click" value="[[[Activate User]]]" title="" />*@
+                            @*<input class="primary-button app-btn-primary password-save-button pull-right @showDeactivateButton" type="button" id="deactivate-button-click" value="[[[Deactivate User]]]" title="" />
+                                <input class="primary-button app-btn-primary pull-right @showResendButton" type="button" id="resend-button-click" value="[[[Resend Activation Code]]]" title="" />
+                                <input class="primary-button app-btn-primary password-save-button pull-right @showActivationButton" type="button" id="activate-button-click" value="[[[Activate User]]]" title="" />*@
 
                             <div id="profile-action-section" class="dropdown pull-right no-padding">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
@@ -156,7 +156,7 @@
                         }
 
                         <a href="@Url.Action("userpermission", "permission")?userId=@userDetail.UserId" title="">
-                            <input type="button" class="link-button pull-right" value="[[[Manage Permissions]]]">
+                            <input type="button" class="link-button app-btn-link pull-right" value="[[[Manage Permissions]]]">
                         </a>
                     </div>
                 </div>
@@ -248,11 +248,12 @@
                     </div>
                     @if (!ViewBag.IsAdUser)
                     {
-                        <div id="edit-button">
-                            <input type="button" class="secondary-button pull-right" id="edit" title="" value="[[[Edit Profile]]]">
-                            <input type="button" class="secondary-button pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
-                            <input type="button" class="primary-button pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="[[[Save]]]">
-                        </div>
+                <div id="edit-button">
+                    <input type="button" class="secondary-button app-btn-secondary pull-right" id="edit" title="" value="[[[Edit Profile]]]">
+                    <input type="button" class="secondary-button app-btn-secondary pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
+                    <input type="button" class="primary-button app-btn-primary pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="[[[Save]]]">
+
+                </div>
                     }
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                         <h5 id="updation-validation-message"></h5>
@@ -305,7 +306,7 @@
                             </div>
                         </form>
                         <div class="col-xs-1 no-padding button-section">
-                            <input type="button" class="primary-button password-save-button profile-save-button pull-right" value="[[[Update]]]" onclick="onUserChangePasswordClick()">
+                            <input type="button" class="primary-button app-btn-primary password-save-button profile-save-button pull-right" value="[[[Update]]]" onclick="onUserChangePasswordClick()">
                         </div>
                         <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 no-padding validation">
                             <h5 id="password-validation" class="password-validate-holder"></h5>
@@ -335,8 +336,8 @@
             </div>
             <div class="col-xs-12 modal-footer">
                 <div class="col-xs-12 no-padding margin-top pull-right">
-                    <input type="button" id="delete-item" onclick="deleteSingleUser(@ViewBag.UserDetail.UserId)" class="critical-action-button margin-right" value="[[[Yes]]]" tabindex="1" autofocus />
-                    <input type="button" onclick="onDeleteDialogClose()" class="secondary-button popup-close" value="[[[No]]]" tabindex="2" />
+                    <input type="button" id="delete-item" onclick="deleteSingleUser(@ViewBag.UserDetail.UserId)" class="critical-action-button app-btn-danger margin-right" value="[[[Yes]]]" tabindex="1" autofocus />
+                    <input type="button" onclick="onDeleteDialogClose()" class="secondary-button app-btn-secondary popup-close" value="[[[No]]]" tabindex="2" />
                 </div>
             </div>
         </div>

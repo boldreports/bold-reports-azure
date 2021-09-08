@@ -12,10 +12,14 @@
 
 @section styles{
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedules.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedules.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 }
 
@@ -311,7 +315,7 @@
                     </h1>
                     @if (itemPermissions[ItemType.Schedule])
                     {
-                        <button type="button" class="create-schedule pull-right primary-button">[[[Create Schedule]]]</button>
+                        <button type="button" class="create-schedule pull-right primary-button app-btn-primary">[[[Create Schedule]]]</button>
                     }
                 </div>
 
