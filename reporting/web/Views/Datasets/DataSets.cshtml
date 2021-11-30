@@ -1,0 +1,109 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    ViewBag.Title = "[[[Datasets]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManageDatasets);
+    var itemPermissions = ViewBag.ItemAddOptions as Dictionary<ItemType, bool>;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@model List<ItemDetail>
+
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/datasets.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/datasets.min.css" />
+    </environment>
+}
+
+@section scripts{
+
+    @if (!isMobile)
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-page.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-page.min.js"></script>
+        </environment>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-page-mobile.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-page-mobile.min.js"></script>
+        </environment>
+    }
+
+    <script>
+        let createDataSet = "@Url.Action("CreateDataset", "DataSets")";
+        var datasetId = "@ViewBag.DatasetId";
+        var datasetName = "@ViewBag.DatasetName";
+        var designerInstallationHelpUrl = "@(ServerAppConfig.AppSettings.Documentation.Uri + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DesignerInstallation))";
+        $(document).ready(function () {
+            $("#search-items").val("");
+            if (datasetId != "" && datasetId != undefined && datasetName != "" && datasetName != undefined) {
+                var newUrl = window.location.origin + rootUrlAction + "/datasets";
+                history.pushState({}, "", newUrl);
+                SuccessAlert(window.Server.App.LocalizationContent.AddDataset, window.Server.App.LocalizationContent.AddDatasetSuccess, 7000);
+            }
+        });
+    </script>
+}
+@section MainSection{
+    @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Dataset) && itemsCount[ItemType.Dataset] > 0)
+    {
+        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container">
+            <input type="hidden" class="page-name" data-content="[[[DATASETS]]]">
+            @if (!isMobile)
+            {
+                <div class="import-area col-lg-12 admin-page-header">
+                    <h2 class="page-title col-lg-6">[[[DATASETS]]]</h2>
+                    @if (itemPermissions[ItemType.Dataset])
+                    {
+                        <button type="button" class="cds-btn pull-right primary-button app-btn-primary">[[[Create Dataset]]]</button>
+                    }
+                </div>
+                <div class="admin-page-body">
+                    <div id="search-area" class="pull-right">
+                        <input type="text" id="search-items" class="pull-left no-margin" placeholder="[[[Search datasets]]]" />
+                        <span class="su close-icon su-inner-close pull-left no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-item pull-left no-margin" title="[[[Search datasets]]]"></span>
+                    </div>
+
+                    <div class="grid-container grid">
+                        @await Html.PartialAsync("../Items/_ItemsGrid", new ViewDataDictionary(ViewData) { { "gridName", "datasets" }, { "Permissions", @itemPermissions } })
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="grid-container grid">
+                    @await Html.PartialAsync("../Items/_ItemsGridForMobile", new ViewDataDictionary(ViewData) { { "gridName", "datasets" } })
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        @await Html.PartialAsync("../DefaultPages/DefaultPages", new ViewDataDictionary(ViewData) { { "Permissions", itemPermissions }, { "ItemType", ItemType.Dataset } })
+    }
+    <div id="cds-popup" class="cds-popup no-padding" style="display:none">
+        <iframe class="cds-iframe"></iframe>
+    </div>
+    <div id="popup-container" style="display:none" class="no-padding">
+        <iframe id="scheduler-popup-iframe" class="datasource-popup-frame"></iframe>
+    </div>
+
+    @if (!isMobile)
+    {
+        @await Html.PartialAsync("../Items/_AddItems")
+        @await Html.PartialAsync("../Items/_ItemVersion")
+        @await Html.PartialAsync("../Items/_SharePermission")
+    }
+}

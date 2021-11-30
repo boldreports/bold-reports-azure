@@ -1,0 +1,214 @@
+﻿@using Syncfusion.Server.Base.Environment;
+@{
+    Layout = null;
+    var token = ViewBag.Token;
+    var cdnLink = @GlobalAppSettings.CdnDomain;
+    var globalAppSettings = _globalAppSettings;
+    globalAppSettings.SystemSettings = new SystemSettings();
+    var reportServerResourceUrl = ViewBag.appsettings.SystemSettings.CDNLink.TrimEnd('/');
+    var pathbase = Context.Request.PathBase;
+    var headerLogo = string.Empty;
+    var favLogo = string.Empty;
+    var orgName = string.Empty;
+    if (!string.IsNullOrWhiteSpace(ViewBag.appsettings.SystemSettings.LoginLogo))
+    {
+        headerLogo = ViewBag.appsettings.SystemSettings.LoginLogo;
+        favLogo = ViewBag.appsettings.SystemSettings.FavIcon + "&random=" + Syncfusion.Server.Base.Helpers.DateTimeHelper.DateTimeToUnixTimeStamp(DateTime.Now);
+        orgName = ViewBag.appsettings.SystemSettings.OrganizationName;
+    }
+    else
+    {
+        headerLogo = reportServerResourceUrl + "/cdn/images/application/boldreports/deployment_header_logo.svg";
+        favLogo = @cdnLink + "/application/" + @ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + @IconFileNames.Favicon;
+        orgName = @GlobalAppSettings.BrandingDisplayName;
+    }
+}
+<!DOCTYPE html>
+<html class="dashboard-server">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="@favLogo" />
+    <title>[[[Registration]]] - @orgName Enterprise Reporting</title>
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tenant-registration.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/signalr/signalr.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tenant-registration-page.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tenant-registration.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/signalr/signalr.min.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tenant-registration-page.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <script>
+        var statusTracker;
+    var setSystemSettingsUrl = "@Url.Action("SetSystemSettings", "ServerConfiguration")";
+    var idpUrl = "@ServerAppConfig.InternalAppIdpUrl";
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("@pathbase" + "/messageHub", { transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling })
+                .build();
+            // Create a function that the hub can call to broadcast messages.
+            connection.on("sendMessage", function (percent, message, additionalData) {
+                // Html encode display name and message.
+                var circleValue = $('#circle').circleProgress('value');
+                if ((percent / 100) > circleValue) {
+                    $('#circle').circleProgress('value', percent / 100);
+                }
+
+                if (message != undefined && message != null) {
+                    $("#deployment-status").text(message + "...");
+                }
+
+                if (additionalData != undefined && additionalData != null) {
+                    $(".user-name span").text(additionalData.DisplayName);
+                    $(".profile-pic-tag").attr({
+                        "data-id": additionalData.UserId,
+                        "data-display-name": additionalData.DisplayName
+                    });
+
+                    generateProfileAvatar();
+
+                    $(".dashboard-parent-container > a, #close-welcome-page").attr("href", additionalData.RedirectUrl);
+                }
+            });
+
+            connection.start().then(function () {
+                connection.invoke("addTenantGroup", "@ViewBag.TenantInfoId");
+                setTimeout(function () {
+                    $('#circle').circleProgress('value', 0.18);
+                        IsSentRequest();
+                }, 2000);
+
+                $('#circle').circleProgress('value', 0.05);
+            });
+        });
+
+        $(window).load(function () {
+            $('.lazyload').each(function () {
+                if ($(this).attr("data-id") == "footerlogo") {
+                    $(this).parent().find("p#poweredbysyncfusion").append($("<img>").attr({
+                        "src": $(this).attr("data-src"),
+                        "alt": $(this).attr("data-alt"),
+                        "id": $(this).attr("data-id"),
+                        "onerror": $(this).attr("data-default")
+                    }));
+
+                }
+
+                $(this).remove();
+            });
+        });
+
+        function IsSentRequest() {
+            $.ajax({
+                type: "POST",
+                url: setSystemSettingsUrl,
+                data: {
+                    token: "@token"
+                },
+                success: function (result) {
+                    if (result.isDefaultTenant) {
+                        $(".deploy-tenant-parent, .deployment-footer").addClass("hide");
+                        $("body").addClass("welcome-page-footer-alignment");
+                        $(".deployment-header, .welcome-tenant-parent, .base-footer-wrapper").removeClass("hide");
+                    }
+                    else {
+                        window.location = result.redirectUrl
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="deploy-tenant-parent">
+        <div class="deploy-tenant-child">
+            <div class="deployment-page-image">
+                <img class="boldbi-logo" src="@headerLogo" />
+            </div>
+            <div class="deploy-tenant-bg">
+                <div class="text-h1 deployment-content">[[[Registering your site...]]]</div>
+                <div class="text-body deployment-content-small">[[[Sit back and relax. We’ll let you know when your setup is ready to go!]]]</div>
+                <div class="deployment-container">
+                    <div class="circle-progress">
+                        <div class="wrapper">
+                            <img src="@reportServerResourceUrl/cdn/images//application/boldreports/deploymentimage.gif" />
+                            <div id="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="deployment-status" class="text-body deployment-content-small">[[[Fetching site information...]]]</div>
+            </div>
+        </div>
+    </div>
+    <footer class="deployment-footer">
+        <span class="footer-content">[[[Powered by]]]</span><img class="footer-logo" src="@reportServerResourceUrl/cdn/images/application/boldreports/footer_logo.svg" />
+    </footer>
+
+    <header class="deployment-header hide">
+        <div class="deployment-header-container">
+            <img class="boldbi-logo" src="@headerLogo" />
+            <a id="close-welcome-page" class="su-close"></a>
+        </div>
+    </header>
+    <div class="welcome-tenant-parent hide">
+        <div class="welcome-tenant-child">
+            <div class="welcome-tenant-bg">
+                <div id="user-profile-picture">
+                    <div class="profile-pic-tag" data-type="user" data-image-size="100" data-toggle="tooltip" data-placement="top"></div>
+                </div>
+                <div class="user-name">[[[Hello, ]]]<span></span></div>
+                <div class="welcome-content">[[[Welcome to]]] @GlobalAppSettings.BrandingDisplayName Enterprise Reporting</div>
+                <div class="tenant-parent-container">
+                    <a class="admin-link-container" href="@ServerAppConfig.InternalAppIdpUrl/@ServerAppConfig.TenantManagementHostName/sites">
+                        <table class="admin-options">
+                            <tr>
+                                <td class="action-logo" rowspan="2">
+                                    <img src="@reportServerResourceUrl/cdn/images/application/boldreports/manage_tenant.svg" />
+                                </td>
+                                <td class="action-title">
+                                    <div>[[[Manage your Sites]]]</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="action-description">
+                                    [[[Manage permissions for the sites you created.]]]
+                                    <a class="su-arrow-right"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
+                </div>
+                <div class="dashboard-parent-container">
+                    <a class="admin-link-container">
+                        <table class="admin-options">
+                            <tr>
+                                <td class="action-logo" rowspan="2">
+                                    <img src="@reportServerResourceUrl/cdn/images/application/boldreports/goto_dashboard.svg" />
+                                </td>
+                                <td class="action-title">
+                                    <div>[[[Go to Reports]]]</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="action-description">
+                                    [[[Get started creating reports.]]]
+                                    <a class="su-arrow-right"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="base-footer-wrapper hide">
+        @await Html.PartialAsync("~/Views/Shared/_Footer.cshtml")
+    </div>
+</body>
+</html>
