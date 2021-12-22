@@ -20,6 +20,7 @@
     var sortAttribute = ViewBag.SortAttribute;
     var sortValue = ViewBag.SortValue;
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
+    var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
 }
 
 @section scripts{
@@ -442,7 +443,7 @@
                                                             <span>[[[Clone]]]</span>
                                                         </span>
                                                     </li>
-                                                    @if(ServerAppConfig.IsSelfHosted)
+                                                    @if(isMasterTenant && ServerAppConfig.IsSelfHosted)
                                                     {
                                                     <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard" ng-hide="schemesDetails != null && !schemesDetails.Publish">
                                                         <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">

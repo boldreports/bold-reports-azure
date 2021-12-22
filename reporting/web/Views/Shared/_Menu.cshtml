@@ -38,6 +38,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var dashboardServerResourceUrl = globalAppSettings.SystemSettings.CDNLink;
     var manageSitesUrl = idPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/sites";
+    var isMasterTenant = Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
     var userPermissionItem = JsonConvert.SerializeObject(ViewBag.ItemAddOptions);
     var hasOwnedReport = ViewBag.HasOwnedReport;
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
@@ -105,7 +106,7 @@
             <li ng-repeat="items in menuList | orderBy:'Order' | filter:{ShowMenu:true} | filter: {Condition: true} as result" ng-init="count()" ng-if="items.Condition">
                 <ul class="default-lists" style="padding: 0; display:none">
                     <li class="mobile-hidden sf-nav-separator" ng-show="{{currentCount == '3' || currentCount == '7' && result.length < 9 }}"></li>
-                    <li class="{{items.IsSelected}} {{items.MobileClassName}}" ng-class="$index > menuCount ? 'sf-nav-administration-item sf-nav-item' : 'sf-nav-item'" ng-show="{{result.length > 8 ? $index < 6 : $index < 8}}">
+                    <li ng-if="@isMasterTenant || items.Display!=='Publish'" class="{{items.IsSelected}} {{items.MobileClassName}}" ng-class="$index > menuCount ? 'sf-nav-administration-item sf-nav-item' : 'sf-nav-item'" ng-show="{{result.length > 8 ? $index < 6 : $index < 8}}">
                         <a class="sf-nav-link" href="{{items.OpenLink}}" target="{{items.OpenBehavior}}">
                             <span class="menu-icon-container">
                                 <i class="{{items.ImageLink}} {{items.ImageClassName}}" ng-style="{'background-image': items.ImageClassName == 'custom-menu' ? 'url(' + items.ImageLink +')' : ''}"></i>
