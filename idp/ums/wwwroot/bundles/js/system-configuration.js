@@ -2632,6 +2632,7 @@ function postSystemSettingsData(systemSettingsDetails, azuredetails, userEmail, 
 
 function validate_report_storage() {
     $(".blob-error-message").hide();
+    $("#report-storage").children(".proceed-button").prop("disabled", true);
     showWaitingPopup($(".startup-page-conatiner"));
     var storageType = $("input[name='IsBlobStorage']:checked").val();
     window.storageType = storageType;
@@ -2700,11 +2701,13 @@ function validate_report_storage() {
                                 }
                             } else {
                                 hideWaitingPopup(".startup-page-conatiner");
+                                $("#report-storage").children(".proceed-button").removeAttr("disabled");
                                 $(".azure-validation,.blob-error-message").css("display", "block");
                                 changeFooterPostion();
                             }
                         } else {
                             hideWaitingPopup(".startup-page-conatiner");
+                            $("#report-storage").children(".proceed-button").removeAttr("disabled");
                             $(".azure-validation,.blob-error-message").css("display", "block");
                             changeFooterPostion();
                         }
@@ -2721,6 +2724,7 @@ function validate_report_storage() {
             }
         } else {
             hideWaitingPopup(".startup-page-conatiner");
+            $("#report-storage").children(".proceed-button").removeAttr("disabled");
             changeFooterPostion();
             return false;
         }
@@ -2909,6 +2913,7 @@ $(document).ready(function () {
 
 function validate_storage_type() {
     $(".blob-error-message").hide();
+    $("#tenant-storage").children(".proceed-button").prop("disabled", true);
     var storageType = getRadioButtonValue('IsBlobStorage');
     window.storageType = storageType;
     if (storageType == "1") {
@@ -2943,11 +2948,13 @@ function validate_storage_type() {
                             return false;
                         } else {
                             hideWaitingPopup(".startup-waiting-popup");
+                            $("#tenant-storage").children(".proceed-button").removeAttr("disabled");
                             $(".azure-validation,.blob-error-message").css("display", "block");
                             changeFooterPostion();
                         }
                     } else {
                         hideWaitingPopup(".startup-waiting-popup");
+                        $("#tenant-storage").children(".proceed-button").removeAttr("disabled");
                         $(".azure-validation,.blob-error-message").css("display", "block");
                         changeFooterPostion();
                     }
@@ -2957,6 +2964,7 @@ function validate_storage_type() {
             return false;
         } else {
             hideWaitingPopup(".startup-waiting-popup");
+            $("#tenant-storage").children(".proceed-button").removeAttr("disabled");
             changeFooterPostion();
             return false;
         }
@@ -3433,8 +3441,8 @@ $(document).on("click", "#db-config-submit, #sql-existing-db-submit", function (
     removeError();
     var canProceed = $("#db-content-holder").valid();
     if (canProceed) {
-        showWaitingPopup($(".startup-waiting-popup"));
         $(this).prop("disabled", true);
+        showWaitingPopup($(".startup-waiting-popup"));
         window.serverName = $("#txt-servername").val();
         window.portNumber = $("#txt-portnumber").val();
         window.maintenanceDb = $('#maintenance-db').val();
@@ -3630,18 +3638,6 @@ function azureStep() {
     $(".storage-checkbox").hide();
     $("body").removeClass("startup-page-container-body");
 
-    if (connectionType === "https") {
-        $("#https").prop("checked", true);
-    } else if (connectionType === "http") {
-        $("#http").prop("checked", true);
-    }
-
-    $("#txt-accountname").val(storageAccountName);
-    $("#txt-endpoint").val(blobServiceEndpoint);
-    $("#txt-accesskey").val(accessKey);
-    $("#txt-containername").val(containerName);
-    validate_storage_type();
-    
     if (connectionType === "https") {
         $("#https").prop("checked", true);
     } else if (connectionType === "http") {
