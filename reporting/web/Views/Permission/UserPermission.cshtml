@@ -22,6 +22,7 @@
         var getItemScopeUrl = "@Url.Action("GetItemScope", "permission")";
         var addnewuserpermissionUrl = "@Url.Action("addnewpermission", "permission")";
         var deleteuserPermissionUrl = "@Url.Action("DeleteUserPermission", "permission")";
+        var resourceManagePermissionUrl = "@Url.Action("IsUserHasResourceManagePermission", "permission")";
     </script>
 
     <environment include="Development,CloudDevelopment">
@@ -45,10 +46,10 @@
                 </hgroup>
             </div>
             <div class="col-md-6 col-xs-12 col-sm-6 col-xs-12 no-padding">
-                <input type="button" title="[[[Add Permission to the user]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button pull-right" />
+                <input type="button" title="[[[Add Permission to the user]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button app-btn-primary pull-right" />
                 @if (!ViewBag.IsAdUser)
                 {
-                    <a type="button" class="link-button pull-right margin-right" href="@Url.Action("ViewProfile", "UserManagement")?id=@ViewBag.UserId">[[[View Profile]]]</a>
+                    <a type="button" class="link-button app-btn-link pull-right margin-right" href="@Url.Action("ViewProfile", "UserManagement")?id=@ViewBag.UserId">[[[View Profile]]]</a>
                 }
             </div>
         </div>
@@ -68,7 +69,7 @@
     <script type="text/x-jsrender" id="commandstemplate">
         <div>
             {{if IsUserPermission}}
-            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"> [[[Remove]]]</a></span>
             {{else}}
             <span title="{{:GroupName}}" data-toggle="tooltip"><a href="@Url.Action("grouppermission","permission")?groupId={{:TargetId}}">{{:GroupName}}</a></span>
             {{/if}}
@@ -114,7 +115,7 @@
                 var addPermissionWaitingPopupTemplateId = createLoader("add-permission_wrapper");
 				$("#add-permission_wrapper").ejWaitingPopup({ template:$("#" + addPermissionWaitingPopupTemplateId) });
                 $("#Grid").ejGrid({
-                    dataSource: ej.DataManager({ url: "@Url.Action("GetAllUserPermission", "permission")?userId=" + userId, adaptor: "UrlAdaptor" }),
+                    dataSource: ej.DataManager({ url: "@Url.Action("GetAllUserPermission", "permission")?userId=" + userId + "&&requiresCounts=true", adaptor: "UrlAdaptor" }),
                     gridLines: ej.Grid.GridLines.None,
                     allowPaging: true,
                     allowSorting: true,

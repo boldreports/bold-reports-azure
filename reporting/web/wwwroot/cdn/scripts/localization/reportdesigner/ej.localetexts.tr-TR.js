@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         report: 'Bildiri',
         url: 'URL',
         linkUrl: 'URL\'yi Rapor öğesine bağlayın',
-        none: 'Orta'
+        none: 'Orta',
+        linkBookmark: 'Yer imi'
     },
     linkReport: {
         reportCaption: 'Bildiri',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         categoryName: 'Bağlantı',
         linkReport: 'Bağlantı Raporu',
+        URL: 'URL',
         appearance: {
             categoryName: 'Görünüm',
             styleTooltip: 'Tarzı',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             customAttributes: 'Özel Nitelikler',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            zIndex: 'ZEndeksi'
+            zIndex: 'ZEndeksi',
+            bookmark: 'Yer imi'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryName: 'Veri yok',
             caption: 'İleti',
             hidden: 'Verileri Gizle',
-            borderStyle: 'Kenarlık Stili',
+            showBorder: 'Kenarlığı Göster',
             borderColor: 'Sınır rengi',
             borderSize: 'Kenarlık boyutu',
             fontLabel: 'Yazı tipi',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 size: 'Yazı Boyutu',
                 style: 'Yazı stili',
                 weight: 'Yazı Tipi Ağırlığı'
-            },
-            positiontypes: {
-                topLeft: 'Sol üst',
-                topCenter: 'Üst merkez',
-                topRight: 'Sağ üst',
-                rightTop: 'Sağ üst',
-                rightCenter: 'Sağ Merkez',
-                rightBottom: 'Sağ Alt',
-                bottomLeft: 'Sol alt',
-                bottomCenter: 'Alt merkez',
-                bottomRight: 'Sağ alt',
-                leftTop: 'Sol üst',
-                leftCenter: 'Sol Merkez',
-                leftBottom: 'Sol alt'
             },
             fontStyle: {
                 label: 'Yazı stili',
@@ -674,28 +663,6 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                     extraBold: 'Ekstra Kalın',
                     heavy: 'Ağır',
                 }
-            },
-            textDecoration: {
-                categoryName: 'Metin Süsleme',
-                defaultStyle: 'Varsayılan',
-                none: 'Orta',
-                underline: 'Altını çizmek',
-                overline: 'Üst çizgi',
-                lineThrough: 'Hat boyunca'
-            },
-            border: {
-                default: 'Kenarlık',
-                left: 'Ayrıldı',
-                top: 'Üst',
-                right: 'Sağ',
-                bottom: 'Alt'
-            },
-            borderStyles: {
-                solid: 'Katı',
-                none: 'Orta',
-                double: 'Çift',
-                dashed: 'Kesikli',
-                dotted: 'Noktalı'
             }
         },
         basicSettings: {
@@ -816,7 +783,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 length: 'Kene Uzunluğu',
                 width: 'İşaret Genişliği'
             },
-            labelsAutofitDisabled: 'Etiketleri Otomatik Sığdırma Devre Dışı Bırakıldı'
+            labelsAutofitDisabled: 'Etiketleri Otomatik Sığdırma Devre Dışı Bırakıldı',
+            maximum: 'Maksimum',
+            minimum: 'Asgari',
+            horizontalAxis: 'Yatay eksen',
+            verticalAxis: 'Dikey eksen'
         },
         gridLine: {
             categoryName: 'Izgara hattı',
@@ -860,6 +831,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
             alertHeader: 'Grafik Raporu Öğesi',
+            bookmark: 'Yer imi',
             alertMessage: 'Geçersiz özel özellikler biçimi. Doğru format örneği: \'AttrName1 = Value1, AttrName2 = Value2 \'.'
         },
         seriesSettings: {
@@ -923,7 +895,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 }
             },
             miscellaneous: {
-                categoryName: 'Çeşitli'
+                categoryName: 'Çeşitli',
+                toolTip: 'Araç ipucu',
+                customLegendText: 'Açıklama Metni'
             }
         },
         borderStyle: 'Kenarlık Stili',
@@ -983,7 +957,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         miscellaneous: {
             categoryName: 'Çeşitli',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         styleTooltip: 'Tarzı',
         colorTooltip: 'Renk',
@@ -1073,7 +1048,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryName: 'Çeşitli',
             customattributes: 'Özel Nitelikler',
             documentMap: 'Belge Haritası',
-            pageName: 'Sayfa ismi'
+            pageName: 'Sayfa ismi',
+            bookmark: 'Yer imi'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1471,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             keepTogether: 'Birlikte Tutun',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         fontStyleTooltip: 'Tarzı',
         fontWeightTooltip: 'Ağırlık',
@@ -1617,7 +1594,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             pageName: 'Sayfa ismi',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         dataElement: {
             categoryName: 'Veri Öğesi',
@@ -1771,6 +1749,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             connectDatasource: 'DataSource\'a bağlanın',
             datasourceType: 'Bağlanacak türü seçin',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL Veri Ambarı',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1761,18 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             mysqlLabel: 'MySQL',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Paylaşılan'
+            sharedLabel: 'Paylaşılan',
+            cdataLabel: 'CDATA',
+            snowflakeLabel: 'kar tanesi',
+            ssasLabel: 'Microsoft SQL Analiz Hizmetleri',
+            verticaLabel: 'Vertika',
+            gcsqlLabel: 'Google Bulut SQL\'i',
+            redshiftLabel: 'Amazon Kırmızıya Kaydırma',
+            amazonAuroraLabel: 'Amazon Aurora\'sı',
+            amazonRDSLabel: 'Amazon RDS',
+            webapilabel: 'Web API\'si',
+            postgresqllabel: 'PostgreSQL',
+            odatalabel: 'OData'
         },
         datasourceConnection: {
             newConnection: 'YENİ BAĞLANTI',
@@ -2053,20 +2043,79 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: 'Bağlantı dizisi',
-            authenticationType: 'Kimlik Doğrulama Türü',
-            authentication: 'Authenticationkimlik doğrulama',
-            prompt: 'Komut istemi',
-            none: 'Yok',
+            serverName: 'Sunucu adı',
+            port: 'Liman',
             userName: 'Kullanıcı adı',
             password: 'Parola',
-            promptLabel: 'İstem Metni',
             savePassword: 'Şifreyi kaydet',
+            database: 'Veri tabanı',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource AdvancePanel',
             alertMessage: {
-                alertConnectionString: 'Bağlantı dizesini belirtin',
-                alertPrompt: 'İstem Metnini Belirtin',
-                alertUserName: 'Kullanıcı Adını Belirtin',
-                alertPassword: 'Şifreyi belirtin'
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Şifreyi belirtin',
+                serverName: 'Sunucu adını belirtin',
+                port: 'Bağlantı noktası numarasını belirtin',
+                database: 'Veritabanı adını belirtin',
+            }
+        },
+        googleCloudSQL: {
+            dbEngine: 'Veritabanı Motoru',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonAurora: {
+            dbEngine: 'Veritabanı Motoru',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonRDS: {
+            dbEngine: 'Veritabanı Motoru',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL',
+            auroraMysqlEngine: 'Amazon Aurora MySQL',
+            auroraPsqlEngine: 'Amazon Aurora PostgreSQL',
+            mariaDbEngine: 'MariaDB',
+            sqlserver: 'SQL Server',
+            oracle: 'kehanet'
+        },
+        snowflakeDatasource: {
+            serverName: 'Sunucu adı',
+            serverWatermark: 'Misal',
+            database: 'Veri tabanı',
+            userName: 'Kullanıcı adı',
+            password: 'Parola',
+            savePassword: 'Şifreyi kaydet',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource Gelişmiş Paneli',
+            alertMessage: {
+                serverName: 'Sunucu adını belirtin',
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Parolayı belirtin',
+                database: 'Veritabanı adını belirtin'
+            }
+        },
+        verticaDatasource: {
+            serverName: 'Sunucu adı',
+            database: 'Veri tabanı',
+            userName: 'Kullanıcı adı',
+            password: 'Parola',
+            port: 'Liman',
+            savePassword: 'Şifreyi kaydet',
+            basicSwitch: 'Temel Seçenekler',
+            advanceSwitch: 'Gelişmiş seçenekler',
+            switchAlert: 'Görsel tasarımcıya geçiş, bağlantı dizesinde yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?',
+            switchLabel: 'DataSource Gelişmiş Paneli',
+            alertMessage: {
+                serverName: 'Sunucu adını belirtin',
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Parolayı belirtin',
+                port: 'Bağlantı noktası numarasını belirtin',
+                database: 'Veritabanı adını belirtin'
             }
         },
         sharedDatasource: {
@@ -2087,6 +2136,28 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             duplicateName: 'Belirtilen ad DataSource listesinde zaten mevcut',
             invalidCharacterValidation: 'Ad, boşluk ve özel karakterler içermemelidir',
             sharedPermissionValidation: 'Veri kaynağı oluşturma, paylaşılan veri kaynağı dışında kısıtlanmıştır.'
+        },
+        descriptionText: {
+            amazonAuroraInfo: 'Amazon Aurora, Amazon Web Services tarafından geliştirilen ve sunulan ilişkisel bir veritabanı hizmetidir. Amazon Aurora bağlayıcısı, {customBrandName} Designer içindeki Amazon Aurora veritabanlarındaki verilere erişmenize olanak tanır.',
+            azureSqlInfo: 'Azure SQL Veri Ambarı, Microsoft bulut tabanlı bir kurumsal veri ambarı hizmeti teklifidir. Petabaytlarca veri üzerinde karmaşık sorguları hızla çalıştırmak için büyük ölçüde paralel işlemeden yararlanır. Azure SQL Veri Ambarı bağlayıcısı, {customBrandName} Designer içindeki Azure SQL Veri Ambarı veritabanlarından verilere erişmenize olanak tanır.',
+            cdataInfo: 'CDATA, her yerde çalışabilen dağıtılmış, yüksek düzeyde ölçeklenebilir bir SQL veritabanıdır. Tanıdık ilişkisel veri yapılarına sahip işlemsel ve analitik iş yükleri için maksimum performans sağlar. cdata bağlayıcısı, {customBrandName} Designer içinde MySQL uç noktası ile cdata veritabanlarından verilere erişmenize olanak tanır.',
+            csvInfo: 'CSV dosyalarınızı {customBrandName} Designer\'a getirin ve verilerinizde yaşayan hikayeyi görmek için raporlar hazırlayın.',
+            excelInfo: 'Excel dosyalarınızı Tablolar veya Çalışma Sayfaları olarak {customBrandName} Tasarımcısına getirin. Verilerinizi keşfedin ve oynayın, verilerinizde yaşayan hikayeyi görmek için raporlar hazırlayın.',
+            googleBigQueryInfo: 'BigQuery, Google Storage ile birlikte çalışan büyük veri kümelerinin etkileşimli analizini sağlayan RESTful bir web hizmetidir. MapReduce ile tamamlayıcı olarak kullanılabilen, sunucusuz bir Hizmet Olarak Yazılımdır.',
+            jsonInfo: 'Raporlar hazırlamak ve verilerinizde yaşayan hikayeyi görmek için JSON dosyalarınızı Yükleyerek {customBrandName} Designer\'a getirin.',
+            mariadbInfo: 'MariaDB, açık kaynaklı kalması garanti edilen MySQL ilişkisel veritabanı yönetim sisteminin topluluk tarafından geliştirilmiş, ticari olarak desteklenen bir çatalıdır. MariaDB bağlayıcısı, {customBrandName} Designer içindeki MariaDB veritabanlarından verilere erişmenizi sağlar.',
+            memsqlInfo: 'MemSQL, her yerde çalışabilen, dağıtılmış, yüksek düzeyde ölçeklenebilir bir SQL veritabanıdır. Bilinen ilişkisel veri yapılarıyla işlemsel ve analitik iş yükleri için maksimum performans sunar. MemSQL bağlayıcısı, {customBrandName} Designer içindeki MemSQL veritabanlarından verilere erişmenizi sağlar.',
+            microsoftsqlInfo: 'SQL Server, Microsoft\'un ilişkisel veritabanı yönetim sistemidir. Piyasadaki en güvenilir ve güvenilir veritabanı sunucularından biri olarak, çekirdek veritabanı yönetim sisteminin üstünde analiz, raporlama ve daha fazlası gibi bir dizi katma değerli hizmetle birlikte gelir. SQL Server bağlayıcısı, {customBrandName} Designer içindeki Microsoft SQL sunucu veritabanlarından verilere erişmenizi sağlar.',
+            ssasInfo: 'SQL Server Analiz Hizmetleri (SSAS), Çevrimiçi Analitik İşleme (OLAP) çözümleri geliştirmek için Microsoft İş Zekası yığınından gelen teknolojidir. Basit bir ifadeyle, daha derin ve daha hızlı veri analizi için veri pazarlarından / veri ambarından gelen verileri kullanarak küpler oluşturmak için SSAS\'ı kullanabilirsiniz.',
+            mysqlInfo: 'MySQL, ücretsiz olarak kullanılabilen, açık kaynaklı bir ilişkisel veritabanı yönetim sistemidir ve en çok hızlı işlemesi, kanıtlanmış güvenilirliği, kullanım kolaylığı ve esnekliği ile dikkat çeker. MySQL bağlayıcısı, {customBrandName} Designer içindeki MySQL veritabanlarından verilere erişmenizi sağlar.',
+            odataInfo: 'OData, sorgulanabilir ve birlikte çalışabilir RESTful API\'lerinin basit ve standart bir şekilde oluşturulmasına ve tüketilmesine izin veren açık bir protokoldür. {customBrandName} Designer ile bağlantı kurun ve verilerinizde yaşayan hikayeyi görmek için raporlar oluşturun.',
+            odbcInfo: 'Bir ODBC sürücüsü, Microsoft\'un Açık Veritabanı Bağlantısı (ODBC) arabirimini kullanır ve bu, uygulamaların verilere erişmek için standart olarak SQL kullanarak veritabanı yönetim sistemlerindeki (DBMS) verilere erişmesine olanak tanır.',
+            oledbInfo: 'OLE DB, farklı veri kaynaklarına erişim için Microsoft\'un stratejik düşük seviyeli uygulama programı arabirimidir (API). OLE DB, yalnızca Microsoft sponsorluğundaki standart veri arabirimi Açık Veritabanı Bağlantısı\'nın (ODBC) Yapılandırılmış Sorgu Dili (SQL) yeteneklerini değil, aynı zamanda SQL verileri dışındaki verilere erişimi de içerir.',
+            oracleInfo: 'Oracle, gelişmiş analitik özelliklere sahip kurumsal düzeyde bir ilişkisel veritabanıdır. Oracle bağlayıcısı, {customBrandName} Designer içindeki Oracle veritabanlarından verilere erişmenizi sağlar.',
+            psqlInfo: 'PostgreSQL, genişletilebilirliği ve standartlara uygunluğu vurgulayan güçlü ve açık kaynaklı bir nesne ilişkisel veritabanı sistemidir. PostgreSQL bağlayıcısı, {customBrandName} Designer içindeki PostgreSQL veritabanlarından verilere erişmenizi sağlar.',
+            snowflakeInfo: 'Snowflake, verileri depolamak ve almak için sınırsız bir platform sağlayan bulut tabanlı bir veri ambarıdır. Geleneksel tek kümeli paylaşılan disk/paylaşılan hiçbir şey mimarilerinden farklı olarak, Snowflake, kurumsal sınıf bulut tabanlı depolama sistemleri sayesinde dinamik ve yüksek düzeyde ölçeklenebilir, çok kümeli, paylaşılan bir veri mimarisine sahiptir.',
+            webAPIInfo: 'REST API\'si olan hemen hemen tüm veri kaynaklarını kullanarak {customBrandName} Designer ile bağlantı kurun. Raporlar oluşturun ve verilerinizde yaşayan hikayeyi görün.',
+            xmlInfo: 'XML dosyalarınızı {customBrandName} Designer\'a getirin ve verilerinizde yaşayan hikayeyi görmek için raporlar hazırlayın.'
         }
     },
     imageManager: {
@@ -2152,9 +2223,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         dsNameLabel: 'İsim',
         dsNameWaterMark: 'Veri Adı',
         dsNameValidation: {
-            emptyName: 'DataSet adını belirtin',
-            duplicateName: 'Belirtilen ad DataSet listesinde zaten mevcut',
-            specialCharacter: 'DataSet adı boşluk ve özel karakterler içermemelidir'
+            emptyName: 'Dataset adını belirtin',
+            duplicateName: 'Belirtilen ad Dataset listesinde zaten mevcut',
+            specialCharacter: 'Dataset adı boşluk ve özel karakterler içermemelidir'
         }
     },
     dataPanel: {
@@ -2176,11 +2247,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         dataSetNewAlert: {
             title: 'Veri Kümesi',
-            contentMessage: 'DataSet oluşturmayı iptal etmek istiyor musunuz?',
+            contentMessage: 'Dataset oluşturmayı iptal etmek istiyor musunuz?',
         },
         dataSetEditAlert: {
             title: 'Veri Kümesi',
-            contentMessage: 'DataSet düzenlemesini iptal etmek istiyor musunuz?',
+            contentMessage: 'Dataset düzenlemesini iptal etmek istiyor musunuz?',
         },
         parameterNewAlert: {
             title: 'Parametre',
@@ -2199,7 +2270,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         toggleExpand: 'Veri kümesi alanlarını genişletmek için geçiş düğmesi',
         datasetLabel: 'Veri KümesiAdı',
         fieldsLabel: 'Alan adı',
-        dataSearch: 'DataSet alanları araması',
+        dataSearch: 'Dataset alanları araması',
         shareDataset: {
             headerText: 'YENİ VERİ KÜMESİ',
             editHeaderText: 'VERİ KÜMESİNİ DÜZENLE',
@@ -2208,9 +2279,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             nameLable: 'İsim',
             sharedDatasetLabel: 'Paylaşılan Veri Kümesi',
             errorMessage: {
-                nameValidation: 'DataSet adını belirtin',
+                nameValidation: 'Dataset adını belirtin',
                 datasetValidation: 'Paylaşılan bir DataSource seçin',
-                duplicateName: 'Belirtilen ad DataSet listesinde zaten var',
+                duplicateName: 'Belirtilen ad Dataset listesinde zaten var',
                 specialCharacter: 'Ad, boşluk ve özel karakterler içermemelidir'
             }
         },
@@ -2235,6 +2306,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         dataFieldSearch: {
             errorMessage: 'Hiçbir sonuç bulunamadı',
             searchText: 'Arama'
+        },
+        dataTab: {
+            dataSourceTabHeader: 'VERİ KAYNAĞI',
+            dataSetTabHeader: 'VERİ SETİ'
         }
     },
     reportViewer: {
@@ -3002,6 +3077,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         reportMiscellaneous: {
             categoryName: 'Çeşitli',
+            consumeWhiteSpace: 'Kapsayıcı Boşluğunu Kullan',
             customAttributes: 'Özel Nitelikler',
             reportVersion: 'Sürüm',
             reportversions: {
@@ -3107,6 +3183,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         link: 'Bağlantı',
         linkReport: 'Bağlantı Raporu',
+        URL: 'URL',
         position: {
             categoryName: 'Durum',
             label: 'Durum',
@@ -3128,7 +3205,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             canShrink: 'Küçültebilir',
             toolTip: 'Araç ipucu',
             customAttributes: 'Özel Nitelikler',
-            documentMap: 'Belge Haritası'
+            documentMap: 'Belge Haritası',
+            bookmark: 'Yer imi'
         },
         paragraphSettings: {
             categoryName: 'Paragraf Ayarları',
@@ -3312,7 +3390,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         miscellaneous: {
             categoryName: 'Çeşitli',
-            toolTip: 'Araç ipucu'
+            toolTip: 'Araç ipucu',
+            bookmark: 'Yer imi'
         },
         styleTooltip: 'Tarzı',
         colorTooltip: 'Renk',
@@ -3436,7 +3515,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             keepTogether: 'Birlikte Tutun',
             customAttributes: 'Özel Nitelikler',
             toolTip: 'Araç ipucu',
-            documentMap: 'Belge Haritası'
+            documentMap: 'Belge Haritası',
+            bookmark: 'Yer imi'
         },
         headers: {
             categoryName: 'Başlıklar',
@@ -3842,19 +3922,20 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 datasourceAlert: 'Rapor Veri Kümesini Yapılandırmak için bir Veri Kaynağı seçin',
                 removeTable: 'Aşağıdaki ilişkili tablolar bununla kaldırılacaktır',
                 duplicateName: 'Belirtilen sütun adı zaten mevcut',
-                duplicateDatasetName: 'Belirtilen ad DataSet listesinde zaten mevcut',
+                duplicateDatasetName: 'Belirtilen ad Dataset listesinde zaten mevcut',
                 datasetSpecialCharacter: 'Ad, boşluk ve özel karakterler içermemelidir',
                 specialCharacter: 'Sütun adı özel karakterler içermemelidir.',
                 switcherAlert: 'Görsel tasarımcıya geçiş, sorguda yapılan manuel değişiklikleri atacaktır. Yine de görsel tasarımcıyı kullanmak istiyor musunuz?'
             },
             errorMessage: {
                 specifyName: 'Sütun adını belirtin',
-                specifyDatasetName: 'DataSet adını belirtin',
-                previewFailed: 'DataSet seçili tabloyu önizleyemedi',
-                specifyQuery: 'DataSet sorgusunu belirtin',
-                selectTable: 'DataSet\'i kaydetmek için tabloyu seçin',
-                queryFailed: 'DataSet, seçili tablonun Sorgusunu kaydedemedi',
-                tableProcedure: 'DataSet, seçilen tablo prosedürünü alamadı',
+                specifyDatasetName: 'Dataset adını belirtin',
+                previewFailed: 'Dataset seçili tabloyu önizleyemedi',
+                specifyQuery: 'Dataset sorgusunu belirtin',
+                selectTable: 'Dataset\'i kaydetmek için tabloyu seçin',
+                queryFailed: 'Dataset, seçili tablonun Sorgusunu kaydedemedi',
+                refreshFailed: '{datasetName} veri kümesi yenilenemedi, bir veya daha fazla giriş değeri gerektiriyor. Lütfen veri kümesini düzenleyin ve kaydedin.',
+                tableProcedure: 'Dataset, seçilen tablo prosedürünü alamadı',
                 deleteTableFailure: 'Seçili tablo silinemedi',
                 joinTableFailure: 'Seçili tablolara katılma başarısız oldu',
                 confirmPermission: 'Büyük kayıtlar alındı, oluşturma zaman alacak. Yine de yüklemek ister misin?'
@@ -4025,7 +4106,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             sort: 'Sıralar',
             group: 'Gruplar',
             expression: 'İfade',
-            aggregate: 'Agrega'
+            aggregate: 'Agrega',
+            none: 'Yok'
         },
         validationMessage: 'Tasarımcıda grafik türü desteklenmez.'
     },
@@ -4432,7 +4514,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             categoryMiscellaneous: 'Çeşitli',
             toolTip: 'Araç ipucu',
             documentMap: 'Belge Haritası',
-            customAttributes: 'Özel Nitelikler'
+            customAttributes: 'Özel Nitelikler',
+            bookmark: 'Yer imi'
         },
         spatial: {
             categoryName: 'Mekansal',

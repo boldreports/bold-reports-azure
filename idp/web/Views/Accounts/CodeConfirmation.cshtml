@@ -24,7 +24,7 @@
         var email = "@email";
         $(document).ready(function () {
             $(document).on("click", ".forgot-pwd-link", function (event) {
-                $("body").ejWaitingPopup("show");
+                showWaitingPopup('body');
             });
         });
 
@@ -48,7 +48,7 @@
         {
             <div class="status-message text-body">[[[An email with instructions on how to verify your account has been sent to ]]]<a id="tenant-email" href='mailto:  @email'>@email</a></div>
             <div class="text-body resend-verification">[[[If you have not received it, please click the following link.]]]</div>
-            <input id="mail-resend" type="button" class="btn-holder link-button" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=true@(string.IsNullOrWhiteSpace(ViewBag.CallBackUri) ? string.Empty : "&callbackuri=" + ViewBag.CallBackUri)" value="[[[Resend activation link]]]">
+            <input id="mail-resend" type="button" class="btn-holder link-button" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=true" value="[[[Resend activation link]]]">
             <div class="divider-light"></div>
             <div class="text-body expiration-time"><span class="info-icon">i</span><span class="message">[[[The verification link expires in 2 days!]]]</span></div>
         }
@@ -56,7 +56,7 @@
         {
             <div class="status-message text-body">[[[An email with instructions on how to recover your password has been sent to ]]]<a id="tenant-email" href='mailto:  @email'>@email</a></div>
             <div class="text-body resend-verification">[[[If you have not received it, click the following link.]]]</div>
-            <input id="mail-resend" type="button" class="btn-holder link-button" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=false@(string.IsNullOrWhiteSpace(ViewBag.CallBackUri) ? string.Empty : "&callbackuri=" + ViewBag.CallBackUri)" value="[[[Resend recovery link]]]">
+            <input id="mail-resend" type="button" class="btn-holder link-button" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=false" value="[[[Resend recovery link]]]">
             <div class="divider-light"></div>
             <div class="text-body expiration-time"><span class="info-icon">i</span><span class="message">[[[The recovery link expires in two hours!]]]</span></div>
         }

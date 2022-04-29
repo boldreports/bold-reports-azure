@@ -21,6 +21,8 @@
     var isMobile = new DeviceDetection(Context).IsMobile;
     var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -39,15 +41,19 @@
     }
     else
     {
-        @*<link href="@ServerAppConfig.ReportServiceCdnLink/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />*@
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />
     }
     @if (!isMobile)
     {
         <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
     }
     else
@@ -110,7 +116,7 @@
             </environment>
         }
         <script src="@reportServerResourceUrl/cdn/scripts/localization/reportviewer/ej.localetexts.@string.Concat(language,".js")"></script>
-        <script src="@reportServerResourceUrl/cdn/scripts/essentialjs/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
     }
     else
     {
@@ -132,14 +138,14 @@
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery-mobile.min.js"></script>
             </environment>
         }
-        @*<script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-base.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-data.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/bold.reportviewer.min.js'></script>*@
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-data.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
         @if (!isMobile)
         {
             <environment include="Development,CloudDevelopment">
@@ -160,6 +166,15 @@
         }
     }
 
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.min.js"></script>
+    </environment>
+
     @if (isMobile && !Context.User.Identity.IsAuthenticated)
     {
         <style>
@@ -178,7 +193,7 @@
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 </head>
-<body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%">
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%" ng-app="serverApp">
 
     <input id="favorite_Item" type="hidden" data-item-id="@ViewBag.ItemId" data-parent-id="@ViewBag.ParentId" data-favorite-value="@ViewBag.IsFavorite">
     <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">
@@ -304,6 +319,10 @@
     {
         @await Html.PartialAsync("_ReportViews")
     }
+    @if (!embedConfig.IsEmbedCode && isUserAuthenticatedInCurrentTenant)
+    {
+        @await Html.PartialAsync("../Items/_SharePermission");
+    }
 
 </body>
 </html>
@@ -354,7 +373,7 @@
      var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
 
      var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
-     var addViewUrl = { "web": "@Url.Action("onfiltersave", "ReportViews")", "api": "/items/views/add" };
+     var addViewUrl = { "web": "@Url.Action("OnFilterSave", "ReportViews")", "api": "/items/views/add" };
      var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
      var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
      var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
@@ -371,7 +390,10 @@
      var isSubmit = true;
 
      var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
-     var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+    var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+    var isAdmin = "@isAdmin";
+    var ItemType = "@ViewBag.ItemType";
+    var customFontsName = [];
 
         function renderComments() {
             var src = $("#commentModuleContainer iframe").attr("src");
@@ -540,6 +562,7 @@
 
             ReportViewer();
             reportviewerObj = $("#sync_report_viewer").data("boldReportViewer");
+            loadCustomFonts();
         });
 
     var token = "@ViewBag.AccessToken";
@@ -608,6 +631,7 @@
                         renderingComplete: 'filterView',
                         parameters: filterParameters,
                         locale: '@language',
+                        fontNames: customFontsName,
 					    parameterSettings: {
                                labelWidth: 'auto'
                         },
@@ -669,6 +693,7 @@
                         viewReportClick: "ViewReportClick",
                         renderingComplete: 'filterView',
                         locale: '@language',
+                        fontNames: customFontsName,
                         parameters: parameter,
 						 parameterSettings: {
                                labelWidth: 'auto'
@@ -695,7 +720,7 @@
                 }
                 $("#nofilters").css("display", "none");
                 $("#save-lable-section label").html("");
-                link = '<a class="saved-view-link txt-overflow" href="/' +
+                link = '<a class="saved-view-link txt-overflow" href="' +
                     pageurl +
                     '?viewid=' +
                     viewId +
@@ -725,5 +750,55 @@
             }
             return parameter;
     }
+
+    function loadCustomFonts() {
+            @if (ServerAppConfig.CustomFont != null && ServerAppConfig.CustomFont.Count > 0)
+            {
+                foreach (var font in ServerAppConfig.CustomFont)
+                {
+                    @:customFontsName.push("@font.Key");
+                    @:addCustomFonts("@font.Key", "@font.Value");
+                }
+            }
+    }
+
+        function isFontFaceExist() {
+            try {
+                return FontFace ? true : false;
+            } catch (error) {
+                return false;
+            }
+        }
+
+    function addCustomFonts(fontFamily, fontFile) {
+        var customFontUrl = baseUrl + "/content/custom-fonts/" + fontFile;
+            if (isFontFaceExist()) {
+                try {
+                    const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
+                    customFont.load().then(function (loadedFont) {
+                        document.fonts.add(loadedFont);
+                    }).catch(function (error) {
+                        console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                    });
+                } catch (error) {
+                    console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                }
+            } else {
+                //Classic Approach Common for all browsers to load fonts
+                try {
+                    const style = document.createElement('style');
+                    style.innerHTML = '@@font-face { font-family:' + fontFamily + '; src: url(' + customFontUrl + ');}';
+                    document.head.appendChild(style);
+
+                    var link = document.createElement('link');
+                    link.setAttribute('rel', 'stylesheet');
+                    link.setAttribute('type', 'text/css');
+                    link.setAttribute('href', customFontUrl + fontFile);
+                    document.head.appendChild(link);
+                } catch (error) {
+                    console.log('Failed to register stylesheet for the font: ' + fontFamily + '; Error: ' + error);
+                }
+            }
+        }
 
 </script>

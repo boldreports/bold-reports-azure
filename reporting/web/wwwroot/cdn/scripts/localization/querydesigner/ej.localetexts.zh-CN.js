@@ -93,6 +93,7 @@ ej.QueryDesigner.Locale['zh-CN'] = {
             specifyQuery: '指定 数据集 查询',
             selectTable: '选择表来保存 数据集',
             queryFailed: '数据集 无法保存所选表的查询',
+            refreshFailed: '未能刷新数据集 {datasetName}，它需要一个或多个输入值。 请编辑并保存数据集。',
             tableProcedure: '数据集 无法检索选定的表过程',
             deleteTableFailure: '删除所选表失败',
             joinTableFailure: '无法加入所选表格',

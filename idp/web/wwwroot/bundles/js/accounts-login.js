@@ -1,11 +1,19 @@
 $(document).ready(function () {
 
-    var outlineEmail = new ejs.inputs.TextBox({
+    var loginEmail = new ejs.inputs.TextBox({
+        cssClass: 'e-outline e-input-focus',
+        floatLabelType: 'Always',
+        created: function () {
+            loginEmail.focusIn();
+        }
+    });
+    loginEmail.appendTo('#login-email');
+
+    var loginPassword = new ejs.inputs.TextBox({
         cssClass: 'e-outline',
         floatLabelType: 'Always'
     });
-    outlineEmail.appendTo('#login-email');
-    outlineEmail.appendTo('#login-password');
+    loginPassword.appendTo('#current-password');
 
     if (IsAdfsUserStatus === "NotActivated") {
         $("#access-denied").css({ "display": "block", "width": "225px", "margin": "15px 28px" });
@@ -23,41 +31,6 @@ $(document).ready(function () {
         $("#validate-auth-user").css("display", "block").find(".auth-error-text").html(authMessage);
     }
 
-    $('#login-email').on("click change", function () {
-        if ($("#password-field").css("display") !== "none") {
-            $(".login-options, #password-field").slideUp();
-            $("#password-field").removeClass("has-error");
-            $("#login-button").html(window.Server.App.LocalizationContent.ContinueButton);
-            $('#login-password').val("");
-        }
-    });
-
-    $('#windows-login').on("click", function () {
-        var emailId = $("#login-email").val();
-        $("#azure-email").val(emailId);
-    });
-
-    $('#azureadfs-login').on("click", function () {
-        var emailId = $("#login-email").val();
-        $("#external-email").val(emailId);
-    });
-
-    $('#login-email').keyup(function () {
-        $("#error-email").css("display", "none");
-    });
-
-    $('#login-password').keyup(function () {
-        $("#error-password").css("display", "none");
-    });
-
-    $(document).on("click", ".forgot-pwd-link", function (event) {
-        event.preventDefault();
-        if ($("#login-email").val() != "" && $("#login-email").val() != undefined) {
-            localStorage.setItem(window.location.hostname + "_email", $("#login-email").val())
-        }
-
-        window.location.href = $(this).attr("href");
-    });
 
     $("#login-form").validate({
         errorElement: "span",
@@ -98,76 +71,135 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("click", "#login-button-windows", function () {
-        $("body").ejWaitingPopup("show");
-        $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.AccessDenied);
-        $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
-        var redirectUrl = rootUrl + (window.location.href.search("authorization") === -1
-            ? "/windowsauthentication/account/login"
-            : "/windowsauthentication/account/oauthlogin?client_id=" + $("#external-authentication-client-id").val());
-        $.ajax({
-            type: "GET",
-            url: redirectUrl,
-            data: {},
-            cache: false,
-            contentType: "application/json; charset=utf-8",
-            statusCode: {
-                401: function () {
-                    $("body").ejWaitingPopup("hide");
-                    $("#access-denied").css("display", "block");
-                },
-                503: function () {
-                    $("body").ejWaitingPopup("hide");
-                    $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.SeviceUnAvailable);
-                    $("#access-denied").css("display", "block");
-                },
-                500: function () {
-                    $("body").ejWaitingPopup("hide");
-                    $("#access-denied").css("display", "block");
-                },
-                404: function () {
-                    $("body").ejWaitingPopup("hide");
-                    $("#access-denied").css("display", "block");
-                },
-                200: function (result) {
-                    $("body").ejWaitingPopup("hide");
-                    if (result.status) {
-                        if (window.location.href.search("authorization") === -1) {
-                            window.location.href = getParameterByName("ReturnUrl");
-                        } else {
+    if (typeof IsWindowADEmbedSSOAuth != 'undefined' && IsWindowADEmbedSSOAuth.toLowerCase() === "true") {
+        isWindowADDefaultAuth = "false";//prevent from triggering windowsad login call again
+        $("#login-button-windows").click();
+    }
+
+    if (typeof isWindowADDefaultAuth != 'undefined' && isWindowADDefaultAuth.toLowerCase() === "true") {
+        $("#login-button-windows").click();
+    }
+});
+
+$(document).on("click", "#login-button-windows", function () {
+    showWaitingPopup('body');
+    $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.AccessDenied);
+    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
+    var redirectUrl = rootUrl + (window.location.href.search("authorization") === -1
+        ? "/windowsauthentication/account/login"
+        : "/windowsauthentication/account/oauthlogin?client_id=" + $("#external-authentication-client-id").val());
+    $.ajax({
+        type: "GET",
+        url: redirectUrl,
+        data: {},
+        cache: false,
+        contentType: "application/json; charset=utf-8",
+        statusCode: {
+            401: function () {
+                hideWaitingPopup('body');
+                $("#access-denied").css("display", "block");
+            },
+            503: function () {
+                hideWaitingPopup('body');
+                $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.SeviceUnAvailable);
+                $("#access-denied").css("display", "block");
+            },
+            500: function () {
+                hideWaitingPopup('body');
+                $("#access-denied").css("display", "block");
+            },
+            404: function () {
+                hideWaitingPopup('body');
+                $("#access-denied").css("display", "block");
+            },
+            200: function (result) {
+                hideWaitingPopup('body');
+                if (result.status) {
+                    if (window.location.href.search("authorization") === -1) {
+                        window.location.href = getParameterByName("ReturnUrl");
+                    } else {
+                        if (typeof IsWindowADEmbedSSOAuth != 'undefined' && IsWindowADEmbedSSOAuth.toLowerCase() === "true") {
+                            window.location.href = WindowADCallBackUrl;
+                        }
+                        else {
                             window.location.reload();
                         }
-                    } else {
-                        $("body").ejWaitingPopup("hide");
-                        if (result.data == null || result.data == "") {
-                            $("#access-denied").css("display", "block");
-                        } else {
-                            $("#validate-ad-user").html(result.data.replace(/[''\[\]\/]/gi, ''));
-                            $("#validate-ad-user").css("display", "block");
-                        }
                     }
-                },
-                304: function (result) {
-                    $("body").ejWaitingPopup("hide");
-                    if (result.responseText.toLowerCase() != "true") {
-                        $("body").ejWaitingPopup("hide");
-                        $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.SeviceUnAvailable);
+                } else {
+                    hideWaitingPopup('body');
+                    if (result.data == null || result.data == "") {
                         $("#access-denied").css("display", "block");
+                    } else {
+                        $("#validate-ad-user").html(result.data.replace(/[''\[\]\/]/gi, ''));
+                        $("#validate-ad-user").css("display", "block");
                     }
                 }
             },
-            complete: function (result) {
-                $("body").ejWaitingPopup("hide");
-            },
-            dataType: "json",
-            success: function (result) { }
-        });
-        return false;
+            304: function (result) {
+                hideWaitingPopup('body');
+                if (result.responseText.toLowerCase() != "true") {
+                    hideWaitingPopup('body');
+                    $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.SeviceUnAvailable);
+                    $("#access-denied").css("display", "block");
+                }
+            }
+        },
+        complete: function (result) {
+            hideWaitingPopup('body');
+        },
+        dataType: "json",
+        success: function (result) { }
     });
+    return false;
+});
 
-    $(document).on("click", ".auth-login-button", function () {
-        $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
-    });
+$(document).on("click", ".auth-login-button", function () {
+    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
+});
+
+$(document).on("click change", "#login-email", function () {
+    if ($("#password-field").css("display") !== "none") {
+        $(".login-options, #password-field").slideUp();
+        $("#password-field").removeClass("has-error");
+        $("#login-button").html(window.Server.App.LocalizationContent.ContinueButton);
+        $('#current-password').val("");
+    }
+});
+
+$(document).on("click", "#windows-login", function () {
+    var emailId = $("#login-email").val();
+    $("#azure-email").val(emailId);
+});
+
+$(document).on("click", "#azureadfs-login", function () {
+    var emailId = $("#login-email").val();
+    $("#external-email").val(emailId);
+});
+
+$(document).on("keyup", "#login-email", function () {
+    $("#error-email").css("display", "none");
+    $("#error-password").css("display", "none");
+});
+
+$(document).on("keyup", "#current-password", function () {
+    $("#error-password").css("display", "none");
+});
+
+$(document).on("click", ".forgot-pwd-link", function (event) {
+    event.preventDefault();
+    if ($("#login-email").val() != "" && $("#login-email").val() != undefined) {
+        localStorage.setItem(window.location.hostname + "_email", $("#login-email").val())
+    }
+
+    window.location.href = $(this).attr("href");
+});
+
+$(document).on("click", "#adfs-login-text", function () {
+    $('#azureadfs-login').click();
+});
+
+$(document).on("click", "#adfs-login-text", function () {
+    $("#windows-login").trigger("click");
 });
 
 function FormValidate() {
@@ -187,14 +219,11 @@ function FormValidate() {
                     } else {
                         $(".mail-loader-div").removeClass("email-loader");
                         $("#login-button").removeAttr("disabled");
-                        if (result.Status === true) {
-                            if (result.DirectoryTypeName === "syncfusion"
-                                || result.DirectoryTypeName === "linkedin"
-                                || result.DirectoryTypeName === "google"
-                                || result.DirectoryTypeName === "twitter"
-                                || result.DirectoryTypeName === "oauth2"
+                        if (result.Status != null) {
+                            if (result.DirectoryTypeName === "oauth2"
                                 || result.DirectoryTypeName === "openidconnect"
-                                || result.DirectoryTypeName === "jwtsso") {
+                                || result.DirectoryTypeName === "jwtsso"
+                                || result.DirectoryTypeName === "windowsad") {
                                 $("#external-email").val(userName);
                                 $("#" + result.DirectoryTypeName + "-login").trigger("click");
                             }
@@ -206,15 +235,11 @@ function FormValidate() {
                                 $("#password-field, .login-options").slideDown();
                                 $("#password-field").children(".e-float-input").removeClass("e-error");
                                 $("#login-button").html(window.Server.App.LocalizationContent.LoginButton);
-                                $("#login-password").focus();
+                                $("#current-password").focus();
                                 if (showBoldSignUp.toLowerCase() === "true") {
                                     $(".account-bg").css("height", "710px");
                                 }
                             }
-                        } else {
-                            $(".login-fields .email").addClass("has-error");
-                            $("#error-email").css("display", "block").html(window.Server.App.LocalizationContent.InvalidAccount);
-                            $(".e-outline").addClass("e-error");
                         }
                     }
                 }
@@ -222,16 +247,13 @@ function FormValidate() {
         }
         return false;
     } else {
+
         if ($("#login-form").valid()) {
-            $("body").ejWaitingPopup("show");
+            showWaitingPopup('body');
         }
         return $("#login-form").valid();
     }
 }
-
-$("#adfs-login-text").click(function () {
-    $('#azureadfs-login').click();
-});
 
 function getParameterByName(name) {
     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -240,10 +262,6 @@ function getParameterByName(name) {
         urlValue = homeUrl;
     return urlValue;
 }
-
-$(document).on("click", "#adfs-login-text", function () {
-    $("#windows-login").trigger("click");
-});
 
 
 
@@ -263,7 +281,7 @@ $(document).on("click", "#syncfusion-login-text", function () {
 });
 
 $(document).on("click", "#syncfusion-login", function (e) {
-    $("body").ejWaitingPopup("show");
+    showWaitingPopup('body');
     if (windowRef != undefined) {
         clearInterval(timer);
         windowRef.close();
@@ -298,13 +316,13 @@ if ($("#login-button").is(":disabled")) {
             window.location.href = window.parent.accessDeniedUrl;
         }
         else {
-            $("body").ejWaitingPopup("hide");
+            hideWaitingPopup('body');   
         }
 
         window.parent.isValidAccount = false;
         window.parent.privacyAccepted = true;
     } else {
-        $("body").ejWaitingPopup("hide");
+        hideWaitingPopup('body');
     }
 }
 
@@ -320,21 +338,21 @@ function onSyncfusionFormChange() {
         $("#syncfusion-login-button").attr("disabled", true);
     }
 }
-$(document).on("ready", function () {
-    $(".show-hide-password").on("click", function () {
+$(function () {
+    $(document).on("click", ".show-hide-password", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
-            $(this).removeClass('su-show');
-            $(this).addClass('su-hide');
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings().find("input").attr('type', 'password');
-            $(this).removeClass('su-hide');
-            $(this).addClass('su-show');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 
-    $(".show-hide-password").bind("touch", function () {
+    $(document).on("touch", ".show-hide-password", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
             $(this).removeClass('su-show');

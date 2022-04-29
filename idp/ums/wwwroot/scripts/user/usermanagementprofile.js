@@ -218,10 +218,10 @@ $(document).ready(function () {
                     rules = "";
                 }
             }
-            $(element).closest('div').find(".password-validate-holder").html("");
+            $(element).closest('div').find(".validation-message").html("");
         },
         errorPlacement: function (error, element) {
-            $(element).closest('div').find(".password-validate-holder").html(error.html());
+            $(element).closest('div').find(".validation-message").html(error.html());
         },
         messages: {
             "new-password": {
@@ -566,7 +566,7 @@ function successMessage() {
 
 function onUserChangePasswordClick() {
     var userId = $("#user-id").val();
-    $(".password-validate-holder").html("");
+    $(".validation-message").html("");
     $("#new-password-validate, #confirm-password-validate").closest("div").prev("div").removeClass("has-error");
     var isValid = true;
     isValid = $('.change-password-form').valid();

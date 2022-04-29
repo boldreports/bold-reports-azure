@@ -42,14 +42,14 @@
                     if (ViewBag.InActiveUser)
                     {
                         <div class="error-text">
-                            [[[You are logged in as ]]]<strong>@email</strong>[[[, but your account is not yet activated in the site ]]]<strong>@(new Uri(GlobalAppSettings.SystemSettings.BaseUrl).DnsSafeHost)</strong>[[[.]]]<br>
+                            [[[You are logged in as ]]]<strong>@email</strong>[[[, but your account is not yet activated in the site ]]]<strong>@(new Uri(GlobalAppSettings.SystemSettings.InternalAppUrls.Idp).DnsSafeHost)</strong>[[[.]]]<br>
                             [[[Please contact your system administrator to activate your account.]]]
                         </div>
                     }
                     else
                     {
                         <div class="error-text">
-                            [[[You are logged in as ]]]<strong>@email</strong>[[[, but you do not have access to the site ]]]<strong>@(new Uri(GlobalAppSettings.SystemSettings.BaseUrl).DnsSafeHost)</strong>[[[.]]]<br>
+                            [[[You are logged in as ]]]<strong>@email</strong>[[[, but you do not have access to the site ]]]<strong>@(new Uri(GlobalAppSettings.SystemSettings.InternalAppUrls.Idp).DnsSafeHost)</strong>[[[.]]]<br>
                             [[[If you should have access to this site, contact your system administrator.]]]
                         </div>
                     }

@@ -29,11 +29,13 @@
         }
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-dataset.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-dataset.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-dataset.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-dataset.min.js"></script>
@@ -52,8 +54,8 @@
                 <div class='new-dataset-popup-btns dataset-btns'>
                     <div id="dataset_validation" style="color: #A94442; display: none; height: 0;"></div>
                     <div class='create-dataset-btns pull-right'>
-                        <input type='button' value='[[[Select]]]' id='publish_dataset' onclick="onSubmitDataset()" class='btn primary-button right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
-                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button NoStyleCloseClick' onclick="closeNewDatasetPopup()" tabindex="16">
+                        <input type='button' value='[[[Select]]]' id='publish_dataset' onclick="onSubmitDataset()" class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
+                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewDatasetPopup()" tabindex="16">
                     </div>
                 </div>
             </div>

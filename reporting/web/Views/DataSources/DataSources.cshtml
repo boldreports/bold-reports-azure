@@ -69,7 +69,7 @@
                     <h2 class="page-title col-lg-6">[[[DATA SOURCES]]]</h2>
                     @if (itemPermissions[ItemType.Datasource])
                     {
-                        <button type="button" class="cd-btn pull-right primary-button">[[[Create Data Source]]]</button>
+                        <button type="button" class="cd-btn pull-right primary-button app-btn-primary">[[[Create Data Source]]]</button>
                     }
                 </div>
                 <div class="admin-page-body">
@@ -108,5 +108,6 @@
     {
         @await Html.PartialAsync("../Items/_AddItems")
         @await Html.PartialAsync("../Items/_ItemVersion")
+        @await Html.PartialAsync("../Items/_SharePermission")
     }
 }

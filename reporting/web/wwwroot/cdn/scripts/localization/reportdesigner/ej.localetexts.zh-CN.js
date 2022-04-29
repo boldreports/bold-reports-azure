@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         report: '报告',
         url: '网址',
         linkUrl: '将网址链接到报告项',
-        none: '没有'
+        none: '没有',
+        linkBookmark: '书签'
     },
     linkReport: {
         reportCaption: '报告',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         categoryName: '链接',
         linkReport: '链接报告',
+        URL: '网址',
         appearance: {
             categoryName: '出现',
             styleTooltip: '樣式',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             toolTip: '工具提示',
             documentMap: '文件图',
             customAttributes: '自定义属性',
-            zIndex: '指数'
+            zIndex: '指数',
+            bookmark: '书签'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '没有数据信息',
             caption: '信息',
             hidden: '隐藏任何数据',
-            borderStyle: '边框样式',
+            showBorder: '显示边框',
             borderColor: '边框颜色',
             borderSize: '边框尺寸',
             fontLabel: '字形',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 size: '字體大小',
                 style: '字體樣式',
                 weight: '字體粗細'
-            },
-            positiontypes: {
-                topLeft: '左上方',
-                topCenter: '顶尖中心',
-                topRight: '右上',
-                rightTop: '右上角',
-                rightCenter: '正确的中心',
-                rightBottom: '右下',
-                bottomLeft: '左下方',
-                bottomCenter: '底部中心',
-                bottomRight: '底部右侧',
-                leftTop: '左上方',
-                leftCenter: '左中心',
-                leftBottom: '左下'
             },
             fontStyle: {
                 label: '字体样式',
@@ -674,28 +663,6 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                     extraBold: '特大号',
                     heavy: '重',
                 }
-            },
-            textDecoration: {
-                categoryName: '文本装饰',
-                defaultStyle: '默认',
-                none: '没有',
-                underline: '强调',
-                overline: '上划线',
-                lineThrough: '通过'
-            },
-            border: {
-                default: '边境',
-                left: '剩下',
-                top: '最佳',
-                right: '对',
-                bottom: '底部'
-            },
-            borderStyles: {
-                solid: '固体',
-                none: '没有',
-                double: '双',
-                dashed: '虚线',
-                dotted: '带点'
             }
         },
         basicSettings: {
@@ -816,7 +783,11 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 length: '長度',
                 width: '刻度線寬度'
             },
-            labelsAutofitDisabled: '标签自动调整已禁用'
+            labelsAutofitDisabled: '标签自动调整已禁用',
+            maximum: '最大限度',
+            minimum: '最低限度',
+            horizontalAxis: '横轴',
+            verticalAxis: '纵轴'
         },
         gridLine: {
             categoryName: '网格线',
@@ -860,6 +831,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             documentMap: '文件图',
             customAttributes: '自定义属性',
             alertHeader: '圖表報告項目',
+            bookmark: '书签',
             alertMessage: '自定义属性格式无效。正确的格式示例：\'AttrName1 = Value1，AttrName2 = Value2 \'.'
         },
         seriesSettings: {
@@ -923,7 +895,9 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 }
             },
             miscellaneous: {
-                categoryName: '杂'
+                categoryName: '杂',
+                toolTip: '工具提示',
+                customLegendText: '图例文本'
             }
         },
         borderStyle: '邊框樣式',
@@ -984,6 +958,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '杂',
             customAttributes: '自定义属性',
             documentMap: '文件图',
+            bookmark: '书签'
         },
         styleTooltip: '樣式',
         colorTooltip: '顏色',
@@ -1073,7 +1048,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryName: '杂',
             customattributes: '自定义属性',
             documentMap: '文件图',
-            pageName: '页面名称'
+            pageName: '页面名称',
+            bookmark: '书签'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1471,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             keepTogether: '保持在一起',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         fontStyleTooltip: '樣式',
         fontWeightTooltip: '重量',
@@ -1617,7 +1594,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             pageName: '页面名称',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         dataElement: {
             categoryName: '数据元素',
@@ -1771,6 +1749,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             connectDatasource: '连接数据源',
             datasourceType: '选择要连接的类型',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL 數據倉庫',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1761,18 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             mysqlLabel: '的MySQL',
             mariadbLabel: '玛丽亚数据库',
             memsqlLabel: '内存SQL',
-            sharedLabel: '共享'
+            sharedLabel: '共享',
+            cdataLabel: '数据',
+            snowflakeLabel: '雪花',
+            ssasLabel: 'Microsoft SQL 分析服务',
+            verticaLabel: '维蒂卡',
+            gcsqlLabel: '谷歌云 SQL',
+            redshiftLabel: '亚马逊红移',
+            amazonAuroraLabel: '亚马逊极光',
+            amazonRDSLabel: 'Amazon RDS',
+            webapilabel: '网页接口',
+            postgresqllabel: 'PostgreSQL',
+            odatalabel: '数据'
         },
         datasourceConnection: {
             newConnection: '新的连接',
@@ -2053,20 +2043,79 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: '连接字符串',
-            authenticationType: '验证类型',
-            authentication: '认证方式',
-            prompt: '提示',
-            none: '没有',
+            serverName: '服务器名称',
+            port: '港口',
             userName: '用户名',
             password: '密码',
-            promptLabel: '提示文字',
             savePassword: '保存密码',
+            database: '数据库',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
             alertMessage: {
-                alertConnectionString: '指定连接字符串',
-                alertPrompt: '指定提示文字',
-                alertUserName: '指定用户名',
-                alertPassword: '指定密码'
+                userName: '指定用户名',
+                password: '指定密码',
+                serverName: '指定服务器名称',
+                port: '指定端口号',
+                database: '指定数据库名称',
+            }
+        },
+        googleCloudSQL: {
+            dbEngine: '数据库引擎',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonAurora: {
+            dbEngine: '数据库引擎',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonRDS: {
+            dbEngine: '数据库引擎',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL',
+            auroraMysqlEngine: '亚马逊极光 MySQL',
+            auroraPsqlEngine: '亚马逊极光 PostgreSQL',
+            mariaDbEngine: '玛丽亚数据库',
+            sqlserver: '数据库服务器',
+            oracle: '甲骨文'
+        },
+        snowflakeDatasource: {
+            serverName: '服务器名称',
+            serverWatermark: '例子',
+            database: '数据库',
+            userName: '用户名',
+            password: '密码',
+            savePassword: '保存密码',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
+            alertMessage: {
+                serverName: '指定服务器名称',
+                userName: '指定用户名',
+                password: '指定密码',
+                database: '指定数据库名称'
+            }
+        },
+        verticaDatasource: {
+            serverName: '服务器名称',
+            port: '港口',
+            database: '数据库',
+            userName: '用户名',
+            password: '密码',
+            savePassword: '保存密码',
+            basicSwitch: '基本选项',
+            advanceSwitch: '高级选项',
+            switchAlert: '切换到视觉设计器将放弃对连接字符串进行的手动更改。您是否仍要使用视觉设计师？',
+            switchLabel: '数据源高级面板',
+            alertMessage: {
+                serverName: '指定服务器名称',
+                userName: '指定用户名',
+                password: '指定密码',
+                port: '指定端口号',
+                database: '指定数据库名称'
             }
         },
         sharedDatasource: {
@@ -2087,6 +2136,28 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             duplicateName: '指定的名称已存在于“数据源”列表中',
             invalidCharacterValidation: '名称不应包含空格和特殊字符',
             sharedPermissionValidation: '除共享數據源外，數據源的創建受到限制。'
+        },
+        descriptionText: {
+            amazonAuroraInfo: 'Amazon Aurora 是由 Amazon Web Services 开发和提供的关系数据库服务。 Amazon Aurora 连接器允许您在 {customBrandName} Designer 中访问来自 Amazon Aurora 数据库的数据。',
+            azureSqlInfo: 'Azure SQL 数据仓库是一种基于 Microsoft 云的企业数据仓库服务产品。 它利用大规模并行处理来快速运行 PB 级数据的复杂查询。 Azure SQL 数据仓库连接器允许你在 {customBrandName} 设计器中访问来自 Azure SQL 数据仓库数据库的数据。',
+            cdataInfo: 'CDATA 是一个分布式、高度可扩展的 SQL 数据库，可以在任何地方运行。它使用熟悉的关系数据结构为事务和分析工作负载提供最高性能。cdata 连接器允许您使用 {customBrandName} Designer 中的 MySQL 端点访问 cdata 数据库中的数据。',
+            csvInfo: '将您的 CSV 文件放入 {customBrandName} 设计器并准备报告以查看数据中的故事。',
+            excelInfo: '将您的 Excel 文件作为表格或工作表放入 {customBrandName} 设计器。 探索和使用您的数据，准备报告以查看数据中的故事。',
+            googleBigQueryInfo: 'BigQuery 是一种 RESTful Web 服务，可与 Google Storage 结合使用，对海量数据集进行交互式分析。它是一种无服务器软件即服务，可以与 MapReduce 互补使用。',
+            jsonInfo: '将您的 JSON 文件上传到 {customBrandName} 设计器中，以准备报告并查看数据中的故事。',
+            mariadbInfo: 'MariaDB 是 MySQL 关系数据库管理系统的一个社区开发的、商业支持的分支，保证保持开源。 MariaDB 连接器允许您在 {customBrandName} 设计器中访问来自 MariaDB 数据库的数据。',
+            memsqlInfo: 'MemSQL 是一种分布式、高度可扩展的 SQL 数据库，可以在任何地方运行。 它使用熟悉的关系数据结构为事务和分析工作负载提供最高性能。 MemSQL 连接器允许您在 {customBrandName} 设计器中访问 MemSQL 数据库中的数据。',
+            microsoftsqlInfo: 'SQL Server 是 Microsoft\ 的关系数据库管理系统。作为市场上最可靠和最值得信赖的数据库服务器之一，它在核心数据库管理之上提供各种增值服务，如分析、报告等 系统。SQL Server 连接器允许您在 {customBrandName} 设计器中访问来自 Microsoft SQL Server 数据库的数据。',
+            ssasInfo: 'SQL Server 分析服务 (SSAS) 是来自 Microsoft 商业智能堆栈的技术，用于开发在线分析处理 (OLAP) 解决方案。简单来说，您可以使用 SSAS 使用来自数据集市/数据仓库的数据创建多维数据集，以进行更深入、更快速的数据分析。',
+            mysqlInfo: 'MySQL 是一个免费提供的开源关系数据库管理系统，以其快速处理、久经考验的可靠性以及易用性和灵活性而著称。 MySQL 连接器允许您在 {customBrandName} 设计器中访问 MySQL 数据库中的数据。',
+            odataInfo: 'OData 是一种开放协议，允许以简单和标准的方式创建和使用可查询和可互操作的 RESTful API。 与 {customBrandName} Designer 连接并构建报告以查看数据中的故事。',
+            odbcInfo: 'ODBC 驱动程序使用 Microsoft 的开放式数据库连接 (ODBC) 接口，该接口允许应用程序使用 SQL 作为访问数据的标准来访问数据库管理系统 (DBMS) 中的数据。',
+            oledbInfo: 'OLE DB 是 Microsoft 用于访问不同数据源的战略性低级应用程序接口 (API)。 OLE DB 不仅包括 Microsoft 赞助的标准数据接口开放式数据库连接 (ODBC) 的结构化查询语言 (SQL) 功能，还包括对 SQL 数据以外的数据的访问。',
+            oracleInfo: 'Oracle 是具有高级分析功能的企业级关系数据库。 Oracle 连接器允许您在 {customBrandName} 设计器中访问来自 Oracle 数据库的数据。',
+            psqlInfo: 'PostgreSQL 是一个强大的开源对象关系数据库系统，强调可扩展性和标准合规性。 PostgreSQL 连接器允许您在 {customBrandName} 设计器中访问来自 PostgreSQL 数据库的数据。',
+            snowflakeInfo: 'Snowflake 是一个基于云的数据仓库，它为存储和检索数据提供了一个无限的平台。与传统的单集群共享磁盘/无共享架构不同，Snowflake 具有多集群、共享数据架构，由于企业级基于云的存储系统，该架构具有动态性和高度可扩展性。',
+            webAPIInfo: '使用几乎所有具有 REST API 的数据源与 {customBrandName} Designer 连接。创建报告并查看数据中的故事。',
+            xmlInfo: '将您的 XML 文件放入 {customBrandName} 设计器并准备报告以查看数据中的故事。'
         }
     },
     imageManager: {
@@ -2235,6 +2306,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         dataFieldSearch: {
             errorMessage: '找不到匹配项',
             searchText: '搜索'
+        },
+        dataTab: {
+            dataSourceTabHeader: '數據源',
+            dataSetTabHeader: '數據集'
         }
     },
     reportViewer: {
@@ -2998,6 +3073,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         reportMiscellaneous: {
             categoryName: '杂',
+            consumeWhiteSpace: '使用容器空白',
             customAttributes: '自定义属性',
             reportVersion: '版',
             reportversions: {
@@ -3103,6 +3179,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         link: '链接',
         linkReport: '链接报告',
+        URL: '网址',
         position: {
             categoryName: '位置',
             label: '位置',
@@ -3124,7 +3201,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             canShrink: '可以收缩',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         paragraphSettings: {
             categoryName: '段落设置',
@@ -3308,7 +3386,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         miscellaneous: {
             categoryName: '杂',
-            toolTip: '工具提示'
+            toolTip: '工具提示',
+            bookmark: '书签'
         },
         styleTooltip: '樣式',
         colorTooltip: '顏色',
@@ -3432,7 +3511,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             keepTogether: '保持在一起',
             customAttributes: '自定义属性',
             toolTip: '工具提示',
-            documentMap: '文件图'
+            documentMap: '文件图',
+            bookmark: '书签'
         },
         headers: {
             categoryName: '标头',
@@ -3851,6 +3931,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 specifyQuery: '指定 数据集 查询',
                 selectTable: '选择表来保存 数据集',
                 queryFailed: '数据集 无法保存所选表的查询',
+                refreshFailed: '未能刷新数据集 {datasetName}，它需要一个或多个输入值。 请编辑并保存数据集。',
                 tableProcedure: '数据集 无法检索选定的表过程',
                 deleteTableFailure: '删除所选表失败',
                 joinTableFailure: '无法加入所选表格',
@@ -4022,7 +4103,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             sort: '排序',
             group: '组',
             expression: '表达',
-            aggregate: '骨料'
+            aggregate: '骨料',
+            none: '没有任何'
         },
         validationMessage: '设计器中不支持图表类型.'
     },
@@ -4430,7 +4512,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             categoryMiscellaneous: '杂',
             toolTip: '工具提示',
             documentMap: '文件图',
-            customAttributes: '自定义属性'
+            customAttributes: '自定义属性',
+            bookmark: '书签'
         },
         spatial: {
             categoryName: '空间空间',

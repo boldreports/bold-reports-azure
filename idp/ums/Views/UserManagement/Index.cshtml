@@ -1,7 +1,7 @@
 ﻿@using System.Configuration
 @using System.Web
 @{
-    var idPUrl = CloudAppConfig.IdPUrl.TrimEnd('/');
+    var idPUrl = GlobalAppSettings.SystemSettings.BaseUrl.TrimEnd('/');
     ViewBag.Title = "[[[Users]]] - " + GlobalAppSettings.SystemSettings.OrganizationName;
 }
 
@@ -11,6 +11,10 @@
 
 @section scripts{
     <script src="~/bundles/js/user-management.js" asp-append-version="true"></script>
+    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
+    <script>
+        $.extend(ej, Syncfusion);
+    </script>
     <script>
         var checkMailSettingUrl = "@Url.Action("checkmailsettingsexist", "Administration")";
         var postactionUrl = "@Url.Action("postaction", "UserManagement")";
@@ -57,17 +61,17 @@
         {{else}}
         <a class="item-name grid-content" title="{{:DisplayName}}" data-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?userid={{:UserId}}">{{:DisplayName}}</a>
         {{/if}}
-        {{if DirectoryTypeId == @((int)DirectoryType.AzureAD)}}
+        {{if DirectoryType.Id == @((int)DirectoryType.AzureAD)}}
         <span class="su su-azure-ad grid-directory-icon"> </span>
-        {{else DirectoryTypeId == @((int)DirectoryType.ExternalDatabase)}}
+        {{else DirectoryType.Id == @((int)DirectoryType.ExternalDatabase)}}
         <span class="su su-datasource grid-directory-icon"> </span>
-        {{else DirectoryTypeId == @((int)DirectoryType.WindowsAD)}}
+        {{else DirectoryType.Id == @((int)DirectoryType.WindowsAD)}}
         <span class="su su-windows-ad grid-directory-icon"> </span>
-        {{else DirectoryTypeId == @((int)DirectoryType.OAuth2)}}
+        {{else DirectoryType.Id == @((int)DirectoryType.OAuth2)}}
         <span class="su su-oauth grid-directory-icon"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></span>
-        {{else DirectoryTypeId == @((int)DirectoryType.OpenIDConnect)}}
+        {{else DirectoryType.Id == @((int)DirectoryType.OpenIDConnect)}}
         <span class="su su-openid grid-directory-icon"> </span>
-        {{else DirectoryTypeId == @((int)DirectoryType.JWTSSO)}}
+        {{else DirectoryType.Id == @((int)DirectoryType.JWTSSO)}}
         <span class="su su-single-sign-on grid-directory-icon"> </span>
         {{/if}}
     </script>
@@ -81,12 +85,15 @@
         <span class="grid-content" title="{{:Email}}" data-toggle="tooltip">@string.Empty</span>
         {{/if}}
     </script>
-    <script type="text/x-jsrender" id="status-description-template">
-        {{if IsActive}}
-        Active
+    <script type="text/x-jsrender" id="email-verification-template">
+        {{if EmailVerified}}
+        Completed
         {{else}}
-        Inactive
+        Pending
         {{/if}}
+    </script>
+    <script type="text/x-jsrender" id="status-description-template">
+        {{:UserStatus}}
     </script>
     <script type="text/x-jsrender" id="filter-template">
         <span>
@@ -109,31 +116,11 @@
     <script type="text/x-jsrender" id="status-header">
         <div class="item-header">[[[Status]]]</div>
     </script>
+    <script type="text/x-jsrender" id="email-verification-header">
+        <div class="item-header">[[[Email Verification]]]</div>
+    </script>
     <script type="text/x-jsrender" id="role-header">
         <div class="item-header">[[[Role]]]</div>
-    </script>
-    <script type="text/x-jsrender" id="filter-header">
-        <div>
-            <span>
-                <a class="e-filtericon e-icon e-filterset" id="role-filter-option" href="javascript:void(0);">
-                </a>
-            </span>
-        </div>
-        <div class="role-filter hide" role="dialog">
-            <div class="admin">
-                <input type="radio" id="admin-checkbox" name="filter" class="css-radio" />
-                <label for="admin-checkbox" class="app-textbox-label notransition" id="labeladmin">[[[Admin]]]</label>
-            </div>
-            <div class="non-admin">
-                <input type="radio" id="nonadmin-checkbox" name="filter" class="css-radio" />
-                <label for="nonadmin-checkbox" class="app-textbox-label notransition" id="labelnonadmin">[[[Non Admin]]]</label>
-            </div>
-            <div class="filter-buttons">
-                <input type="button" id="filter-button" class="primary-button margin-right" onclick="roleFilter()" value="Filter" />
-                <input type="hidden" />
-                <input type="button" id="cancel" class="secondary-button popup-close" onclick="resetFilter()" value="Clear" />
-            </div>
-        </div>
     </script>
 
     <script type="text/x-jsrender" id="options">
@@ -158,22 +145,22 @@
                 {{if Email != "@ViewBag.LoggedUser"}}
                 {{if Role == ""}}
                 <li class="assign-role" data-content="{{:UserId}}">
-                    <a class="make-admin-class" href="javascript:void(0);" title="">
-                        <i class="su su-user_settings_icon"></i>
+                    <a class="make-admin-class">
+                        <i class="su su-user-settings"></i>
                         <span>[[[Make Admin]]]</span>
                     </a>
                 </li>
                 {{/if}}
                 {{if Role == "@Role.Admin"}}
                 <li class="assign-role" data-content="{{:UserId}}">
-                    <a class="remove-admin-class" href="javascript:void(0);" title="">
-                        <i class="su su-user_settings_icon"></i>
+                    <a class="remove-admin-class" title="">
+                        <i class="su su-user-settings"></i>
                         <span>[[[Remove Admin]]]</span>
                     </a>
                 </li>
                 {{/if}}
-                <li data-content="{{:UserId}}">
-                    <a class="delete-class" href="javascript:void(0);" title="">
+                <li class="delete-user" data-content="{{:UserId}}">
+                    <a class="delete-class" title="">
                         <i class="su su-delete"></i>
                         <span>[[[Delete]]]</span>
                     </a>
@@ -198,7 +185,7 @@
                 allowSorting: true,
                 allowSearching: true,
                 allowSelection: true,
-                allowFiltering: true,
+                allowFiltering: false,
                 pageSettings: { pageSize: 20 },
                 filterSettings: { filterType: "menu" },
                 selectionType: ej.Grid.SelectionType.Multiple,
@@ -225,6 +212,7 @@
                 columns: [
                     {
                         template: true,
+                        allowFiltering: false,
                         allowSorting: true,
                         templateID: "#user-profile-template",
                         headerText: "[[[Name]]]",
@@ -235,6 +223,7 @@
                     },
                     {
                         template: true,
+                        allowFiltering: false,
                         allowSorting: true,
                         field: "Username",
                         templateID: "#user-username-template",
@@ -245,6 +234,7 @@
                     },
                     {
                         field: "Email",
+                        allowFiltering: false,
                         templateID: "#user-email-template",
                         headerText: "[[[Email Address]]]",
                         headerTemplateID: "#email-header",
@@ -260,16 +250,19 @@
                         allowFiltering: false,
                     },
                     {
-                        headerTemplateID: "#filter-header",
-                        width: 15,
-                        allowFiltering: false
-                    },
-                    {
                         field: "StatusDescription",
                         headerText: "[[[Status]]]",
                         headerTemplateID: "#status-header",
                         templateID: "#status-description-template",
-                        width: 60,
+                        width: 80,
+                        allowFiltering: false
+                    },
+                    {
+                        field: "IsActivated",
+                        headerText: "[[[Email Verification]]]",
+                        headerTemplateID: "#email-verification-header",
+                        templateID: "#email-verification-template",
+                        width: 90,
                         allowFiltering: false
                     },
                     {
@@ -293,93 +286,96 @@
 }
 
 @section MainSection{
-    <div id="base-container" class="col-xs-12 admin-page-container ">
-        <div class="col-lg-12 col-xs-12 admin-page-header">
-            <div class="col-xs-12 no-padding" id="application-title">
-                <h1 class="pull-left col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding page-title">
-                    <input type="hidden" id="user-count-text" value="@ViewBag.UserCount">
-                    USERS (<span id="user-count" value="@ViewBag.UserCount">@ViewBag.UserCount</span>)
-                </h1>
+    <div id="base-container" class="admin-page-content-container full-page-container">
+        <div class="admin-page-content col-md-12 no-padding">
+            <div class="col-xs-12 admin-page-header">
+                <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
+                    <h1 class="h2 page-title">
+                        <input type="hidden" id="user-count-text" value="@ViewBag.UserCount">
+                        [[[USERS]]] (<span id="user-count" value="@ViewBag.UserCount">@ViewBag.UserCount</span>)
+                    </h1>
 
-                <ul class="pull-right col-lg-6 no-margin no-padding" id="user-management-options">
-                    <li class="dropdown no-padding">
-                        <button class="primary-button" id="assign-user-role-button" disabled>
-                            <span>[[[Make Admin]]]</span>
+                </div>
+                <div class="col-xs-6 no-padding admin-header-btn">
+                    @if (DeviceDetection.IsMobile)
+                    {
+                        <button class="primary-button pull-right" id="new-user-dropdown" title="[[[Add new user]]]" data-toggle="tooltip" onclick="onUserAddDialogOpen()">
+                            [[[New User]]]
                         </button>
-                        <button class="secondary-button" id="grant-user-button" onclick="onAddTenantsDialogOpen()" disabled>
-                            [[[Grant Site Access]]]
+                    }
+                    else
+                    {
+                        <button class="dropdown-toggle primary-button pull-right" data-toggle="dropdown" data-placement="left" id="new-user-dropdown" title="[[[Add new user]]]">
+                            <span>[[[New User]]] </span>
+                            <span class="caret"></span>
                         </button>
-                        @if (DeviceDetection.IsMobile)
-                        {
-                            <button class="primary-button" id="new-user-dropdown" title="[[[Add new user]]]" data-toggle="tooltip" onclick="onUserAddDialogOpen()">
-                                [[[New User]]]
-                            </button>
-                        }
-                        else
-                        {
-                            <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
-                                <span>[[[New User]]] </span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu add-user-dropdown multi-level" role="menu" id="dropdown-options">
-                                <li id="create-user" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
-                                    <a href="javascript:void(0)" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
-                                        <i class="su su-user-add"> </i>
-                                        <span>[[[Add User]]]</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("UploadFileFormAction", "UserManagement")" title="[[[Import users from CSV]]]" data-toggle="tooltip" data-placement="bottom">
-                                        <i class="su su-download"> </i>
-                                        <span>[[[Import from CSV]]]</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        }
-                    </li>
-                </ul>
-            </div>
-        </div>
+                        <ul class="dropdown-menu add-user-dropdown multi-level pull-right" role="menu" id="dropdown-options">
+                            <li id="create-user" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
+                                <a href="javascript:void(0)" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
+                                    <i class="su su-user-add"> </i>
+                                    <span>[[[Add User]]]</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("UploadFileFormAction", "UserManagement")" title="[[[Import users from CSV]]]" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="su su-download"> </i>
+                                    <span>[[[Import from CSV]]]</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    <button class="primary-button pull-right" id="assign-user-role-button" onclick="onMakeMultipleAdminDialogOpen()" disabled>
+                        [[[Make Admin]]]
+                    </button>
+                    <button class="secondary-button pull-right" id="grant-user-button" onclick="onAddTenantsDialogOpen()" disabled>
+                        [[[Grant Site Access]]]
+                    </button>
 
-        <div id="user-list-container" class="list col-xs-12 admin-page-body">
-            <div id="search-area" class="pull-right">
-                <input type="text" class="pull-left" id="search-users" placeholder="[[[Search users]]]" />
-                <span class="su su-inner-close close-icon pull-left" id="clear-search" title="[[[Clear search]]]"></span>
-                <span class="su su-search search-user pull-left" title="[[[Search]]]"></span>
-            </div>
-            <div class="col-xs-12 no-padding ">
-                <div id="user_grid">
                 </div>
             </div>
 
+            <div id="user-list-container" class="list col-xs-12 admin-page-body">
+                <div id="search-area" class="pull-right">
+                    <input type="text" class="pull-left" id="search-users" placeholder="[[[Search users]]]" />
+                    <span class="su su-inner-close close-icon pull-left" id="clear-search" title="[[[Clear search]]]"></span>
+                    <span class="su su-search search-user pull-left" title="[[[Search]]]"></span>
+                </div>
+                <div class="col-xs-12 no-padding ">
+                    <div id="user_grid">
+                    </div>
+                </div>
 
-            @if (ViewBag.AzureADUserCount > 0)
-            {
-                <div id="azure-ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-azure-ad"> </span> - [[[Azure AD User]]]</div>
-            }
-            @if (ViewBag.DatabaseUserCount > 0)
-            {
-                <div id="database-indication" class="ad-azure-indication col-lg-12"><span class="su su-datasource"> </span> - [[[Database User]]]</div>
-            }
-            @if (ViewBag.AdUserCount > 0)
-            {
-                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-windows-ad"> </span> - [[[Windows AD User]]]</div>
-            }
-            @if (ViewBag.OAuthUserCount > 0)
-            {
-                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-oauth"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></span> - [[[OAuth User]]]</div>
-            }
-            @if (ViewBag.OpenIdUserCount > 0)
-            {
-                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-openid"> </span> - [[[OpenID Connect User]]]</div>
-            }
-            @if (ViewBag.JwtSsoUserCount > 0)
-            {
-                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-single-sign-on"> </span> - [[[JWT SSO User]]]</div>
-            }
+
+                @if (ViewBag.AzureADUserCount > 0)
+                {
+                    <div id="azure-ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-azure-ad"> </span> - [[[Azure AD User]]]</div>
+                }
+                @if (ViewBag.DatabaseUserCount > 0)
+                {
+                    <div id="database-indication" class="ad-azure-indication col-lg-12"><span class="su su-datasource"> </span> - [[[Database User]]]</div>
+                }
+                @if (ViewBag.AdUserCount > 0)
+                {
+                    <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-windows-ad"> </span> - [[[Windows AD User]]]</div>
+                }
+                @if (ViewBag.OAuthUserCount > 0)
+                {
+                    <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-oauth"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></span> - [[[OAuth User]]]</div>
+                }
+                @if (ViewBag.OpenIdUserCount > 0)
+                {
+                    <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-openid"> </span> - [[[OpenID Connect User]]]</div>
+                }
+                @if (ViewBag.JwtSsoUserCount > 0)
+                {
+                    <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-single-sign-on"> </span> - [[[JWT SSO User]]]</div>
+                }
+            </div>
         </div>
+        @await Html.PartialAsync("../Shared/_FooterOnPremise")
     </div>
-
+    <div id="grant-access-dialog"></div>
+    <div id="add-tenants-report-dialog"></div>
     @await Html.PartialAsync("../UserManagement/_GrantAccessDialog")
     @await Html.PartialAsync("../UserManagement/_GrantAccessReport")
     @await Html.PartialAsync("../UserManagement/_UserAddDialog")

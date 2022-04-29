@@ -19,6 +19,7 @@
     var sortLabel = ViewBag.SortLabel;
     var sortAttribute = ViewBag.SortAttribute;
     var sortValue = ViewBag.SortValue;
+    var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
 }
 
@@ -70,6 +71,7 @@
         var sortvalue = "@sortValue";
         var exportItemUrl = "@Url.Action("GetReportParameter", "Items")";
         var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
+        var isMaster = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
         var parameterObj;
         var reportparameterObj;
         var categoryList;
@@ -79,6 +81,7 @@
         else {
             categoryList = "";
         }
+        var granularPermissions = @Html.Raw(JsonConvert.SerializeObject(granularPermissions));
     </script>
     <script>
     var dashboardItemCount = "@itemsCount[ItemType.Report]";
@@ -125,11 +128,11 @@
                                                         <span class="category-count">{{categoryItem.ReportsCount}}</span>
                                                     </span>
                                                     <ul class="category-settings pull-left">
-                                                        <li class="dropdown category-context-menu" ng-if="(categoryItem.CreatedById== currentUserId || isAdmin || categoryItem.CanWrite || categoryItem.CanDelete) && !isTablet">
+                                                        <li class="dropdown category-context-menu" ng-if="(categoryItem.CreatedById== currentUserId || isAdmin || categoryItem.CanWrite || categoryItem.CanDelete || hasCategorySharePermission) && !isTablet">
                                                             <span class="dropdown-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-placement="top" data-toggle="dropdown">
                                                             </span>
                                                             <ul class="dropdown-menu" role="menu">
-                                                                <li ng-if="categoryItem.CreatedById== currentUserId || isAdmin">
+                                                                <li ng-if="categoryItem.CreatedById== currentUserId || isAdmin || hasCategorySharePermission">
                                                                     <a href="javascript:void(0);" class="item-permissions" title="" ng-click="sharePermission(categoryItem.Id)">
                                                                         <i class="su su-manage-permission"></i>
                                                                         <span>[[[Sharing Permissions]]]</span>
@@ -169,7 +172,7 @@
                 <div class="dashboard-action-container col-xs-12 no-padding">
                     <div class="col-xs-5 col-lg-4 no-padding category-info-container" ng-show="!isMobile">
                         <span class="col-xs-12 no-padding">
-                            <span class="dashboard-category-name" ng-bind="activeMenuLabel" data-container="body" data-toggle="dashboard-list-tooltip" data-original-title="{{activeMenuLabel}}">[[[All Reports]]]</span>
+                            <span class="dashboard-category-name" ng-bind="activeMenuLabel" data-container="body" data-toggle="dashboard-list-tooltip" data-original-title="{{activeMenuLabel}}" data-placement="bottom">[[[All Reports]]]</span>
                             <span class="dashboard-count ng-hide" ng-show="dashboardDataBindComplete">({{totalDashboardCount}} {{totalDashboardCount ==1 ? "[[[report]]]" : "[[[reports]]]"}})</span>
                         </span>
                         <span class="dashboard-category-owner pull-left" ng-bind="categoryCreatedBy"></span>
@@ -353,7 +356,7 @@
                                                     </span>
                                                 </a>
                                             </div>
-                                            <div class="dashboard-share" ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet">
+                                            <div class="dashboard-share" ng-if="(dashboardItem.CreatedById==currentUserId || hasDashboardSharePermission) && !isTablet">
                                                 <span class="item-permissions option-click" title="" ng-click="shareDashboardPermission()">
                                                     <i class="su su-share"></i>
                                                 </span>
@@ -383,7 +386,7 @@
                                                             <span>[[[Get Link]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanDownload">
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanDownload && !dashboardItem.IsLocked">
                                                         <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
                                                             <i class="su su-download"></i>
                                                             <span>[[[Download Report]]]</span>
@@ -421,26 +424,26 @@
                                                             <span>[[[Processing Options]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="(dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone) && !isTablet" role="separator" class="divider"></li>
-                                                    <li ng-if="dashboardItem.CanMove && !isTablet">
+                                                    <li ng-if="(dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone) && !isTablet && !dashboardItem.IsLocked" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.CanMove && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="moveItem option-click" data-action="Move" ng-click="moveDashboard()">
                                                             <i class="su su-move"></i>
                                                             <span>[[[Move]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanCopy && !isTablet">
+                                                    <li ng-if="dashboardItem.CanCopy && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="copyItem option-click" data-action="Copy" ng-click="copyDashboard()">
                                                             <i class="su su-copy"></i>
                                                             <span>[[[Copy]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanClone && !isTablet">
+                                                    <li ng-if="dashboardItem.CanClone && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="copyItem option-click" data-action="Clone" ng-click="cloneDashboard()">
                                                             <i class="su su-clone"></i>
                                                             <span>[[[Clone]]]</span>
                                                         </span>
                                                     </li>
-                                                    @if(isMasterTenant)
+                                                    @if(isMasterTenant && ServerAppConfig.IsSelfHosted)
                                                     {
                                                     <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard" ng-hide="schemesDetails != null && !schemesDetails.Publish">
                                                         <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">
@@ -476,7 +479,7 @@
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanWrite && !isTablet">
+                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>
                                                             <span>[[[Update]]]</span>
@@ -591,7 +594,7 @@
                             <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No drafts were found that match your search. Try modifying your search.]]]</span>
                         </div>
                         <div class="create-buttton">
-                            <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button">[[[Create Report]]]</button>
+                            <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button app-btn-primary">[[[Create Report]]]</button>
                         </div>
                     </div>
                 </div>
@@ -643,8 +646,8 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="app-button app-primary-button" data-dismiss="modal" ng-click="onSortApplyClicked()">[[[Apply]]]</button>
-                        <button type="button" class="app-button app-secondary-button" data-dismiss="modal">Close</button>
+                        <button type="button" class="app-button app-primary-button app-btn-primary" data-dismiss="modal" ng-click="onSortApplyClicked()">[[[Apply]]]</button>
+                        <button type="button" class="app-button app-secondary-button app-btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

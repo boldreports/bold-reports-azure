@@ -107,7 +107,8 @@ CREATE TABLE BOLDRS_Item(
 	IsPublic smallint NOT NULL DEFAULT 0,
 	IsDraft smallint NULL DEFAULT 0,
 	IsUserBased smallint NULL,
-	IsActive smallint NULL)
+	IsActive smallint NULL,
+	IsLocked smallint NULL DEFAULT 0)
 ;
 
 CREATE TABLE BOLDRS_ItemView(
@@ -168,6 +169,7 @@ CREATE TABLE BOLDRS_ItemLog(
 	FromCategoryId uuid NULL,
 	ToCategoryId uuid NULL,
 	UpdatedUserId int NOT NULL,	
+	AdditionalLogInfo varchar(100) NULL,
 	ModifiedDate timestamp NOT NULL,
 	IsActive smallint NOT NULL)
 ;
@@ -186,6 +188,9 @@ CREATE TABLE BOLDRS_UserPermission(
 	PermissionEntityId int NOT NULL,
 	ItemId uuid NULL,
 	UserId int NOT NULL,
+	SettingsTypeId int NULL,
+	ScopeGroupId int NULL,
+	ItemTypeId int NULL,
 	IsActive smallint NOT NULL)
 ;
 
@@ -195,6 +200,9 @@ CREATE TABLE BOLDRS_GroupPermission(
 	PermissionEntityId int NOT NULL,
 	ItemId uuid NULL,
 	GroupId int NOT NULL,
+	SettingsTypeId int NULL,
+	ScopeGroupId int NULL,
+	ItemTypeId int NULL,
 	IsActive smallint NOT NULL)
 ;
 
@@ -239,7 +247,8 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	IsActive smallint NOT NULL,
 	IsOverwrite smallint NOT NULL DEFAULT 1,
 	IsNotifySaveAs smallint NOT NULL DEFAULT 1,
-	ExportFileName varchar(150) NULL)
+	ExportFileName varchar(150) NULL,
+	ScheduleExportInfo varchar(4000) NULL)
 ;
 
 CREATE TABLE BOLDRS_SubscribedUser(
@@ -389,7 +398,8 @@ CREATE TABLE BOLDRS_AzureADCredential(
 	TenantName varchar(255),
 	ClientId varchar(100),
 	ClientSecret varchar(100),
-	IsActive smallint NOT NULL)
+	IsActive smallint NOT NULL,
+	DeleteGroupUsers smallint NOT NULL)
 ;
 
 CREATE TABLE BOLDRS_ADCredential(
@@ -672,6 +682,52 @@ CREATE TABLE BOLDRS_PublishJobs(
 	IsActive smallint NOT NULL)
 ;
 
+CREATE TABLE BOLDRS_UserAttributes(
+    Id SERIAL primary key NOT NULL,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt smallint NOT NULL,
+	UserId int NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+	CreatedDate timestamp NOT NULL,
+    ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL)
+;
+
+CREATE TABLE BOLDRS_GroupAttributes(
+    Id SERIAL primary key NOT NULL,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt smallint NOT NULL,
+	GroupId int NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+	CreatedDate timestamp NOT NULL,
+    ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL)
+;
+
+CREATE TABLE BOLDRS_SiteAttributes(
+    Id SERIAL primary key NOT NULL,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt smallint NOT NULL,
+	CreatedById uuid NOT NULL,
+	ModifiedById uuid NOT NULL,
+	CreatedDate timestamp NOT NULL,
+    ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL)
+;
+
+CREATE TABLE BOLDRS_SettingsType(
+	Id SERIAL PRIMARY KEY NOT NULL,
+	Name varchar(100) NOT NULL UNIQUE,
+	IsActive smallint NULL);
+	
 ---- PASTE INSERT Queries below this section --------
 
 INSERT into BOLDRS_ItemType (Name,IsActive) VALUES (N'Category',1)
@@ -691,6 +747,41 @@ INSERT into BOLDRS_ItemType (Name,IsActive) VALUES (N'Schedule',1)
 insert into BOLDRS_ItemType (Name,IsActive) values (N'Widget',1)
 ;
 insert into BOLDRS_ItemType (Name,IsActive) values (N'ItemView',1)
+;
+insert into BOLDRS_ItemType (Name,IsActive) values (N'Slideshow',1)
+;
+INSERT into BOLDRS_ItemType (Name, IsActive) Values (N'Settings',1)
+; 
+INSERT INTO BOLDRS_ItemType (Name, IsActive) Values (N'User Management',1)
+;
+INSERT INTO BOLDRS_ItemType (Name, IsActive) Values (N'Permissions',1)
+;
+
+INSERT into BOLDRS_SettingsType (Name,IsActive) VALUES (N'Site Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) VALUES (N'Reports Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) VALUES (N'Embed Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name, IsActive) VALUES (N'Connectors',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) VALUES (N'Email Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) VALUES (N'Accounts Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) values (N'User Directory Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) values (N'Authentication Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) Values (N'Notification Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) Values (N'Manage License',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) Values (N'Support Settings',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) Values (N'Subscription',1)
+;
+INSERT into BOLDRS_SettingsType (Name,IsActive) Values (N'Payments',1)
 ;
 
 INSERT into BOLDRS_ItemLogType (Name,IsActive) VALUES ( N'Added',1)
@@ -795,6 +886,24 @@ INSERT into BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId,IsActive) VALUES
 ;
 INSERT into BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId,IsActive) VALUES (N'All ItemViews',1,9,1)
 ;
+INSERT into BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'Specific Slideshow',0,10,1)
+;
+INSERT into BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'All Slideshow',1,10,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'Specific Settings',0,11,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'All Settings',1,11,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'Specific Group',0,12,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'Users and Groups',1,12,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'Specific Permissions',0,13,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'All Permissions',1,13,1)
+;
+INSERT INTO BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES (N'All Groups',1,12,1)
+;
 
 INSERT into BOLDRS_Group (Name,Description,Color,ModifiedDate,DirectoryTypeId,IsActive) VALUES (N'System Administrator','Has administrative rights for the reports','#ff0000',now() at time zone 'utc', 1, 1)
 ;
@@ -855,6 +964,8 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,1,1)
 ;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (29,1,1)
+;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (4,2,1)
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (5,2,1)
@@ -906,6 +1017,18 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,3,1)
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (23,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (24,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (25,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (26,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (27,3,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (28,3,1)
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (4,4,1)
 ;
@@ -1041,6 +1164,8 @@ INSERT into BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES (N'GroupManagem
 INSERT into BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES (N'WindowsADDetail',now() at time zone 'utc',1)
 ;
 INSERT into BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES (N'UserDirectoryWindowsSchedule',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES (N'EmailSettings',now() at time zone 'utc',1)
 ;
 
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'DateFormat',N'SiteSettings.DateFormat',now() at time zone 'utc',1)
@@ -1391,9 +1516,47 @@ INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) V
 ;
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EmbedSettings',N'EmbedSettings',now() at time zone 'utc',1)
 ;
-INSERT into BOLDRS_SystemSettings ([Key],Value,ModifiedDate,IsActive) VALUES (N'IsEmbedEnabled',N'false',now() at time zone 'utc',1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'SMTPServer',N'SMTPServer.EmailSettings',now() at time zone 'utc',1)
 ;
-INSERT into BOLDRS_SystemSettings ([Key],Value,ModifiedDate,IsActive) VALUES (N'EmbedSecret',N'',now() at time zone 'utc',1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'SMTPPort',N'SMTPPort.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'SenderName',N'SenderName.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'SenderEmailAddress',N'SenderEmailAddress.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'AuthenticationType',N'AuthenticationType.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'Username',N'Username.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'Password',N'Password.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,N'EnableSSL',N'EnableSSL.EmailSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES (N'IsEmbedEnabled',N'false',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES (N'EmbedSecret',N'',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ManageLicenseSettings',N'ManageLicenseSettings',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'DataConnectors',N'DataConnectors',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableDefaultAuthentication',N'EnableDefaultAuthentication',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableAuthSettings',N'EnableAuthSettings',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableAuthControlSettings',N'EnableAuthControlSettings',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ScheduleExportFileSettings',N'ScheduleExportFileSettings',now(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OAuth2',N'UserDirectory.OAuth2',GETDATE(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OpenIDConnect',N'UserDirectory.OpenIDConnect',GETDATE(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.AuthControl',N'UserDirectory.AuthControl',GETDATE(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ReportSettings',N'ReportSettings',GETDATE(),1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (2,N'NotificationSettings',N'NotificationSettings',GETDATE(),1)
 ;
 
 ---- PASTE ALTER Queries below this section --------
@@ -1470,12 +1633,24 @@ ALTER TABLE BOLDRS_UserPermission  ADD  FOREIGN KEY(ItemId) REFERENCES BOLDRS_It
 ;
 ALTER TABLE BOLDRS_UserPermission  ADD  FOREIGN KEY(UserId) REFERENCES BOLDRS_User (Id)
 ;
+ALTER TABLE BOLDRS_UserPermission ADD FOREIGN KEY (SettingsTypeId) REFERENCES BOLDRS_SettingsType (Id) 
+;
+ALTER TABLE BOLDRS_UserPermission  ADD  FOREIGN KEY(ScopeGroupId) REFERENCES BOLDRS_Group (Id)
+;
+ALTER TABLE BOLDRS_UserPermission  ADD  FOREIGN KEY(ItemTypeId) REFERENCES BOLDRS_ItemType (Id)
+;
 
 ALTER TABLE BOLDRS_GroupPermission  ADD  FOREIGN KEY(PermissionEntityId) REFERENCES BOLDRS_PermissionEntity (Id)
 ;
 ALTER TABLE BOLDRS_GroupPermission  ADD  FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item (Id)
 ;
 ALTER TABLE BOLDRS_GroupPermission  ADD  FOREIGN KEY(GroupId) REFERENCES BOLDRS_Group (Id)
+;
+ALTER TABLE BOLDRS_GroupPermission ADD FOREIGN KEY (SettingsTypeId) REFERENCES BOLDRS_SettingsType (Id)
+;
+ALTER TABLE BOLDRS_GroupPermission  ADD  FOREIGN KEY(ScopeGroupId) REFERENCES BOLDRS_Group (Id)
+;
+ALTER TABLE BOLDRS_GroupPermission  ADD  FOREIGN KEY(ItemTypeId) REFERENCES BOLDRS_ItemType (Id)
 ;
 
 ALTER TABLE BOLDRS_ScheduleDetail  ADD FOREIGN KEY(ScheduleId) REFERENCES BOLDRS_Item (Id)
@@ -1655,8 +1830,6 @@ ALTER TABLE BOLDRS_DeploymentReports  ADD FOREIGN KEY(ItemId) REFERENCES BOLDRS_
 ALTER TABLE BOLDRS_DeploymentReports  ADD FOREIGN KEY(CreatedById) REFERENCES BOLDRS_User (Id)
 ;
 ALTER TABLE BOLDRS_ExternalSites ADD FOREIGN KEY(CreatedById) REFERENCES BOLDRS_User (Id)
-;
-ALTER TABLE BOLDRS_Item ADD IsLocked smallint NOT NULL DEFAULT 0
 ;
 ALTER TABLE BOLDRS_DeploymentReports  ADD FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item (Id)
 ;

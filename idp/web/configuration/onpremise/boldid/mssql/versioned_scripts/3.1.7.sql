@@ -1,5 +1,5 @@
-ALTER TABLE [BOLDTC_AuthSettings] ALTER  COLUMN ModifiedBy uniqueidentifier NULL
-ALTER TABLE [BOLDTC_AuthSettings] ALTER  COLUMN CreatedBy uniqueidentifier NULL
+ALTER TABLE [BOLDTC_AuthSettings] ALTER  COLUMN ModifiedBy uniqueidentifier NULL;
+ALTER TABLE [BOLDTC_AuthSettings] ALTER  COLUMN CreatedBy uniqueidentifier NULL;
 
 INSERT into [BOLDTC_DirectoryType] (DirectoryName,IsActive) VALUES (N'LinkedIn',1);
 INSERT into [BOLDTC_DirectoryType] (DirectoryName,IsActive) VALUES (N'Google',1);

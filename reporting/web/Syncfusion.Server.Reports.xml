@@ -89,7 +89,7 @@
              <param name="itemName"></param>
              <returns></returns>
         </member>
-        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.CopyItem(System.String,System.String,System.String,System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSetMappingInfo},System.Boolean)">
+        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.CopyItem(System.String,System.String,System.String,System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSetMappingInfo},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSourceMappingInfo},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.ReportMappingInfo},System.Boolean)">
              <summary>
             
              </summary>
@@ -140,7 +140,7 @@
              <param name="deleteItem"></param>
              <returns></returns>
         </member>
-        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.GetGroupItemViewPermissions(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod})">
+        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.GetGroupItemViewPermissions(System.String,Syncfusion.Server.Base.DataClasses.GridObject,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod})">
              <summary>
             
              </summary>
@@ -152,7 +152,7 @@
              <param name="filterCollection"></param>
              <returns></returns>
         </member>
-        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.GetUserItemViewPermissions(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod})">
+        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.GetUserItemViewPermissions(System.String,Syncfusion.Server.Base.DataClasses.GridObject,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod})">
              <summary>
             
              </summary>
@@ -318,7 +318,7 @@
             If the popup is closed without any changes the uploaded file will be deleted from temporary files
             </summary>
         </member>
-        <member name="M:Syncfusion.Server.Reports.Controllers.ReportsController.GetItems(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod},Syncfusion.Server.Base.DataClasses.DisplayCategory,System.Boolean)">
+        <member name="M:Syncfusion.Server.Reports.Controllers.ReportsController.GetItems(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.SortMethod},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.FilterMethod},Syncfusion.Server.Base.DataClasses.DisplayCategory,System.Boolean,System.Boolean)">
              <summary>
             
              </summary>
@@ -424,6 +424,13 @@
             <param name="currentUserId">Id of the user</param>
             <returns>Returns Temporary file name and data source list</returns>
         </member>
+        <member name="M:Syncfusion.Server.Reports.Models.DataSetManager.ChangeDatasourceInDataSet(Syncfusion.Server.Base.DataClasses.ItemDetail,System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSourceMappingInfo},System.Int32,System.String)">
+            <summary>
+            Change datasource in dataset file
+            </summary>
+            <param name="itemDetail">ItemRequest object which is sent as request</param>
+            <returns>The response is sent as ItemResponse object</returns>
+        </member>
         <member name="M:Syncfusion.Server.Reports.Models.DataSourceManager.DeleteTemporaryFile(System.String)">
             <summary>
             If the popup is closed without any changes the uploaded file will be deleted from temporary files
@@ -512,6 +519,12 @@
             </summary>
             <param name="userId">user id</param>
             <returns>item detail list object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.Reports.Models.DataSourceManager.UpdateReportReferencePath(System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.ReportMappingInfo},System.Xml.XmlDocument)">
+            <summary>
+            This method will update the given report reference path to the report
+            </summary>
+            <param name="reportMappingInfos">ReportMappingInfos which is saved as an report reference in the report</param>
         </member>
         <member name="M:Syncfusion.Server.Reports.Models.ItemModel.AddRdlReport(Syncfusion.Server.Base.DataClasses.ItemDetail,System.String,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSourceMappingInfo},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.DataSetMappingInfo},System.Int32)">
             <summary>

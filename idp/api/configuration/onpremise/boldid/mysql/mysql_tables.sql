@@ -120,6 +120,7 @@ CREATE TABLE {database_name}.BOLDTC_TenantLog (
 	ToStatus int Not Null,
 	UpdatedUserId char(38) NULL,
 	SourceTypeId int Null,
+	OptionalData longtext NULL,
 	CreatedDate datetime NOT NULL,
 	IsActive tinyint(1) NOT NULL,
   CONSTRAINT PK_BOLDTC_TENANTLOG PRIMARY KEY (Id ASC) 
@@ -345,6 +346,7 @@ CREATE TABLE {database_name}.BOLDTC_TenantInfo (
 	DatabaseType int Default 0,
 	BlobConnectionString longtext,
 	ConnectionString longtext,
+	AdditionalParameters longtext,
 	MaintenanceDatabase char(255) NULL,
 	TenantSQLServerId int,
 	ElasticPoolId int,
@@ -353,6 +355,7 @@ CREATE TABLE {database_name}.BOLDTC_TenantInfo (
 	ImDbSqlServerId int,
 	ImDbElasticPoolId int,
 	ImDbMaintenanceDatabase char(255) NULL,
+	ImDbAdditionalParameters longtext,
 	TenantStatus int NOT NULL,
 	BillingAddressId char(38),
 	StatusUpdatedDate datetime NOT NULL,
@@ -364,6 +367,9 @@ CREATE TABLE {database_name}.BOLDTC_TenantInfo (
 	IsMaster tinyint(1) NOT NULL,
 	IsolationCode nvarchar(4000),
 	IsTenantIsolationCodeEnabled tinyint(1) NOT NULL DEFAULT '0',
+	UseCustomBranding tinyint(1) NOT NULL,
+	IsNewImDbDatabase tinyint(1) NOT NULL,
+	IsNewDatabase tinyint(1) NOT NULL,
   CONSTRAINT PK_BOLDTC_TENANTINFO PRIMARY KEY (Id ASC)
 )
 ;
@@ -492,9 +498,11 @@ CREATE TABLE {database_name}.BOLDTC_SqlServerType (
 )
 ;
 CREATE TABLE {database_name}.BOLDTC_OAuthToken(
+    Id int NOT NULL AUTO_INCREMENT,
 	Token longtext NULL,
 	Ticket longtext NULL,
-	ModifiedDate datetime NULL
+	ModifiedDate datetime NULL,
+	CONSTRAINT PK_BOLDTC_OAUTHTOKEN PRIMARY KEY (Id ASC)
 )
 ;
 CREATE TABLE {database_name}.BOLDTC_InternalApps(
@@ -718,8 +726,8 @@ CREATE TABLE {database_name}.BOLDTC_AuthSettings (
     AuthProviderId int NOT NULL,
     Settings longtext,
     IsEnabled tinyint(1) NOT NULL,
-    CreatedBy char(38) NOT NULL,
-    ModifiedBy char(38) NOT NULL,
+    CreatedBy char(38) NULL,
+    ModifiedBy char(38) NULL,
     CreatedDate datetime NOT NULL,
     ModifiedDate datetime NOT NULL,
 	IsDefaultAuthentication tinyint(1) NOT NULL Default '0',
@@ -740,6 +748,22 @@ CREATE TABLE {database_name}.BOLDTC_UserLog (
 	IsActive tinyint(1) NOT NULL,
 	AdditionalData longtext NULL,
   CONSTRAINT PK_BOLDTC_USERLOG PRIMARY KEY (Id ASC)
+)
+;
+
+CREATE TABLE {database_name}.BOLDTC_AzureBlob (
+	Id int NOT NULL AUTO_INCREMENT,
+	TenantInfoId char(38) NOT NULL,
+	AccountName nvarchar(1024) NOT NULL,
+	AccessKey nvarchar(1024) NOT NULL,
+	Uri nvarchar(1024) NULL,
+	ContainerName nvarchar(1024) NOT NULL,
+	ConnectionType nvarchar(1024) NOT NULL,
+	ConnectionString nvarchar(4000) NOT NULL,
+	CreatedDate datetime NOT NULL,
+	ModifiedDate datetime NOT NULL,
+	IsActive tinyint(1) NOT NULL,
+  CONSTRAINT PK_BOLDTC_AZUREBLOB PRIMARY KEY (Id ASC)
 )
 ;
 
@@ -1121,4 +1145,7 @@ ALTER TABLE {database_name}.BOLDTC_UserLog  ADD CONSTRAINT BOLDTC_UserLog_fk1 FO
 ;
 
 ALTER TABLE {database_name}.BOLDTC_UserLog  ADD CONSTRAINT BOLDTC_UserLog_fk2 FOREIGN KEY (RequestedById) REFERENCES {database_name}.BOLDTC_User(Id)
+;
+
+ALTER TABLE {database_name}.BOLDTC_AzureBlob ADD CONSTRAINT BOLDTC_AzureBlob_fk0 FOREIGN KEY (TenantInfoId) REFERENCES {database_name}.BOLDTC_TenantInfo(Id)
 ;

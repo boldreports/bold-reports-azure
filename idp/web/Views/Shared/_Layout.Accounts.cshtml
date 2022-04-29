@@ -3,11 +3,13 @@
 
 @{
     var includeHeader = ViewBag.IncludeHeader != null ? ViewBag.IncludeHeader : false;
+    var loginBackgroundImage = ViewBag.LoginBackgroundImage;
     var headerLogo = (ViewBag.LoginLogo != null) ? ViewBag.LoginLogo : CloudAppConfig.FallbackLoginLogoUrl;
 }
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     @await Html.PartialAsync("~/Views/Shared/_OGPContent.cshtml")
@@ -19,8 +21,29 @@
     @await Html.PartialAsync("_Favicon")
 
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
     <link rel="stylesheet" href="~/bundles/css/accounts-layout.css" asp-append-version="true" />
     @RenderSection("styles", false)
+
+    @if (!string.IsNullOrWhiteSpace(loginBackgroundImage))
+    {
+        var imageUrl = GlobalAppSettings.SystemSettings.InternalAppUrls.Idp.TrimEnd('/') + "/content/images/application/" + loginBackgroundImage;
+        <style>
+            body {
+                background-image: url(@imageUrl);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .account-parent{
+                background: transparent;
+            }
+            .account-bg {
+                background-color: white;
+                box-shadow: 0px 0px 5px #c9ced0;
+            }
+        </style>
+    }
+
     <script src="~/bundles/js/accounts.js" asp-append-version="true"></script>
     <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
     @RenderSection("scripts", false)
@@ -28,47 +51,9 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             $('[data-toggle="popover"]').popover();
-            var layoutBodyWaitingPopupTemplateId = createLoader("body");
-            $("#body").ejWaitingPopup({ template: $("#" + layoutBodyWaitingPopupTemplateId) });
+
+            createWaitingPopup('body');
         });
-
-         @if(GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier && Syncfusion.Server.Base.CloudAppConfig.EnableAnalyticsTracking)
-        {
-            <text>
-                 var analyticKeyUA = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyUA";
-                (function(i, s, o, g, r, a, m) {
-                    window['GoogleAnalyticsObject'] = 'ga';
-                    window['ga'] = window['ga'] || function() {
-                        (window['ga'].q = window['ga'].q || []).push(arguments)
-                       }, window['ga'].l = 1 * new Date();
-                    a = document.createElement('script'),
-                        m = document.getElementsByTagName('script')[0];
-                    a.async = 1;
-                    a.src = '//www.google-analytics.com/analytics.js';
-                    m.parentNode.insertBefore(a, m)
-                   })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-                ga('create', analyticKeyUA, 'auto', { allowLinker: true });
-                ga('require', 'linker');
-                ga('linker:autoLink', ['@(GlobalAppSettings.BrandingDomain)']);
-                ga('send', 'pageview');
-            </text>
-        }
-
-        @if (GlobalAppSettings.Branding == AppBranding.Bold.Identifier && Syncfusion.Server.Base.CloudAppConfig.EnableAnalyticsTracking) {
-            <text>
-            var analyticKeyUA = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyUA";
-            var google_tag_manager = document.createElement("script");
-            google_tag_manager.src = "https://www.googletagmanager.com/gtag/js?id=" + analyticKeyUA;
-            google_tag_manager.async = 1;
-            var parent_node = document.head || document.body;
-            parent_node.appendChild(google_tag_manager);
-
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', analyticKeyUA);
-            </text>
-        }
     </script>
     <style>
         .loader-icon {

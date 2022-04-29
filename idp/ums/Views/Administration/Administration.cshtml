@@ -1,6 +1,17 @@
 ﻿@{
     ViewBag.Title = "[[[Administration]]] - " + GlobalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
+    var isSecureConnection = GlobalAppSettings.SystemSettings.IsSecureConnection;
+    var protocolTypes = new List<SelectListItem>
+    {  new SelectListItem
+    {
+        Text = "http", Value = "http", Selected = !GlobalAppSettings.SystemSettings.IsSecureConnection
+    },
+        new SelectListItem
+        {
+            Text = "https", Value = "https", Selected = GlobalAppSettings.SystemSettings.IsSecureConnection
+        }
+    };
 }
 
 @section styles{
@@ -22,17 +33,27 @@
     </script>
 
     <script type="text/javascript">
-
+        var selectedTimeZoneText = "@ViewBag.SelectedTimeZone.Text";
+        var selectedTimeZoneValue = "@ViewBag.SelectedTimeZone.Value";
+        var selectedTimeFormatText = "@ViewBag.SelectedTimeFormat.Text";
+        var selectedTimeFormatValue = "@ViewBag.SelectedTimeFormat.Value";
+        var selectedDateFormatText = "@ViewBag.SelectedDateFormat.Text";
+        var selectedDateFormatValue = "@ViewBag.SelectedDateFormat.Value";
+        var selectedLanguageText = "@ViewBag.SelectedLanguage.Text";
+        var selectedLanguageValue = "@ViewBag.SelectedLanguage.Value";
         var SystemSettingsProperties = @Html.Raw(@Json.Serialize(ViewBag.SystemSettings));
         var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
         var updateSystemSettingsUrl = "@Url.Action("UpdateSystemSettings", "Administration")";
         var azureadTestconnectionUrl = "@Url.Action("AzureADTestConnection", "Administration")";
         var updateAzureADSettingsUrl = "@Url.Action("UpdateAzureADSettings", "Administration")";
         var setLanguageUrl = "@Url.Action("SetLanguage", "Administration")";
+        var sentTestMail = "@Url.Action("SentTestMail", "Administration")";
         var baseRootUrl = "@Url.Content("~/")";
         var isSelfHosted = convertToBoolean("@CloudAppConfig.IsSelfHosted");
         if (baseRootUrl.toLowerCase() === "/")
             baseRootUrl = "";
+        var isSiteCreation = false;
+        var isSecureConnection = "@isSecureConnection.ToString()" == "True";
 
         $(function() {
             if ("@ViewBag.scheme.ToLower()" != "null") {
@@ -40,7 +61,6 @@
             } else {
                 $("#enable-ssl").val("http");
             }
-            $("#enable-ssl").selectpicker("refresh");
 
             $(document).click(function(e) {
                 if (e.target.id !== "error_icon") {

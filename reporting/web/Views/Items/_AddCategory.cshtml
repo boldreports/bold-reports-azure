@@ -12,10 +12,12 @@
 {
     <link href="@reportServerResourceUrl/Styles/LESS/Components/Buttons.less" rel="stylesheet" />
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.css" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.min.css" />
     </environment>
@@ -62,8 +64,8 @@
         </form>
         <div class="category-btns dialog-footer">
             <div class="pull-right">
-                <input type="button" title="" class="app-button app-primary-button" value="[[[Add]]]" tabindex="3" onclick="addItemValidate()">
-                <input type="button" title="" class="app-button app-secondary-button" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="4">
+                <input type="button" title="" class="app-button app-primary-button app-btn-primary" value="[[[Add]]]" tabindex="3" onclick="addItemValidate()">
+                <input type="button" title="" class="app-button app-secondary-button app-btn-secondary" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="4">
             </div>
         </div>
     </div>

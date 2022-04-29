@@ -117,6 +117,7 @@ CREATE TABLE  {database_name}.BOLDRS_Item(
 	IsActive tinyint NULL,
 	IsDraft tinyint NULL DEFAULT 0,
 	IsUserBased tinyint NULL,
+	IsLocked tinyint NULL DEFAULT 0,
 	PRIMARY KEY (Id))
 ;
 
@@ -182,6 +183,7 @@ CREATE TABLE  {database_name}.BOLDRS_ItemLog(
 	FromCategoryId char(38) NULL,
 	ToCategoryId char(38) NULL,
 	UpdatedUserId int NOT NULL,	
+	AdditionalLogInfo varchar(4000) NULL,
 	ModifiedDate datetime NOT NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))
@@ -202,6 +204,9 @@ CREATE TABLE  {database_name}.BOLDRS_UserPermission(
 	PermissionEntityId int NOT NULL,
 	ItemId char(38) NULL,
 	UserId int NOT NULL,
+	SettingsTypeId int NULL,
+	ScopeGroupId int NULL,
+	ItemTypeId int NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))
 ;
@@ -212,6 +217,9 @@ CREATE TABLE  {database_name}.BOLDRS_GroupPermission(
 	PermissionEntityId int NOT NULL,
 	ItemId char(38) NULL,
 	GroupId int NOT NULL,
+	SettingsTypeId int NULL,
+	ScopeGroupId int NULL,
+	ItemTypeId int NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))
 ;
@@ -262,6 +270,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	IsNotifySaveAs tinyint NOT NULL,
 	IsOverwrite tinyint NOT NULL,
 	ExportFileName varchar(130) NULL,
+	ScheduleExportInfo text(500) NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -428,6 +437,7 @@ CREATE TABLE  {database_name}.BOLDRS_AzureADCredential(
 	ClientId varchar(100),
 	ClientSecret varchar(100),
 	IsActive tinyint NOT NULL,
+	DeleteGroupUsers tinyint NOT NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -738,6 +748,57 @@ CREATE TABLE {database_name}.BOLDRS_PublishJobs(
 	PRIMARY KEY (Id))
 ;
 
+CREATE TABLE {database_name}.BOLDRS_UserAttributes(
+	Id int NOT NULL AUTO_INCREMENT,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt tinyint NOT NULL,
+	UserId int NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+    CreatedDate datetime NOT NULL,
+    ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+CREATE TABLE {database_name}.BOLDRS_GroupAttributes(
+	Id int NOT NULL AUTO_INCREMENT,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt tinyint NOT NULL,
+	GroupId int NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+    CreatedDate datetime NOT NULL,
+    ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+CREATE TABLE {database_name}.BOLDRS_SiteAttributes(
+	Id int NOT NULL AUTO_INCREMENT,
+	Name varchar(255) NOT NULL,
+	Value varchar(4000) NOT NULL,
+	Description varchar(1026) NULL,
+	Encrypt tinyint NOT NULL,
+	CreatedById Char(38) NOT NULL,
+	ModifiedById Char(38) NOT NULL,
+    CreatedDate datetime NOT NULL,
+    ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+CREATE TABLE {database_name}.BOLDRS_SettingsType(
+	Id int NOT NULL AUTO_INCREMENT,
+	Name varchar(100) NOT NULL UNIQUE,
+	IsActive tinyint NULL,
+	PRIMARY KEY (Id))
+;
+
 /*INSERT Queries below this section*/ 
 
 INSERT into  {database_name}.BOLDRS_ItemType (Name,IsActive) VALUES ('Category',1)
@@ -757,6 +818,41 @@ INSERT into  {database_name}.BOLDRS_ItemType (Name,IsActive) VALUES ('Schedule',
 INSERT into  {database_name}.BOLDRS_ItemType (Name,IsActive) VALUES ('Widget',1)
 ;
 INSERT into  {database_name}.BOLDRS_ItemType (Name,IsActive) VALUES ('ItemView',1)
+;
+INSERT into  {database_name}.BOLDRS_ItemType (Name,IsActive) VALUES ('Slideshow',1)
+;
+INSERT into {database_name}.BOLDRS_ItemType (Name, IsActive) Values ('Settings',1)
+;
+INSERT into {database_name}.BOLDRS_ItemType (Name, IsActive) Values ('User Management',1)
+;
+INSERT into {database_name}.BOLDRS_ItemType (Name, IsActive) Values ('Permissions',1)
+;
+
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Site Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Reports Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Embed Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Connectors',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Email Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Accounts Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) values ('User Directory Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) values ('Authentication Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name, IsActive) Values ('Notification Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name, IsActive) Values ('Manage License',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ( 'Support Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ( 'Subscription',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ( 'Payments',1)
 ;
 
 INSERT into  {database_name}.BOLDRS_ItemLogType (Name,IsActive) VALUES ( 'Added',1)
@@ -863,6 +959,24 @@ INSERT into  {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId
 ;
 INSERT into  {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId,IsActive) VALUES ('All ItemViews',1,9,1)
 ;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('Specific Slideshow',0,10,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('All Slideshow',1,10,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('Specific Settings',0,11,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('All Settings',1,11,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('Specific Group',0,12,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('Users and Groups',1,12,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('Specific Permissions',0,13,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('All Permissions',1,13,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionEntity (Name,EntityType,ItemTypeId, IsActive) VALUES ('All Groups',1,12,1)
+;
 
 INSERT into  {database_name}.BOLDRS_Group (Name,Description,Color,ModifiedDate,DirectoryTypeId,IsActive) VALUES ('System Administrator','Has administrative rights for the reports','#ff0000',Now(), 1, 1)
 ;
@@ -920,6 +1034,8 @@ INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Per
 ;
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,1,1)
 ;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (29,1,1)
+;
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (4,2,1)
 ;
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (5,2,1)
@@ -971,6 +1087,18 @@ INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Per
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,3,1)
 ;
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (23,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (24,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (25,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (26,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (27,3,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (28,3,1)
 ;
 INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (4,4,1)
 ;
@@ -1105,6 +1233,8 @@ INSERT into  {database_name}.BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUE
 INSERT into  {database_name}.BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES ('WindowsADDetail',Now(),1)
 ;
 INSERT into  {database_name}.BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES ('UserDirectoryWindowsSchedule',Now(),1)
+;
+INSERT into  {database_name}.BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES ('EmailSettings',Now(),1)
 ;
 
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,'DateFormat','SiteSettings.DateFormat',Now(),1)
@@ -1457,6 +1587,44 @@ INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,Modified
 ;
 INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (14,'EnableUserScheduleNotification','User Schedule Notification',Now(),1)
 ;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SMTPServer','SMTPServer.EmailSettings',Now(),1)
+;
+INSERT into{database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SMTPPort','SMTPPort.EmailSettings',Now(),1)
+;
+INSERT into{database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SenderName','SenderName.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SenderEmailAddress','SenderEmailAddress.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'AuthenticationType','AuthenticationType.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'Username','Username.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'Password','Password.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'EnableSSL','EnableSSL.EmailSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ManageLicenseSettings',N'ManageLicenseSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'DataConnectors',N'DataConnectors',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableDefaultAuthentication',N'EnableDefaultAuthentication',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableAuthSettings',N'EnableAuthSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'EnableAuthControlSettings',N'EnableAuthControlSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ScheduleExportFileSettings',N'ScheduleExportFileSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OAuth2',N'UserDirectory.OAuth2',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OpenIDConnect',N'UserDirectory.OpenIDConnect',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.AuthControl',N'UserDirectory.AuthControl',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ReportSettings',N'ReportSettings',Now(),1)
+;
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (2,N'NotificationSettings',N'NotificationSettings',Now(),1)
+;
 
 /*ALTER Queries below this section */
 
@@ -1532,12 +1700,24 @@ ALTER TABLE  {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(ItemId) REF
 ;
 ALTER TABLE  {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(UserId) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
+ALTER TABLE {database_name}.BOLDRS_UserPermission ADD FOREIGN KEY ([SettingsTypeId]) REFERENCES [BOLDRS_SettingsType] (Id) 
+;
+ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY([ScopeGroupId]) REFERENCES [BOLDRS_Group] ([Id])
+;
+ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY([ItemTypeId]) REFERENCES [BOLDRS_ItemType] ([Id])
+;
 
 ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(PermissionEntityId) REFERENCES  {database_name}.BOLDRS_PermissionEntity (Id)
 ;
 ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(ItemId) REFERENCES  {database_name}.BOLDRS_Item (Id)
 ;
 ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(GroupId) REFERENCES  {database_name}.BOLDRS_Group (Id)
+;
+ALTER TABLE {database_name}.BOLDRS_GroupPermission ADD FOREIGN KEY ([SettingsTypeId]) REFERENCES [BOLDRS_SettingsType] (Id)
+;
+ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY([ScopeGroupId]) REFERENCES [BOLDRS_Group] ([Id])
+;
+ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY([ItemTypeId]) REFERENCES [BOLDRS_ItemType] ([Id])
 ;
 
 ALTER TABLE  {database_name}.BOLDRS_ScheduleDetail  ADD FOREIGN KEY(ScheduleId) REFERENCES  {database_name}.BOLDRS_Item (Id)

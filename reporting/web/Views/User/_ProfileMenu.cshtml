@@ -4,6 +4,7 @@
     var currentUrl = requestUrl.LocalPath.TrimEnd('/');
     var profilePageUrl = Url.Action("Profilepage", "User");
     var myPremissionPageUrl = Url.Action("UserPermission", "User");
+    var personalAccessTokenPageUrl = Url.Action("PersonalAccessToken", "User");
     var connectedAccountPageUrl = Url.Action("ConnectedAccounts", "User");
     var supportTicketsUrl = Url.Action("TicketList", "Support");
 }
@@ -22,13 +23,16 @@
                 <span>[[[My Permissions]]]</span>
             </a>
         </li>
-        @*<li>
-                <a id="active-directory-settings-link" class="admin-menu-item @(currentUrl.IndexOf(connectedAccountPageUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@connectedAccountPageUrl" role="tab">
-                    <i class="su su-link"></i>
-                    <span>[[[Connected Accounts]]]</span>
+        @if (ServerAppConfig.IsSelfHosted)
+        {
+            <li>
+                <a id="personal-access-token-link" class="admin-menu-item @(currentUrl.IndexOf(personalAccessTokenPageUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@personalAccessTokenPageUrl" role="tab">
+                    <i class="su su-embed"></i>
+                    <span>[[[Personal Access Token]]]</span>
                 </a>
-            </li>*@
-        @if (!ServerAppConfig.IsSelfHosted)
+            </li>
+        }
+        else
         {
             <li>
                 <a id="ticket-listing-link" class="admin-menu-item @(currentUrl.IndexOf(supportTicketsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@supportTicketsUrl" role="tab">
@@ -37,5 +41,12 @@
                 </a>
             </li>
         }
+
+        @*<li>
+            <a id="active-directory-settings-link" class="admin-menu-item @(currentUrl.IndexOf(connectedAccountPageUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@connectedAccountPageUrl" role="tab">
+                <i class="su su-link"></i>
+                <span>[[[Connected Accounts]]]</span>
+            </a>
+        </li>*@
     </ul>
 </nav>

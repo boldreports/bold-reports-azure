@@ -10,6 +10,7 @@
         var getActiveSitesUrl = "@Url.Action("GetAllActiveTenantsForPublish", "Publish")";
         var getUsersPermissionUrl = "@Url.Action("GetUsersWithCreatePermission", "Publish")";
         var getDatasourceUrl = "@Url.Action("GetDataSources", "Publish")";
+        var getDatasetUrl = "@Url.Action("GetDataSets", "Publish")";
         var publishReportUrl = "@Url.Action("PublishReportItem", "Publish")";
         var validatePublishItemUrl = "@Url.Action("ValidatePublishItem", "Publish")";
         var getExternalSitesUrl = "@Url.Action("GetExternalSites", "Publish")";
@@ -47,14 +48,18 @@
                 <input id="publish-report-name" class="form-control" maxlength="253" ng-model="PublishedItems.Name" disabled>
                 <label>[[[Report description]]]</label>
                 <textarea id="publish-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" ng-model="PublishedItems.Description" maxlength="1024" rows="3"> </textarea>
-                @*<div id="publish-report-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div id="publish-report-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
                     @Html.CheckBox("publish-report-edit", new { @class = "material-checkbox" })
                     @Html.Label("publish-report-edit", "[[[Lock report editing in published site.]]]", new { @class = "toggle-space" })
                 </div>
                 <div id="publish-datasource-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
                     @Html.CheckBox("publish-datasource-edit", new { @class = "material-checkbox" })
                     @Html.Label("publish-datasource-edit", "[[[Lock data source editing in published site.]]]", new { @class = "toggle-space" })
-                </div>*@
+                </div>
+                <div id="publish-dataset-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
+                    @Html.CheckBox("publish-dataset-edit", new { @class = "material-checkbox" })
+                    @Html.Label("publish-dataset-edit", "[[[Lock dataset editing in published site.]]]", new { @class = "toggle-space" })
+                </div>
             </div>
             <div class="col-xs-6 publish-info">
                 <h5>[[[Sites:]]]</h5>
@@ -62,7 +67,7 @@
                 <h5>[[[Category name:]]]</h5>
                 <p>[[[An existing category will be used if one is present in the destination site. Otherwise, a new category will be created in the destination site according to the name entered in this field.]]]</p>
                 <h5>[[[Owner:]]]</h5>
-                <p>[[[The report will be created in the destination site with an owner who has permission to create reports, data sources, and categories.]]]</p>
+                <p>[[[The report will be created in the destination site with an owner who has permission to create reports, data sources, datasets and categories.]]]</p>
                 <div class="advanced-info">
                     <p>[[[If you want to publish the report for a specific user, click on ]]]<b>[[[Advanced]]]</b>[[[ and choose the user you want.]]]
                 </div>
@@ -89,7 +94,7 @@
                 <input ng-model="p.PublishItem.Name" id="advanced-report-name" class="form-control" maxlength="253" disabled>
                 <label>[[[Report description]]]</label>
                 <textarea ng-model="p.PublishItem.Description" id="advanced-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" maxlength="1024"></textarea>
-                @*<div ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div ng-if="publishType == '@PublishType.Internal.ToString()'">
                     <div id="advanced-report-checkbox">
                         <input type="checkbox" id="advanced-report-edit" class="material-checkbox" ng-model="p.PublishItem.IsLocked" />
                         <input name="advanced-report-edit" type="hidden" value="false" ng-model="p.PublishItem.IsLocked">
@@ -99,7 +104,11 @@
                     <div id="selected-datasources" class="selectpicker dropup">
                         <select id="datasource-list-dropdown" class="form-control selectpicker" title="[[[Select data sources]]]" multiple="" data-size="5" data-actions-box="true" data-live-search="true" style="display: none"></select>
                     </div>
-                </div>*@
+                    <label>[[[Select datasets that you want to lock from editing in the destination site.]]]</label>
+                    <div id="selected-datasets" class="selectpicker dropup">
+                        <select id="dataset-list-dropdown" class="form-control selectpicker" title="[[[Select datasets]]]" multiple="" data-size="5" data-actions-box="true" data-live-search="true" style="display: none"></select>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="publish-select-site-container" class="col-xs-12" style="display:none">

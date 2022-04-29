@@ -11,7 +11,7 @@
     var idPUrl = GlobalAppSettings.Configuration.GetSection("AppSettings")["IdPUrl"];
     ViewBag.Title = "Organization | User | Profile | Bold IAM";
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
-    var idpChangePasswordUrl = CloudAppConfig.IdPUrl + "/profile/change-password?return_url=" + requestUrl.AbsoluteUri;
+    var idpChangePasswordUrl = GlobalAppSettings.SystemSettings.BaseUrl + "/profile/change-password?return_url=" + requestUrl.AbsoluteUri;
     var dateFormat = string.IsNullOrWhiteSpace(_clientDateTimeInfo.ClientDateTime.DateFormat) ? GlobalAppSettings.SystemSettings.DateFormat : _clientDateTimeInfo.ClientDateTime.DateFormat;
 }
 

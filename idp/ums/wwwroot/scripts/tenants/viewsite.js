@@ -15,49 +15,65 @@ var isSafari = navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgen
 var needPush = true;
 var isFreshLoad = true;
 var isIsolationCodeUpdated = false;
+var validateTimer;
+var validateInterval = 1000;
 
 function fnCreate() {
     $("#checkbox-header").change(headCheckboxOnChange);
 }
 
 $(document).ready(function () {
-    addPlacehoder("#add-users-dialog");
+    addPlacehoder("#grant-users-access-dialog");
     addPlacehoder("#search-area");
     addPlacehoder("#search-app-admins");
     addPlacehoder("#add-admin-search");
     addPlacehoder("#add-user-search-area");
     $("[data-toggle='tooltip']").tooltip();
 
-    $("#add-users-dialog").ejDialog({
+    var grantUserAccessDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.GrantAccessToUsers + " - " + tenantName + " </div>",
+        content: document.getElementById("grant-users-access-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: provideAccesstoUsers, buttonModel: { content: window.TM.App.LocalizationContent.GrantSiteAccessButton, isPrimary: true } },
+            { click: onAddUsersDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } }
+        ],
         width: "900px",
         height: "539px",
-        showOnInit: false,
-        allowDraggable: true,
-        enableResize: false,
-        showHeader: false,
-        enableModal: true,
+        isModal: true,
+        visible: false,
+        allowDragging: true,
+        closeOnEscape: true,
         close: "onAddUsersDialogClose",
-        open: "onAddUsersDialogOpen",
-        closeOnEscape: true
     });
+    grantUserAccessDialog.appendTo("#grant-users-access-dialog");
+
     $("#add-users-button").on("click", function () {
         var gridObj = $('#users_grid').data("ejGrid");
         gridObj.clearSelection();
         $("#remove-users-button").addClass("hide").removeClass("show");
-        $("#add-users-dialog").ejDialog("open");
+        document.getElementById("grant-users-access-dialog").ej2_instances[0].show();
+        onAddUsersDialogOpen();
     });
-    $("#user-remove-confirmation").ejDialog({
+
+    var removeUserAccessDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.RevokeAccess + " </div>",
+        content: document.getElementById("user-remove-confirmation-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: removeConfirm, buttonModel: { content: window.TM.App.LocalizationContent.YesButton, isPrimary: true } },
+            { click: onUserRemoveDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } }
+        ],
         width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
         height: "auto",
-        showHeader: false,
-        enableModal: true,
-        close: "onUserRemoveDialogClose",
+        isModal: true,
+        visible: false,
+        allowDragging: true,
         closeOnEscape: true,
-        open: "onUserRemoveDialogOpen"
+        close: "onUserRemoveDialogClose",
     });
+    removeUserAccessDialog.appendTo("#user-remove-confirmation-dialog");
+
     $("#regenerate-client-secret-dialog").ejDialog({
         width: "400px",
         showOnInit: false,
@@ -179,8 +195,8 @@ $(document).ready(function () {
     $(document).on('click', "input#add-user", function () {
         var firstName = $("#firstname").val().trim();
         var userName = $("#username").val().trim().toLowerCase();
-        var password = $("#user-password").val();
-        var emailid = $('#mailid').val().trim();       
+        var password = $("#new-password").val();
+        var emailid = $('#mailid').val().trim();
         var tenantId = $("#myId").val();
         var isValid = $("#dialog-container").valid();
 
@@ -227,26 +243,22 @@ $(document).ready(function () {
                                         success: function (result) {
                                             var messageText = "";
                                             if (result.activation == 0) {
-                                                messageText = window.TM.App.LocalizationContent.UserAddedActivated;
+                                                SuccessAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserAddedActivated, 7000)
                                             }
                                             else if (result.result == "success" && result.activation == 1) {
-                                                messageText = window.TM.App.LocalizationContent.UserAdded;
+                                                SuccessAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserAdded, 7000);
                                             }
                                             else if (result.result == "failure" && result.isAdmin == true && result.activation == 1) {
-                                                messageText = window.TM.App.LocalizationContent.UserActivationEmailCannotSent;
+                                                WarningAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserActivationEmailCannotSent, 7000);
                                             }
-                                            messageBox("su-user-add", window.TM.App.LocalizationContent.AddUser, messageText, "success", function () {
-                                                g.refreshContent();
-                                                onCloseMessageBox();
-                                            });
+                                            g.refreshContent();
                                         }
                                     });
                                 }
                                 else {
-                                    messageBox("su-user-add", window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.InternalServerErrorTryAgain, "error", function () {
-                                        g.refreshContent();
-                                        onCloseMessageBox();
-                                    });
+                                    onUserAddDialogClose();
+                                    WarningAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.InternalServerErrorTryAgain, 7000);
+                                    g.refreshContent();
                                 }
                             }
                         });
@@ -263,7 +275,7 @@ $(document).ready(function () {
                     $('#mailid').closest('div').addClass("has-error");
                     $("#invalid-email").html(window.TM.App.LocalizationContent.IsMailExist).css("display", "block");
                     $("#firstname").parent('div').removeClass("has-error");
-                    $("#user-password").parent('div').removeClass("has-error");
+                    $("#new-password").parent('div').removeClass("has-error");
                     isEmailExist = false;
                 }
             }
@@ -464,7 +476,7 @@ function getAppUsers() {
         enableAltRow: false,
         allowSearching: true,
         allowSelection: true,
-        allowFiltering: true,
+        allowFiltering: false,
         pageSettings: { pageSize: 20 },
         filterSettings: { filterType: "menu" },
         selectionType: ej.Grid.SelectionType.Multiple,
@@ -489,6 +501,7 @@ function getAppUsers() {
         columns: [
             {
                 template: true,
+                allowFiltering: false,
                 templateID: "#user-profile-template",
                 width: 115,
                 headerTemplateID: "#username-header",
@@ -497,20 +510,23 @@ function getAppUsers() {
             },
             {
                 field: "Username",
+                allowFiltering: false,
                 templateID: "#user-username-template",
                 headerTemplateID: "#user-username-header",
                 type: "string",
-                width: 155
+                width: 120
             },
             {
                 field: "Email",
+                allowFiltering: false,
                 templateID: "#user-email-template",
                 headerTemplateID: "#email-header",
                 type: "string",
-                width: 155
+                width: 135
             },
             {
                 field: "IsActive",
+                allowFiltering: false,
                 templateID: "#user-status-template",
                 headerTemplateID: "#status-header",
                 type: "string",
@@ -519,9 +535,10 @@ function getAppUsers() {
             {
                 template: true,
                 allowSorting: false,
+                allowFiltering: false,
                 templateID: "#commandstemplate",
                 headerTemplateID: "#actionsheader",
-                width: (window.innerWidth > 1024) ? 40 : 80
+                width: 80
             }
         ]
     });
@@ -529,62 +546,67 @@ function getAppUsers() {
 
 function getUsersWithoutAccess() {
     var requestUrl = $("meta[name='add-ump-app-users-link']").attr("content") + $("#application-id").val();
-    $("#add_users_grid")
-        .ejGrid({
-            dataSource: ej.DataManager({ url: requestUrl, adaptor: "UrlAdaptor" }),
-            gridLines: ej.Grid.GridLines.None,
-            allowPaging: true,
-            allowSorting: true,
-            enableAltRow: false,
-            allowSearching: true,
-            allowSelection: true,
-            allowFiltering: true,
-            pageSettings: { pageSize: 20 },
-            filterSettings: { filterType: "menu" },
-            selectionType: ej.Grid.SelectionType.Multiple,
-            selectionSettings: { selectionMode: ["row"] },
-            enableRowHover: true,
-            create: "fnCreate",
-            recordClick: "recordClick",
-            templateRefresh: "refreshTemplate",
-            actionBegin: "fnOnAddUserGridActionBegin",
-            actionComplete: "fnOnAddUserGridActionComplete",
-            rowDataBound: function () {
-                var height = $(".e-gridcontent").height();
-                if (height != null) {
-                    rowBound();
-                }
+    var data = ej.DataManager({
+        url: requestUrl,
+        adaptor: new ej.UrlAdaptor()
+    });
+    $("#add_users_grid").ejGrid({
+        dataSource: data,
+        gridLines: ej.Grid.GridLines.None,
+        allowPaging: true,
+        allowSorting: true,
+        enableAltRow: false,
+        allowSearching: true,
+        allowSelection: true,
+        allowFiltering: true,
+        pageSettings: { pageSize: 20 },
+        filterSettings: { filterType: "menu" },
+        selectionType: ej.Grid.SelectionType.Multiple,
+        selectionSettings: { selectionMode: ["row"] },
+        enableRowHover: true,
+        create: "fnCreate",
+        recordClick: "recordClick",
+        templateRefresh: "refreshTemplate",
+        actionBegin: "fnOnAddUserGridActionBegin",
+        actionComplete: "fnOnAddUserGridActionComplete",
+        rowDataBound: function () {
+            var height = $(".e-gridcontent").height();
+            if (height != null) {
+                rowBound();
+            }
+        },
+        dataBound: function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+        columns: [
+            {
+                headerTemplateID: "#checkbox-header-template",
+                template: true,
+                templateID: "#checkbox-row-template",
+                textAlign: ej.TextAlign.Center,
+                width: 15,
+                allowFiltering: false
             },
-            dataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip();
+            {
+                template: true,
+                allowFiltering: false,
+                templateID: "#user-name-template",
+                width: 115,
+                headerTemplateID: "#user-name-header",
+                field: "DisplayName",
+                type: "string"
             },
-            columns: [
-                {
-                    headerTemplateID: "#checkbox-header-template",
-                    template: true,
-                    templateID: "#checkbox-row-template",
-                    textAlign: ej.TextAlign.Center,
-                    width: 15,
-                    allowFiltering: false
-                },
-                {
-                    template: true,
-                    templateID: "#user-name-template",
-                    width: 115,
-                    headerTemplateID: "#user-name-header",
-                    field: "DisplayName",
-                    type: "string"
-                },
-                {
-                    template: true,
-                    field: "Email",
-                    templateID: "#email-template",
-                    headerTemplateID: "#user-email-header",
-                    type: "string",
-                    width: 155
-                }
-            ]
-        });
+            {
+                template: true,
+                allowFiltering: false,
+                field: "Email",
+                templateID: "#email-template",
+                headerTemplateID: "#user-email-header",
+                type: "string",
+                width: 155
+            }
+        ]
+    });
 }
 
 function enableAccessButton() {
@@ -667,6 +689,11 @@ function recordClick(args) {
     enableAccessButton();
 }
 
+function onAddUsersDialogOpen() {
+    selectedUsers = [];
+    getUsersWithoutAccess();
+}
+
 function onAddUsersDialogClose() {
     var gridObj = $("#add_users_grid").data("ejGrid");
     gridObj.clearSelection();
@@ -679,12 +706,7 @@ function onAddUsersDialogClose() {
     gridObj.model.filterSettings.filteredColumns = [];
     gridObj.model.pageSettings.currentPage = 1;
     gridObj.refreshContent();
-    $("#add-users-dialog").ejDialog("close");
-}
-
-function onAddUsersDialogOpen() {
-    selectedUsers = [];
-    getUsersWithoutAccess();
+    document.getElementById("grant-users-access-dialog").ej2_instances[0].hide();
 }
 
 function refreshTemplate() {
@@ -752,40 +774,40 @@ function provideAccesstoUsers() {
 ////Remove user Access
 $(document).on("click", ".delete-permission", function () {
     singleUserSelectedId = $(this).attr("data-user-id");
-    $("#user-remove-confirmation").ejDialog("open");
+    document.getElementById("user-remove-confirmation-dialog").ej2_instances[0].show();
     singleUserRemove = true;
 });
 
 function onUserRemoveDialogClose() {
-    $("#user-remove-confirmation").ejDialog("close");
+    document.getElementById("user-remove-confirmation-dialog").ej2_instances[0].hide();
 }
 
-$(document).on("click", ".remove-confirm-button", function () {
+function removeConfirm() {
     if (singleUserRemove) {
         users = singleUserSelectedId;
     } else {
         users = selectedUsers;
     }
     removeUserAccess(users);
-});
+}
 
 function removeUserAccess(users) {
     var requestUrl = $("meta[name='remove-app-access-link']").attr("content") + $("#application-id").val();
     if (users.length > 0) {
-        showWaitingPopup("user-remove-confirmation");
+        showWaitingPopup("user-remove-confirmation-dialog");
         $.ajax({
             type: "POST",
             data: { selectedUsers: users },
             url: requestUrl,
             success: function (result) {
-                hideWaitingPopup("user-remove-confirmation");
+                hideWaitingPopup("user-remove-confirmation-dialog");
                 var userGridObj = $("#users_grid").data("ejGrid");
                 userGridObj.clearSelection();
                 userGridObj.model.pageSettings.currentPage = getCurrentPageNumber(userGridObj.model.pageSettings.pageSize, selectedUsers.length, userGridObj.model.pageSettings.totalRecordsCount, userGridObj.model.pageSettings.currentPage);
                 selectedUsers = [];
                 userGridObj.refreshContent();
                 $("#remove-users-button").removeClass("show").addClass("hide");
-                $("#user-remove-confirmation").ejDialog("close");
+                document.getElementById("user-remove-confirmation-dialog").ej2_instances[0].hide();
                 if (result.status) {
                     var content = window.TM.App.LocalizationContent.RevokedAccessFor + " " + result.count + " " + window.TM.App.LocalizationContent.UsersSuccessfully;
                     SuccessAlert(window.TM.App.LocalizationContent.RevokeSiteAccess, content, 7000);
@@ -800,7 +822,7 @@ function removeUserAccess(users) {
 }
 
 $(document).on("click", "#remove-users-button", function () {
-    $("#user-remove-confirmation").ejDialog("open");
+    document.getElementById("user-remove-confirmation-dialog").ej2_instances[0].show();
 });
 
 function onUserRecordSelect(args) {
@@ -864,7 +886,7 @@ $(document).on("click", ".tenant-action", function (e) {
         headerIcon = "delete";
         headerText = window.TM.App.LocalizationContent.Delete;
         actionUrl = deleteTenantUrl;
-        messageContent += "<br/><br/><div class='tenant-delete-warning'> <span>" + window.TM.App.LocalizationContent.WarningColon + "</span><div> " + window.TM.App.LocalizationContent.DeleteAllResource + "</div></div>";
+        messageContent += "<br/><br/><div><span class='material'><input type='checkbox' id='delete-database-checkbox' /><label for='delete-database-checkbox' class='label-database'>" + window.TM.App.LocalizationContent.DeleteDatabase + "</label></span ></div><div class='tenant-delete-warning'> <span>" + window.TM.App.LocalizationContent.WarningColon + "</span><div class = 'warning-content'> " + window.TM.App.LocalizationContent.DeleteAllResourceWithoutDataBase + "</div></div>";
     }
     if (action !== "edit") {
         messageBox("su-" + headerIcon, headerText + " " + window.TM.App.LocalizationContent.SiteLetter, messageContent, "error", function () {
@@ -873,20 +895,48 @@ $(document).on("click", ".tenant-action", function (e) {
     }
 });
 
+$(document).on("change", "#delete-database-checkbox", function () {
+    if ($(this).is(":checked")) {
+        $(".warning-content").html(window.TM.App.LocalizationContent.DeleteAllResource);
+    } else {
+        $(".warning-content").html(window.TM.App.LocalizationContent.DeleteAllResourceWithoutDataBase);
+    }
+});
+
 function updateTenantStatus(actionUrl, tenantId, action) {
     $("#messageBox").ejWaitingPopup("show");
     var actionName = action === "suspend" ? window.TM.App.LocalizationContent.Suspend : action === "delete" ? window.TM.App.LocalizationContent.Delete : window.TM.App.LocalizationContent.Activate;
+    var isDeleteDatabase = $("#delete-database-checkbox").is(":checked");
+    var input = {}
+    if (action === "delete") {
+        input = {
+            tenantId: tenantId,
+            isDeleteDatabase: isDeleteDatabase
+
+        };
+
+    } else {
+        input = { tenantId: tenantId }
+    }
     $.ajax({
         type: "POST",
         url: actionUrl,
-        data: { tenantId: tenantId },
+        data: input,
         success: function (data) {
             if (data.Success) {
                 if (action === "suspend") {
                     SuccessAlert(actionName + " " + window.TM.App.LocalizationContent.SiteLetter, window.TM.App.LocalizationContent.SiteSuspendSuccess, 7000);
                 }
                 else if (action === "delete") {
-                    SuccessAlert(actionName + " " + window.TM.App.LocalizationContent.SiteLetter, window.TM.App.LocalizationContent.SiteDeleteSuccess, 7000);
+                    if (!data.Value) {
+                        SuccessAlert(actionName + " " + window.TM.App.LocalizationContent.SiteLetter,
+                            window.TM.App.LocalizationContent.SiteDeleteSuccesswithoutdatabase,
+                            7000);
+                    } else {
+                        SuccessAlert(actionName + " " + window.TM.App.LocalizationContent.SiteLetter,
+                            window.TM.App.LocalizationContent.SiteDeleteSuccess,
+                            7000);
+                    }
                 }
                 else if (action === "activate") {
                     SuccessAlert(actionName + " " + window.TM.App.LocalizationContent.SiteLetter, window.TM.App.LocalizationContent.SiteActivatedSuccess, 7000);
@@ -920,15 +970,14 @@ function enableIsolationCode() {
         $("#isolation-code").removeClass("has-error");
         isIsolationCodeUpdated = false;
     }
+
+    $("#update-isolation-code").attr("disabled", false);
 }
 
 $(document).on("click", "#update-isolation-code", function (e) {
     var isolationCode = $("#isolation-code").val().trim();
     var tenantInfoId = $(".isolation-code-value").attr("data-tenant-id");
     var isIsolationCodeEnabled = $("#isolation-enable-switch").is(":checked");
-    if (isIsolationCodeEnabled && !ValidateIsolationCode(isolationCode)) {
-        return;
-    }
     showWaitingPopup("content-area");
     $.ajax({
         type: "POST",
@@ -938,6 +987,7 @@ $(document).on("click", "#update-isolation-code", function (e) {
             if (result.Status) {
                 isIsolationCodeUpdated = true;
                 SuccessAlert(window.TM.App.LocalizationContent.IsolationCode, window.TM.App.LocalizationContent.IsolationCodeSucess, 7000);
+                $("#update-isolation-code").attr("disabled", true);
             } else {
                 WarningAlert(window.TM.App.LocalizationContent.IsolationCode, window.TM.App.LocalizationContent.IsolationCodeError, 7000);
             }
@@ -946,42 +996,20 @@ $(document).on("click", "#update-isolation-code", function (e) {
     });
 });
 
-function ValidateIsolationCode(filterQuery) {
-    if (!ej.isNullOrUndefined(filterQuery) && filterQuery !== '') {
-        var decryptfilterParam = filterQuery.
-            replace(/~&~/g, String.fromCharCode(251) + String.fromCharCode(251)).
-            replace(/~=~/g, String.fromCharCode(250) + String.fromCharCode(250)).
-            replace(/~[?]~/g, String.fromCharCode(253) + String.fromCharCode(253)).
-            replace(/~[/]~/g, String.fromCharCode(254) + String.fromCharCode(254)).
-            replace(/&&/g, '&').
-            replace(/&/g, '|,|').
-            replace(/=/g, '|:|').
-            replace(/>/g, '>|:|').
-            replace(/</g, '<|:|').
-            replace(/~,~/g, String.fromCharCode(252) + String.fromCharCode(252));
-        var splitFilterParamObj = decryptfilterParam.split('|,|');
-        for (var index = 0; index < splitFilterParamObj.length; index++) {
-            var splitFilterQuery = splitFilterParamObj[index].split('|:|');
-            if (splitFilterQuery.length === 2) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-    return false;
-}
 
-$(document).on("focusin keyup", "#isolation-code", function (e) {
-    var isolationCode = $("#isolation-code").val().trim();
-    if (!ValidateIsolationCode(isolationCode)) {
-        $("#isolation-code-validation").html(window.TM.App.LocalizationContent.IsolationCodeValidator);
-        $("#isolation-code").addClass("has-error");
-    } else {
-        $("#isolation-code-validation").html("");
-        $("#isolation-code").removeClass("has-error");
-    }
+
+$(document).on("keyup", "#isolation-code", function (e) {
+    clearTimeout(validateTimer);
+    validateTimer = setTimeout(validateCode, validateInterval);
 });
+
+$(document).on("keydown", "#isolation-code", function (e) {
+    clearTimeout(validateTimer);
+});
+
+function validateCode() {
+    ValidateIsolationCode($("#isolation-code").val(), "#isolation-code");
+}
 
 $(document).on("click", "#data-security", function (e) {
     enableIsolationCode();

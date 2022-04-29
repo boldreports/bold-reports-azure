@@ -13,10 +13,12 @@
         [[[New Dataset popup]]]
     </title>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-dataset.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-dataset.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-dataset.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-dataset.min.js"></script>
     </environment>
@@ -30,6 +32,9 @@
                 parent.$("#uploadValidation").html("");
                 parent.$("#publish_file").attr("disabled", true);
                 var filename = $("#browse_file").val();
+                if (filename == "") {
+                    $("#upload_browse_file").val('');
+                }
                 if (filename.substring(filename.lastIndexOf('.') + 1) == "rsd") {
                     filename = filename.substring(filename.lastIndexOf('\\') + 1);
                     $("#upload_browse_file").css("color", "#555555");
@@ -92,7 +97,7 @@
         {
             <input type="hidden" name="previousFileName" value="none" />
         }
-        <input id="rsd_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button" disabled data-previous-filename="none" />
+        <input id="rsd_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button app-btn-primary" disabled data-previous-filename="none" />
     </form>
 </body>
 </html>

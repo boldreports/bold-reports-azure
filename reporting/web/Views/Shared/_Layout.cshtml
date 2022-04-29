@@ -7,7 +7,7 @@
     var nativeNameTitleCase = _localizationOptions.DefaultRequestCulture.Culture.NativeName.ToLower();
     var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
     var gridName = string.Empty;
-    var cdnLink = globalAppSettings.SystemSettings.CDNLink;
+    var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var url = new Uri(Context.Request.GetDisplayUrl());
     var requestUrl = url.AbsolutePath.ToString().ToLower();
     var dashboardsPageUrl = Url.Action("Reports", "Reports");
@@ -38,7 +38,7 @@
     var absolutePath = url.AbsolutePath;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
     //var dashboardBIUrl = new DashboardServerEndPoints(globalAppSettings).DashboardServerBIUrl();
-    var rootUrl = (Context.Request.PathBase + "/" + ServerAppConfig.TenantIdentifierPrefix + "/" + Context.Request.RouteValues["tenantName"]).TrimEnd('/');
+    var rootUrl = Context.Request.RouteValues["tenantName"] != null ? (Context.Request.PathBase + "/" + ServerAppConfig.TenantIdentifierPrefix + "/" + Context.Request.RouteValues["tenantName"]).TrimEnd('/') : Context.Request.PathBase.ToString();
     var isExludeEjDialog = ViewBag.IsExludeEjDialog != null ? ViewBag.IsExludeEjDialog : false;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
@@ -72,11 +72,73 @@
         }
     </style>
 
+    @if (!ServerAppConfig.IsCustomThemeForMenu)
+    {
+        <style>
+            :root {
+                --nav-menu-bg-color: var(--white);
+                --nav-menu-text-color: var(--primary-black);
+                --nav-menu-text-sec-color: var(--grey-700);
+                --nav-menu-content-color: var(--grey-800);
+                --nav-menu-active-color: var(--blue-lighter);
+                --nav-menu-active-text-color: var(--blue);
+                --nav-menu-active-sec-color: var(--blue);
+                --nav-menu-active-content-color: var(--grey-800);
+                --nav-menu-hover-color: var(--grey-300);
+                --nav-menu-hover-text-color: var(--primary-black);
+                --nav-menu-hover-text-sec-color: var(--grey-700);
+                --nav-menu-hover-content-color: var(--grey-800);
+                --nav-menu-create-icon-bgcolor: var(--blue);
+                --nav-menu-separtor-icon-color: var(--grey-400);
+                --item-menu-hover-bg-color: var(--white);
+                --item-menu-hover-border-color: var(--blue);
+                --item-menu-section-bg-color: var(--blue-lighten);
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            :root {
+            @ServerAppConfig.ThemeStyle
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-section-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-bg-color: var( --nav-menu-hover-color);
+                --item-menu-hover-border-color: var( --nav-menu-hover-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+
     <link href="https://fonts.googleapis.com/css?family=Heebo:400,500,700" rel="stylesheet">
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
-    <link rel="icon" href="@faviconLogo" onerror="if (this.href !== null && this.href.toLowerCase() !== '@cdnLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon') this.href = '@cdnLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon';" />
+    <link rel="icon" href="@faviconLogo" onerror="if (this.href !== null && this.href.toLowerCase() !== '@cdnLink/cdn/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon') this.href = '@cdnLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon';" />
 
     <!--Prefetch viewer & designer resources-->
     @*<link rel="prefetch" href="@ServerAppConfig.InternalAppDataServiceUrl">*@
@@ -128,14 +190,18 @@
             </svg>
         </div>
     }
-    <environment include="Development,CloudDevelopment">
-        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" />
-    </environment>
-    <environment exclude="Development,CloudDevelopment">
-        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" />
-    </environment>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" />
+</environment>
 
     @RenderSection("styles", false)
     @if (!isMobile)
@@ -173,7 +239,7 @@
     <script type="text/javascript">
         $.extend(ej, Syncfusion);
         var baseUrl = "@globalAppSettings.SystemSettings.BaseUrl";
-        var manageLicenseUrl = "@(ServerAppConfig.IsSelfHosted ? ServerAppConfig.InternalAppIdpUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
+        var manageLicenseUrl = "@(ServerAppConfig.IsSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
 		var contactUsUrl = "https://www.@(GlobalAppSettings.BrandingDomain)/contact";
         var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
         var paymentPageUrl = "@Url.Action("GetCardDetail", "Payment")";

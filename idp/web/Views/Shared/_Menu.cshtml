@@ -22,9 +22,10 @@
                          currentUrl.IndexOf(".gif", StringComparison.CurrentCultureIgnoreCase) > 0 ||
                          currentUrl.IndexOf(".svg", StringComparison.CurrentCultureIgnoreCase) > 0;
 
-    var profilePageUrl = Url.Action("Profilepage", "User");
+    var idPUrl = GlobalAppSettings.SystemSettings.BaseUrl.TrimEnd('/');
+    var profilePageUrl = $"{idPUrl}/user/profile";
 
-    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    var isAdmin = await new UserManagement().IsAdmin(Guid.Parse(Context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value));
     var tenantSitesUrl = "/" + @CloudAppConfig.TenantManagementUrl.Trim('/') + "/sites";
     var tenantUsersUrl = "/" + @CloudAppConfig.TenantManagementUrl.Trim('/') + "/administration/user-management/users";
     var tenantSettingsUrl = "/" + @CloudAppConfig.TenantManagementUrl.Trim('/') + "/administration";
@@ -32,7 +33,7 @@
     var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress").ToString() : string.Empty;
     var username = Context.Session.GetString("username") != null ? Context.Session.GetString("username").ToString() : string.Empty;
     var userId = Context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-    var imageUrl = GlobalAppSettings.SystemSettings.BaseUrl;
+    var imageUrl = GlobalAppSettings.SystemSettings.InternalAppUrls.Idp;
 }
 
 <aside class="menu-bar" id="app-navigation">
@@ -41,7 +42,7 @@
         <nav id="main-nav">
             <ul id="items-menu">
                 <li>
-                    <a href="/" class="home-link" style="background-color:transparent;" title=@GlobalAppSettings.SystemSettings.OrganizationName>
+                    <a href="@imageUrl" class="home-link" style="background-color:transparent;" title=@GlobalAppSettings.SystemSettings.OrganizationName>
                         @if (!CloudAppConfig.IsSelfHosted)
                         {
                             <img alt="[[[Application Logo]]]" id="application-logo" src="@GlobalAppSettings.CdnDomain/static/company/@GlobalAppSettings.Branding/logo/v1/@IconFileNames.MainLogo" />
@@ -52,7 +53,7 @@
                         }
                     </a>
                 </li>
-                @if (adminType == AdminType.SuperAdmin)
+                @if (isAdmin)
                 {
                     <li class="sf-nav-separator logo-separator mobile-hidden"></li>
                     <li>
@@ -66,7 +67,7 @@
                     <li>
                         <a href="@tenantUsersUrl">
                             <span class="menu-icon-container">
-                                <i class="su su-nav-user-management"></i>
+                                <i class="su su-user"></i>
                             </span>
                             <span class="menu-label">[[[Users]]]</span>
                         </a>
@@ -93,7 +94,7 @@
                         <li class="sub-menu-item sub-menu-profile">
 
                             <div class="sub-menu-profile-text-padding">[[[Profile]]]</div>
-                            <a href="@Url.Action("ProfilePage", "User")">
+                            <a href="/user/profile">
 
                                 <div class="sub-menu-profile-hover">
                                     <div class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="40" data-toggle="tooltip" title="@displayName" data-placement="top" data-url="@imageUrl" style="border-radius:50%"></div>
@@ -114,7 +115,7 @@
                         </li>
                         <li class="sf-sub-menu-separator"></li>
                         <li class="sub-menu-item">
-                            <a href="@Url.Action("logout", "accounts")">
+                            <a href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath">
                                 [[[Logout]]]
                             </a>
                         </li>
@@ -151,14 +152,14 @@
                 {
                     <li>
                         <a class="@(currentUrl.IndexOf(Url.Action("Index", "UserManagement"), StringComparison.CurrentCultureIgnoreCase) > 0 ? "active" : string.Empty)" href="@Url.Action("Index", "UserManagement")" data-toggle="tooltip" data-placement="right" data-container="body" title="User Management">
-                            <i class="su su-nav-user-management"></i>
+                            <i class="su su-user"></i>
                             <span class="menu-label mobile-visible">User Management</span>
                         </a>
                     </li>
                 }
                 <li class="li-logout">
                     <img src="@GlobalAppSettings.SystemSettings.CDNLink/images/common/divider_dark.png" class="upper-divider" />
-                    <a class="" href="@Url.Action("logout", "accounts")" data-toggle="@(!DeviceDetection.IsMobile ? "" : "tooltip")" data-placement="right" data-container="body" title="Log out">
+                    <a class="" href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath" data-toggle="@(!DeviceDetection.IsMobile ? "" : "tooltip")" data-placement="right" data-container="body" title="Log out">
                         <i class="su su-logout"></i>
                         <span class="menu-label mobile-visible">Log out</span>
                     </a>

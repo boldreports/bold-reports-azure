@@ -1,4 +1,4 @@
-@{
+﻿@{
     Layout = null;
     var item = "dashboards";
     var baseUrl = CloudAppConfig.InternalAppBIUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
@@ -7,21 +7,39 @@
     var baseUri = new Uri(GlobalAppSettings.SystemSettings.BaseUrl);
     var url = baseUri.Authority;
     var storageType = ViewBag.StorageType != null ? ViewBag.StorageType : 0;
-	var siteProtocol = baseUri.Scheme;
+    var siteDomain = url;
+    var siteProtocol = baseUri.Scheme;
+    var biUrl = !string.IsNullOrWhiteSpace(CloudAppConfig.InternalAppBIUrl) ? new Uri(CloudAppConfig.InternalAppBIUrl) : new Uri(baseUri + "bi");
+    var reportUrl = !string.IsNullOrWhiteSpace(CloudAppConfig.InternalAppReportUrl) ? new Uri(CloudAppConfig.InternalAppReportUrl) : new Uri(baseUri + "reporting");
+    var biScheme = baseUri.Scheme;
+    var reportScheme = baseUri.Scheme;
+    var biDomain = baseUri.Authority;
+    var reportDomain = baseUri.Authority;
 
     if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
     {
         item = "dashboards";
         baseUrl = CloudAppConfig.InternalAppBIUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
-        var biUrl = new Uri(CloudAppConfig.InternalAppBIUrl);
+        siteDomain = biUrl.Authority;
+        siteProtocol = biUrl.Scheme;
         boldBIPath = biUrl != null ? biUrl.LocalPath.ToString() : "/bi";
     }
     else if (!ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
     {
         item = "reports";
         baseUrl = CloudAppConfig.InternalAppReportUrl + "/" + CloudAppConfig.TenantIdentifierPrefix + "/";
-        var reportUrl = new Uri(CloudAppConfig.InternalAppReportUrl);
+        siteDomain = reportUrl.Authority;
+        siteProtocol = reportUrl.Scheme;
         boldReportPath = reportUrl != null ? reportUrl.LocalPath.ToString() : "/reporting";
+    }
+    else if (ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
+    {
+        biScheme = biUrl.Scheme;
+        reportScheme = reportUrl.Scheme;
+        biDomain = biUrl.Authority;
+        reportDomain = reportUrl.Authority;
+        boldBIPath = biUrl.LocalPath.ToString();
+        boldReportPath = reportUrl.LocalPath.ToString();
     }
     var protocolTypes = new List<SelectListItem>
 {
@@ -29,20 +47,26 @@
         new SelectListItem { Text = "https", Value = "https", Selected = siteProtocol == "https" }
     };
     var useSiteIdentifier = CloudAppConfig.UseSiteIdentifier;
+    var sqlParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
+    var postgresSQLParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.PostgreSQL_Connection_Parameters);
+    var mySQLParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MySQL_Connection_Parameters);
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <title>[[[Add Tenants]]]</title>
 
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+
     <link rel="stylesheet" href="~/bundles/css/addtenantiframe.css" asp-append-version="true" />
     <script src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
     <script src="~/bundles/js/addtenantiframe.js" asp-append-version="true"></script>
-    <script src="~/bundles/js/ej2-dialog.js" asp-append-version="true"></script>
+    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
 
     <script>
         $.extend(ej, Syncfusion);
@@ -59,30 +83,37 @@
         var connectDatabaseUrl = "@Url.Action("ConnectDatabase", "ServerConfiguration")";
         var generateDatabaseUrl = "@Url.Action("GenerateDatabase", "ServerConfiguration")";
         var getAllDatabaseUrl = "@Url.Action("GetAllDatabase", "ServerConfiguration")";
-        var checkTableExistsUrl = "@Url.Action("CheckTableAlreadyExistsForServer", "ServerConfiguration")";
+        var checkTableExistsUrl = "@Url.Action("CheckTableAlreadyExists", "ServerConfiguration")";
         var blobExist = "@Url.Action("IsBlobExists", "ServerConfiguration")";
         var checkTenantNameExistsUrl = "@Url.Action("CheckTenantNameIdentifierExist", "TenantsManagement")";
         var addTenantsUrl = "@Url.Action("AddTenant", "ServerConfiguration")";
         var getTenantDetailsUrl = "@Url.Action("GetTenantInfo", "TenantsManagement")";
         var blobDetails = "@Url.Action("GetAzureDetails", "TenantsManagement")";
+        var blobExist = "@Url.Action("IsBlobExists", "ServerConfiguration")";
         var updateTenantDetailsUrl = "@Url.Action("UpdateTenantInfo", "TenantsManagement")";
         var checkDatabaseExistForServerUrl = "@Url.Action("CheckDatabaseExistsForServer", "ServerConfiguration")";
         var checkHealthStatusUrl = "@Url.Action("CheckServerHealthStatus","TenantsManagement")";
         var dataConnectorsCount = "@CloudAppConfig.DataConnectorsCount";
         var umsSitesUrl = "@Url.Action("Sites", "TenantsManagement")";
+        var checkValidDatabaseUrl = "@Url.Action("ValidateDatabaseChange", "TenantsManagement")";
         var isBoldBI = "@(GlobalAppSettings.BrandingDisplayName == AppBranding.Bold.DisplayName)".toLowerCase() == "true";
         var isAzureApplication = ("@ViewBag.IsAzureApplication".toLowerCase() === "true");
         var isBoldReports = "@(GlobalAppSettings.BrandingDisplayName == AppBranding.BoldReports.DisplayName)".toLowerCase() == "true";
         var selfHosted = ("@ViewBag.selfHosted".toLowerCase() === "true");
+        var isBoldBIMultiTenant = "@ViewBag.IsBoldBIMultiTenant";
+        var isBoldReportsMultiTenant = "@ViewBag.IsBoldReportsMultiTenant";
         var isCommonLogin = ("@(ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)".toLowerCase() === "true");
         var useSiteIdentifierEnable = "@useSiteIdentifier".toLowerCase() === "true";
-
-        $(document).ready(function () {
-            $("#database-type").on("change", function () {
-                $('#server-maintenance-db').val("postgres");
-                $('.dialog-body-div').css("height", "auto");
-            });
-        });
+        var sqlParameter = "@sqlParameter";
+        var postgresSQLParameter = "@postgresSQLParameter";
+        var mySQLParameter = "@mySQLParameter";
+        var biScheme = "@biScheme";
+        var reportScheme = "@reportScheme";
+        var biDomain = "@biDomain";
+        var reportDomain = "@reportDomain";
+        var isSiteCreation = true;
+        var isSimpleModeValue = "true";
+        var validateIsolationCodeUrl = "@Url.Action("IsValidIsolationCode", "TenantsManagement")";
     </script>
 </head>
 <body>
@@ -109,13 +140,6 @@
                                 <div class="circle"></div>
                                 <div class="hr-tag"> </div>
                             </div>
-                            @if (ViewBag.IsBoldBIMultiTenant)
-                            {
-                                <div class="selector-panel" id="selection-intermediate-db">
-                                    <div class="circle"></div>
-                                    <div class="hr-tag"> </div>
-                                </div>
-                            }
                             <div class="selector-panel" id="selection-storage">
                                 <div class="circle"></div>
                                 <div class="hr-tag"> </div>
@@ -127,24 +151,20 @@
                                     <div class="hr-tag"> </div>
                                 </div>
                             }
-                            <div class="selector-panel" id="selectionadmin">
-                                <div class="circle"></div>
+                                <div class="selector-panel" id="selectionadmin">
+                                    <div class="circle"></div>
+                                </div>
                             </div>
-                        </div>
                         <div class="selector-content">
                             <span class="site-creation selectedContent">[[[SITE CREATION]]]</span>
                             <span class="select-database">[[[SELECT DATABASE]]]</span>
-                            @if (ViewBag.IsBoldBIMultiTenant)
-                            {
-                                <span class="select-intermediate-database">[[[SELECT DATA STORE]]]</span>
-                            }
                             <span class="select-storage">[[[SELECT STORAGE]]]</span>
                             @if (ViewBag.IsBoldBIMultiTenant)
                             {
                                 <span class="get-data-security">[[[DATA SECURITY]]]</span>
                             }
-                            <span class="administrator">[[[ADMINISTRATOR]]]</span>
-                        </div>
+                                <span class="administrator">[[[ADMINISTRATOR]]]</span>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -188,7 +208,7 @@
                                     <span class="su su-search search-icon" title="[[[Search]]]"></span>
                                 </div>
                                 <div class="sort">
-                                    <span class="su su-sort text-right" id="order" data-value="descending">
+                                    <span class="su su-sort text-right" id="order" data-trigger="hover" data-toggle="tooltip" data-original-title="[[[Sort by descending]]]" data-value="descending">
                                     </span>
                                 </div>
                             </div>
@@ -197,41 +217,33 @@
                             <div class="tenant-registration-form show">
                                 <form class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding" id="tenant-registration-form" autocomplete="off">
                                     <div class="txt-holder text-wrap center-align">
-                                        <label class="field-label">[[[Tenant Type]]]</label>
-                                        <select @(ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant ? string.Empty : "disabled") id="tenant-type" name="tenanttype" class="selectpicker" data-width="100%">
+                                        <select @(ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant ? string.Empty : "disabled") id="tenant-type" name="tenanttype" data-width="100%">
 
-                                            @if (ViewBag.IsCreateActionType)
+
+                                            @if (ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
                                             {
-                                                if (ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
-                                                {
-                                                    <option value="@TenantType.BoldBIOnPremise" class="">Embedded BI</option>
-                                                    <option value="@TenantType.BoldReportsOnPremise" class="">Enterprise Reporting</option>
-                                                }
-                                                else if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
-                                                {
-                                                    <option value="@TenantType.BoldBIOnPremise" class="">Embedded BI</option>
-                                                }
-                                                else if (!ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
-                                                {
-                                                    <option value="@TenantType.BoldReportsOnPremise" class="">Enterprise Reporting</option>
-                                                }
+                                                <option value="@TenantType.BoldBIOnPremise" class="">Embedded BI</option>
+                                                <option value="@TenantType.BoldReportsOnPremise" class="">Enterprise Reporting</option>
+                                            }
+                                            else if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
+                                            {
+                                                <option value="@TenantType.BoldBIOnPremise" class="">Embedded BI</option>
+                                            }
+                                            else if (!ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
+                                            {
+                                                <option value="@TenantType.BoldReportsOnPremise" class="">Enterprise Reporting</option>
                                             }
 
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding site-name">
+
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
-                                            <label class="text-content">[[[Site Name]]]</label>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
-                                            <input type="text" id="tenant-name" name="tenantname" class="form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Site name]]]" />
+                                            <input type="text" id="tenant-name" name="tenantname" placeholder="[[[Site name]]]">
                                             <span class="startup-validation validation-txt-errors" id="tenant-name-validation-error"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding domain hide">
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
-                                            <label class="text-content">[[[Domain]]]</label>
-                                        </div>
+                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding domain">
                                         <div id="ssl-selectpicker" class="input-group col-xs-4">
                                             <div class="input-group-addon">
                                                 @Html.DropDownList("enableSsl", protocolTypes, new
@@ -239,35 +251,29 @@
                                                     id = "enable-ssl",
                                                     @class = "selectpicker",
                                                     data_live_search = "false",
-                                                    disabled = true
                                                 })
                                             </div>
                                             <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding domain-text">
-                                                <input type="text" id="input-domain" name="domainname" class="form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Domain]]]" value="@baseUri.Authority" disabled />
-                                                <span class="startup-validation validation-txt-errors" id="domain-validation-error"></span>
+                                                <input type="text" id="input-domain" name="domainname" class="" placeholder="[[[Domain]]]" value="@siteDomain" />
                                             </div>
+                                            <span class="startup-validation validation-txt-errors" id="domain-validation-error"></span>
                                         </div>
-                                    </div>
-                                    <div id="new-domain-div" class="material-checkbox selfhosted center-align hide">
-                                        @Html.CheckBox("newdomain", false)
-                                        <label for="newdomain" class="">[[[Use Custom Domain]]]</label>
+                                        
                                     </div>
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding site-url-identifier hide">
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding site-identifier">
-                                            <label class="text-content">[[[Site Identifier]]]</label>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder center-align input-alignment no-padding">
-                                            <input type="text" id="tenant-identifier" name="tenantidentifier" class=" form-text form-control system-settings-startup-page-fields db-fields text-content" placeholder="[[[Site identifier]]]" />
+
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 txt-holder site-identifier-div center-align input-alignment no-padding">
+                                            <input type="text" id="tenant-identifier" name="tenantidentifier" class="form-text" placeholder="[[[Site identifier]]]" />
                                             <div id="site-identifier-check" class="material-checkbox selfhosted center-align site-identifier-check hide">
                                                 @Html.CheckBox("identifier", false)
                                                 <label for="identifier" class="">[[[Do not use site identifier]]]</label>
                                             </div>
                                             <span class="startup-validation validation-txt-errors" id="tenant-identifier-validation-error" style="display: inherit;"></span>
-                                            <span class="identifier-info">
+                                            <span class="identifier-info info-content txt-box-info">
                                                 [[[The site identifier should be unique, and it is part of your site URL.]]]
                                                 <div class="url-part">
                                                     <span>[[[i.e ]]]</span>
-                                                    <span class="site-url no-padding" data-toggle="popover" data-html="true" data-placement="top" data-container="body" data-content="">
+                                                    <span class="site-url no-padding" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="top" data-container="body" data-content="">
                                                         <span class="site-domain">@GlobalAppSettings.SystemSettings.BaseUrl</span>
                                                         <span class="site-default-text text-content"></span>
                                                         <span class="site-id-name"></span>
@@ -277,12 +283,24 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding branding-type">
-                                        <label class="field-label">[[[Use Branding]]]</label>
-                                        <span tabindex="0" class="info-icon su su-info" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" data-html="true" data-content="[[[Based on branding chosen, following information will be copied to tenant.<ul><li> Localization,</li><li> Date Format,</li><li> Time Format,</li><li> Images.</li></ul> Otherwise, default images and values will be used for the tenant branding.]]]"></span>
-                                        <select id="branding-type" name="brandingtype" class="selectpicker" data-width="100%">
-                                            <option value="" class="tenant-type-brand"></option>
-                                            <option value="Bold ID" class="bold-id">@GlobalAppSettings.SystemSettings.OrganizationName</option>
+                                        <select id="branding-type" name="brandingtype" class="" data-width="100%">
+                                            @if (ViewBag.IsBoldBIMultiTenant && ViewBag.IsBoldReportsMultiTenant)
+                                            {
+                                                <option value="Embedded BI" class="tenant-type-brand">Embedded BI</option>
+                                                <option value="Enterprise Reporting" class="tenant-type-brand">Enterprise Reporting</option>
+                                            }
+                                            else if (ViewBag.IsBoldBIMultiTenant)
+                                            {
+                                                <option value="Embedded BI" class="tenant-type-brand">Embedded BI</option>
+                                            }
+                                            else if (ViewBag.IsBoldReportsMultiTenant)
+                                            {
+                                                <option value="Enterprise Reporting" class="tenant-type-brand">Enterprise Reporting</option>
+                                            }
+
+                                            <option value="@GlobalAppSettings.SystemSettings.OrganizationName" class="bold-id">@GlobalAppSettings.SystemSettings.OrganizationName</option>
                                         </select>
+                                        <span class="col-lg-12 col-sm-12 col-xs-12 col-md-12 info-content">[[[Based on branding chosen, localization, date format and images will be copied to tenant. Otherwise, default images and values will be used for the tenant branding.]]]</span>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding empty-validation-error">
                                         <span class="startup-validation validation-txt-errors" id="tenant-identifier-empty-validation-error" style="display: inherit;"></span>

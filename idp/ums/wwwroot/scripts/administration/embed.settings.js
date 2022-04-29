@@ -6,9 +6,13 @@ var isChrome = navigator.userAgent.indexOf("Chrome") != -1;
 $(function () {
     var getLinkInputObj = $("#secret-code");
     var getLinkCopyLinkobj = $("#secret-code-copy");
-    $('[data-toggle="popover"]').popover();
     if (!$("#restrict-embed-enabled").is(":checked")) {
         $("#import-validation-msg").html("");
+    }
+
+    if (!embedEnabled) {
+        $("#trigger-file").attr("disabled", "disabled");
+        $("#filename").attr("disabled", "disabled");
     }
 
     $(document).on('click', '#restrict-embed-enabled', function () {
@@ -23,8 +27,8 @@ $(function () {
             }
             var isEmbed = "true";
             $(".download-template").show();
-            $("#trigger-file").removeClass("disabled");
-            $("#filename").removeClass("disabled");
+            $("#trigger-file").removeAttr("disabled");
+            $("#filename").removeAttr("disabled");
 
         } else {
             $("#get-embed-code").attr("disabled", "disabled");
@@ -33,13 +37,13 @@ $(function () {
             getLinkCopyLinkobj.tooltip("disable").attr("data-original-title", window.TM.App.LocalizationContent.LinkCopy$).tooltip("fixTitle").tooltip("disable");
             getLinkCopyLinkobj.css("cursor", "default");
             $(".download-template").hide();
-            $("#trigger-file").addClass("disabled");
-            $("#filename").addClass("disabled");
+            $("#trigger-file").attr("disabled", "disabled");
+            $("#filename").attr("disabled", "disabled");
             $("#import-validation-msg").html("");
             var isEmbed = "false";
         }
         $("#restrict-embed-enabled").attr("disabled", "disabled");
-        $(".embed-loader").append($("<span class='no-padding loader-gif'><div class='loader-blue loader-icon' id='embed-enabled-loader-icon'><svg class='circular'><circle class='path' cx='27' cy='27' r='13' fill='none' stroke-width='4' stroke-miterlimit='10'></circle></svg></div></span>"));
+        $(".embed-loader").addClass("embed-loading");
         $.ajax({
             type: "POST",
             url: updateSystemSettingsValueUrl,
@@ -47,7 +51,7 @@ $(function () {
             success: function (data) {
                 if (data.status) {
                     $("#restrict-embed-enabled").removeAttr("disabled");
-                    $(".embed-loader span.loader-gif").remove();
+                    $(".embed-loader").removeClass("embed-loading");
                     return;
                 } else {
                     $("#restrict-embed-enabled").removeAttr("disabled");
@@ -57,7 +61,7 @@ $(function () {
                     else {
                         $("#restrict-embed-enabled").attr("checked", true);
                     }
-                    $(".embed-loader span.loader-gif").remove();
+                    $(".embed-loader").removeClass("embed-loading");
                 }
             }
         });
@@ -73,8 +77,8 @@ $(function () {
             }
             else {
                 document.execCommand('copy');
-                getLinkCopyLinkobj.attr("data-original-title", window.TM.App.LocalizationContent.Copysuccess);
-                getLinkCopyLinkobj.tooltip("hide").attr("data-original-title", window.TM.App.LocalizationContent.Copysuccess).tooltip("fixTitle").tooltip("show");
+                getLinkCopyLinkobj.attr("data-original-title", window.TM.App.LocalizationContent.Copied);
+                getLinkCopyLinkobj.tooltip("hide").attr("data-original-title", window.TM.App.LocalizationContent.Copied).tooltip("fixTitle").tooltip("show");
                 setTimeout(function () { getLinkCopyLinkobj.attr("data-original-title", window.TM.App.LocalizationContent.LinkCopy); getLinkCopyLinkobj.tooltip(); }, 3000);
             }
         }
@@ -134,25 +138,6 @@ function secretCodeChange(data) {
     $("#secret-code").val(data.resetEmbedSecret);
     $(".secret-code-notification").show();
 }
-
-$(document).on('click', function (e) {
-    if ($(".popover").children().hasClass("popover-content")) {
-        $(".popover-content").attr("id", "popover-content");
-        $(".arrow").attr("id", "arrow");
-    }
-
-    if (e.target.id !== "popover-content" && e.target.id !== "arrow" && e.target.id !== "embed-info") {
-        $(".popover").css("display", "none");
-    }
-
-    $('.popover').each(function () {
-        if (!($(this).is(e.target) || $(this).has(e.target).length > 0) &&
-            $(this).siblings('.popover').length !== 0 &&
-            $(this).siblings('.popover').has(e.target).length === 0) {
-            $(this).popover().remove();
-        }
-    });
-});
 
 $(document).on("click", "#trigger-file,#filename", function () {
     if ($("#restrict-embed-enabled").is(":checked")) {

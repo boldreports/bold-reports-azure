@@ -1,5 +1,7 @@
 ﻿@{
     Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var path = "/Export";
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
@@ -12,7 +14,7 @@
 </head>
 <body>
     <input type="hidden" value="@ViewBag.Username" id="userName" />
-    <input type="hidden" value="@ViewBag.Path" id="edit-export-path" />
+    <input type="hidden" value="@path" id="edit-export-path" />
     <input type="hidden" value="" id="export-report-count" />
     <div class="col-sm-12 col-xs-12 no-padding subscribe-popup-body" id="subscribers-panel">
         <div class="col-sm-12 col-xs-12 export-format" id="export-format-container">
@@ -65,10 +67,9 @@
         {
             <div class="col-sm-12 col-xs-12 send-mail-align">
                 <div id="enable-mail-attachment" class="col-sm-6 col-xs-6 no-padding no-margin">
-                    @Html.CheckBox("enable-send-mail", true, new { @class = "material-checkbox  enable-sendmail-checkbox" })
+                    @Html.CheckBox("enable-send-mail", false, new { @class = "material-checkbox  enable-sendmail-checkbox" })
                     @Html.Label("enable-send-mail", "[[[Email attachment]]]", new { @class = "clspadleft app-checkbox-label normal-font sendmail-label" })
                 </div>
-                <div class="col-sm-6 col-xs-6" id="checkbox-validation" style="visibility: hidden">[[[Please select at least one option to schedule a report ]]]</div>
             </div>
             <div class="col-sm-12 col-xs-12 enable-save-block">
                 <div id="enable-save-as-file" class="col-sm-2 col-xs-2 no-padding no-margin">
@@ -114,6 +115,33 @@
                     <div class="col-sm-3 col-xs-3 no-padding label-align-center" id="report-count-validation" style="visibility: hidden;margin-left: -110px;margin-top:15px">[[[Please enter a valid report count]]]</div>
                 </div>
             </div>
+
+            <div id="location-export-checkbox" class="col-sm-12 col-xs-12">
+                @Html.CheckBox("ftp-location-export", false, new { @class = "material-checkbox overwrite-checkbox" })
+                @Html.Label("ftp-location-export", "[[[FTP Location Export]]]")
+            </div>
+            <div class="col-sm-6 col-xs-6" id="checkbox-validation" style="visibility: hidden">[[[Please select at least one option to schedule a report ]]]</div>
+            <form class="col-sm-12 col-xs-12" id="ftp-form">
+                <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Host]]]</label>
+                        <input type="text" class="form-control" id="ftp-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
+                        <div id="ftp-hostname-validation" style="display: none"></div>
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Username]]]</label>
+                        <input type="text" class="form-control" id="ftp-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
+                        <div id="ftp-username-validation" style="display: none"></div>
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Password]]]</label>
+                        <input type="password" class="form-control password-field" id="ftp-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
+                        <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
+                        <div id="ftp-password-validation" style="display: none"></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6" id="ftp-validation" style="display: none"></div>
+                </div>
+            </form>
         }
         <div class="col-sm-12 col-xs-12 send-mail-block">
             <div class="col-sm-12 col-xs-12 send-mail-align">
@@ -142,24 +170,27 @@
         </div>
         <div id="selected-users-validation">[[[Select a user, group, or type an email address in the external recipient to schedule]]]</div>
         <div id="selected-users-info" class="col-sm-5 col-xs-5 no-margin i-search-fields"></div>
-        <div id="failure-notification" class="col-sm-12 col-xs-12  no-margin">
-            <div id="enable-checkbox">
-                @Html.CheckBox("enable-notification-to-owner", new { @class = "material-checkbox", @id = "enable-notification-to-owner" })
-                @Html.Label("enable-notification-to-owner", "[[[Send failure notification to schedule owner]]]")
+        @if(isSelfHosted)
+        {
+            <div id="failure-notification" class="col-sm-12 col-xs-12  no-margin">
+                <div id="enable-checkbox">
+                    @Html.CheckBox("enable-notification-to-owner", new { @class = "material-checkbox", @id = "enable-notification-to-owner" })
+                    @Html.Label("enable-notification-to-owner", "[[[Send failure notification to schedule owner]]]")
+                </div>
+                <div id="enable-checkbox">
+                    @Html.CheckBox("enable-notification-to-recipient", new { @class = "material-checkbox", @id = "enable-notification-to-recipient" })
+                    @Html.Label("enable-notification-to-recipient", "[[[Send failure notification to recipient]]]")
+                </div>
             </div>
-            <div id="enable-checkbox">
-                @Html.CheckBox("enable-notification-to-recipient", new { @class = "material-checkbox", @id = "enable-notification-to-recipient" })
-                @Html.Label("enable-notification-to-recipient", "[[[Send failure notification to recipient]]]")
+            <div id="note-message" class="col-sm-12 col-xs-12  no-margin">
+                <b>[[[Note: ]]]</b>
+                @(String.Format("[[[The application deactivates your schedule after {0} consecutive failures.]]]", Convert.ToInt32(ServerAppConfig.FailureOccurrence)))
+                @if (!@ServerAppConfig.IsHideHelpLink)
+                {
+                    <span>[[[To learn more, click]]] <a href="@(ServerAppConfig.AppSettings.Documentation.BaseUri + @helpSiteUrl)" title="help" target="_blank">[[[here.]]]</a></span>
+                }
             </div>
-        </div>
-        <div id="note-message" class="col-sm-12 col-xs-12  no-margin">
-            <b>[[[Note: ]]]</b>
-            @(String.Format("[[[The application deactivates your schedule after {0} consecutive failures.]]]", Convert.ToInt32(ServerAppConfig.FailureOccurrence)))
-            @if (!@ServerAppConfig.IsHideHelpLink)
-            {
-                <span>[[[To learn more, click]]] <a href="@(ServerAppConfig.AppSettings.Documentation.BaseUri + @helpSiteUrl)" title="help" target="_blank">[[[here.]]]</a></span>
-            }
-        </div>
+        }
     </div>
 </body>
 </html>
@@ -167,6 +198,7 @@
            var getActiveandInactiveUserUrl = "@Url.Action("getallactivegroupsandusers", "accounts")";
            var updateScheduleUrl = "@Url.Action("UpdateSchedule", "scheduler")";
            var addScheduleUrl = "@Url.Action("AddSchedule", "scheduler")";
-           var isAzureApplication = "@isAzureApplication";
-           var isSelfHosted = "@isSelfHosted";
+           var validateFTPCredentials = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+           var isAzureApplication = @Json.Serialize(isAzureApplication);
+           var isSelfHosted = @Json.Serialize(isSelfHosted);
 </script>

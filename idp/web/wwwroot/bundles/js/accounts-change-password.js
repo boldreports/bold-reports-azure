@@ -3,16 +3,25 @@ var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
 
 $(document).ready(function () {
 
-    var outlineChangePassword = new ejs.inputs.TextBox({
+    var changePassword = new ejs.inputs.TextBox({
         cssClass: 'e-outline',
         floatLabelType: 'Auto',
     });
-    outlineChangePassword.appendTo('#firstname');
-    outlineChangePassword.appendTo('#lastname');
-    outlineChangePassword.appendTo('#companyname');
-    outlineChangePassword.appendTo('#phone');
-    outlineChangePassword.appendTo('#password');
-    outlineChangePassword.appendTo('#re-password');
+    changePassword.appendTo('#firstname');
+    changePassword.appendTo('#lastname');
+    changePassword.appendTo('#companyname');
+    changePassword.appendTo('#phone');
+    changePassword.appendTo('#new-password');
+    changePassword.appendTo('#confirm-password');
+
+    var recoverEmail = new ejs.inputs.TextBox({
+        cssClass: 'e-outline',
+        floatLabelType: 'Always',
+        created: function () {
+            outlineEmail.focusIn();
+        }
+    });
+    recoverEmail.appendTo('#key-input');
 
     $.validator.addMethod("isValidName", function (value, element) {
         return IsValidName("name", value)
@@ -30,21 +39,21 @@ $(document).ready(function () {
 
     $("#update-password-form").validate({
         onkeyup: function (element, event) {
-            if (event.target.id.toLowerCase() === "password") {
+            if (event.target.id.toLowerCase() === "new-password") {
                 showPasswordPolicy();
             }
             if (event.keyCode != 9) {
                 $(element).valid();
 
-                if ($("#re-password").val() != "") {
-                    $("#re-password").valid();
+                if ($("#confirm-password").val() != "") {
+                    $("#confirm-password").valid();
                 }
             }
             else true;
         },
         onfocusout: function (element) { $(element).valid(); },
         onfocusin: function (element, event) {
-            if (event.target.id.toLowerCase() === "password") {
+            if (event.target.id.toLowerCase() === "new-password") {
                 showPasswordPolicy();
             }
         },
@@ -67,7 +76,7 @@ $(document).ready(function () {
             },
             "re-password": {
                 required: true,
-                equalTo: "#password"
+                equalTo: "#new-password"
             }
         },
         messages: {
@@ -96,21 +105,18 @@ $(document).ready(function () {
         errorElement: 'span',
         errorPlacement: function (error, element) {
             $(element).parents(".update-form-input-field").find('div.validation-holder').find('span').html(error.html());
-            $("body").ejWaitingPopup("hide");
-        }
-    });
-
-    $("#agreement").on("change", function () {
-        if ($("#agreement").is(":checked")) {
-            $(".proceed-button").removeAttr("disabled");
-        } else {
-            $(".proceed-button").attr("disabled", "disabled");
+            hideWaitingPopup('body');
         }
     });
 });
 
-
-
+$(document).on("change", "#agreement", function () {
+    if ($("#agreement").is(":checked")) {
+        $(".proceed-button").removeAttr("disabled");
+    } else {
+        $(".proceed-button").attr("disabled", "disabled");
+    }
+});
 
 function IsValidName(validationType, inputString) {
     var regex;
@@ -133,7 +139,7 @@ function IsValidPassword(password) {
 }
 
 function showPasswordPolicy() {
-    var value = $("#password").val().trim();
+    var value = $("#new-password").val().trim();
     var validateMethods = new Array();
     validateMethods.push(validateUserpassword.p_policy_uppercase);
     validateMethods.push(validateUserpassword.p_policy_lowercase);
@@ -145,14 +151,14 @@ function showPasswordPolicy() {
         var currentMethodName = validateMethods[i];
         ruleName = currentMethodName(value);
         if (ruleName != undefined && ruleName != "") {
-            if (!$("#password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
-                $("#password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").addClass("su-password-tick").removeClass("icon");
+            if (!$("#new-password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
+                $("#new-password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").addClass("su-password-tick").removeClass("icon");
             }
         }
         else {
             ruleName = name;
-            if ($("#password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
-                $("#password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").removeClass("su-password-tick").addClass("icon");
+            if ($("#new-password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
+                $("#new-password").next().find("#password_policy_rules").find("li#" + ruleName + " span:first").removeClass("su-password-tick").addClass("icon");
             }
         }
 
@@ -161,26 +167,26 @@ function showPasswordPolicy() {
 }
 
 function changePasswordValidation() {
-    $("body").ejWaitingPopup("show");
+    showWaitingPopup('body');
     return $("#update-password-form").valid();
 }
 
 
-$(document).on("ready", function () {
-    $(".show-hide-password").on("click", function () {
+$(function () {
+    $(document).on("click", ".show-hide-password", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
-            $(this).removeClass('su-show');
-            $(this).addClass('su-hide');
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
         }
         else {
             $(this).siblings().find("input").attr('type', 'password');
-            $(this).removeClass('su-hide');
-            $(this).addClass('su-show');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.Server.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
         }
     });
 
-    $(".show-hide-password").bind("touch", function () {
+    $(document).on("touch", ".show-hide-password", function () {
         if ($(this).siblings().find("input").is(":password")) {
             $(this).siblings().find("input").attr('type', 'text');
             $(this).removeClass('su-show');

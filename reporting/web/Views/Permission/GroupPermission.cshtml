@@ -23,6 +23,7 @@
         var getItemScopeUrl = "@Url.Action("GetItemScope", "permission")";
         var addnewgrouppermissionUrl = "@Url.Action("addnewgrouppermission", "permission")";
         var deleteGroupPermissionUrl = "@Url.Action("DeleteGroupPermission", "permission")";
+        var resourceManagePermissionUrl = "@Url.Action("IsUserHasResourceManagePermission", "permission")";
     </script>
 }
 @section MainSection {
@@ -38,8 +39,8 @@
                 </hgroup>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
-                <input type="button" title="[[[Add Permission to the group]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button pull-right" />
-                <a type="button" class="link-button pull-right margin-right" id="view-group" title="" href="@Url.Action("viewgroup","group")?groupId=@Context.Request.Query["groupid"]">[[[View Group]]]</a>
+                <input type="button" title="[[[Add Permission to the group]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button app-btn-primary pull-right" />
+                <a type="button" class="link-button app-btn-link pull-right margin-right" id="view-group" title="" href="@Url.Action("viewgroup","group")?groupId=@Context.Request.Query["groupid"]">[[[View Group]]]</a>
             </div>
         </div>
         <div class="active-directory-form col-lg-12 admin-page-body">
@@ -56,7 +57,7 @@
 
     <script type="text/x-jsrender" id="commandstemplate">
         <div>
-            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"> [[[Remove]]]</a></span>
         </div>
     </script>
     <script type="text/x-jsrender" id="accessmodetemplate">
@@ -99,7 +100,7 @@
                 var addPermissionWaitingPopupTemplateId = createLoader("add-permission_wrapper");
 				$("#add-permission_wrapper").ejWaitingPopup({ template:$("#" + addPermissionWaitingPopupTemplateId) });
                 $("#Grid").ejGrid({
-                    dataSource: ej.DataManager({ url: "@Url.Action("GetAllGroupPermission", "permission")?groupId=" + groupId, adaptor: "UrlAdaptor" }),
+                    dataSource: ej.DataManager({ url: "@Url.Action("GetAllGroupPermission", "permission")?groupId=" + groupId + "&&requiresCounts=true", adaptor: "UrlAdaptor" }),
                     gridLines: ej.Grid.GridLines.None,
                     allowPaging: true,
                     allowSorting: true,

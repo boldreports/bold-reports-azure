@@ -4,12 +4,199 @@
         <name>BoldReports.Server.Services</name>
     </assembly>
     <members>
+        <member name="M:BoldReports.Server.Service.ActionFilters.CustomAuthorizationAttribute.ForceValidateRequest(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            Method to verify whether the request needs to force validate the token. 
+            This is added to ensure that the reports load action revalidated the token to avoid unauthorized access to the reports in mobile application
+            </summary>
+            <param name="actionContext"> The request context object</param>
+            <returns>Boolean that represents whether to validate the token or not</returns>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Id">
+            <summary>
+            Holds the Publis ID of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Version">
+            <summary>s
+            Holds the version of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Name">
+            <summary>
+            Holds the Name of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Description">
+            <summary>
+            Holds the Description of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.CanEdit">
+            <summary>
+            Holds the can edit value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.FileContent">
+            <summary>
+            Holds the file content of the dataset file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.IsLocked">
+            <summary>
+            Holds the is locked value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.RefreshSchedule">
+            <summary>
+            Holds the RefreshSchedule value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.DestinationId">
+            <summary>
+            Holds the Destination Id value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Id">
+            <summary>
+            Holds the Publis ID of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Version">
+            <summary>
+            Holds the version of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Name">
+            <summary>
+            Holds the Name of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Description">
+            <summary>
+            Holds the Description of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.CanEdit">
+            <summary>
+            Holds the can edit value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.FileContent">
+            <summary>
+            Holds the file content of the data source file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.IsLocked">
+            <summary>
+            Holds the is locked value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.RefreshSchedule">
+            <summary>
+            Holds the RefreshSchedule value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.DestinationId">
+            <summary>
+            Holds the Destination Id value of the data source
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Controllers.ConfigurationController">
+            <summary>
+            Controller for Data Connectors.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Services.CacheManager">
+            <summary>
+            Manages the caching of data in memory
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.AddToCache(System.String,System.Object)">
+            <summary>
+            Adds an entry in the cache that will have a sliding expiration of 10 minutes.
+            </summary>
+            <param name="key">Unique key for the cache entry</param>
+            <param name="cacheModel">Object to be cached</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.IsInCache(System.String)">
+            <summary>
+            Checks whether there is an entry in cache
+            </summary>
+            <param name="key">Unique key</param>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.GetFromCache(System.String)">
+            <summary>
+            Gets the cached object. If key is not present will return null
+            </summary>
+            <param name="key">Key of the object to be returned</param>
+            <returns>Cached object</returns>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Token">
+            <summary>
+            Gets or sets the current user's access token used for authenticate.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Email">
+            <summary>
+            Gets or sets the current user name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.FullName">
+            <summary>
+            Gets or sets the current user name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.ExpiresIn">
+            <summary>
+            Gets or sets the current token expiration time 
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.UserId">
+            <summary>
+            Gets or sets the current user id.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Filter">
+            <summary>
+            Gets or sets the data source level filter to be applied to the dashboard in embed mode.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Domain">
+            <summary>
+            Gets or sets the current user domain.
+            </summary>
+        </member>
         <member name="M:BoldReports.Server.Services.Draft.DraftHelper.ParseIso8601toDateTime(System.String)">
             <summary>
             Get datetime object from iso8601 string.
             </summary>
             <param name="iso8601String"></param>
             <returns>DateTime object</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper">
+            <summary>
+            Get and update the connections from server
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.GetConnections(BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Method to fetch connection list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.UpdateConnections(BoldReports.Server.RequestHelpers.ConnectionDetails,BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Method to update connection list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.GetConfigurationList(BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Common method to get configuration list from server
+            </summary>
+            <returns>Configuration list</returns>
         </member>
         <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanRead">
             <summary>
@@ -201,6 +388,11 @@
             Provide the Category Name of item
             </summary>
         </member>
+        <member name="P:BoldReports.Server.Report.Model.ConnectionList.Configuration">
+            <summary>
+            Data sources connection list
+            </summary>
+        </member>
         <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.Name">
             <summary>
             Name of the DataSource
@@ -385,6 +577,106 @@
             <param name="chain"></param>
             <param name="sslPolicyErrors"></param>
             <returns></returns>
+        </member>
+        <member name="T:BoldReports.Server.PublishHelpers.DownloadUploadHelper">
+            <summary>
+            Download upload helper class used for Download/Upload for data source and Report file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.SiteIdentifier">
+            <summary>
+            Holds the Site Identifier of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.TenantId">
+            <summary>
+            Holds the Tenant Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.UserId">
+            <summary>
+            Holds the User Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.IdpReferenceId">
+            <summary>
+            Holds the Idp Reference Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.PublishItem">
+            <summary>
+            Holds the Publish Item of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.Datasources">
+            <summary>
+            Holds the Datasources of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.Datasets">
+            <summary>
+            Holds the Datasets of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.JobId">
+            <summary>
+            Holds the Job Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.PublishType">
+            <summary>
+            Holds the Publish Type of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Status">
+            <summary>
+            Gets or sets a value indicating whether status.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.StatusMessage">
+            <summary>
+            Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Token">
+            <summary>
+            Gets or sets the Token.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.ExpiresIn">
+            <summary>
+            Gets or sets the token expiration time.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserDisplayName">
+            <summary>
+            Gets or sets the Current User name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserId">
+            <summary>
+            Gets or sets the Current User Id.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.ErrorCode">
+            <summary>
+            Gets or sets the Error codes when exception is thrown.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Email">
+            <summary>
+            Gets or sets the Email.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserDomain">
+            <summary>
+            Gets or sets the UserDomain.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Filter">
+            <summary>
+            Gets or sets the data source level filter to be applied to the dashboard in embed mode.
+            </summary>
         </member>
     </members>
 </doc>

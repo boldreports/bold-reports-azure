@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         report: 'Bericht',
         url: 'URL',
         linkUrl: 'Verknüpfen Sie die URL mit dem Berichtselement',
-        none: 'Keiner'
+        none: 'Keiner',
+        linkBookmark: 'Lesezeichen'
     },
     linkReport: {
         reportCaption: 'Bericht',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         categoryName: 'Verknüpfung',
         linkReport: 'Link-Bericht',
+        URL: 'URL',
         appearance: {
             categoryName: 'Aussehen',
             styleTooltip: 'Stil',
@@ -543,10 +545,11 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         miscellaneous: {
             categoryName: 'Sonstiges',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
             customAttributes: 'Benutzerdefinierte Attribute',
-            zIndex: 'ZIndex'
+            zIndex: 'ZIndex',
+            bookmark: 'Lesezeichen'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
             categoryName: 'Keine Daten',
             caption: 'Botschaft',
             hidden: 'Keine Daten ausblenden',
-            borderStyle: 'Randstil',
+            showBorder: 'Grenze anzeigen',
             borderColor: 'Randfarbe',
             borderSize: 'Rahmengrösse',
             fontLabel: 'Schriftart',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 size: 'Schriftgröße',
                 style: 'Schriftstil',
                 weight: 'Schriftgröße'
-            },
-            positiontypes: {
-                topLeft: 'Oben links',
-                topCenter: 'Oben in der Mitte',
-                topRight: 'Oben rechts',
-                rightTop: 'Rechts oben',
-                rightCenter: 'Rechtes Zentrum',
-                rightBottom: 'Rechts unten',
-                bottomLeft: 'Unten links',
-                bottomCenter: 'Unten in der Mitte',
-                bottomRight: 'Unten rechts',
-                leftTop: 'Links oben',
-                leftCenter: 'Linkes Zentrum',
-                leftBottom: 'Links unten'
             },
             fontStyle: {
                 label: 'Schriftstil',
@@ -674,29 +663,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                     extraBold: 'Extra fett',
                     heavy: 'Schwer',
                 }
-            },
-            textDecoration: {
-                categoryName: 'Textdekoration',
-                defaultStyle: 'Standard',
-                none: 'Keiner',
-                underline: 'Unterstreichen',
-                overline: 'Überstreichen',
-                lineThrough: 'Linie durch'
-            },
-            border: {
-                default: 'Rand',
-                left: 'Links',
-                top: 'Oben',
-                right: 'Recht',
-                bottom: 'Unterseite'
-            },
-            borderStyles: {
-                solid: 'Solide',
-                none: 'Keiner',
-                double: 'Doppelt',
-                dashed: 'Gestrichelt',
-                dotted: 'Gepunktet'
-            },
+            }
         },
         basicSettings: {
             categoryName: 'Grundeinstellungen',
@@ -816,7 +783,11 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 length: 'Tick Länge',
                 width: 'Tick Breite'
             },
-            labelsAutofitDisabled: 'Beschriftungen Autofit deaktiviert'
+            labelsAutofitDisabled: 'Beschriftungen Autofit deaktiviert',
+            horizontalAxis: 'Horizontale Achse',
+            maximum: 'Maximal',
+            minimum: 'Minimum',
+            verticalAxis: 'Vertikale Achse',
         },
         gridLine: {
             categoryName: 'Rasterlinie',
@@ -856,10 +827,11 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         miscellaneous: {
             categoryName: 'Sonstiges',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
             customAttributes: 'Benutzerdefinierte Attribute',
             alertHeader: 'Diagramm Berichtselement',
+            bookmark: 'Lesezeichen',
             alertMessage: 'Ungültiges Format für benutzerdefinierte Attribute. Richtiges Formatbeispiel: \'AttrName1 = Wert1, AttrName2 = Wert2 \'.'
         },
         seriesSettings: {
@@ -923,7 +895,9 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 }
             },
             miscellaneous: {
-                categoryName: 'Sonstiges'
+                categoryName: 'Sonstiges',
+                toolTip: 'Kurzinfo',
+                customLegendText: 'Legendentext'
             }
         },
         borderStyle: 'Rahmenstil',
@@ -983,7 +957,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         miscellaneous: {
             categoryName: 'Sonstiges',
             documentMap: 'Dokumentenkarte',
-            customAttributes: 'Benutzerdefinierte Attribute'
+            customAttributes: 'Benutzerdefinierte Attribute',
+            bookmark: 'Lesezeichen'
         },
         styleTooltip: 'Stil',
         colorTooltip: 'Farbe',
@@ -1073,7 +1048,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
             categoryName: 'Sonstiges',
             customattributes: 'Benutzerdefinierte Attribute',
             documentMap: 'Dokumentenkarte',
-            pageName: 'Seitenname'
+            pageName: 'Seitenname',
+            bookmark: 'Lesezeichen'
         },
         commonCategory: {
             fontCategory: {
@@ -1208,7 +1184,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         miscellaneous: {
             categoryName: 'Sonstiges',
-            toolTip: 'Tooltip'
+            toolTip: 'Kurzinfo'
         }
     },
     linearGaugeProperty: {
@@ -1280,7 +1256,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 cross: 'Kreuz'
             },
             miscellaneousCategory: {
-                tooltip: 'Tooltip',
+                tooltip: 'Kurzinfo',
                 miscellaneous: 'Sonstiges'
             }
         }
@@ -1363,7 +1339,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 cross: 'Kreuz'
             },
             miscellaneousCategory: {
-                tooltip: 'Tooltip',
+                tooltip: 'Kurzinfo',
                 miscellaneous: 'Sonstiges'
             }
         }
@@ -1493,9 +1469,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
         miscellaneous: {
             categoryName: 'Sonstiges',
             keepTogether: 'Zusammen halten',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
-            customAttributes: 'Benutzerdefinierte Attribute'
+            customAttributes: 'Benutzerdefinierte Attribute',
+            bookmark: 'Lesezeichen'
         },
         fontStyleTooltip: 'Stil',
         fontWeightTooltip: 'Gewicht',
@@ -1615,9 +1592,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
             categoryName: 'Sonstiges',
             keepTogether: 'Zusammen halten',
             pageName: 'Seitenname',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
-            customAttributes: 'Benutzerdefinierte Attribute'
+            customAttributes: 'Benutzerdefinierte Attribute',
+            bookmark: 'Lesezeichen'
         },
         dataElement: {
             categoryName: 'Datenelement',
@@ -1771,6 +1749,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
             connectDatasource: 'Datenquelle verbinden',
             datasourceType: 'Wählen Sie den Typ zum Verbinden',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL Data Warehouse',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1761,18 @@ ej.ReportDesigner.Locale['de-DE'] = {
             mysqlLabel: 'MySQL',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Geteilt'
+            sharedLabel: 'Geteilt',
+            cdataLabel: 'CDATA',
+            snowflakeLabel: 'Schneeflocke',
+            ssasLabel: 'Microsoft SQL Analysis Services',
+            verticaLabel: 'Vertica',
+            gcsqlLabel: 'Google Cloud SQL',
+            redshiftLabel: 'Amazon Redshift',
+            amazonAuroraLabel: 'Amazon Aurora',
+            amazonRDSLabel: 'Amazon RDS',
+            webapilabel: 'Web API',
+            postgresqllabel: 'PostgreSQL',
+            odatalabel: 'OData'
         },
         datasourceConnection: {
             newConnection: 'NEUE VERBINDUNG',
@@ -2053,20 +2043,79 @@ ej.ReportDesigner.Locale['de-DE'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: 'Verbindungszeichenfolge',
-            authenticationType: 'Authentifizierungsart',
-            authentication: 'Authentifizierung',
-            prompt: 'Prompt',
-            none: 'Keiner',
+            serverName: 'Servername',
+            port: 'Hafen',
             userName: 'Nutzername',
             password: 'Passwort',
-            promptLabel: 'Eingabeaufforderungstext',
             savePassword: 'Save Password',
+            database: 'Datenbank',
+            basicSwitch: 'Grundlegende Optionen',
+            advanceSwitch: 'Erweiterte Optionen',
+            switchAlert: 'Wenn Sie zum visuellen Designer wechseln, werden die manuellen Änderungen an der Verbindungszeichenfolge verworfen. Möchten Sie den visuellen Designer trotzdem verwenden?',
+            switchLabel: 'DataSource AdvancePanel',
             alertMessage: {
-                alertConnectionString: 'Geben Sie die Verbindungszeichenfolge an',
-                alertPrompt: 'Geben Sie den Eingabeaufforderungstext an',
-                alertUserName: 'Geben Sie den Benutzernamen an',
-                alertPassword: 'Geben Sie das Passwort an'
+                userName: 'Geben Sie den Benutzernamen an',
+                password: 'Geben Sie das Passwort an',
+                serverName: 'Geben Sie den Servernamen an',
+                port: 'Geben Sie die Portnummer an',
+                database: 'Geben Sie den Datenbanknamen an',
+            }
+        },
+        googleCloudSQL: {
+            dbEngine: 'Datenbankmodul',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonAurora: {
+            dbEngine: 'Datenbankmodul',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonRDS: {
+            dbEngine: 'Datenbankmodul',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL',
+            auroraMysqlEngine: 'Amazon Aurora MySQL',
+            auroraPsqlEngine: 'Amazon Aurora PostgreSQL',
+            mariaDbEngine: 'MariaDB',
+            sqlserver: 'SQL Server',
+            oracle: 'Orakel'
+        },
+        snowflakeDatasource: {
+            serverName: 'Servername',
+            serverWatermark: 'Beispiel',
+            database: 'Datenbank',
+            userName: 'Nutzername',
+            password: 'Passwort',
+            savePassword: 'Passwort speichern',
+            basicSwitch: 'Grundlegende Optionen',
+            advanceSwitch: 'Erweiterte Optionen',
+            switchAlert: 'Wenn Sie zum visuellen Designer wechseln, werden die manuellen Änderungen an der Verbindungszeichenfolge verworfen. Möchten Sie den visuellen Designer trotzdem verwenden?',
+            switchLabel: 'DataSource AdvancePanel',
+            alertMessage: {
+                serverName: 'Geben Sie den Servernamen an',
+                userName: 'Geben Sie den Benutzernamen an',
+                password: 'Geben Sie das Passwort an',
+                database: 'Geben Sie den Datenbanknamen an'
+            }
+        },
+        verticaDatasource: {
+            serverName: 'Servername',
+            database: 'Datenbank',
+            userName: 'Nutzername',
+            password: 'Passwort',
+            port: 'Hafen',
+            savePassword: 'Passwort speichern',
+            basicSwitch: 'Grundlegende Optionen',
+            advanceSwitch: 'Erweiterte Optionen',
+            switchAlert: 'Wenn Sie zum visuellen Designer wechseln, werden die manuellen Änderungen an der Verbindungszeichenfolge verworfen. Möchten Sie den visuellen Designer trotzdem verwenden?',
+            switchLabel: 'DataSource AdvancePanel',
+            alertMessage: {
+                serverName: 'Geben Sie den Servernamen an',
+                userName: 'Geben Sie den Benutzernamen an',
+                password: 'Geben Sie das Passwort an',
+                database: 'Geben Sie den Datenbanknamen an',
+                port: 'Geben Sie die Portnummer an'
             }
         },
         sharedDatasource: {
@@ -2087,6 +2136,28 @@ ej.ReportDesigner.Locale['de-DE'] = {
             duplicateName: 'Der angegebene Name existiert bereits in der Datenquelle-Liste',
             invalidCharacterValidation: 'Name sollte keine Leerzeichen und Sonderzeichen enthalten',
             sharedPermissionValidation: 'Die Erstellung von Datenquellen wurde mit Ausnahme der gemeinsam genutzten Datenquelle eingeschränkt.'
+        },
+        descriptionText: {
+            amazonAuroraInfo: 'Amazon Aurora ist ein relationaler Datenbankdienst, der von Amazon Web Services entwickelt und angeboten wird. Der Amazon Aurora-Connector ermöglicht Ihnen den Zugriff auf Daten aus Amazon Aurora-Datenbanken im {customBrandName} Designer.',
+            azureSqlInfo: 'Azure SQL Data Warehouse ist ein cloudbasiertes Enterprise-Data-Warehouse-Dienstangebot von Microsoft. Es nutzt massiv parallele Verarbeitung, um schnell komplexe Abfragen über Petabyte an Daten auszuführen. Der Azure SQL Data Warehouse-Connector ermöglicht Ihnen den Zugriff auf Daten aus Azure SQL Data Warehouse-Datenbanken im {customBrandName} Designer.',
+            cdataInfo: 'CDATA ist eine verteilte, hochskalierbare SQL-Datenbank, die überall ausgeführt werden kann. Es bietet maximale Leistung für transaktionale und analytische Workloads mit vertrauten relationalen Datenstrukturen. Der cdata-Connector ermöglicht Ihnen den Zugriff auf Daten aus cdata-Datenbanken mit MySQL-Endpunkt im {customBrandName} Designer.',
+            csvInfo: 'Bringen Sie Ihre CSV-Dateien in den {customBrandName} Designer und bereiten Sie Berichte vor, um die Geschichte zu sehen, die in Ihren Daten steckt.',
+            excelInfo: 'Bringen Sie Ihre Excel-Dateien als Tabellen oder Arbeitsblätter in den {customBrandName} Designer. Erkunden und spielen Sie mit Ihren Daten, erstellen Sie Berichte, um die Geschichte zu sehen, die in Ihren Daten steckt.',
+            googleBigQueryInfo: 'BigQuery ist ein RESTful-Webservice, der in Verbindung mit Google Storage eine interaktive Analyse riesiger Datensätze ermöglicht. Es handelt sich um eine serverlose Software as a Service, die ergänzend zu MapReduce verwendet werden kann.',
+            jsonInfo: 'Bringen Sie Ihre JSON-Dateien in den {customBrandName} Designer, indem Sie sie hochladen, um Berichte vorzubereiten und die Geschichte zu sehen, die in Ihren Daten steckt.',
+            mariadbInfo: 'MariaDB ist ein von der Community entwickelter, kommerziell unterstützter Fork des relationalen Datenbankverwaltungssystems MySQL, der garantiert quelloffen bleibt. Der MariaDB-Connector ermöglicht Ihnen den Zugriff auf Daten aus MariaDB-Datenbanken im {customBrandName} Designer.',
+            memsqlInfo: 'MemSQL ist eine verteilte, hochskalierbare SQL-Datenbank, die überall ausgeführt werden kann. Es bietet maximale Leistung für transaktionale und analytische Workloads mit vertrauten relationalen Datenstrukturen. Der MemSQL-Connector ermöglicht Ihnen den Zugriff auf Daten aus MemSQL-Datenbanken im {customBrandName} Designer.',
+            microsoftsqlInfo: 'SQL Server ist das relationale Datenbankverwaltungssystem von Microsoft. Als einer der zuverlässigsten und vertrauenswürdigsten Datenbankserver auf dem Markt bietet er neben dem zentralen Datenbankverwaltungssystem eine Reihe von Mehrwertdiensten wie Analyse, Berichterstellung und mehr Der SQL Server-Connector ermöglicht Ihnen den Zugriff auf Daten aus Microsoft SQL Server-Datenbanken im {customBrandName} Designer.',
+            ssasInfo: 'SQL Server Analysis Services (SSAS) ist die Technologie aus dem Microsoft Business Intelligence-Stack zur Entwicklung von Online Analytical Processing (OLAP)-Lösungen. Einfach ausgedrückt, können Sie SSAS verwenden, um Cubes mit Daten aus Data Marts / Data Warehouse für eine tiefere und schnellere Datenanalyse zu erstellen.',
+            mysqlInfo: 'MySQL ist ein frei verfügbares, relationales Open-Source-Datenbankverwaltungssystem, das vor allem für seine schnelle Verarbeitung, bewährte Zuverlässigkeit sowie Benutzerfreundlichkeit und Flexibilität bekannt ist. Der MySQL-Connector ermöglicht Ihnen den Zugriff auf Daten aus MySQL-Datenbanken im {customBrandName} Designer.',
+            odataInfo: 'OData ist ein offenes Protokoll, das die Erstellung und Nutzung abfragbarer und interoperabler RESTful-APIs auf einfache und standardmäßige Weise ermöglicht. Verbinden Sie sich mit dem {customBrandName} Designer und erstellen Sie Berichte, um die Geschichte zu sehen, die in Ihren Daten steckt.s',
+            odbcInfo: 'Ein ODBC-Treiber verwendet die Open Database Connectivity (ODBC)-Schnittstelle von Microsoft, die es Anwendungen ermöglicht, auf Daten in Datenbankverwaltungssystemen (DBMS) zuzugreifen, die SQL als Standard für den Zugriff auf die Daten verwenden.',
+            oledbInfo: 'OLE DB ist die strategische Low-Level-Anwendungsprogrammschnittstelle (API) von Microsoft für den Zugriff auf verschiedene Datenquellen. OLE DB umfasst nicht nur die Funktionen der Structured Query Language (SQL) der von Microsoft gesponserten Standarddatenschnittstelle Open Database Connectivity (ODBC), sondern umfasst auch den Zugriff auf andere Daten als SQL-Daten.',
+            oracleInfo: 'Oracle ist eine relationale Datenbank der Enterprise-Klasse mit erweiterten Analysefunktionen. Der Oracle-Connector ermöglicht Ihnen den Zugriff auf Daten aus Oracle-Datenbanken im {customBrandName} Designer.',
+            psqlInfo: 'PostgreSQL ist ein leistungsstarkes und quelloffenes objektrelationales Datenbanksystem, das Wert auf Erweiterbarkeit und die Einhaltung von Standards legt. Der PostgreSQL-Connector ermöglicht Ihnen den Zugriff auf Daten aus PostgreSQL-Datenbanken im {customBrandName} Designer.',
+            snowflakeInfo: 'Snowflake ist ein Cloud-basiertes Data Warehouse, das eine unbegrenzte Plattform zum Speichern und Abrufen von Daten bietet. Im Gegensatz zu herkömmlichen Single-Cluster-Shared-Disk-/Shared-Nothing-Architekturen verfügt Snowflake über eine Multi-Cluster-Shared-Data-Architektur, die dank cloudbasierter Speichersysteme der Enterprise-Klasse dynamisch und hoch skalierbar ist.',
+            webAPIInfo: 'Verbinden Sie sich mit dem {customBrandName} Designer über fast alle Datenquellen, die über eine REST-API verfügen. Erstellen Sie Berichte und sehen Sie die Geschichte, die in Ihren Daten steckt.',
+            xmlInfo: 'Bringen Sie Ihre XML-Dateien in den {customBrandName} Designer und erstellen Sie Berichte, um die Geschichte zu sehen, die in Ihren Daten steckt.'
         }
     },
     imageManager: {
@@ -2206,7 +2277,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
             save: 'Sparen',
             cancel: 'Stornieren',
             nameLable: 'Name',
-            sharedDatasetLabel: 'Gemeinsames DataSet',
+            sharedDatasetLabel: 'Gemeinsames Dataset',
             errorMessage: {
                 nameValidation: 'Geben Sie den Datensatznamen an',
                 datasetValidation: 'Wählen Sie eine gemeinsame Datenquelle',
@@ -2235,6 +2306,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
         dataFieldSearch: {
             errorMessage: 'Keine Treffer gefunden',
             searchText: 'Suche'
+        },
+        dataTab: {
+            dataSourceTabHeader: 'DATENQUELLE',
+            dataSetTabHeader: 'DATENSATZ'
         }
     },
     reportViewer: {
@@ -3001,6 +3076,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         reportMiscellaneous: {
             categoryName: 'Sonstiges',
+            consumeWhiteSpace: 'Container-Leerraum verbrauchen',
             customAttributes: 'Benutzerdefinierte Attribute',
             reportVersion: 'Ausführung',
             reportversions: {
@@ -3106,6 +3182,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         link: 'Verknüpfung',
         linkReport: 'Link-Bericht',
+        URL: 'URL',
         position: {
             categoryName: 'Position',
             label: 'Position',
@@ -3125,9 +3202,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
             categoryName: 'Sonstiges',
             canGrow: 'Kann wachsen',
             canShrink: 'Kann schrumpfen',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
-            customAttributes: 'Benutzerdefinierte Attribute'
+            customAttributes: 'Benutzerdefinierte Attribute',
+            bookmark: 'Lesezeichen'
         },
         paragraphSettings: {
             categoryName: 'Absatzeinstellungen',
@@ -3311,7 +3389,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         miscellaneous: {
             categoryName: 'Sonstiges',
-            toolTip: 'Tooltip'
+            toolTip: 'Kurzinfo',
+            bookmark: 'Lesezeichen'
         },
         styleTooltip: 'Stil',
         colorTooltip: 'Farbe',
@@ -3434,8 +3513,9 @@ ej.ReportDesigner.Locale['de-DE'] = {
             pageName: 'Seitenname',
             keepTogether: 'Zusammen halten',
             customAttributes: 'Benutzerdefinierte Attribute',
-            toolTip: 'Tooltip',
-            documentMap: 'Dokumentenkarte'
+            toolTip: 'Kurzinfo',
+            documentMap: 'Dokumentenkarte',
+            bookmark: 'Lesezeichen'
         },
         headers: {
             categoryName: 'Überschriften',
@@ -3849,10 +3929,11 @@ ej.ReportDesigner.Locale['de-DE'] = {
             errorMessage: {
                 specifyName: 'Geben Sie den Spaltennamen an',
                 specifyDatasetName: 'Geben Sie den Datensatznamen an',
-                previewFailed: 'DataSet konnte die ausgewählte Tabelle nicht in der Vorschau anzeigen',
-                specifyQuery: 'Geben Sie die DataSet-Abfrage an',
+                previewFailed: 'Dataset konnte die ausgewählte Tabelle nicht in der Vorschau anzeigen',
+                specifyQuery: 'Geben Sie die Dataset-Abfrage an',
                 selectTable: 'Wählen Sie die Tabelle aus, um den Datensatz zu speichern',
                 queryFailed: 'Datensatz konnte die Abfrage der ausgewählten Tabelle nicht speichern',
+                refreshFailed: 'Das Dataset {datasetName} konnte nicht aktualisiert werden, es erfordert einen oder mehrere Eingabewerte. Bitte bearbeiten und speichern Sie den Datensatz.',
                 tableProcedure: 'Datensatz konnte die ausgewählte Tabellenprozedur nicht abrufen',
                 deleteTableFailure: 'Fehler beim Löschen der ausgewählten Tabelle',
                 joinTableFailure: 'Fehler beim Verknüpfen der ausgewählten Tabellen',
@@ -4024,7 +4105,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
             sort: 'Sortiert',
             group: 'Gruppen',
             expression: 'Ausdruck',
-            aggregate: 'Aggregat'
+            aggregate: 'Aggregat',
+            none: 'Keiner'
         },
         validationMessage: 'Der Diagrammtyp wird in Designer nicht unterstützt.'
     },
@@ -4405,7 +4487,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 heavy: 'Schwer'
             },
             label: 'Beschriftungstext',
-            tooltip: 'Tooltip',
+            tooltip: 'Kurzinfo',
             visibility: 'Sichtweite'
         },
         position: {
@@ -4430,9 +4512,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
         fontstyletooltip: 'Schriftstil',
         miscellaneous: {
             categoryMiscellaneous: 'Sonstiges',
-            toolTip: 'Tooltip',
+            toolTip: 'Kurzinfo',
             documentMap: 'Dokumentenkarte',
-            customAttributes: 'Benutzerdefinierte Attribute'
+            customAttributes: 'Benutzerdefinierte Attribute',
+            bookmark: 'Lesezeichen'
         },
         spatial: {
             categoryName: 'Räumlich',
@@ -4467,7 +4550,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 background: 'Hintergrund',
                 markerStyle: 'Stil',
                 markerSize: 'Größe',
-                tooltip: 'Tooltip',
+                tooltip: 'Kurzinfo',
                 latitude: 'Breite',
                 longitude: 'Längengrad',
                 markerStyles: {

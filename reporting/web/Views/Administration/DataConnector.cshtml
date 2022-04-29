@@ -1,0 +1,95 @@
+﻿@using System.Globalization;
+@{
+    var globalAppSettings = _globalAppSettings;
+    var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.Title = "[[[Data Connectors]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    bool isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var language = CultureInfo.CurrentCulture.Name;
+    var boldReportsApiUrl = new DashboardServerApiEndPoints(globalAppSettings).BoldReportsApiUrl();
+    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
+}
+
+@section meta{
+    <meta name="report_server:url" content="@boldReportsApiUrl" />
+    <meta name="user:is_admin" content="@isAdmin.ToString()" />
+    <meta name="designer_service:url" content="@reportServiceUrl" />
+    <meta name="designer_service:access_token" content="@ViewBag.AccessToken" />
+    <meta name="designer_service:isazureapp" content="@isAzureApplication.ToString().ToLower()" />
+}
+
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.min.css" />
+    </environment>
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.min.js"></script>
+    </environment>
+    <script src="@reportServerResourceUrl/cdn/scripts/localization/datatileconfiguration/ej.localetexts.@string.Concat(language, ".js")"></script>
+    <script>
+        var isSelfHosted = "@isSelfHosted";
+        var language = "@language";
+    </script>
+}
+
+@section MainSection{
+    @await Html.PartialAsync("_AdminMenu")
+    <div id="look-and-feel-container" class="col-xs-12 admin-page-container">
+        <div id="dataconnector-settings-header" class="col-xs-12 admin-page-header">
+            <hgroup class="col-lg-6">
+                <h1 class="h2 page-title">
+                    [[[DATA CONNECTORS CONFIGURATION]]]
+                </h1>
+                <h5 class="page-description">
+                    [[[Configure any number of connections for your applications by choosing connectors from the list below.]]]
+                </h5>
+            </hgroup>
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+                [[[Save]]]
+            </button>
+        </div>
+
+        <div id="look-and-feel-form col-lg-12 col-md-12">
+            <div id="container" style="display:none;height:0px !important;width:0px !important;"></div>
+            <div id="connectionDesigner" class="admin-page-body" style="height:100%;width:100%;"></div>
+        </div>
+        <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+                [[[Save]]]
+            </button>
+        </div>
+    </div>
+}

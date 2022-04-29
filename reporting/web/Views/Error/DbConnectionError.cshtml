@@ -2,7 +2,7 @@
     Layout = null;
     ViewBag.MessageBox = false;
     var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
 }
 <html class="report-server">
 <head>

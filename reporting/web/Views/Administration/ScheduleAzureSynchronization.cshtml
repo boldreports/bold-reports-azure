@@ -37,7 +37,7 @@
     <input type="hidden" value="@globalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
     <div id="schedule-synchronization-container" class="col-xs-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")">
         <div id="schedule-header" class="col-md-12 import-area admin-page-header pull-left">
-            <a href="@Url.Action("user-directory-settings","administration")" data-toggle="tooltip" data-placement="top" title="[[[Active Directory Settings]]]" class="back-button pull-left">
+            <a href="@Url.Action("Administration","Administration")/user-directory-settings" data-toggle="tooltip" data-placement="top" title="[[[Active Directory Settings]]]" class="back-button pull-left">
                 <i class="su su-arrow-back back-navigaion img-size"> </i>
             </a>
             <hgroup>
@@ -73,8 +73,25 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 col-xs-12 no-padding no-margin display" id="daily-schedule-option">
+            <div class="col-sm-12 col-xs-12 no-padding" id="hourly-schedule-option">
                 <div class="col-sm-12 col-xs-12 no-padding top-margin">
+                    <div class="col-sm-2 col-xs-2">
+                        @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
+                    </div>
+                    <div class="col-sm-10 col-xs-10">
+                        <div class="pull-left mar-top">
+                            @Html.Label("every-x-hours", "[[[Every]]]", new { @class = "pointer normal-font notransition" })
+                        </div>
+                        <div class="clspad pull-left top-margin"><input type="text" class="time-format pull-left validation-input col-sm-3 col-xs-2 change-event" id="every-x-hours-value" /></div>
+                        <div class="clspad pull-left"><label for="every-x-hours" class="col-sm-12  normal-font no-padding">HH:MM</label></div>
+                        <div>
+                            <span class="frequency-error">[[[Please enter minimum 5 minutes]]]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-12 no-padding cls-options" id="daily-schedule-option">
+                <div class="col-sm-12 col-xs-12 no-padding">
                     <div class="col-sm-2 col-xs-2">
                         @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
                     </div>
@@ -255,8 +272,8 @@
         @if (ViewBag.ThirdPartyLogins)
         {
             <div class="admin-page-actions col-xs-12 col-md-12">
-                <a href="@Url.Action("Index","Home")" class="secondary-button pull-right" id="cancel-schedule-synchronization" title="">[[[Cancel]]]</a>
-                <input type="button" title="" id="update-schedule-synchronization-bottom" class="primary-button pull-right" value="[[[Save]]]" />
+                <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-schedule-synchronization" title="">[[[Cancel]]]</a>
+                <input type="button" title="" id="update-schedule-synchronization-bottom" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
             </div>
         }
     </div>

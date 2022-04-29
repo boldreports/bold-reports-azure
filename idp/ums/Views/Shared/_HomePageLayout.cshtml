@@ -1,7 +1,7 @@
 ﻿@{
     var includeMessageBox = ViewBag.MessageBox == null || ViewBag.MessageBox == true;
 
-    var showMenuBar = Context.User.Identity.IsAuthenticated && (ViewBag.ShowMenuBar == null || ViewBag.ShowMenuBar) && Convert.ToBoolean(Context.Session.GetString("IsAdmin")) || new UserManagement().IsTenantMangementUser(Guid.Parse(Context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value));
+    var showMenuBar = Context.User.Identity.IsAuthenticated && (ViewBag.ShowMenuBar == null || ViewBag.ShowMenuBar) && Convert.ToBoolean(Context.Session.GetString("IsAdmin")) || await new UserManagement().IsTenantMangementUser(Guid.Parse(Context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value));
     var isMobile = DeviceDetection.IsMobile ;
     var appContainerStyle = (ViewBag.HidePageLoader != null && ViewBag.HidePageLoader) ? "" : "opacity:0;";
     var requestUrl = new Uri(this.Context.Request.GetDisplayUrl());
@@ -35,6 +35,7 @@
     {
         <script type="text/javascript">
            var isLicenseExpiredUrl = "@Url.Action("IsLicenseExpired", "Home")";
+           var validateIsolationCodeUrl = "@Url.Action("IsValidIsolationCode", "TenantsManagement")";
            var manageLicenseUrl = "@Url.Action("LicenseSettings", "Administration")";
            var boldContactUrl = "https://www.syncfusion.com/support/directtrac/incidents/newincident";
            //$.extend(ej, Syncfusion);

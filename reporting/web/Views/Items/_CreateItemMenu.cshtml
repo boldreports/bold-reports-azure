@@ -96,7 +96,7 @@
                     @if (!ServerAppConfig.IsSelfHosted)
                     {
                         <li class="request-concierge-support">
-                            <div class="create-item-list-section">
+                            <a href="@ServerAppConfig.AppSettings.Syncfusion.Support.CreateTicket" target="_blank" class="create-item-list-section">
                                 <div class="create-item-list-icon" style="float: left;">
                                     <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/support.svg">
                                 </div>
@@ -104,7 +104,7 @@
                                     <label>[[[Support]]]</label><br>
                                     <span>[[[Having trouble? Contact our dedicated support team now]]]</span>
                                 </div>
-                            </div>
+                            </a>
                         </li>
                     }
                 </ul>

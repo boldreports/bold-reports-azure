@@ -14,7 +14,7 @@ $(document).on("click", "#syncfusion-login-text", function () {
 });
 
 $(document).on("click", "#syncfusion-login", function (e) {
-    $("body").ejWaitingPopup("show");
+    showWaitingPopup('body');
     if (windowRef != undefined) {
         clearInterval(timer);
         windowRef.close();
@@ -49,13 +49,13 @@ if ($("#login-button").is(":disabled")) {
             window.location.href = window.parent.accessDeniedUrl;
         }
         else {
-            $("body").ejWaitingPopup("hide");
+            hideWaitingPopup('body');   
         }
 
         window.parent.isValidAccount = false;
         window.parent.privacyAccepted = true;
     } else {
-        $("body").ejWaitingPopup("hide");
+        hideWaitingPopup('body');
     }
 }
 

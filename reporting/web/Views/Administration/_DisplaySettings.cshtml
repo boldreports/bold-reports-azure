@@ -58,6 +58,13 @@
     @if (ServerAppConfig.IsSelfHosted)
     {
         <div class="form-group">
+            @Html.Label("application-font", "[[[Application font]]]", new { @class = "app-textbox-label col-xs-2 user-model-language-container" })
+            <div class="dropdown col-xs-4">
+                @Html.DropDownList("application-font", ViewBag.CustomFontList as IEnumerable<SelectListItem>, new { id = "application-font", @class = "selectpicker form-control", data_live_search = "false" })
+                <input type="hidden" id="app_font" value="@ViewBag.SystemSettings.FontPreference">
+            </div>
+        </div>
+        <div class="form-group">
             @Html.Label("language", "[[[Language]]]", new { @class = "col-xs-2 app-textbox-label" })
             <div class="dropdown col-xs-4 language-group">
                 @Html.DropDownList("language", ViewBag.languageList as IEnumerable<SelectListItem>, new { id = "language", @class = "selectpicker form-control pull-left", data_live_search = "false" })

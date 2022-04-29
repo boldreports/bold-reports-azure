@@ -6,6 +6,7 @@
     <ClientId>ClientId</ClientId>
     <ClientSecret>ClientSecret</ClientSecret>
     <IsActive>IsActive</IsActive>
+    <DeleteGroupUsers>DeleteGroupUsers</DeleteGroupUsers>
   </DB_AzureADCredential>
   <DB_AzureADGroup>
     <DB_TableName>AzureADGroup</DB_TableName>
@@ -74,6 +75,9 @@
     <ItemId>ItemId</ItemId>
     <GroupId>GroupId</GroupId>
     <IsActive>IsActive</IsActive>
+    <SettingsTypeId>SettingsTypeId</SettingsTypeId>
+    <ScopeGroupId>ScopeGroupId</ScopeGroupId>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
   </DB_GroupPermission>
   <DB_Item>
     <DB_TableName>Item</DB_TableName>
@@ -94,6 +98,7 @@
     <IsDraft>IsDraft</IsDraft>
     <IsActive>IsActive</IsActive>
     <IsUserBased>IsUserBased</IsUserBased>
+    <IsLocked>IsLocked</IsLocked>
   </DB_Item>
   <DB_ItemCommentLog>
     <DB_TableName>ItemCommentLog</DB_TableName>
@@ -128,6 +133,7 @@
     <ToCategoryId>ToCategoryId</ToCategoryId>
     <UpdatedUserId>UpdatedUserId</UpdatedUserId>
     <SourceTypeId>SourceTypeId</SourceTypeId>
+    <AdditionalLogInfo>AdditionalLogInfo</AdditionalLogInfo>
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
   </DB_ItemLog>
@@ -281,6 +287,7 @@
     <IsOverwrite>IsOverwrite</IsOverwrite>
     <ExportFileName>ExportFileName</ExportFileName>
     <IsNotifySaveAs>IsNotifySaveAs</IsNotifySaveAs>
+    <ScheduleExportInfo>ScheduleExportInfo</ScheduleExportInfo>
   </DB_ScheduleDetail>
   <DB_ScheduleLog>
     <DB_TableName>ScheduleLog</DB_TableName>
@@ -291,6 +298,7 @@
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsOnDemand>IsOnDemand</IsOnDemand>
     <IsActive>IsActive</IsActive>
+    <Message>Message</Message>
   </DB_ScheduleLog>
   <DB_ScheduleLogGroup>
     <DB_TableName>ScheduleLogGroup</DB_TableName>
@@ -449,6 +457,9 @@
     <ItemId>ItemId</ItemId>
     <UserId>UserId</UserId>
     <IsActive>IsActive</IsActive>
+    <SettingsTypeId>SettingsTypeId</SettingsTypeId>
+    <ScopeGroupId>ScopeGroupId</ScopeGroupId>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
   </DB_UserPermission>
   <DB_UserPreference>
     <DB_TableName>UserPreference</DB_TableName>
@@ -739,4 +750,51 @@
     <Status>Status</Status>
     <IsActive>IsActive</IsActive>
   </DB_PublishJobs>
+  <DB_UserAttributes>
+    <DB_TableName>UserAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <UserId>UserId</UserId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_UserAttributes>
+  <DB_GroupAttributes>
+    <DB_TableName>GroupAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <GroupId>GroupId</GroupId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_GroupAttributes>
+  <DB_SiteAttributes>
+    <DB_TableName>SiteAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_SiteAttributes>
+  <DB_SettingsType>
+    <DB_TableName>SettingsType</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <IsActive>IsActive</IsActive>
+  </DB_SettingsType>
 </DB_SyncUMP>

@@ -41,16 +41,16 @@
         <div class="col-xs-8 no-padding padding-top validation-area">
             @if (itemType == ItemType.Slideshow)
             {
-            <input type="button" class="app-button app-critical-action-button" value="[[[Yes]]]" id="delete-slideshow" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
+            <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-slideshow" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
             }
             else
             {
-            <input type="button" class="app-button app-critical-action-button" value="[[[Yes]]]" id="delete-item" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
+            <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-item" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
             }
-            <input type="button" id="cancel" class="app-button app-secondary-button popup-close" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
+            <input type="button" id="cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
         </div>
         <div class="col-xs-8 padding-top success-area" style="display:none">
-            <input title="" type="button" id="Cancel" class="app-button app-secondary-button popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" autofocus />
+            <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" autofocus />
         </div>
     </div>
 </div>
@@ -86,7 +86,7 @@ else
     </div>
 
     <div class="modal-footer text-center">
-        <input title="" type="button" id="Cancel" class="app-button app-secondary-button popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="1" autofocus />
+        <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="1" autofocus />
     </div>
 </div>
 

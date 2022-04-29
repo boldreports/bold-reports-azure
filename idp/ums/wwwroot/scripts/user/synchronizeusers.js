@@ -126,7 +126,7 @@ function SynchronizeUsers() {
             $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").addClass("msg-box-height");  //For height adjustment purpose
             $(".message-box-btn-holder").addClass("msg-footer-height");
             var title = synchronizeSelectedUsersUrl.indexOf("azure") > 0 ? "Azure Active Directory Synchronization" : "Active Directory Synchronization";
-            parent.messageBox("su-user-1", title, result.Message, "success", function () {
+            parent.messageBox("su-single-user", title, result.Message, "success", function () {
                 parent.onCloseMessageBox();
             });
             gridObj.clearSelection();
@@ -138,7 +138,7 @@ function SynchronizeUsers() {
             $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").addClass("msg-box-height");  //For height adjustment purpose
             $(".message-box-btn-holder").addClass("msg-footer-height");
             var title = synchronizeSelectedUsersUrl.indexOf("azure") > 0 ? "Azure Active Directory Synchronization" : "Active Directory Synchronization";
-            parent.messageBox("su-user-1", title, "Synchronizing users with active directory has been failed.", "success", function () {
+            parent.messageBox("su-single-user", title, "Synchronizing users with active directory has been failed.", "success", function () {
                 parent.onCloseMessageBox();
             });
             hideWaitingPopup("server-app-container");
@@ -156,7 +156,7 @@ function SynchronizeDatabaseUsers() {
         success: function (result) {
             $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").addClass("msg-box-height");  //For height adjustment purpose
             $(".message-box-btn-holder").addClass("msg-footer-height");
-            parent.messageBox("su-user-1", "Database Synchronization", result.Message, "success", function () {
+            parent.messageBox("su-single-user", "Database Synchronization", result.Message, "success", function () {
                 parent.onCloseMessageBox();
                 hideWaitingPopup("server-app-container");
             });
@@ -168,7 +168,7 @@ function SynchronizeDatabaseUsers() {
         error: function () {
             $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").addClass("msg-box-height");  //For height adjustment purpose
             $(".message-box-btn-holder").addClass("msg-footer-height");
-            parent.messageBox("su-user-1", "Database Synchronization", "Synchronizing users with existing database has been failed.", "success", function () {
+            parent.messageBox("su-single-user", "Database Synchronization", "Synchronizing users with existing database has been failed.", "success", function () {
                 parent.onCloseMessageBox();
             });
             hideWaitingPopup("server-app-container");

@@ -23,6 +23,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <partial name="_OGPContent" />
     @RenderSection("meta", false)
@@ -114,18 +115,14 @@
     </script>
 
     @await Html.PartialAsync("../Shared/_FontReference")
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+    @await Html.PartialAsync("../Shared/_MenuTheme.cshtml")
     <link rel="stylesheet" href="~/bundles/css/layout.css" asp-append-version="true" />
 
     @RenderSection("styles", false)
 
-    @if (!DeviceDetection.IsMobile)
-    {
-        <script src="~/bundles/js/layout.js" asp-append-version="true"></script>
-    }
-    else
-    {
-        <script src="~/bundles/js/layout-mobile.js" asp-append-version="true"></script>
-    }
+    <script src="~/bundles/js/layout.js" asp-append-version="true"></script>
+    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
 
     @if (DeviceDetection.IsMobile)
     {
@@ -133,8 +130,7 @@
             $(document).ready(function () {
                 function nextEvent() {
                     $(this).on('touchend', function (e) {
-                        $("html").ejWaitingPopup();
-                        $("html").ejWaitingPopup("show");
+
                         window.location.href = ($(this).attr("href"));
                         $(this).off('touchend');
                     });
@@ -146,14 +142,17 @@
                 $('#main-nav a, .items a, .notification-mobile-link, .menu-options a, .notification-text-content a, .admin-page-header a, #edit-profile-heading-div a, #change-password-btn a').on('click touchstart', this, nextEvent);
 
                 $(window).on('popstate', function (e) {
-                    $("html").ejWaitingPopup("hide");
                 });
 
                 $(document).on('touchend', function (e) {
                     $(".tooltip").hide();
                 });
+                ej.popups.createSpinner({
+                    target: document.getElementById('body')
+                });
 
             });
+
 
         </script>
     }
@@ -164,16 +163,18 @@
     {
         <script>
             $(document).ready(function () {
-                $("#messageBox").ejDialog({
-                    width: (window.innerWidth > 460) ? "450px" : (window.innerWidth - 10),
-                    showOnInit: false,
-                    allowDraggable: true,
-                    enableResize: false,
+
+                var messageBoxDialog = new ej.popups.Dialog({
+                    header: "title",
+                    width: (window.innerWidth > 460) ? "472px" : (window.innerWidth - 10),
+                    visible: false,
+                    allowDragging: true,
                     height: "auto",
-                    showHeader: false,
-                    enableModal: true,
+                    isModal: true,
+                    footerTemplate: "footer",
                     close: "onMessageDialogClose"
                 });
+                messageBoxDialog.appendTo("#messageBox");
             });
         </script>
     }
@@ -278,17 +279,14 @@
         }
         @if (!CloudAppConfig.IsSelfHosted)
         {
-        @await Html.PartialAsync("../Shared/_Footer") }
-        else
-        {
-        @await Html.PartialAsync("../Shared/_FooterOnPremise")}
+        @await Html.PartialAsync("../Shared/_Footer")
+        }
+
         @if (includeMessageBox)
         {
         <div id="messageBox">
-            <div class="message-header"></div>
             <div class="message-box-close"></div>
             <div class="message-content text-center"></div>
-            <div class="message-box-btn-holder"></div>
         </div>
         }
     </div>

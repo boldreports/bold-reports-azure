@@ -442,7 +442,8 @@ ej.ReportDesigner.Locale['en-US'] = {
         report: 'Report',
         url: 'URL',
         linkUrl: 'Link Url to the Report item',
-        none: 'None'
+        none: 'None',
+        linkBookmark: 'Bookmark'
     },
     linkReport: {
         reportCaption: 'Report',
@@ -473,6 +474,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         categoryName: 'Link',
         linkReport: 'Link Report',
+        URL: 'URL',
         appearance: {
             categoryName: 'Appearance',
             styleTooltip: 'Style',
@@ -546,7 +548,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             customAttributes: 'Custom Attributes',
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
-            zIndex: 'ZIndex'
+            zIndex: 'ZIndex',
+            bookmark: 'Bookmark'
         }
     },
     chartProperty: {
@@ -627,7 +630,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             categoryName: 'No Data',
             caption: 'Message',
             hidden: 'Hide No Data',
-            borderStyle: 'Border Style',
+            showBorder: 'Show Border',
             borderColor: 'Border Color',
             borderSize: 'Border Size',
             fontLabel: 'Font',
@@ -640,20 +643,6 @@ ej.ReportDesigner.Locale['en-US'] = {
                 size: 'Font Size',
                 style: 'Font Style',
                 weight: 'Font Weight'
-            },
-            positiontypes: {
-                topLeft: 'TopLeft',
-                topCenter: 'TopCenter',
-                topRight: 'TopRight',
-                rightTop: 'RightTop',
-                rightCenter: 'RightCenter',
-                rightBottom: 'RightBottom',
-                bottomLeft: 'BottomLeft',
-                bottomCenter: 'BottomCenter',
-                bottomRight: 'BottomRight',
-                leftTop: 'LeftTop',
-                leftCenter: 'LeftCenter',
-                leftBottom: 'LeftBottom'
             },
             fontStyle: {
                 label: 'Font Style',
@@ -674,28 +663,6 @@ ej.ReportDesigner.Locale['en-US'] = {
                     extraBold: 'ExtraBold',
                     heavy: 'Heavy',
                 }
-            },
-            textDecoration: {
-                categoryName: 'Text Decoration',
-                defaultStyle: 'Default',
-                none: 'None',
-                underline: 'Underline',
-                overline: 'Overline',
-                lineThrough: 'LineThrough'
-            },
-            border: {
-                default: 'Border',
-                left: 'Left',
-                top: 'Top',
-                right: 'Right',
-                bottom: 'Bottom'
-            },
-            borderStyles: {
-                solid: 'Solid',
-                none: 'None',
-                double: 'Double',
-                dashed: 'Dashed',
-                dotted: 'Dotted'
             }
         },
         basicSettings: {
@@ -816,7 +783,11 @@ ej.ReportDesigner.Locale['en-US'] = {
                 length: 'Tick Length',
                 width: 'Tick Width'
             },
-            labelsAutofitDisabled: 'Labels AutoFit Disabled'
+            labelsAutofitDisabled: 'Labels AutoFit Disabled',
+            maximum: 'Maximum',
+            minimum: 'Minimum',
+            horizontalAxis: 'Horizontal Axis',
+            verticalAxis: 'Vertical Axis'
         },
         gridLine: {
             categoryName: 'Grid Line',
@@ -860,7 +831,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
             alertHeader: 'Chart ReportItem',
-            alertMessage: 'Invalid custom attributes format. Correct format example: \'AttrName1= Value1, AttrName2 = Value2\'.'
+            alertMessage: 'Invalid custom attributes format. Correct format example: \'AttrName1= Value1, AttrName2 = Value2\'.',
+            bookmark: 'Bookmark'
         },
         seriesSettings: {
             headerName: 'Series Properties',
@@ -923,7 +895,9 @@ ej.ReportDesigner.Locale['en-US'] = {
                 }
             },
             miscellaneous: {
-                categoryName: 'Miscellaneous'
+                categoryName: 'Miscellaneous',
+                toolTip: 'Tooltip',
+                customLegendText: 'Legend Text'
             }
         },
         borderStyle: 'Border Style',
@@ -983,7 +957,8 @@ ej.ReportDesigner.Locale['en-US'] = {
         miscellaneous: {
             categoryName: 'Miscellaneous',
             documentMap: 'Document Map',
-            customAttributes: 'Custom Attributes'
+            customAttributes: 'Custom Attributes',
+            bookmark: 'Bookmark'
         },
         styleTooltip: 'Style',
         colorTooltip: 'Color',
@@ -1073,7 +1048,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             categoryName: 'Miscellaneous',
             customattributes: 'Custom Attributes',
             documentMap: 'Document Map',
-            pageName: 'Page Name'
+            pageName: 'Page Name',
+            bookmark: 'Bookmark'
         },
         commonCategory: {
             fontCategory: {
@@ -1495,7 +1471,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             keepTogether: 'Keep Together',
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
-            customAttributes: 'Custom Attributes'
+            customAttributes: 'Custom Attributes',
+            bookmark: 'Bookmark'
         },
         fontStyleTooltip: 'Style',
         fontWeightTooltip: 'Weight',
@@ -1617,7 +1594,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             pageName: 'Page Name',
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
-            customAttributes: 'Custom Attributes'
+            customAttributes: 'Custom Attributes',
+            bookmark: 'Bookmark'
         },
         dataElement: {
             categoryName: 'Data Element',
@@ -1760,7 +1738,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             contextMenu: {
                 edit: 'Edit',
                 deleteItem: 'Delete',
-                create: 'Create DataSet',
+                create: 'Create Dataset',
                 clone: 'Clone'
             }
         },
@@ -1771,6 +1749,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             connectDatasource: 'Connect DataSource',
             datasourceType: 'Choose the type to connect',
             sqlLabel: 'Microsoft SQL',
+            azuresqldwlabel: 'Azure SQL Data Warehouse',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1782,7 +1761,18 @@ ej.ReportDesigner.Locale['en-US'] = {
             mysqlLabel: 'MySQL',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Shared'
+            sharedLabel: 'Shared',
+            cdataLabel: 'CDATA',
+            snowflakeLabel: 'Snowflake',
+            ssasLabel: 'Microsoft SQL Analysis Services',
+            verticaLabel: 'Vertica',
+            gcsqlLabel: 'Google Cloud SQL',
+            redshiftLabel: 'Amazon Redshift',
+            amazonAuroraLabel: 'Amazon Aurora',
+            amazonRDSLabel: 'Amazon RDS',
+            webapilabel: 'Web API',
+            postgresqllabel: 'PostgreSQL',
+            odatalabel: 'OData'
         },
         datasourceConnection: {
             newConnection: 'NEW CONNECTION',
@@ -2053,20 +2043,79 @@ ej.ReportDesigner.Locale['en-US'] = {
             }
         },
         mysqlDatasource: {
-            connectionString: 'Connection String',
-            authenticationType: 'Authentication Type',
-            authentication: 'Authentication',
-            prompt: 'Prompt',
-            none: 'None',
+            serverName: 'Server Name',
+            port: 'Port',
             userName: 'Username',
             password: 'Password',
-            promptLabel: 'Prompt Text',
             savePassword: 'Save Password',
+            database: 'Database',
+            basicSwitch: 'Basic Options',
+            advanceSwitch: 'Advanced Options',
+            switchAlert: 'Switching to the visual designer will discard the manual changes made to the connection string. Do you want to use the visual designer anyway?',
+            switchLabel: 'DataSource AdvancePanel',
             alertMessage: {
-                alertConnectionString: 'Specify the Connection string',
-                alertPrompt: 'Specify the Prompt Text',
-                alertUserName: 'Specify the User Name',
-                alertPassword: 'Specify the Password'
+                serverName: 'Specify the server name',
+                port: 'Specify the Port number',
+                userName: 'Specify the User Name',
+                password: 'Specify the Password',
+                database: 'Specify the database name'
+            }
+        },
+        googleCloudSQL: {
+            dbEngine: 'Database Engine',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonAurora: {
+            dbEngine: 'Database Engine',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL'
+        },
+        amazonRDS: {
+            dbEngine: 'Database Engine',
+            mysqlEngine: 'MySQL',
+            psqlEngine: 'PostgreSQL',
+            auroraMysqlEngine: 'Amazon Aurora MySQL',
+            auroraPsqlEngine: 'Amazon Aurora PSQL',
+            mariaDbEngine: 'MariaDB',
+            sqlserver: 'SQL Server',
+            oracle: 'Oracle'
+        },
+        snowflakeDatasource: {
+            serverName: 'Server Name',
+            serverWatermark: 'Example',
+            database: 'Database',
+            userName: 'Username',
+            password: 'Password',
+            savePassword: 'Save Password',
+            basicSwitch: 'Basic Options',
+            advanceSwitch: 'Advanced Options',
+            switchAlert: 'Switching to the visual designer will discard the manual changes made to the connection string. Do you want to use the visual designer anyway?',
+            switchLabel: 'DataSource AdvancePanel',
+            alertMessage: {
+                serverName: 'Specify the server name',
+                userName: 'Specify the User Name',
+                password: 'Specify the Password',
+                database: 'Specify the database name'
+            }
+        },
+        verticaDatasource: {
+            serverName: 'Server Name',
+            database: 'Database',
+            userName: 'Username',
+            password: 'Password',
+            savePassword: 'Save Password',
+            basicSwitch: 'Basic Options',
+            port: 'Port',
+            advanceSwitch: 'Advanced Options',
+            switchAlert: 'Switching to the visual designer will discard the manual changes made to the connection string. Do you want to use the visual designer anyway?',
+            switchLabel: 'DataSource AdvancePanel',
+            alertMessage: {
+                serverName: 'Specify the server name',
+                userName: 'Specify the User Name',
+                password: 'Specify the Password',
+                port: 'Specify the Port number',
+                database: 'Specify the database name'
             }
         },
         sharedDatasource: {
@@ -2087,6 +2136,28 @@ ej.ReportDesigner.Locale['en-US'] = {
             duplicateName: 'The specified name already exists in the DataSource list',
             invalidCharacterValidation: 'Name should not contain spaces and special characters',
             sharedPermissionValidation: 'Data source creation has been restricted except for shared data source.'
+        },
+        descriptionText: {
+            amazonAuroraInfo: 'Amazon Aurora is a relational database service developed and offered by Amazon Web Services. The Amazon Aurora connector allows you to access data from Amazon Aurora databases within the {customBrandName} Designer.',
+            azureSqlInfo: 'Azure SQL Data Warehouse is a Microsoft cloud-based enterprise data warehouse service offering. It leverages massively parallel processing to quickly run complex queries across petabytes of data. The Azure SQL Data Warehouse connector allows you to access data from Azure SQL Data Warehouse databases within the {customBrandName} Designer.',
+            cdataInfo: 'CDATA is a distributed, highly-scalable SQL database that can run anywhere. It delivers maximum performance for transactional and analytical workloads with familiar relational data structures.The cdata connector allows you to access data from cdata databases with MySQL endpoint within the {customBrandName} Designer.',
+            csvInfo: 'Bring your CSV files into the {customBrandName} Designer and prepare reports to see the story that lives in your data.',
+            excelInfo: 'Bring your Excel files as Tables or Worksheets into the {customBrandName} Designer. Explore and play with your data, prepare reports to see the story that lives in your data.',
+            googleBigQueryInfo: 'BigQuery is a RESTful web service that enables interactive analysis of massive datasets working in conjunction with Google Storage. It is a serverless Software as a Service that may be used complementarily with MapReduce.',
+            jsonInfo: 'Bring your JSON files into the {customBrandName} Designer by uploading them to prepare reports and see the story that lives in your data.',
+            mariadbInfo: 'MariaDB is a community-developed, commercially supported fork of the MySQL relational database management system that is guaranteed to stay open-source. The MariaDB connector allows you to access data from MariaDB databases within the {customBrandName} Designer.',
+            memsqlInfo: 'MemSQL is a distributed, highly-scalable SQL database that can run anywhere. It delivers maximum performance for transactional and analytical workloads with familiar relational data structures. The MemSQL connector allows you to access data from MemSQL databases within the {customBrandName} Designer.',
+            microsoftsqlInfo: 'SQL Server is Microsoft\'s relational database management system.As one of the most reliable and trusted database servers on the market, it comes with an assortment of value-added services like analysis, reporting, and more on top of the core database management system.The SQL Server connector allows you to access data from Microsoft SQL server databases within the {customBrandName} Designer.',
+            ssasInfo: 'SQL Server Analysis Services (SSAS) is the technology from the Microsoft Business Intelligence stack, to develop Online Analytical Processing (OLAP) solutions. In simple terms, you can use SSAS to create cubes using data from data marts / data warehouse for deeper and faster data analysis.',
+            mysqlInfo: 'MySQL is a freely available, open-source relational database management system, most noted for its quick processing, proven reliability, and ease and flexibility of use. The MySQL connector allows you to access data from MySQL databases within the {customBrandName} Designer.',
+            odataInfo: 'OData is an open protocol to allow the creation and consumption of queryable and interoperable RESTful APIs in a simple and standard way. Connect with the {customBrandName} Designer and build reports to see the story that lives in your data.',
+            odbcInfo: 'An ODBC driver uses the Open Database Connectivity (ODBC) interface by Microsoft that allows applications to access data in database management systems (DBMS) using SQL as a standard for accessing the data.',
+            oledbInfo: 'OLE DB is Microsoft\'s strategic low-level application program interface (API) for access to different data sources. OLE DB includes not only the Structured Query Language (SQL) capabilities of the Microsoft-sponsored standard data interface Open Database Connectivity (ODBC) but also includes access to data other than SQL data.',
+            oracleInfo: 'Oracle is an enterprise-grade relational database with advanced analytics features. The Oracle connector allows you to access data from Oracle databases within the {customBrandName} Designer.',
+            psqlInfo: 'PostgreSQL is a powerful and open-source object-relational database system emphasizing extensibility and standards compliance. The PostgreSQL connector allows you to access data from PostgreSQL databases within the {customBrandName} Designer.',
+            snowflakeInfo: 'Snowflake is a cloud-based data warehouse that provides an unbounded platform for storing and retrieving data. Unlike traditional single-cluster shared-disk/shared-nothing architectures, Snowflake has as a multi-cluster, shared data architecture that is dynamic and highly scalable thanks to enterprise class cloud-based storage systems.',
+            webAPIInfo: 'Connect with the {customBrandName} Designer using almost all data sources that have a REST API. Create reports and see the story that lives in your data.',
+            xmlInfo: 'Bring your XML files into the {customBrandName} Designer and prepare reports to see the story that lives in your data.'
         }
     },
     imageManager: {
@@ -2152,9 +2223,9 @@ ej.ReportDesigner.Locale['en-US'] = {
         dsNameLabel: 'Name',
         dsNameWaterMark: 'Data Name',
         dsNameValidation: {
-            emptyName: 'Specify the DataSet name',
-            duplicateName: 'The specified name already exists in DataSet list',
-            specialCharacter: 'DataSet name should not contain spaces and special characters'
+            emptyName: 'Specify the Dataset name',
+            duplicateName: 'The specified name already exists in Dataset list',
+            specialCharacter: 'Dataset name should not contain spaces and special characters'
         }
     },
     dataPanel: {
@@ -2175,12 +2246,12 @@ ej.ReportDesigner.Locale['en-US'] = {
             contentMessage: 'Do you want to cancel the DataSource editing?',
         },
         dataSetNewAlert: {
-            title: 'DataSet',
-            contentMessage: 'Do you want to cancel the DataSet creation?',
+            title: 'Dataset',
+            contentMessage: 'Do you want to cancel the Dataset creation?',
         },
         dataSetEditAlert: {
-            title: 'DataSet',
-            contentMessage: 'Do you want to cancel the DataSet editing?',
+            title: 'Dataset',
+            contentMessage: 'Do you want to cancel the Dataset editing?',
         },
         parameterNewAlert: {
             title: 'Parameter',
@@ -2199,18 +2270,18 @@ ej.ReportDesigner.Locale['en-US'] = {
         toggleExpand: 'Toggle button to expand the dataset fields',
         datasetLabel: 'DataSetName',
         fieldsLabel: 'Field Name',
-        dataSearch: 'DataSet fields search',
+        dataSearch: 'Dataset fields search',
         shareDataset: {
             headerText: 'NEW DATASET',
             editHeaderText: 'EDIT DATASET',
             save: 'Save',
             cancel: 'Cancel',
             nameLable: 'Name',
-            sharedDatasetLabel: 'Shared DataSet',
+            sharedDatasetLabel: 'Shared Dataset',
             errorMessage: {
-                nameValidation: 'Specify the DataSet name',
+                nameValidation: 'Specify the Dataset name',
                 datasetValidation: 'Select a shared DataSource',
-                duplicateName: 'The specified name already exists in the DataSet list',
+                duplicateName: 'The specified name already exists in the Dataset list',
                 specialCharacter: 'Name should not contain spaces and special characters'
             }
         },
@@ -2235,6 +2306,10 @@ ej.ReportDesigner.Locale['en-US'] = {
         dataFieldSearch: {
             errorMessage: 'No matches found',
             searchText: 'Search'
+        },
+        dataTab: {
+            dataSourceTabHeader: 'DATASOURCE',
+            dataSetTabHeader: 'DATASET'
         }
     },
     reportViewer: {
@@ -3003,6 +3078,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         reportMiscellaneous: {
             categoryName: 'Miscellaneous',
             customAttributes: 'Custom Attributes',
+            consumeWhiteSpace: 'ConsumeContainerWhitespace',
             reportVersion: 'Version',
             reportversions: {
                 default: 'Default',
@@ -3107,6 +3183,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         link: 'Link',
         linkReport: 'Link Report',
+        URL: 'URL',
         position: {
             categoryName: 'Position',
             label: 'Position',
@@ -3128,7 +3205,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             canShrink: 'Can Shrink',
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
-            customAttributes: 'Custom Attributes'
+            customAttributes: 'Custom Attributes',
+            bookmark: 'Bookmark',
         },
         paragraphSettings: {
             categoryName: 'Paragraph Settings',
@@ -3312,7 +3390,8 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         miscellaneous: {
             categoryName: 'Miscellaneous',
-            toolTip: 'Tooltip'
+            toolTip: 'Tooltip',
+            bookmark: 'Bookmark'
         },
         styleTooltip: 'Style',
         colorTooltip: 'Color',
@@ -3436,7 +3515,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             keepTogether: 'Keep Together',
             customAttributes: 'Custom Attributes',
             toolTip: 'Tooltip',
-            documentMap: 'Document Map'
+            documentMap: 'Document Map',
+            bookmark: 'Bookmark'
         },
         headers: {
             categoryName: 'Headers',
@@ -3837,24 +3917,25 @@ ej.ReportDesigner.Locale['en-US'] = {
             rename: 'Rename',
             searchInfo: 'Retrieves the matching information from currently fetched schema',
             aggregation: 'Aggregation',
-            dialogHeader: 'DataSet',
+            dialogHeader: 'Dataset',
             alertMessage: {
-                datasourceAlert: 'Select a DataSource to Configure Report DataSet',
+                datasourceAlert: 'Select a DataSource to Configure Report Dataset',
                 removeTable: 'The below associated tables will remove with this',
                 duplicateName: 'The specified column name already exists',
-                duplicateDatasetName: 'The specified name already exists in DataSet list',
+                duplicateDatasetName: 'The specified name already exists in Dataset list',
                 datasetSpecialCharacter: 'Name should not contain spaces and special characters',
                 specialCharacter: 'Column name should not contain special characters.',
                 switcherAlert: 'Switching to the visual designer will discard manual changes made to the query. Do you want to use the visual designer anyway?'
             },
             errorMessage: {
                 specifyName: 'Specify the column name',
-                specifyDatasetName: 'Specify the DataSet name',
-                previewFailed: 'DataSet failed to preview the selected table',
-                specifyQuery: 'Specify the DataSet query',
-                selectTable: 'Select the table to save the DataSet',
-                queryFailed: 'DataSet failed to save the Query of selected table',
-                tableProcedure: 'DataSet failed to retrieve the selected table procedure',
+                specifyDatasetName: 'Specify the Dataset name',
+                previewFailed: 'Dataset failed to preview the selected table',
+                specifyQuery: 'Specify the Dataset query',
+                selectTable: 'Select the table to save the Dataset',
+                queryFailed: 'Dataset failed to save the Query of selected table',
+                refreshFailed: 'Failed to refresh the dataset {datasetName}, it requires one or more input values. Please edit and save the dataset.',
+                tableProcedure: 'Dataset failed to retrieve the selected table procedure',
                 deleteTableFailure: 'Failed to delete the selected table',
                 joinTableFailure: 'Failed to join the selected tables',
                 confirmPermission: 'Retrieved huge records, rendering will take time. Would you like to load anyway ?'
@@ -3949,7 +4030,7 @@ ej.ReportDesigner.Locale['en-US'] = {
                 invalidSyntax: 'Invalid syntax near open/close bracket(s).',
                 retrieveExpression: 'ReportDesigner failed to retrieve the specified expression.',
             },
-            datasetTitle: 'DataSet',
+            datasetTitle: 'Dataset',
             expressions: {
                 all: 'All',
                 numbers: 'Numbers',
@@ -4025,7 +4106,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             sort: 'Sorts',
             group: 'Groups',
             expression: 'Expression',
-            aggregate: 'Aggregate'
+            aggregate: 'Aggregate',
+            none: 'None'
         },
         validationMessage: 'Chart type does not supported in designer.'
     },
@@ -4311,7 +4393,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         basicSettings: {
             categoryName: 'Basic Settings',
             shapeType: 'Shapes',
-            datasetName: 'DataSet',
+            datasetName: 'Dataset',
             bindData: 'Binding Data',
             mapProjection: {
                 projectionType: 'Projection Type',
@@ -4432,7 +4514,8 @@ ej.ReportDesigner.Locale['en-US'] = {
             categoryMiscellaneous: 'Miscellaneous',
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
-            customAttributes: 'Custom Attributes'
+            customAttributes: 'Custom Attributes',
+            bookmark: 'Bookmark'
         },
         spatial: {
             categoryName: 'Spatial',

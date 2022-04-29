@@ -32,7 +32,7 @@
                         Get <b>25 users</b> plus <b>25 GB</b> of data storage, until your Syncfusion.com global license period expires.
                     </p>
 
-                    <button type="button" title="" id="link-kc-offer" name="ChangePlanSettings" onclick="openKcUserOfferPartial();" class="primary-button">
+                    <button type="button" title="" id="link-kc-offer" name="ChangePlanSettings" onclick="openKcUserOfferPartial();" class="primary-button app-btn-primary">
                         [[[Connect Now]]]
                     </button>
                 </div>
@@ -115,7 +115,7 @@
                     {
                         if (!licenseSettings.IsKcBenefit && !ServerAppConfig.IsCustomPlan((SaaSPlan)(int.Parse(Model.PlanId))))
                         {
-                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" onclick="openPlanPickupPartial();" class="primary-button pull-right">
+                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" onclick="openPlanPickupPartial();" class="primary-button app-btn-primary pull-right">
                                 [[[Change Plan]]]
                             </button>
                         }
@@ -214,7 +214,7 @@
                     </table>
                 </div>
                 <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" onclick="openSubscriptionSettings();" class="secondary-button cancel-subscription-button pull-right disable-subscription">
+                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" onclick="openSubscriptionSettings();" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
                         [[[Cancel my subscription]]]
                     </button>
                 </div>
@@ -245,10 +245,10 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 no-margin">
-                            <button type="button" title="" name="ChangeSubscriptionSettings" onclick="redirectToSubscriptionPlan();" class="primary-button pull-right">
+                            <button type="button" title="" name="ChangeSubscriptionSettings" onclick="redirectToSubscriptionPlan();" class="primary-button app-btn-primary pull-right">
                                 [[[Go back]]]
                             </button>
-                            <button type="button" title="" id="enable-cancelsubscription" onclick="cancelSubscriptionFeedback();" class="secondary-button cancel-subscription-button pull-right disable-subscription">
+                            <button type="button" title="" id="enable-cancelsubscription" onclick="cancelSubscriptionFeedback();" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
                                 [[[Cancel my subscription]]]
                             </button>
                         </div>
@@ -277,10 +277,10 @@
                         <span>[[[Your billing period and billed amount is not affected by this action if you have already paid for the current billing cycle. Click]]] <b>[[[Reactivate my subscription]]]</b> [[[to continue using reports.]]] </span>
                     }
                     <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                        <button type="button" title="" onclick="redirectToSubscriptionPlan();" class="secondary-button pull-right">
+                        <button type="button" title="" onclick="redirectToSubscriptionPlan();" class="secondary-button app-btn-secondary pull-right">
                             [[[Go back]]]
                         </button>
-                        <button type="button" title="" onclick="activateSubscription();" class="primary-button reactivate-subscription-button pull-right">
+                        <button type="button" title="" onclick="activateSubscription();" class="primary-button app-btn-primary reactivate-subscription-button pull-right">
                             [[[Reactivate my subscription]]]
                         </button>
                     </div>
@@ -318,8 +318,8 @@
         </div>
         <div class="fluent-popup-footer">
             <div class="col-lg-12 col-md-12">
-                <button type="button" id="kclink-submit-button" class="primary-button apply-coupon-section" disabled="disabled">[[[Connect Now]]]</button>
-                <button type="button" id="kclink-retry-button" class="primary-button coupon-error-section" style="display:none">[[[Try with another coupon]]]</button>
+                <button type="button" id="kclink-submit-button" class="primary-button app-btn-primary apply-coupon-section" disabled="disabled">[[[Connect Now]]]</button>
+                <button type="button" id="kclink-retry-button" class="primary-button app-btn-primary coupon-error-section" style="display:none">[[[Try with another coupon]]]</button>
             </div>
         </div>
     </div>*@
@@ -404,17 +404,17 @@
     </div>
     @*<div id="additional-storage-button" class="fluent-popup-footer">
             <div id="button-container" class="col-lg-12 col-md-12">
-                <button type="button" id="storage-close-popup-button" class="app-button app-secondary-button pull-right">[[[Close]]]</button>
+                <button type="button" id="storage-close-popup-button" class="app-button app-secondary-button app-btn-secondary pull-right">[[[Close]]]</button>
                 @if (isCardExist)
                 {
-                    <button type="button" id="storage-pay-now-button" class="app-button app-primary-button pull-right">[[[Pay Now]]]</button>
+                    <button type="button" id="storage-pay-now-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Pay Now]]]</button>
                 }
                 else
                 {
-                    <button type="button" id="billing-address-proceed-button" class="app-button app-primary-button pull-right">[[[Next]]]</button>
-                    <button type="button" id="card-detail-proceed-button" class="app-button app-primary-button pull-right" style="display: none;">[[[Next]]]</button>
-                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button pull-right" style="display: none;">[[[Pay Now]]]</button>
-                    <button type="button" id="storage-back-popup-button" class="app-button app-secondary-button pull-left" style="display: none;">[[[Back]]]</button>
+                    <button type="button" id="billing-address-proceed-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Next]]]</button>
+                    <button type="button" id="card-detail-proceed-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Next]]]</button>
+                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Pay Now]]]</button>
+                    <button type="button" id="storage-back-popup-button" class="app-button app-secondary-button app-btn-secondary pull-left" style="display: none;">[[[Back]]]</button>
                 }
             </div>
         </div>*@

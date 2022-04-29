@@ -8,6 +8,8 @@
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var enableWindowsAD = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
+    var isAdmin = _identityResponse.IsAdmin;
+    var permissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
 }
 
 @section scripts{
@@ -38,6 +40,8 @@
 
         var getResultDataUrl = "@Url.Action("GetUserDataForImportFromDatabase", "UserManagement")";
         var isEmailRequired = "@isEmailRequired";
+        var isAdmin = @Json.Serialize(isAdmin);
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
 
     </script>
     <script>
@@ -67,6 +71,10 @@
         <span class="su su-openid grid-directory-icon"> </span>
         {{else DirectoryType == @((int)DirectoryType.JWTSSO)}}
         <span class="su su-single-sign-on grid-directory-icon"> </span>
+        {{else DirectoryType == @((int)DirectoryType.LinkedIn)}}
+        <span class="su su-linkedin grid-directory-icon"> </span>
+        {{else DirectoryType == @((int)DirectoryType.Google)}}
+        <span class="su su-google grid-directory-icon"><span class="su su-google path1"></span><span class="su su-google path2"></span><span class="su su-google path3"></span><span class="su su-google path4"></span></span>
         {{/if}}
     </script>
     <script type="text/x-jsrender" id="user-name-template">
@@ -106,14 +114,21 @@
     </script>
     <script type="text/x-jsrender" id="options">
         <div class="user-hover-options" data-content="{{:Email}}">
-            <a href="@Url.Action("userpermission", "permission")?userId={{:UserId}}" title="[[[Manage Permissions]]]" data-toggle="tooltip">
-                <i class="su su-manage-permission"></i>
-            </a>
+            @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
+            {
+                <a href="@Url.Action("userpermission", "permission")?userId={{:UserId}}" title="[[[Manage Permissions]]]" data-toggle="tooltip">
+                    <i class="su su-manage-permission"></i>
+                </a>
+            }
             <a href="@Url.Action("ViewProfile", "UserManagement")?id={{:UserId}}" title="[[[View]]]" data-toggle="tooltip">
                 <i class="su su-eye"></i>
             </a>
             {{if Email == "@ViewBag.LoggedUser"}}
             <a href="javascript:void(0);" title="[[[It's You]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                <i class="su su-delete disabled-icon-color"></i>
+            </a>
+            {{else IsAdmin && ~isAdmin() == false}}
+            <a href="javascript:void(0);" title="[[[You cannot delete the system administrator]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
                 <i class="su su-delete disabled-icon-color"></i>
             </a>
             {{else}}
@@ -181,7 +196,8 @@
                         headerText: "[[[Username]]]",
                         width: 115,
                         headerTemplateID: "#username-header",
-                        type: "string"
+                        type: "string",
+                        visible: isSelfHosted
                     },
                     {
                         field: "Email",
@@ -218,6 +234,11 @@
                 ]
 
             });
+            $.views.helpers({
+                isAdmin: function () {
+                    return @isAdmin.ToString().ToLower();
+                }
+            });
             });
     </script>
 }
@@ -237,13 +258,13 @@
                     <li class="dropdown no-padding">
                         @if (new DeviceDetection(Context).IsMobile)
                         {
-                            <button class="primary-button" id="new-user-dropdown" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
-                                [[[New User]]]
-                            </button>
+                        <button class="primary-button app-btn-primary" id="new-user-dropdown" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
+                            [[[New User]]]
+                        </button>
                         }
                         else
                         {
-                            <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
+                            <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
                                 <span>[[[New User]]] </span>
                                 <span class="caret"></span>
                             </button>
@@ -281,6 +302,24 @@
                                         <span>[[[Import from Database]]]</span>
                                     </a>
                                 </li>
+                                @*@if (ViewBag.OAuthdIdentityProviderInfo != null && ViewBag.OAuthdIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
+                                {
+                                    <li>
+                                        <a class="dropdown-toggle" href="@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
+                                            <i class="su su-oauth path1"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></i>
+                                            <span>[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (ViewBag.OpendIdentityProviderInfo != null && ViewBag.OpendIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
+                                {
+                                    <li>
+                                        <a class="dropdown-toggle" href="@ViewBag.OpendIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
+                                            <i class="su su-openid"></i>
+                                            <span>[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]</span>
+                                        </a>
+                                    </li>
+                                }*@
                             </ul>
                         }
                     </li>
@@ -288,7 +327,7 @@
                     @if (((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.AzureAD != null) || ((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.CustomDatabaseUserCount != null) || (ViewBag.AzureAD != null && ViewBag.CustomDatabaseUserCount != null))
                     {
                         <li class="dropdown no-padding">
-                            <button class="dropdown-toggle primary-button" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Users]]]">
+                            <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="synchronize-dropdown" title="[[[Synchronize Users]]]">
                                 <span>[[[Synchronize]]] </span>
                                 <span class="caret"></span>
                             </button>
@@ -329,26 +368,27 @@
                         if (ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted && !isAzureApplication)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeUsers", "UserManagement")" class="link-button synchronize-users" title="[[[Synchronize users with Active Directory]]]" data-toggle="tooltip" data-placement="left">[[[Active Directory Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeUsers", "UserManagement")" class="link-button app-btn-link synchronize-users" title="[[[Synchronize users with Active Directory]]]" data-toggle="tooltip" data-placement="left">[[[Active Directory Synchronization]]]</a>
                             </li>
                         }
                         if (ViewBag.AzureAD != null)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeAzureUsers", "UserManagement")" class="link-button synchronize-azure-users" title="[[[Synchronize users with Azure AD]]]" data-toggle="tooltip" data-placement="left">[[[Azure AD Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeAzureUsers", "UserManagement")" class="link-button app-btn-link synchronize-azure-users" title="[[[Synchronize users with Azure AD]]]" data-toggle="tooltip" data-placement="left">[[[Azure AD Synchronization]]]</a>
                             </li>
                         }
                         if (ViewBag.CustomDatabaseUserCount != null)
                         {
                             <li>
-                                <a href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" class="link-button synchronize-database-users" title="[[[Synchronize users with Custom Database]]]" data-toggle="tooltip" data-placement="left">[[[Database Synchronization]]]</a>
+                                <a href="@Url.Action("SynchronizeCustomDatabaseUsers", "UserManagement")" class="link-button app-btn-link synchronize-database-users" title="[[[Synchronize users with Custom Database]]]" data-toggle="tooltip" data-placement="left">[[[Database Synchronization]]]</a>
                             </li>
                         }
                     }
-                    <li class="flying-add hide" id="add-user-in-group">
-                        <button class="critical-action-button user-delete-button" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user">[[[Delete User]]]</button>
-                        <button class="secondary-button user-add-group" title="[[[Assign a group to selected users]]]">[[[Assign Group]]]</button>
-                    </li>
+                <li class="flying-add hide" id="add-user-in-group">
+                    <button class="critical-action-button app-btn-danger user-delete-button" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user">[[[Delete User]]]</button>
+                    <button class="secondary-button app-btn-secondary user-add-group" title="[[[Assign a group to selected users]]]">[[[Assign Group]]]</button>
+
+                </li>
                 </ul>
             </div>
         </div>
@@ -387,6 +427,14 @@
             @if (ViewBag.JWTSSO > 0)
             {
                 <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-single-sign-on"> </span> - [[[JWT SSO User]]]</div>
+            }
+            @if (ViewBag.LinkedInUserCount > 0)
+            {
+                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-linkedin"></span> - [[[LinkedIn User]]]</div>
+            }
+            @if (ViewBag.GoogleUserCount > 0)
+            {
+                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-google"><span class="su su-google path1"></span><span class="su su-google path2"></span><span class="su su-google path3"></span><span class="su su-google path4"></span></span> - [[[Google User]]]</div>
             }
         </div>
     </div>

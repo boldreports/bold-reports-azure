@@ -14,6 +14,10 @@
         open: "onUploadFontDialogOpen"
     });
 
+    fontDropDownListInitialization('#fontfamily', window.TM.App.LocalizationContent.LookAndFeel);
+    document.getElementById("fontfamily").ej2_instances[0].value = selectedFontValue;
+    document.getElementById("fontfamily").ej2_instances[0].text = selectedFontText;
+
     $.validator.addMethod("additionalSpecialCharValidation", function (value) {
         if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
             return true;
@@ -67,7 +71,7 @@
     });
 
     $(document).on("click", "#update-font-settings", function () {
-        var fontSettings = { FontFamily: $("#fontfamily").val() };
+        var fontSettings = { FontFamily: document.getElementById("fontfamily").ej2_instances[0].value };
         showWaitingPopup($("#body"));
         $.ajax({
             type: "POST",
@@ -88,13 +92,13 @@
     $(document).on("click", "#upload-font", function () {
         showWaitingPopup($("#body"));     
     });
-
-    $('#fontfamily').on('change', function () {
-        var selectedFontFamily = $(this).val();
-        var fontElements = document.getElementsByClassName("font-ref");
-        fontElements[0].href = fontReferenceUrl + "?family=" + selectedFontFamily;
-    });
 });
+
+function onFontChange() {
+    var selectedFontFamily = document.getElementById("fontfamily").ej2_instances[0].value;
+    var fontElements = document.getElementsByClassName("font-ref");
+    fontElements[0].href = fontReferenceUrl + "?family=" + selectedFontFamily;
+}
 
 
 $(document).on("change", "#font-file", function (e) {

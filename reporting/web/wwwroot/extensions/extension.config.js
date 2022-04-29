@@ -1,19 +1,5 @@
-var dataExtensions = [
-    {
-        className: 'SASSDataSource',
-        name: 'Microsoft SQL Server Analysis Services',
-        imageClass: 'e-reportdesigner-datasource-ssas',
-        displayName: 'SSAS'
-    }
-];
-var cloudDataExtensions = [
-    {
-        className: 'SASSDataSource',
-        name: 'Microsoft SQL Server Analysis Services',
-        imageClass: 'e-reportdesigner-datasource-ssas',
-        displayName: 'SSAS'
-    }
-];
+var dataExtensions = [];
+var cloudDataExtensions = [];
 var itemExtensions = [{
         name: 'barcode',
         className: 'EJBarcode',

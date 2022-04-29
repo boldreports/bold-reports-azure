@@ -7,6 +7,7 @@
     var isAdmin = _identityResponse.IsAdmin;
     var isMobile = new DeviceDetection(Context).IsMobile;
     var query = ViewBag.SearchQuery;
+    var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
 }
 <script>
     var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
@@ -61,26 +62,26 @@
 <script type="text/x-jsrender" id="description">
     <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-toggle="tooltip" data-placement="top">
         <span>
-            {{:Description}}
+            {{>Description}}
         </span>
     </div>
 </script>
 
 <script type="text/x-jsrender" id="category">
     <span title="{{:CategoryName}}" data-toggle="tooltip" data-placement="top">
-        {{:CategoryName}}
+        {{>CategoryName}}
     </span>
 </script>
 
 <script type="text/x-jsrender" id="createdbydisplayname">
     <span title="{{:CreatedByDisplayName}}" data-toggle="tooltip" data-placement="top">
-        {{:CreatedByDisplayName}}
+        {{>CreatedByDisplayName}}
     </span>
 </script>
 
 <script type="text/x-jsrender" id="modifieddate">
     <div title="{{:ModifiedDate}}" data-toggle="tooltip" data-placement="top">
-        {{:ModifiedDate}}
+        {{>ModifiedDate}}
     </div>
 </script>
 
@@ -89,29 +90,29 @@
     {{if ItemType=="2"}}
     <div class="item-name no-left-margin grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
         {{if ItemType=="2"}}
-        <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="8"}}
-        <span><a href="{{:~widgetUrlEncode(Name)}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="{{:~widgetUrlEncode(Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="1"}}
-        <span><a href="@Url.Action("Reports", "Reports" )?category={{:Name}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="@Url.Action("Reports", "Reports" )?category={{:Name}}" target="_blank">{{>Name}}</a></span>
         @*{{else ItemType=="@((int)ItemType.File)"}}
-            <span><a href="@UrlHelper.GenerateUrl(" ItemDownload", "Download" , "FileRender" , null, RouteTable.Routes, HttpContext.Current.Request.RequestContext, false)/{{:ItemTypeString}}/{{:Name}}" target="_blank">{{:Name}}</a></span>*@
+            <span><a href="@UrlHelper.GenerateUrl(" ItemDownload", "Download" , "FileRender" , null, RouteTable.Routes, HttpContext.Current.Request.RequestContext, false)/{{:ItemTypeString}}/{{:Name}}" target="_blank">{{>Name}}</a></span>*@
         {{else}}
-        <span>{{:Name}}</span>
+        <span>{{>Name}}</span>
         {{/if}}
     </div>
     {{else}}
     <div class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
         {{if ItemType=="2"}}
-        <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="8"}}
-        <span><a href="{{:~widgetUrlEncode(Name)}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="{{:~widgetUrlEncode(Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="1"}}
-        <span><a href="@Url.Action(" Reports", "Reports" )?category={{:Name}}" target="_blank">{{:Name}}</a></span>
+        <span><a href="@Url.Action(" Reports", "Reports" )?category={{:Name}}" target="_blank">{{>Name}}</a></span>
         @*{{else ItemType=="@((int)ItemType.File)"}}
-            <span><a href="@UrlHelper.GenerateUrl(" ItemDownload", "Download" , "FileRender" , null, RouteTable.Routes, HttpContext.Current.Request.RequestContext, false)/{{:ItemTypeString}}/{{:Name}}" target="_blank">{{:Name}}</a></span>*@
+            <span><a href="@UrlHelper.GenerateUrl(" ItemDownload", "Download" , "FileRender" , null, RouteTable.Routes, HttpContext.Current.Request.RequestContext, false)/{{:ItemTypeString}}/{{:Name}}" target="_blank">{{>Name}}</a></span>*@
         {{else}}
-        <span>{{:Name}}</span>
+        <span>{{>Name}}</span>
         {{/if}}
     </div>
     {{/if}}
@@ -124,7 +125,7 @@
         </span>
         {{if (!CanWrite && ItemType =="@((int)ItemType.Datasource)")}}
         {{else}}
-    <ul class="dropdown-menu" role="menu">
+        <ul class="dropdown-menu" role="menu">
 
         {{if CanDownload}}
         {{if ~checkMobile()}}
@@ -200,8 +201,9 @@
         {{/if}}
         {{/if}}
 
+        {{if !IsLocked}}
         {{if ~checkMobile()}}
-        {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(permissionData[ItemType.Dataset].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
         <li>
             <a href="javascript:void(0);" title="" class="change-datasource" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-action="ChangeDataSource">
                 <i class="su su-copy"></i>
@@ -211,9 +213,10 @@
         <li role="separator" class="divider"></li>
         {{/if}}
         {{/if}}
+        {{/if}}
 
         {{if ~checkMobile()}}
-        {{if CreatedById==@(userId) || @(isAdmin)== true}}
+        {{if CreatedById==@(userId) || @(isAdmin)== true  || (@(granularPermissions[ItemType.Datasource].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Datasource)") || (@(granularPermissions[ItemType.Dataset].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
         {{if ItemType=="@((int)ItemType.File)"}}
         <li role="separator" class="divider"></li>
         {{/if}}
@@ -274,6 +277,7 @@
         {{/if}}
         {{/if}}
         {{/if}}*@
+        {{if !IsLocked}}
         {{if (~checkMobile() && CanWrite && ItemType!="@((int)ItemType.Datasource)")}}
         <li role="separator" class="divider"></li>
         <li>
@@ -283,6 +287,8 @@
             </a>
         </li>
         {{/if}}
+        {{/if}}
+        {{if !IsLocked}}
         {{if ~checkMobile()}}
         {{if CanWrite}}
         {{if ItemType=="@((int)ItemType.Datasource)"}}
@@ -292,6 +298,7 @@
                 <span>[[[Update]]]</span>
             </a>
         </li>
+        {{/if}}
         {{/if}}
         {{/if}}
         {{/if}}

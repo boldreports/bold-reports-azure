@@ -2,7 +2,7 @@
     ViewBag.Title = "[[[Page Not Found]]]";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
 }
 
 @section scripts{

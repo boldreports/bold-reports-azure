@@ -6,7 +6,6 @@
     Layout = "../Shared/_Layout.Registration.cshtml";
     ViewBag.HideLoginOption = true;
     var isBoldBIBranding = GlobalAppSettings.Branding == @AppBranding.Bold.Identifier;
-    var analyticsTrackingEnabled = Syncfusion.Server.Base.CloudAppConfig.EnableAnalyticsTracking;
     var isEmbedPlan = ViewBag.PlanId == (int)SaaSPlan.Embedded;
     var name = tenantType == TenantType.BoldBI ? "dashboard" : "report";
 }
@@ -25,27 +24,7 @@
         var planId = "@planId";
         var isEmbedPlan =  @Json.Serialize(isEmbedPlan);
         var isBoldBiBranding =  @Json.Serialize(isBoldBIBranding);
-        var analyticsTrackingEnabled =  @Json.Serialize(analyticsTrackingEnabled);
-        var googleAnalyticsSendTo = "@CloudAppConfig.GoogleAnalyticSentTo";
         var isBoldBICloudRegistration =  @Json.Serialize(tenantType == TenantType.BoldBI);
-
-        @if (GlobalAppSettings.Branding == AppBranding.Bold.Identifier && Syncfusion.Server.Base.CloudAppConfig.EnableAnalyticsTracking) {
-            <text>
-            var analyticKeyUA = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyUA";
-            var analyticKeyAW = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyAW";
-            var google_tag_manager = document.createElement("script");
-            google_tag_manager.src = "https://www.googletagmanager.com/gtag/js?id=" + analyticKeyUA;
-            google_tag_manager.async = 1;
-            var parent_node = document.head || document.body;
-            parent_node.appendChild(google_tag_manager);
-
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', analyticKeyUA);
-            gtag('config', analyticKeyAW);
-            </text>
-        }
     </script>
 }
 

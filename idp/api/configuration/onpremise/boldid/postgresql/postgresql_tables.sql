@@ -119,6 +119,7 @@ CREATE TABLE BOLDTC_TenantLog (
 	ToStatus int Not Null,
 	UpdatedUserId uuid NULL,
 	SourceTypeId int Null,
+	OptionalData varchar(1026) NULL,
 	CreatedDate timestamp NOT NULL,
 	IsActive smallint NOT NULL,
   CONSTRAINT PK_BOLDTC_TENANTLOG PRIMARY KEY (Id)
@@ -330,6 +331,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	DatabaseType int Default 0,
 	BlobConnectionString varchar(1026),
 	ConnectionString varchar(1026),
+	AdditionalParameters varchar(1026),
 	MaintenanceDatabase varchar(255) NULL,
 	TenantSQLServerId int,
 	ElasticPoolId int,
@@ -338,6 +340,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	ImDbSqlServerId int,
 	ImDbElasticPoolId int,
 	ImDbMaintenanceDatabase varchar(255) NULL,
+	ImDbAdditionalParameters varchar(1026),
 	TenantStatus int NOT NULL,
 	BillingAddressId uuid,
 	StatusUpdatedDate timestamp NOT NULL,
@@ -349,6 +352,9 @@ CREATE TABLE BOLDTC_TenantInfo (
 	IsMaster smallint NOT NULL,
 	IsolationCode varchar(4000),
 	IsTenantIsolationCodeEnabled smallint NOT NULL DEFAULT '0',
+	UseCustomBranding smallint NOT NULL,
+	IsNewImDbDatabase smallint NOT NULL,
+	IsNewDatabase smallint NOT NULL,
   CONSTRAINT PK_BOLDTC_TENANTINFO PRIMARY KEY (Id)
 )
 ;
@@ -477,9 +483,11 @@ CREATE TABLE BOLDTC_SqlServerType (
 )
 ;
 CREATE TABLE BOLDTC_OAuthToken (
+     Id SERIAL NOT NULL,
 	 Token varchar (1026) NULL,
 	 Ticket varchar (1026) NULL,
-	 ModifiedDate timestamp  NULL
+	 ModifiedDate timestamp  NULL,
+  CONSTRAINT PK_BOLDTC_OAUTHTOKEN PRIMARY KEY (Id)
 )
 ;
 CREATE TABLE BOLDTC_InternalApps (
@@ -711,8 +719,8 @@ CREATE TABLE BOLDTC_AuthSettings (
     AuthProviderId int NOT NULL,
     Settings varchar(1026),
     IsEnabled smallint NOT NULL,
-    CreatedBy uuid NOT NULL,
-    ModifiedBy uuid NOT NULL,
+    CreatedBy uuid NULL,
+    ModifiedBy uuid NULL,
     CreatedDate timestamp NOT NULL,
     ModifiedDate timestamp NOT NULL,
 	IsDefaultAuthentication smallint NOT NULL DEFAULT '0',
@@ -733,6 +741,22 @@ CREATE TABLE BOLDTC_UserLog (
 	IsActive smallint NOT NULL,
 	AdditionalData varchar(4000) NULL,
   CONSTRAINT PK_BOLDTC_UserLog PRIMARY KEY (Id)
+)
+;
+
+CREATE TABLE BOLDTC_AzureBlob (
+	Id SERIAL NOT NULL,
+	TenantInfoId uuid NOT NULL,
+	AccountName varchar(4000) NOT NULL,
+	AccessKey varchar(4000) NOT NULL,
+	Uri varchar(4000) NULL,
+	ContainerName varchar(4000) NOT NULL,
+	ConnectionType varchar(4000) NOT NULL,
+	ConnectionString varchar(4000) NOT NULL,
+	CreatedDate timestamp NOT NULL,
+	ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL,
+  CONSTRAINT PK_BOLDTC_AZUREBLOB PRIMARY KEY (Id)
 )
 ;
 
@@ -1198,4 +1222,8 @@ ALTER TABLE BOLDTC_UserLog  VALIDATE CONSTRAINT BOLDTC_UserLog_fk1
 ALTER TABLE BOLDTC_UserLog  ADD CONSTRAINT BOLDTC_UserLog_fk2 FOREIGN KEY (RequestedById) REFERENCES BOLDTC_User(Id)
 ;
 ALTER TABLE BOLDTC_UserLog  VALIDATE CONSTRAINT BOLDTC_UserLog_fk2
+;
+ALTER TABLE  BOLDTC_AzureBlob  ADD CONSTRAINT  BOLDTC_AzureBlob_fk0  FOREIGN KEY ( TenantInfoId ) REFERENCES  BOLDTC_TenantInfo ( Id )
+;
+ALTER TABLE  BOLDTC_AzureBlob  VALIDATE CONSTRAINT  BOLDTC_AzureBlob_fk0
 ;

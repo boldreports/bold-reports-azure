@@ -37,7 +37,7 @@
     <input type="hidden" value="@globalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
     <div id="schedule-synchronization-container" class="col-xs-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")">
         <div id="schedule-header" class="col-md-12 import-area admin-page-header pull-left">
-            <a href="@Url.Action("user-directory-settings","administration")" data-toggle="tooltip" data-placement="top" title="[[[User Directory Settings]]]" class="back-button pull-left">
+            <a href="@Url.Action("Administration","Administration")/user-directory-settings" data-toggle="tooltip" data-placement="top" title="[[[User Directory Settings]]]" class="back-button pull-left">
                 <i class="su su-arrow-back back-navigaion img-size"> </i>
             </a>
             <hgroup>
@@ -254,8 +254,8 @@
         @if (ViewBag.ThirdPartyLogins)
         {
             <div class="admin-page-actions col-xs-12 col-md-12">
-                <a href="@Url.Action("Index","Home")" class="secondary-button pull-right" id="cancel-schedule-synchronization" title="">[[[Cancel]]]</a>
-                <input type="button" title="" id="update-schedule-synchronization-bottom" class="primary-button pull-right" value="[[[Save]]]" />
+                <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-schedule-synchronization" title="">[[[Cancel]]]</a>
+                <input type="button" title="" id="update-schedule-synchronization-bottom" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
             </div>
         }
 

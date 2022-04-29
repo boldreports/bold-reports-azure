@@ -30,6 +30,38 @@
             <remarks></remarks>
             <returns>The response is sent as ApiResponse Object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.AddUserV4Json(Syncfusion.Server.Base.DataClasses.ApiUserAdd)">
+            <summary>
+            Adds a user to the server.
+            </summary>
+            <param name="userDetail">Detail of the user.</param>
+            <remarks></remarks>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.EditUserV4Json(System.String,Syncfusion.Server.Base.DataClasses.ApiUserEdit)">
+            <summary>
+            Modifies information about the specified user.
+            </summary>
+            <param name="user">Email address of the user.</param>
+            <param name="userDetail">Detail of the user.</param>
+            <remarks></remarks>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.DeleteUser(System.String)">
+            <summary>
+            Deletes the specified user on the server.
+            </summary>
+            <param name="user">Email address of the user.</param>
+            <remarks></remarks>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.GetUserDetail(System.String)">
+            <summary>
+            Returns user details on the server for a specified user.
+            </summary>
+            <param name="user">Email address of the user.</param>
+            <returns>The response is sent as ApiUserDetail object</returns>
+        </member>
         <member name="T:Syncfusion.Server.API.Controllers.GroupsController">
             <summary>
             Controller for group operations
@@ -225,6 +257,14 @@
             <param name="id">Item ID</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemDetail(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="itemType"></param>
+            <param name="serverPath"></param>
+            <returns></returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemDetailV3(System.String,System.String)">
             <summary>
             
@@ -345,6 +385,13 @@
             <param name="apiReportAddV6">Report details</param>
             <returns>The response is sent as ApiItemResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.ReportAddV2(Syncfusion.Server.Base.DataClasses.ApiCopyReportRequestV5)">
+            <summary>
+            Add report.
+            </summary>
+            <param name="apiReportAddV6">Report details</param>
+            <returns>The response is sent as ApiItemResponse object</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.AddDataSource(Syncfusion.Server.Base.DataClasses.ApiReportDataSourceAdd)">
             <summary>
             Add a new datasource to the server.
@@ -381,6 +428,14 @@
             <returns>The response is sent as ApiResponse object</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItems(Syncfusion.Server.Base.DataClasses.ItemType,System.String)">
+            <summary>
+            Returns list of items from the server.
+            </summary>
+            <param name="itemType">Item type</param>
+            <param name="serverPath">Category path</param>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemsV4(Syncfusion.Server.Base.DataClasses.ItemType,System.String)">
             <summary>
             Returns list of items from the server.
             </summary>
@@ -490,6 +545,36 @@
             </summary>
             <param name="apiExportReportV3"></param>
             <returns></returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.ChangeDatasourceV4(System.String,Syncfusion.Server.Base.DataClasses.ApiCopyDataset)">
+            <summary>
+            Change Datasource.
+            </summary>
+            <param name="serverPath">Dataset name</param>
+            <param name="apiCopyDataset">Details about the dataset for which datasource has to be changed</param>
+            <returns>The response is sent as ItemResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.AddReportV4(Syncfusion.Server.Base.DataClasses.ApiReportAddV4)">
+            <summary>
+            Add report.
+            </summary>
+            <param name="apiReportAddV4">Report details</param>
+            <returns>The response is sent as ApiItemResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.UpdateReportV4(Syncfusion.Server.Base.DataClasses.ApiReportUpdateV4)">
+            <summary>
+            Update report.
+            </summary>
+            <param name="apiReportUpdateV4">Report details</param>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemsV2(System.Int32,Syncfusion.Server.Base.DataClasses.ItemType,System.String)">
+            <summary>
+            Returns list of items from the server.
+            </summary>
+            <param name="itemType">Item type</param>
+            <param name="serverPath">Category path</param>
+            <returns>The response is sent as ApiResponse object</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Controllers.PermissionController.GetUserPermission(System.Int32)">
             <summary>
@@ -772,37 +857,25 @@
             <param name="user">User ID or Email address of the user.</param>
             <returns>Group details retrieved successfully.</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.AddUserV4Json(Syncfusion.Server.Base.DataClasses.ApiUserAdd)">
+        <member name="M:Syncfusion.Server.API.Controllers.V2.DataSourceController.AddDataSourceFile(Syncfusion.Server.Base.DataClasses.ApiDataSourceAdd)">
             <summary>
-            Adds a user to the server.
+            Add a new data source to the server
             </summary>
-            <param name="userDetail">Detail of the user.</param>
-            <remarks></remarks>
-            <returns>The response is sent as ApiResponse object</returns>
+            <remarks>
+            Users who have a create access for data sources, can add a new data source to the server by providing respective data source details in the request body.
+            </remarks>
+            <param name="apiDataSourceAdd">Details about the data source passed will be added to the server.</param>
+            <returns>The response is sent as ApiItemResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.EditUserV4Json(System.String,Syncfusion.Server.Base.DataClasses.ApiUserEdit)">
+        <member name="M:Syncfusion.Server.API.Controllers.V2.DataSourceController.UpdateDataSourceFile(Syncfusion.Server.Base.DataClasses.ApiDataSourceUpdate)">
             <summary>
-            Modifies information about the specified user.
+            Update the data source to the server
             </summary>
-            <param name="user">Email address of the user.</param>
-            <param name="userDetail">Detail of the user.</param>
-            <remarks></remarks>
+            <remarks>
+            Users who have a write access for data source, can update an existing data source on the server by providing respective data source details in the request body.
+            </remarks>
+            <param name="apiDataSourceUpdate">Details about the data source passed will be updated to the specified data source id.</param>
             <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.DeleteUser(System.String)">
-            <summary>
-            Deletes the specified user on the server.
-            </summary>
-            <param name="user">Email address of the user.</param>
-            <remarks></remarks>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.GetUserDetail(System.String)">
-            <summary>
-            Returns user details on the server for a specified user.
-            </summary>
-            <param name="user">Email address of the user.</param>
-            <returns>The response is sent as ApiUserDetail object</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemViewsController.AddItemViewJson(Syncfusion.Server.Base.DataClasses.ApiItemViewsAdd)">
             <summary>
@@ -981,6 +1054,13 @@
             <param name="itemId">Item id for particular item to download</param>
             <returns>The response sent has a ItemDownloadResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.DataSetManager.GetDataSourceDetailsbyDataSetId(System.Guid)">
+            <summary>
+            This method is used to get the data source details of the dataset
+            </summary>
+            <param name="userId">Id of the dataset</param>
+            <returns>Returns data source</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Models.ReportServer.DataSourceManager.IsValidSqlConnectionString(System.String)">
             <summary>
             This method is used to test connection string for SQL Connection
@@ -1024,6 +1104,12 @@
             <param name="connectionString">connection string provided in form element</param>
             <returns>Status of the operation</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.DataSourceManager.UpdateReportReferencePath(System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.CopySubReportMappingInfoV4},System.Xml.XmlDocument)">
+            <summary>
+            This method will update the given report reference path to the report
+            </summary>
+            <param name="copySubReportMappingInfosV4">copySubReportMappingInfosV4 which is saved as an report reference in the report</param>
+        </member>
         <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.PublishReport(Syncfusion.Server.Base.DataClasses.ApiReportAdd)">
             <summary>
             Add RDL report in Reports Server
@@ -1041,6 +1127,13 @@
         <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.PublishDataSet(Syncfusion.Server.Base.DataClasses.ApiReportDataSetAdd)">
             <summary>
             Add dataset in Reports Server
+            </summary>
+            <param name="itemRequest">ItemRequest object which is sent as request</param>
+            <returns>The response is sent as ItemResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.ChangeDatasourceinDataSet(Syncfusion.Server.Base.DataClasses.ApiReportDataSetAdd,System.Guid,System.Boolean)">
+            <summary>
+            Change datasource in dataset file
             </summary>
             <param name="itemRequest">ItemRequest object which is sent as request</param>
             <returns>The response is sent as ItemResponse object</returns>
@@ -1166,7 +1259,7 @@
             <param name="allUserList"></param>
             <returns>returns the errorneous users list</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.ApiOAuthProvider.GenerateToken(Microsoft.AspNetCore.Http.HttpContext,Syncfusion.Server.Base.DataClasses.User,System.String,System.String,System.String,System.Collections.Generic.List{System.Int32})">
+        <member name="M:Syncfusion.Server.API.ApiOAuthProvider.GenerateToken(Microsoft.AspNetCore.Http.HttpContext,Syncfusion.Server.Base.DataClasses.User,System.String,System.String,System.Nullable{System.Int32},System.String,System.Collections.Generic.List{System.Int32})">
             <summary>
             Do not use this method for generation token unless needed.
             This is used only when this API application needs a new token to send to the client
@@ -1175,6 +1268,7 @@
             <param name="userDetail">Detail of the user</param>
             <param name="ipAddress">IP address of the request</param>
             <param name="expiresIn">Specifies the expiry time in seconds</param>
+            <param name="expiresInDays">Specifies the token expiry time in days</param>
             <returns></returns>
         </member>
     </members>

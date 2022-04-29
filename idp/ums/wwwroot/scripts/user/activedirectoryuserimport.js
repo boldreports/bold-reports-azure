@@ -94,11 +94,11 @@ function SaveActiveDirectoryUsers() {
 
                         message = "User has been imported and activated successfully.<ul class='list-area'>" + message + "</ul>";
                         message += "<ul style='padding-left: 0px;list-style: none'><li>Please click OK to check the list behind regarding the invalid or duplicate users.</li></ul>";
-                        parent.messageBox("su-user-1", title, message, "success", function () {
+                        parent.messageBox("su-single-user", title, message, "success", function () {
                             parent.onCloseMessageBox();
                         }, undefined, undefined, undefined, undefined, "success-message-large");
                     } else {
-                        parent.messageBox("su-user-1", title, objectSelected.length + " User(s) has been imported and activated successfully.", "success", function () {
+                        parent.messageBox("su-single-user", title, objectSelected.length + " User(s) has been imported and activated successfully.", "success", function () {
                             parent.onCloseMessageBox();
                         });
                         $(".user-count").html(objectSelected.length);

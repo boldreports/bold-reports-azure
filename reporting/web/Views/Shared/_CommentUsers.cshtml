@@ -44,7 +44,7 @@
                         <div>
                             <a>
                                 <span style="width:32px; height:32px;">
-                                    <img src="@(ServerAppConfig.InternalAppIdpUrl + Url.Content("/User/Avatar?id=" + idpreferenceId + "&ImageSize=32"))" width="12" height="12" />
+                                    <img src="@(globalAppSettings.SystemSettings.IDPUrl + Url.Content("/User/Avatar?id=" + idpreferenceId + "&ImageSize=32"))" width="12" height="12" />
                                 </span>
                                 <span>
                                     @Model[item].DisplayName - @Model[item].Email  @Model[item].FirstName @Model[item].LastName

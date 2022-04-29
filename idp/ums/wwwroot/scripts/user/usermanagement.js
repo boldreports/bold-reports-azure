@@ -14,19 +14,20 @@ $(document).ready(function () {
     var isFirstRequest = false;
     addPlacehoder("#search-area");
 
-    $("#singleuser-delete-confirmation").ejDialog({
+    var singleUserDeleteDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.DeleteUser + "</div>",
+        content: document.getElementById("singleuser-delete-confirmation-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: deleteSingleUser, buttonModel: { content: window.TM.App.LocalizationContent.YesButton, isPrimary:true } },
+            { click: onSingleDeleteDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.NoButton } }
+        ],
         width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
         height: "auto",
-        title: window.TM.App.LocalizationContent.DeleteUser,
-        showHeader: false,
-        enableModal: true,
-        close: "onSingleDeleteDialogClose",
-        closeOnEscape: true,
-        open: "onSingleDeleteDialogOpen"
+        isModal: true,
+        visible: false
     });
+    singleUserDeleteDialog.appendTo("#singleuser-delete-confirmation");
 
     $("#singleuser-delete-confirmation").ejWaitingPopup();
 
@@ -44,73 +45,91 @@ $(document).ready(function () {
         open: "onDeleteDialogOpen"
     });
 
-    $("#make-admin-confirmation").ejDialog({
+    var makeAdminDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.AssignRole + "</div>",
+        content: document.getElementById("make-admin-confirmation-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: MakeSingleUserAdmin, buttonModel: { content: window.TM.App.LocalizationContent.YesButton, isPrimary: true } },
+            { click: onMakeAdminDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.NoButton } }
+        ],
         width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
         height: "auto",
-        title: window.TM.App.LocalizationContent.AssignRole,
-        showHeader: false,
-        enableModal: true,
-        close: "onRefreshUserGrid",
-        closeOnEscape: true,
+        isModal: true,
+        visible: false,
+        close: "onRefreshUserGrid"
     });
+    makeAdminDialog.appendTo("#make-admin-confirmation");
 
-    $("#multiple-admin-confirmation").ejDialog({
+    var makeMultipleAdminDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.AssignRole + "</div>",
+        content: document.getElementById("multiple-admin-confirmation-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: MakeMultipleUserAdmin, buttonModel: { content: window.TM.App.LocalizationContent.YesButton, isPrimary: true } },
+            { click: onMultipleAdminDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.NoButton } }
+        ],
         width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
         height: "auto",
-        title: window.TM.App.LocalizationContent.AssignRole,
-        showHeader: false,
-        enableModal: true,
-        close: "onRefreshUserGrid",
-        closeOnEscape: true,
+        isModal: true,
+        visible: false,
+        close: "onRefreshUserGrid"
     });
+    makeMultipleAdminDialog.appendTo("#multiple-admin-confirmation");
 
-    $("#remove-admin-confirmation").ejDialog({
+    var removeAdminDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.RemoveRole + "</div>",
+        content: document.getElementById("remove-admin-confirmation-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: removeAdmin, buttonModel: { content: window.TM.App.LocalizationContent.YesButton, isPrimary: true } },
+            { click: onRemoveAdminDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.NoButton } }
+        ],
         width: "378px",
-        showOnInit: false,
-        allowDraggable: false,
-        enableResize: false,
         height: "auto",
-        title: window.TM.App.LocalizationContent.RemoveRole,
-        showHeader: false,
-        enableModal: true,
-        close: "onRefreshUserGrid",
-        closeOnEscape: true,
+        isModal: true,
+        visible: false,
+        close: "onRefreshUserGrid"
     });
+    removeAdminDialog.appendTo("#remove-admin-confirmation");
 
-    $("#add-tenants-dialog").ejDialog({
+
+    var grantAccessDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.GrantSiteAcessHeaderTitle + " </div>",
+        content: document.getElementById("add-tenants-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: provideAccesstoTenants, buttonModel: { content: window.TM.App.LocalizationContent.GrantSiteAccessButton, isPrimary: true } },
+            { click: onAddTenantsDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } }
+        ],
         width: "900px",
         height: "539px",
-        showOnInit: false,
-        allowDraggable: true,
-        enableResize: false,
-        showHeader: false,
-        enableModal: true,
-        closeOnEscape: true
+        isModal: true,
+        visible: false,
     });
+    grantAccessDialog.appendTo("#grant-access-dialog");
 
-    $("#add-tenants-report").ejDialog({
+    var addTenantsReportDialog = new ej.popups.Dialog({
+        header: "<div class='dlg-title'>" + window.TM.App.LocalizationContent.ManageUserAccess + " </div>",
+        content: document.getElementById("add-tenants-report-dialog-content"),
+        showCloseIcon: true,
+        buttons: [
+            { click: onTenantsReportDialogClose, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } }
+        ],
         width: "900px",
         height: "300px",
-        showOnInit: false,
-        allowDraggable: true,
-        enableResize: false,
-        showHeader: false,
-        enableModal: true,
-        close: "onRefreshUserGrid",
-        closeOnEscape: true
+        allowDragging: true,
+        isModal: true,
+        visible: false,
+        closeOnEscape: true,
+        close: "onRefreshUserGrid"
     });
-
+    addTenantsReportDialog.appendTo("#add-tenants-report-dialog");
 
     $(document).ready(function () {
         if (document.getElementById("existing-user-count") != null) {
             if ($("#existing-user-count").attr("data-value").toLowerCase() == "true" && $("#csv-file-error").attr("data-value").toLowerCase() != "error") {
-                parent.messageBox("su-user-1", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.NoDataInUploadedFile, "success", function () {
+                parent.messageBox("su-single-user", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.NoDataInUploadedFile, "success", function () {
                     parent.onCloseMessageBox();
                 });
                 $("#import-button").attr("disabled", "disabled");
@@ -125,7 +144,7 @@ $(document).ready(function () {
     $(document).on('click', "input#add-user", function () {
         var firstName = $("#firstname").val().trim();
         var userName = $("#username").val().trim().toLowerCase();
-        var password = $("#user-password").val();
+        var password = $("#new-password").val();
         var isValid = $("#dialog-container").valid();
         var emailid = $('#mailid').val().trim();
 
@@ -177,18 +196,15 @@ $(document).ready(function () {
                                             success: function (result) {
                                                 var messageText = "";
                                                 if (result.activation == 0) {
-                                                    messageText = window.TM.App.LocalizationContent.UserAddedActivated;
+                                                    SuccessAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserAddedActivated, 7000);
                                                 }
                                                 else if (result.result == "success" && result.activation == 1) {
-                                                    messageText = window.TM.App.LocalizationContent.UserAdded;
+                                                    SuccessAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserAdded, 7000);
                                                 }
                                                 else if (result.result == "failure" && result.isAdmin == true && result.activation == 1) {
-                                                    messageText = window.TM.App.LocalizationContent.UserActivationEmailCannotSent;
+                                                    WarningAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.UserActivationEmailCannotSent, 7000);
                                                 }
-                                                messageBox("su-user-add", window.TM.App.LocalizationContent.AddUser, messageText, "success", function () {
-                                                    userGrid.refreshContent();
-                                                    onCloseMessageBox();
-                                                });
+                                                userGrid.refreshContent();
                                             }
                                         });
                                     }
@@ -198,21 +214,18 @@ $(document).ready(function () {
                                         $("#zero-user-acc").show();
                                     }
                                     else {
-                                        messageBox("su-user-add", window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.InternalServerErrorTryAgain, "error", function () {
-                                            userGrid.refreshContent();
-                                            onCloseMessageBox();
-                                        });
+                                        WarningAlert(window.TM.App.LocalizationContent.AddUser, window.TM.App.LocalizationContent.InternalServerErrorTryAgain, 7000);
+                                        userGrid.refreshContent();
                                     }
+                                    onUserAddDialogClose();
                                 }
                                 else {
                                 }
                             }
                         });
                     }
-
                 }
             });
-
         }
         else {
             if ($("#invalid-email").is(':visible')) {
@@ -357,24 +370,6 @@ $(document).ready(function () {
             }
         }
     }
-    $(document).on("click", ".delete-class", function () {
-        $(this).parent("li").addClass("Isdelete");
-        $("#singleuser-delete-confirmation").ejDialog("open");
-    });
-
-    $(document).on("click", ".make-admin-class", function () {
-        $(this).parent("li").addClass("make-admin");
-        $("#make-admin-confirmation").ejDialog("open");
-    });
-
-    $(document).on("click", ".remove-admin-class", function () {
-        $(this).parent("li").addClass("remove-admin");
-        $("#remove-admin-confirmation").ejDialog("open");
-    });
-
-    $(document).on("click", "#assign-user-role-button", function () {
-        $("#multiple-admin-confirmation").ejDialog("open");
-    });
 
     $(document).on("click", ".css-radio", function () {
         $(this).siblings("label").removeClass("notransition");
@@ -399,7 +394,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".remove-admin-button", function () {
-        RemoveAdmin();
+        removeAdmin();
     });
 
 });
@@ -716,7 +711,7 @@ function CloseGroup() {
 }
 
 function onAddTenantsDialogOpen() {
-    $("#add-tenants-dialog").ejDialog("open");
+    document.getElementById("grant-access-dialog").ej2_instances[0].show();
     var data = ej.DataManager({
         url: getItemsUrl + "?includeActiveSites=true",
         adaptor: new ej.UrlAdaptor()
@@ -728,7 +723,7 @@ function onAddTenantsDialogOpen() {
         allowSorting: true,
         allowSearching: true,
         allowSelection: true,
-        allowFiltering: true,
+        allowFiltering: false,
         enableAltRow: false,
         pageSettings: { pageSize: 20 },
         filterSettings: { filterType: "menu" },
@@ -764,6 +759,7 @@ function onAddTenantsDialogOpen() {
             },
             {
                 template: true,
+                allowFiltering: false,
                 allowSorting: true,
                 templateID: "#application-name-template",
                 headerText: "Application Name",
@@ -774,6 +770,7 @@ function onAddTenantsDialogOpen() {
             },
             {
                 template: true,
+                allowFiltering: false,
                 templateID: "#application-url-template",
                 headerText: "Application URL",
                 width: 150,
@@ -927,7 +924,7 @@ function enableAccessButton() {
 function onAddTenantsDialogClose() {
     var gridObj = $('#add_tenants_grid').data("ejGrid");
     gridObj.clearSelection();
-    $("#add-tenants-dialog").ejDialog("close");
+    document.getElementById("grant-access-dialog").ej2_instances[0].hide();
 }
 
 function provideAccesstoTenants() {
@@ -975,7 +972,7 @@ function provideAccesstoTenants() {
 }
 
 function onTenantsReportDialogOpen() {
-    $("#add-tenants-report").ejDialog("open");
+    document.getElementById("add-tenants-report-dialog").ej2_instances[0].show();
 }
 
 $(document).on("click", ".report-download", function () {
@@ -992,7 +989,7 @@ $(document).on("click", ".report-download", function () {
 });
 
 function onTenantsReportDialogClose() {
-    $("#add-tenants-report").ejDialog("close");
+    document.getElementById("add-tenants-report-dialog").ej2_instances[0].hide();
 }
 
 function onDeleteDialogClose() {
@@ -1004,8 +1001,13 @@ function onDeleteDialogOpen() {
     $("#user-delete-confirmation").focus();
 }
 
+function onSingleDeleteDialogOpen() {
+    $("#singleuser-delete-confirmation").find("button.e-primary").addClass("critical-action-button");
+    document.getElementById("singleuser-delete-confirmation").ej2_instances[0].show();
+}
+
 function onSingleDeleteDialogClose() {
-    $("#singleuser-delete-confirmation").ejDialog("close");
+    document.getElementById("singleuser-delete-confirmation").ej2_instances[0].hide();
 }
 
 function checkUserImported(t) {
@@ -1014,7 +1016,7 @@ function checkUserImported(t) {
     if (gridRows.length > 0) {
         $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height"); //Message box height adjustment 
         $(".message-content").removeClass("text-center");
-        messageBox("su-user-1", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.UserImportIncomplete, "error", function () {
+        messageBox("su-single-user", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.UserImportIncomplete, "error", function () {
             parent.onCloseMessageBox();
             window.location.href = $(t).attr("href");
         }, function () {
@@ -1074,7 +1076,7 @@ function SaveUserListFromCSV() {
                     hideWaitingPopup("content-area");
                     $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
                     $(".message-content").addClass("text-center");
-                    messageBox("su-user-1", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.DuplicateOrInvalidData, "success", function () {
+                    messageBox("su-single-user", window.TM.App.LocalizationContent.ImportFromCSV, window.TM.App.LocalizationContent.DuplicateOrInvalidData, "success", function () {
                         parent.onCloseMessageBox();
                     });
                     $("#import-button").attr("disabled", "disabled");
@@ -1084,7 +1086,7 @@ function SaveUserListFromCSV() {
                     var messageText = result.activation == 0 ? " " + window.TM.App.LocalizationContent.UsersHasAddedActivated : " " + window.TM.App.LocalizationContent.UsersHasAdded;
                     $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
                     $(".message-content").addClass("text-center");
-                    messageBox("su-user-1", window.TM.App.LocalizationContent.ImportFromCSV, result.Count + messageText, "success", function () {
+                    messageBox("su-single-user", window.TM.App.LocalizationContent.ImportFromCSV, result.Count + messageText, "success", function () {
                         parent.onCloseMessageBox();
                         window.location.href = userPageUrl;
                     });
@@ -1094,7 +1096,7 @@ function SaveUserListFromCSV() {
             } else {
                 $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("msg-box-height").addClass("failed-msg-box-height");//Message box height adjustment               
                 $(".message-content").addClass("text-center");
-                messageBox("su-user-1", window.TM.App.LocalizationContent.ImportFromCSV, result.Message, "success", function () {
+                messageBox("su-single-user", window.TM.App.LocalizationContent.ImportFromCSV, result.Message, "success", function () {
                     parent.onCloseMessageBox();
                 });
                 hideWaitingPopup("content-area");
@@ -1116,8 +1118,7 @@ $(document).on("click", ".option-icon", function () {
 
 function deleteSingleUser() {
     $("#singleuser-delete-confirmation").ejWaitingPopup("show");
-    var userId = $(".Isdelete").attr("data-content");
-    var usergrid = $('#user_grid').data("ejGrid");
+    var userId = $(".is-delete").attr("data-content");
     doAjaxPost("POST", deleteSingleFromUserListUrl, "UserId=" + userId, function (data) {
         if (data.status) {
             var count = parent.$("#user-count-text").val();
@@ -1130,16 +1131,13 @@ function deleteSingleUser() {
             if (data.AzureADUserCount == 0) {
                 $("#azure-ad-indication").html("");
             }
-            parent.messageBox("su-delete", window.TM.App.LocalizationContent.DeleteUser, window.TM.App.LocalizationContent.UserHasDeleted, "success", function () {
-                parent.onCloseMessageBox();
-            });
+            SuccessAlert(window.TM.App.LocalizationContent.DeleteUser, window.TM.App.LocalizationContent.UserHasDeleted, 7000);
             onConfirmDeleteUser("1");
             $("#singleuser-delete-confirmation").ejWaitingPopup("hide");
-            $("#singleuser-delete-confirmation").ejDialog("close");
+            onSingleDeleteDialogClose();
         } else {
-            parent.messageBox("su-delete", window.TM.App.LocalizationContent.DeleteUser, window.TM.App.LocalizationContent.FailedToDeleteUser, "error", function () {
-                parent.onCloseMessageBox();
-            });
+            WarningAlert(window.TM.App.LocalizationContent.DeleteUser, window.TM.App.LocalizationContent.FailedToDeleteUser, 7000);
+            onSingleDeleteDialogClose();
         }
     });
 }
@@ -1170,8 +1168,35 @@ $(document).on("click", ".search-user", function () {
     gridObj.refreshContent();
 });
 
+$(document).on("click", ".delete-class", function () {
+    $(this).parent("li").addClass("is-delete");
+    onSingleDeleteDialogOpen();
+});
+
+$(document).on("click", ".make-admin-class", function () {
+    $(this).parent("li").addClass("make-admin");
+    onMakeAdminDialogOpen();
+});
+
+$(document).on("click", ".remove-admin-class", function () {
+    $(this).parent("li").addClass("remove-admin");
+    onRemoveAdminDialogOpen();
+});
+
+function onMakeAdminDialogOpen() {
+    document.getElementById("make-admin-confirmation").ej2_instances[0].show();
+}
+
+function onMakeMultipleAdminDialogOpen() {
+    document.getElementById("multiple-admin-confirmation").ej2_instances[0].show();
+}
+
+function onRemoveAdminDialogOpen() {
+    document.getElementById("remove-admin-confirmation").ej2_instances[0].show();
+}
+
 function onMakeAdminDialogClose() {
-    $("#make-admin-confirmation").ejDialog("close");
+    document.getElementById("make-admin-confirmation").ej2_instances[0].hide();
 }
 
 function onRefreshUserGrid() {
@@ -1181,11 +1206,11 @@ function onRefreshUserGrid() {
 }
 
 function onRemoveAdminDialogClose() {
-    $("#remove-admin-confirmation").ejDialog("close");
+    document.getElementById("remove-admin-confirmation").ej2_instances[0].hide();
 }
 
 function onMultipleAdminDialogClose() {
-    $("#multiple-admin-confirmation").ejDialog("close");
+    document.getElementById("multiple-admin-confirmation").ej2_instances[0].hide();
 }
 
 function MakeSingleUserAdmin() {
@@ -1202,14 +1227,14 @@ function MakeSingleUserAdmin() {
                 userGrid.refreshContent();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("make-admin-confirmation")
-                $("#make-admin-confirmation").ejDialog("close");
+                onMakeAdminDialogClose();
             }
             else {
                 WarningAlert(window.TM.App.LocalizationContent.AssignRole, window.TM.App.LocalizationContent.MakeAdminError, 7000)
                 userGrid.refreshContent();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("make-admin-confirmation")
-                $("#make-admin-confirmation").ejDialog("close");
+                onMakeAdminDialogClose();
             }
         }
     });
@@ -1217,7 +1242,6 @@ function MakeSingleUserAdmin() {
 }
 
 function MakeMultipleUserAdmin() {
-
     var userGrid = $('#user_grid').data("ejGrid");
     var userList = "";
     var usergrid = $('#user_grid').data("ejGrid");
@@ -1243,21 +1267,21 @@ function MakeMultipleUserAdmin() {
                 userGrid.refreshContent();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("multiple-admin-confirmation");
-                $("#multiple-admin-confirmation").ejDialog("close");
+                onMultipleAdminDialogClose();
             }
             else {
                 WarningAlert(window.TM.App.LocalizationContent.AssignRole, window.TM.App.LocalizationContent.MakeAdminError, 7000)
                 userGrid.refreshContent();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("multiple-admin-confirmation");
-                $("#multiple-admin-confirmation").ejDialog("close");
+                onMultipleAdminDialogClose();
             }
         }
     });
 
 }
 
-function RemoveAdmin() {
+function removeAdmin() {
     var userId = $(".remove-admin").attr("data-content");
     var userGrid = $('#user_grid').data("ejGrid");
     showWaitingPopup("remove-admin-confirmation");
@@ -1270,13 +1294,13 @@ function RemoveAdmin() {
                 SuccessAlert(window.TM.App.LocalizationContent.RemoveRole, window.TM.App.LocalizationContent.RemoveAdmin, 7000)
                 userGrid.refreshContent();
                 hideWaitingPopup("remove-admin-confirmation");
-                $("#remove-admin-confirmation").ejDialog("close");
+                document.getElementById("remove-admin-confirmation").ej2_instances[0].hide();
             }
             else {
                 WarningAlert(window.TM.App.LocalizationContent.RemoveRole, window.TM.App.LocalizationContent.RemoveAdminError, 7000)
                 userGrid.refreshContent();
                 hideWaitingPopup("remove-admin-confirmation");
-                $("#remove-admin-confirmation").ejDialog("close");
+                document.getElementById("remove-admin-confirmation").ej2_instances[0].hide();
             }
         }
     });

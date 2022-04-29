@@ -13,14 +13,14 @@
         </div>
     </div>
     <div class="dc-list">
-        <div class="dc-list-header">Service Connectors</div>
+        <div class="dc-list-header" ng-if="loadingStatus">Service Connectors</div>
         <div class="dc-list-cards">
             <div class="dc-list-card" ng-mouseenter="onDataListHover($event)" ng-mouseleave="onDataListHover($event)" ng-repeat="(key, value) in connectorList">
                 <div class="dc-list-info" data-title="{{value.description}}"></div>
-                <div class="dc-list-img" data-extType="{{value.extType | lowercase}}"></div>
+                <div class="{{value.iconClassName}} e-rpt-connection-img-tile dc-list-img">{{value.isCustomConnector ? value.displayName : ''}}</div>
                 <div class="dc-list-select-btn" ng-click="onDataConnectorSelect(value)">Select</div>
             </div>
-            <div class="ds-list-card-empty" ng-class="connectorList.length ? '': 'active'">No records to display</div>
+            <div class="ds-list-card-empty" ng-if="!loadingStatus" ng-class="connectorList.length ? '': 'active'">No records to display</div>
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@
     var tenantHomePage = "/" + @CloudAppConfig.TenantManagementUrl.Trim('/') + "/homepage";
     var requestUri = new Uri(Context.Request.GetDisplayUrl());
     var requestUrl = requestUri.AbsolutePath.ToLower();
-    var imageUrl = GlobalAppSettings.SystemSettings.BaseUrl;
+    var imageUrl = GlobalAppSettings.SystemSettings.InternalAppUrls.Idp;
 }
 
 <aside class="menu-bar" id="app-navigation">

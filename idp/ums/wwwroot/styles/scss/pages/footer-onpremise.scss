@@ -1,4 +1,4 @@
-﻿@import "../themes/_light.scss";
+﻿@import "../themes/default.scss";
 @import "../core/_typography.scss";
 
 $notify-baner-bg:#e57768;
@@ -11,7 +11,7 @@ $notify-baner-bg:#e57768;
 }
 
 body {
-    background: $grey-100;
+    background: $admin-container-bg;
 
     #content-area {
         margin-top: 0px !important;
@@ -54,28 +54,22 @@ body {
     }
 
     #base-footer-div {
+        bottom: 0px;
         color: $grey-700;
         float: left;
-        font-size: map-get($app-text-size, sm);
+        font-size: map-get($app-text-size, md);
         font-weight: 600;
-        height: 50px;
-        padding: 0px 0px 0px 80px;
+        margin-top: 7px;
+        padding: 25px 30px 10px 30px;
+        position: absolute;
         width: 100%;
 
         footer {
-            display: block !important;
-            padding: 0px !important;
-
             .layout-footer {
                 padding: 0px;
                 margin-top: 10px;
 
                 #enablefooter {
-                    color: $grey-700;
-                    font-size: 12px;
-                    margin: 7px 0px;
-                    text-align: right;
-
                     #footer-separator {
                         margin-left: 10px;
                         margin-right: 10px;
@@ -84,23 +78,22 @@ body {
 
                     #footerlogo {
                         height: 25px;
-                        width: 110px;
+                        width: 100px;
                     }
                 }
             }
 
             .language-area {
                 bottom: 0px;
-                float: right;
-                font-size: map-get($app-text-size, sm);
-                padding: 6px 20px 10px 8px !important;
+                font-size: map-get($app-text-size, md);
+                margin-bottom: 5px;
+                padding: 0px;
                 position: relative;
                 right: 0px;
+                width: auto;
                 bottom: 0px;
 
                 #lang_menu {
-                    height: 24px;
-                    color: $primary-black;
                     position: relative;
                     right: 0;
 
@@ -122,6 +115,7 @@ body {
                 img {
                     margin-left: 5px;
                     margin-top: -7px;
+                    height: 25px;
                 }
             }
         }
@@ -142,7 +136,7 @@ body {
     #server-app-container {
         #base-footer-div {
             margin-top: 20px;
-            padding: 0px 0px 0px 80px !important;
+            padding: 0px 0px 0px 80px;
         }
     }
 }
@@ -158,11 +152,11 @@ body.layout-accounts {
         #base-footer-div {
             footer {
                 .language-area {
-                    font-size: map-get($app-text-size, sm);
+                    font-size: map-get($app-text-size, md);
                 }
 
                 #enablefooter {
-                    font-size: map-get($app-text-size, sm);
+                    font-size: map-get($app-text-size, md);
                 }
             }
         }

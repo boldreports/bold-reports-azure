@@ -3,7 +3,7 @@
     var globalAppSettings = _globalAppSettings;
     var tenantAppConfig = new TenantAppConfiguration(globalAppSettings);
     var showSyncfusionBrand = globalAppSettings.SystemSettings.IsShowPoweredBySyncfusion ? "form-group" : "form-group hide";
-    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink + "/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.MainLogo;
+    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.MainLogo;
     var appLogo = (globalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo) || globalAppSettings.SystemSettings.MainScreenLogo.EndsWith("main_logo.png")) ? defaultAppLogo : globalAppSettings.SystemSettings.MainScreenLogo;
     var protocolTypes = new List<SelectListItem>
 {
@@ -41,10 +41,10 @@
 
                         <div id="ssl-selectpicker" class="input-group col-xs-4">
                             <div class="input-group-addon">
-                                @Html.DropDownList("enableSsl", protocolTypes, new { id = "enable-ssl", @class = "selectpicker", data_live_search = "false" })
+                                @Html.DropDownList("enableSsl", protocolTypes, new { id = "enable-ssl", @class = "selectpicker", data_live_search = "false", disabled = "disabled" })
                             </div>
                             <div class="col-xs-12 no-padding">
-                                <input type="text" id="site-base-url" name="site-base-url" class="form-control site-url-fields" placeholder="[[[Enter your URL]]]" value="@ViewBag.authority" data-original-value="@ViewBag.authority" />
+                                <input type="text" id="site-base-url" name="site-base-url" class="form-control site-url-fields" placeholder="[[[Enter your URL]]]" value="@ViewBag.authority" data-original-value="@ViewBag.authority" disabled />
                             </div>
                         </div>
                         @if (isWindowsPlatform)
@@ -77,24 +77,24 @@
                             <input type="text" id="site_url" name="site_url" disabled class="form-control site-url-fields" placeholder="[[[Enter your URL]]]" value="@ViewBag.SystemSettings.BaseUrl" data-original-value="@ViewBag.SystemSettings.BaseUrl" />
 
                             @*<div class="custom-domain pull-left no-padding">
-                                    @if (!ViewBag.IsCustomDomain)
-                                    {
-                                        <span>[[[Now, you can use your own domain]]]</span>
-                                        <button type="button" title="" id="add-custom-domain" class="app-button app-secondary-button custom-domain-btn">
-                                            [[[Use custom domain]]]
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <div class="alert alert-success no-margin">
-                                            [[[SSL Certificate expires on]]] <b>@ViewBag.ExpirationDate</b>
-                                        </div>
+            @if (!ViewBag.IsCustomDomain)
+            {
+                <span>[[[Now, you can use your own domain]]]</span>
+                <button type="button" title="" id="add-custom-domain" class="app-button app-secondary-button app-btn-secondary custom-domain-btn">
+                    [[[Use custom domain]]]
+                </button>
+            }
+            else
+            {
+                <div class="alert alert-success no-margin">
+                    [[[SSL Certificate expires on]]] <b>@ViewBag.ExpirationDate</b>
+                </div>
 
-                                        <button type="button" title="" id="update-custom-domain" class="app-button app-secondary-button custom-domain-btn no-margin">
-                                            [[[Update custom domain]]]
-                                        </button>
-                                    }
-                                </div>*@
+                <button type="button" title="" id="update-custom-domain" class="app-button app-secondary-button app-btn-secondary custom-domain-btn no-margin">
+                    [[[Update custom domain]]]
+                </button>
+            }
+        </div>*@
                         </div>
 
                         <input type="hidden" class="hidden-input" id="scheme_value" data-value="@ViewBag.scheme">
@@ -175,8 +175,6 @@
                             </span>
                         </div>
                     </div>
-                    @if (ServerAppConfig.IsSelfHosted)
-                    {
                         <div class="@showSyncfusionBrand blur-whitelable-content">
                             @Html.Label("enablepoweredbysyncfusion", "[[[Show powered by Information]]]", new { @class = "app-textbox-label col-xs-4" })
                             <div class="col-xs-4 enablepoweredbysyncfusion switch-align">
@@ -186,6 +184,8 @@
                                 </span>
                             </div>
                         </div>
+                      @if (ServerAppConfig.IsSelfHosted)
+                      {
                         <div class="form-group highlight-image" data-image="powderedby-logo">
                             <label class="col-xs-4 app-textbox-label">[[[Powered by logo]]]</label>
                             <div class="col-xs-8">
@@ -200,6 +200,7 @@
                                 </span>
                             </div>
                         </div>
+                      }
                         <div class="form-group blur-whitelable-content">
                             @Html.Label("enablecopyrightinfo", "[[[Show copyright information]]]", new { @class = "app-textbox-label col-xs-4" })
                             <div class="col-xs-4 enablecopyrightinfo switch-align">
@@ -209,6 +210,8 @@
                                 </span>
                             </div>
                         </div>
+                      @if (ServerAppConfig.IsSelfHosted)
+                      {
                         <div class="form-group highlight-image">
                             <label class="col-xs-4 app-textbox-label">[[[Site copyright information]]]</label>
                             <div class="col-xs-8">
@@ -220,7 +223,7 @@
                             </div>
                             <input type="hidden" class="hidden-input" id="scheme_value" data-value="@ViewBag.scheme">
                         </div>
-                    }
+                       }
                     </div>
                 <div class="col-xs-6 text-center blur-whitelable-content">
                     <div id="image-container" class="center-img">
@@ -267,6 +270,8 @@
                                         <img src="@Url.Content("~/images/divider_light.png")" alt="divider" />
                                     </td>
                                 </tr>
+                                @if (ServerAppConfig.IsSelfHosted)
+                                {
                                 <tr width="200">
                                     <td>
                                         <span id="footer-preview-image" class="app-img-container header-icon tooltip-container" data-toggle="tooltip" data-animation="true" data-image="header-logo">
@@ -275,6 +280,7 @@
                                         <div id="footer-preview-image" class="applogo-label">[[[Powered by logo]]]</div>
                                     </td>
                                 </tr>
+                                }
                                 </tbody>
                         </table>
                     </div>
@@ -285,8 +291,8 @@
     </div>
 
     <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-        <a href="@Url.Action("Index","Home")" class="secondary-button pull-right" id="cancel-site-settings" title="">[[[Cancel]]]</a>
-        <button type="button" title="" id="update-mail-settings" name="UpdateSystemSettings" class="primary-button pull-right update-system-settings">
+        <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-site-settings" title="">[[[Cancel]]]</a>
+        <button type="button" title="" id="update-mail-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right update-system-settings">
             [[[Save]]]
         </button>
     </div>

@@ -22,14 +22,18 @@
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
     </script>
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.min.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 
     <script>
@@ -127,8 +131,8 @@
             </div>
             <div class='col-xs-12 new-report-button-holder rightAlign no-left-padding fixed-footer dialog-footer'>
                 <div class='create-rdl-btns pull-right'>
-                    <input type='button' title="" value='[[[Update]]]' id='publish_report' onclick="addRDLReport()" class='btn primary-button small-right-margin' disabled tabindex="5">
-                    <input type='button' title="" value='[[[Cancel]]]' class='btn secondary-button NoStyleCloseClick' onclick="closeNewRDLAddPopup()" tabindex="6">
+                    <input type='button' title="" value='[[[Update]]]' id='publish_report' onclick="addRDLReport()" class='btn primary-button app-btn-primary small-right-margin' disabled tabindex="5">
+                    <input type='button' title="" value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewRDLAddPopup()" tabindex="6">
                 </div>
             </div>
         </div>

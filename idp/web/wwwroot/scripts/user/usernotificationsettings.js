@@ -1,7 +1,5 @@
 ﻿var updatedNotificationSettings;
 $(document).ready(function () {
-    $(".notification-disabled").attr("disabled", true).selectpicker("refresh");
-    $(".selectpicker").removeClass("enable");
     var contentAreaWaitingPopupTemplateId = createLoader("content-area");
 	$("#content-area").ejWaitingPopup({ template:$("#" + contentAreaWaitingPopupTemplateId)});
     $(document).on("click", "#edit-settings", function (e) {
@@ -9,8 +7,6 @@ $(document).ready(function () {
             EnableSystemNotification: parseInt($("#system-notify-status").val()),
             EnableMailNotification: parseInt($("#mail-notify-status").val()),
         };
-        $(".notification-disabled").attr("disabled", false).selectpicker("refresh");
-        $(".selectpicker").addClass("enable");
         $("#edit-settings").hide();
         $("#update-notification-settings").show();
         $("#cancel-settings").css("display", "inline");
@@ -40,8 +36,6 @@ $(document).ready(function () {
                 $("#content-area").ejWaitingPopup("hide");
             }
         });
-        $(".notification-disabled").attr("disabled", true).selectpicker("refresh");
-        $(".selectpicker").removeClass("enable");
         $("#edit-settings").show();
         $("#update-notification-settings").hide();
         $("#cancel-settings").hide();
@@ -57,13 +51,11 @@ function cancelSettings(updatedNotificationSettings) {
     $("#mail-notify-status").val(updatedNotificationSettings.EnableMailNotification);
     $("#autowatch-created-comment-status").val(updatedNotificationSettings.EnableAutoWatchOfCommentsOfCreatedItems);
     $("#autowatch-access-comment-status").val(updatedNotificationSettings.EnableAutoWatchOfCommentsOfAccessibleItems);
-    $(".notification-disabled").attr("disabled", true).selectpicker("refresh");
-    $(".selectpicker").removeClass("enable");
     $("#edit-settings").show();
     $("#update-notification-settings").hide();
     $("#cancel-settings").hide();
 }
 
-$(window).load(function () {
+$(window).on("load", function () {
     $(".hidden-visibility").removeClass("hidden-visibility");
 });

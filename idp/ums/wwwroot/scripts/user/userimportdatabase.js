@@ -1417,7 +1417,7 @@ function SaveSelectedUsers() {
                         if (parseInt(result.Data.FailureUserCount) > 0) {
                             message += "<li class='list-unstyled'>" + result.Data.FailureUserCount + " duplicate user(s) exists. <br />(Username or Email address already exists or repeated).</li>";
                         }
-                        messageBox("su-user-1", "Import users from database", message, "success", function () {
+                        messageBox("su-single-user", "Import users from database", message, "success", function () {
                             $("#change-selected-column").click();
                             var gridObj = $("#Grid").data("ejGrid");
                             gridObj.clearSelection();
@@ -1429,7 +1429,7 @@ function SaveSelectedUsers() {
                         });
                     }
                 } else {
-                    messageBox("su-user-1", "Import users from database", "Internal server error. Please try again.", "success", function () {
+                    messageBox("su-single-user", "Import users from database", "Internal server error. Please try again.", "success", function () {
                         parent.onCloseMessageBox();
                     });
                 }

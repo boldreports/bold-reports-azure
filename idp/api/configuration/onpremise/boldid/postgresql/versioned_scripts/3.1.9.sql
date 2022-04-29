@@ -2,8 +2,6 @@
 
 INSERT into BOLDTC_AuthProvider  (Name, AuthTypeId, ModifiedDate, IsActive) VALUES (N'WindowsAD', 6, now() at time zone 'utc', 1);
 
-INSERT into BOLDTC_AuthSettings  ( AuthProviderId , IsEnabled, CreatedDate, ModifiedDate, IsDefaultAuthentication, IsActive ) VALUES (5, 1, now() at time zone 'utc', now() at time zone 'utc', 0, 1);
-
 ﻿ALTER TABLE BOLDTC_TenantActivity ADD ChildId varchar(1026) NULL
 ;
 ALTER TABLE BOLDTC_TenantActivity ADD DetailActionId int NOT NULL DEFAULT 0

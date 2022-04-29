@@ -5,6 +5,16 @@ var addSiteAttribute = [];
 var siteCreation = false;
 
 $(document).ready(function () {
+    var inputbox = new ejs.inputs.TextBox({
+        cssClass: 'e-outline e-custom',
+        floatLabelType: 'Auto'
+    });
+
+    inputbox.appendTo("#custom-attribute-name");
+
+    multiLineInputBoxInitialization("#custom-attribute-value");
+    multiLineInputBoxInitialization("#custom-attribute-descrition");
+
     $("#custom-attribute-form").validate({
         errorElement: "span",
         onkeyup: function (element, event) {
@@ -25,14 +35,14 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest("div").addClass("has-error");
+            $(element).closest("div").addClass("e-error");
         },
         unhighlight: function (element) {
-            $(element).closest("div").removeClass("has-error");
-            $(element).parent().find("div.custom-attr-validation-errors").html("");
+            $(element).closest("div").removeClass("e-error");
+            $(element).closest(".e-outline").siblings(".custom-attr-validation-errors").html("");
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find("div.custom-attr-validation-errors").html(error);
+            $(element).closest(".e-outline").siblings(".custom-attr-validation-errors").html(error);
         },
         messages: {
             "custom-attribute-name": {
@@ -58,11 +68,10 @@ $(document).ready(function () {
 });
 
 function isAttributeExist() {
-    return !$("#custom-attribute-name").hasClass("has-error");
+    return !$("#custom-attribute-name").hasClass("e-error");
 }
 
 function openCustomAttributeDialog(attributeId, name) {
-    var dialogHeader = '<span class ="custom-dialog-header">' + window.TM.App.LocalizationContent.AddCustomAttribute + '</span>';
     if (!isCustomAttributeBinded) {
         var createDialogId = document.createElement("div");
         createDialogId.setAttribute("id", "custom-attribute-dialog");
@@ -76,34 +85,11 @@ function openCustomAttributeDialog(attributeId, name) {
         element.appendChild(createDialogId);
         $("#custom-attribute-dialog").css("height", $("#popup-container").height());
         var dialog = new ejs.popups.Dialog({
-            header: dialogHeader,
+            header: '<div class="dlg-title">' + window.TM.App.LocalizationContent.AddCustomAttribute + '</div>',
             content: document.getElementById("custom-attribute-content"),
             buttons: [
-                {
-                    'click': function (e) {
-                        if ($("#custom-attribute-form").valid() && !$("#custom-attribute-name").hasClass("has-error")) {
-                            if (isAttributeEdit) {
-                                updateCustomAttribute(customAttributeInfo.Id);
-                            } else {
-                                saveCustomAttribute();
-                            }
-                        }
-                    },
-                    buttonModel: {
-                        isPrimary: true,
-                        content: window.TM.App.LocalizationContent.SaveButton
-                    }
-                },
-                {
-                    'click': function () {
-                        $("#custom-attribute-form").find("div.validation-errors").html("");
-                        $("#custom-attribute-form").find("div").removeClass("has-error");
-                        dialog.hide();
-                    },
-                    buttonModel: {
-                        content: window.TM.App.LocalizationContent.CancelButton
-                    }
-                },
+                { click: saveAttribute, buttonModel: { isPrimary: true, content: window.TM.App.LocalizationContent.SaveButton } },
+                { click: onCloseCustomAttribute, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } },
             ],
             animationSettings: { effect: 'Zoom' },
             beforeOpen: showCustomAttribute,
@@ -118,6 +104,10 @@ function openCustomAttributeDialog(attributeId, name) {
     }
     else {
         var dialog = document.getElementById("custom-attribute-dialog").ej2_instances;
+        dialog[0].buttons = [
+            { click: saveAttribute, buttonModel: { isPrimary: true, content: window.TM.App.LocalizationContent.SaveButton } },
+            { click: onCloseCustomAttribute, buttonModel: { content: window.TM.App.LocalizationContent.CancelButton } },
+        ],
         dialog[0].show();
     }
     
@@ -128,12 +118,29 @@ function openCustomAttributeDialog(attributeId, name) {
     }
 }
 
+function saveAttribute() {
+    if ($("#custom-attribute-form").valid() && !$("#custom-attribute-name").hasClass("e-error")) {
+        if (isAttributeEdit) {
+            updateCustomAttribute(customAttributeInfo.Id);
+        } else {
+            saveCustomAttribute();
+        }
+    }
+}
+
+function onCloseCustomAttribute() {
+    $("#custom-attribute-form").find("div.validation-errors").html("");
+    $("#custom-attribute-form").find("div").removeClass("e-error");
+    var dialog = document.getElementById("custom-attribute-dialog").ej2_instances;
+    dialog[0].hide();
+}
+
 function showSavedAttributes() {
     var attributeGridObj = siteCreation ? $("#AddSiteAttributesGrid").data("ejGrid") : $("#SiteAttributesGrid").data("ejGrid");
     customAttributeInfo = attributeGridObj.getCurrentViewData()[attributeGridObj.getIndexByRow($("tr.e-row[aria-selected *='true']"))];
-    $("#custom-attribute-name").val(customAttributeInfo.Name);
-    customAttributeInfo.CanEncrypt ? "" : $("#custom-attribute-value").val(customAttributeInfo.Value);
-    $("#custom-attribute-descrition").val(customAttributeInfo.Description);
+    document.getElementById("custom-attribute-name").ej2_instances[0].value = customAttributeInfo.Name;
+    document.getElementById("custom-attribute-descrition").ej2_instances[0].value = customAttributeInfo.Description;
+    customAttributeInfo.CanEncrypt ? "" : document.getElementById("custom-attribute-value").ej2_instances[0].value = customAttributeInfo.Value;
     $("#encrypt-custom-attribute").prop("checked", customAttributeInfo.CanEncrypt);
 }
 
@@ -148,8 +155,8 @@ function showCustomAttribute() {
 function saveCustomAttribute() {
     var customAttribute = {
         Name: $("#custom-attribute-name").val().trim(),
-        Value: $("#custom-attribute-value").val().trim(),
-        Description: $("#custom-attribute-descrition").val().trim(),
+        Value: document.getElementById("custom-attribute-value").ej2_instances[0].value,
+        Description: document.getElementById("custom-attribute-descrition").ej2_instances[0].value,
         CanEncrypt: $("#encrypt-custom-attribute").is(":checked"),
         CreatedDate: new Date(),
         ModifiedDate: new Date()
@@ -177,7 +184,7 @@ function saveCustomAttribute() {
             } else {
                 ShowWaitingProgress("#custom-attribute-dialog", "hide");
                 if (!isEmptyOrWhitespace(result.Message)) {
-                    $("#custom-attribute-name").addClass("has-error");
+                    $("#custom-attribute-name").addClass("e-error");
                     $("#custom-attribute-form").valid();
                 } else {
                     WarningAlert(window.TM.App.LocalizationContent.AddCustomAttribute, window.TM.App.LocalizationContent.CustomAttributeFailure, 7000);
@@ -201,7 +208,7 @@ $(document).on("keyup focusout", "#custom-attribute-name", function (e) {
             siteCreation ? nameCheckAtAddTenant() : attributeNameCheck();
         }
     } else {
-        $("#custom-attribute-name").removeClass("has-error");
+        $("#custom-attribute-name").removeClass("e-error");
         $("[name='custom-attribute-name']").valid();
     }
 });
@@ -214,9 +221,9 @@ function attributeNameCheck() {
         data: { attributeName: attributeName, tenantInfoId: tenantInfoId },
         success: function (result) {
             if (result.Status) {
-                $("#custom-attribute-name").addClass("has-error");
+                $("#custom-attribute-name").addClass("e-error");
             } else {
-                $("#custom-attribute-name").removeClass("has-error");
+                $("#custom-attribute-name").removeClass("e-error");
             }
             $("[name='custom-attribute-name']").valid();
         }
@@ -227,8 +234,8 @@ function updateCustomAttribute(attributeId) {
     var customAttribute = {
         Id: attributeId,
         Name: $("#custom-attribute-name").val().trim(),
-        Value: $("#custom-attribute-value").val().trim(),
-        Description: $("#custom-attribute-descrition").val().trim(),
+        Value: document.getElementById("custom-attribute-value").ej2_instances[0].value,
+        Description: document.getElementById("custom-attribute-descrition").ej2_instances[0].value,
         CanEncrypt: $("#encrypt-custom-attribute").is(":checked"),
         CreatedDate: new Date(),
         ModifiedDate: new Date()
@@ -254,7 +261,7 @@ function updateCustomAttribute(attributeId) {
             } else {
                 ShowWaitingProgress("#custom-attribute-dialog", "hide");
                 if (!isEmptyOrWhitespace(result.Message)) {
-                    $("#custom-attribute-name").addClass("has-error");
+                    $("#custom-attribute-name").addClass("e-error");
                     $("#custom-attribute-form").valid();
                 } else {
                     WarningAlert(window.TM.App.LocalizationContent.EditCustomAttribute, window.TM.App.LocalizationContent.UpdateCustomAttributeFailure, 7000);
@@ -312,11 +319,13 @@ function getSiteAttributes() {
 }
 
 function updateValidationMessages() {
-    $("#custom-attribute-name, #custom-attribute-value, #custom-attribute-descrition").val("");
+    document.getElementById("custom-attribute-name").ej2_instances[0].value = null;
+    document.getElementById("custom-attribute-value").ej2_instances[0].value = null;
+    document.getElementById("custom-attribute-descrition").ej2_instances[0].value = null;
     $("#encrypt-custom-attribute").prop("checked", false);
-    $("#custom-attribute-name, #custom-attribute-value").removeClass("has-error");
-    $("#custom-attribute-name, #custom-attribute-value").next(".validation-errors").html("");
-    $("#custom-attribute-name, #custom-attribute-value").parent('div').removeClass("has-error");
+    $("#custom-attribute-name, #custom-attribute-value").removeClass("e-error");
+    $("#custom-attribute-name, #custom-attribute-value").closest(".e-outline").siblings(".custom-attr-validation-errors").html("");
+    $("#custom-attribute-name, #custom-attribute-value").parent('div').removeClass("e-error");
 }
 
 function deleteConfirmation(item) {
@@ -353,9 +362,9 @@ function nameCheckAtAddTenant() {
     var attributeName = $("#custom-attribute-name").val().trim();
     $.each(addSiteAttribute, function (index, value) {
         if (value.Name == attributeName) {
-            $("#custom-attribute-name").addClass("has-error");
+            $("#custom-attribute-name").addClass("e-error");
         } else {
-            $("#custom-attribute-name").removeClass("has-error");
+            $("#custom-attribute-name").removeClass("e-error");
         }
         $("[name='custom-attribute-name']").valid();
     });
@@ -375,4 +384,13 @@ function removeSiteAttribute() {
     var siteAttributesGrid = $("#AddSiteAttributesGrid").data("ejGrid");
     addSiteAttribute.splice(siteAttributesGrid.getIndexByRow($("tr.e-row[aria-selected *='true']")));
     siteAttributesGrid.refreshContent();
+}
+
+function multiLineInputBoxInitialization(id) {
+    var inputbox = new ejs.inputs.TextBox({
+        cssClass: 'e-outline e-custom',
+        floatLabelType: 'Auto',
+        multiline: true
+    });
+    inputbox.appendTo(id);
 }

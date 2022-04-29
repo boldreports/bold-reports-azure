@@ -7,24 +7,41 @@
     globalAppSettings.SystemSettings = new SystemSettings();
     var reportServerResourceUrl = ViewBag.appsettings.SystemSettings.CDNLink.TrimEnd('/');
     var pathbase = Context.Request.PathBase;
+    var headerLogo = string.Empty;
+    var favLogo = string.Empty;
+    var orgName = string.Empty;
+    if (!string.IsNullOrWhiteSpace(ViewBag.appsettings.SystemSettings.LoginLogo))
+    {
+        headerLogo = ViewBag.appsettings.SystemSettings.LoginLogo;
+        favLogo = ViewBag.appsettings.SystemSettings.FavIcon + "&random=" + Syncfusion.Server.Base.Helpers.DateTimeHelper.DateTimeToUnixTimeStamp(DateTime.Now);
+        orgName = ViewBag.appsettings.SystemSettings.OrganizationName;
+    }
+    else
+    {
+        headerLogo = reportServerResourceUrl + "/cdn/images/application/boldreports/deployment_header_logo.svg";
+        favLogo = @cdnLink + "/application/" + @ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + @IconFileNames.Favicon;
+        orgName = @GlobalAppSettings.BrandingDisplayName;
+    }
 }
 <!DOCTYPE html>
 <html class="dashboard-server">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="@cdnLink/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon" />
-    <title>[[[Registration]]] - @GlobalAppSettings.BrandingDisplayName Enterprise Reporting</title>
+    <link rel="icon" href="@favLogo" />
+    <title>[[[Registration]]] - @orgName Enterprise Reporting</title>
     <environment include="Development,CloudDevelopment">
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tenant-registration.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/signalr/signalr.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tenant-registration-page.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tenant-registration.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/signalr/signalr.min.js"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tenant-registration-page.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <script>
         var statusTracker;
@@ -112,7 +129,7 @@
     <div class="deploy-tenant-parent">
         <div class="deploy-tenant-child">
             <div class="deployment-page-image">
-                <img class="boldbi-logo" src="@reportServerResourceUrl/cdn/images/application/boldreports/deployment_header_logo.svg" />
+                <img class="boldbi-logo" src="@headerLogo" />
             </div>
             <div class="deploy-tenant-bg">
                 <div class="text-h1 deployment-content">[[[Registering your site...]]]</div>
@@ -135,7 +152,7 @@
 
     <header class="deployment-header hide">
         <div class="deployment-header-container">
-            <img class="boldbi-logo" src="@reportServerResourceUrl/cdn/images/application/boldreports/deployment_header_logo.svg" />
+            <img class="boldbi-logo" src="@headerLogo" />
             <a id="close-welcome-page" class="su-close"></a>
         </div>
     </header>
@@ -152,7 +169,7 @@
                         <table class="admin-options">
                             <tr>
                                 <td class="action-logo" rowspan="2">
-                                    <img src="@cdnLink/application/boldreports/manage_tenant.svg" />
+                                    <img src="@reportServerResourceUrl/cdn/images/application/boldreports/manage_tenant.svg" />
                                 </td>
                                 <td class="action-title">
                                     <div>[[[Manage your Sites]]]</div>
@@ -172,7 +189,7 @@
                         <table class="admin-options">
                             <tr>
                                 <td class="action-logo" rowspan="2">
-                                    <img src="@cdnLink/application/boldreports/goto_dashboard.svg" />
+                                    <img src="@reportServerResourceUrl/cdn/images/application/boldreports/goto_dashboard.svg" />
                                 </td>
                                 <td class="action-title">
                                     <div>[[[Go to Reports]]]</div>

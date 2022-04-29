@@ -23,7 +23,8 @@
         tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
     }
     var showTour = !new DeviceDetection(Context).IsMobile && ((tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")));
-    var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/') + "/api/Designer";
+    var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var reportServiceUrl = designerServiceUrl + "/api/Designer";
     if (!string.IsNullOrWhiteSpace(ViewBag.categoryName) && !string.IsNullOrWhiteSpace(ViewBag.reportName))
     {
         categoryName = ViewBag.categoryName;
@@ -35,9 +36,12 @@
     var datasetPermissions = ViewBag.DatasetPermission;
     var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var dataConnectors = @Json.Serialize(ViewBag.DataConnectors);
     var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
     var customHelpLinkDomain = "@(ServerAppConfig.AllowCustomHelpLink ? ServerAppConfig.AppSettings.Documentation.BaseUri : string.Empty)";
     var custombrandName = "@ServerAppConfig.CustomBrandName";
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -56,16 +60,20 @@
     @if (ServerAppConfig.IsSelfHosted)
     {
         <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" rel="stylesheet" />
         <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" rel="stylesheet" />
@@ -91,7 +99,6 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
@@ -101,49 +108,50 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
         <script src = "@reportServerResourceUrl/cdn/scripts/localization/reportdesigner/ej.localetexts.@string.Concat(language, ".js")" ></script >
-        <script src="@reportServerResourceUrl/cdn/scripts/essentialjs/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
     }
     else
     {
         <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
         </environment>
-        @*<link href="@ServerAppConfig.ReportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
-        <link href="@ServerAppConfig.ReportServiceCdnLink/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />*@
+        <link href="@reportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
         </environment>
-        @*<link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-base.css" rel="stylesheet" />
-            <link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-notifications.css" rel="stylesheet" />*@
+        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
+        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
         </environment>
-        @*<script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-base.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-data.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
-            <script type="text/javascript" src="@ServerAppConfig.StaticCdnLink/scripts/essentialjs/ej2-popups.min.js"></script>
-            <script type="text/javascript" src="@ServerAppConfig.StaticCdnLink/scripts/essentialjs/ej2-notifications.min.js"></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/bold.reportviewer.min.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/scripts/essentialjs/bold.reportdesigner.min.js'></script>*@
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-data.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportdesigner.min.js'></script>
         <environment include="Development,CloudDevelopment">
              <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
@@ -151,7 +159,6 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
@@ -161,14 +168,11 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
-        @*
-        <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/extension.config.js'></script>
-        <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/qrbarcode.reportitem.js'></script>
-        <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/ssas.data.js'></script>
-        <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/barcode.reportitem.js'></script>*@
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/qrbarcode.reportitem.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/barcode.reportitem.js'></script>
     }
 
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
@@ -336,6 +340,68 @@
         }
     </style>
 
+    @if (!ServerAppConfig.IsCustomThemeForMenu)
+    {
+        <style>
+            :root {
+                --nav-menu-bg-color: var(--white);
+                --nav-menu-text-color: var(--primary-black);
+                --nav-menu-text-sec-color: var(--grey-700);
+                --nav-menu-content-color: var(--grey-800);
+                --nav-menu-active-color: var(--blue-lighter);
+                --nav-menu-active-text-color: var(--blue);
+                --nav-menu-active-sec-color: var(--blue);
+                --nav-menu-active-content-color: var(--grey-800);
+                --nav-menu-hover-color: var(--grey-300);
+                --nav-menu-hover-text-color: var(--primary-black);
+                --nav-menu-hover-text-sec-color: var(--grey-700);
+                --nav-menu-hover-content-color: var(--grey-800);
+                --nav-menu-create-icon-bgcolor: var(--blue);
+                --nav-menu-separtor-icon-color: var(--grey-400);
+                --item-menu-hover-bg-color: var(--white);
+                --item-menu-hover-border-color: var(--blue);
+                --item-menu-section-bg-color: var(--blue-lighten);
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            :root {
+            @ServerAppConfig.ThemeStyle
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-section-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-bg-color: var( --nav-menu-hover-color);
+                --item-menu-hover-border-color: var( --nav-menu-hover-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+
     <script>
         var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
         var addCategoryUrl = "@Url.Action("addcategory", "category")";
@@ -378,7 +444,7 @@
         var customDomain = isCustomDomain.toLowerCase() == "true" ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
         var isHideHelpLinks = "@ServerAppConfig.IsHideHelpLink";
         var isHideHelpLink = isHideHelpLinks.toLowerCase() == "true" ? true : false;
-
+        var customFontsName = [];
         if(isEdit === "true"){
             isEditReport = true;
         }
@@ -389,6 +455,7 @@
         var designerToken = "@ViewBag.AccessToken";
 
         $(document).ready(function () {
+            loadCustomFonts();
             renderDesignerHeader();
             refreshReportDesignerFooter();
             renderDesigner();
@@ -406,8 +473,9 @@
         function renderDesigner() {
             $(document.body).bind('submit', $.proxy(this.formSubmit, this));
             $(window).bind('beforeunload', $.proxy(this.windowUnload, this));
-             var datasetPermission = noPermission;
+            var datasetPermission = noPermission;
             var datasourcePermission = noPermission;
+            var filterDataTiles = (@dataConnectors) ? JSON.parse(@dataConnectors) : [];
 
             if ('@datasetPermissions[PermissionAccess.ReadWriteDelete]' == 'True') {
                 datasetPermission = '@datasetPermissions[PermissionAccess.Create]' == 'True' ? allPermission : readWriteDeletePermission;
@@ -443,11 +511,11 @@
             var designerModel = {
                 enableAutoDraft: true,
                 serviceUrl: "@reportServiceUrl",
+                filterDataConnectors: filterDataTiles,
                 ajaxBeforeLoad: ajaxBeforeSend,
                 reportServerUrl: "@reportServerApiUrl",
                 create: $.proxy(controlInitialized, this),
                 reportSaved: $.proxy(reportSaved, this),
-                destroy: $.proxy(destroyComponent, this),
                 serviceAuthorizationToken: designerToken,
                 toolbarSettings: {
                     items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.New
@@ -463,17 +531,68 @@
                 reportItemExtensions: window.itemExtensions,
                 queryDesignerAction: disableDesignerHeaderPane,
                 mapShapData: window.ShapData,
+                fontNames: customFontsName,
                 isAzureApp: (@isAzureApplication.ToString().ToLower()),
                 customBrandSettings: {
                     hideHelpLink: isHideHelpLink,
                     customDomain: customDomain,
                     customBrandName: custombrandName,
                     customLinks: window.customLinks
-                }
-
+                },
+                enableImageBlobing: true
             };
 
             var designer = new boldReportDesigner($('#' + controlId), designerModel);
+        }
+
+        function loadCustomFonts() {
+            @if (ServerAppConfig.CustomFont != null && ServerAppConfig.CustomFont.Count > 0)
+            {
+                foreach (var font in ServerAppConfig.CustomFont)
+                {
+                    @:customFontsName.push("@font.Key");
+                    @:addCustomFonts("@font.Key", "@font.Value");
+                }
+            }
+        }
+
+        function isFontFaceExist() {
+            try {
+                return FontFace ? true : false;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function addCustomFonts(fontFamily, fontFile) {
+            var customFontUrl = "@baseUrl/content/custom-fonts/" + fontFile;
+            if (isFontFaceExist()) {
+                try {
+                    const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
+                    customFont.load().then(function (loadedFont) {
+                        document.fonts.add(loadedFont);
+                    }).catch(function (error) {
+                        console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                    });
+                } catch (error) {
+                    console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                }
+            } else {
+                //Classic Approach Common for all browsers to load fonts
+                try {
+                    const style = document.createElement('style');
+                    style.innerHTML = '@@font-face { font-family:' + fontFamily + '; src: url(' + customFontUrl + ');}';
+                    document.head.appendChild(style);
+
+                    var link = document.createElement('link');
+                    link.setAttribute('rel', 'stylesheet');
+                    link.setAttribute('type', 'text/css');
+                    link.setAttribute('href', customFontUrl);
+                    document.head.appendChild(link);
+                } catch (error) {
+                    console.log('Failed to register stylesheet for the font: ' + fontFamily + '; Error: ' + error);
+                }
+            }
         }
 
         function controlInitialized(args) {
@@ -530,11 +649,6 @@
 
         function formSubmit(args) {
             isSubmit = false;
-        }
-
-        function destroyComponent(args) {
-            var designer = $('#' + controlId).data('boldReportDesigner');
-            designer.destroy();
         }
 
         function reportSaved(args) {
@@ -661,17 +775,11 @@
 
         function windowUnload(args) {
             var designer = $('#' + controlId).data('boldReportDesigner');
-            var viewerVisible = $('#' + controlId).find('.e-reportviewer.e-js').is(':visible');
 
-            if (designer) {
-                var hasChanges = designer.hasReportChanges();
-                if (isSubmit && (!viewerVisible || !hasChanges)) {
-                    designer.disposeViewerCache();
-                }
-                if (hasChanges && isSubmit) {
-                    return 'Changes you made may not be saved';
-                }
+            if (designer && isSubmit) {
+                designer.disposeViewerCache();
             }
+
             isSubmit = true;
         }
 
@@ -1009,6 +1117,7 @@
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
     <div id="container"></div>
     <div id="toast-message-container"></div>
+    <div id="designer-loading-icon" style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%"></div>
     @if (ViewBag.isEdit)
     {
         <div id="messageBox">

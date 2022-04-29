@@ -2,7 +2,6 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -30,43 +29,18 @@
         @Html.Label("admin-checkbox-header", " ", new { @class = "admin-checkbox-header-label" })
     </script>
 </head>
-<body>
-    <div class="modal no-padding" id="add-tenants-dialog" tabindex="-1" role="dialog">
-        <div class="col-lg-12 modal-dialog no-padding" role="document">
-            <div class="col-lg-12 modal-content no-padding" autocomplete="off">
-                <div class="col-md-12 modal-header">
-                    <div class="col-xs-8 no-padding">
-                        <i class="su head-icon"></i>
-                        <span class="modal-title">[[[Grant Access to Sites]]]</span>
-                    </div>
-                    <div class="col-xs-4 no-padding">
-                        <a href="javascript:void(0);" onclick="onAddTenantsDialogClose()" class="close"><i class="su su-close"></i></a>
-                    </div>
-                    <div class="col-xs-12 no-padding description pull-left">
-                        <span>
-                            [[[Select the sites to which you want to grant access.]]]
-                        </span>
-                    </div>
-                </div>
-                <div class="modal-body col-xs-12">
-                    <div id="add-user-search-area" class="pull-right">
-                        <input type="text" class="pull-left" id="add-tenant-search" placeholder="[[[Search sites]]]" />
-                        <span class="su su-inner-close close-icon pull-left" id="add-tenant-clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-icon pull-left" title="[[[Search]]]"></span>
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <div id="add_tenants_grid">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 modal-footer add-user-dialog-footer no-right-padding no-left-padding">
-                    <input type="hidden" value="">
-                    <input type="button" onclick="provideAccesstoTenants()" class="primary-button" id="provide-access-button" value="[[[Grant access]]]" />
-                    <input type="button" onclick="onAddTenantsDialogClose()" class="secondary-button popup-close" value="[[[Cancel]]]" />
-                </div>
-            </div>
+<div id="add-tenants-dialog-content" class="modal-body col-xs-12">
+    <div id="add-user-search-area" class="pull-right">
+        <input type="text" class="pull-left" id="add-tenant-search" placeholder="[[[Search sites]]]" />
+        <span class="su su-inner-close close-icon pull-left" id="add-tenant-clear-search" title="[[[Clear search]]]"></span>
+        <span class="su su-search search-icon pull-left" title="[[[Search]]]"></span>
+    </div>
+    <div class="col-xs-12 no-padding">
+        <div id="add_tenants_grid">
         </div>
     </div>
-</body>
-</html>
+    <div class="col-xs-12 no-padding">
+        <div class="note-info"><span class="note-text">[[[Note]]]:</span><span>[[[ Select the users who would be granted site access.]]]</span></div>
+    </div>
+</div>
 

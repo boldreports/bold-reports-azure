@@ -16,67 +16,6 @@
 @section scripts{
     <script type="text/javascript">
         var isBoldBiBranding = @Json.Serialize(isBoldBIBranding);
-        var analyticsTrackingEnabled = @Json.Serialize(analyticsTrackingEnabled);
-        var googleAnalyticsSendTo = "@CloudAppConfig.GoogleAnalyticSentTo";
-
-        @if (GlobalAppSettings.Branding == AppBranding.Bold.Identifier && Syncfusion.Server.Base.CloudAppConfig.EnableAnalyticsTracking) {
-            <text>
-            var analyticKeyUA = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyUA";
-            var analyticKeyAW = "@Syncfusion.Server.Base.CloudAppConfig.GoogleAnalyticKeyAW";
-            var google_tag_manager = document.createElement("script");
-            google_tag_manager.src = "https://www.googletagmanager.com/gtag/js?id=" + analyticKeyUA;
-            google_tag_manager.async = 1;
-            var parent_node = document.head || document.body;
-            parent_node.appendChild(google_tag_manager);
-
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', analyticKeyUA);
-            gtag('config', analyticKeyAW);
-            </text>
-        }
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            triggerGoogleAnalyticsOnSetupVisit();
-        });
-
-        ////Trigger google Analytics
-        function triggerGoogleAnalyticsOnSetupVisit() {
-            if (isBoldBiBranding && analyticsTrackingEnabled) {
-                gtag('event', 'Tenant Setup', {
-                    'event_category': 'Bold BI',
-                    'event_label': 'Bold BI Tenant Setup'
-                });
-
-                gtag_report_conversion();
-            }
-        }
-
-        function triggerGoogleAnalyticsOnSetupComplete() {
-            if (isBoldBiBranding && analyticsTrackingEnabled) {
-                gtag('event', 'Tenant Setup Complete', {
-                    'event_category': 'Bold BI',
-                    'event_label': 'Bold BI Tenant Setup Complete'
-                });
-
-                gtag_report_conversion();
-            }
-        }
-
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof (url) !== 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': googleAnalyticsSendTo,
-                'event_callback': callback
-            });
-            return false;
-        }
     </script>
 }
 

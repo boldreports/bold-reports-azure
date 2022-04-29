@@ -6,8 +6,7 @@
 
     $('#account-verification-code').keypress(function (e) {
         var key = e.which;
-        if (key == 13)  
-        {
+        if (key == 13) {
             $("#verify-code-button").click();
         }
     });
@@ -16,7 +15,7 @@
         $("#verifiation-error").hide();
         $("#account-verification-code").val("");
         $("#verify-code-button").prop("disabled", true);
-        $("#body").ejWaitingPopup("show");
+        showWaitingPopup('body');
         $.ajax({
             type: "POST",
             url: resendActivationUrl,
@@ -28,7 +27,7 @@
                     $("#tick-icon,  #account-active, #login-button").addClass("show").removeClass("hide");
                     $("#user-verification-box, #warning-icon ").addClass("hide").removeClass("show");
                 }
-                $("#body").ejWaitingPopup("hide");
+                hideWaitingPopup('body');
             }
         });
     });
@@ -39,7 +38,7 @@
             $("#verify-code-button").prop("disabled", true);
         }
         else {
-            $("body").ejWaitingPopup("show");
+            showWaitingPopup('body');
             $("#verifiation-error").html("").hide().fadeOut("slow");
             $.ajax({
                 type: "POST",
@@ -65,11 +64,11 @@
                         $("#verifiation-error").html(result.Value).show().fadeIn("slow");
                         $("#verify-code-button").prop("disabled", true);
                     }
-                    $("body").ejWaitingPopup("hide");
+                    hideWaitingPopup('body');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $("#verifiation-error").html("Remote connection failed.").show().fadeIn("slow");
-                    $("body").ejWaitingPopup("hide");
+                    hideWaitingPopup('body');
                 }
             });
         }

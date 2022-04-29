@@ -19,12 +19,14 @@
     </script>
 
     <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/shareviewdialog.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/shareviewdialog.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/shareviewdialog.min.css" />
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.min.js"></script>
@@ -137,7 +139,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 sharebuttonContainer no-left-padding no-right-padding">
-                    <input id="schedule_Submit" title="[[[Share]]]" type="button" value="[[[Share]]]" class="btn btn-primary pull-right button-right primary-button">
+                    <input id="schedule_Submit" title="[[[Share]]]" type="button" value="[[[Share]]]" class="btn btn-primary pull-right button-right primary-button app-btn-primary">
                     <span class="IsPublic">
                         @if (ViewBag.IsPublic)
                         {
@@ -191,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            <div id="submit_Container" class="col-sm-12 col-xs-4 button-container dialogFooter"><input id="shareview_Submit_Cancel" title="[[[Close]]]" type="button" onclick="ShareviewSubmitCancel()" value="[[[Close]]]" class="btn pull-right scheduleCancel button-right secondary-button"></div>
+            <div id="submit_Container" class="col-sm-12 col-xs-4 button-container dialogFooter"><input id="shareview_Submit_Cancel" title="[[[Close]]]" type="button" onclick="ShareviewSubmitCancel()" value="[[[Close]]]" class="btn pull-right scheduleCancel button-right secondary-button app-btn-secondary"></div>
         </div>
 
         <div id="messageBox">
@@ -225,8 +227,8 @@
                     <div class="col-xs-8 no-padding rightAlign">
                         <input type="hidden" value="" id="delete_permission_id">
                         <input type="hidden" value="" id="delete_item_type">
-                        <input type="button" onclick=" DeletePermission() " class="critical-action-button margin-right" value="[[[Yes]]]" />
-                        <input type="button" onclick=" onPermissionDeleteDialogClose() " class="secondary-button margin-right PopupClose" value="[[[No]]]" />
+                        <input type="button" onclick=" DeletePermission() " class="critical-action-button app-btn-danger margin-right" value="[[[Yes]]]" />
+                        <input type="button" onclick=" onPermissionDeleteDialogClose() " class="secondary-button app-btn-secondary margin-right PopupClose" value="[[[No]]]" />
                     </div>
                 </div>
             </div>

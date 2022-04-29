@@ -3,18 +3,12 @@
 }({});var B=/(?:\{[\s\S]*\}|\[[\s\S]*\])$/,P=/([A-Z])/g;function R(e,n,r,i){if(x.acceptData(e)){var o,a,s=x.expando,l=e.nodeType,u=l?x.cache:e,c=l?e[s]:e[s]&&s;if(c&&u[c]&&(i||u[c].data)||r!==t||"string"!=typeof n)return c||(c=l?e[s]=p.pop()||x.guid++:s),u[c]||(u[c]=l?{}:{toJSON:x.noop}),("object"==typeof n||"function"==typeof n)&&(i?u[c]=x.extend(u[c],n):u[c].data=x.extend(u[c].data,n)),a=u[c],i||(a.data||(a.data={}),a=a.data),r!==t&&(a[x.camelCase(n)]=r),"string"==typeof n?(o=a[n],null==o&&(o=a[x.camelCase(n)])):o=a,o}}function W(e,t,n){if(x.acceptData(e)){var r,i,o=e.nodeType,a=o?x.cache:e,s=o?e[x.expando]:x.expando;if(a[s]){if(t&&(r=n?a[s]:a[s].data)){x.isArray(t)?t=t.concat(x.map(t,x.camelCase)):t in r?t=[t]:(t=x.camelCase(t),t=t in r?[t]:t.split(" ")),i=t.length;while(i--)delete r[t[i]];if(n?!I(r):!x.isEmptyObject(r))return}(n||(delete a[s].data,I(a[s])))&&(o?x.cleanData([e],!0):x.support.deleteExpando||a!=a.window?delete a[s]:a[s]=null)}}}x.extend({cache:{},noData:{applet:!0,embed:!0,object:"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"},hasData:function(e){return e=e.nodeType?x.cache[e[x.expando]]:e[x.expando],!!e&&!I(e)},data:function(e,t,n){return R(e,t,n)},removeData:function(e,t){return W(e,t)},_data:function(e,t,n){return R(e,t,n,!0)},_removeData:function(e,t){return W(e,t,!0)},acceptData:function(e){if(e.nodeType&&1!==e.nodeType&&9!==e.nodeType)return!1;var t=e.nodeName&&x.noData[e.nodeName.toLowerCase()];return!t||t!==!0&&e.getAttribute("classid")===t}}),x.fn.extend({data:function(e,n){var r,i,o=null,a=0,s=this[0];if(e===t){if(this.length&&(o=x.data(s),1===s.nodeType&&!x._data(s,"parsedAttrs"))){for(r=s.attributes;r.length>a;a++)i=r[a].name,0===i.indexOf("data-")&&(i=x.camelCase(i.slice(5)),$(s,i,o[i]));x._data(s,"parsedAttrs",!0)}return o}return"object"==typeof e?this.each(function(){x.data(this,e)}):arguments.length>1?this.each(function(){x.data(this,e,n)}):s?$(s,e,x.data(s,e)):null},removeData:function(e){return this.each(function(){x.removeData(this,e)})}});function $(e,n,r){if(r===t&&1===e.nodeType){var i="data-"+n.replace(P,"-$1").toLowerCase();if(r=e.getAttribute(i),"string"==typeof r){try{r="true"===r?!0:"false"===r?!1:"null"===r?null:+r+""===r?+r:B.test(r)?x.parseJSON(r):r}catch(o){}x.data(e,n,r)}else r=t}return r}function I(e){var t;for(t in e)if(("data"!==t||!x.isEmptyObject(e[t]))&&"toJSON"!==t)return!1;return!0}x.extend({queue:function(e,n,r){var i;return e?(n=(n||"fx")+"queue",i=x._data(e,n),r&&(!i||x.isArray(r)?i=x._data(e,n,x.makeArray(r)):i.push(r)),i||[]):t},dequeue:function(e,t){t=t||"fx";var n=x.queue(e,t),r=n.length,i=n.shift(),o=x._queueHooks(e,t),a=function(){x.dequeue(e,t)};"inprogress"===i&&(i=n.shift(),r--),i&&("fx"===t&&n.unshift("inprogress"),delete o.stop,i.call(e,a,o)),!r&&o&&o.empty.fire()},_queueHooks:function(e,t){var n=t+"queueHooks";return x._data(e,n)||x._data(e,n,{empty:x.Callbacks("once memory").add(function(){x._removeData(e,t+"queue"),x._removeData(e,n)})})}}),x.fn.extend({queue:function(e,n){var r=2;return"string"!=typeof e&&(n=e,e="fx",r--),r>arguments.length?x.queue(this[0],e):n===t?this:this.each(function(){var t=x.queue(this,e,n);x._queueHooks(this,e),"fx"===e&&"inprogress"!==t[0]&&x.dequeue(this,e)})},dequeue:function(e){return this.each(function(){x.dequeue(this,e)})},delay:function(e,t){return e=x.fx?x.fx.speeds[e]||e:e,t=t||"fx",this.queue(t,function(t,n){var r=setTimeout(t,e);n.stop=function(){clearTimeout(r)}})},clearQueue:function(e){return this.queue(e||"fx",[])},promise:function(e,n){var r,i=1,o=x.Deferred(),a=this,s=this.length,l=function(){--i||o.resolveWith(a,[a])};"string"!=typeof e&&(n=e,e=t),e=e||"fx";while(s--)r=x._data(a[s],e+"queueHooks"),r&&r.empty&&(i++,r.empty.add(l));return l(),o.promise(n)}});var z,X,U=/[\t\r\n\f]/g,V=/\r/g,Y=/^(?:input|select|textarea|button|object)$/i,J=/^(?:a|area)$/i,G=/^(?:checked|selected)$/i,Q=x.support.getSetAttribute,K=x.support.input;x.fn.extend({attr:function(e,t){return x.access(this,x.attr,e,t,arguments.length>1)},removeAttr:function(e){return this.each(function(){x.removeAttr(this,e)})},prop:function(e,t){return x.access(this,x.prop,e,t,arguments.length>1)},removeProp:function(e){return e=x.propFix[e]||e,this.each(function(){try{this[e]=t,delete this[e]}catch(n){}})},addClass:function(e){var t,n,r,i,o,a=0,s=this.length,l="string"==typeof e&&e;if(x.isFunction(e))return this.each(function(t){x(this).addClass(e.call(this,t,this.className))});if(l)for(t=(e||"").match(T)||[];s>a;a++)if(n=this[a],r=1===n.nodeType&&(n.className?(" "+n.className+" ").replace(U," "):" ")){o=0;while(i=t[o++])0>r.indexOf(" "+i+" ")&&(r+=i+" ");n.className=x.trim(r)}return this},removeClass:function(e){var t,n,r,i,o,a=0,s=this.length,l=0===arguments.length||"string"==typeof e&&e;if(x.isFunction(e))return this.each(function(t){x(this).removeClass(e.call(this,t,this.className))});if(l)for(t=(e||"").match(T)||[];s>a;a++)if(n=this[a],r=1===n.nodeType&&(n.className?(" "+n.className+" ").replace(U," "):"")){o=0;while(i=t[o++])while(r.indexOf(" "+i+" ")>=0)r=r.replace(" "+i+" "," ");n.className=e?x.trim(r):""}return this},toggleClass:function(e,t){var n=typeof e;return"boolean"==typeof t&&"string"===n?t?this.addClass(e):this.removeClass(e):x.isFunction(e)?this.each(function(n){x(this).toggleClass(e.call(this,n,this.className,t),t)}):this.each(function(){if("string"===n){var t,r=0,o=x(this),a=e.match(T)||[];while(t=a[r++])o.hasClass(t)?o.removeClass(t):o.addClass(t)}else(n===i||"boolean"===n)&&(this.className&&x._data(this,"__className__",this.className),this.className=this.className||e===!1?"":x._data(this,"__className__")||"")})},hasClass:function(e){var t=" "+e+" ",n=0,r=this.length;for(;r>n;n++)if(1===this[n].nodeType&&(" "+this[n].className+" ").replace(U," ").indexOf(t)>=0)return!0;return!1},val:function(e){var n,r,i,o=this[0];{if(arguments.length)return i=x.isFunction(e),this.each(function(n){var o;1===this.nodeType&&(o=i?e.call(this,n,x(this).val()):e,null==o?o="":"number"==typeof o?o+="":x.isArray(o)&&(o=x.map(o,function(e){return null==e?"":e+""})),r=x.valHooks[this.type]||x.valHooks[this.nodeName.toLowerCase()],r&&"set"in r&&r.set(this,o,"value")!==t||(this.value=o))});if(o)return r=x.valHooks[o.type]||x.valHooks[o.nodeName.toLowerCase()],r&&"get"in r&&(n=r.get(o,"value"))!==t?n:(n=o.value,"string"==typeof n?n.replace(V,""):null==n?"":n)}}}),x.extend({valHooks:{option:{get:function(e){var t=x.find.attr(e,"value");return null!=t?t:e.text}},select:{get:function(e){var t,n,r=e.options,i=e.selectedIndex,o="select-one"===e.type||0>i,a=o?null:[],s=o?i+1:r.length,l=0>i?s:o?i:0;for(;s>l;l++)if(n=r[l],!(!n.selected&&l!==i||(x.support.optDisabled?n.disabled:null!==n.getAttribute("disabled"))||n.parentNode.disabled&&x.nodeName(n.parentNode,"optgroup"))){if(t=x(n).val(),o)return t;a.push(t)}return a},set:function(e,t){var n,r,i=e.options,o=x.makeArray(t),a=i.length;while(a--)r=i[a],(r.selected=x.inArray(x(r).val(),o)>=0)&&(n=!0);return n||(e.selectedIndex=-1),o}}},attr:function(e,n,r){var o,a,s=e.nodeType;if(e&&3!==s&&8!==s&&2!==s)return typeof e.getAttribute===i?x.prop(e,n,r):(1===s&&x.isXMLDoc(e)||(n=n.toLowerCase(),o=x.attrHooks[n]||(x.expr.match.bool.test(n)?X:z)),r===t?o&&"get"in o&&null!==(a=o.get(e,n))?a:(a=x.find.attr(e,n),null==a?t:a):null!==r?o&&"set"in o&&(a=o.set(e,r,n))!==t?a:(e.setAttribute(n,r+""),r):(x.removeAttr(e,n),t))},removeAttr:function(e,t){var n,r,i=0,o=t&&t.match(T);if(o&&1===e.nodeType)while(n=o[i++])r=x.propFix[n]||n,x.expr.match.bool.test(n)?K&&Q||!G.test(n)?e[r]=!1:e[x.camelCase("default-"+n)]=e[r]=!1:x.attr(e,n,""),e.removeAttribute(Q?n:r)},attrHooks:{type:{set:function(e,t){if(!x.support.radioValue&&"radio"===t&&x.nodeName(e,"input")){var n=e.value;return e.setAttribute("type",t),n&&(e.value=n),t}}}},propFix:{"for":"htmlFor","class":"className"},prop:function(e,n,r){var i,o,a,s=e.nodeType;if(e&&3!==s&&8!==s&&2!==s)return a=1!==s||!x.isXMLDoc(e),a&&(n=x.propFix[n]||n,o=x.propHooks[n]),r!==t?o&&"set"in o&&(i=o.set(e,r,n))!==t?i:e[n]=r:o&&"get"in o&&null!==(i=o.get(e,n))?i:e[n]},propHooks:{tabIndex:{get:function(e){var t=x.find.attr(e,"tabindex");return t?parseInt(t,10):Y.test(e.nodeName)||J.test(e.nodeName)&&e.href?0:-1}}}}),X={set:function(e,t,n){return t===!1?x.removeAttr(e,n):K&&Q||!G.test(n)?e.setAttribute(!Q&&x.propFix[n]||n,n):e[x.camelCase("default-"+n)]=e[n]=!0,n}},x.each(x.expr.match.bool.source.match(/\w+/g),function(e,n){var r=x.expr.attrHandle[n]||x.find.attr;x.expr.attrHandle[n]=K&&Q||!G.test(n)?function(e,n,i){var o=x.expr.attrHandle[n],a=i?t:(x.expr.attrHandle[n]=t)!=r(e,n,i)?n.toLowerCase():null;return x.expr.attrHandle[n]=o,a}:function(e,n,r){return r?t:e[x.camelCase("default-"+n)]?n.toLowerCase():null}}),K&&Q||(x.attrHooks.value={set:function(e,n,r){return x.nodeName(e,"input")?(e.defaultValue=n,t):z&&z.set(e,n,r)}}),Q||(z={set:function(e,n,r){var i=e.getAttributeNode(r);return i||e.setAttributeNode(i=e.ownerDocument.createAttribute(r)),i.value=n+="","value"===r||n===e.getAttribute(r)?n:t}},x.expr.attrHandle.id=x.expr.attrHandle.name=x.expr.attrHandle.coords=function(e,n,r){var i;return r?t:(i=e.getAttributeNode(n))&&""!==i.value?i.value:null},x.valHooks.button={get:function(e,n){var r=e.getAttributeNode(n);return r&&r.specified?r.value:t},set:z.set},x.attrHooks.contenteditable={set:function(e,t,n){z.set(e,""===t?!1:t,n)}},x.each(["width","height"],function(e,n){x.attrHooks[n]={set:function(e,r){return""===r?(e.setAttribute(n,"auto"),r):t}}})),x.support.hrefNormalized||x.each(["href","src"],function(e,t){x.propHooks[t]={get:function(e){return e.getAttribute(t,4)}}}),x.support.style||(x.attrHooks.style={get:function(e){return e.style.cssText||t},set:function(e,t){return e.style.cssText=t+""}}),x.support.optSelected||(x.propHooks.selected={get:function(e){var t=e.parentNode;return t&&(t.selectedIndex,t.parentNode&&t.parentNode.selectedIndex),null}}),x.each(["tabIndex","readOnly","maxLength","cellSpacing","cellPadding","rowSpan","colSpan","useMap","frameBorder","contentEditable"],function(){x.propFix[this.toLowerCase()]=this}),x.support.enctype||(x.propFix.enctype="encoding"),x.each(["radio","checkbox"],function(){x.valHooks[this]={set:function(e,n){return x.isArray(n)?e.checked=x.inArray(x(e).val(),n)>=0:t}},x.support.checkOn||(x.valHooks[this].get=function(e){return null===e.getAttribute("value")?"on":e.value})});var Z=/^(?:input|select|textarea)$/i,et=/^key/,tt=/^(?:mouse|contextmenu)|click/,nt=/^(?:focusinfocus|focusoutblur)$/,rt=/^([^.]*)(?:\.(.+)|)$/;function it(){return!0}function ot(){return!1}function at(){try{return a.activeElement}catch(e){}}x.event={global:{},add:function(e,n,r,o,a){var s,l,u,c,p,f,d,h,g,m,y,v=x._data(e);if(v){r.handler&&(c=r,r=c.handler,a=c.selector),r.guid||(r.guid=x.guid++),(l=v.events)||(l=v.events={}),(f=v.handle)||(f=v.handle=function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)},f.elem=e),n=(n||"").match(T)||[""],u=n.length;while(u--)s=rt.exec(n[u])||[],g=y=s[1],m=(s[2]||"").split(".").sort(),g&&(p=x.event.special[g]||{},g=(a?p.delegateType:p.bindType)||g,p=x.event.special[g]||{},d=x.extend({type:g,origType:y,data:o,handler:r,guid:r.guid,selector:a,needsContext:a&&x.expr.match.needsContext.test(a),namespace:m.join(".")},c),(h=l[g])||(h=l[g]=[],h.delegateCount=0,p.setup&&p.setup.call(e,o,m,f)!==!1||(e.addEventListener?e.addEventListener(g,f,!1):e.attachEvent&&e.attachEvent("on"+g,f))),p.add&&(p.add.call(e,d),d.handler.guid||(d.handler.guid=r.guid)),a?h.splice(h.delegateCount++,0,d):h.push(d),x.event.global[g]=!0);e=null}},remove:function(e,t,n,r,i){var o,a,s,l,u,c,p,f,d,h,g,m=x.hasData(e)&&x._data(e);if(m&&(c=m.events)){t=(t||"").match(T)||[""],u=t.length;while(u--)if(s=rt.exec(t[u])||[],d=g=s[1],h=(s[2]||"").split(".").sort(),d){p=x.event.special[d]||{},d=(r?p.delegateType:p.bindType)||d,f=c[d]||[],s=s[2]&&RegExp("(^|\\.)"+h.join("\\.(?:.*\\.|)")+"(\\.|$)"),l=o=f.length;while(o--)a=f[o],!i&&g!==a.origType||n&&n.guid!==a.guid||s&&!s.test(a.namespace)||r&&r!==a.selector&&("**"!==r||!a.selector)||(f.splice(o,1),a.selector&&f.delegateCount--,p.remove&&p.remove.call(e,a));l&&!f.length&&(p.teardown&&p.teardown.call(e,h,m.handle)!==!1||x.removeEvent(e,d,m.handle),delete c[d])}else for(d in c)x.event.remove(e,d+t[u],n,r,!0);x.isEmptyObject(c)&&(delete m.handle,x._removeData(e,"events"))}},trigger:function(n,r,i,o){var s,l,u,c,p,f,d,h=[i||a],g=v.call(n,"type")?n.type:n,m=v.call(n,"namespace")?n.namespace.split("."):[];if(u=f=i=i||a,3!==i.nodeType&&8!==i.nodeType&&!nt.test(g+x.event.triggered)&&(g.indexOf(".")>=0&&(m=g.split("."),g=m.shift(),m.sort()),l=0>g.indexOf(":")&&"on"+g,n=n[x.expando]?n:new x.Event(g,"object"==typeof n&&n),n.isTrigger=o?2:3,n.namespace=m.join("."),n.namespace_re=n.namespace?RegExp("(^|\\.)"+m.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,n.result=t,n.target||(n.target=i),r=null==r?[n]:x.makeArray(r,[n]),p=x.event.special[g]||{},o||!p.trigger||p.trigger.apply(i,r)!==!1)){if(!o&&!p.noBubble&&!x.isWindow(i)){for(c=p.delegateType||g,nt.test(c+g)||(u=u.parentNode);u;u=u.parentNode)h.push(u),f=u;f===(i.ownerDocument||a)&&h.push(f.defaultView||f.parentWindow||e)}d=0;while((u=h[d++])&&!n.isPropagationStopped())n.type=d>1?c:p.bindType||g,s=(x._data(u,"events")||{})[n.type]&&x._data(u,"handle"),s&&s.apply(u,r),s=l&&u[l],s&&x.acceptData(u)&&s.apply&&s.apply(u,r)===!1&&n.preventDefault();if(n.type=g,!o&&!n.isDefaultPrevented()&&(!p._default||p._default.apply(h.pop(),r)===!1)&&x.acceptData(i)&&l&&i[g]&&!x.isWindow(i)){f=i[l],f&&(i[l]=null),x.event.triggered=g;try{i[g]()}catch(y){}x.event.triggered=t,f&&(i[l]=f)}return n.result}},dispatch:function(e){e=x.event.fix(e);var n,r,i,o,a,s=[],l=g.call(arguments),u=(x._data(this,"events")||{})[e.type]||[],c=x.event.special[e.type]||{};if(l[0]=e,e.delegateTarget=this,!c.preDispatch||c.preDispatch.call(this,e)!==!1){s=x.event.handlers.call(this,e,u),n=0;while((o=s[n++])&&!e.isPropagationStopped()){e.currentTarget=o.elem,a=0;while((i=o.handlers[a++])&&!e.isImmediatePropagationStopped())(!e.namespace_re||e.namespace_re.test(i.namespace))&&(e.handleObj=i,e.data=i.data,r=((x.event.special[i.origType]||{}).handle||i.handler).apply(o.elem,l),r!==t&&(e.result=r)===!1&&(e.preventDefault(),e.stopPropagation()))}return c.postDispatch&&c.postDispatch.call(this,e),e.result}},handlers:function(e,n){var r,i,o,a,s=[],l=n.delegateCount,u=e.target;if(l&&u.nodeType&&(!e.button||"click"!==e.type))for(;u!=this;u=u.parentNode||this)if(1===u.nodeType&&(u.disabled!==!0||"click"!==e.type)){for(o=[],a=0;l>a;a++)i=n[a],r=i.selector+" ",o[r]===t&&(o[r]=i.needsContext?x(r,this).index(u)>=0:x.find(r,this,null,[u]).length),o[r]&&o.push(i);o.length&&s.push({elem:u,handlers:o})}return n.length>l&&s.push({elem:this,handlers:n.slice(l)}),s},fix:function(e){if(e[x.expando])return e;var t,n,r,i=e.type,o=e,s=this.fixHooks[i];s||(this.fixHooks[i]=s=tt.test(i)?this.mouseHooks:et.test(i)?this.keyHooks:{}),r=s.props?this.props.concat(s.props):this.props,e=new x.Event(o),t=r.length;while(t--)n=r[t],e[n]=o[n];return e.target||(e.target=o.srcElement||a),3===e.target.nodeType&&(e.target=e.target.parentNode),e.metaKey=!!e.metaKey,s.filter?s.filter(e,o):e},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(e,t){return null==e.which&&(e.which=null!=t.charCode?t.charCode:t.keyCode),e}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(e,n){var r,i,o,s=n.button,l=n.fromElement;return null==e.pageX&&null!=n.clientX&&(i=e.target.ownerDocument||a,o=i.documentElement,r=i.body,e.pageX=n.clientX+(o&&o.scrollLeft||r&&r.scrollLeft||0)-(o&&o.clientLeft||r&&r.clientLeft||0),e.pageY=n.clientY+(o&&o.scrollTop||r&&r.scrollTop||0)-(o&&o.clientTop||r&&r.clientTop||0)),!e.relatedTarget&&l&&(e.relatedTarget=l===e.target?n.toElement:l),e.which||s===t||(e.which=1&s?1:2&s?3:4&s?2:0),e}},special:{load:{noBubble:!0},focus:{trigger:function(){if(this!==at()&&this.focus)try{return this.focus(),!1}catch(e){}},delegateType:"focusin"},blur:{trigger:function(){return this===at()&&this.blur?(this.blur(),!1):t},delegateType:"focusout"},click:{trigger:function(){return x.nodeName(this,"input")&&"checkbox"===this.type&&this.click?(this.click(),!1):t},_default:function(e){return x.nodeName(e.target,"a")}},beforeunload:{postDispatch:function(e){e.result!==t&&(e.originalEvent.returnValue=e.result)}}},simulate:function(e,t,n,r){var i=x.extend(new x.Event,n,{type:e,isSimulated:!0,originalEvent:{}});r?x.event.trigger(i,null,t):x.event.dispatch.call(t,i),i.isDefaultPrevented()&&n.preventDefault()}},x.removeEvent=a.removeEventListener?function(e,t,n){e.removeEventListener&&e.removeEventListener(t,n,!1)}:function(e,t,n){var r="on"+t;e.detachEvent&&(typeof e[r]===i&&(e[r]=null),e.detachEvent(r,n))},x.Event=function(e,n){return this instanceof x.Event?(e&&e.type?(this.originalEvent=e,this.type=e.type,this.isDefaultPrevented=e.defaultPrevented||e.returnValue===!1||e.getPreventDefault&&e.getPreventDefault()?it:ot):this.type=e,n&&x.extend(this,n),this.timeStamp=e&&e.timeStamp||x.now(),this[x.expando]=!0,t):new x.Event(e,n)},x.Event.prototype={isDefaultPrevented:ot,isPropagationStopped:ot,isImmediatePropagationStopped:ot,preventDefault:function(){var e=this.originalEvent;this.isDefaultPrevented=it,e&&(e.preventDefault?e.preventDefault():e.returnValue=!1)},stopPropagation:function(){var e=this.originalEvent;this.isPropagationStopped=it,e&&(e.stopPropagation&&e.stopPropagation(),e.cancelBubble=!0)},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=it,this.stopPropagation()}},x.each({mouseenter:"mouseover",mouseleave:"mouseout"},function(e,t){x.event.special[e]={delegateType:t,bindType:t,handle:function(e){var n,r=this,i=e.relatedTarget,o=e.handleObj;return(!i||i!==r&&!x.contains(r,i))&&(e.type=o.origType,n=o.handler.apply(this,arguments),e.type=t),n}}}),x.support.submitBubbles||(x.event.special.submit={setup:function(){return x.nodeName(this,"form")?!1:(x.event.add(this,"click._submit keypress._submit",function(e){var n=e.target,r=x.nodeName(n,"input")||x.nodeName(n,"button")?n.form:t;r&&!x._data(r,"submitBubbles")&&(x.event.add(r,"submit._submit",function(e){e._submit_bubble=!0}),x._data(r,"submitBubbles",!0))}),t)},postDispatch:function(e){e._submit_bubble&&(delete e._submit_bubble,this.parentNode&&!e.isTrigger&&x.event.simulate("submit",this.parentNode,e,!0))},teardown:function(){return x.nodeName(this,"form")?!1:(x.event.remove(this,"._submit"),t)}}),x.support.changeBubbles||(x.event.special.change={setup:function(){return Z.test(this.nodeName)?(("checkbox"===this.type||"radio"===this.type)&&(x.event.add(this,"propertychange._change",function(e){"checked"===e.originalEvent.propertyName&&(this._just_changed=!0)}),x.event.add(this,"click._change",function(e){this._just_changed&&!e.isTrigger&&(this._just_changed=!1),x.event.simulate("change",this,e,!0)})),!1):(x.event.add(this,"beforeactivate._change",function(e){var t=e.target;Z.test(t.nodeName)&&!x._data(t,"changeBubbles")&&(x.event.add(t,"change._change",function(e){!this.parentNode||e.isSimulated||e.isTrigger||x.event.simulate("change",this.parentNode,e,!0)}),x._data(t,"changeBubbles",!0))}),t)},handle:function(e){var n=e.target;return this!==n||e.isSimulated||e.isTrigger||"radio"!==n.type&&"checkbox"!==n.type?e.handleObj.handler.apply(this,arguments):t},teardown:function(){return x.event.remove(this,"._change"),!Z.test(this.nodeName)}}),x.support.focusinBubbles||x.each({focus:"focusin",blur:"focusout"},function(e,t){var n=0,r=function(e){x.event.simulate(t,e.target,x.event.fix(e),!0)};x.event.special[t]={setup:function(){0===n++&&a.addEventListener(e,r,!0)},teardown:function(){0===--n&&a.removeEventListener(e,r,!0)}}}),x.fn.extend({on:function(e,n,r,i,o){var a,s;if("object"==typeof e){"string"!=typeof n&&(r=r||n,n=t);for(a in e)this.on(a,n,r,e[a],o);return this}if(null==r&&null==i?(i=n,r=n=t):null==i&&("string"==typeof n?(i=r,r=t):(i=r,r=n,n=t)),i===!1)i=ot;else if(!i)return this;return 1===o&&(s=i,i=function(e){return x().off(e),s.apply(this,arguments)},i.guid=s.guid||(s.guid=x.guid++)),this.each(function(){x.event.add(this,e,i,r,n)})},one:function(e,t,n,r){return this.on(e,t,n,r,1)},off:function(e,n,r){var i,o;if(e&&e.preventDefault&&e.handleObj)return i=e.handleObj,x(e.delegateTarget).off(i.namespace?i.origType+"."+i.namespace:i.origType,i.selector,i.handler),this;if("object"==typeof e){for(o in e)this.off(o,n,e[o]);return this}return(n===!1||"function"==typeof n)&&(r=n,n=t),r===!1&&(r=ot),this.each(function(){x.event.remove(this,e,r,n)})},trigger:function(e,t){return this.each(function(){x.event.trigger(e,t,this)})},triggerHandler:function(e,n){var r=this[0];return r?x.event.trigger(e,n,r,!0):t}});var st=/^.[^:#\[\.,]*$/,lt=/^(?:parents|prev(?:Until|All))/,ut=x.expr.match.needsContext,ct={children:!0,contents:!0,next:!0,prev:!0};x.fn.extend({find:function(e){var t,n=[],r=this,i=r.length;if("string"!=typeof e)return this.pushStack(x(e).filter(function(){for(t=0;i>t;t++)if(x.contains(r[t],this))return!0}));for(t=0;i>t;t++)x.find(e,r[t],n);return n=this.pushStack(i>1?x.unique(n):n),n.selector=this.selector?this.selector+" "+e:e,n},has:function(e){var t,n=x(e,this),r=n.length;return this.filter(function(){for(t=0;r>t;t++)if(x.contains(this,n[t]))return!0})},not:function(e){return this.pushStack(ft(this,e||[],!0))},filter:function(e){return this.pushStack(ft(this,e||[],!1))},is:function(e){return!!ft(this,"string"==typeof e&&ut.test(e)?x(e):e||[],!1).length},closest:function(e,t){var n,r=0,i=this.length,o=[],a=ut.test(e)||"string"!=typeof e?x(e,t||this.context):0;for(;i>r;r++)for(n=this[r];n&&n!==t;n=n.parentNode)if(11>n.nodeType&&(a?a.index(n)>-1:1===n.nodeType&&x.find.matchesSelector(n,e))){n=o.push(n);break}return this.pushStack(o.length>1?x.unique(o):o)},index:function(e){return e?"string"==typeof e?x.inArray(this[0],x(e)):x.inArray(e.jquery?e[0]:e,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(e,t){var n="string"==typeof e?x(e,t):x.makeArray(e&&e.nodeType?[e]:e),r=x.merge(this.get(),n);return this.pushStack(x.unique(r))},addBack:function(e){return this.add(null==e?this.prevObject:this.prevObject.filter(e))}});function pt(e,t){do e=e[t];while(e&&1!==e.nodeType);return e}x.each({parent:function(e){var t=e.parentNode;return t&&11!==t.nodeType?t:null},parents:function(e){return x.dir(e,"parentNode")},parentsUntil:function(e,t,n){return x.dir(e,"parentNode",n)},next:function(e){return pt(e,"nextSibling")},prev:function(e){return pt(e,"previousSibling")},nextAll:function(e){return x.dir(e,"nextSibling")},prevAll:function(e){return x.dir(e,"previousSibling")},nextUntil:function(e,t,n){return x.dir(e,"nextSibling",n)},prevUntil:function(e,t,n){return x.dir(e,"previousSibling",n)},siblings:function(e){return x.sibling((e.parentNode||{}).firstChild,e)},children:function(e){return x.sibling(e.firstChild)},contents:function(e){return x.nodeName(e,"iframe")?e.contentDocument||e.contentWindow.document:x.merge([],e.childNodes)}},function(e,t){x.fn[e]=function(n,r){var i=x.map(this,t,n);return"Until"!==e.slice(-5)&&(r=n),r&&"string"==typeof r&&(i=x.filter(r,i)),this.length>1&&(ct[e]||(i=x.unique(i)),lt.test(e)&&(i=i.reverse())),this.pushStack(i)}}),x.extend({filter:function(e,t,n){var r=t[0];return n&&(e=":not("+e+")"),1===t.length&&1===r.nodeType?x.find.matchesSelector(r,e)?[r]:[]:x.find.matches(e,x.grep(t,function(e){return 1===e.nodeType}))},dir:function(e,n,r){var i=[],o=e[n];while(o&&9!==o.nodeType&&(r===t||1!==o.nodeType||!x(o).is(r)))1===o.nodeType&&i.push(o),o=o[n];return i},sibling:function(e,t){var n=[];for(;e;e=e.nextSibling)1===e.nodeType&&e!==t&&n.push(e);return n}});function ft(e,t,n){if(x.isFunction(t))return x.grep(e,function(e,r){return!!t.call(e,r,e)!==n});if(t.nodeType)return x.grep(e,function(e){return e===t!==n});if("string"==typeof t){if(st.test(t))return x.filter(t,e,n);t=x.filter(t,e)}return x.grep(e,function(e){return x.inArray(e,t)>=0!==n})}function dt(e){var t=ht.split("|"),n=e.createDocumentFragment();if(n.createElement)while(t.length)n.createElement(t.pop());return n}var ht="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",gt=/ jQuery\d+="(?:null|\d+)"/g,mt=RegExp("<(?:"+ht+")[\\s/>]","i"),yt=/^\s+/,vt=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,bt=/<([\w:]+)/,xt=/<tbody/i,wt=/<|&#?\w+;/,Tt=/<(?:script|style|link)/i,Ct=/^(?:checkbox|radio)$/i,Nt=/checked\s*(?:[^=]|=\s*.checked.)/i,kt=/^$|\/(?:java|ecma)script/i,Et=/^true\/(.*)/,St=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,At={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],area:[1,"<map>","</map>"],param:[1,"<object>","</object>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:x.support.htmlSerialize?[0,"",""]:[1,"X<div>","</div>"]},jt=dt(a),Dt=jt.appendChild(a.createElement("div"));At.optgroup=At.option,At.tbody=At.tfoot=At.colgroup=At.caption=At.thead,At.th=At.td,x.fn.extend({text:function(e){return x.access(this,function(e){return e===t?x.text(this):this.empty().append((this[0]&&this[0].ownerDocument||a).createTextNode(e))},null,e,arguments.length)},append:function(){return this.domManip(arguments,function(e){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var t=Lt(this,e);t.appendChild(e)}})},prepend:function(){return this.domManip(arguments,function(e){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var t=Lt(this,e);t.insertBefore(e,t.firstChild)}})},before:function(){return this.domManip(arguments,function(e){this.parentNode&&this.parentNode.insertBefore(e,this)})},after:function(){return this.domManip(arguments,function(e){this.parentNode&&this.parentNode.insertBefore(e,this.nextSibling)})},remove:function(e,t){var n,r=e?x.filter(e,this):this,i=0;for(;null!=(n=r[i]);i++)t||1!==n.nodeType||x.cleanData(Ft(n)),n.parentNode&&(t&&x.contains(n.ownerDocument,n)&&_t(Ft(n,"script")),n.parentNode.removeChild(n));return this},empty:function(){var e,t=0;for(;null!=(e=this[t]);t++){1===e.nodeType&&x.cleanData(Ft(e,!1));while(e.firstChild)e.removeChild(e.firstChild);e.options&&x.nodeName(e,"select")&&(e.options.length=0)}return this},clone:function(e,t){return e=null==e?!1:e,t=null==t?e:t,this.map(function(){return x.clone(this,e,t)})},html:function(e){return x.access(this,function(e){var n=this[0]||{},r=0,i=this.length;if(e===t)return 1===n.nodeType?n.innerHTML.replace(gt,""):t;if(!("string"!=typeof e||Tt.test(e)||!x.support.htmlSerialize&&mt.test(e)||!x.support.leadingWhitespace&&yt.test(e)||At[(bt.exec(e)||["",""])[1].toLowerCase()])){e=e.replace(vt,"<$1></$2>");try{for(;i>r;r++)n=this[r]||{},1===n.nodeType&&(x.cleanData(Ft(n,!1)),n.innerHTML=e);n=0}catch(o){}}n&&this.empty().append(e)},null,e,arguments.length)},replaceWith:function(){var e=x.map(this,function(e){return[e.nextSibling,e.parentNode]}),t=0;return this.domManip(arguments,function(n){var r=e[t++],i=e[t++];i&&(r&&r.parentNode!==i&&(r=this.nextSibling),x(this).remove(),i.insertBefore(n,r))},!0),t?this:this.remove()},detach:function(e){return this.remove(e,!0)},domManip:function(e,t,n){e=d.apply([],e);var r,i,o,a,s,l,u=0,c=this.length,p=this,f=c-1,h=e[0],g=x.isFunction(h);if(g||!(1>=c||"string"!=typeof h||x.support.checkClone)&&Nt.test(h))return this.each(function(r){var i=p.eq(r);g&&(e[0]=h.call(this,r,i.html())),i.domManip(e,t,n)});if(c&&(l=x.buildFragment(e,this[0].ownerDocument,!1,!n&&this),r=l.firstChild,1===l.childNodes.length&&(l=r),r)){for(a=x.map(Ft(l,"script"),Ht),o=a.length;c>u;u++)i=l,u!==f&&(i=x.clone(i,!0,!0),o&&x.merge(a,Ft(i,"script"))),t.call(this[u],i,u);if(o)for(s=a[a.length-1].ownerDocument,x.map(a,qt),u=0;o>u;u++)i=a[u],kt.test(i.type||"")&&!x._data(i,"globalEval")&&x.contains(s,i)&&(i.src?x._evalUrl(i.src):x.globalEval((i.text||i.textContent||i.innerHTML||"").replace(St,"")));l=r=null}return this}});function Lt(e,t){return x.nodeName(e,"table")&&x.nodeName(1===t.nodeType?t:t.firstChild,"tr")?e.getElementsByTagName("tbody")[0]||e.appendChild(e.ownerDocument.createElement("tbody")):e}function Ht(e){return e.type=(null!==x.find.attr(e,"type"))+"/"+e.type,e}function qt(e){var t=Et.exec(e.type);return t?e.type=t[1]:e.removeAttribute("type"),e}function _t(e,t){var n,r=0;for(;null!=(n=e[r]);r++)x._data(n,"globalEval",!t||x._data(t[r],"globalEval"))}function Mt(e,t){if(1===t.nodeType&&x.hasData(e)){var n,r,i,o=x._data(e),a=x._data(t,o),s=o.events;if(s){delete a.handle,a.events={};for(n in s)for(r=0,i=s[n].length;i>r;r++)x.event.add(t,n,s[n][r])}a.data&&(a.data=x.extend({},a.data))}}function Ot(e,t){var n,r,i;if(1===t.nodeType){if(n=t.nodeName.toLowerCase(),!x.support.noCloneEvent&&t[x.expando]){i=x._data(t);for(r in i.events)x.removeEvent(t,r,i.handle);t.removeAttribute(x.expando)}"script"===n&&t.text!==e.text?(Ht(t).text=e.text,qt(t)):"object"===n?(t.parentNode&&(t.outerHTML=e.outerHTML),x.support.html5Clone&&e.innerHTML&&!x.trim(t.innerHTML)&&(t.innerHTML=e.innerHTML)):"input"===n&&Ct.test(e.type)?(t.defaultChecked=t.checked=e.checked,t.value!==e.value&&(t.value=e.value)):"option"===n?t.defaultSelected=t.selected=e.defaultSelected:("input"===n||"textarea"===n)&&(t.defaultValue=e.defaultValue)}}x.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(e,t){x.fn[e]=function(e){var n,r=0,i=[],o=x(e),a=o.length-1;for(;a>=r;r++)n=r===a?this:this.clone(!0),x(o[r])[t](n),h.apply(i,n.get());return this.pushStack(i)}});function Ft(e,n){var r,o,a=0,s=typeof e.getElementsByTagName!==i?e.getElementsByTagName(n||"*"):typeof e.querySelectorAll!==i?e.querySelectorAll(n||"*"):t;if(!s)for(s=[],r=e.childNodes||e;null!=(o=r[a]);a++)!n||x.nodeName(o,n)?s.push(o):x.merge(s,Ft(o,n));return n===t||n&&x.nodeName(e,n)?x.merge([e],s):s}function Bt(e){Ct.test(e.type)&&(e.defaultChecked=e.checked)}x.extend({clone:function(e,t,n){var r,i,o,a,s,l=x.contains(e.ownerDocument,e);if(x.support.html5Clone||x.isXMLDoc(e)||!mt.test("<"+e.nodeName+">")?o=e.cloneNode(!0):(Dt.innerHTML=e.outerHTML,Dt.removeChild(o=Dt.firstChild)),!(x.support.noCloneEvent&&x.support.noCloneChecked||1!==e.nodeType&&11!==e.nodeType||x.isXMLDoc(e)))for(r=Ft(o),s=Ft(e),a=0;null!=(i=s[a]);++a)r[a]&&Ot(i,r[a]);if(t)if(n)for(s=s||Ft(e),r=r||Ft(o),a=0;null!=(i=s[a]);a++)Mt(i,r[a]);else Mt(e,o);return r=Ft(o,"script"),r.length>0&&_t(r,!l&&Ft(e,"script")),r=s=i=null,o},buildFragment:function(e,t,n,r){var i,o,a,s,l,u,c,p=e.length,f=dt(t),d=[],h=0;for(;p>h;h++)if(o=e[h],o||0===o)if("object"===x.type(o))x.merge(d,o.nodeType?[o]:o);else if(wt.test(o)){s=s||f.appendChild(t.createElement("div")),l=(bt.exec(o)||["",""])[1].toLowerCase(),c=At[l]||At._default,s.innerHTML=c[1]+o.replace(vt,"<$1></$2>")+c[2],i=c[0];while(i--)s=s.lastChild;if(!x.support.leadingWhitespace&&yt.test(o)&&d.push(t.createTextNode(yt.exec(o)[0])),!x.support.tbody){o="table"!==l||xt.test(o)?"<table>"!==c[1]||xt.test(o)?0:s:s.firstChild,i=o&&o.childNodes.length;while(i--)x.nodeName(u=o.childNodes[i],"tbody")&&!u.childNodes.length&&o.removeChild(u)}x.merge(d,s.childNodes),s.textContent="";while(s.firstChild)s.removeChild(s.firstChild);s=f.lastChild}else d.push(t.createTextNode(o));s&&f.removeChild(s),x.support.appendChecked||x.grep(Ft(d,"input"),Bt),h=0;while(o=d[h++])if((!r||-1===x.inArray(o,r))&&(a=x.contains(o.ownerDocument,o),s=Ft(f.appendChild(o),"script"),a&&_t(s),n)){i=0;while(o=s[i++])kt.test(o.type||"")&&n.push(o)}return s=null,f},cleanData:function(e,t){var n,r,o,a,s=0,l=x.expando,u=x.cache,c=x.support.deleteExpando,f=x.event.special;for(;null!=(n=e[s]);s++)if((t||x.acceptData(n))&&(o=n[l],a=o&&u[o])){if(a.events)for(r in a.events)f[r]?x.event.remove(n,r):x.removeEvent(n,r,a.handle);
 u[o]&&(delete u[o],c?delete n[l]:typeof n.removeAttribute!==i?n.removeAttribute(l):n[l]=null,p.push(o))}},_evalUrl:function(e){return x.ajax({url:e,type:"GET",dataType:"script",async:!1,global:!1,"throws":!0})}}),x.fn.extend({wrapAll:function(e){if(x.isFunction(e))return this.each(function(t){x(this).wrapAll(e.call(this,t))});if(this[0]){var t=x(e,this[0].ownerDocument).eq(0).clone(!0);this[0].parentNode&&t.insertBefore(this[0]),t.map(function(){var e=this;while(e.firstChild&&1===e.firstChild.nodeType)e=e.firstChild;return e}).append(this)}return this},wrapInner:function(e){return x.isFunction(e)?this.each(function(t){x(this).wrapInner(e.call(this,t))}):this.each(function(){var t=x(this),n=t.contents();n.length?n.wrapAll(e):t.append(e)})},wrap:function(e){var t=x.isFunction(e);return this.each(function(n){x(this).wrapAll(t?e.call(this,n):e)})},unwrap:function(){return this.parent().each(function(){x.nodeName(this,"body")||x(this).replaceWith(this.childNodes)}).end()}});var Pt,Rt,Wt,$t=/alpha\([^)]*\)/i,It=/opacity\s*=\s*([^)]*)/,zt=/^(top|right|bottom|left)$/,Xt=/^(none|table(?!-c[ea]).+)/,Ut=/^margin/,Vt=RegExp("^("+w+")(.*)$","i"),Yt=RegExp("^("+w+")(?!px)[a-z%]+$","i"),Jt=RegExp("^([+-])=("+w+")","i"),Gt={BODY:"block"},Qt={position:"absolute",visibility:"hidden",display:"block"},Kt={letterSpacing:0,fontWeight:400},Zt=["Top","Right","Bottom","Left"],en=["Webkit","O","Moz","ms"];function tn(e,t){if(t in e)return t;var n=t.charAt(0).toUpperCase()+t.slice(1),r=t,i=en.length;while(i--)if(t=en[i]+n,t in e)return t;return r}function nn(e,t){return e=t||e,"none"===x.css(e,"display")||!x.contains(e.ownerDocument,e)}function rn(e,t){var n,r,i,o=[],a=0,s=e.length;for(;s>a;a++)r=e[a],r.style&&(o[a]=x._data(r,"olddisplay"),n=r.style.display,t?(o[a]||"none"!==n||(r.style.display=""),""===r.style.display&&nn(r)&&(o[a]=x._data(r,"olddisplay",ln(r.nodeName)))):o[a]||(i=nn(r),(n&&"none"!==n||!i)&&x._data(r,"olddisplay",i?n:x.css(r,"display"))));for(a=0;s>a;a++)r=e[a],r.style&&(t&&"none"!==r.style.display&&""!==r.style.display||(r.style.display=t?o[a]||"":"none"));return e}x.fn.extend({css:function(e,n){return x.access(this,function(e,n,r){var i,o,a={},s=0;if(x.isArray(n)){for(o=Rt(e),i=n.length;i>s;s++)a[n[s]]=x.css(e,n[s],!1,o);return a}return r!==t?x.style(e,n,r):x.css(e,n)},e,n,arguments.length>1)},show:function(){return rn(this,!0)},hide:function(){return rn(this)},toggle:function(e){return"boolean"==typeof e?e?this.show():this.hide():this.each(function(){nn(this)?x(this).show():x(this).hide()})}}),x.extend({cssHooks:{opacity:{get:function(e,t){if(t){var n=Wt(e,"opacity");return""===n?"1":n}}}},cssNumber:{columnCount:!0,fillOpacity:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":x.support.cssFloat?"cssFloat":"styleFloat"},style:function(e,n,r,i){if(e&&3!==e.nodeType&&8!==e.nodeType&&e.style){var o,a,s,l=x.camelCase(n),u=e.style;if(n=x.cssProps[l]||(x.cssProps[l]=tn(u,l)),s=x.cssHooks[n]||x.cssHooks[l],r===t)return s&&"get"in s&&(o=s.get(e,!1,i))!==t?o:u[n];if(a=typeof r,"string"===a&&(o=Jt.exec(r))&&(r=(o[1]+1)*o[2]+parseFloat(x.css(e,n)),a="number"),!(null==r||"number"===a&&isNaN(r)||("number"!==a||x.cssNumber[l]||(r+="px"),x.support.clearCloneStyle||""!==r||0!==n.indexOf("background")||(u[n]="inherit"),s&&"set"in s&&(r=s.set(e,r,i))===t)))try{u[n]=r}catch(c){}}},css:function(e,n,r,i){var o,a,s,l=x.camelCase(n);return n=x.cssProps[l]||(x.cssProps[l]=tn(e.style,l)),s=x.cssHooks[n]||x.cssHooks[l],s&&"get"in s&&(a=s.get(e,!0,r)),a===t&&(a=Wt(e,n,i)),"normal"===a&&n in Kt&&(a=Kt[n]),""===r||r?(o=parseFloat(a),r===!0||x.isNumeric(o)?o||0:a):a}}),e.getComputedStyle?(Rt=function(t){return e.getComputedStyle(t,null)},Wt=function(e,n,r){var i,o,a,s=r||Rt(e),l=s?s.getPropertyValue(n)||s[n]:t,u=e.style;return s&&(""!==l||x.contains(e.ownerDocument,e)||(l=x.style(e,n)),Yt.test(l)&&Ut.test(n)&&(i=u.width,o=u.minWidth,a=u.maxWidth,u.minWidth=u.maxWidth=u.width=l,l=s.width,u.width=i,u.minWidth=o,u.maxWidth=a)),l}):a.documentElement.currentStyle&&(Rt=function(e){return e.currentStyle},Wt=function(e,n,r){var i,o,a,s=r||Rt(e),l=s?s[n]:t,u=e.style;return null==l&&u&&u[n]&&(l=u[n]),Yt.test(l)&&!zt.test(n)&&(i=u.left,o=e.runtimeStyle,a=o&&o.left,a&&(o.left=e.currentStyle.left),u.left="fontSize"===n?"1em":l,l=u.pixelLeft+"px",u.left=i,a&&(o.left=a)),""===l?"auto":l});function on(e,t,n){var r=Vt.exec(t);return r?Math.max(0,r[1]-(n||0))+(r[2]||"px"):t}function an(e,t,n,r,i){var o=n===(r?"border":"content")?4:"width"===t?1:0,a=0;for(;4>o;o+=2)"margin"===n&&(a+=x.css(e,n+Zt[o],!0,i)),r?("content"===n&&(a-=x.css(e,"padding"+Zt[o],!0,i)),"margin"!==n&&(a-=x.css(e,"border"+Zt[o]+"Width",!0,i))):(a+=x.css(e,"padding"+Zt[o],!0,i),"padding"!==n&&(a+=x.css(e,"border"+Zt[o]+"Width",!0,i)));return a}function sn(e,t,n){var r=!0,i="width"===t?e.offsetWidth:e.offsetHeight,o=Rt(e),a=x.support.boxSizing&&"border-box"===x.css(e,"boxSizing",!1,o);if(0>=i||null==i){if(i=Wt(e,t,o),(0>i||null==i)&&(i=e.style[t]),Yt.test(i))return i;r=a&&(x.support.boxSizingReliable||i===e.style[t]),i=parseFloat(i)||0}return i+an(e,t,n||(a?"border":"content"),r,o)+"px"}function ln(e){var t=a,n=Gt[e];return n||(n=un(e,t),"none"!==n&&n||(Pt=(Pt||x("<iframe frameborder='0' width='0' height='0'/>").css("cssText","display:block !important")).appendTo(t.documentElement),t=(Pt[0].contentWindow||Pt[0].contentDocument).document,t.write("<!doctype html><html><body>"),t.close(),n=un(e,t),Pt.detach()),Gt[e]=n),n}function un(e,t){var n=x(t.createElement(e)).appendTo(t.body),r=x.css(n[0],"display");return n.remove(),r}x.each(["height","width"],function(e,n){x.cssHooks[n]={get:function(e,r,i){return r?0===e.offsetWidth&&Xt.test(x.css(e,"display"))?x.swap(e,Qt,function(){return sn(e,n,i)}):sn(e,n,i):t},set:function(e,t,r){var i=r&&Rt(e);return on(e,t,r?an(e,n,r,x.support.boxSizing&&"border-box"===x.css(e,"boxSizing",!1,i),i):0)}}}),x.support.opacity||(x.cssHooks.opacity={get:function(e,t){return It.test((t&&e.currentStyle?e.currentStyle.filter:e.style.filter)||"")?.01*parseFloat(RegExp.$1)+"":t?"1":""},set:function(e,t){var n=e.style,r=e.currentStyle,i=x.isNumeric(t)?"alpha(opacity="+100*t+")":"",o=r&&r.filter||n.filter||"";n.zoom=1,(t>=1||""===t)&&""===x.trim(o.replace($t,""))&&n.removeAttribute&&(n.removeAttribute("filter"),""===t||r&&!r.filter)||(n.filter=$t.test(o)?o.replace($t,i):o+" "+i)}}),x(function(){x.support.reliableMarginRight||(x.cssHooks.marginRight={get:function(e,n){return n?x.swap(e,{display:"inline-block"},Wt,[e,"marginRight"]):t}}),!x.support.pixelPosition&&x.fn.position&&x.each(["top","left"],function(e,n){x.cssHooks[n]={get:function(e,r){return r?(r=Wt(e,n),Yt.test(r)?x(e).position()[n]+"px":r):t}}})}),x.expr&&x.expr.filters&&(x.expr.filters.hidden=function(e){return 0>=e.offsetWidth&&0>=e.offsetHeight||!x.support.reliableHiddenOffsets&&"none"===(e.style&&e.style.display||x.css(e,"display"))},x.expr.filters.visible=function(e){return!x.expr.filters.hidden(e)}),x.each({margin:"",padding:"",border:"Width"},function(e,t){x.cssHooks[e+t]={expand:function(n){var r=0,i={},o="string"==typeof n?n.split(" "):[n];for(;4>r;r++)i[e+Zt[r]+t]=o[r]||o[r-2]||o[0];return i}},Ut.test(e)||(x.cssHooks[e+t].set=on)});var cn=/%20/g,pn=/\[\]$/,fn=/\r?\n/g,dn=/^(?:submit|button|image|reset|file)$/i,hn=/^(?:input|select|textarea|keygen)/i;x.fn.extend({serialize:function(){return x.param(this.serializeArray())},serializeArray:function(){return this.map(function(){var e=x.prop(this,"elements");return e?x.makeArray(e):this}).filter(function(){var e=this.type;return this.name&&!x(this).is(":disabled")&&hn.test(this.nodeName)&&!dn.test(e)&&(this.checked||!Ct.test(e))}).map(function(e,t){var n=x(this).val();return null==n?null:x.isArray(n)?x.map(n,function(e){return{name:t.name,value:e.replace(fn,"\r\n")}}):{name:t.name,value:n.replace(fn,"\r\n")}}).get()}}),x.param=function(e,n){var r,i=[],o=function(e,t){t=x.isFunction(t)?t():null==t?"":t,i[i.length]=encodeURIComponent(e)+"="+encodeURIComponent(t)};if(n===t&&(n=x.ajaxSettings&&x.ajaxSettings.traditional),x.isArray(e)||e.jquery&&!x.isPlainObject(e))x.each(e,function(){o(this.name,this.value)});else for(r in e)gn(r,e[r],n,o);return i.join("&").replace(cn,"+")};function gn(e,t,n,r){var i;if(x.isArray(t))x.each(t,function(t,i){n||pn.test(e)?r(e,i):gn(e+"["+("object"==typeof i?t:"")+"]",i,n,r)});else if(n||"object"!==x.type(t))r(e,t);else for(i in t)gn(e+"["+i+"]",t[i],n,r)}x.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(e,t){x.fn[t]=function(e,n){return arguments.length>0?this.on(t,null,e,n):this.trigger(t)}}),x.fn.extend({hover:function(e,t){return this.mouseenter(e).mouseleave(t||e)},bind:function(e,t,n){return this.on(e,null,t,n)},unbind:function(e,t){return this.off(e,null,t)},delegate:function(e,t,n,r){return this.on(t,e,n,r)},undelegate:function(e,t,n){return 1===arguments.length?this.off(e,"**"):this.off(t,e||"**",n)}});var mn,yn,vn=x.now(),bn=/\?/,xn=/#.*$/,wn=/([?&])_=[^&]*/,Tn=/^(.*?):[ \t]*([^\r\n]*)\r?$/gm,Cn=/^(?:about|app|app-storage|.+-extension|file|res|widget):$/,Nn=/^(?:GET|HEAD)$/,kn=/^\/\//,En=/^([\w.+-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/,Sn=x.fn.load,An={},jn={},Dn="*/".concat("*");try{yn=o.href}catch(Ln){yn=a.createElement("a"),yn.href="",yn=yn.href}mn=En.exec(yn.toLowerCase())||[];function Hn(e){return function(t,n){"string"!=typeof t&&(n=t,t="*");var r,i=0,o=t.toLowerCase().match(T)||[];if(x.isFunction(n))while(r=o[i++])"+"===r[0]?(r=r.slice(1)||"*",(e[r]=e[r]||[]).unshift(n)):(e[r]=e[r]||[]).push(n)}}function qn(e,n,r,i){var o={},a=e===jn;function s(l){var u;return o[l]=!0,x.each(e[l]||[],function(e,l){var c=l(n,r,i);return"string"!=typeof c||a||o[c]?a?!(u=c):t:(n.dataTypes.unshift(c),s(c),!1)}),u}return s(n.dataTypes[0])||!o["*"]&&s("*")}function _n(e,n){var r,i,o=x.ajaxSettings.flatOptions||{};for(i in n)n[i]!==t&&((o[i]?e:r||(r={}))[i]=n[i]);return r&&x.extend(!0,e,r),e}x.fn.load=function(e,n,r){if("string"!=typeof e&&Sn)return Sn.apply(this,arguments);var i,o,a,s=this,l=e.indexOf(" ");return l>=0&&(i=e.slice(l,e.length),e=e.slice(0,l)),x.isFunction(n)?(r=n,n=t):n&&"object"==typeof n&&(a="POST"),s.length>0&&x.ajax({url:e,type:a,dataType:"html",data:n}).done(function(e){o=arguments,s.html(i?x("<div>").append(x.parseHTML(e)).find(i):e)}).complete(r&&function(e,t){s.each(r,o||[e.responseText,t,e])}),this},x.each(["ajaxStart","ajaxStop","ajaxComplete","ajaxError","ajaxSuccess","ajaxSend"],function(e,t){x.fn[t]=function(e){return this.on(t,e)}}),x.extend({active:0,lastModified:{},etag:{},ajaxSettings:{url:yn,type:"GET",isLocal:Cn.test(mn[1]),global:!0,processData:!0,async:!0,contentType:"application/x-www-form-urlencoded; charset=UTF-8",accepts:{"*":Dn,text:"text/plain",html:"text/html",xml:"application/xml, text/xml",json:"application/json, text/javascript"},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText",json:"responseJSON"},converters:{"* text":String,"text html":!0,"text json":x.parseJSON,"text xml":x.parseXML},flatOptions:{url:!0,context:!0}},ajaxSetup:function(e,t){return t?_n(_n(e,x.ajaxSettings),t):_n(x.ajaxSettings,e)},ajaxPrefilter:Hn(An),ajaxTransport:Hn(jn),ajax:function(e,n){"object"==typeof e&&(n=e,e=t),n=n||{};var r,i,o,a,s,l,u,c,p=x.ajaxSetup({},n),f=p.context||p,d=p.context&&(f.nodeType||f.jquery)?x(f):x.event,h=x.Deferred(),g=x.Callbacks("once memory"),m=p.statusCode||{},y={},v={},b=0,w="canceled",C={readyState:0,getResponseHeader:function(e){var t;if(2===b){if(!c){c={};while(t=Tn.exec(a))c[t[1].toLowerCase()]=t[2]}t=c[e.toLowerCase()]}return null==t?null:t},getAllResponseHeaders:function(){return 2===b?a:null},setRequestHeader:function(e,t){var n=e.toLowerCase();return b||(e=v[n]=v[n]||e,y[e]=t),this},overrideMimeType:function(e){return b||(p.mimeType=e),this},statusCode:function(e){var t;if(e)if(2>b)for(t in e)m[t]=[m[t],e[t]];else C.always(e[C.status]);return this},abort:function(e){var t=e||w;return u&&u.abort(t),k(0,t),this}};if(h.promise(C).complete=g.add,C.success=C.done,C.error=C.fail,p.url=((e||p.url||yn)+"").replace(xn,"").replace(kn,mn[1]+"//"),p.type=n.method||n.type||p.method||p.type,p.dataTypes=x.trim(p.dataType||"*").toLowerCase().match(T)||[""],null==p.crossDomain&&(r=En.exec(p.url.toLowerCase()),p.crossDomain=!(!r||r[1]===mn[1]&&r[2]===mn[2]&&(r[3]||("http:"===r[1]?"80":"443"))===(mn[3]||("http:"===mn[1]?"80":"443")))),p.data&&p.processData&&"string"!=typeof p.data&&(p.data=x.param(p.data,p.traditional)),qn(An,p,n,C),2===b)return C;l=p.global,l&&0===x.active++&&x.event.trigger("ajaxStart"),p.type=p.type.toUpperCase(),p.hasContent=!Nn.test(p.type),o=p.url,p.hasContent||(p.data&&(o=p.url+=(bn.test(o)?"&":"?")+p.data,delete p.data),p.cache===!1&&(p.url=wn.test(o)?o.replace(wn,"$1_="+vn++):o+(bn.test(o)?"&":"?")+"_="+vn++)),p.ifModified&&(x.lastModified[o]&&C.setRequestHeader("If-Modified-Since",x.lastModified[o]),x.etag[o]&&C.setRequestHeader("If-None-Match",x.etag[o])),(p.data&&p.hasContent&&p.contentType!==!1||n.contentType)&&C.setRequestHeader("Content-Type",p.contentType),C.setRequestHeader("Accept",p.dataTypes[0]&&p.accepts[p.dataTypes[0]]?p.accepts[p.dataTypes[0]]+("*"!==p.dataTypes[0]?", "+Dn+"; q=0.01":""):p.accepts["*"]);for(i in p.headers)C.setRequestHeader(i,p.headers[i]);if(p.beforeSend&&(p.beforeSend.call(f,C,p)===!1||2===b))return C.abort();w="abort";for(i in{success:1,error:1,complete:1})C[i](p[i]);if(u=qn(jn,p,n,C)){C.readyState=1,l&&d.trigger("ajaxSend",[C,p]),p.async&&p.timeout>0&&(s=setTimeout(function(){C.abort("timeout")},p.timeout));try{b=1,u.send(y,k)}catch(N){if(!(2>b))throw N;k(-1,N)}}else k(-1,"No Transport");function k(e,n,r,i){var c,y,v,w,T,N=n;2!==b&&(b=2,s&&clearTimeout(s),u=t,a=i||"",C.readyState=e>0?4:0,c=e>=200&&300>e||304===e,r&&(w=Mn(p,C,r)),w=On(p,w,C,c),c?(p.ifModified&&(T=C.getResponseHeader("Last-Modified"),T&&(x.lastModified[o]=T),T=C.getResponseHeader("etag"),T&&(x.etag[o]=T)),204===e||"HEAD"===p.type?N="nocontent":304===e?N="notmodified":(N=w.state,y=w.data,v=w.error,c=!v)):(v=N,(e||!N)&&(N="error",0>e&&(e=0))),C.status=e,C.statusText=(n||N)+"",c?h.resolveWith(f,[y,N,C]):h.rejectWith(f,[C,N,v]),C.statusCode(m),m=t,l&&d.trigger(c?"ajaxSuccess":"ajaxError",[C,p,c?y:v]),g.fireWith(f,[C,N]),l&&(d.trigger("ajaxComplete",[C,p]),--x.active||x.event.trigger("ajaxStop")))}return C},getJSON:function(e,t,n){return x.get(e,t,n,"json")},getScript:function(e,n){return x.get(e,t,n,"script")}}),x.each(["get","post"],function(e,n){x[n]=function(e,r,i,o){return x.isFunction(r)&&(o=o||i,i=r,r=t),x.ajax({url:e,type:n,dataType:o,data:r,success:i})}});function Mn(e,n,r){var i,o,a,s,l=e.contents,u=e.dataTypes;while("*"===u[0])u.shift(),o===t&&(o=e.mimeType||n.getResponseHeader("Content-Type"));if(o)for(s in l)if(l[s]&&l[s].test(o)){u.unshift(s);break}if(u[0]in r)a=u[0];else{for(s in r){if(!u[0]||e.converters[s+" "+u[0]]){a=s;break}i||(i=s)}a=a||i}return a?(a!==u[0]&&u.unshift(a),r[a]):t}function On(e,t,n,r){var i,o,a,s,l,u={},c=e.dataTypes.slice();if(c[1])for(a in e.converters)u[a.toLowerCase()]=e.converters[a];o=c.shift();while(o)if(e.responseFields[o]&&(n[e.responseFields[o]]=t),!l&&r&&e.dataFilter&&(t=e.dataFilter(t,e.dataType)),l=o,o=c.shift())if("*"===o)o=l;else if("*"!==l&&l!==o){if(a=u[l+" "+o]||u["* "+o],!a)for(i in u)if(s=i.split(" "),s[1]===o&&(a=u[l+" "+s[0]]||u["* "+s[0]])){a===!0?a=u[i]:u[i]!==!0&&(o=s[0],c.unshift(s[1]));break}if(a!==!0)if(a&&e["throws"])t=a(t);else try{t=a(t)}catch(p){return{state:"parsererror",error:a?p:"No conversion from "+l+" to "+o}}}return{state:"success",data:t}}x.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/(?:java|ecma)script/},converters:{"text script":function(e){return x.globalEval(e),e}}}),x.ajaxPrefilter("script",function(e){e.cache===t&&(e.cache=!1),e.crossDomain&&(e.type="GET",e.global=!1)}),x.ajaxTransport("script",function(e){if(e.crossDomain){var n,r=a.head||x("head")[0]||a.documentElement;return{send:function(t,i){n=a.createElement("script"),n.async=!0,e.scriptCharset&&(n.charset=e.scriptCharset),n.src=e.url,n.onload=n.onreadystatechange=function(e,t){(t||!n.readyState||/loaded|complete/.test(n.readyState))&&(n.onload=n.onreadystatechange=null,n.parentNode&&n.parentNode.removeChild(n),n=null,t||i(200,"success"))},r.insertBefore(n,r.firstChild)},abort:function(){n&&n.onload(t,!0)}}}});var Fn=[],Bn=/(=)\?(?=&|$)|\?\?/;x.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var e=Fn.pop()||x.expando+"_"+vn++;return this[e]=!0,e}}),x.ajaxPrefilter("json jsonp",function(n,r,i){var o,a,s,l=n.jsonp!==!1&&(Bn.test(n.url)?"url":"string"==typeof n.data&&!(n.contentType||"").indexOf("application/x-www-form-urlencoded")&&Bn.test(n.data)&&"data");return l||"jsonp"===n.dataTypes[0]?(o=n.jsonpCallback=x.isFunction(n.jsonpCallback)?n.jsonpCallback():n.jsonpCallback,l?n[l]=n[l].replace(Bn,"$1"+o):n.jsonp!==!1&&(n.url+=(bn.test(n.url)?"&":"?")+n.jsonp+"="+o),n.converters["script json"]=function(){return s||x.error(o+" was not called"),s[0]},n.dataTypes[0]="json",a=e[o],e[o]=function(){s=arguments},i.always(function(){e[o]=a,n[o]&&(n.jsonpCallback=r.jsonpCallback,Fn.push(o)),s&&x.isFunction(a)&&a(s[0]),s=a=t}),"script"):t});var Pn,Rn,Wn=0,$n=e.ActiveXObject&&function(){var e;for(e in Pn)Pn[e](t,!0)};function In(){try{return new e.XMLHttpRequest}catch(t){}}function zn(){try{return new e.ActiveXObject("Microsoft.XMLHTTP")}catch(t){}}x.ajaxSettings.xhr=e.ActiveXObject?function(){return!this.isLocal&&In()||zn()}:In,Rn=x.ajaxSettings.xhr(),x.support.cors=!!Rn&&"withCredentials"in Rn,Rn=x.support.ajax=!!Rn,Rn&&x.ajaxTransport(function(n){if(!n.crossDomain||x.support.cors){var r;return{send:function(i,o){var a,s,l=n.xhr();if(n.username?l.open(n.type,n.url,n.async,n.username,n.password):l.open(n.type,n.url,n.async),n.xhrFields)for(s in n.xhrFields)l[s]=n.xhrFields[s];n.mimeType&&l.overrideMimeType&&l.overrideMimeType(n.mimeType),n.crossDomain||i["X-Requested-With"]||(i["X-Requested-With"]="XMLHttpRequest");try{for(s in i)l.setRequestHeader(s,i[s])}catch(u){}l.send(n.hasContent&&n.data||null),r=function(e,i){var s,u,c,p;try{if(r&&(i||4===l.readyState))if(r=t,a&&(l.onreadystatechange=x.noop,$n&&delete Pn[a]),i)4!==l.readyState&&l.abort();else{p={},s=l.status,u=l.getAllResponseHeaders(),"string"==typeof l.responseText&&(p.text=l.responseText);try{c=l.statusText}catch(f){c=""}s||!n.isLocal||n.crossDomain?1223===s&&(s=204):s=p.text?200:404}}catch(d){i||o(-1,d)}p&&o(s,c,p,u)},n.async?4===l.readyState?setTimeout(r):(a=++Wn,$n&&(Pn||(Pn={},x(e).unload($n)),Pn[a]=r),l.onreadystatechange=r):r()},abort:function(){r&&r(t,!0)}}}});var Xn,Un,Vn=/^(?:toggle|show|hide)$/,Yn=RegExp("^(?:([+-])=|)("+w+")([a-z%]*)$","i"),Jn=/queueHooks$/,Gn=[nr],Qn={"*":[function(e,t){var n=this.createTween(e,t),r=n.cur(),i=Yn.exec(t),o=i&&i[3]||(x.cssNumber[e]?"":"px"),a=(x.cssNumber[e]||"px"!==o&&+r)&&Yn.exec(x.css(n.elem,e)),s=1,l=20;if(a&&a[3]!==o){o=o||a[3],i=i||[],a=+r||1;do s=s||".5",a/=s,x.style(n.elem,e,a+o);while(s!==(s=n.cur()/r)&&1!==s&&--l)}return i&&(a=n.start=+a||+r||0,n.unit=o,n.end=i[1]?a+(i[1]+1)*i[2]:+i[2]),n}]};function Kn(){return setTimeout(function(){Xn=t}),Xn=x.now()}function Zn(e,t,n){var r,i=(Qn[t]||[]).concat(Qn["*"]),o=0,a=i.length;for(;a>o;o++)if(r=i[o].call(n,t,e))return r}function er(e,t,n){var r,i,o=0,a=Gn.length,s=x.Deferred().always(function(){delete l.elem}),l=function(){if(i)return!1;var t=Xn||Kn(),n=Math.max(0,u.startTime+u.duration-t),r=n/u.duration||0,o=1-r,a=0,l=u.tweens.length;for(;l>a;a++)u.tweens[a].run(o);return s.notifyWith(e,[u,o,n]),1>o&&l?n:(s.resolveWith(e,[u]),!1)},u=s.promise({elem:e,props:x.extend({},t),opts:x.extend(!0,{specialEasing:{}},n),originalProperties:t,originalOptions:n,startTime:Xn||Kn(),duration:n.duration,tweens:[],createTween:function(t,n){var r=x.Tween(e,u.opts,t,n,u.opts.specialEasing[t]||u.opts.easing);return u.tweens.push(r),r},stop:function(t){var n=0,r=t?u.tweens.length:0;if(i)return this;for(i=!0;r>n;n++)u.tweens[n].run(1);return t?s.resolveWith(e,[u,t]):s.rejectWith(e,[u,t]),this}}),c=u.props;for(tr(c,u.opts.specialEasing);a>o;o++)if(r=Gn[o].call(u,e,c,u.opts))return r;return x.map(c,Zn,u),x.isFunction(u.opts.start)&&u.opts.start.call(e,u),x.fx.timer(x.extend(l,{elem:e,anim:u,queue:u.opts.queue})),u.progress(u.opts.progress).done(u.opts.done,u.opts.complete).fail(u.opts.fail).always(u.opts.always)}function tr(e,t){var n,r,i,o,a;for(n in e)if(r=x.camelCase(n),i=t[r],o=e[n],x.isArray(o)&&(i=o[1],o=e[n]=o[0]),n!==r&&(e[r]=o,delete e[n]),a=x.cssHooks[r],a&&"expand"in a){o=a.expand(o),delete e[r];for(n in o)n in e||(e[n]=o[n],t[n]=i)}else t[r]=i}x.Animation=x.extend(er,{tweener:function(e,t){x.isFunction(e)?(t=e,e=["*"]):e=e.split(" ");var n,r=0,i=e.length;for(;i>r;r++)n=e[r],Qn[n]=Qn[n]||[],Qn[n].unshift(t)},prefilter:function(e,t){t?Gn.unshift(e):Gn.push(e)}});function nr(e,t,n){var r,i,o,a,s,l,u=this,c={},p=e.style,f=e.nodeType&&nn(e),d=x._data(e,"fxshow");n.queue||(s=x._queueHooks(e,"fx"),null==s.unqueued&&(s.unqueued=0,l=s.empty.fire,s.empty.fire=function(){s.unqueued||l()}),s.unqueued++,u.always(function(){u.always(function(){s.unqueued--,x.queue(e,"fx").length||s.empty.fire()})})),1===e.nodeType&&("height"in t||"width"in t)&&(n.overflow=[p.overflow,p.overflowX,p.overflowY],"inline"===x.css(e,"display")&&"none"===x.css(e,"float")&&(x.support.inlineBlockNeedsLayout&&"inline"!==ln(e.nodeName)?p.zoom=1:p.display="inline-block")),n.overflow&&(p.overflow="hidden",x.support.shrinkWrapBlocks||u.always(function(){p.overflow=n.overflow[0],p.overflowX=n.overflow[1],p.overflowY=n.overflow[2]}));for(r in t)if(i=t[r],Vn.exec(i)){if(delete t[r],o=o||"toggle"===i,i===(f?"hide":"show"))continue;c[r]=d&&d[r]||x.style(e,r)}if(!x.isEmptyObject(c)){d?"hidden"in d&&(f=d.hidden):d=x._data(e,"fxshow",{}),o&&(d.hidden=!f),f?x(e).show():u.done(function(){x(e).hide()}),u.done(function(){var t;x._removeData(e,"fxshow");for(t in c)x.style(e,t,c[t])});for(r in c)a=Zn(f?d[r]:0,r,u),r in d||(d[r]=a.start,f&&(a.end=a.start,a.start="width"===r||"height"===r?1:0))}}function rr(e,t,n,r,i){return new rr.prototype.init(e,t,n,r,i)}x.Tween=rr,rr.prototype={constructor:rr,init:function(e,t,n,r,i,o){this.elem=e,this.prop=n,this.easing=i||"swing",this.options=t,this.start=this.now=this.cur(),this.end=r,this.unit=o||(x.cssNumber[n]?"":"px")},cur:function(){var e=rr.propHooks[this.prop];return e&&e.get?e.get(this):rr.propHooks._default.get(this)},run:function(e){var t,n=rr.propHooks[this.prop];return this.pos=t=this.options.duration?x.easing[this.easing](e,this.options.duration*e,0,1,this.options.duration):e,this.now=(this.end-this.start)*t+this.start,this.options.step&&this.options.step.call(this.elem,this.now,this),n&&n.set?n.set(this):rr.propHooks._default.set(this),this}},rr.prototype.init.prototype=rr.prototype,rr.propHooks={_default:{get:function(e){var t;return null==e.elem[e.prop]||e.elem.style&&null!=e.elem.style[e.prop]?(t=x.css(e.elem,e.prop,""),t&&"auto"!==t?t:0):e.elem[e.prop]},set:function(e){x.fx.step[e.prop]?x.fx.step[e.prop](e):e.elem.style&&(null!=e.elem.style[x.cssProps[e.prop]]||x.cssHooks[e.prop])?x.style(e.elem,e.prop,e.now+e.unit):e.elem[e.prop]=e.now}}},rr.propHooks.scrollTop=rr.propHooks.scrollLeft={set:function(e){e.elem.nodeType&&e.elem.parentNode&&(e.elem[e.prop]=e.now)}},x.each(["toggle","show","hide"],function(e,t){var n=x.fn[t];x.fn[t]=function(e,r,i){return null==e||"boolean"==typeof e?n.apply(this,arguments):this.animate(ir(t,!0),e,r,i)}}),x.fn.extend({fadeTo:function(e,t,n,r){return this.filter(nn).css("opacity",0).show().end().animate({opacity:t},e,n,r)},animate:function(e,t,n,r){var i=x.isEmptyObject(e),o=x.speed(t,n,r),a=function(){var t=er(this,x.extend({},e),o);(i||x._data(this,"finish"))&&t.stop(!0)};return a.finish=a,i||o.queue===!1?this.each(a):this.queue(o.queue,a)},stop:function(e,n,r){var i=function(e){var t=e.stop;delete e.stop,t(r)};return"string"!=typeof e&&(r=n,n=e,e=t),n&&e!==!1&&this.queue(e||"fx",[]),this.each(function(){var t=!0,n=null!=e&&e+"queueHooks",o=x.timers,a=x._data(this);if(n)a[n]&&a[n].stop&&i(a[n]);else for(n in a)a[n]&&a[n].stop&&Jn.test(n)&&i(a[n]);for(n=o.length;n--;)o[n].elem!==this||null!=e&&o[n].queue!==e||(o[n].anim.stop(r),t=!1,o.splice(n,1));(t||!r)&&x.dequeue(this,e)})},finish:function(e){return e!==!1&&(e=e||"fx"),this.each(function(){var t,n=x._data(this),r=n[e+"queue"],i=n[e+"queueHooks"],o=x.timers,a=r?r.length:0;for(n.finish=!0,x.queue(this,e,[]),i&&i.stop&&i.stop.call(this,!0),t=o.length;t--;)o[t].elem===this&&o[t].queue===e&&(o[t].anim.stop(!0),o.splice(t,1));for(t=0;a>t;t++)r[t]&&r[t].finish&&r[t].finish.call(this);delete n.finish})}});function ir(e,t){var n,r={height:e},i=0;for(t=t?1:0;4>i;i+=2-t)n=Zt[i],r["margin"+n]=r["padding"+n]=e;return t&&(r.opacity=r.width=e),r}x.each({slideDown:ir("show"),slideUp:ir("hide"),slideToggle:ir("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(e,t){x.fn[e]=function(e,n,r){return this.animate(t,e,n,r)}}),x.speed=function(e,t,n){var r=e&&"object"==typeof e?x.extend({},e):{complete:n||!n&&t||x.isFunction(e)&&e,duration:e,easing:n&&t||t&&!x.isFunction(t)&&t};return r.duration=x.fx.off?0:"number"==typeof r.duration?r.duration:r.duration in x.fx.speeds?x.fx.speeds[r.duration]:x.fx.speeds._default,(null==r.queue||r.queue===!0)&&(r.queue="fx"),r.old=r.complete,r.complete=function(){x.isFunction(r.old)&&r.old.call(this),r.queue&&x.dequeue(this,r.queue)},r},x.easing={linear:function(e){return e},swing:function(e){return.5-Math.cos(e*Math.PI)/2}},x.timers=[],x.fx=rr.prototype.init,x.fx.tick=function(){var e,n=x.timers,r=0;for(Xn=x.now();n.length>r;r++)e=n[r],e()||n[r]!==e||n.splice(r--,1);n.length||x.fx.stop(),Xn=t},x.fx.timer=function(e){e()&&x.timers.push(e)&&x.fx.start()},x.fx.interval=13,x.fx.start=function(){Un||(Un=setInterval(x.fx.tick,x.fx.interval))},x.fx.stop=function(){clearInterval(Un),Un=null},x.fx.speeds={slow:600,fast:200,_default:400},x.fx.step={},x.expr&&x.expr.filters&&(x.expr.filters.animated=function(e){return x.grep(x.timers,function(t){return e===t.elem}).length}),x.fn.offset=function(e){if(arguments.length)return e===t?this:this.each(function(t){x.offset.setOffset(this,e,t)});var n,r,o={top:0,left:0},a=this[0],s=a&&a.ownerDocument;if(s)return n=s.documentElement,x.contains(n,a)?(typeof a.getBoundingClientRect!==i&&(o=a.getBoundingClientRect()),r=or(s),{top:o.top+(r.pageYOffset||n.scrollTop)-(n.clientTop||0),left:o.left+(r.pageXOffset||n.scrollLeft)-(n.clientLeft||0)}):o},x.offset={setOffset:function(e,t,n){var r=x.css(e,"position");"static"===r&&(e.style.position="relative");var i=x(e),o=i.offset(),a=x.css(e,"top"),s=x.css(e,"left"),l=("absolute"===r||"fixed"===r)&&x.inArray("auto",[a,s])>-1,u={},c={},p,f;l?(c=i.position(),p=c.top,f=c.left):(p=parseFloat(a)||0,f=parseFloat(s)||0),x.isFunction(t)&&(t=t.call(e,n,o)),null!=t.top&&(u.top=t.top-o.top+p),null!=t.left&&(u.left=t.left-o.left+f),"using"in t?t.using.call(e,u):i.css(u)}},x.fn.extend({position:function(){if(this[0]){var e,t,n={top:0,left:0},r=this[0];return"fixed"===x.css(r,"position")?t=r.getBoundingClientRect():(e=this.offsetParent(),t=this.offset(),x.nodeName(e[0],"html")||(n=e.offset()),n.top+=x.css(e[0],"borderTopWidth",!0),n.left+=x.css(e[0],"borderLeftWidth",!0)),{top:t.top-n.top-x.css(r,"marginTop",!0),left:t.left-n.left-x.css(r,"marginLeft",!0)}}},offsetParent:function(){return this.map(function(){var e=this.offsetParent||s;while(e&&!x.nodeName(e,"html")&&"static"===x.css(e,"position"))e=e.offsetParent;return e||s})}}),x.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(e,n){var r=/Y/.test(n);x.fn[e]=function(i){return x.access(this,function(e,i,o){var a=or(e);return o===t?a?n in a?a[n]:a.document.documentElement[i]:e[i]:(a?a.scrollTo(r?x(a).scrollLeft():o,r?o:x(a).scrollTop()):e[i]=o,t)},e,i,arguments.length,null)}});function or(e){return x.isWindow(e)?e:9===e.nodeType?e.defaultView||e.parentWindow:!1}x.each({Height:"height",Width:"width"},function(e,n){x.each({padding:"inner"+e,content:n,"":"outer"+e},function(r,i){x.fn[i]=function(i,o){var a=arguments.length&&(r||"boolean"!=typeof i),s=r||(i===!0||o===!0?"margin":"border");return x.access(this,function(n,r,i){var o;return x.isWindow(n)?n.document.documentElement["client"+e]:9===n.nodeType?(o=n.documentElement,Math.max(n.body["scroll"+e],o["scroll"+e],n.body["offset"+e],o["offset"+e],o["client"+e])):i===t?x.css(n,r,s):x.style(n,r,i,s)},n,a?i:t,a,null)}})}),x.fn.size=function(){return this.length},x.fn.andSelf=x.fn.addBack,"object"==typeof module&&module&&"object"==typeof module.exports?module.exports=x:(e.jQuery=e.$=x,"function"==typeof define&&define.amd&&define("jquery",[],function(){return x}))})(window);
 
-/*! jQuery Validation Plugin - v1.14.0 - 6/30/2015
- * http://jqueryvalidation.org/
- * Copyright (c) 2015 Jörn Zaefferer; Licensed MIT */
-!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a(jQuery)}(function(a){a.extend(a.fn,{validate:function(b){if(!this.length)return void(b&&b.debug&&window.console&&console.warn("Nothing selected, can't validate, returning nothing."));var c=a.data(this[0],"validator");return c?c:(this.attr("novalidate","novalidate"),c=new a.validator(b,this[0]),a.data(this[0],"validator",c),c.settings.onsubmit&&(this.on("click.validate",":submit",function(b){c.settings.submitHandler&&(c.submitButton=b.target),a(this).hasClass("cancel")&&(c.cancelSubmit=!0),void 0!==a(this).attr("formnovalidate")&&(c.cancelSubmit=!0)}),this.on("submit.validate",function(b){function d(){var d,e;return c.settings.submitHandler?(c.submitButton&&(d=a("<input type='hidden'/>").attr("name",c.submitButton.name).val(a(c.submitButton).val()).appendTo(c.currentForm)),e=c.settings.submitHandler.call(c,c.currentForm,b),c.submitButton&&d.remove(),void 0!==e?e:!1):!0}return c.settings.debug&&b.preventDefault(),c.cancelSubmit?(c.cancelSubmit=!1,d()):c.form()?c.pendingRequest?(c.formSubmitted=!0,!1):d():(c.focusInvalid(),!1)})),c)},valid:function(){var b,c,d;return a(this[0]).is("form")?b=this.validate().form():(d=[],b=!0,c=a(this[0].form).validate(),this.each(function(){b=c.element(this)&&b,d=d.concat(c.errorList)}),c.errorList=d),b},rules:function(b,c){var d,e,f,g,h,i,j=this[0];if(b)switch(d=a.data(j.form,"validator").settings,e=d.rules,f=a.validator.staticRules(j),b){case"add":a.extend(f,a.validator.normalizeRule(c)),delete f.messages,e[j.name]=f,c.messages&&(d.messages[j.name]=a.extend(d.messages[j.name],c.messages));break;case"remove":return c?(i={},a.each(c.split(/\s/),function(b,c){i[c]=f[c],delete f[c],"required"===c&&a(j).removeAttr("aria-required")}),i):(delete e[j.name],f)}return g=a.validator.normalizeRules(a.extend({},a.validator.classRules(j),a.validator.attributeRules(j),a.validator.dataRules(j),a.validator.staticRules(j)),j),g.required&&(h=g.required,delete g.required,g=a.extend({required:h},g),a(j).attr("aria-required","true")),g.remote&&(h=g.remote,delete g.remote,g=a.extend(g,{remote:h})),g}}),a.extend(a.expr[":"],{blank:function(b){return!a.trim(""+a(b).val())},filled:function(b){return!!a.trim(""+a(b).val())},unchecked:function(b){return!a(b).prop("checked")}}),a.validator=function(b,c){this.settings=a.extend(!0,{},a.validator.defaults,b),this.currentForm=c,this.init()},a.validator.format=function(b,c){return 1===arguments.length?function(){var c=a.makeArray(arguments);return c.unshift(b),a.validator.format.apply(this,c)}:(arguments.length>2&&c.constructor!==Array&&(c=a.makeArray(arguments).slice(1)),c.constructor!==Array&&(c=[c]),a.each(c,function(a,c){b=b.replace(new RegExp("\\{"+a+"\\}","g"),function(){return c})}),b)},a.extend(a.validator,{defaults:{messages:{},groups:{},rules:{},errorClass:"error",validClass:"valid",errorElement:"label",focusCleanup:!1,focusInvalid:!0,errorContainer:a([]),errorLabelContainer:a([]),onsubmit:!0,ignore:":hidden",ignoreTitle:!1,onfocusin:function(a){this.lastActive=a,this.settings.focusCleanup&&(this.settings.unhighlight&&this.settings.unhighlight.call(this,a,this.settings.errorClass,this.settings.validClass),this.hideThese(this.errorsFor(a)))},onfocusout:function(a){this.checkable(a)||!(a.name in this.submitted)&&this.optional(a)||this.element(a)},onkeyup:function(b,c){var d=[16,17,18,20,35,36,37,38,39,40,45,144,225];9===c.which&&""===this.elementValue(b)||-1!==a.inArray(c.keyCode,d)||(b.name in this.submitted||b===this.lastElement)&&this.element(b)},onclick:function(a){a.name in this.submitted?this.element(a):a.parentNode.name in this.submitted&&this.element(a.parentNode)},highlight:function(b,c,d){"radio"===b.type?this.findByName(b.name).addClass(c).removeClass(d):a(b).addClass(c).removeClass(d)},unhighlight:function(b,c,d){"radio"===b.type?this.findByName(b.name).removeClass(c).addClass(d):a(b).removeClass(c).addClass(d)}},setDefaults:function(b){a.extend(a.validator.defaults,b)},messages:{required:"This field is required.",remote:"Please fix this field.",email:"Please enter a valid email address.",url:"Please enter a valid URL.",date:"Please enter a valid date.",dateISO:"Please enter a valid date ( ISO ).",number:"Please enter a valid number.",digits:"Please enter only digits.",creditcard:"Please enter a valid credit card number.",equalTo:"Please enter the same value again.",maxlength:a.validator.format("Please enter no more than {0} characters."),minlength:a.validator.format("Please enter at least {0} characters."),rangelength:a.validator.format("Please enter a value between {0} and {1} characters long."),range:a.validator.format("Please enter a value between {0} and {1}."),max:a.validator.format("Please enter a value less than or equal to {0}."),min:a.validator.format("Please enter a value greater than or equal to {0}.")},autoCreateRanges:!1,prototype:{init:function(){function b(b){var c=a.data(this.form,"validator"),d="on"+b.type.replace(/^validate/,""),e=c.settings;e[d]&&!a(this).is(e.ignore)&&e[d].call(c,this,b)}this.labelContainer=a(this.settings.errorLabelContainer),this.errorContext=this.labelContainer.length&&this.labelContainer||a(this.currentForm),this.containers=a(this.settings.errorContainer).add(this.settings.errorLabelContainer),this.submitted={},this.valueCache={},this.pendingRequest=0,this.pending={},this.invalid={},this.reset();var c,d=this.groups={};a.each(this.settings.groups,function(b,c){"string"==typeof c&&(c=c.split(/\s/)),a.each(c,function(a,c){d[c]=b})}),c=this.settings.rules,a.each(c,function(b,d){c[b]=a.validator.normalizeRule(d)}),a(this.currentForm).on("focusin.validate focusout.validate keyup.validate",":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], [type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], [type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], [type='radio'], [type='checkbox']",b).on("click.validate","select, option, [type='radio'], [type='checkbox']",b),this.settings.invalidHandler&&a(this.currentForm).on("invalid-form.validate",this.settings.invalidHandler),a(this.currentForm).find("[required], [data-rule-required], .required").attr("aria-required","true")},form:function(){return this.checkForm(),a.extend(this.submitted,this.errorMap),this.invalid=a.extend({},this.errorMap),this.valid()||a(this.currentForm).triggerHandler("invalid-form",[this]),this.showErrors(),this.valid()},checkForm:function(){this.prepareForm();for(var a=0,b=this.currentElements=this.elements();b[a];a++)this.check(b[a]);return this.valid()},element:function(b){var c=this.clean(b),d=this.validationTargetFor(c),e=!0;return this.lastElement=d,void 0===d?delete this.invalid[c.name]:(this.prepareElement(d),this.currentElements=a(d),e=this.check(d)!==!1,e?delete this.invalid[d.name]:this.invalid[d.name]=!0),a(b).attr("aria-invalid",!e),this.numberOfInvalids()||(this.toHide=this.toHide.add(this.containers)),this.showErrors(),e},showErrors:function(b){if(b){a.extend(this.errorMap,b),this.errorList=[];for(var c in b)this.errorList.push({message:b[c],element:this.findByName(c)[0]});this.successList=a.grep(this.successList,function(a){return!(a.name in b)})}this.settings.showErrors?this.settings.showErrors.call(this,this.errorMap,this.errorList):this.defaultShowErrors()},resetForm:function(){a.fn.resetForm&&a(this.currentForm).resetForm(),this.submitted={},this.lastElement=null,this.prepareForm(),this.hideErrors();var b,c=this.elements().removeData("previousValue").removeAttr("aria-invalid");if(this.settings.unhighlight)for(b=0;c[b];b++)this.settings.unhighlight.call(this,c[b],this.settings.errorClass,"");else c.removeClass(this.settings.errorClass)},numberOfInvalids:function(){return this.objectLength(this.invalid)},objectLength:function(a){var b,c=0;for(b in a)c++;return c},hideErrors:function(){this.hideThese(this.toHide)},hideThese:function(a){a.not(this.containers).text(""),this.addWrapper(a).hide()},valid:function(){return 0===this.size()},size:function(){return this.errorList.length},focusInvalid:function(){if(this.settings.focusInvalid)try{a(this.findLastActive()||this.errorList.length&&this.errorList[0].element||[]).filter(":visible").focus().trigger("focusin")}catch(b){}},findLastActive:function(){var b=this.lastActive;return b&&1===a.grep(this.errorList,function(a){return a.element.name===b.name}).length&&b},elements:function(){var b=this,c={};return a(this.currentForm).find("input, select, textarea").not(":submit, :reset, :image, :disabled").not(this.settings.ignore).filter(function(){return!this.name&&b.settings.debug&&window.console&&console.error("%o has no name assigned",this),this.name in c||!b.objectLength(a(this).rules())?!1:(c[this.name]=!0,!0)})},clean:function(b){return a(b)[0]},errors:function(){var b=this.settings.errorClass.split(" ").join(".");return a(this.settings.errorElement+"."+b,this.errorContext)},reset:function(){this.successList=[],this.errorList=[],this.errorMap={},this.toShow=a([]),this.toHide=a([]),this.currentElements=a([])},prepareForm:function(){this.reset(),this.toHide=this.errors().add(this.containers)},prepareElement:function(a){this.reset(),this.toHide=this.errorsFor(a)},elementValue:function(b){var c,d=a(b),e=b.type;return"radio"===e||"checkbox"===e?this.findByName(b.name).filter(":checked").val():"number"===e&&"undefined"!=typeof b.validity?b.validity.badInput?!1:d.val():(c=d.val(),"string"==typeof c?c.replace(/\r/g,""):c)},check:function(b){b=this.validationTargetFor(this.clean(b));var c,d,e,f=a(b).rules(),g=a.map(f,function(a,b){return b}).length,h=!1,i=this.elementValue(b);for(d in f){e={method:d,parameters:f[d]};try{if(c=a.validator.methods[d].call(this,i,b,e.parameters),"dependency-mismatch"===c&&1===g){h=!0;continue}if(h=!1,"pending"===c)return void(this.toHide=this.toHide.not(this.errorsFor(b)));if(!c)return this.formatAndAdd(b,e),!1}catch(j){throw this.settings.debug&&window.console&&console.log("Exception occurred when checking element "+b.id+", check the '"+e.method+"' method.",j),j instanceof TypeError&&(j.message+=".  Exception occurred when checking element "+b.id+", check the '"+e.method+"' method."),j}}if(!h)return this.objectLength(f)&&this.successList.push(b),!0},customDataMessage:function(b,c){return a(b).data("msg"+c.charAt(0).toUpperCase()+c.substring(1).toLowerCase())||a(b).data("msg")},customMessage:function(a,b){var c=this.settings.messages[a];return c&&(c.constructor===String?c:c[b])},findDefined:function(){for(var a=0;a<arguments.length;a++)if(void 0!==arguments[a])return arguments[a];return void 0},defaultMessage:function(b,c){return this.findDefined(this.customMessage(b.name,c),this.customDataMessage(b,c),!this.settings.ignoreTitle&&b.title||void 0,a.validator.messages[c],"<strong>Warning: No message defined for "+b.name+"</strong>")},formatAndAdd:function(b,c){var d=this.defaultMessage(b,c.method),e=/\$?\{(\d+)\}/g;"function"==typeof d?d=d.call(this,c.parameters,b):e.test(d)&&(d=a.validator.format(d.replace(e,"{$1}"),c.parameters)),this.errorList.push({message:d,element:b,method:c.method}),this.errorMap[b.name]=d,this.submitted[b.name]=d},addWrapper:function(a){return this.settings.wrapper&&(a=a.add(a.parent(this.settings.wrapper))),a},defaultShowErrors:function(){var a,b,c;for(a=0;this.errorList[a];a++)c=this.errorList[a],this.settings.highlight&&this.settings.highlight.call(this,c.element,this.settings.errorClass,this.settings.validClass),this.showLabel(c.element,c.message);if(this.errorList.length&&(this.toShow=this.toShow.add(this.containers)),this.settings.success)for(a=0;this.successList[a];a++)this.showLabel(this.successList[a]);if(this.settings.unhighlight)for(a=0,b=this.validElements();b[a];a++)this.settings.unhighlight.call(this,b[a],this.settings.errorClass,this.settings.validClass);this.toHide=this.toHide.not(this.toShow),this.hideErrors(),this.addWrapper(this.toShow).show()},validElements:function(){return this.currentElements.not(this.invalidElements())},invalidElements:function(){return a(this.errorList).map(function(){return this.element})},showLabel:function(b,c){var d,e,f,g=this.errorsFor(b),h=this.idOrName(b),i=a(b).attr("aria-describedby");g.length?(g.removeClass(this.settings.validClass).addClass(this.settings.errorClass),g.html(c)):(g=a("<"+this.settings.errorElement+">").attr("id",h+"-error").addClass(this.settings.errorClass).html(c||""),d=g,this.settings.wrapper&&(d=g.hide().show().wrap("<"+this.settings.wrapper+"/>").parent()),this.labelContainer.length?this.labelContainer.append(d):this.settings.errorPlacement?this.settings.errorPlacement(d,a(b)):d.insertAfter(b),g.is("label")?g.attr("for",h):0===g.parents("label[for='"+h+"']").length&&(f=g.attr("id").replace(/(:|\.|\[|\]|\$)/g,"\\$1"),i?i.match(new RegExp("\\b"+f+"\\b"))||(i+=" "+f):i=f,a(b).attr("aria-describedby",i),e=this.groups[b.name],e&&a.each(this.groups,function(b,c){c===e&&a("[name='"+b+"']",this.currentForm).attr("aria-describedby",g.attr("id"))}))),!c&&this.settings.success&&(g.text(""),"string"==typeof this.settings.success?g.addClass(this.settings.success):this.settings.success(g,b)),this.toShow=this.toShow.add(g)},errorsFor:function(b){var c=this.idOrName(b),d=a(b).attr("aria-describedby"),e="label[for='"+c+"'], label[for='"+c+"'] *";return d&&(e=e+", #"+d.replace(/\s+/g,", #")),this.errors().filter(e)},idOrName:function(a){return this.groups[a.name]||(this.checkable(a)?a.name:a.id||a.name)},validationTargetFor:function(b){return this.checkable(b)&&(b=this.findByName(b.name)),a(b).not(this.settings.ignore)[0]},checkable:function(a){return/radio|checkbox/i.test(a.type)},findByName:function(b){return a(this.currentForm).find("[name='"+b+"']")},getLength:function(b,c){switch(c.nodeName.toLowerCase()){case"select":return a("option:selected",c).length;case"input":if(this.checkable(c))return this.findByName(c.name).filter(":checked").length}return b.length},depend:function(a,b){return this.dependTypes[typeof a]?this.dependTypes[typeof a](a,b):!0},dependTypes:{"boolean":function(a){return a},string:function(b,c){return!!a(b,c.form).length},"function":function(a,b){return a(b)}},optional:function(b){var c=this.elementValue(b);return!a.validator.methods.required.call(this,c,b)&&"dependency-mismatch"},startRequest:function(a){this.pending[a.name]||(this.pendingRequest++,this.pending[a.name]=!0)},stopRequest:function(b,c){this.pendingRequest--,this.pendingRequest<0&&(this.pendingRequest=0),delete this.pending[b.name],c&&0===this.pendingRequest&&this.formSubmitted&&this.form()?(a(this.currentForm).submit(),this.formSubmitted=!1):!c&&0===this.pendingRequest&&this.formSubmitted&&(a(this.currentForm).triggerHandler("invalid-form",[this]),this.formSubmitted=!1)},previousValue:function(b){return a.data(b,"previousValue")||a.data(b,"previousValue",{old:null,valid:!0,message:this.defaultMessage(b,"remote")})},destroy:function(){this.resetForm(),a(this.currentForm).off(".validate").removeData("validator")}},classRuleSettings:{required:{required:!0},email:{email:!0},url:{url:!0},date:{date:!0},dateISO:{dateISO:!0},number:{number:!0},digits:{digits:!0},creditcard:{creditcard:!0}},addClassRules:function(b,c){b.constructor===String?this.classRuleSettings[b]=c:a.extend(this.classRuleSettings,b)},classRules:function(b){var c={},d=a(b).attr("class");return d&&a.each(d.split(" "),function(){this in a.validator.classRuleSettings&&a.extend(c,a.validator.classRuleSettings[this])}),c},normalizeAttributeRule:function(a,b,c,d){/min|max/.test(c)&&(null===b||/number|range|text/.test(b))&&(d=Number(d),isNaN(d)&&(d=void 0)),d||0===d?a[c]=d:b===c&&"range"!==b&&(a[c]=!0)},attributeRules:function(b){var c,d,e={},f=a(b),g=b.getAttribute("type");for(c in a.validator.methods)"required"===c?(d=b.getAttribute(c),""===d&&(d=!0),d=!!d):d=f.attr(c),this.normalizeAttributeRule(e,g,c,d);return e.maxlength&&/-1|2147483647|524288/.test(e.maxlength)&&delete e.maxlength,e},dataRules:function(b){var c,d,e={},f=a(b),g=b.getAttribute("type");for(c in a.validator.methods)d=f.data("rule"+c.charAt(0).toUpperCase()+c.substring(1).toLowerCase()),this.normalizeAttributeRule(e,g,c,d);return e},staticRules:function(b){var c={},d=a.data(b.form,"validator");return d.settings.rules&&(c=a.validator.normalizeRule(d.settings.rules[b.name])||{}),c},normalizeRules:function(b,c){return a.each(b,function(d,e){if(e===!1)return void delete b[d];if(e.param||e.depends){var f=!0;switch(typeof e.depends){case"string":f=!!a(e.depends,c.form).length;break;case"function":f=e.depends.call(c,c)}f?b[d]=void 0!==e.param?e.param:!0:delete b[d]}}),a.each(b,function(d,e){b[d]=a.isFunction(e)?e(c):e}),a.each(["minlength","maxlength"],function(){b[this]&&(b[this]=Number(b[this]))}),a.each(["rangelength","range"],function(){var c;b[this]&&(a.isArray(b[this])?b[this]=[Number(b[this][0]),Number(b[this][1])]:"string"==typeof b[this]&&(c=b[this].replace(/[\[\]]/g,"").split(/[\s,]+/),b[this]=[Number(c[0]),Number(c[1])]))}),a.validator.autoCreateRanges&&(null!=b.min&&null!=b.max&&(b.range=[b.min,b.max],delete b.min,delete b.max),null!=b.minlength&&null!=b.maxlength&&(b.rangelength=[b.minlength,b.maxlength],delete b.minlength,delete b.maxlength)),b},normalizeRule:function(b){if("string"==typeof b){var c={};a.each(b.split(/\s/),function(){c[this]=!0}),b=c}return b},addMethod:function(b,c,d){a.validator.methods[b]=c,a.validator.messages[b]=void 0!==d?d:a.validator.messages[b],c.length<3&&a.validator.addClassRules(b,a.validator.normalizeRule(b))},methods:{required:function(b,c,d){if(!this.depend(d,c))return"dependency-mismatch";if("select"===c.nodeName.toLowerCase()){var e=a(c).val();return e&&e.length>0}return this.checkable(c)?this.getLength(b,c)>0:b.length>0},email:function(a,b){return this.optional(b)||/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(a)},url:function(a,b){return this.optional(b)||/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})).?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(a)},date:function(a,b){return this.optional(b)||!/Invalid|NaN/.test(new Date(a).toString())},dateISO:function(a,b){return this.optional(b)||/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(a)},number:function(a,b){return this.optional(b)||/^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(a)},digits:function(a,b){return this.optional(b)||/^\d+$/.test(a)},creditcard:function(a,b){if(this.optional(b))return"dependency-mismatch";if(/[^0-9 \-]+/.test(a))return!1;var c,d,e=0,f=0,g=!1;if(a=a.replace(/\D/g,""),a.length<13||a.length>19)return!1;for(c=a.length-1;c>=0;c--)d=a.charAt(c),f=parseInt(d,10),g&&(f*=2)>9&&(f-=9),e+=f,g=!g;return e%10===0},minlength:function(b,c,d){var e=a.isArray(b)?b.length:this.getLength(b,c);return this.optional(c)||e>=d},maxlength:function(b,c,d){var e=a.isArray(b)?b.length:this.getLength(b,c);return this.optional(c)||d>=e},rangelength:function(b,c,d){var e=a.isArray(b)?b.length:this.getLength(b,c);return this.optional(c)||e>=d[0]&&e<=d[1]},min:function(a,b,c){return this.optional(b)||a>=c},max:function(a,b,c){return this.optional(b)||c>=a},range:function(a,b,c){return this.optional(b)||a>=c[0]&&a<=c[1]},equalTo:function(b,c,d){var e=a(d);return this.settings.onfocusout&&e.off(".validate-equalTo").on("blur.validate-equalTo",function(){a(c).valid()}),b===e.val()},remote:function(b,c,d){if(this.optional(c))return"dependency-mismatch";var e,f,g=this.previousValue(c);return this.settings.messages[c.name]||(this.settings.messages[c.name]={}),g.originalMessage=this.settings.messages[c.name].remote,this.settings.messages[c.name].remote=g.message,d="string"==typeof d&&{url:d}||d,g.old===b?g.valid:(g.old=b,e=this,this.startRequest(c),f={},f[c.name]=b,a.ajax(a.extend(!0,{mode:"abort",port:"validate"+c.name,dataType:"json",data:f,context:e.currentForm,success:function(d){var f,h,i,j=d===!0||"true"===d;e.settings.messages[c.name].remote=g.originalMessage,j?(i=e.formSubmitted,e.prepareElement(c),e.formSubmitted=i,e.successList.push(c),delete e.invalid[c.name],e.showErrors()):(f={},h=d||e.defaultMessage(c,"remote"),f[c.name]=g.message=a.isFunction(h)?h(b):h,e.invalid[c.name]=!0,e.showErrors(f)),g.valid=j,e.stopRequest(c,j)}},d)),"pending")}}});var b,c={};a.ajaxPrefilter?a.ajaxPrefilter(function(a,b,d){var e=a.port;"abort"===a.mode&&(c[e]&&c[e].abort(),c[e]=d)}):(b=a.ajax,a.ajax=function(d){var e=("mode"in d?d:a.ajaxSettings).mode,f=("port"in d?d:a.ajaxSettings).port;return"abort"===e?(c[f]&&c[f].abort(),c[f]=b.apply(this,arguments),c[f]):b.apply(this,arguments)})});
-jQuery.easing.jswing=jQuery.easing.swing;
-jQuery.extend(jQuery.easing,{def:"easeOutQuad",swing:function(e,a,c,b,d){return jQuery.easing[jQuery.easing.def](e,a,c,b,d)},easeInQuad:function(e,a,c,b,d){return b*(a/=d)*a+c},easeOutQuad:function(e,a,c,b,d){return-b*(a/=d)*(a-2)+c},easeInOutQuad:function(e,a,c,b,d){if((a/=d/2)<1)return b/2*a*a+c;return-b/2*(--a*(a-2)-1)+c},easeInCubic:function(e,a,c,b,d){return b*(a/=d)*a*a+c},easeOutCubic:function(e,a,c,b,d){return b*((a=a/d-1)*a*a+1)+c},easeInOutCubic:function(e,a,c,b,d){if((a/=d/2)<1)return b/
-2*a*a*a+c;return b/2*((a-=2)*a*a+2)+c},easeInQuart:function(e,a,c,b,d){return b*(a/=d)*a*a*a+c},easeOutQuart:function(e,a,c,b,d){return-b*((a=a/d-1)*a*a*a-1)+c},easeInOutQuart:function(e,a,c,b,d){if((a/=d/2)<1)return b/2*a*a*a*a+c;return-b/2*((a-=2)*a*a*a-2)+c},easeInQuint:function(e,a,c,b,d){return b*(a/=d)*a*a*a*a+c},easeOutQuint:function(e,a,c,b,d){return b*((a=a/d-1)*a*a*a*a+1)+c},easeInOutQuint:function(e,a,c,b,d){if((a/=d/2)<1)return b/2*a*a*a*a*a+c;return b/2*((a-=2)*a*a*a*a+2)+c},easeInSine:function(e,
-a,c,b,d){return-b*Math.cos(a/d*(Math.PI/2))+b+c},easeOutSine:function(e,a,c,b,d){return b*Math.sin(a/d*(Math.PI/2))+c},easeInOutSine:function(e,a,c,b,d){return-b/2*(Math.cos(Math.PI*a/d)-1)+c},easeInExpo:function(e,a,c,b,d){return a==0?c:b*Math.pow(2,10*(a/d-1))+c},easeOutExpo:function(e,a,c,b,d){return a==d?c+b:b*(-Math.pow(2,-10*a/d)+1)+c},easeInOutExpo:function(e,a,c,b,d){if(a==0)return c;if(a==d)return c+b;if((a/=d/2)<1)return b/2*Math.pow(2,10*(a-1))+c;return b/2*(-Math.pow(2,-10*--a)+2)+c},
-easeInCirc:function(e,a,c,b,d){return-b*(Math.sqrt(1-(a/=d)*a)-1)+c},easeOutCirc:function(e,a,c,b,d){return b*Math.sqrt(1-(a=a/d-1)*a)+c},easeInOutCirc:function(e,a,c,b,d){if((a/=d/2)<1)return-b/2*(Math.sqrt(1-a*a)-1)+c;return b/2*(Math.sqrt(1-(a-=2)*a)+1)+c},easeInElastic:function(e,a,c,b,d){e=1.70158;var f=0,g=b;if(a==0)return c;if((a/=d)==1)return c+b;f||(f=d*0.3);if(g<Math.abs(b)){g=b;e=f/4}else e=f/(2*Math.PI)*Math.asin(b/g);return-(g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*2*Math.PI/f))+c},easeOutElastic:function(e,
-a,c,b,d){e=1.70158;var f=0,g=b;if(a==0)return c;if((a/=d)==1)return c+b;f||(f=d*0.3);if(g<Math.abs(b)){g=b;e=f/4}else e=f/(2*Math.PI)*Math.asin(b/g);return g*Math.pow(2,-10*a)*Math.sin((a*d-e)*2*Math.PI/f)+b+c},easeInOutElastic:function(e,a,c,b,d){e=1.70158;var f=0,g=b;if(a==0)return c;if((a/=d/2)==2)return c+b;f||(f=d*0.3*1.5);if(g<Math.abs(b)){g=b;e=f/4}else e=f/(2*Math.PI)*Math.asin(b/g);if(a<1)return-0.5*g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*2*Math.PI/f)+c;return g*Math.pow(2,-10*(a-=1))*Math.sin((a*
-d-e)*2*Math.PI/f)*0.5+b+c},easeInBack:function(e,a,c,b,d,f){if(f==undefined)f=1.70158;return b*(a/=d)*a*((f+1)*a-f)+c},easeOutBack:function(e,a,c,b,d,f){if(f==undefined)f=1.70158;return b*((a=a/d-1)*a*((f+1)*a+f)+1)+c},easeInOutBack:function(e,a,c,b,d,f){if(f==undefined)f=1.70158;if((a/=d/2)<1)return b/2*a*a*(((f*=1.525)+1)*a-f)+c;return b/2*((a-=2)*a*(((f*=1.525)+1)*a+f)+2)+c},easeInBounce:function(e,a,c,b,d){return b-jQuery.easing.easeOutBounce(e,d-a,0,b,d)+c},easeOutBounce:function(e,a,c,b,d){return(a/=
-d)<1/2.75?b*7.5625*a*a+c:a<2/2.75?b*(7.5625*(a-=1.5/2.75)*a+0.75)+c:a<2.5/2.75?b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},easeInOutBounce:function(e,a,c,b,d){if(a<d/2)return jQuery.easing.easeInBounce(e,a*2,0,b,d)*0.5+c;return jQuery.easing.easeOutBounce(e,a*2-d,0,b,d)*0.5+b*0.5+c}});
+/*! jQuery Validation Plugin - v1.19.3 - 1/9/2021
+ * https://jqueryvalidation.org/
+ * Copyright (c) 2021 Jörn Zaefferer; Licensed MIT */
+!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof module&&module.exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){a.extend(a.fn,{validate:function(b){if(!this.length)return void(b&&b.debug&&window.console&&console.warn("Nothing selected, can't validate, returning nothing."));var c=a.data(this[0],"validator");return c?c:(this.attr("novalidate","novalidate"),c=new a.validator(b,this[0]),a.data(this[0],"validator",c),c.settings.onsubmit&&(this.on("click.validate",":submit",function(b){c.submitButton=b.currentTarget,a(this).hasClass("cancel")&&(c.cancelSubmit=!0),void 0!==a(this).attr("formnovalidate")&&(c.cancelSubmit=!0)}),this.on("submit.validate",function(b){function d(){var d,e;return c.submitButton&&(c.settings.submitHandler||c.formSubmitted)&&(d=a("<input type='hidden'/>").attr("name",c.submitButton.name).val(a(c.submitButton).val()).appendTo(c.currentForm)),!(c.settings.submitHandler&&!c.settings.debug)||(e=c.settings.submitHandler.call(c,c.currentForm,b),d&&d.remove(),void 0!==e&&e)}return c.settings.debug&&b.preventDefault(),c.cancelSubmit?(c.cancelSubmit=!1,d()):c.form()?c.pendingRequest?(c.formSubmitted=!0,!1):d():(c.focusInvalid(),!1)})),c)},valid:function(){var b,c,d;return a(this[0]).is("form")?b=this.validate().form():(d=[],b=!0,c=a(this[0].form).validate(),this.each(function(){b=c.element(this)&&b,b||(d=d.concat(c.errorList))}),c.errorList=d),b},rules:function(b,c){var d,e,f,g,h,i,j=this[0],k="undefined"!=typeof this.attr("contenteditable")&&"false"!==this.attr("contenteditable");if(null!=j&&(!j.form&&k&&(j.form=this.closest("form")[0],j.name=this.attr("name")),null!=j.form)){if(b)switch(d=a.data(j.form,"validator").settings,e=d.rules,f=a.validator.staticRules(j),b){case"add":a.extend(f,a.validator.normalizeRule(c)),delete f.messages,e[j.name]=f,c.messages&&(d.messages[j.name]=a.extend(d.messages[j.name],c.messages));break;case"remove":return c?(i={},a.each(c.split(/\s/),function(a,b){i[b]=f[b],delete f[b]}),i):(delete e[j.name],f)}return g=a.validator.normalizeRules(a.extend({},a.validator.classRules(j),a.validator.attributeRules(j),a.validator.dataRules(j),a.validator.staticRules(j)),j),g.required&&(h=g.required,delete g.required,g=a.extend({required:h},g)),g.remote&&(h=g.remote,delete g.remote,g=a.extend(g,{remote:h})),g}}});var b=function(a){return a.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,"")};a.extend(a.expr.pseudos||a.expr[":"],{blank:function(c){return!b(""+a(c).val())},filled:function(c){var d=a(c).val();return null!==d&&!!b(""+d)},unchecked:function(b){return!a(b).prop("checked")}}),a.validator=function(b,c){this.settings=a.extend(!0,{},a.validator.defaults,b),this.currentForm=c,this.init()},a.validator.format=function(b,c){return 1===arguments.length?function(){var c=a.makeArray(arguments);return c.unshift(b),a.validator.format.apply(this,c)}:void 0===c?b:(arguments.length>2&&c.constructor!==Array&&(c=a.makeArray(arguments).slice(1)),c.constructor!==Array&&(c=[c]),a.each(c,function(a,c){b=b.replace(new RegExp("\\{"+a+"\\}","g"),function(){return c})}),b)},a.extend(a.validator,{defaults:{messages:{},groups:{},rules:{},errorClass:"error",pendingClass:"pending",validClass:"valid",errorElement:"label",focusCleanup:!1,focusInvalid:!0,errorContainer:a([]),errorLabelContainer:a([]),onsubmit:!0,ignore:":hidden",ignoreTitle:!1,onfocusin:function(a){this.lastActive=a,this.settings.focusCleanup&&(this.settings.unhighlight&&this.settings.unhighlight.call(this,a,this.settings.errorClass,this.settings.validClass),this.hideThese(this.errorsFor(a)))},onfocusout:function(a){this.checkable(a)||!(a.name in this.submitted)&&this.optional(a)||this.element(a)},onkeyup:function(b,c){var d=[16,17,18,20,35,36,37,38,39,40,45,144,225];9===c.which&&""===this.elementValue(b)||a.inArray(c.keyCode,d)!==-1||(b.name in this.submitted||b.name in this.invalid)&&this.element(b)},onclick:function(a){a.name in this.submitted?this.element(a):a.parentNode.name in this.submitted&&this.element(a.parentNode)},highlight:function(b,c,d){"radio"===b.type?this.findByName(b.name).addClass(c).removeClass(d):a(b).addClass(c).removeClass(d)},unhighlight:function(b,c,d){"radio"===b.type?this.findByName(b.name).removeClass(c).addClass(d):a(b).removeClass(c).addClass(d)}},setDefaults:function(b){a.extend(a.validator.defaults,b)},messages:{required:"This field is required.",remote:"Please fix this field.",email:"Please enter a valid email address.",url:"Please enter a valid URL.",date:"Please enter a valid date.",dateISO:"Please enter a valid date (ISO).",number:"Please enter a valid number.",digits:"Please enter only digits.",equalTo:"Please enter the same value again.",maxlength:a.validator.format("Please enter no more than {0} characters."),minlength:a.validator.format("Please enter at least {0} characters."),rangelength:a.validator.format("Please enter a value between {0} and {1} characters long."),range:a.validator.format("Please enter a value between {0} and {1}."),max:a.validator.format("Please enter a value less than or equal to {0}."),min:a.validator.format("Please enter a value greater than or equal to {0}."),step:a.validator.format("Please enter a multiple of {0}.")},autoCreateRanges:!1,prototype:{init:function(){function b(b){var c="undefined"!=typeof a(this).attr("contenteditable")&&"false"!==a(this).attr("contenteditable");if(!this.form&&c&&(this.form=a(this).closest("form")[0],this.name=a(this).attr("name")),d===this.form){var e=a.data(this.form,"validator"),f="on"+b.type.replace(/^validate/,""),g=e.settings;g[f]&&!a(this).is(g.ignore)&&g[f].call(e,this,b)}}this.labelContainer=a(this.settings.errorLabelContainer),this.errorContext=this.labelContainer.length&&this.labelContainer||a(this.currentForm),this.containers=a(this.settings.errorContainer).add(this.settings.errorLabelContainer),this.submitted={},this.valueCache={},this.pendingRequest=0,this.pending={},this.invalid={},this.reset();var c,d=this.currentForm,e=this.groups={};a.each(this.settings.groups,function(b,c){"string"==typeof c&&(c=c.split(/\s/)),a.each(c,function(a,c){e[c]=b})}),c=this.settings.rules,a.each(c,function(b,d){c[b]=a.validator.normalizeRule(d)}),a(this.currentForm).on("focusin.validate focusout.validate keyup.validate",":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], [type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], [type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], [type='radio'], [type='checkbox'], [contenteditable], [type='button']",b).on("click.validate","select, option, [type='radio'], [type='checkbox']",b),this.settings.invalidHandler&&a(this.currentForm).on("invalid-form.validate",this.settings.invalidHandler)},form:function(){return this.checkForm(),a.extend(this.submitted,this.errorMap),this.invalid=a.extend({},this.errorMap),this.valid()||a(this.currentForm).triggerHandler("invalid-form",[this]),this.showErrors(),this.valid()},checkForm:function(){this.prepareForm();for(var a=0,b=this.currentElements=this.elements();b[a];a++)this.check(b[a]);return this.valid()},element:function(b){var c,d,e=this.clean(b),f=this.validationTargetFor(e),g=this,h=!0;return void 0===f?delete this.invalid[e.name]:(this.prepareElement(f),this.currentElements=a(f),d=this.groups[f.name],d&&a.each(this.groups,function(a,b){b===d&&a!==f.name&&(e=g.validationTargetFor(g.clean(g.findByName(a))),e&&e.name in g.invalid&&(g.currentElements.push(e),h=g.check(e)&&h))}),c=this.check(f)!==!1,h=h&&c,c?this.invalid[f.name]=!1:this.invalid[f.name]=!0,this.numberOfInvalids()||(this.toHide=this.toHide.add(this.containers)),this.showErrors(),a(b).attr("aria-invalid",!c)),h},showErrors:function(b){if(b){var c=this;a.extend(this.errorMap,b),this.errorList=a.map(this.errorMap,function(a,b){return{message:a,element:c.findByName(b)[0]}}),this.successList=a.grep(this.successList,function(a){return!(a.name in b)})}this.settings.showErrors?this.settings.showErrors.call(this,this.errorMap,this.errorList):this.defaultShowErrors()},resetForm:function(){a.fn.resetForm&&a(this.currentForm).resetForm(),this.invalid={},this.submitted={},this.prepareForm(),this.hideErrors();var b=this.elements().removeData("previousValue").removeAttr("aria-invalid");this.resetElements(b)},resetElements:function(a){var b;if(this.settings.unhighlight)for(b=0;a[b];b++)this.settings.unhighlight.call(this,a[b],this.settings.errorClass,""),this.findByName(a[b].name).removeClass(this.settings.validClass);else a.removeClass(this.settings.errorClass).removeClass(this.settings.validClass)},numberOfInvalids:function(){return this.objectLength(this.invalid)},objectLength:function(a){var b,c=0;for(b in a)void 0!==a[b]&&null!==a[b]&&a[b]!==!1&&c++;return c},hideErrors:function(){this.hideThese(this.toHide)},hideThese:function(a){a.not(this.containers).text(""),this.addWrapper(a).hide()},valid:function(){return 0===this.size()},size:function(){return this.errorList.length},focusInvalid:function(){if(this.settings.focusInvalid)try{a(this.findLastActive()||this.errorList.length&&this.errorList[0].element||[]).filter(":visible").trigger("focus").trigger("focusin")}catch(b){}},findLastActive:function(){var b=this.lastActive;return b&&1===a.grep(this.errorList,function(a){return a.element.name===b.name}).length&&b},elements:function(){var b=this,c={};return a(this.currentForm).find("input, select, textarea, [contenteditable]").not(":submit, :reset, :image, :disabled").not(this.settings.ignore).filter(function(){var d=this.name||a(this).attr("name"),e="undefined"!=typeof a(this).attr("contenteditable")&&"false"!==a(this).attr("contenteditable");return!d&&b.settings.debug&&window.console&&console.error("%o has no name assigned",this),e&&(this.form=a(this).closest("form")[0],this.name=d),this.form===b.currentForm&&(!(d in c||!b.objectLength(a(this).rules()))&&(c[d]=!0,!0))})},clean:function(b){return a(b)[0]},errors:function(){var b=this.settings.errorClass.split(" ").join(".");return a(this.settings.errorElement+"."+b,this.errorContext)},resetInternals:function(){this.successList=[],this.errorList=[],this.errorMap={},this.toShow=a([]),this.toHide=a([])},reset:function(){this.resetInternals(),this.currentElements=a([])},prepareForm:function(){this.reset(),this.toHide=this.errors().add(this.containers)},prepareElement:function(a){this.reset(),this.toHide=this.errorsFor(a)},elementValue:function(b){var c,d,e=a(b),f=b.type,g="undefined"!=typeof e.attr("contenteditable")&&"false"!==e.attr("contenteditable");return"radio"===f||"checkbox"===f?this.findByName(b.name).filter(":checked").val():"number"===f&&"undefined"!=typeof b.validity?b.validity.badInput?"NaN":e.val():(c=g?e.text():e.val(),"file"===f?"C:\\fakepath\\"===c.substr(0,12)?c.substr(12):(d=c.lastIndexOf("/"),d>=0?c.substr(d+1):(d=c.lastIndexOf("\\"),d>=0?c.substr(d+1):c)):"string"==typeof c?c.replace(/\r/g,""):c)},check:function(b){b=this.validationTargetFor(this.clean(b));var c,d,e,f,g=a(b).rules(),h=a.map(g,function(a,b){return b}).length,i=!1,j=this.elementValue(b);"function"==typeof g.normalizer?f=g.normalizer:"function"==typeof this.settings.normalizer&&(f=this.settings.normalizer),f&&(j=f.call(b,j),delete g.normalizer);for(d in g){e={method:d,parameters:g[d]};try{if(c=a.validator.methods[d].call(this,j,b,e.parameters),"dependency-mismatch"===c&&1===h){i=!0;continue}if(i=!1,"pending"===c)return void(this.toHide=this.toHide.not(this.errorsFor(b)));if(!c)return this.formatAndAdd(b,e),!1}catch(k){throw this.settings.debug&&window.console&&console.log("Exception occurred when checking element "+b.id+", check the '"+e.method+"' method.",k),k instanceof TypeError&&(k.message+=".  Exception occurred when checking element "+b.id+", check the '"+e.method+"' method."),k}}if(!i)return this.objectLength(g)&&this.successList.push(b),!0},customDataMessage:function(b,c){return a(b).data("msg"+c.charAt(0).toUpperCase()+c.substring(1).toLowerCase())||a(b).data("msg")},customMessage:function(a,b){var c=this.settings.messages[a];return c&&(c.constructor===String?c:c[b])},findDefined:function(){for(var a=0;a<arguments.length;a++)if(void 0!==arguments[a])return arguments[a]},defaultMessage:function(b,c){"string"==typeof c&&(c={method:c});var d=this.findDefined(this.customMessage(b.name,c.method),this.customDataMessage(b,c.method),!this.settings.ignoreTitle&&b.title||void 0,a.validator.messages[c.method],"<strong>Warning: No message defined for "+b.name+"</strong>"),e=/\$?\{(\d+)\}/g;return"function"==typeof d?d=d.call(this,c.parameters,b):e.test(d)&&(d=a.validator.format(d.replace(e,"{$1}"),c.parameters)),d},formatAndAdd:function(a,b){var c=this.defaultMessage(a,b);this.errorList.push({message:c,element:a,method:b.method}),this.errorMap[a.name]=c,this.submitted[a.name]=c},addWrapper:function(a){return this.settings.wrapper&&(a=a.add(a.parent(this.settings.wrapper))),a},defaultShowErrors:function(){var a,b,c;for(a=0;this.errorList[a];a++)c=this.errorList[a],this.settings.highlight&&this.settings.highlight.call(this,c.element,this.settings.errorClass,this.settings.validClass),this.showLabel(c.element,c.message);if(this.errorList.length&&(this.toShow=this.toShow.add(this.containers)),this.settings.success)for(a=0;this.successList[a];a++)this.showLabel(this.successList[a]);if(this.settings.unhighlight)for(a=0,b=this.validElements();b[a];a++)this.settings.unhighlight.call(this,b[a],this.settings.errorClass,this.settings.validClass);this.toHide=this.toHide.not(this.toShow),this.hideErrors(),this.addWrapper(this.toShow).show()},validElements:function(){return this.currentElements.not(this.invalidElements())},invalidElements:function(){return a(this.errorList).map(function(){return this.element})},showLabel:function(b,c){var d,e,f,g,h=this.errorsFor(b),i=this.idOrName(b),j=a(b).attr("aria-describedby");h.length?(h.removeClass(this.settings.validClass).addClass(this.settings.errorClass),h.html(c)):(h=a("<"+this.settings.errorElement+">").attr("id",i+"-error").addClass(this.settings.errorClass).html(c||""),d=h,this.settings.wrapper&&(d=h.hide().show().wrap("<"+this.settings.wrapper+"/>").parent()),this.labelContainer.length?this.labelContainer.append(d):this.settings.errorPlacement?this.settings.errorPlacement.call(this,d,a(b)):d.insertAfter(b),h.is("label")?h.attr("for",i):0===h.parents("label[for='"+this.escapeCssMeta(i)+"']").length&&(f=h.attr("id"),j?j.match(new RegExp("\\b"+this.escapeCssMeta(f)+"\\b"))||(j+=" "+f):j=f,a(b).attr("aria-describedby",j),e=this.groups[b.name],e&&(g=this,a.each(g.groups,function(b,c){c===e&&a("[name='"+g.escapeCssMeta(b)+"']",g.currentForm).attr("aria-describedby",h.attr("id"))})))),!c&&this.settings.success&&(h.text(""),"string"==typeof this.settings.success?h.addClass(this.settings.success):this.settings.success(h,b)),this.toShow=this.toShow.add(h)},errorsFor:function(b){var c=this.escapeCssMeta(this.idOrName(b)),d=a(b).attr("aria-describedby"),e="label[for='"+c+"'], label[for='"+c+"'] *";return d&&(e=e+", #"+this.escapeCssMeta(d).replace(/\s+/g,", #")),this.errors().filter(e)},escapeCssMeta:function(a){return a.replace(/([\\!"#$%&'()*+,.\/:;<=>?@\[\]^`{|}~])/g,"\\$1")},idOrName:function(a){return this.groups[a.name]||(this.checkable(a)?a.name:a.id||a.name)},validationTargetFor:function(b){return this.checkable(b)&&(b=this.findByName(b.name)),a(b).not(this.settings.ignore)[0]},checkable:function(a){return/radio|checkbox/i.test(a.type)},findByName:function(b){return a(this.currentForm).find("[name='"+this.escapeCssMeta(b)+"']")},getLength:function(b,c){switch(c.nodeName.toLowerCase()){case"select":return a("option:selected",c).length;case"input":if(this.checkable(c))return this.findByName(c.name).filter(":checked").length}return b.length},depend:function(a,b){return!this.dependTypes[typeof a]||this.dependTypes[typeof a](a,b)},dependTypes:{"boolean":function(a){return a},string:function(b,c){return!!a(b,c.form).length},"function":function(a,b){return a(b)}},optional:function(b){var c=this.elementValue(b);return!a.validator.methods.required.call(this,c,b)&&"dependency-mismatch"},startRequest:function(b){this.pending[b.name]||(this.pendingRequest++,a(b).addClass(this.settings.pendingClass),this.pending[b.name]=!0)},stopRequest:function(b,c){this.pendingRequest--,this.pendingRequest<0&&(this.pendingRequest=0),delete this.pending[b.name],a(b).removeClass(this.settings.pendingClass),c&&0===this.pendingRequest&&this.formSubmitted&&this.form()?(a(this.currentForm).submit(),this.submitButton&&a("input:hidden[name='"+this.submitButton.name+"']",this.currentForm).remove(),this.formSubmitted=!1):!c&&0===this.pendingRequest&&this.formSubmitted&&(a(this.currentForm).triggerHandler("invalid-form",[this]),this.formSubmitted=!1)},previousValue:function(b,c){return c="string"==typeof c&&c||"remote",a.data(b,"previousValue")||a.data(b,"previousValue",{old:null,valid:!0,message:this.defaultMessage(b,{method:c})})},destroy:function(){this.resetForm(),a(this.currentForm).off(".validate").removeData("validator").find(".validate-equalTo-blur").off(".validate-equalTo").removeClass("validate-equalTo-blur").find(".validate-lessThan-blur").off(".validate-lessThan").removeClass("validate-lessThan-blur").find(".validate-lessThanEqual-blur").off(".validate-lessThanEqual").removeClass("validate-lessThanEqual-blur").find(".validate-greaterThanEqual-blur").off(".validate-greaterThanEqual").removeClass("validate-greaterThanEqual-blur").find(".validate-greaterThan-blur").off(".validate-greaterThan").removeClass("validate-greaterThan-blur")}},classRuleSettings:{required:{required:!0},email:{email:!0},url:{url:!0},date:{date:!0},dateISO:{dateISO:!0},number:{number:!0},digits:{digits:!0},creditcard:{creditcard:!0}},addClassRules:function(b,c){b.constructor===String?this.classRuleSettings[b]=c:a.extend(this.classRuleSettings,b)},classRules:function(b){var c={},d=a(b).attr("class");return d&&a.each(d.split(" "),function(){this in a.validator.classRuleSettings&&a.extend(c,a.validator.classRuleSettings[this])}),c},normalizeAttributeRule:function(a,b,c,d){/min|max|step/.test(c)&&(null===b||/number|range|text/.test(b))&&(d=Number(d),isNaN(d)&&(d=void 0)),d||0===d?a[c]=d:b===c&&"range"!==b&&(a[c]=!0)},attributeRules:function(b){var c,d,e={},f=a(b),g=b.getAttribute("type");for(c in a.validator.methods)"required"===c?(d=b.getAttribute(c),""===d&&(d=!0),d=!!d):d=f.attr(c),this.normalizeAttributeRule(e,g,c,d);return e.maxlength&&/-1|2147483647|524288/.test(e.maxlength)&&delete e.maxlength,e},dataRules:function(b){var c,d,e={},f=a(b),g=b.getAttribute("type");for(c in a.validator.methods)d=f.data("rule"+c.charAt(0).toUpperCase()+c.substring(1).toLowerCase()),""===d&&(d=!0),this.normalizeAttributeRule(e,g,c,d);return e},staticRules:function(b){var c={},d=a.data(b.form,"validator");return d.settings.rules&&(c=a.validator.normalizeRule(d.settings.rules[b.name])||{}),c},normalizeRules:function(b,c){return a.each(b,function(d,e){if(e===!1)return void delete b[d];if(e.param||e.depends){var f=!0;switch(typeof e.depends){case"string":f=!!a(e.depends,c.form).length;break;case"function":f=e.depends.call(c,c)}f?b[d]=void 0===e.param||e.param:(a.data(c.form,"validator").resetElements(a(c)),delete b[d])}}),a.each(b,function(a,d){b[a]="function"==typeof d&&"normalizer"!==a?d(c):d}),a.each(["minlength","maxlength"],function(){b[this]&&(b[this]=Number(b[this]))}),a.each(["rangelength","range"],function(){var a;b[this]&&(Array.isArray(b[this])?b[this]=[Number(b[this][0]),Number(b[this][1])]:"string"==typeof b[this]&&(a=b[this].replace(/[\[\]]/g,"").split(/[\s,]+/),b[this]=[Number(a[0]),Number(a[1])]))}),a.validator.autoCreateRanges&&(null!=b.min&&null!=b.max&&(b.range=[b.min,b.max],delete b.min,delete b.max),null!=b.minlength&&null!=b.maxlength&&(b.rangelength=[b.minlength,b.maxlength],delete b.minlength,delete b.maxlength)),b},normalizeRule:function(b){if("string"==typeof b){var c={};a.each(b.split(/\s/),function(){c[this]=!0}),b=c}return b},addMethod:function(b,c,d){a.validator.methods[b]=c,a.validator.messages[b]=void 0!==d?d:a.validator.messages[b],c.length<3&&a.validator.addClassRules(b,a.validator.normalizeRule(b))},methods:{required:function(b,c,d){if(!this.depend(d,c))return"dependency-mismatch";if("select"===c.nodeName.toLowerCase()){var e=a(c).val();return e&&e.length>0}return this.checkable(c)?this.getLength(b,c)>0:void 0!==b&&null!==b&&b.length>0},email:function(a,b){return this.optional(b)||/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(a)},url:function(a,b){return this.optional(b)||/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[\/?#]\S*)?$/i.test(a)},date:function(){var a=!1;return function(b,c){return a||(a=!0,this.settings.debug&&window.console&&console.warn("The `date` method is deprecated and will be removed in version '2.0.0'.\nPlease don't use it, since it relies on the Date constructor, which\nbehaves very differently across browsers and locales. Use `dateISO`\ninstead or one of the locale specific methods in `localizations/`\nand `additional-methods.js`.")),this.optional(c)||!/Invalid|NaN/.test(new Date(b).toString())}}(),dateISO:function(a,b){return this.optional(b)||/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(a)},number:function(a,b){return this.optional(b)||/^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(a)},digits:function(a,b){return this.optional(b)||/^\d+$/.test(a)},minlength:function(a,b,c){var d=Array.isArray(a)?a.length:this.getLength(a,b);return this.optional(b)||d>=c},maxlength:function(a,b,c){var d=Array.isArray(a)?a.length:this.getLength(a,b);return this.optional(b)||d<=c},rangelength:function(a,b,c){var d=Array.isArray(a)?a.length:this.getLength(a,b);return this.optional(b)||d>=c[0]&&d<=c[1]},min:function(a,b,c){return this.optional(b)||a>=c},max:function(a,b,c){return this.optional(b)||a<=c},range:function(a,b,c){return this.optional(b)||a>=c[0]&&a<=c[1]},step:function(b,c,d){var e,f=a(c).attr("type"),g="Step attribute on input type "+f+" is not supported.",h=["text","number","range"],i=new RegExp("\\b"+f+"\\b"),j=f&&!i.test(h.join()),k=function(a){var b=(""+a).match(/(?:\.(\d+))?$/);return b&&b[1]?b[1].length:0},l=function(a){return Math.round(a*Math.pow(10,e))},m=!0;if(j)throw new Error(g);return e=k(d),(k(b)>e||l(b)%l(d)!==0)&&(m=!1),this.optional(c)||m},equalTo:function(b,c,d){var e=a(d);return this.settings.onfocusout&&e.not(".validate-equalTo-blur").length&&e.addClass("validate-equalTo-blur").on("blur.validate-equalTo",function(){a(c).valid()}),b===e.val()},remote:function(b,c,d,e){if(this.optional(c))return"dependency-mismatch";e="string"==typeof e&&e||"remote";var f,g,h,i=this.previousValue(c,e);return this.settings.messages[c.name]||(this.settings.messages[c.name]={}),i.originalMessage=i.originalMessage||this.settings.messages[c.name][e],this.settings.messages[c.name][e]=i.message,d="string"==typeof d&&{url:d}||d,h=a.param(a.extend({data:b},d.data)),i.old===h?i.valid:(i.old=h,f=this,this.startRequest(c),g={},g[c.name]=b,a.ajax(a.extend(!0,{mode:"abort",port:"validate"+c.name,dataType:"json",data:g,context:f.currentForm,success:function(a){var d,g,h,j=a===!0||"true"===a;f.settings.messages[c.name][e]=i.originalMessage,j?(h=f.formSubmitted,f.resetInternals(),f.toHide=f.errorsFor(c),f.formSubmitted=h,f.successList.push(c),f.invalid[c.name]=!1,f.showErrors()):(d={},g=a||f.defaultMessage(c,{method:e,parameters:b}),d[c.name]=i.message=g,f.invalid[c.name]=!0,f.showErrors(d)),i.valid=j,f.stopRequest(c,j)}},d)),"pending")}}});var c,d={};return a.ajaxPrefilter?a.ajaxPrefilter(function(a,b,c){var e=a.port;"abort"===a.mode&&(d[e]&&d[e].abort(),d[e]=c)}):(c=a.ajax,a.ajax=function(b){var e=("mode"in b?b:a.ajaxSettings).mode,f=("port"in b?b:a.ajaxSettings).port;return"abort"===e?(d[f]&&d[f].abort(),d[f]=c.apply(this,arguments),d[f]):c.apply(this,arguments)}),a});
+!function(n){"function"==typeof define&&define.amd?define(["jquery"],function(e){return n(e)}):"object"==typeof module&&"object"==typeof module.exports?exports=n(require("jquery")):n(jQuery)}(function(n){function e(n){var e=7.5625,t=2.75;return n<1/t?e*n*n:n<2/t?e*(n-=1.5/t)*n+.75:n<2.5/t?e*(n-=2.25/t)*n+.9375:e*(n-=2.625/t)*n+.984375}void 0!==n.easing&&(n.easing.jswing=n.easing.swing);var t=Math.pow,u=Math.sqrt,r=Math.sin,i=Math.cos,a=Math.PI,c=1.70158,o=1.525*c,s=2*a/3,f=2*a/4.5;n.extend(n.easing,{def:"easeOutQuad",swing:function(e){return n.easing[n.easing.def](e)},easeInQuad:function(n){return n*n},easeOutQuad:function(n){return 1-(1-n)*(1-n)},easeInOutQuad:function(n){return n<.5?2*n*n:1-t(-2*n+2,2)/2},easeInCubic:function(n){return n*n*n},easeOutCubic:function(n){return 1-t(1-n,3)},easeInOutCubic:function(n){return n<.5?4*n*n*n:1-t(-2*n+2,3)/2},easeInQuart:function(n){return n*n*n*n},easeOutQuart:function(n){return 1-t(1-n,4)},easeInOutQuart:function(n){return n<.5?8*n*n*n*n:1-t(-2*n+2,4)/2},easeInQuint:function(n){return n*n*n*n*n},easeOutQuint:function(n){return 1-t(1-n,5)},easeInOutQuint:function(n){return n<.5?16*n*n*n*n*n:1-t(-2*n+2,5)/2},easeInSine:function(n){return 1-i(n*a/2)},easeOutSine:function(n){return r(n*a/2)},easeInOutSine:function(n){return-(i(a*n)-1)/2},easeInExpo:function(n){return 0===n?0:t(2,10*n-10)},easeOutExpo:function(n){return 1===n?1:1-t(2,-10*n)},easeInOutExpo:function(n){return 0===n?0:1===n?1:n<.5?t(2,20*n-10)/2:(2-t(2,-20*n+10))/2},easeInCirc:function(n){return 1-u(1-t(n,2))},easeOutCirc:function(n){return u(1-t(n-1,2))},easeInOutCirc:function(n){return n<.5?(1-u(1-t(2*n,2)))/2:(u(1-t(-2*n+2,2))+1)/2},easeInElastic:function(n){return 0===n?0:1===n?1:-t(2,10*n-10)*r((10*n-10.75)*s)},easeOutElastic:function(n){return 0===n?0:1===n?1:t(2,-10*n)*r((10*n-.75)*s)+1},easeInOutElastic:function(n){return 0===n?0:1===n?1:n<.5?-(t(2,20*n-10)*r((20*n-11.125)*f))/2:t(2,-20*n+10)*r((20*n-11.125)*f)/2+1},easeInBack:function(n){return(c+1)*n*n*n-c*n*n},easeOutBack:function(n){return 1+(c+1)*t(n-1,3)+c*t(n-1,2)},easeInOutBack:function(n){return n<.5?t(2*n,2)*(7.189819*n-o)/2:(t(2*n-2,2)*((o+1)*(2*n-2)+o)+2)/2},easeInBounce:function(n){return 1-e(1-n)},easeOutBounce:e,easeInOutBounce:function(n){return n<.5?(1-e(1-2*n))/2:(1+e(2*n-1))/2}})});
+
 /*!
 * Globalize
 *
@@ -26,22 +20,14 @@ d)<1/2.75?b*7.5625*a*a+c:a<2/2.75?b*(7.5625*(a-=1.5/2.75)*a+0.75)+c:a<2.5/2.75?b
 */
 (function (n, t) { var i, ut, it, g, tt, u, c, d, a, nt, w, e, r, k, s, l, v, y, rt, p, o, h, b, f; i = function (n) { return new i.prototype.init(n) }, typeof require != "undefined" && typeof exports != "undefined" && typeof module != "undefined" ? module.exports = i : n.Globalize = i, i.cultures = {}, i.prototype = { constructor: i, init: function (n) { return this.cultures = i.cultures, this.cultureSelector = n, this } }, i.prototype.init.prototype = i.prototype, i.cultures["default"] = { name: "en", englishName: "English", nativeName: "English", isRTL: !1, language: "en", numberFormat: { pattern: ["-n"], decimals: 2, ",": ",", ".": ".", groupSizes: [3], "+": "+", "-": "-", NaN: "NaN", negativeInfinity: "-Infinity", positiveInfinity: "Infinity", percent: { pattern: ["-n %", "n %"], decimals: 2, groupSizes: [3], ",": ",", ".": ".", symbol: "%" }, currency: { pattern: ["($n)", "$n"], decimals: 2, groupSizes: [3], ",": ",", ".": ".", symbol: "$" } }, calendars: { standard: { name: "Gregorian_USEnglish", "/": "/", ":": ":", firstDay: 0, days: { names: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], namesAbbr: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], namesShort: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"] }, months: { names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""], namesAbbr: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""] }, AM: ["AM", "am", "AM"], PM: ["PM", "pm", "PM"], eras: [{ name: "A.D.", start: null, offset: 0 }], twoDigitYearMax: 2029, patterns: { d: "M/d/yyyy", D: "dddd, MMMM dd, yyyy", t: "h:mm tt", T: "h:mm:ss tt", f: "dddd, MMMM dd, yyyy h:mm tt", F: "dddd, MMMM dd, yyyy h:mm:ss tt", M: "MMMM dd", Y: "yyyy MMMM", S: "yyyy'-'MM'-'dd'T'HH':'mm':'ss" } } }, messages: {} }, i.cultures["default"].calendar = i.cultures["default"].calendars.standard, i.cultures.en = i.cultures["default"], i.cultureSelector = "en", ut = /^0x[a-f0-9]+$/i, it = /^[+\-]?infinity$/i, g = /^[+\-]?\d*\.?\d*(e[+\-]?\d+)?$/, tt = /^\s+|\s+$/g, u = function (n, t) { if (n.indexOf) return n.indexOf(t); for (var i = 0, r = n.length; i < r; i++)if (n[i] === t) return i; return -1 }, c = function (n, t) { return n.substr(n.length - t.length) === t }, d = function () { var o, u, r, i, s, h, n = arguments[0] || {}, f = 1, c = arguments.length, e = !1; for (typeof n == "boolean" && (e = n, n = arguments[1] || {}, f = 2), typeof n == "object" || nt(n) || (n = {}); f < c; f++)if ((o = arguments[f]) != null) for (u in o) (r = n[u], i = o[u], n !== i) && (e && i && (w(i) || (s = a(i))) ? (s ? (s = !1, h = r && a(r) ? r : []) : h = r && w(r) ? r : {}, n[u] = d(e, h, i)) : i !== t && (n[u] = i)); return n }, a = Array.isArray || function (n) { return Object.prototype.toString.call(n) === "[object Array]" }, nt = function (n) { return Object.prototype.toString.call(n) === "[object Function]" }, w = function (n) { return Object.prototype.toString.call(n) === "[object Object]" }, e = function (n, t) { return n.indexOf(t) === 0 }, r = function (n) { return (n + "").replace(tt, "") }, k = function (n) { return isNaN(n) ? NaN : Math[n < 0 ? "ceil" : "floor"](n) }, s = function (n, t, i) { for (var r = n.length; r < t; r += 1)n = i ? "0" + n : n + "0"; return n }, l = function (n, t) { for (var f = 0, i = !1, u, r = 0, e = n.length; r < e; r++) { u = n.charAt(r); switch (u) { case "'": i ? t.push("'") : f++, i = !1; break; case "\\": i && t.push("\\"), i = !i; break; default: t.push(u), i = !1 } } return f }, v = function (n, t) { t = t || "F"; var i, u = n.patterns, r = t.length; if (r === 1) { if (i = u[t], !i) throw "Invalid date format string '" + t + "'."; t = i } else r === 2 && t.charAt(0) === "%" && (t = t.charAt(1)); return t }, y = function (n, t, i) { function e(n, t) { var i, r = n + ""; return t > 1 && r.length < t ? (i = lt[t - 2] + r, i.substr(i.length - t, t)) : i = r } function ct() { return b || rt ? b : (b = ht.test(t), rt = !0, b) } function nt(n, t) { if (w) return w[t]; switch (t) { case 0: return n.getFullYear(); case 1: return n.getMonth(); case 2: return n.getDate(); default: throw "Invalid part value " + t; } } var u = i.calendar, d = u.convert, r, g, ft, tt, it, k, f, ut, c; if (!t || !t.length || t === "i") return i && i.name.length ? d ? r = y(n, u.patterns.F, i) : (g = new Date(n.getTime()), ft = o(n, u.eras), g.setFullYear(h(n, u, ft)), r = g.toLocaleString()) : r = n.toString(), r; tt = u.eras, it = t === "s", t = v(u, t), r = []; var s, lt = ["0", "00", "000"], b, rt, ht = /([^d]|^)(d|dd)([^d]|$)/g, et = 0, ot = p(), w; for (!it && d && (w = d.fromGregorian(n)); ;) { var st = ot.lastIndex, a = ot.exec(t), at = t.slice(st, a ? a.index : t.length); if (et += l(at, r), !a) break; if (et % 2) { r.push(a[0]); continue } k = a[0], f = k.length; switch (k) { case "ddd": case "dddd": ut = f === 3 ? u.days.namesAbbr : u.days.names, r.push(ut[n.getDay()]); break; case "d": case "dd": b = !0, r.push(e(nt(n, 2), f)); break; case "MMM": case "MMMM": c = nt(n, 1), r.push(u.monthsGenitive && ct() ? u.monthsGenitive[f === 3 ? "namesAbbr" : "names"][c] : u.months[f === 3 ? "namesAbbr" : "names"][c]); break; case "M": case "MM": r.push(e(nt(n, 1) + 1, f)); break; case "y": case "yy": case "yyyy": c = w ? w[0] : h(n, u, o(n, tt), it), f < 4 && (c = c % 100), r.push(e(c, f)); break; case "h": case "hh": s = n.getHours() % 12, s === 0 && (s = 12), r.push(e(s, f)); break; case "H": case "HH": r.push(e(n.getHours(), f)); break; case "m": case "mm": r.push(e(n.getMinutes(), f)); break; case "s": case "ss": r.push(e(n.getSeconds(), f)); break; case "t": case "tt": c = n.getHours() < 12 ? u.AM ? u.AM[0] : " " : u.PM ? u.PM[0] : " ", r.push(f === 1 ? c.charAt(0) : c); break; case "f": case "ff": case "fff": r.push(e(n.getMilliseconds(), 3).substr(0, f)); break; case "z": case "zz": s = n.getTimezoneOffset() / 60, r.push((s <= 0 ? "+" : "-") + e(Math.floor(Math.abs(s)), f)); break; case "zzz": s = n.getTimezoneOffset() / 60, r.push((s <= 0 ? "+" : "-") + e(Math.floor(Math.abs(s)), 2) + ":" + e(Math.abs(n.getTimezoneOffset() % 60), 2)); break; case "g": case "gg": u.eras && r.push(u.eras[o(n, tt)].name); break; case "/": r.push(u["/"]); break; default: throw "Invalid date format pattern '" + k + "'."; } } return r.join("") }, function () { var n; n = function (n, t, i) { var l = i.groupSizes, c = l[0], y = 1, p = Math.pow(10, t), v = Math.round(n * p) / p, w; isFinite(v) || (v = n), n = v; var u = n + "", r = "", o = u.split(/e/i), f = o.length > 1 ? parseInt(o[1], 10) : 0; u = o[0], o = u.split("."), u = o[0], r = o.length > 1 ? o[1] : "", f > 0 ? (r = s(r, f, !1), u += r.slice(0, f), r = r.substr(f)) : f < 0 && (f = -f, u = s(u, f + 1, !0), r = u.slice(-f, u.length) + r, u = u.slice(0, -f)), r = t > 0 ? i["."] + (r.length > t ? r.slice(0, t) : s(r, t)) : ""; for (var e = u.length - 1, a = i[","], h = ""; e >= 0;) { if (c === 0 || c > e) return u.slice(0, e + 1) + (h.length ? a + h + r : r); h = u.slice(e - c + 1, e + 1) + (h.length ? a + h : ""), e -= c, y < l.length && (c = l[y], y++) } return u.slice(0, e + 1) + a + h + r }, rt = function (t, i, r) { var a, f, v, e, y, c; if (!isFinite(t)) return t === Infinity ? r.numberFormat.positiveInfinity : t === -Infinity ? r.numberFormat.negativeInfinity : r.numberFormat.NaN; if (!i || i === "i") return r.name.length ? t.toLocaleString() : t.toString(); i = i || "D"; var o = r.numberFormat, u = Math.abs(t), h = -1, l; i.length > 1 && (h = parseInt(i.slice(1), 10)), a = i.charAt(0).toUpperCase(); switch (a) { case "D": l = "n", u = k(u), h !== -1 && (u = s("" + u, h, !0)), t < 0 && (u = "-" + u); break; case "N": f = o; case "C": f = f || o.currency; case "P": f = f || o.percent, l = t < 0 ? f.pattern[0] : f.pattern[1] || "n", h === -1 && (h = f.decimals), u = n(u * (a === "P" ? 100 : 1), h, f); break; default: throw "Bad number format specifier: " + a; }for (v = /n|\$|-|%/g, e = ""; ;) { if (y = v.lastIndex, c = v.exec(l), e += l.slice(y, c ? c.index : l.length), !c) break; switch (c[0]) { case "n": e += u; break; case "$": e += o.currency.symbol; break; case "-": /[1-9]/.test(u) && (e += o["-"]); break; case "%": e += o.percent.symbol } } return e } }(), p = function () { return /\/|dddd|ddd|dd|d|MMMM|MMM|MM|M|yyyy|yy|y|hh|h|HH|H|mm|m|ss|s|tt|t|fff|ff|f|zzz|zz|z|gg|g/g }, o = function (n, t) { var r, f, i, u; if (!t) return 0; for (f = n.getTime(), i = 0, u = t.length; i < u; i++)if (r = t[i].start, r === null || f >= r) return i; return 0 }, h = function (n, t, i, r) { var u = n.getFullYear(); return !r && t.eras && (u -= t.eras[i].offset), u }, function () { var f, s, c, a, n, i, t; f = function (n, t) { if (t < 100) { var r = new Date, f = o(r), u = h(r, n, f), i = n.twoDigitYearMax; i = typeof i == "string" ? (new Date).getFullYear() % 100 + parseInt(i, 10) : i, t += u - u % 100, t > i && (t -= 100) } return t }, s = function (n, r, f) { var o, s = n.days, e = n._upperDays; return e || (n._upperDays = e = [t(s.names), t(s.namesAbbr), t(s.namesShort)]), r = i(r), f ? (o = u(e[1], r), o === -1 && (o = u(e[2], r))) : o = u(e[0], r), o }, c = function (n, r, f) { var h = n.months, c = n.monthsGenitive || n.months, e = n._upperMonths, s = n._upperMonthsGen, o; return e || (n._upperMonths = e = [t(h.names), t(h.namesAbbr)], n._upperMonthsGen = s = [t(c.names), t(c.namesAbbr)]), r = i(r), o = u(f ? e[1] : e[0], r), o < 0 && (o = u(f ? s[1] : s[0], r)), o }, a = function (n, t) { var e = n._parseRegExp, o, k, f, a, i, y, c; if (e) { if (o = e[t], o) return o } else n._parseRegExp = e = {}; for (var h = v(n, t).replace(/([\^\$\.\*\+\?\|\[\]\(\)\{\}])/g, "\\\\$1"), r = ["^"], b = [], s = 0, w = 0, d = p(), u; (u = d.exec(h)) !== null;) { if (k = h.slice(s, u.index), s = d.lastIndex, w += l(k, r), w % 2) { r.push(u[0]); continue } f = u[0], a = f.length; switch (f) { case "dddd": case "ddd": case "MMMM": case "MMM": case "gg": case "g": i = "(\\D+)"; break; case "tt": case "t": i = "(\\D*)"; break; case "yyyy": case "fff": case "ff": case "f": i = "(\\d{" + a + "})"; break; case "dd": case "d": case "MM": case "M": case "yy": case "y": case "HH": case "H": case "hh": case "h": case "mm": case "m": case "ss": case "s": i = "(\\d\\d?)"; break; case "zzz": i = "([+-]?\\d\\d?:\\d{2})"; break; case "zz": case "z": i = "([+-]?\\d\\d?)"; break; case "/": i = "(\\/)"; break; default: throw "Invalid date format pattern '" + f + "'."; }i && r.push(i), b.push(u[0]) } return l(h.slice(s), r), r.push("$"), y = r.join("").replace(/\s+/g, "\\s+"), c = { regExp: y, groups: b }, e[t] = c }, n = function (n, t, i) { return n < t || n > i }, i = function (n) { return n.split("\u00a0").join(" ").toUpperCase() }, t = function (n) { for (var u = [], t = 0, r = n.length; t < r; t++)u[t] = i(n[t]); return u }, b = function (t, i, u) { var d, bt, l, ft, ut, nt, g, dt, h, vt, tt, ot; t = r(t); var o = u.calendar, yt = a(o, i), pt = new RegExp(yt.regExp).exec(t); if (pt === null) return null; var wt = yt.groups, ct = null, b = null, p = null, w = null, rt = null, y = 0, k, lt = 0, ht = 0, st = 0, et = null, at = !1; for (d = 0, bt = wt.length; d < bt; d++)if (l = pt[d + 1], l) { var kt = wt[d], it = kt.length, v = parseInt(l, 10); switch (kt) { case "dd": case "d": if (w = v, n(w, 1, 31)) return null; break; case "MMM": case "MMMM": if (p = c(o, l, it === 3), n(p, 0, 11)) return null; break; case "M": case "MM": if (p = v - 1, n(p, 0, 11)) return null; break; case "y": case "yy": case "yyyy": if (b = it < 4 ? f(o, v) : v, n(b, 0, 9999)) return null; break; case "h": case "hh": if (y = v, y === 12 && (y = 0), n(y, 0, 11)) return null; break; case "H": case "HH": if (y = v, n(y, 0, 23)) return null; break; case "m": case "mm": if (lt = v, n(lt, 0, 59)) return null; break; case "s": case "ss": if (ht = v, n(ht, 0, 59)) return null; break; case "tt": case "t": if (at = o.PM && (l === o.PM[0] || l === o.PM[1] || l === o.PM[2]), !at && (!o.AM || l !== o.AM[0] && l !== o.AM[1] && l !== o.AM[2])) return null; break; case "f": case "ff": case "fff": if (st = v * Math.pow(10, 3 - it), n(st, 0, 999)) return null; break; case "ddd": case "dddd": if (rt = s(o, l, it === 3), n(rt, 0, 6)) return null; break; case "zzz": if ((ft = l.split(/:/), ft.length !== 2) || (k = parseInt(ft[0], 10), n(k, -12, 13)) || (ut = parseInt(ft[1], 10), n(ut, 0, 59))) return null; et = k * 60 + (e(l, "-") ? -ut : ut); break; case "z": case "zz": if (k = v, n(k, -12, 13)) return null; et = k * 60; break; case "g": case "gg": if (nt = l, !nt || !o.eras) return null; for (nt = r(nt.toLowerCase()), g = 0, dt = o.eras.length; g < dt; g++)if (nt === o.eras[g].name.toLowerCase()) { ct = g; break } if (ct === null) return null } } if (h = new Date, tt = o.convert, vt = tt ? tt.fromGregorian(h)[0] : h.getFullYear(), b === null ? b = vt : o.eras && (b += o.eras[ct || 0].offset), p === null && (p = 0), w === null && (w = 1), tt) { if (h = tt.toGregorian(b, p, w), h === null) return null } else if ((h.setFullYear(b, p, w), h.getDate() !== w) || rt !== null && h.getDay() !== rt) return null; return at && y < 12 && (y += 12), h.setHours(y, lt, ht, st), et !== null && (ot = h.getMinutes() - (et + h.getTimezoneOffset()), h.setHours(h.getHours() + parseInt(ot / 60, 10), ot % 60)), h } }(), f = function (n, t, i) { var u = t["-"], r = t["+"], f; switch (i) { case "n -": u = " " + u, r = " " + r; case "n-": c(n, u) ? f = ["-", n.substr(0, n.length - u.length)] : c(n, r) && (f = ["+", n.substr(0, n.length - r.length)]); break; case "- n": u += " ", r += " "; case "-n": e(n, u) ? f = ["-", n.substr(u.length)] : e(n, r) && (f = ["+", n.substr(r.length)]); break; case "(n)": e(n, "(") && c(n, ")") && (f = ["-", n.substr(1, n.length - 2)]) }return f || ["", n] }, i.prototype.findClosestCulture = function (n) { return i.findClosestCulture.call(this, n) }, i.prototype.format = function (n, t, r) { return i.format.call(this, n, t, r) }, i.prototype.localize = function (n, t) { return i.localize.call(this, n, t) }, i.prototype.parseInt = function (n, t, r) { return i.parseInt.call(this, n, t, r) }, i.prototype.parseFloat = function (n, t, r) { return i.parseFloat.call(this, n, t, r) }, i.prototype.culture = function (n) { return i.culture.call(this, n) }, i.addCultureInfo = function (n, t, i) { var r = {}, u = !1; typeof n != "string" ? (i = n, n = this.culture().name, r = this.cultures[n]) : typeof t != "string" ? (i = t, u = this.cultures[n] == null, r = this.cultures[n] || this.cultures["default"]) : (u = !0, r = this.cultures[t]), this.cultures[n] = d(!0, {}, r, i), u && (this.cultures[n].calendar = this.cultures[n].calendars.standard) }, i.findClosestCulture = function (n) { var f, u, o, l, y, c; if (!n) return this.findClosestCulture(this.cultureSelector) || this.cultures["default"]; if (typeof n == "string" && (n = n.split(",")), a(n)) { for (var i, s = this.cultures, v = n, h = v.length, e = [], t = 0; t < h; t++)n = r(v[t]), o = n.split(";"), i = r(o[0]), o.length === 1 ? u = 1 : (n = r(o[1]), n.indexOf("q=") === 0 ? (n = n.substr(2), u = parseFloat(n), u = isNaN(u) ? 0 : u) : u = 1), e.push({ lang: i, pri: u }); for (e.sort(function (n, t) { return n.pri < t.pri ? 1 : n.pri > t.pri ? -1 : 0 }), t = 0; t < h; t++)if (i = e[t].lang, f = s[i], f) return f; for (t = 0; t < h; t++) { i = e[t].lang; do { if (l = i.lastIndexOf("-"), l === -1) break; if (i = i.substr(0, l), f = s[i], f) return f } while (1) } for (t = 0; t < h; t++) { i = e[t].lang; for (y in s) if (c = s[y], c.language == i) return c } } else if (typeof n == "object") return n; return f || null }, i.format = function (n, t, i) { var r = this.findClosestCulture(i); return n instanceof Date ? n = y(n, t, r) : typeof n == "number" && (n = rt(n, t, r)), n }, i.localize = function (n, t) { return this.findClosestCulture(t).messages[n] || this.cultures["default"].messages[n] }, i.parseDate = function (n, t, i) { var r, o, f, u, s, e; if (i = this.findClosestCulture(i), t) { if (typeof t == "string" && (t = [t]), t.length) for (u = 0, s = t.length; u < s; u++)if (e = t[u], e && (r = b(n, e, i), r)) break } else { f = i.calendar.patterns; for (o in f) if (r = b(n, f[o], i), r) break } return r || null }, i.parseInt = function (n, t, r) { return k(i.parseFloat(n, t, r)) }, i.parseFloat = function (n, t, i) { var k, c, l, s, b, nt, y, p, tt, v, d; typeof t != "number" && (i = t, t = 10); var a = this.findClosestCulture(i), w = NaN, u = a.numberFormat; if (n.indexOf(a.numberFormat.currency.symbol) > -1 && (n = n.replace(a.numberFormat.currency.symbol, ""), n = n.replace(a.numberFormat.currency["."], a.numberFormat["."])), n = r(n), it.test(n)) w = parseFloat(n); else if (!t && ut.test(n)) w = parseInt(n, 16); else { var e = f(n, u, u.pattern[0]), o = e[0], h = e[1]; o === "" && u.pattern[0] !== "(n)" && (e = f(n, u, "(n)"), o = e[0], h = e[1]), o === "" && u.pattern[0] !== "-n" && (e = f(n, u, "-n"), o = e[0], h = e[1]), o = o || "+", l = h.indexOf("e"), l < 0 && (l = h.indexOf("E")), l < 0 ? (c = h, k = null) : (c = h.substr(0, l), k = h.substr(l + 1)), nt = u["."], y = c.indexOf(nt), y < 0 ? (s = c, b = null) : (s = c.substr(0, y), b = c.substr(y + nt.length)), p = u[","], s = s.split(p).join(""), tt = p.replace(/\u00A0/g, " "), p !== tt && (s = s.split(tt).join("")), v = o + s, b !== null && (v += "." + b), k !== null && (d = f(k, u, "-n"), v += "e" + (d[0] || "+") + d[1]), g.test(v) && (w = parseFloat(v)) } return w }, i.culture = function (n) { return typeof n != "undefined" && (this.cultureSelector = n), this.findClosestCulture(n) || this.cultures["default"] } })(this);
 /*!
- * Bootstrap v3.2.0 (http://getbootstrap.com)
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Bootstrap v3.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under the MIT license
  */
-if("undefined"==typeof jQuery)throw new Error("Bootstrap's JavaScript requires jQuery");+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var c=a(this),e=c.data("bs.alert");e||c.data("bs.alert",e=new d(this)),"string"==typeof b&&e[b].call(c)})}var c='[data-dismiss="alert"]',d=function(b){a(b).on("click",c,this.close)};d.VERSION="3.2.0",d.prototype.close=function(b){function c(){f.detach().trigger("closed.bs.alert").remove()}var d=a(this),e=d.attr("data-target");e||(e=d.attr("href"),e=e&&e.replace(/.*(?=#[^\s]*$)/,""));var f=a(e);b&&b.preventDefault(),f.length||(f=d.hasClass("alert")?d:d.parent()),f.trigger(b=a.Event("close.bs.alert")),b.isDefaultPrevented()||(f.removeClass("in"),a.support.transition&&f.hasClass("fade")?f.one("bsTransitionEnd",c).emulateTransitionEnd(150):c())};var e=a.fn.alert;a.fn.alert=b,a.fn.alert.Constructor=d,a.fn.alert.noConflict=function(){return a.fn.alert=e,this},a(document).on("click.bs.alert.data-api",c,d.prototype.close)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.button"),f="object"==typeof b&&b;e||d.data("bs.button",e=new c(this,f)),"toggle"==b?e.toggle():b&&e.setState(b)})}var c=function(b,d){this.$element=a(b),this.options=a.extend({},c.DEFAULTS,d),this.isLoading=!1};c.VERSION="3.2.0",c.DEFAULTS={loadingText:"loading..."},c.prototype.setState=function(b){var c="disabled",d=this.$element,e=d.is("input")?"val":"html",f=d.data();b+="Text",null==f.resetText&&d.data("resetText",d[e]()),d[e](null==f[b]?this.options[b]:f[b]),setTimeout(a.proxy(function(){"loadingText"==b?(this.isLoading=!0,d.addClass(c).attr(c,c)):this.isLoading&&(this.isLoading=!1,d.removeClass(c).removeAttr(c))},this),0)},c.prototype.toggle=function(){var a=!0,b=this.$element.closest('[data-toggle="buttons"]');if(b.length){var c=this.$element.find("input");"radio"==c.prop("type")&&(c.prop("checked")&&this.$element.hasClass("active")?a=!1:b.find(".active").removeClass("active")),a&&c.prop("checked",!this.$element.hasClass("active")).trigger("change")}a&&this.$element.toggleClass("active")};var d=a.fn.button;a.fn.button=b,a.fn.button.Constructor=c,a.fn.button.noConflict=function(){return a.fn.button=d,this},a(document).on("click.bs.button.data-api",'[data-toggle^="button"]',function(c){var d=a(c.target);d.hasClass("btn")||(d=d.closest(".btn")),b.call(d,"toggle"),c.preventDefault()})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.carousel"),f=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b),g="string"==typeof b?b:f.slide;e||d.data("bs.carousel",e=new c(this,f)),"number"==typeof b?e.to(b):g?e[g]():f.interval&&e.pause().cycle()})}var c=function(b,c){this.$element=a(b).on("keydown.bs.carousel",a.proxy(this.keydown,this)),this.$indicators=this.$element.find(".carousel-indicators"),this.options=c,this.paused=this.sliding=this.interval=this.$active=this.$items=null,"hover"==this.options.pause&&this.$element.on("mouseenter.bs.carousel",a.proxy(this.pause,this)).on("mouseleave.bs.carousel",a.proxy(this.cycle,this))};c.VERSION="3.2.0",c.DEFAULTS={interval:5e3,pause:"hover",wrap:!0},c.prototype.keydown=function(a){switch(a.which){case 37:this.prev();break;case 39:this.next();break;default:return}a.preventDefault()},c.prototype.cycle=function(b){return b||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(a.proxy(this.next,this),this.options.interval)),this},c.prototype.getItemIndex=function(a){return this.$items=a.parent().children(".item"),this.$items.index(a||this.$active)},c.prototype.to=function(b){var c=this,d=this.getItemIndex(this.$active=this.$element.find(".item.active"));return b>this.$items.length-1||0>b?void 0:this.sliding?this.$element.one("slid.bs.carousel",function(){c.to(b)}):d==b?this.pause().cycle():this.slide(b>d?"next":"prev",a(this.$items[b]))},c.prototype.pause=function(b){return b||(this.paused=!0),this.$element.find(".next, .prev").length&&a.support.transition&&(this.$element.trigger(a.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},c.prototype.next=function(){return this.sliding?void 0:this.slide("next")},c.prototype.prev=function(){return this.sliding?void 0:this.slide("prev")},c.prototype.slide=function(b,c){var d=this.$element.find(".item.active"),e=c||d[b](),f=this.interval,g="next"==b?"left":"right",h="next"==b?"first":"last",i=this;if(!e.length){if(!this.options.wrap)return;e=this.$element.find(".item")[h]()}if(e.hasClass("active"))return this.sliding=!1;var j=e[0],k=a.Event("slide.bs.carousel",{relatedTarget:j,direction:g});if(this.$element.trigger(k),!k.isDefaultPrevented()){if(this.sliding=!0,f&&this.pause(),this.$indicators.length){this.$indicators.find(".active").removeClass("active");var l=a(this.$indicators.children()[this.getItemIndex(e)]);l&&l.addClass("active")}var m=a.Event("slid.bs.carousel",{relatedTarget:j,direction:g});return a.support.transition&&this.$element.hasClass("slide")?(e.addClass(b),e[0].offsetWidth,d.addClass(g),e.addClass(g),d.one("bsTransitionEnd",function(){e.removeClass([b,g].join(" ")).addClass("active"),d.removeClass(["active",g].join(" ")),i.sliding=!1,setTimeout(function(){i.$element.trigger(m)},0)}).emulateTransitionEnd(1e3*d.css("transition-duration").slice(0,-1))):(d.removeClass("active"),e.addClass("active"),this.sliding=!1,this.$element.trigger(m)),f&&this.cycle(),this}};var d=a.fn.carousel;a.fn.carousel=b,a.fn.carousel.Constructor=c,a.fn.carousel.noConflict=function(){return a.fn.carousel=d,this},a(document).on("click.bs.carousel.data-api","[data-slide], [data-slide-to]",function(c){var d,e=a(this),f=a(e.attr("data-target")||(d=e.attr("href"))&&d.replace(/.*(?=#[^\s]+$)/,""));if(f.hasClass("carousel")){var g=a.extend({},f.data(),e.data()),h=e.attr("data-slide-to");h&&(g.interval=!1),b.call(f,g),h&&f.data("bs.carousel").to(h),c.preventDefault()}}),a(window).on("load",function(){a('[data-ride="carousel"]').each(function(){var c=a(this);b.call(c,c.data())})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.collapse"),f=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b);!e&&f.toggle&&"show"==b&&(b=!b),e||d.data("bs.collapse",e=new c(this,f)),"string"==typeof b&&e[b]()})}var c=function(b,d){this.$element=a(b),this.options=a.extend({},c.DEFAULTS,d),this.transitioning=null,this.options.parent&&(this.$parent=a(this.options.parent)),this.options.toggle&&this.toggle()};c.VERSION="3.2.0",c.DEFAULTS={toggle:!0},c.prototype.dimension=function(){var a=this.$element.hasClass("width");return a?"width":"height"},c.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var c=a.Event("show.bs.collapse");if(this.$element.trigger(c),!c.isDefaultPrevented()){var d=this.$parent&&this.$parent.find("> .panel > .in");if(d&&d.length){var e=d.data("bs.collapse");if(e&&e.transitioning)return;b.call(d,"hide"),e||d.data("bs.collapse",null)}var f=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[f](0),this.transitioning=1;var g=function(){this.$element.removeClass("collapsing").addClass("collapse in")[f](""),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return g.call(this);var h=a.camelCase(["scroll",f].join("-"));this.$element.one("bsTransitionEnd",a.proxy(g,this)).emulateTransitionEnd(350)[f](this.$element[0][h])}}},c.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var b=a.Event("hide.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.dimension();this.$element[c](this.$element[c]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse").removeClass("in"),this.transitioning=1;var d=function(){this.transitioning=0,this.$element.trigger("hidden.bs.collapse").removeClass("collapsing").addClass("collapse")};return a.support.transition?void this.$element[c](0).one("bsTransitionEnd",a.proxy(d,this)).emulateTransitionEnd(350):d.call(this)}}},c.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()};var d=a.fn.collapse;a.fn.collapse=b,a.fn.collapse.Constructor=c,a.fn.collapse.noConflict=function(){return a.fn.collapse=d,this},a(document).on("click.bs.collapse.data-api",'[data-toggle="collapse"]',function(c){var d,e=a(this),f=e.attr("data-target")||c.preventDefault()||(d=e.attr("href"))&&d.replace(/.*(?=#[^\s]+$)/,""),g=a(f),h=g.data("bs.collapse"),i=h?"toggle":e.data(),j=e.attr("data-parent"),k=j&&a(j);h&&h.transitioning||(k&&k.find('[data-toggle="collapse"][data-parent="'+j+'"]').not(e).addClass("collapsed"),e[g.hasClass("in")?"addClass":"removeClass"]("collapsed")),b.call(g,i)})}(jQuery),+function(a){"use strict";function b(b){b&&3===b.which||(a(e).remove(),a(f).each(function(){var d=c(a(this)),e={relatedTarget:this};d.hasClass("open")&&(d.trigger(b=a.Event("hide.bs.dropdown",e)),b.isDefaultPrevented()||d.removeClass("open").trigger("hidden.bs.dropdown",e))}))}function c(b){var c=b.attr("data-target");c||(c=b.attr("href"),c=c&&/#[A-Za-z]/.test(c)&&c.replace(/.*(?=#[^\s]*$)/,""));var d=c&&a(c);return d&&d.length?d:b.parent()}function d(b){return this.each(function(){var c=a(this),d=c.data("bs.dropdown");d||c.data("bs.dropdown",d=new g(this)),"string"==typeof b&&d[b].call(c)})}var e=".dropdown-backdrop",f='[data-toggle="dropdown"]',g=function(b){a(b).on("click.bs.dropdown",this.toggle)};g.VERSION="3.2.0",g.prototype.toggle=function(d){var e=a(this);if(!e.is(".disabled, :disabled")){var f=c(e),g=f.hasClass("open");if(b(),!g){"ontouchstart"in document.documentElement&&!f.closest(".navbar-nav").length&&a('<div class="dropdown-backdrop"/>').insertAfter(a(this)).on("click",b);var h={relatedTarget:this};if(f.trigger(d=a.Event("show.bs.dropdown",h)),d.isDefaultPrevented())return;e.trigger("focus"),f.toggleClass("open").trigger("shown.bs.dropdown",h)}return!1}},g.prototype.keydown=function(b){if(/(38|40|27)/.test(b.keyCode)){var d=a(this);if(b.preventDefault(),b.stopPropagation(),!d.is(".disabled, :disabled")){var e=c(d),g=e.hasClass("open");if(!g||g&&27==b.keyCode)return 27==b.which&&e.find(f).trigger("focus"),d.trigger("click");var h=" li:not(.divider):visible a",i=e.find('[role="menu"]'+h+', [role="listbox"]'+h);if(i.length){var j=i.index(i.filter(":focus"));38==b.keyCode&&j>0&&j--,40==b.keyCode&&j<i.length-1&&j++,~j||(j=0),i.eq(j).trigger("focus")}}}};var h=a.fn.dropdown;a.fn.dropdown=d,a.fn.dropdown.Constructor=g,a.fn.dropdown.noConflict=function(){return a.fn.dropdown=h,this},a(document).on("click.bs.dropdown.data-api",b).on("click.bs.dropdown.data-api",".dropdown form",function(a){a.stopPropagation()}).on("click.bs.dropdown.data-api",f,g.prototype.toggle).on("keydown.bs.dropdown.data-api",f+', [role="menu"], [role="listbox"]',g.prototype.keydown)}(jQuery),+function(a){"use strict";function b(b,d){return this.each(function(){var e=a(this),f=e.data("bs.modal"),g=a.extend({},c.DEFAULTS,e.data(),"object"==typeof b&&b);f||e.data("bs.modal",f=new c(this,g)),"string"==typeof b?f[b](d):g.show&&f.show(d)})}var c=function(b,c){this.options=c,this.$body=a(document.body),this.$element=a(b),this.$backdrop=this.isShown=null,this.scrollbarWidth=0,this.options.remote&&this.$element.find(".modal-content").load(this.options.remote,a.proxy(function(){this.$element.trigger("loaded.bs.modal")},this))};c.VERSION="3.2.0",c.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},c.prototype.toggle=function(a){return this.isShown?this.hide():this.show(a)},c.prototype.show=function(b){var c=this,d=a.Event("show.bs.modal",{relatedTarget:b});this.$element.trigger(d),this.isShown||d.isDefaultPrevented()||(this.isShown=!0,this.checkScrollbar(),this.$body.addClass("modal-open"),this.setScrollbar(),this.escape(),this.$element.on("click.dismiss.bs.modal",'[data-dismiss="modal"]',a.proxy(this.hide,this)),this.backdrop(function(){var d=a.support.transition&&c.$element.hasClass("fade");c.$element.parent().length||c.$element.appendTo(c.$body),c.$element.show().scrollTop(0),d&&c.$element[0].offsetWidth,c.$element.addClass("in").attr("aria-hidden",!1),c.enforceFocus();var e=a.Event("shown.bs.modal",{relatedTarget:b});d?c.$element.find(".modal-dialog").one("bsTransitionEnd",function(){c.$element.trigger("focus").trigger(e)}).emulateTransitionEnd(300):c.$element.trigger("focus").trigger(e)}))},c.prototype.hide=function(b){b&&b.preventDefault(),b=a.Event("hide.bs.modal"),this.$element.trigger(b),this.isShown&&!b.isDefaultPrevented()&&(this.isShown=!1,this.$body.removeClass("modal-open"),this.resetScrollbar(),this.escape(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").attr("aria-hidden",!0).off("click.dismiss.bs.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one("bsTransitionEnd",a.proxy(this.hideModal,this)).emulateTransitionEnd(300):this.hideModal())},c.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(a){this.$element[0]===a.target||this.$element.has(a.target).length||this.$element.trigger("focus")},this))},c.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keyup.dismiss.bs.modal",a.proxy(function(a){27==a.which&&this.hide()},this)):this.isShown||this.$element.off("keyup.dismiss.bs.modal")},c.prototype.hideModal=function(){var a=this;this.$element.hide(),this.backdrop(function(){a.$element.trigger("hidden.bs.modal")})},c.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},c.prototype.backdrop=function(b){var c=this,d=this.$element.hasClass("fade")?"fade":"";if(this.isShown&&this.options.backdrop){var e=a.support.transition&&d;if(this.$backdrop=a('<div class="modal-backdrop '+d+'" />').appendTo(this.$body),this.$element.on("click.dismiss.bs.modal",a.proxy(function(a){a.target===a.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus.call(this.$element[0]):this.hide.call(this))},this)),e&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!b)return;e?this.$backdrop.one("bsTransitionEnd",b).emulateTransitionEnd(150):b()}else if(!this.isShown&&this.$backdrop){this.$backdrop.removeClass("in");var f=function(){c.removeBackdrop(),b&&b()};a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one("bsTransitionEnd",f).emulateTransitionEnd(150):f()}else b&&b()},c.prototype.checkScrollbar=function(){document.body.clientWidth>=window.innerWidth||(this.scrollbarWidth=this.scrollbarWidth||this.measureScrollbar())},c.prototype.setScrollbar=function(){var a=parseInt(this.$body.css("padding-right")||0,10);this.scrollbarWidth&&this.$body.css("padding-right",a+this.scrollbarWidth)},c.prototype.resetScrollbar=function(){this.$body.css("padding-right","")},c.prototype.measureScrollbar=function(){var a=document.createElement("div");a.className="modal-scrollbar-measure",this.$body.append(a);var b=a.offsetWidth-a.clientWidth;return this.$body[0].removeChild(a),b};var d=a.fn.modal;a.fn.modal=b,a.fn.modal.Constructor=c,a.fn.modal.noConflict=function(){return a.fn.modal=d,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(c){var d=a(this),e=d.attr("href"),f=a(d.attr("data-target")||e&&e.replace(/.*(?=#[^\s]+$)/,"")),g=f.data("bs.modal")?"toggle":a.extend({remote:!/#/.test(e)&&e},f.data(),d.data());d.is("a")&&c.preventDefault(),f.one("show.bs.modal",function(a){a.isDefaultPrevented()||f.one("hidden.bs.modal",function(){d.is(":visible")&&d.trigger("focus")})}),b.call(f,g,this)})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tooltip"),f="object"==typeof b&&b;(e||"destroy"!=b)&&(e||d.data("bs.tooltip",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.type=this.options=this.enabled=this.timeout=this.hoverState=this.$element=null,this.init("tooltip",a,b)};c.VERSION="3.2.0",c.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1,viewport:{selector:"body",padding:0}},c.prototype.init=function(b,c,d){this.enabled=!0,this.type=b,this.$element=a(c),this.options=this.getOptions(d),this.$viewport=this.options.viewport&&a(this.options.viewport.selector||this.options.viewport);for(var e=this.options.trigger.split(" "),f=e.length;f--;){var g=e[f];if("click"==g)this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this));else if("manual"!=g){var h="hover"==g?"mouseenter":"focusin",i="hover"==g?"mouseleave":"focusout";this.$element.on(h+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(i+"."+this.type,this.options.selector,a.proxy(this.leave,this))}}this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.getOptions=function(b){return b=a.extend({},this.getDefaults(),this.$element.data(),b),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},c.prototype.getDelegateOptions=function(){var b={},c=this.getDefaults();return this._options&&a.each(this._options,function(a,d){c[a]!=d&&(b[a]=d)}),b},c.prototype.enter=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),clearTimeout(c.timeout),c.hoverState="in",c.options.delay&&c.options.delay.show?void(c.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show)):c.show()},c.prototype.leave=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),clearTimeout(c.timeout),c.hoverState="out",c.options.delay&&c.options.delay.hide?void(c.timeout=setTimeout(function(){"out"==c.hoverState&&c.hide()},c.options.delay.hide)):c.hide()},c.prototype.show=function(){var b=a.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){this.$element.trigger(b);var c=a.contains(document.documentElement,this.$element[0]);if(b.isDefaultPrevented()||!c)return;var d=this,e=this.tip(),f=this.getUID(this.type);this.setContent(),e.attr("id",f),this.$element.attr("aria-describedby",f),this.options.animation&&e.addClass("fade");var g="function"==typeof this.options.placement?this.options.placement.call(this,e[0],this.$element[0]):this.options.placement,h=/\s?auto?\s?/i,i=h.test(g);i&&(g=g.replace(h,"")||"top"),e.detach().css({top:0,left:0,display:"block"}).addClass(g).data("bs."+this.type,this),this.options.container?e.appendTo(this.options.container):e.insertAfter(this.$element);var j=this.getPosition(),k=e[0].offsetWidth,l=e[0].offsetHeight;if(i){var m=g,n=this.$element.parent(),o=this.getPosition(n);g="bottom"==g&&j.top+j.height+l-o.scroll>o.height?"top":"top"==g&&j.top-o.scroll-l<0?"bottom":"right"==g&&j.right+k>o.width?"left":"left"==g&&j.left-k<o.left?"right":g,e.removeClass(m).addClass(g)}var p=this.getCalculatedOffset(g,j,k,l);this.applyPlacement(p,g);var q=function(){d.$element.trigger("shown.bs."+d.type),d.hoverState=null};a.support.transition&&this.$tip.hasClass("fade")?e.one("bsTransitionEnd",q).emulateTransitionEnd(150):q()}},c.prototype.applyPlacement=function(b,c){var d=this.tip(),e=d[0].offsetWidth,f=d[0].offsetHeight,g=parseInt(d.css("margin-top"),10),h=parseInt(d.css("margin-left"),10);isNaN(g)&&(g=0),isNaN(h)&&(h=0),b.top=b.top+g,b.left=b.left+h,a.offset.setOffset(d[0],a.extend({using:function(a){d.css({top:Math.round(a.top),left:Math.round(a.left)})}},b),0),d.addClass("in");var i=d[0].offsetWidth,j=d[0].offsetHeight;"top"==c&&j!=f&&(b.top=b.top+f-j);var k=this.getViewportAdjustedDelta(c,b,i,j);k.left?b.left+=k.left:b.top+=k.top;var l=k.left?2*k.left-e+i:2*k.top-f+j,m=k.left?"left":"top",n=k.left?"offsetWidth":"offsetHeight";d.offset(b),this.replaceArrow(l,d[0][n],m)},c.prototype.replaceArrow=function(a,b,c){this.arrow().css(c,a?50*(1-a/b)+"%":"")},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade in top bottom left right")},c.prototype.hide=function(){function b(){"in"!=c.hoverState&&d.detach(),c.$element.trigger("hidden.bs."+c.type)}var c=this,d=this.tip(),e=a.Event("hide.bs."+this.type);return this.$element.removeAttr("aria-describedby"),this.$element.trigger(e),e.isDefaultPrevented()?void 0:(d.removeClass("in"),a.support.transition&&this.$tip.hasClass("fade")?d.one("bsTransitionEnd",b).emulateTransitionEnd(150):b(),this.hoverState=null,this)},c.prototype.fixTitle=function(){var a=this.$element;(a.attr("title")||"string"!=typeof a.attr("data-original-title"))&&a.attr("data-original-title",a.attr("title")||"").attr("title","")},c.prototype.hasContent=function(){return this.getTitle()},c.prototype.getPosition=function(b){b=b||this.$element;var c=b[0],d="BODY"==c.tagName;return a.extend({},"function"==typeof c.getBoundingClientRect?c.getBoundingClientRect():null,{scroll:d?document.documentElement.scrollTop||document.body.scrollTop:b.scrollTop(),width:d?a(window).width():b.outerWidth(),height:d?a(window).height():b.outerHeight()},d?{top:0,left:0}:b.offset())},c.prototype.getCalculatedOffset=function(a,b,c,d){return"bottom"==a?{top:b.top+b.height,left:b.left+b.width/2-c/2}:"top"==a?{top:b.top-d,left:b.left+b.width/2-c/2}:"left"==a?{top:b.top+b.height/2-d/2,left:b.left-c}:{top:b.top+b.height/2-d/2,left:b.left+b.width}},c.prototype.getViewportAdjustedDelta=function(a,b,c,d){var e={top:0,left:0};if(!this.$viewport)return e;var f=this.options.viewport&&this.options.viewport.padding||0,g=this.getPosition(this.$viewport);if(/right|left/.test(a)){var h=b.top-f-g.scroll,i=b.top+f-g.scroll+d;h<g.top?e.top=g.top-h:i>g.top+g.height&&(e.top=g.top+g.height-i)}else{var j=b.left-f,k=b.left+f+c;j<g.left?e.left=g.left-j:k>g.width&&(e.left=g.left+g.width-k)}return e},c.prototype.getTitle=function(){var a,b=this.$element,c=this.options;return a=b.attr("data-original-title")||("function"==typeof c.title?c.title.call(b[0]):c.title)},c.prototype.getUID=function(a){do a+=~~(1e6*Math.random());while(document.getElementById(a));return a},c.prototype.tip=function(){return this.$tip=this.$tip||a(this.options.template)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},c.prototype.validate=function(){this.$element[0].parentNode||(this.hide(),this.$element=null,this.options=null)},c.prototype.enable=function(){this.enabled=!0},c.prototype.disable=function(){this.enabled=!1},c.prototype.toggleEnabled=function(){this.enabled=!this.enabled},c.prototype.toggle=function(b){var c=this;b&&(c=a(b.currentTarget).data("bs."+this.type),c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c))),c.tip().hasClass("in")?c.leave(c):c.enter(c)},c.prototype.destroy=function(){clearTimeout(this.timeout),this.hide().$element.off("."+this.type).removeData("bs."+this.type)};var d=a.fn.tooltip;a.fn.tooltip=b,a.fn.tooltip.Constructor=c,a.fn.tooltip.noConflict=function(){return a.fn.tooltip=d,this}}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.popover"),f="object"==typeof b&&b;(e||"destroy"!=b)&&(e||d.data("bs.popover",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.init("popover",a,b)};if(!a.fn.tooltip)throw new Error("Popover requires tooltip.js");c.VERSION="3.2.0",c.DEFAULTS=a.extend({},a.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'}),c.prototype=a.extend({},a.fn.tooltip.Constructor.prototype),c.prototype.constructor=c,c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle(),c=this.getContent();a.find(".popover-title")[this.options.html?"html":"text"](b),a.find(".popover-content").empty()[this.options.html?"string"==typeof c?"html":"append":"text"](c),a.removeClass("fade top bottom left right in"),a.find(".popover-title").html()||a.find(".popover-title").hide()},c.prototype.hasContent=function(){return this.getTitle()||this.getContent()},c.prototype.getContent=function(){var a=this.$element,b=this.options;return a.attr("data-content")||("function"==typeof b.content?b.content.call(a[0]):b.content)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")},c.prototype.tip=function(){return this.$tip||(this.$tip=a(this.options.template)),this.$tip};var d=a.fn.popover;a.fn.popover=b,a.fn.popover.Constructor=c,a.fn.popover.noConflict=function(){return a.fn.popover=d,this}}(jQuery),+function(a){"use strict";function b(c,d){var e=a.proxy(this.process,this);this.$body=a("body"),this.$scrollElement=a(a(c).is("body")?window:c),this.options=a.extend({},b.DEFAULTS,d),this.selector=(this.options.target||"")+" .nav li > a",this.offsets=[],this.targets=[],this.activeTarget=null,this.scrollHeight=0,this.$scrollElement.on("scroll.bs.scrollspy",e),this.refresh(),this.process()}function c(c){return this.each(function(){var d=a(this),e=d.data("bs.scrollspy"),f="object"==typeof c&&c;e||d.data("bs.scrollspy",e=new b(this,f)),"string"==typeof c&&e[c]()})}b.VERSION="3.2.0",b.DEFAULTS={offset:10},b.prototype.getScrollHeight=function(){return this.$scrollElement[0].scrollHeight||Math.max(this.$body[0].scrollHeight,document.documentElement.scrollHeight)},b.prototype.refresh=function(){var b="offset",c=0;a.isWindow(this.$scrollElement[0])||(b="position",c=this.$scrollElement.scrollTop()),this.offsets=[],this.targets=[],this.scrollHeight=this.getScrollHeight();var d=this;this.$body.find(this.selector).map(function(){var d=a(this),e=d.data("target")||d.attr("href"),f=/^#./.test(e)&&a(e);return f&&f.length&&f.is(":visible")&&[[f[b]().top+c,e]]||null}).sort(function(a,b){return a[0]-b[0]}).each(function(){d.offsets.push(this[0]),d.targets.push(this[1])})},b.prototype.process=function(){var a,b=this.$scrollElement.scrollTop()+this.options.offset,c=this.getScrollHeight(),d=this.options.offset+c-this.$scrollElement.height(),e=this.offsets,f=this.targets,g=this.activeTarget;if(this.scrollHeight!=c&&this.refresh(),b>=d)return g!=(a=f[f.length-1])&&this.activate(a);if(g&&b<=e[0])return g!=(a=f[0])&&this.activate(a);for(a=e.length;a--;)g!=f[a]&&b>=e[a]&&(!e[a+1]||b<=e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activeTarget=b,a(this.selector).parentsUntil(this.options.target,".active").removeClass("active");var c=this.selector+'[data-target="'+b+'"],'+this.selector+'[href="'+b+'"]',d=a(c).parents("li").addClass("active");d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active")),d.trigger("activate.bs.scrollspy")};var d=a.fn.scrollspy;a.fn.scrollspy=c,a.fn.scrollspy.Constructor=b,a.fn.scrollspy.noConflict=function(){return a.fn.scrollspy=d,this},a(window).on("load.bs.scrollspy.data-api",function(){a('[data-spy="scroll"]').each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tab");e||d.data("bs.tab",e=new c(this)),"string"==typeof b&&e[b]()})}var c=function(b){this.element=a(b)};c.VERSION="3.2.0",c.prototype.show=function(){var b=this.element,c=b.closest("ul:not(.dropdown-menu)"),d=b.data("target");if(d||(d=b.attr("href"),d=d&&d.replace(/.*(?=#[^\s]*$)/,"")),!b.parent("li").hasClass("active")){var e=c.find(".active:last a")[0],f=a.Event("show.bs.tab",{relatedTarget:e});if(b.trigger(f),!f.isDefaultPrevented()){var g=a(d);this.activate(b.closest("li"),c),this.activate(g,g.parent(),function(){b.trigger({type:"shown.bs.tab",relatedTarget:e})})}}},c.prototype.activate=function(b,c,d){function e(){f.removeClass("active").find("> .dropdown-menu > .active").removeClass("active"),b.addClass("active"),g?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu")&&b.closest("li.dropdown").addClass("active"),d&&d()}var f=c.find("> .active"),g=d&&a.support.transition&&f.hasClass("fade");g?f.one("bsTransitionEnd",e).emulateTransitionEnd(150):e(),f.removeClass("in")};var d=a.fn.tab;a.fn.tab=b,a.fn.tab.Constructor=c,a.fn.tab.noConflict=function(){return a.fn.tab=d,this},a(document).on("click.bs.tab.data-api",'[data-toggle="tab"], [data-toggle="pill"]',function(c){c.preventDefault(),b.call(a(this),"show")})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.affix"),f="object"==typeof b&&b;e||d.data("bs.affix",e=new c(this,f)),"string"==typeof b&&e[b]()})}var c=function(b,d){this.options=a.extend({},c.DEFAULTS,d),this.$target=a(this.options.target).on("scroll.bs.affix.data-api",a.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",a.proxy(this.checkPositionWithEventLoop,this)),this.$element=a(b),this.affixed=this.unpin=this.pinnedOffset=null,this.checkPosition()};c.VERSION="3.2.0",c.RESET="affix affix-top affix-bottom",c.DEFAULTS={offset:0,target:window},c.prototype.getPinnedOffset=function(){if(this.pinnedOffset)return this.pinnedOffset;this.$element.removeClass(c.RESET).addClass("affix");var a=this.$target.scrollTop(),b=this.$element.offset();return this.pinnedOffset=b.top-a},c.prototype.checkPositionWithEventLoop=function(){setTimeout(a.proxy(this.checkPosition,this),1)},c.prototype.checkPosition=function(){if(this.$element.is(":visible")){var b=a(document).height(),d=this.$target.scrollTop(),e=this.$element.offset(),f=this.options.offset,g=f.top,h=f.bottom;"object"!=typeof f&&(h=g=f),"function"==typeof g&&(g=f.top(this.$element)),"function"==typeof h&&(h=f.bottom(this.$element));var i=null!=this.unpin&&d+this.unpin<=e.top?!1:null!=h&&e.top+this.$element.height()>=b-h?"bottom":null!=g&&g>=d?"top":!1;if(this.affixed!==i){null!=this.unpin&&this.$element.css("top","");var j="affix"+(i?"-"+i:""),k=a.Event(j+".bs.affix");this.$element.trigger(k),k.isDefaultPrevented()||(this.affixed=i,this.unpin="bottom"==i?this.getPinnedOffset():null,this.$element.removeClass(c.RESET).addClass(j).trigger(a.Event(j.replace("affix","affixed"))),"bottom"==i&&this.$element.offset({top:b-this.$element.height()-h}))}}};var d=a.fn.affix;a.fn.affix=b,a.fn.affix.Constructor=c,a.fn.affix.noConflict=function(){return a.fn.affix=d,this},a(window).on("load",function(){a('[data-spy="affix"]').each(function(){var c=a(this),d=c.data();d.offset=d.offset||{},d.offsetBottom&&(d.offset.bottom=d.offsetBottom),d.offsetTop&&(d.offset.top=d.offsetTop),b.call(c,d)})})}(jQuery);
-/*!
- * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
- *
- * Copyright 2013-2017 bootstrap-select
- * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
- */
-!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(a){return b(a)}):"object"==typeof module&&module.exports?module.exports=b(require("jquery")):b(a.jQuery)}(this,function(a){!function(a){"use strict";function b(b){var c=[{re:/[\xC0-\xC6]/g,ch:"A"},{re:/[\xE0-\xE6]/g,ch:"a"},{re:/[\xC8-\xCB]/g,ch:"E"},{re:/[\xE8-\xEB]/g,ch:"e"},{re:/[\xCC-\xCF]/g,ch:"I"},{re:/[\xEC-\xEF]/g,ch:"i"},{re:/[\xD2-\xD6]/g,ch:"O"},{re:/[\xF2-\xF6]/g,ch:"o"},{re:/[\xD9-\xDC]/g,ch:"U"},{re:/[\xF9-\xFC]/g,ch:"u"},{re:/[\xC7-\xE7]/g,ch:"c"},{re:/[\xD1]/g,ch:"N"},{re:/[\xF1]/g,ch:"n"}];return a.each(c,function(){b=b?b.replace(this.re,this.ch):""}),b}function c(b){var c=arguments,d=b;[].shift.apply(c);var e,f=this.each(function(){var b=a(this);if(b.is("select")){var f=b.data("selectpicker"),g="object"==typeof d&&d;if(f){if(g)for(var h in g)g.hasOwnProperty(h)&&(f.options[h]=g[h])}else{var i=a.extend({},l.DEFAULTS,a.fn.selectpicker.defaults||{},b.data(),g);i.template=a.extend({},l.DEFAULTS.template,a.fn.selectpicker.defaults?a.fn.selectpicker.defaults.template:{},b.data().template,g.template),b.data("selectpicker",f=new l(this,i))}"string"==typeof d&&(e=f[d]instanceof Function?f[d].apply(f,c):f.options[d])}});return"undefined"!=typeof e?e:f}String.prototype.includes||!function(){var a={}.toString,b=function(){try{var a={},b=Object.defineProperty,c=b(a,a,a)&&b}catch(a){}return c}(),c="".indexOf,d=function(b){if(null==this)throw new TypeError;var d=String(this);if(b&&"[object RegExp]"==a.call(b))throw new TypeError;var e=d.length,f=String(b),g=f.length,h=arguments.length>1?arguments[1]:void 0,i=h?Number(h):0;i!=i&&(i=0);var j=Math.min(Math.max(i,0),e);return!(g+j>e)&&c.call(d,f,i)!=-1};b?b(String.prototype,"includes",{value:d,configurable:!0,writable:!0}):String.prototype.includes=d}(),String.prototype.startsWith||!function(){var a=function(){try{var a={},b=Object.defineProperty,c=b(a,a,a)&&b}catch(a){}return c}(),b={}.toString,c=function(a){if(null==this)throw new TypeError;var c=String(this);if(a&&"[object RegExp]"==b.call(a))throw new TypeError;var d=c.length,e=String(a),f=e.length,g=arguments.length>1?arguments[1]:void 0,h=g?Number(g):0;h!=h&&(h=0);var i=Math.min(Math.max(h,0),d);if(f+i>d)return!1;for(var j=-1;++j<f;)if(c.charCodeAt(i+j)!=e.charCodeAt(j))return!1;return!0};a?a(String.prototype,"startsWith",{value:c,configurable:!0,writable:!0}):String.prototype.startsWith=c}(),Object.keys||(Object.keys=function(a,b,c){c=[];for(b in a)c.hasOwnProperty.call(a,b)&&c.push(b);return c});var d={useDefault:!1,_set:a.valHooks.select.set};a.valHooks.select.set=function(b,c){return c&&!d.useDefault&&a(b).data("selected",!0),d._set.apply(this,arguments)};var e=null,f=function(){try{return new Event("change"),!0}catch(a){return!1}}();a.fn.triggerNative=function(a){var b,c=this[0];c.dispatchEvent?(f?b=new Event(a,{bubbles:!0}):(b=document.createEvent("Event"),b.initEvent(a,!0,!1)),c.dispatchEvent(b)):c.fireEvent?(b=document.createEventObject(),b.eventType=a,c.fireEvent("on"+a,b)):this.trigger(a)},a.expr.pseudos.icontains=function(b,c,d){var e=a(b).find("a"),f=(e.data("tokens")||e.text()).toString().toUpperCase();return f.includes(d[3].toUpperCase())},a.expr.pseudos.ibegins=function(b,c,d){var e=a(b).find("a"),f=(e.data("tokens")||e.text()).toString().toUpperCase();return f.startsWith(d[3].toUpperCase())},a.expr.pseudos.aicontains=function(b,c,d){var e=a(b).find("a"),f=(e.data("tokens")||e.data("normalizedText")||e.text()).toString().toUpperCase();return f.includes(d[3].toUpperCase())},a.expr.pseudos.aibegins=function(b,c,d){var e=a(b).find("a"),f=(e.data("tokens")||e.data("normalizedText")||e.text()).toString().toUpperCase();return f.startsWith(d[3].toUpperCase())};var g={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","`":"&#x60;"},h={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#x27;":"'","&#x60;":"`"},i=function(a){var b=function(b){return a[b]},c="(?:"+Object.keys(a).join("|")+")",d=RegExp(c),e=RegExp(c,"g");return function(a){return a=null==a?"":""+a,d.test(a)?a.replace(e,b):a}},j=i(g),k=i(h),l=function(b,c){d.useDefault||(a.valHooks.select.set=d._set,d.useDefault=!0),this.$element=a(b),this.$newElement=null,this.$button=null,this.$menu=null,this.$lis=null,this.options=c,null===this.options.title&&(this.options.title=this.$element.attr("title"));var e=this.options.windowPadding;"number"==typeof e&&(this.options.windowPadding=[e,e,e,e]),this.val=l.prototype.val,this.render=l.prototype.render,this.refresh=l.prototype.refresh,this.setStyle=l.prototype.setStyle,this.selectAll=l.prototype.selectAll,this.deselectAll=l.prototype.deselectAll,this.destroy=l.prototype.destroy,this.remove=l.prototype.remove,this.show=l.prototype.show,this.hide=l.prototype.hide,this.init()};l.VERSION="1.12.4",l.DEFAULTS={noneSelectedText:"Nothing selected",noneResultsText:"No results matched {0}",countSelectedText:function(a,b){return 1==a?"{0} item selected":"{0} items selected"},maxOptionsText:function(a,b){return[1==a?"Limit reached ({n} item max)":"Limit reached ({n} items max)",1==b?"Group limit reached ({n} item max)":"Group limit reached ({n} items max)"]},selectAllText:"Select All",deselectAllText:"Deselect All",doneButton:!1,doneButtonText:"Close",multipleSeparator:", ",styleBase:"btn",style:"btn-default",size:"auto",title:null,selectedTextFormat:"values",width:!1,container:!1,hideDisabled:!1,showSubtext:!1,showIcon:!0,showContent:!0,dropupAuto:!0,header:!1,liveSearch:!1,liveSearchPlaceholder:null,liveSearchNormalize:!1,liveSearchStyle:"contains",actionsBox:!1,iconBase:"glyphicon",tickIcon:"glyphicon-ok",showTick:!1,template:{caret:'<span class="caret"></span>'},maxOptions:!1,mobile:!1,selectOnTab:!1,dropdownAlignRight:!1,windowPadding:0},l.prototype={constructor:l,init:function(){var b=this,c=this.$element.attr("id");this.$element.addClass("bs-select-hidden"),this.liObj={},this.multiple=this.$element.prop("multiple"),this.autofocus=this.$element.prop("autofocus"),this.$newElement=this.createView(),this.$element.after(this.$newElement).appendTo(this.$newElement),this.$button=this.$newElement.children("button"),this.$menu=this.$newElement.children(".dropdown-menu"),this.$menuInner=this.$menu.children(".inner"),this.$searchbox=this.$menu.find("input"),this.$element.removeClass("bs-select-hidden"),this.options.dropdownAlignRight===!0&&this.$menu.addClass("dropdown-menu-right"),"undefined"!=typeof c&&(this.$button.attr("data-id",c),a('label[for="'+c+'"]').click(function(a){a.preventDefault(),b.$button.focus()})),this.checkDisabled(),this.clickListener(),this.options.liveSearch&&this.liveSearchListener(),this.render(),this.setStyle(),this.setWidth(),this.options.container&&this.selectPosition(),this.$menu.data("this",this),this.$newElement.data("this",this),this.options.mobile&&this.mobile(),this.$newElement.on({"hide.bs.dropdown":function(a){b.$menuInner.attr("aria-expanded",!1),b.$element.trigger("hide.bs.select",a)},"hidden.bs.dropdown":function(a){b.$element.trigger("hidden.bs.select",a)},"show.bs.dropdown":function(a){b.$menuInner.attr("aria-expanded",!0),b.$element.trigger("show.bs.select",a)},"shown.bs.dropdown":function(a){b.$element.trigger("shown.bs.select",a)}}),b.$element[0].hasAttribute("required")&&this.$element.on("invalid",function(){b.$button.addClass("bs-invalid"),b.$element.on({"focus.bs.select":function(){b.$button.focus(),b.$element.off("focus.bs.select")},"shown.bs.select":function(){b.$element.val(b.$element.val()).off("shown.bs.select")},"rendered.bs.select":function(){this.validity.valid&&b.$button.removeClass("bs-invalid"),b.$element.off("rendered.bs.select")}}),b.$button.on("blur.bs.select",function(){b.$element.focus().blur(),b.$button.off("blur.bs.select")})}),setTimeout(function(){b.$element.trigger("loaded.bs.select")})},createDropdown:function(){var b=this.multiple||this.options.showTick?" show-tick":"",c=this.$element.parent().hasClass("input-group")?" input-group-btn":"",d=this.autofocus?" autofocus":"",e=this.options.header?'<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>'+this.options.header+"</div>":"",f=this.options.liveSearch?'<div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off"'+(null===this.options.liveSearchPlaceholder?"":' placeholder="'+j(this.options.liveSearchPlaceholder)+'"')+' role="textbox" aria-label="Search"></div>':"",g=this.multiple&&this.options.actionsBox?'<div class="bs-actionsbox"><div class="btn-group btn-group-sm btn-block"><button type="button" class="actions-btn bs-select-all btn btn-default">'+this.options.selectAllText+'</button><button type="button" class="actions-btn bs-deselect-all btn btn-default">'+this.options.deselectAllText+"</button></div></div>":"",h=this.multiple&&this.options.doneButton?'<div class="bs-donebutton"><div class="btn-group btn-block"><button type="button" class="btn btn-sm btn-default">'+this.options.doneButtonText+"</button></div></div>":"",i='<div class="btn-group bootstrap-select'+b+c+'"><button type="button" class="'+this.options.styleBase+' dropdown-toggle" data-toggle="dropdown"'+d+' role="button"><span class="filter-option pull-left"></span>&nbsp;<span class="bs-caret">'+this.options.template.caret+'</span></button><div class="dropdown-menu open" role="combobox">'+e+f+g+'<ul class="dropdown-menu inner" role="listbox" aria-expanded="false"></ul>'+h+"</div></div>";return a(i)},createView:function(){var a=this.createDropdown(),b=this.createLi();return a.find("ul")[0].innerHTML=b,a},reloadLi:function(){var a=this.createLi();this.$menuInner[0].innerHTML=a},createLi:function(){var c=this,d=[],e=0,f=document.createElement("option"),g=-1,h=function(a,b,c,d){return"<li"+("undefined"!=typeof c&&""!==c?' class="'+c+'"':"")+("undefined"!=typeof b&&null!==b?' data-original-index="'+b+'"':"")+("undefined"!=typeof d&&null!==d?'data-optgroup="'+d+'"':"")+">"+a+"</li>"},i=function(d,e,f,g){return'<a tabindex="0"'+("undefined"!=typeof e?' class="'+e+'"':"")+(f?' style="'+f+'"':"")+(c.options.liveSearchNormalize?' data-normalized-text="'+b(j(a(d).html()))+'"':"")+("undefined"!=typeof g||null!==g?' data-tokens="'+g+'"':"")+' role="option">'+d+'<span class="'+c.options.iconBase+" "+c.options.tickIcon+' check-mark"></span></a>'};if(this.options.title&&!this.multiple&&(g--,!this.$element.find(".bs-title-option").length)){var k=this.$element[0];f.className="bs-title-option",f.innerHTML=this.options.title,f.value="",k.insertBefore(f,k.firstChild);var l=a(k.options[k.selectedIndex]);void 0===l.attr("selected")&&void 0===this.$element.data("selected")&&(f.selected=!0)}var m=this.$element.find("option");return m.each(function(b){var f=a(this);if(g++,!f.hasClass("bs-title-option")){var k,l=this.className||"",n=j(this.style.cssText),o=f.data("content")?f.data("content"):f.html(),p=f.data("tokens")?f.data("tokens"):null,q="undefined"!=typeof f.data("subtext")?'<small class="text-muted">'+f.data("subtext")+"</small>":"",r="undefined"!=typeof f.data("icon")?'<span class="'+c.options.iconBase+" "+f.data("icon")+'"></span> ':"",s=f.parent(),t="OPTGROUP"===s[0].tagName,u=t&&s[0].disabled,v=this.disabled||u;if(""!==r&&v&&(r="<span>"+r+"</span>"),c.options.hideDisabled&&(v&&!t||u))return k=f.data("prevHiddenIndex"),f.next().data("prevHiddenIndex",void 0!==k?k:b),void g--;if(f.data("content")||(o=r+'<span class="text">'+o+q+"</span>"),t&&f.data("divider")!==!0){if(c.options.hideDisabled&&v){if(void 0===s.data("allOptionsDisabled")){var w=s.children();s.data("allOptionsDisabled",w.filter(":disabled").length===w.length)}if(s.data("allOptionsDisabled"))return void g--}var x=" "+s[0].className||"";if(0===f.index()){e+=1;var y=s[0].label,z="undefined"!=typeof s.data("subtext")?'<small class="text-muted">'+s.data("subtext")+"</small>":"",A=s.data("icon")?'<span class="'+c.options.iconBase+" "+s.data("icon")+'"></span> ':"";y=A+'<span class="text">'+j(y)+z+"</span>",0!==b&&d.length>0&&(g++,d.push(h("",null,"divider",e+"div"))),g++,d.push(h(y,null,"dropdown-header"+x,e))}if(c.options.hideDisabled&&v)return void g--;d.push(h(i(o,"opt "+l+x,n,p),b,"",e))}else if(f.data("divider")===!0)d.push(h("",b,"divider"));else if(f.data("hidden")===!0)k=f.data("prevHiddenIndex"),f.next().data("prevHiddenIndex",void 0!==k?k:b),d.push(h(i(o,l,n,p),b,"hidden is-hidden"));else{var B=this.previousElementSibling&&"OPTGROUP"===this.previousElementSibling.tagName;if(!B&&c.options.hideDisabled&&(k=f.data("prevHiddenIndex"),void 0!==k)){var C=m.eq(k)[0].previousElementSibling;C&&"OPTGROUP"===C.tagName&&!C.disabled&&(B=!0)}B&&(g++,d.push(h("",null,"divider",e+"div"))),d.push(h(i(o,l,n,p),b))}c.liObj[b]=g}}),this.multiple||0!==this.$element.find("option:selected").length||this.options.title||this.$element.find("option").eq(0).prop("selected",!0).attr("selected","selected"),d.join("")},findLis:function(){return null==this.$lis&&(this.$lis=this.$menu.find("li")),this.$lis},render:function(b){var c,d=this,e=this.$element.find("option");b!==!1&&e.each(function(a){var b=d.findLis().eq(d.liObj[a]);d.setDisabled(a,this.disabled||"OPTGROUP"===this.parentNode.tagName&&this.parentNode.disabled,b),d.setSelected(a,this.selected,b)}),this.togglePlaceholder(),this.tabIndex();var f=e.map(function(){if(this.selected){if(d.options.hideDisabled&&(this.disabled||"OPTGROUP"===this.parentNode.tagName&&this.parentNode.disabled))return;var b,c=a(this),e=c.data("icon")&&d.options.showIcon?'<i class="'+d.options.iconBase+" "+c.data("icon")+'"></i> ':"";return b=d.options.showSubtext&&c.data("subtext")&&!d.multiple?' <small class="text-muted">'+c.data("subtext")+"</small>":"","undefined"!=typeof c.attr("title")?c.attr("title"):c.data("content")&&d.options.showContent?c.data("content").toString():e+c.html()+b}}).toArray(),g=this.multiple?f.join(this.options.multipleSeparator):f[0];if(this.multiple&&this.options.selectedTextFormat.indexOf("count")>-1){var h=this.options.selectedTextFormat.split(">");if(h.length>1&&f.length>h[1]||1==h.length&&f.length>=2){c=this.options.hideDisabled?", [disabled]":"";var i=e.not('[data-divider="true"], [data-hidden="true"]'+c).length,j="function"==typeof this.options.countSelectedText?this.options.countSelectedText(f.length,i):this.options.countSelectedText;g=j.replace("{0}",f.length.toString()).replace("{1}",i.toString())}}void 0==this.options.title&&(this.options.title=this.$element.attr("title")),"static"==this.options.selectedTextFormat&&(g=this.options.title),g||(g="undefined"!=typeof this.options.title?this.options.title:this.options.noneSelectedText),this.$button.attr("title",k(a.trim(g.replace(/<[^>]*>?/g,"")))),this.$button.children(".filter-option").html(g),this.$element.trigger("rendered.bs.select")},setStyle:function(a,b){this.$element.attr("class")&&this.$newElement.addClass(this.$element.attr("class").replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi,""));var c=a?a:this.options.style;"add"==b?this.$button.addClass(c):"remove"==b?this.$button.removeClass(c):(this.$button.removeClass(this.options.style),this.$button.addClass(c))},liHeight:function(b){if(b||this.options.size!==!1&&!this.sizeInfo){var c=document.createElement("div"),d=document.createElement("div"),e=document.createElement("ul"),f=document.createElement("li"),g=document.createElement("li"),h=document.createElement("a"),i=document.createElement("span"),j=this.options.header&&this.$menu.find(".popover-title").length>0?this.$menu.find(".popover-title")[0].cloneNode(!0):null,k=this.options.liveSearch?document.createElement("div"):null,l=this.options.actionsBox&&this.multiple&&this.$menu.find(".bs-actionsbox").length>0?this.$menu.find(".bs-actionsbox")[0].cloneNode(!0):null,m=this.options.doneButton&&this.multiple&&this.$menu.find(".bs-donebutton").length>0?this.$menu.find(".bs-donebutton")[0].cloneNode(!0):null;if(i.className="text",c.className=this.$menu[0].parentNode.className+" open",d.className="dropdown-menu open",e.className="dropdown-menu inner",f.className="divider",i.appendChild(document.createTextNode("Inner text")),h.appendChild(i),g.appendChild(h),e.appendChild(g),e.appendChild(f),j&&d.appendChild(j),k){var n=document.createElement("input");k.className="bs-searchbox",n.className="form-control",k.appendChild(n),d.appendChild(k)}l&&d.appendChild(l),d.appendChild(e),m&&d.appendChild(m),c.appendChild(d),document.body.appendChild(c);var o=h.offsetHeight,p=j?j.offsetHeight:0,q=k?k.offsetHeight:0,r=l?l.offsetHeight:0,s=m?m.offsetHeight:0,t=a(f).outerHeight(!0),u="function"==typeof getComputedStyle&&getComputedStyle(d),v=u?null:a(d),w={vert:parseInt(u?u.paddingTop:v.css("paddingTop"))+parseInt(u?u.paddingBottom:v.css("paddingBottom"))+parseInt(u?u.borderTopWidth:v.css("borderTopWidth"))+parseInt(u?u.borderBottomWidth:v.css("borderBottomWidth")),horiz:parseInt(u?u.paddingLeft:v.css("paddingLeft"))+parseInt(u?u.paddingRight:v.css("paddingRight"))+parseInt(u?u.borderLeftWidth:v.css("borderLeftWidth"))+parseInt(u?u.borderRightWidth:v.css("borderRightWidth"))},x={vert:w.vert+parseInt(u?u.marginTop:v.css("marginTop"))+parseInt(u?u.marginBottom:v.css("marginBottom"))+2,horiz:w.horiz+parseInt(u?u.marginLeft:v.css("marginLeft"))+parseInt(u?u.marginRight:v.css("marginRight"))+2};document.body.removeChild(c),this.sizeInfo={liHeight:o,headerHeight:p,searchHeight:q,actionsHeight:r,doneButtonHeight:s,dividerHeight:t,menuPadding:w,menuExtras:x}}},setSize:function(){if(this.findLis(),this.liHeight(),this.options.header&&this.$menu.css("padding-top",0),this.options.size!==!1){var b,c,d,e,f,g,h,i,j=this,k=this.$menu,l=this.$menuInner,m=a(window),n=this.$newElement[0].offsetHeight,o=this.$newElement[0].offsetWidth,p=this.sizeInfo.liHeight,q=this.sizeInfo.headerHeight,r=this.sizeInfo.searchHeight,s=this.sizeInfo.actionsHeight,t=this.sizeInfo.doneButtonHeight,u=this.sizeInfo.dividerHeight,v=this.sizeInfo.menuPadding,w=this.sizeInfo.menuExtras,x=this.options.hideDisabled?".disabled":"",y=function(){var b,c=j.$newElement.offset(),d=a(j.options.container);j.options.container&&!d.is("body")?(b=d.offset(),b.top+=parseInt(d.css("borderTopWidth")),b.left+=parseInt(d.css("borderLeftWidth"))):b={top:0,left:0};var e=j.options.windowPadding;f=c.top-b.top-m.scrollTop(),g=m.height()-f-n-b.top-e[2],h=c.left-b.left-m.scrollLeft(),i=m.width()-h-o-b.left-e[1],f-=e[0],h-=e[3]};if(y(),"auto"===this.options.size){var z=function(){var m,n=function(b,c){return function(d){return c?d.classList?d.classList.contains(b):a(d).hasClass(b):!(d.classList?d.classList.contains(b):a(d).hasClass(b))}},u=j.$menuInner[0].getElementsByTagName("li"),x=Array.prototype.filter?Array.prototype.filter.call(u,n("hidden",!1)):j.$lis.not(".hidden"),z=Array.prototype.filter?Array.prototype.filter.call(x,n("dropdown-header",!0)):x.filter(".dropdown-header");y(),b=g-w.vert,c=i-w.horiz,j.options.container?(k.data("height")||k.data("height",k.height()),d=k.data("height"),k.data("width")||k.data("width",k.width()),e=k.data("width")):(d=k.height(),e=k.width()),j.options.dropupAuto&&j.$newElement.toggleClass("dropup",f>g&&b-w.vert<d),j.$newElement.hasClass("dropup")&&(b=f-w.vert),"auto"===j.options.dropdownAlignRight&&k.toggleClass("dropdown-menu-right",h>i&&c-w.horiz<e-o),m=x.length+z.length>3?3*p+w.vert-2:0,k.css({"max-height":b+"px",overflow:"hidden","min-height":m+q+r+s+t+"px"}),l.css({"max-height":b-q-r-s-t-v.vert+"px","overflow-y":"auto","min-height":Math.max(m-v.vert,0)+"px"})};z(),this.$searchbox.off("input.getSize propertychange.getSize").on("input.getSize propertychange.getSize",z),m.off("resize.getSize scroll.getSize").on("resize.getSize scroll.getSize",z)}else if(this.options.size&&"auto"!=this.options.size&&this.$lis.not(x).length>this.options.size){var A=this.$lis.not(".divider").not(x).children().slice(0,this.options.size).last().parent().index(),B=this.$lis.slice(0,A+1).filter(".divider").length;b=p*this.options.size+B*u+v.vert,j.options.container?(k.data("height")||k.data("height",k.height()),d=k.data("height")):d=k.height(),j.options.dropupAuto&&this.$newElement.toggleClass("dropup",f>g&&b-w.vert<d),k.css({"max-height":b+q+r+s+t+"px",overflow:"hidden","min-height":""}),l.css({"max-height":b-v.vert+"px","overflow-y":"auto","min-height":""})}}},setWidth:function(){if("auto"===this.options.width){this.$menu.css("min-width","0");var a=this.$menu.parent().clone().appendTo("body"),b=this.options.container?this.$newElement.clone().appendTo("body"):a,c=a.children(".dropdown-menu").outerWidth(),d=b.css("width","auto").children("button").outerWidth();a.remove(),b.remove(),this.$newElement.css("width",Math.max(c,d)+"px")}else"fit"===this.options.width?(this.$menu.css("min-width",""),this.$newElement.css("width","").addClass("fit-width")):this.options.width?(this.$menu.css("min-width",""),this.$newElement.css("width",this.options.width)):(this.$menu.css("min-width",""),this.$newElement.css("width",""));this.$newElement.hasClass("fit-width")&&"fit"!==this.options.width&&this.$newElement.removeClass("fit-width")},selectPosition:function(){this.$bsContainer=a('<div class="bs-container" />');var b,c,d,e=this,f=a(this.options.container),g=function(a){e.$bsContainer.addClass(a.attr("class").replace(/form-control|fit-width/gi,"")).toggleClass("dropup",a.hasClass("dropup")),b=a.offset(),f.is("body")?c={top:0,left:0}:(c=f.offset(),c.top+=parseInt(f.css("borderTopWidth"))-f.scrollTop(),c.left+=parseInt(f.css("borderLeftWidth"))-f.scrollLeft()),d=a.hasClass("dropup")?0:a[0].offsetHeight,e.$bsContainer.css({top:b.top-c.top+d,left:b.left-c.left,width:a[0].offsetWidth})};this.$button.on("click",function(){var b=a(this);e.isDisabled()||(g(e.$newElement),e.$bsContainer.appendTo(e.options.container).toggleClass("open",!b.hasClass("open")).append(e.$menu))}),a(window).on("resize scroll",function(){g(e.$newElement)}),this.$element.on("hide.bs.select",function(){e.$menu.data("height",e.$menu.height()),e.$bsContainer.detach()})},setSelected:function(a,b,c){c||(this.togglePlaceholder(),c=this.findLis().eq(this.liObj[a])),c.toggleClass("selected",b).find("a").attr("aria-selected",b)},setDisabled:function(a,b,c){c||(c=this.findLis().eq(this.liObj[a])),b?c.addClass("disabled").children("a").attr("href","#").attr("tabindex",-1).attr("aria-disabled",!0):c.removeClass("disabled").children("a").removeAttr("href").attr("tabindex",0).attr("aria-disabled",!1)},isDisabled:function(){return this.$element[0].disabled},checkDisabled:function(){var a=this;this.isDisabled()?(this.$newElement.addClass("disabled"),this.$button.addClass("disabled").attr("tabindex",-1).attr("aria-disabled",!0)):(this.$button.hasClass("disabled")&&(this.$newElement.removeClass("disabled"),this.$button.removeClass("disabled").attr("aria-disabled",!1)),this.$button.attr("tabindex")!=-1||this.$element.data("tabindex")||this.$button.removeAttr("tabindex")),this.$button.click(function(){return!a.isDisabled()})},togglePlaceholder:function(){var a=this.$element.val();this.$button.toggleClass("bs-placeholder",null===a||""===a||a.constructor===Array&&0===a.length)},tabIndex:function(){this.$element.data("tabindex")!==this.$element.attr("tabindex")&&this.$element.attr("tabindex")!==-98&&"-98"!==this.$element.attr("tabindex")&&(this.$element.data("tabindex",this.$element.attr("tabindex")),this.$button.attr("tabindex",this.$element.data("tabindex"))),this.$element.attr("tabindex",-98)},clickListener:function(){var b=this,c=a(document);c.data("spaceSelect",!1),this.$button.on("keyup",function(a){/(32)/.test(a.keyCode.toString(10))&&c.data("spaceSelect")&&(a.preventDefault(),c.data("spaceSelect",!1))}),this.$button.on("click",function(){b.setSize()}),this.$element.on("shown.bs.select",function(){if(b.options.liveSearch||b.multiple){if(!b.multiple){var a=b.liObj[b.$element[0].selectedIndex];if("number"!=typeof a||b.options.size===!1)return;var c=b.$lis.eq(a)[0].offsetTop-b.$menuInner[0].offsetTop;c=c-b.$menuInner[0].offsetHeight/2+b.sizeInfo.liHeight/2,b.$menuInner[0].scrollTop=c}}else b.$menuInner.find(".selected a").focus()}),this.$menuInner.on("click","li a",function(c){var d=a(this),f=d.parent().data("originalIndex"),g=b.$element.val(),h=b.$element.prop("selectedIndex"),i=!0;if(b.multiple&&1!==b.options.maxOptions&&c.stopPropagation(),c.preventDefault(),!b.isDisabled()&&!d.parent().hasClass("disabled")){var j=b.$element.find("option"),k=j.eq(f),l=k.prop("selected"),m=k.parent("optgroup"),n=b.options.maxOptions,o=m.data("maxOptions")||!1;if(b.multiple){if(k.prop("selected",!l),b.setSelected(f,!l),d.blur(),n!==!1||o!==!1){var p=n<j.filter(":selected").length,q=o<m.find("option:selected").length;if(n&&p||o&&q)if(n&&1==n)j.prop("selected",!1),k.prop("selected",!0),b.$menuInner.find(".selected").removeClass("selected"),b.setSelected(f,!0);else if(o&&1==o){m.find("option:selected").prop("selected",!1),k.prop("selected",!0);var r=d.parent().data("optgroup");b.$menuInner.find('[data-optgroup="'+r+'"]').removeClass("selected"),b.setSelected(f,!0)}else{var s="string"==typeof b.options.maxOptionsText?[b.options.maxOptionsText,b.options.maxOptionsText]:b.options.maxOptionsText,t="function"==typeof s?s(n,o):s,u=t[0].replace("{n}",n),v=t[1].replace("{n}",o),w=a('<div class="notify"></div>');t[2]&&(u=u.replace("{var}",t[2][n>1?0:1]),v=v.replace("{var}",t[2][o>1?0:1])),k.prop("selected",!1),b.$menu.append(w),n&&p&&(w.append(a("<div>"+u+"</div>")),i=!1,b.$element.trigger("maxReached.bs.select")),o&&q&&(w.append(a("<div>"+v+"</div>")),i=!1,b.$element.trigger("maxReachedGrp.bs.select")),setTimeout(function(){b.setSelected(f,!1)},10),w.delay(750).fadeOut(300,function(){a(this).remove()})}}}else j.prop("selected",!1),k.prop("selected",!0),b.$menuInner.find(".selected").removeClass("selected").find("a").attr("aria-selected",!1),b.setSelected(f,!0);!b.multiple||b.multiple&&1===b.options.maxOptions?b.$button.focus():b.options.liveSearch&&b.$searchbox.focus(),i&&(g!=b.$element.val()&&b.multiple||h!=b.$element.prop("selectedIndex")&&!b.multiple)&&(e=[f,k.prop("selected"),l],b.$element.triggerNative("change"))}}),this.$menu.on("click","li.disabled a, .popover-title, .popover-title :not(.close)",function(c){c.currentTarget==this&&(c.preventDefault(),c.stopPropagation(),b.options.liveSearch&&!a(c.target).hasClass("close")?b.$searchbox.focus():b.$button.focus())}),this.$menuInner.on("click",".divider, .dropdown-header",function(a){a.preventDefault(),a.stopPropagation(),b.options.liveSearch?b.$searchbox.focus():b.$button.focus()}),this.$menu.on("click",".popover-title .close",function(){b.$button.click()}),this.$searchbox.on("click",function(a){a.stopPropagation()}),this.$menu.on("click",".actions-btn",function(c){b.options.liveSearch?b.$searchbox.focus():b.$button.focus(),c.preventDefault(),c.stopPropagation(),a(this).hasClass("bs-select-all")?b.selectAll():b.deselectAll()}),this.$element.change(function(){b.render(!1),b.$element.trigger("changed.bs.select",e),e=null})},liveSearchListener:function(){var c=this,d=a('<li class="no-results"></li>');this.$button.on("click.dropdown.data-api",function(){c.$menuInner.find(".active").removeClass("active"),c.$searchbox.val()&&(c.$searchbox.val(""),c.$lis.not(".is-hidden").removeClass("hidden"),d.parent().length&&d.remove()),c.multiple||c.$menuInner.find(".selected").addClass("active"),setTimeout(function(){c.$searchbox.focus()},10)}),this.$searchbox.on("click.dropdown.data-api focus.dropdown.data-api touchend.dropdown.data-api",function(a){a.stopPropagation()}),this.$searchbox.on("input propertychange",function(){if(c.$lis.not(".is-hidden").removeClass("hidden"),c.$lis.filter(".active").removeClass("active"),d.remove(),c.$searchbox.val()){var e,f=c.$lis.not(".is-hidden, .divider, .dropdown-header");if(e=c.options.liveSearchNormalize?f.not(":a"+c._searchStyle()+'("'+b(c.$searchbox.val())+'")'):f.not(":"+c._searchStyle()+'("'+c.$searchbox.val()+'")'),e.length===f.length)d.html(c.options.noneResultsText.replace("{0}",'"'+j(c.$searchbox.val())+'"')),c.$menuInner.append(d),c.$lis.addClass("hidden");else{e.addClass("hidden");var g,h=c.$lis.not(".hidden");h.each(function(b){var c=a(this);c.hasClass("divider")?void 0===g?c.addClass("hidden"):(g&&g.addClass("hidden"),g=c):c.hasClass("dropdown-header")&&h.eq(b+1).data("optgroup")!==c.data("optgroup")?c.addClass("hidden"):g=null}),g&&g.addClass("hidden"),f.not(".hidden").first().addClass("active"),c.$menuInner.scrollTop(0)}}})},_searchStyle:function(){var a={begins:"ibegins",startsWith:"ibegins"};return a[this.options.liveSearchStyle]||"icontains"},val:function(a){return"undefined"!=typeof a?(this.$element.val(a),this.render(),this.$element):this.$element.val()},changeAll:function(b){if(this.multiple){"undefined"==typeof b&&(b=!0),this.findLis();var c=this.$element.find("option"),d=this.$lis.not(".divider, .dropdown-header, .disabled, .hidden"),e=d.length,f=[];if(b){if(d.filter(".selected").length===d.length)return}else if(0===d.filter(".selected").length)return;d.toggleClass("selected",b);for(var g=0;g<e;g++){var h=d[g].getAttribute("data-original-index");f[f.length]=c.eq(h)[0]}a(f).prop("selected",b),this.render(!1),this.togglePlaceholder(),this.$element.triggerNative("change")}},selectAll:function(){return this.changeAll(!0)},deselectAll:function(){return this.changeAll(!1)},toggle:function(a){a=a||window.event,a&&a.stopPropagation(),this.$button.trigger("click")},keydown:function(b){var c,d,e,f,g=a(this),h=g.is("input")?g.parent().parent():g.parent(),i=h.data("this"),j=":not(.disabled, .hidden, .dropdown-header, .divider)",k={32:" ",48:"0",49:"1",50:"2",51:"3",52:"4",53:"5",54:"6",55:"7",56:"8",57:"9",59:";",65:"a",66:"b",67:"c",68:"d",69:"e",70:"f",71:"g",72:"h",73:"i",74:"j",75:"k",76:"l",77:"m",78:"n",79:"o",80:"p",81:"q",82:"r",83:"s",84:"t",85:"u",86:"v",87:"w",88:"x",89:"y",90:"z",96:"0",97:"1",98:"2",99:"3",100:"4",101:"5",102:"6",103:"7",104:"8",105:"9"};if(f=i.$newElement.hasClass("open"),!f&&(b.keyCode>=48&&b.keyCode<=57||b.keyCode>=96&&b.keyCode<=105||b.keyCode>=65&&b.keyCode<=90))return i.options.container?i.$button.trigger("click"):(i.setSize(),i.$menu.parent().addClass("open"),f=!0),void i.$searchbox.focus();if(i.options.liveSearch&&/(^9$|27)/.test(b.keyCode.toString(10))&&f&&(b.preventDefault(),b.stopPropagation(),i.$menuInner.click(),i.$button.focus()),/(38|40)/.test(b.keyCode.toString(10))){if(c=i.$lis.filter(j),!c.length)return;d=i.options.liveSearch?c.index(c.filter(".active")):c.index(c.find("a").filter(":focus").parent()),e=i.$menuInner.data("prevIndex"),38==b.keyCode?(!i.options.liveSearch&&d!=e||d==-1||d--,d<0&&(d+=c.length)):40==b.keyCode&&((i.options.liveSearch||d==e)&&d++,d%=c.length),i.$menuInner.data("prevIndex",d),i.options.liveSearch?(b.preventDefault(),g.hasClass("dropdown-toggle")||(c.removeClass("active").eq(d).addClass("active").children("a").focus(),g.focus())):c.eq(d).children("a").focus()}else if(!g.is("input")){var l,m,n=[];c=i.$lis.filter(j),c.each(function(c){a.trim(a(this).children("a").text().toLowerCase()).substring(0,1)==k[b.keyCode]&&n.push(c)}),l=a(document).data("keycount"),l++,a(document).data("keycount",l),m=a.trim(a(":focus").text().toLowerCase()).substring(0,1),m!=k[b.keyCode]?(l=1,a(document).data("keycount",l)):l>=n.length&&(a(document).data("keycount",0),l>n.length&&(l=1)),c.eq(n[l-1]).children("a").focus()}if((/(13|32)/.test(b.keyCode.toString(10))||/(^9$)/.test(b.keyCode.toString(10))&&i.options.selectOnTab)&&f){if(/(32)/.test(b.keyCode.toString(10))||b.preventDefault(),i.options.liveSearch)/(32)/.test(b.keyCode.toString(10))||(i.$menuInner.find(".active a").click(),g.focus());else{var o=a(":focus");o.click(),o.focus(),b.preventDefault(),a(document).data("spaceSelect",!0)}a(document).data("keycount",0)}(/(^9$|27)/.test(b.keyCode.toString(10))&&f&&(i.multiple||i.options.liveSearch)||/(27)/.test(b.keyCode.toString(10))&&!f)&&(i.$menu.parent().removeClass("open"),i.options.container&&i.$newElement.removeClass("open"),i.$button.focus())},mobile:function(){this.$element.addClass("mobile-device")},refresh:function(){this.$lis=null,this.liObj={},this.reloadLi(),this.render(),this.checkDisabled(),this.liHeight(!0),this.setStyle(),
-this.setWidth(),this.$lis&&this.$searchbox.trigger("propertychange"),this.$element.trigger("refreshed.bs.select")},hide:function(){this.$newElement.hide()},show:function(){this.$newElement.show()},remove:function(){this.$newElement.remove(),this.$element.remove()},destroy:function(){this.$newElement.before(this.$element).remove(),this.$bsContainer?this.$bsContainer.remove():this.$menu.remove(),this.$element.off(".bs.select").removeData("selectpicker").removeClass("bs-select-hidden selectpicker")}};var m=a.fn.selectpicker;a.fn.selectpicker=c,a.fn.selectpicker.Constructor=l,a.fn.selectpicker.noConflict=function(){return a.fn.selectpicker=m,this},a(document).data("keycount",0).on("keydown.bs.select",'.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input',l.prototype.keydown).on("focusin.modal",'.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input',function(a){a.stopPropagation()}),a(window).on("load.bs.select.data-api",function(){a(".selectpicker").each(function(){var b=a(this);c.call(b,b.data())})})}(a)});
-//# sourceMappingURL=bootstrap-select.js.map
-/*! JsRender v1.0pre: http://github.com/BorisMoore/jsrender */
-(function(n,t,i){"use strict";function tt(n,t){t&&t.onError&&t.onError(n)===!1||(this.name="JsRender Error",this.message=n||"JsRender error")}function e(n,t){var i;n=n||{};for(i in t)n[i]=t[i];return n}function lt(n,t,i){return(!d.rTag||arguments.length)&&(p=n?n.charAt(0):p,w=n?n.charAt(1):w,s=t?t.charAt(0):s,y=t?t.charAt(1):y,b=i||b,n="\\"+p+"(\\"+b+")?\\"+w,t="\\"+s+"\\"+y,v="(?:(?:(\\w+(?=[\\/\\s\\"+s+"]))|(?:(\\w+)?(:)|(>)|!--((?:[^-]|-(?!-))*)--|(\\*)))\\s*((?:[^\\"+s+"]|\\"+s+"(?!\\"+y+"))*?)",d.rTag=v+")",v=new RegExp(n+v+"(\\/)?|(?:\\/(\\w+)))"+t,"g"),ft=new RegExp("<.*>|([^\\\\]|^)[{}]|"+n+".*"+t)),[p,w,s,y,b]}function hi(n,t){t||(t=n,n=i);var e,f,o,u,r=this,s=!t||t==="root";if(n){if(u=r.type===t?r:i,!u)if(e=r.views,r._.useKey){for(f in e)if(u=e[f].get(n,t))break}else for(f=0,o=e.length;!u&&f<o;f++)u=e[f].get(n,t)}else if(s)while(r.parent.parent)u=r=r.parent;else while(r&&!u)u=r.type===t?r:i,r=r.parent;return u}function yt(){var n=this.get("item");return n?n.index:i}function ci(n){var r,u=this,t=(u.ctx||{})[n];return t=t===i?u.getRsc("helpers",n):t,t&&typeof t=="function"&&(r=function(){return t.apply(u,arguments)},e(r,t)),r||t}function fi(n,t,i){var s,u,o,f=+i===i&&i,e=t.linkCtx;return f&&(i=(f=t.tmpl.bnds[f-1])(t.data,t,r)),o=i.args[0],(n||f)&&(u=e&&e.tag||{_:{inline:!e},tagName:n+":",flow:!0,_is:"tag"},u._.bnd=f,e&&(e.tag=u,u.linkCtx=e,i.ctx=h(i.ctx,e.view.ctx)),u.tagCtx=i,i.view=t,u.ctx=i.ctx||{},delete i.ctx,t._.tag=u,n=n!=="true"&&n,n&&((s=t.getRsc("converters",n))||a("Unknown converter: {{"+n+":"))&&(u.depends=s.depends,o=s.apply(u,i.args)),o=f&&t._.onRender?t._.onRender(o,t,f):o),o}function ei(n,t){for(var e=this,u=r[n],f=u&&u[t];f===i&&e;)u=e.tmpl[n],f=u&&u[t],e=e.parent;return f}function oi(n,t,u,o){var et,s,ot,it,ct,nt,l,tt,rt,c,k,b,st,p,w="",d=+o===o&&o,v=t.linkCtx||0,y=t.ctx,ft=u||t.tmpl,ht=t._;for(n._is==="tag"&&(s=n,n=s.tagName),d&&(o=(st=ft.bnds[d-1])(t.data,t,r)),tt=o.length,s=s||v.tag,l=0;l<tt;l++)c=o[l],b=c.tmpl,b=c.content=b&&ft.tmpls[b-1],u=c.props.tmpl,l||u&&s||(p=t.getRsc("tags",n)||a("Unknown tag: {{"+n+"}}")),u=u||!l&&p.template||b,u=""+u===u?t.getRsc("templates",u)||f(u):u,e(c,{tmpl:u,render:g,index:l,view:t,ctx:h(c.ctx,y)}),s||(p.init?(s=new p.init(c,v,y),s.attr=s.attr||p.attr||i):s={render:p.render},s._={inline:!v},v&&(v.attr=s.attr=v.attr||s.attr,v.tag=s,s.linkCtx=v),(s._.bnd=st||v)&&(s._.arrVws={}),s.tagName=n,s.parent=nt=y&&y.tag,s._is="tag"),ht.tag=s,c.tag=s,s.tagCtxs=o,s.rendering={},s.flow||(k=c.ctx=c.ctx||{},ot=k.parentTags=y&&h(k.parentTags,y.parentTags)||{},nt&&(ot[nt.tagName]=nt),k.tag=s);for(l=0;l<tt;l++)c=s.tagCtx=o[l],s.ctx=c.ctx,(et=s.render)&&(rt=et.apply(s,c.args)),w+=rt!==i?rt:c.tmpl?c.render():"";return delete s.rendering,s.tagCtx=s.tagCtxs[0],s.ctx=s.tagCtx.ctx,s._.inline&&(it=s.attr)&&it!=="html"&&(w=it==="text"?ut.html(w):""),w=d&&t._.onRender?t._.onRender(w,t,d):w}function k(n,t,r,u,f,e,o,s){var v,a,c,y=t==="array",l={key:0,useKey:y?0:1,id:""+ai++,onRender:s,bnds:{}},h={data:u,tmpl:f,content:o,views:y?[]:{},parent:r,ctx:n,type:t,get:hi,getIndex:yt,getRsc:ei,hlp:ci,_:l,_is:"view"};return r&&(v=r.views,a=r._,a.useKey?(v[l.key="_"+a.useKey++]=h,c=a.tag,l.bnd=y&&(!c||!!c._.bnd&&c)):v.splice(l.key=h.index=e!==i?e:v.length,0,h),h.ctx=n||r.ctx),h}function pi(n){var r,i,t,u,f;for(r in c)if(u=c[r],(f=u.compile)&&(i=n[r+"s"]))for(t in i)i[t]=f(t,i[t],n,r,u)}function vi(n,t,i){var u,r;return typeof t=="function"?t={depends:t.depends,render:t}:((r=t.template)&&(t.template=""+r===r?f[r]||f(r):r),t.init!==!1&&(u=t.init=t.init||function(){},u.prototype=t,(u.prototype=t).constructor=u)),i&&(t._parentTmpl=i),t}function st(r,u,e,o,s,c){function v(i){if(""+i===i||i.nodeType>0){try{a=i.nodeType>0?i:!ft.test(i)&&t&&t(n.document).find(i)[0]}catch(u){}return a&&(i=a.getAttribute(vt),r=r||i,i=f[i],i||(r=r||"_"+li++,a.setAttribute(vt,r),i=f[r]=st(r,a.innerHTML,e,o,s,c))),i}}var l,a;return u=u||"",l=v(u),c=c||(u.markup?u:{}),c.tmplName=r,e&&(c._parentTmpl=e),!l&&u.markup&&(l=v(u.markup))&&l.fn&&(l.debug!==u.debug||l.allowCode!==u.allowCode)&&(l=l.markup),l!==i?(r&&!e&&(nt[r]=function(){return u.render.apply(u,arguments)}),l.fn||u.fn?l.fn&&(u=r&&r!==l.tmplName?h(c,l):l):(u=ht(l,c),ot(l,u)),pi(c),u):void 0}function ht(n,t){var r,f=l.wrapMap||{},i=e({markup:n,tmpls:[],links:{},tags:{},bnds:[],_is:"template",render:g},t);return t.htmlTag||(r=bt.exec(n),i.htmlTag=r?r[1].toLowerCase():""),r=f[i.htmlTag],r&&r!==f.div&&(i.markup=u.trim(i.markup),i._elCnt=!0),i}function ui(n,t){function f(e,o,s){var l,h,a,c;if(e&&""+e!==e&&!e.nodeType&&!e.markup){for(a in e)f(a,e[a],o);return r}return c=s?s[u]=s[u]||{}:f,o===i&&(o=e,e=i),h=t.compile,(l=d.onBeforeStoreItem)&&(h=l(c,e,o,h)||h),e?""+e===e&&(o===null?delete c[e]:c[e]=h?o=h(e,o,s,n,t):o):o=h(i,o),o&&(o._is=n),(l=d.onStoreItem)&&l(c,e,o,h),o}var u=n+"s";r[u]=f,c[n]=t}function g(n,t,e,o,s,c){var b,ft,nt,y,tt,it,rt,w,p,et,d,ut,v,l=this,ot=!l.attr||l.attr==="html",g="";if(o===!0&&(rt=!0,o=0),l.tag?(w=l,l=l.tag,et=l._,ut=l.tagName,v=w.tmpl,t=h(t,l.ctx),p=w.content,w.props.link===!1&&(t=t||{},t.link=!1),e=e||w.view,n=n===i?e:n):v=l.jquery&&(l[0]||a('Unknown template: "'+l.selector+'"'))||l,v&&(!e&&n&&n._is==="view"&&(e=n),e&&(p=p||e.content,c=c||e._.onRender,n===e&&(n=e.data,s=!0),t=h(t,e.ctx)),e&&e.data!==i||((t=t||{}).root=n),v.fn||(v=f[v]||f(v)),v)){if(c=(t&&t.link)!==!1&&ot&&c,d=c,c===!0&&(d=i,c=e._.onRender),u.isArray(n)&&!s)for(y=rt?e:o!==i&&e||k(t,"array",e,n,v,o,p,c),b=0,ft=n.length;b<ft;b++)nt=n[b],tt=k(t,"item",y,nt,v,(o||0)+b,p,c),it=v.fn(nt,tt,r),g+=y._.onRender?y._.onRender(it,tt):it;else y=rt?e:k(t,ut||"data",e,n,v,o,p,c),et&&!l.flow&&(y.tag=l),g+=v.fn(n,y,r);return d?d(g,y):g}return""}function a(n){if(l.debugMode)throw new r.sub.Error(n);}function o(n){a("Syntax error\n"+n)}function ot(n,t,i,r){function a(t){t-=f,t&&h.push(n.substr(f,t).replace(rt,"\\n"))}function c(t){t&&o('Unmatched or missing tag: "{{/'+t+'}}" in template:\n'+n)}function y(t,e,v,y,w,b,k,d,g,nt,tt,it){b&&(w=":",y="html"),nt=nt||i;var lt,st,ht=e&&[],ft="",ut="",ot="",et=!nt&&!w&&!k;v=v||w,a(it),f=it+t.length,d?p&&h.push(["*","\n"+g.replace(ri,"$1")+"\n"]):v?(v==="else"&&(pt.test(g)&&o('for "{{else if expr}}" use "{{else expr}}"'),ht=u[6],u[7]=n.substring(u[7],it),u=s.pop(),h=u[3],et=!0),g&&(g=g.replace(rt," "),ft=ct(g,ht).replace(wt,function(n,t,i){return t?ot+=i+",":ut+=i+",",""})),ut=ut.slice(0,-1),ft=ft.slice(0,-1),lt=ut&&ut.indexOf("noerror:true")+1&&ut||"",l=[v,y||!!r||"",ft,et&&[],'params:"'+g+'",props:{'+ut+"}"+(ot?",ctx:{"+ot.slice(0,-1)+"}":""),lt,ht||0],h.push(l),et&&(s.push(u),u=l,u[7]=f)):tt&&(st=u[0],c(tt!==st&&st!=="else"&&tt),u[7]=n.substring(u[7],it),u=s.pop()),c(!u&&tt),h=u[3]}var l,p=t&&t.allowCode,e=[],f=0,s=[],h=e,u=[,,,e];return n=n.replace(ii,"\\$1"),c(s[0]&&s[0][3].pop()[0]),n.replace(v,y),a(n.length),(f=e[e.length-1])&&c(""+f!==f&&+f[7]===f[7]&&f[0]),et(e,t||n,i)}function et(n,i,r){var c,e,f,y,v,p,vt,yt,at,it,d,s,kt,gt,ot,a,ft,b,bt,tt,pt,ni,g,lt,ct,st,nt,w,h=0,u="",k="",ut={},wt=n.length;for(""+i===i?(a=r?'data-link="'+i.replace(rt," ").slice(1,-1)+'"':i,i=0):(a=i.tmplName||"unnamed",(bt=i.allowCode)&&(ut.allowCode=!0),i.debug&&(ut.debug=!0),d=i.bnds,ot=i.tmpls),c=0;c<wt;c++)if(e=n[c],""+e===e)u+='\nret+="'+e+'";';else if(f=e[0],f==="*")u+=""+e[1];else{if(y=e[1],v=e[2],tt=e[3],p=e[4],k=e[5],pt=e[7],(ct=f==="else")||(h=0,d&&(s=e[6])&&(h=d.push(s))),(st=f===":")?(y&&(f=y==="html"?">":y+f),k&&(nt="prm"+c,k="try{var "+nt+"=["+v+"][0];}catch(e){"+nt+'="";}\n',v=nt)):(tt&&(ft=ht(pt,ut),ft.tmplName=a+"/"+f,et(tt,ft),ot.push(ft)),ct||(b=f,lt=u,u="",kt=c),g=n[c+1],g=g&&g[0]==="else"),p+=",args:["+v+"]}",st&&s||y&&f!==">"){if(w=new Function("data,view,j,u"," // "+a+" "+h+" "+f+"\n"+k+"return {"+p+";"),w.paths=s,w._ctxs=f,r)return w;it=!0}if(u+=st?"\n"+(s?"":k)+(r?"return ":"ret+=")+(it?(it=!0,'c("'+y+'",view,'+(s?(d[h-1]=w,h):"{"+p)+");"):f===">"?(yt=!0,"h("+v+");"):(at=!0,"(v="+v+")!="+(r?"=":"")+'u?v:"";')):(vt=!0,"{tmpl:"+(tt?ot.length:"0")+","+p+","),b&&!g){if(u="["+u.slice(0,-1)+"]",(r||s)&&(u=new Function("data,view,j,u"," // "+a+" "+h+" "+b+"\nreturn "+u+";"),s&&((d[h-1]=u).paths=s),u._ctxs=f,r))return u;u=lt+'\nret+=t("'+b+'",view,this,'+(h||u)+");",s=0,b=0}}u="// "+a+"\nvar j=j||"+(t?"jQuery.":"js")+"views"+(at?",v":"")+(vt?",t=j._tag":"")+(it?",c=j._cnvt":"")+(yt?",h=j.converters.html":"")+(r?";\n":',ret="";\n')+(l.tryCatch?"try{\n":"")+(ut.debug?"debugger;":"")+u+(r?"\n":"\nreturn ret;\n")+(l.tryCatch?"\n}catch(e){return j._err(e);}":"");try{u=new Function("data,view,j,u",u)}catch(dt){o("Compiled template code:\n\n"+u,dt)}return i&&(i.fn=u),u}function ct(n,t){function c(c,l,a,v,y,p,w,b,k,d,g,nt,tt,it,rt,ut,ft,et,ot){function ht(n,i,r,u,f,o,s){if(i&&(t&&!e&&t.push(v),i!==".")){var h=(r?'view.hlp("'+r+'")':u?"view":"data")+(s?(f?"."+f:r?"":u?"":"."+i)+(o||""):(s=r?"":u?f||"":i,""));return h=h+(s?"."+s:""),h.slice(0,9)==="view.data"?h.slice(5):h}return n}if(y=y||"",a=a||l||g,v=v||b,t&&rt&&t.push({_jsvOb:ot.slice(h[i-1]+1,et+1)}),k=k||ut||"",p)o(n);else return f?(f=!nt,f?c:'"'):u?(u=!tt,u?c:'"'):(a?(i++,h[i]=et,a):"")+(ft?i?"":s?(s=e=!1,"\b"):",":w?(i&&o(n),s=v,e=v.charAt(0)==="~","\b"+v+":"):v?v.split("^").join(".").replace(kt,ht)+(k?(r[++i]=!0,k):y):y?y:it?(r[i--]=!1,it)+(k?(r[++i]=!0,k):""):d?(r[i]||o(n),","):l?"":(f=nt,u=tt,'"'))}var s,e,r={},h={0:-1},i=0,u=!1,f=!1;return(n+" ").replace(ti,c)}function h(n,t){return n&&n!==t?t?e(e({},t),n):n:t&&e({},t)}function at(n){return yi[n]}if((!t||!t.views)&&!n.jsviews){var ni="v1.0pre",u,it,v,ft,p="{",w="{",s="}",y="}",b="^",kt=/^(?:null|true|false|\d[\d.]*|([\w$]+|\.|~([\w$]+)|#(view|([\w$]+))?)([\w$.^]*?)(?:[.[^]([\w$]+)\]?)?)$/g,ti=/(\()(?=\s*\()|(?:([([])\s*)?(?:([#~]?[\w$.^]+)?\s*((\+\+|--)|\+|-|&&|\|\||===|!==|==|!=|<=|>=|[<>%*!:?\/]|(=))\s*|([#~]?[\w$.^]+)([([])?)|(,\s*)|(\(?)\\?(?:(')|("))|(?:\s*((\))(?=\s*\.|\s*\^)|\)|\])([([]?))|(\s+)/g,rt=/\s*\n/g,ri=/\\(['"])/g,ii=/([\\'"])/g,wt=/\x08(~)?([^\x08]+)\x08/g,pt=/^if\s/,bt=/<(\w+)[>\s]/,ki=/<(\w+)[^>\/]*>[^>]*$/,dt=/[<"'&]/g,si=/[><"'&]/g,li=0,ai=0,yi={"&":"&amp;","<":"&lt;",">":"&gt;","\x00":"&#0;","'":"&#39;",'"':"&#34;"},vt="data-jsv-tmpl",wi=[].slice,nt={},c={template:{compile:st},tag:{compile:vi},helper:{},converter:{}},r={jsviews:ni,render:nt,View:k,settings:{delimiters:lt,debugMode:!0,tryCatch:!0},sub:{Error:tt,tmplFn:ot,parse:ct,extend:e,error:a,syntaxError:o},_cnvt:fi,_tag:oi,_err:function(n){return l.debugMode?"Error: "+(n.message||n)+". ":""}};(tt.prototype=new Error).constructor=tt,yt.depends=function(){return[this.get("item"),"index"]};for(it in c)ui(it,c[it]);var f=r.templates,ut=r.converters,bi=r.helpers,gt=r.tags,d=r.sub,l=r.settings;t?(u=t,u.fn.render=g):(u=n.jsviews={},u.isArray=Array&&Array.isArray||function(n){return Object.prototype.toString.call(n)==="[object Array]"}),u.render=nt,u.views=r,u.templates=f=r.templates,gt({"else":function(){},"if":{render:function(n){var t=this;return t.rendering.done||!n&&(arguments.length||!t.tagCtx.index)?"":(t.rendering.done=!0,t.selected=t.tagCtx.index,t.tagCtx.render())},onUpdate:function(n,t,i){for(var r,f,u=0;(r=this.tagCtxs[u])&&r.args.length;u++)if(r=r.args[0],f=!r!=!i[u].args[0],!!r||f)return f;return!1},flow:!0},"for":{render:function(n){var h,s,t=this,o=t.tagCtx,f=!arguments.length,r="",e=f||0;return t.rendering.done||(f?r=i:n!==i&&(r+=o.render(n),e+=u.isArray(n)?n.length:1),(t.rendering.done=e)&&(t.selected=o.index)),r},onUpdate:function(){},onArrayChange:function(n,t){var i,u=this,r=t.change;if(this.tagCtxs[1]&&(r==="insert"&&n.target.length===t.items.length||r==="remove"&&!n.target.length||r==="refresh"&&!t.oldItems.length!=!n.target.length))this.refresh();else for(i in u._.arrVws)i=u._.arrVws[i],i.data===n.target&&i._.onArrayChange.apply(i,arguments);n.done=!0},flow:!0},include:{flow:!0},"*":{render:function(n){return n},flow:!0}}),ut({html:function(n){return n!=i?String(n).replace(si,at):""},attr:function(n){return n!=i?String(n).replace(dt,at):n===null?null:""},url:function(n){return n!=i?encodeURI(String(n)):n===null?null:""}}),lt()}})(this,this.jQuery);
+if("undefined"==typeof jQuery)throw new Error("Bootstrap's JavaScript requires jQuery");!function(t){"use strict";var e=jQuery.fn.jquery.split(" ")[0].split(".");if(e[0]<2&&e[1]<9||1==e[0]&&9==e[1]&&e[2]<1||3<e[0])throw new Error("Bootstrap's JavaScript requires jQuery version 1.9.1 or higher, but lower than version 4")}(),function(n){"use strict";n.fn.emulateTransitionEnd=function(t){var e=!1,i=this;n(this).one("bsTransitionEnd",function(){e=!0});return setTimeout(function(){e||n(i).trigger(n.support.transition.end)},t),this},n(function(){n.support.transition=function o(){var t=document.createElement("bootstrap"),e={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var i in e)if(t.style[i]!==undefined)return{end:e[i]};return!1}(),n.support.transition&&(n.event.special.bsTransitionEnd={bindType:n.support.transition.end,delegateType:n.support.transition.end,handle:function(t){if(n(t.target).is(this))return t.handleObj.handler.apply(this,arguments)}})})}(jQuery),function(s){"use strict";var e='[data-dismiss="alert"]',a=function(t){s(t).on("click",e,this.close)};a.VERSION="3.4.1",a.TRANSITION_DURATION=150,a.prototype.close=function(t){var e=s(this),i=e.attr("data-target");i||(i=(i=e.attr("href"))&&i.replace(/.*(?=#[^\s]*$)/,"")),i="#"===i?[]:i;var o=s(document).find(i);function n(){o.detach().trigger("closed.bs.alert").remove()}t&&t.preventDefault(),o.length||(o=e.closest(".alert")),o.trigger(t=s.Event("close.bs.alert")),t.isDefaultPrevented()||(o.removeClass("in"),s.support.transition&&o.hasClass("fade")?o.one("bsTransitionEnd",n).emulateTransitionEnd(a.TRANSITION_DURATION):n())};var t=s.fn.alert;s.fn.alert=function o(i){return this.each(function(){var t=s(this),e=t.data("bs.alert");e||t.data("bs.alert",e=new a(this)),"string"==typeof i&&e[i].call(t)})},s.fn.alert.Constructor=a,s.fn.alert.noConflict=function(){return s.fn.alert=t,this},s(document).on("click.bs.alert.data-api",e,a.prototype.close)}(jQuery),function(s){"use strict";var n=function(t,e){this.$element=s(t),this.options=s.extend({},n.DEFAULTS,e),this.isLoading=!1};function i(o){return this.each(function(){var t=s(this),e=t.data("bs.button"),i="object"==typeof o&&o;e||t.data("bs.button",e=new n(this,i)),"toggle"==o?e.toggle():o&&e.setState(o)})}n.VERSION="3.4.1",n.DEFAULTS={loadingText:"loading..."},n.prototype.setState=function(t){var e="disabled",i=this.$element,o=i.is("input")?"val":"html",n=i.data();t+="Text",null==n.resetText&&i.data("resetText",i[o]()),setTimeout(s.proxy(function(){i[o](null==n[t]?this.options[t]:n[t]),"loadingText"==t?(this.isLoading=!0,i.addClass(e).attr(e,e).prop(e,!0)):this.isLoading&&(this.isLoading=!1,i.removeClass(e).removeAttr(e).prop(e,!1))},this),0)},n.prototype.toggle=function(){var t=!0,e=this.$element.closest('[data-toggle="buttons"]');if(e.length){var i=this.$element.find("input");"radio"==i.prop("type")?(i.prop("checked")&&(t=!1),e.find(".active").removeClass("active"),this.$element.addClass("active")):"checkbox"==i.prop("type")&&(i.prop("checked")!==this.$element.hasClass("active")&&(t=!1),this.$element.toggleClass("active")),i.prop("checked",this.$element.hasClass("active")),t&&i.trigger("change")}else this.$element.attr("aria-pressed",!this.$element.hasClass("active")),this.$element.toggleClass("active")};var t=s.fn.button;s.fn.button=i,s.fn.button.Constructor=n,s.fn.button.noConflict=function(){return s.fn.button=t,this},s(document).on("click.bs.button.data-api",'[data-toggle^="button"]',function(t){var e=s(t.target).closest(".btn");i.call(e,"toggle"),s(t.target).is('input[type="radio"], input[type="checkbox"]')||(t.preventDefault(),e.is("input,button")?e.trigger("focus"):e.find("input:visible,button:visible").first().trigger("focus"))}).on("focus.bs.button.data-api blur.bs.button.data-api",'[data-toggle^="button"]',function(t){s(t.target).closest(".btn").toggleClass("focus",/^focus(in)?$/.test(t.type))})}(jQuery),function(p){"use strict";var c=function(t,e){this.$element=p(t),this.$indicators=this.$element.find(".carousel-indicators"),this.options=e,this.paused=null,this.sliding=null,this.interval=null,this.$active=null,this.$items=null,this.options.keyboard&&this.$element.on("keydown.bs.carousel",p.proxy(this.keydown,this)),"hover"==this.options.pause&&!("ontouchstart"in document.documentElement)&&this.$element.on("mouseenter.bs.carousel",p.proxy(this.pause,this)).on("mouseleave.bs.carousel",p.proxy(this.cycle,this))};function r(n){return this.each(function(){var t=p(this),e=t.data("bs.carousel"),i=p.extend({},c.DEFAULTS,t.data(),"object"==typeof n&&n),o="string"==typeof n?n:i.slide;e||t.data("bs.carousel",e=new c(this,i)),"number"==typeof n?e.to(n):o?e[o]():i.interval&&e.pause().cycle()})}c.VERSION="3.4.1",c.TRANSITION_DURATION=600,c.DEFAULTS={interval:5e3,pause:"hover",wrap:!0,keyboard:!0},c.prototype.keydown=function(t){if(!/input|textarea/i.test(t.target.tagName)){switch(t.which){case 37:this.prev();break;case 39:this.next();break;default:return}t.preventDefault()}},c.prototype.cycle=function(t){return t||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(p.proxy(this.next,this),this.options.interval)),this},c.prototype.getItemIndex=function(t){return this.$items=t.parent().children(".item"),this.$items.index(t||this.$active)},c.prototype.getItemForDirection=function(t,e){var i=this.getItemIndex(e);if(("prev"==t&&0===i||"next"==t&&i==this.$items.length-1)&&!this.options.wrap)return e;var o=(i+("prev"==t?-1:1))%this.$items.length;return this.$items.eq(o)},c.prototype.to=function(t){var e=this,i=this.getItemIndex(this.$active=this.$element.find(".item.active"));if(!(t>this.$items.length-1||t<0))return this.sliding?this.$element.one("slid.bs.carousel",function(){e.to(t)}):i==t?this.pause().cycle():this.slide(i<t?"next":"prev",this.$items.eq(t))},c.prototype.pause=function(t){return t||(this.paused=!0),this.$element.find(".next, .prev").length&&p.support.transition&&(this.$element.trigger(p.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},c.prototype.next=function(){if(!this.sliding)return this.slide("next")},c.prototype.prev=function(){if(!this.sliding)return this.slide("prev")},c.prototype.slide=function(t,e){var i=this.$element.find(".item.active"),o=e||this.getItemForDirection(t,i),n=this.interval,s="next"==t?"left":"right",a=this;if(o.hasClass("active"))return this.sliding=!1;var r=o[0],l=p.Event("slide.bs.carousel",{relatedTarget:r,direction:s});if(this.$element.trigger(l),!l.isDefaultPrevented()){if(this.sliding=!0,n&&this.pause(),this.$indicators.length){this.$indicators.find(".active").removeClass("active");var h=p(this.$indicators.children()[this.getItemIndex(o)]);h&&h.addClass("active")}var d=p.Event("slid.bs.carousel",{relatedTarget:r,direction:s});return p.support.transition&&this.$element.hasClass("slide")?(o.addClass(t),"object"==typeof o&&o.length&&o[0].offsetWidth,i.addClass(s),o.addClass(s),i.one("bsTransitionEnd",function(){o.removeClass([t,s].join(" ")).addClass("active"),i.removeClass(["active",s].join(" ")),a.sliding=!1,setTimeout(function(){a.$element.trigger(d)},0)}).emulateTransitionEnd(c.TRANSITION_DURATION)):(i.removeClass("active"),o.addClass("active"),this.sliding=!1,this.$element.trigger(d)),n&&this.cycle(),this}};var t=p.fn.carousel;p.fn.carousel=r,p.fn.carousel.Constructor=c,p.fn.carousel.noConflict=function(){return p.fn.carousel=t,this};var e=function(t){var e=p(this),i=e.attr("href");i&&(i=i.replace(/.*(?=#[^\s]+$)/,""));var o=e.attr("data-target")||i,n=p(document).find(o);if(n.hasClass("carousel")){var s=p.extend({},n.data(),e.data()),a=e.attr("data-slide-to");a&&(s.interval=!1),r.call(n,s),a&&n.data("bs.carousel").to(a),t.preventDefault()}};p(document).on("click.bs.carousel.data-api","[data-slide]",e).on("click.bs.carousel.data-api","[data-slide-to]",e),p(window).on("load",function(){p('[data-ride="carousel"]').each(function(){var t=p(this);r.call(t,t.data())})})}(jQuery),function(a){"use strict";var r=function(t,e){this.$element=a(t),this.options=a.extend({},r.DEFAULTS,e),this.$trigger=a('[data-toggle="collapse"][href="#'+t.id+'"],[data-toggle="collapse"][data-target="#'+t.id+'"]'),this.transitioning=null,this.options.parent?this.$parent=this.getParent():this.addAriaAndCollapsedClass(this.$element,this.$trigger),this.options.toggle&&this.toggle()};function n(t){var e,i=t.attr("data-target")||(e=t.attr("href"))&&e.replace(/.*(?=#[^\s]+$)/,"");return a(document).find(i)}function l(o){return this.each(function(){var t=a(this),e=t.data("bs.collapse"),i=a.extend({},r.DEFAULTS,t.data(),"object"==typeof o&&o);!e&&i.toggle&&/show|hide/.test(o)&&(i.toggle=!1),e||t.data("bs.collapse",e=new r(this,i)),"string"==typeof o&&e[o]()})}r.VERSION="3.4.1",r.TRANSITION_DURATION=350,r.DEFAULTS={toggle:!0},r.prototype.dimension=function(){return this.$element.hasClass("width")?"width":"height"},r.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var t,e=this.$parent&&this.$parent.children(".panel").children(".in, .collapsing");if(!(e&&e.length&&(t=e.data("bs.collapse"))&&t.transitioning)){var i=a.Event("show.bs.collapse");if(this.$element.trigger(i),!i.isDefaultPrevented()){e&&e.length&&(l.call(e,"hide"),t||e.data("bs.collapse",null));var o=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[o](0).attr("aria-expanded",!0),this.$trigger.removeClass("collapsed").attr("aria-expanded",!0),this.transitioning=1;var n=function(){this.$element.removeClass("collapsing").addClass("collapse in")[o](""),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return n.call(this);var s=a.camelCase(["scroll",o].join("-"));this.$element.one("bsTransitionEnd",a.proxy(n,this)).emulateTransitionEnd(r.TRANSITION_DURATION)[o](this.$element[0][s])}}}},r.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var t=a.Event("hide.bs.collapse");if(this.$element.trigger(t),!t.isDefaultPrevented()){var e=this.dimension();this.$element[e](this.$element[e]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse in").attr("aria-expanded",!1),this.$trigger.addClass("collapsed").attr("aria-expanded",!1),this.transitioning=1;var i=function(){this.transitioning=0,this.$element.removeClass("collapsing").addClass("collapse").trigger("hidden.bs.collapse")};if(!a.support.transition)return i.call(this);this.$element[e](0).one("bsTransitionEnd",a.proxy(i,this)).emulateTransitionEnd(r.TRANSITION_DURATION)}}},r.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()},r.prototype.getParent=function(){return a(document).find(this.options.parent).find('[data-toggle="collapse"][data-parent="'+this.options.parent+'"]').each(a.proxy(function(t,e){var i=a(e);this.addAriaAndCollapsedClass(n(i),i)},this)).end()},r.prototype.addAriaAndCollapsedClass=function(t,e){var i=t.hasClass("in");t.attr("aria-expanded",i),e.toggleClass("collapsed",!i).attr("aria-expanded",i)};var t=a.fn.collapse;a.fn.collapse=l,a.fn.collapse.Constructor=r,a.fn.collapse.noConflict=function(){return a.fn.collapse=t,this},a(document).on("click.bs.collapse.data-api",'[data-toggle="collapse"]',function(t){var e=a(this);e.attr("data-target")||t.preventDefault();var i=n(e),o=i.data("bs.collapse")?"toggle":e.data();l.call(i,o)})}(jQuery),function(a){"use strict";var r='[data-toggle="dropdown"]',o=function(t){a(t).on("click.bs.dropdown",this.toggle)};function l(t){var e=t.attr("data-target");e||(e=(e=t.attr("href"))&&/#[A-Za-z]/.test(e)&&e.replace(/.*(?=#[^\s]*$)/,""));var i="#"!==e?a(document).find(e):null;return i&&i.length?i:t.parent()}function s(o){o&&3===o.which||(a(".dropdown-backdrop").remove(),a(r).each(function(){var t=a(this),e=l(t),i={relatedTarget:this};e.hasClass("open")&&(o&&"click"==o.type&&/input|textarea/i.test(o.target.tagName)&&a.contains(e[0],o.target)||(e.trigger(o=a.Event("hide.bs.dropdown",i)),o.isDefaultPrevented()||(t.attr("aria-expanded","false"),e.removeClass("open").trigger(a.Event("hidden.bs.dropdown",i)))))}))}o.VERSION="3.4.1",o.prototype.toggle=function(t){var e=a(this);if(!e.is(".disabled, :disabled")){var i=l(e),o=i.hasClass("open");if(s(),!o){"ontouchstart"in document.documentElement&&!i.closest(".navbar-nav").length&&a(document.createElement("div")).addClass("dropdown-backdrop").insertAfter(a(this)).on("click",s);var n={relatedTarget:this};if(i.trigger(t=a.Event("show.bs.dropdown",n)),t.isDefaultPrevented())return;e.trigger("focus").attr("aria-expanded","true"),i.toggleClass("open").trigger(a.Event("shown.bs.dropdown",n))}return!1}},o.prototype.keydown=function(t){if(/(38|40|27|32)/.test(t.which)&&!/input|textarea/i.test(t.target.tagName)){var e=a(this);if(t.preventDefault(),t.stopPropagation(),!e.is(".disabled, :disabled")){var i=l(e),o=i.hasClass("open");if(!o&&27!=t.which||o&&27==t.which)return 27==t.which&&i.find(r).trigger("focus"),e.trigger("click");var n=i.find(".dropdown-menu li:not(.disabled):visible a");if(n.length){var s=n.index(t.target);38==t.which&&0<s&&s--,40==t.which&&s<n.length-1&&s++,~s||(s=0),n.eq(s).trigger("focus")}}}};var t=a.fn.dropdown;a.fn.dropdown=function e(i){return this.each(function(){var t=a(this),e=t.data("bs.dropdown");e||t.data("bs.dropdown",e=new o(this)),"string"==typeof i&&e[i].call(t)})},a.fn.dropdown.Constructor=o,a.fn.dropdown.noConflict=function(){return a.fn.dropdown=t,this},a(document).on("click.bs.dropdown.data-api",s).on("click.bs.dropdown.data-api",".dropdown form",function(t){t.stopPropagation()}).on("click.bs.dropdown.data-api",r,o.prototype.toggle).on("keydown.bs.dropdown.data-api",r,o.prototype.keydown).on("keydown.bs.dropdown.data-api",".dropdown-menu",o.prototype.keydown)}(jQuery),function(a){"use strict";var s=function(t,e){this.options=e,this.$body=a(document.body),this.$element=a(t),this.$dialog=this.$element.find(".modal-dialog"),this.$backdrop=null,this.isShown=null,this.originalBodyPad=null,this.scrollbarWidth=0,this.ignoreBackdropClick=!1,this.fixedContent=".navbar-fixed-top, .navbar-fixed-bottom",this.options.remote&&this.$element.find(".modal-content").load(this.options.remote,a.proxy(function(){this.$element.trigger("loaded.bs.modal")},this))};function r(o,n){return this.each(function(){var t=a(this),e=t.data("bs.modal"),i=a.extend({},s.DEFAULTS,t.data(),"object"==typeof o&&o);e||t.data("bs.modal",e=new s(this,i)),"string"==typeof o?e[o](n):i.show&&e.show(n)})}s.VERSION="3.4.1",s.TRANSITION_DURATION=300,s.BACKDROP_TRANSITION_DURATION=150,s.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},s.prototype.toggle=function(t){return this.isShown?this.hide():this.show(t)},s.prototype.show=function(i){var o=this,t=a.Event("show.bs.modal",{relatedTarget:i});this.$element.trigger(t),this.isShown||t.isDefaultPrevented()||(this.isShown=!0,this.checkScrollbar(),this.setScrollbar(),this.$body.addClass("modal-open"),this.escape(),this.resize(),this.$element.on("click.dismiss.bs.modal",'[data-dismiss="modal"]',a.proxy(this.hide,this)),this.$dialog.on("mousedown.dismiss.bs.modal",function(){o.$element.one("mouseup.dismiss.bs.modal",function(t){a(t.target).is(o.$element)&&(o.ignoreBackdropClick=!0)})}),this.backdrop(function(){var t=a.support.transition&&o.$element.hasClass("fade");o.$element.parent().length||o.$element.appendTo(o.$body),o.$element.show().scrollTop(0),o.adjustDialog(),t&&o.$element[0].offsetWidth,o.$element.addClass("in"),o.enforceFocus();var e=a.Event("shown.bs.modal",{relatedTarget:i});t?o.$dialog.one("bsTransitionEnd",function(){o.$element.trigger("focus").trigger(e)}).emulateTransitionEnd(s.TRANSITION_DURATION):o.$element.trigger("focus").trigger(e)}))},s.prototype.hide=function(t){t&&t.preventDefault(),t=a.Event("hide.bs.modal"),this.$element.trigger(t),this.isShown&&!t.isDefaultPrevented()&&(this.isShown=!1,this.escape(),this.resize(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").off("click.dismiss.bs.modal").off("mouseup.dismiss.bs.modal"),this.$dialog.off("mousedown.dismiss.bs.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one("bsTransitionEnd",a.proxy(this.hideModal,this)).emulateTransitionEnd(s.TRANSITION_DURATION):this.hideModal())},s.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(t){document===t.target||this.$element[0]===t.target||this.$element.has(t.target).length||this.$element.trigger("focus")},this))},s.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keydown.dismiss.bs.modal",a.proxy(function(t){27==t.which&&this.hide()},this)):this.isShown||this.$element.off("keydown.dismiss.bs.modal")},s.prototype.resize=function(){this.isShown?a(window).on("resize.bs.modal",a.proxy(this.handleUpdate,this)):a(window).off("resize.bs.modal")},s.prototype.hideModal=function(){var t=this;this.$element.hide(),this.backdrop(function(){t.$body.removeClass("modal-open"),t.resetAdjustments(),t.resetScrollbar(),t.$element.trigger("hidden.bs.modal")})},s.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},s.prototype.backdrop=function(t){var e=this,i=this.$element.hasClass("fade")?"fade":"";if(this.isShown&&this.options.backdrop){var o=a.support.transition&&i;if(this.$backdrop=a(document.createElement("div")).addClass("modal-backdrop "+i).appendTo(this.$body),this.$element.on("click.dismiss.bs.modal",a.proxy(function(t){this.ignoreBackdropClick?this.ignoreBackdropClick=!1:t.target===t.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus():this.hide())},this)),o&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!t)return;o?this.$backdrop.one("bsTransitionEnd",t).emulateTransitionEnd(s.BACKDROP_TRANSITION_DURATION):t()}else if(!this.isShown&&this.$backdrop){this.$backdrop.removeClass("in");var n=function(){e.removeBackdrop(),t&&t()};a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one("bsTransitionEnd",n).emulateTransitionEnd(s.BACKDROP_TRANSITION_DURATION):n()}else t&&t()},s.prototype.handleUpdate=function(){this.adjustDialog()},s.prototype.adjustDialog=function(){var t=this.$element[0].scrollHeight>document.documentElement.clientHeight;this.$element.css({paddingLeft:!this.bodyIsOverflowing&&t?this.scrollbarWidth:"",paddingRight:this.bodyIsOverflowing&&!t?this.scrollbarWidth:""})},s.prototype.resetAdjustments=function(){this.$element.css({paddingLeft:"",paddingRight:""})},s.prototype.checkScrollbar=function(){var t=window.innerWidth;if(!t){var e=document.documentElement.getBoundingClientRect();t=e.right-Math.abs(e.left)}this.bodyIsOverflowing=document.body.clientWidth<t,this.scrollbarWidth=this.measureScrollbar()},s.prototype.setScrollbar=function(){var t=parseInt(this.$body.css("padding-right")||0,10);this.originalBodyPad=document.body.style.paddingRight||"";var n=this.scrollbarWidth;this.bodyIsOverflowing&&(this.$body.css("padding-right",t+n),a(this.fixedContent).each(function(t,e){var i=e.style.paddingRight,o=a(e).css("padding-right");a(e).data("padding-right",i).css("padding-right",parseFloat(o)+n+"px")}))},s.prototype.resetScrollbar=function(){this.$body.css("padding-right",this.originalBodyPad),a(this.fixedContent).each(function(t,e){var i=a(e).data("padding-right");a(e).removeData("padding-right"),e.style.paddingRight=i||""})},s.prototype.measureScrollbar=function(){var t=document.createElement("div");t.className="modal-scrollbar-measure",this.$body.append(t);var e=t.offsetWidth-t.clientWidth;return this.$body[0].removeChild(t),e};var t=a.fn.modal;a.fn.modal=r,a.fn.modal.Constructor=s,a.fn.modal.noConflict=function(){return a.fn.modal=t,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(t){var e=a(this),i=e.attr("href"),o=e.attr("data-target")||i&&i.replace(/.*(?=#[^\s]+$)/,""),n=a(document).find(o),s=n.data("bs.modal")?"toggle":a.extend({remote:!/#/.test(i)&&i},n.data(),e.data());e.is("a")&&t.preventDefault(),n.one("show.bs.modal",function(t){t.isDefaultPrevented()||n.one("hidden.bs.modal",function(){e.is(":visible")&&e.trigger("focus")})}),r.call(n,s,this)})}(jQuery),function(g){"use strict";var o=["sanitize","whiteList","sanitizeFn"],a=["background","cite","href","itemtype","longdesc","poster","src","xlink:href"],t={"*":["class","dir","id","lang","role",/^aria-[\w-]*$/i],a:["target","href","title","rel"],area:[],b:[],br:[],col:[],code:[],div:[],em:[],hr:[],h1:[],h2:[],h3:[],h4:[],h5:[],h6:[],i:[],img:["src","alt","title","width","height"],li:[],ol:[],p:[],pre:[],s:[],small:[],span:[],sub:[],sup:[],strong:[],u:[],ul:[]},r=/^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi,l=/^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;function u(t,e){var i=t.nodeName.toLowerCase();if(-1!==g.inArray(i,e))return-1===g.inArray(i,a)||Boolean(t.nodeValue.match(r)||t.nodeValue.match(l));for(var o=g(e).filter(function(t,e){return e instanceof RegExp}),n=0,s=o.length;n<s;n++)if(i.match(o[n]))return!0;return!1}function n(t,e,i){if(0===t.length)return t;if(i&&"function"==typeof i)return i(t);if(!document.implementation||!document.implementation.createHTMLDocument)return t;var o=document.implementation.createHTMLDocument("sanitization");o.body.innerHTML=t;for(var n=g.map(e,function(t,e){return e}),s=g(o.body).find("*"),a=0,r=s.length;a<r;a++){var l=s[a],h=l.nodeName.toLowerCase();if(-1!==g.inArray(h,n))for(var d=g.map(l.attributes,function(t){return t}),p=[].concat(e["*"]||[],e[h]||[]),c=0,f=d.length;c<f;c++)u(d[c],p)||l.removeAttribute(d[c].nodeName);else l.parentNode.removeChild(l)}return o.body.innerHTML}var m=function(t,e){this.type=null,this.options=null,this.enabled=null,this.timeout=null,this.hoverState=null,this.$element=null,this.inState=null,this.init("tooltip",t,e)};m.VERSION="3.4.1",m.TRANSITION_DURATION=150,m.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1,viewport:{selector:"body",padding:0},sanitize:!0,sanitizeFn:null,whiteList:t},m.prototype.init=function(t,e,i){if(this.enabled=!0,this.type=t,this.$element=g(e),this.options=this.getOptions(i),this.$viewport=this.options.viewport&&g(document).find(g.isFunction(this.options.viewport)?this.options.viewport.call(this,this.$element):this.options.viewport.selector||this.options.viewport),this.inState={click:!1,hover:!1,focus:!1},this.$element[0]instanceof document.constructor&&!this.options.selector)throw new Error("`selector` option must be specified when initializing "+this.type+" on the window.document object!");for(var o=this.options.trigger.split(" "),n=o.length;n--;){var s=o[n];if("click"==s)this.$element.on("click."+this.type,this.options.selector,g.proxy(this.toggle,this));else if("manual"!=s){var a="hover"==s?"mouseenter":"focusin",r="hover"==s?"mouseleave":"focusout";this.$element.on(a+"."+this.type,this.options.selector,g.proxy(this.enter,this)),this.$element.on(r+"."+this.type,this.options.selector,g.proxy(this.leave,this))}}this.options.selector?this._options=g.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},m.prototype.getDefaults=function(){return m.DEFAULTS},m.prototype.getOptions=function(t){var e=this.$element.data();for(var i in e)e.hasOwnProperty(i)&&-1!==g.inArray(i,o)&&delete e[i];return(t=g.extend({},this.getDefaults(),e,t)).delay&&"number"==typeof t.delay&&(t.delay={show:t.delay,hide:t.delay}),t.sanitize&&(t.template=n(t.template,t.whiteList,t.sanitizeFn)),t},m.prototype.getDelegateOptions=function(){var i={},o=this.getDefaults();return this._options&&g.each(this._options,function(t,e){o[t]!=e&&(i[t]=e)}),i},m.prototype.enter=function(t){var e=t instanceof this.constructor?t:g(t.currentTarget).data("bs."+this.type);if(e||(e=new this.constructor(t.currentTarget,this.getDelegateOptions()),g(t.currentTarget).data("bs."+this.type,e)),t instanceof g.Event&&(e.inState["focusin"==t.type?"focus":"hover"]=!0),e.tip().hasClass("in")||"in"==e.hoverState)e.hoverState="in";else{if(clearTimeout(e.timeout),e.hoverState="in",!e.options.delay||!e.options.delay.show)return e.show();e.timeout=setTimeout(function(){"in"==e.hoverState&&e.show()},e.options.delay.show)}},m.prototype.isInStateTrue=function(){for(var t in this.inState)if(this.inState[t])return!0;return!1},m.prototype.leave=function(t){var e=t instanceof this.constructor?t:g(t.currentTarget).data("bs."+this.type);if(e||(e=new this.constructor(t.currentTarget,this.getDelegateOptions()),g(t.currentTarget).data("bs."+this.type,e)),t instanceof g.Event&&(e.inState["focusout"==t.type?"focus":"hover"]=!1),!e.isInStateTrue()){if(clearTimeout(e.timeout),e.hoverState="out",!e.options.delay||!e.options.delay.hide)return e.hide();e.timeout=setTimeout(function(){"out"==e.hoverState&&e.hide()},e.options.delay.hide)}},m.prototype.show=function(){var t=g.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){this.$element.trigger(t);var e=g.contains(this.$element[0].ownerDocument.documentElement,this.$element[0]);if(t.isDefaultPrevented()||!e)return;var i=this,o=this.tip(),n=this.getUID(this.type);this.setContent(),o.attr("id",n),this.$element.attr("aria-describedby",n),this.options.animation&&o.addClass("fade");var s="function"==typeof this.options.placement?this.options.placement.call(this,o[0],this.$element[0]):this.options.placement,a=/\s?auto?\s?/i,r=a.test(s);r&&(s=s.replace(a,"")||"top"),o.detach().css({top:0,left:0,display:"block"}).addClass(s).data("bs."+this.type,this),this.options.container?o.appendTo(g(document).find(this.options.container)):o.insertAfter(this.$element),this.$element.trigger("inserted.bs."+this.type);var l=this.getPosition(),h=o[0].offsetWidth,d=o[0].offsetHeight;if(r){var p=s,c=this.getPosition(this.$viewport);s="bottom"==s&&l.bottom+d>c.bottom?"top":"top"==s&&l.top-d<c.top?"bottom":"right"==s&&l.right+h>c.width?"left":"left"==s&&l.left-h<c.left?"right":s,o.removeClass(p).addClass(s)}var f=this.getCalculatedOffset(s,l,h,d);this.applyPlacement(f,s);var u=function(){var t=i.hoverState;i.$element.trigger("shown.bs."+i.type),i.hoverState=null,"out"==t&&i.leave(i)};g.support.transition&&this.$tip.hasClass("fade")?o.one("bsTransitionEnd",u).emulateTransitionEnd(m.TRANSITION_DURATION):u()}},m.prototype.applyPlacement=function(t,e){var i=this.tip(),o=i[0].offsetWidth,n=i[0].offsetHeight,s=parseInt(i.css("margin-top"),10),a=parseInt(i.css("margin-left"),10);isNaN(s)&&(s=0),isNaN(a)&&(a=0),t.top+=s,t.left+=a,g.offset.setOffset(i[0],g.extend({using:function(t){i.css({top:Math.round(t.top),left:Math.round(t.left)})}},t),0),i.addClass("in");var r=i[0].offsetWidth,l=i[0].offsetHeight;"top"==e&&l!=n&&(t.top=t.top+n-l);var h=this.getViewportAdjustedDelta(e,t,r,l);h.left?t.left+=h.left:t.top+=h.top;var d=/top|bottom/.test(e),p=d?2*h.left-o+r:2*h.top-n+l,c=d?"offsetWidth":"offsetHeight";i.offset(t),this.replaceArrow(p,i[0][c],d)},m.prototype.replaceArrow=function(t,e,i){this.arrow().css(i?"left":"top",50*(1-t/e)+"%").css(i?"top":"left","")},m.prototype.setContent=function(){var t=this.tip(),e=this.getTitle();this.options.html?(this.options.sanitize&&(e=n(e,this.options.whiteList,this.options.sanitizeFn)),t.find(".tooltip-inner").html(e)):t.find(".tooltip-inner").text(e),t.removeClass("fade in top bottom left right")},m.prototype.hide=function(t){var e=this,i=g(this.$tip),o=g.Event("hide.bs."+this.type);function n(){"in"!=e.hoverState&&i.detach(),e.$element&&e.$element.removeAttr("aria-describedby").trigger("hidden.bs."+e.type),t&&t()}if(this.$element.trigger(o),!o.isDefaultPrevented())return i.removeClass("in"),g.support.transition&&i.hasClass("fade")?i.one("bsTransitionEnd",n).emulateTransitionEnd(m.TRANSITION_DURATION):n(),this.hoverState=null,this},m.prototype.fixTitle=function(){var t=this.$element;(t.attr("title")||"string"!=typeof t.attr("data-original-title"))&&t.attr("data-original-title",t.attr("title")||"").attr("title","")},m.prototype.hasContent=function(){return this.getTitle()},m.prototype.getPosition=function(t){var e=(t=t||this.$element)[0],i="BODY"==e.tagName,o=e.getBoundingClientRect();null==o.width&&(o=g.extend({},o,{width:o.right-o.left,height:o.bottom-o.top}));var n=window.SVGElement&&e instanceof window.SVGElement,s=i?{top:0,left:0}:n?null:t.offset(),a={scroll:i?document.documentElement.scrollTop||document.body.scrollTop:t.scrollTop()},r=i?{width:g(window).width(),height:g(window).height()}:null;return g.extend({},o,a,r,s)},m.prototype.getCalculatedOffset=function(t,e,i,o){return"bottom"==t?{top:e.top+e.height,left:e.left+e.width/2-i/2}:"top"==t?{top:e.top-o,left:e.left+e.width/2-i/2}:"left"==t?{top:e.top+e.height/2-o/2,left:e.left-i}:{top:e.top+e.height/2-o/2,left:e.left+e.width}},m.prototype.getViewportAdjustedDelta=function(t,e,i,o){var n={top:0,left:0};if(!this.$viewport)return n;var s=this.options.viewport&&this.options.viewport.padding||0,a=this.getPosition(this.$viewport);if(/right|left/.test(t)){var r=e.top-s-a.scroll,l=e.top+s-a.scroll+o;r<a.top?n.top=a.top-r:l>a.top+a.height&&(n.top=a.top+a.height-l)}else{var h=e.left-s,d=e.left+s+i;h<a.left?n.left=a.left-h:d>a.right&&(n.left=a.left+a.width-d)}return n},m.prototype.getTitle=function(){var t=this.$element,e=this.options;return t.attr("data-original-title")||("function"==typeof e.title?e.title.call(t[0]):e.title)},m.prototype.getUID=function(t){for(;t+=~~(1e6*Math.random()),document.getElementById(t););return t},m.prototype.tip=function(){if(!this.$tip&&(this.$tip=g(this.options.template),1!=this.$tip.length))throw new Error(this.type+" `template` option must consist of exactly 1 top-level element!");return this.$tip},m.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},m.prototype.enable=function(){this.enabled=!0},m.prototype.disable=function(){this.enabled=!1},m.prototype.toggleEnabled=function(){this.enabled=!this.enabled},m.prototype.toggle=function(t){var e=this;t&&((e=g(t.currentTarget).data("bs."+this.type))||(e=new this.constructor(t.currentTarget,this.getDelegateOptions()),g(t.currentTarget).data("bs."+this.type,e))),t?(e.inState.click=!e.inState.click,e.isInStateTrue()?e.enter(e):e.leave(e)):e.tip().hasClass("in")?e.leave(e):e.enter(e)},m.prototype.destroy=function(){var t=this;clearTimeout(this.timeout),this.hide(function(){t.$element.off("."+t.type).removeData("bs."+t.type),t.$tip&&t.$tip.detach(),t.$tip=null,t.$arrow=null,t.$viewport=null,t.$element=null})},m.prototype.sanitizeHtml=function(t){return n(t,this.options.whiteList,this.options.sanitizeFn)};var e=g.fn.tooltip;g.fn.tooltip=function i(o){return this.each(function(){var t=g(this),e=t.data("bs.tooltip"),i="object"==typeof o&&o;!e&&/destroy|hide/.test(o)||(e||t.data("bs.tooltip",e=new m(this,i)),"string"==typeof o&&e[o]())})},g.fn.tooltip.Constructor=m,g.fn.tooltip.noConflict=function(){return g.fn.tooltip=e,this}}(jQuery),function(n){"use strict";var s=function(t,e){this.init("popover",t,e)};if(!n.fn.tooltip)throw new Error("Popover requires tooltip.js");s.VERSION="3.4.1",s.DEFAULTS=n.extend({},n.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'}),((s.prototype=n.extend({},n.fn.tooltip.Constructor.prototype)).constructor=s).prototype.getDefaults=function(){return s.DEFAULTS},s.prototype.setContent=function(){var t=this.tip(),e=this.getTitle(),i=this.getContent();if(this.options.html){var o=typeof i;this.options.sanitize&&(e=this.sanitizeHtml(e),"string"===o&&(i=this.sanitizeHtml(i))),t.find(".popover-title").html(e),t.find(".popover-content").children().detach().end()["string"===o?"html":"append"](i)}else t.find(".popover-title").text(e),t.find(".popover-content").children().detach().end().text(i);t.removeClass("fade top bottom left right in"),t.find(".popover-title").html()||t.find(".popover-title").hide()},s.prototype.hasContent=function(){return this.getTitle()||this.getContent()},s.prototype.getContent=function(){var t=this.$element,e=this.options;return t.attr("data-content")||("function"==typeof e.content?e.content.call(t[0]):e.content)},s.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")};var t=n.fn.popover;n.fn.popover=function e(o){return this.each(function(){var t=n(this),e=t.data("bs.popover"),i="object"==typeof o&&o;!e&&/destroy|hide/.test(o)||(e||t.data("bs.popover",e=new s(this,i)),"string"==typeof o&&e[o]())})},n.fn.popover.Constructor=s,n.fn.popover.noConflict=function(){return n.fn.popover=t,this}}(jQuery),function(s){"use strict";function n(t,e){this.$body=s(document.body),this.$scrollElement=s(t).is(document.body)?s(window):s(t),this.options=s.extend({},n.DEFAULTS,e),this.selector=(this.options.target||"")+" .nav li > a",this.offsets=[],this.targets=[],this.activeTarget=null,this.scrollHeight=0,this.$scrollElement.on("scroll.bs.scrollspy",s.proxy(this.process,this)),this.refresh(),this.process()}function e(o){return this.each(function(){var t=s(this),e=t.data("bs.scrollspy"),i="object"==typeof o&&o;e||t.data("bs.scrollspy",e=new n(this,i)),"string"==typeof o&&e[o]()})}n.VERSION="3.4.1",n.DEFAULTS={offset:10},n.prototype.getScrollHeight=function(){return this.$scrollElement[0].scrollHeight||Math.max(this.$body[0].scrollHeight,document.documentElement.scrollHeight)},n.prototype.refresh=function(){var t=this,o="offset",n=0;this.offsets=[],this.targets=[],this.scrollHeight=this.getScrollHeight(),s.isWindow(this.$scrollElement[0])||(o="position",n=this.$scrollElement.scrollTop()),this.$body.find(this.selector).map(function(){var t=s(this),e=t.data("target")||t.attr("href"),i=/^#./.test(e)&&s(e);return i&&i.length&&i.is(":visible")&&[[i[o]().top+n,e]]||null}).sort(function(t,e){return t[0]-e[0]}).each(function(){t.offsets.push(this[0]),t.targets.push(this[1])})},n.prototype.process=function(){var t,e=this.$scrollElement.scrollTop()+this.options.offset,i=this.getScrollHeight(),o=this.options.offset+i-this.$scrollElement.height(),n=this.offsets,s=this.targets,a=this.activeTarget;if(this.scrollHeight!=i&&this.refresh(),o<=e)return a!=(t=s[s.length-1])&&this.activate(t);if(a&&e<n[0])return this.activeTarget=null,this.clear();for(t=n.length;t--;)a!=s[t]&&e>=n[t]&&(n[t+1]===undefined||e<n[t+1])&&this.activate(s[t])},n.prototype.activate=function(t){this.activeTarget=t,this.clear();var e=this.selector+'[data-target="'+t+'"],'+this.selector+'[href="'+t+'"]',i=s(e).parents("li").addClass("active");i.parent(".dropdown-menu").length&&(i=i.closest("li.dropdown").addClass("active")),i.trigger("activate.bs.scrollspy")},n.prototype.clear=function(){s(this.selector).parentsUntil(this.options.target,".active").removeClass("active")};var t=s.fn.scrollspy;s.fn.scrollspy=e,s.fn.scrollspy.Constructor=n,s.fn.scrollspy.noConflict=function(){return s.fn.scrollspy=t,this},s(window).on("load.bs.scrollspy.data-api",function(){s('[data-spy="scroll"]').each(function(){var t=s(this);e.call(t,t.data())})})}(jQuery),function(r){"use strict";var a=function(t){this.element=r(t)};function e(i){return this.each(function(){var t=r(this),e=t.data("bs.tab");e||t.data("bs.tab",e=new a(this)),"string"==typeof i&&e[i]()})}a.VERSION="3.4.1",a.TRANSITION_DURATION=150,a.prototype.show=function(){var t=this.element,e=t.closest("ul:not(.dropdown-menu)"),i=t.data("target");if(i||(i=(i=t.attr("href"))&&i.replace(/.*(?=#[^\s]*$)/,"")),!t.parent("li").hasClass("active")){var o=e.find(".active:last a"),n=r.Event("hide.bs.tab",{relatedTarget:t[0]}),s=r.Event("show.bs.tab",{relatedTarget:o[0]});if(o.trigger(n),t.trigger(s),!s.isDefaultPrevented()&&!n.isDefaultPrevented()){var a=r(document).find(i);this.activate(t.closest("li"),e),this.activate(a,a.parent(),function(){o.trigger({type:"hidden.bs.tab",relatedTarget:t[0]}),t.trigger({type:"shown.bs.tab",relatedTarget:o[0]})})}}},a.prototype.activate=function(t,e,i){var o=e.find("> .active"),n=i&&r.support.transition&&(o.length&&o.hasClass("fade")||!!e.find("> .fade").length);function s(){o.removeClass("active").find("> .dropdown-menu > .active").removeClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!1),t.addClass("active").find('[data-toggle="tab"]').attr("aria-expanded",!0),n?(t[0].offsetWidth,t.addClass("in")):t.removeClass("fade"),t.parent(".dropdown-menu").length&&t.closest("li.dropdown").addClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!0),i&&i()}o.length&&n?o.one("bsTransitionEnd",s).emulateTransitionEnd(a.TRANSITION_DURATION):s(),o.removeClass("in")};var t=r.fn.tab;r.fn.tab=e,r.fn.tab.Constructor=a,r.fn.tab.noConflict=function(){return r.fn.tab=t,this};var i=function(t){t.preventDefault(),e.call(r(this),"show")};r(document).on("click.bs.tab.data-api",'[data-toggle="tab"]',i).on("click.bs.tab.data-api",'[data-toggle="pill"]',i)}(jQuery),function(l){"use strict";var h=function(t,e){this.options=l.extend({},h.DEFAULTS,e);var i=this.options.target===h.DEFAULTS.target?l(this.options.target):l(document).find(this.options.target);this.$target=i.on("scroll.bs.affix.data-api",l.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",l.proxy(this.checkPositionWithEventLoop,this)),this.$element=l(t),this.affixed=null,this.unpin=null,this.pinnedOffset=null,this.checkPosition()};function i(o){return this.each(function(){var t=l(this),e=t.data("bs.affix"),i="object"==typeof o&&o;e||t.data("bs.affix",e=new h(this,i)),"string"==typeof o&&e[o]()})}h.VERSION="3.4.1",h.RESET="affix affix-top affix-bottom",h.DEFAULTS={offset:0,target:window},h.prototype.getState=function(t,e,i,o){var n=this.$target.scrollTop(),s=this.$element.offset(),a=this.$target.height();if(null!=i&&"top"==this.affixed)return n<i&&"top";if("bottom"==this.affixed)return null!=i?!(n+this.unpin<=s.top)&&"bottom":!(n+a<=t-o)&&"bottom";var r=null==this.affixed,l=r?n:s.top;return null!=i&&n<=i?"top":null!=o&&t-o<=l+(r?a:e)&&"bottom"},h.prototype.getPinnedOffset=function(){if(this.pinnedOffset)return this.pinnedOffset;this.$element.removeClass(h.RESET).addClass("affix");var t=this.$target.scrollTop(),e=this.$element.offset();return this.pinnedOffset=e.top-t},h.prototype.checkPositionWithEventLoop=function(){setTimeout(l.proxy(this.checkPosition,this),1)},h.prototype.checkPosition=function(){if(this.$element.is(":visible")){var t=this.$element.height(),e=this.options.offset,i=e.top,o=e.bottom,n=Math.max(l(document).height(),l(document.body).height());"object"!=typeof e&&(o=i=e),"function"==typeof i&&(i=e.top(this.$element)),"function"==typeof o&&(o=e.bottom(this.$element));var s=this.getState(n,t,i,o);if(this.affixed!=s){null!=this.unpin&&this.$element.css("top","");var a="affix"+(s?"-"+s:""),r=l.Event(a+".bs.affix");if(this.$element.trigger(r),r.isDefaultPrevented())return;this.affixed=s,this.unpin="bottom"==s?this.getPinnedOffset():null,this.$element.removeClass(h.RESET).addClass(a).trigger(a.replace("affix","affixed")+".bs.affix")}"bottom"==s&&this.$element.offset({top:n-t-o})}};var t=l.fn.affix;l.fn.affix=i,l.fn.affix.Constructor=h,l.fn.affix.noConflict=function(){return l.fn.affix=t,this},l(window).on("load",function(){l('[data-spy="affix"]').each(function(){var t=l(this),e=t.data();e.offset=e.offset||{},null!=e.offsetBottom&&(e.offset.bottom=e.offsetBottom),null!=e.offsetTop&&(e.offset.top=e.offsetTop),i.call(t,e)})})}(jQuery);
+/*! JsRender v1.0.11: http://jsviews.com/#jsrender */
+/*! **VERSION FOR WEB** (For NODE.JS see http://jsviews.com/download/jsrender-node.js) */
+!function(t,e){var n=e.jQuery;"object"==typeof exports?module.exports=n?t(e,n):function(n){if(n&&!n.fn)throw"Provide jQuery or null";return t(e,n)}:"function"==typeof define&&define.amd?define(function(){return t(e)}):t(e,!1)}(function(t,e){"use strict";function n(t,e){return function(){var n,r=this,i=r.base;return r.base=t,n=e.apply(r,arguments),r.base=i,n}}function r(t,e){return st(e)&&(e=n(t?t._d?t:n(a,t):a,e),e._d=(t&&t._d||0)+1),e}function i(t,e){var n,i=e.props;for(n in i)!Vt.test(n)||t[n]&&t[n].fix||(t[n]="convert"!==n?r(t.constructor.prototype[n],i[n]):i[n])}function o(t){return t}function a(){return""}function s(t){try{throw console.log("JsRender dbg breakpoint: "+t),"dbg breakpoint"}catch(e){}return this.base?this.baseApply(arguments):t}function l(t){this.name=(e.link?"JsViews":"JsRender")+" Error",this.message=t||this.name}function d(t,e){if(t){for(var n in e)t[n]=e[n];return t}}function c(t,e,n){return t?lt(t)?c.apply(ot,t):(wt=n?n[0]:wt,/^(\W|_){5}$/.test(t+e+wt)||S("Invalid delimiters"),mt=t[0],_t=t[1],xt=e[0],bt=e[1],gt.delimiters=[mt+_t,xt+bt,wt],t="\\"+mt+"(\\"+wt+")?\\"+_t,e="\\"+xt+"\\"+bt,rt="(?:(\\w+(?=[\\/\\s\\"+xt+"]))|(\\w+)?(:)|(>)|(\\*))\\s*((?:[^\\"+xt+"]|\\"+xt+"(?!\\"+bt+"))*?)",ft.rTag="(?:"+rt+")",rt=new RegExp("(?:"+t+rt+"(\\/)?|\\"+mt+"(\\"+wt+")?\\"+_t+"(?:(?:\\/(\\w+))\\s*|!--[\\s\\S]*?--))"+e,"g"),ft.rTmpl=new RegExp("^\\s|\\s$|<.*>|([^\\\\]|^)[{}]|"+t+".*"+e),ht):gt.delimiters}function p(t,e){e||t===!0||(e=t,t=void 0);var n,r,i,o,a=this,s="root"===e;if(t){if(o=e&&a.type===e&&a,!o)if(n=a.views,a._.useKey){for(r in n)if(o=e?n[r].get(t,e):n[r])break}else for(r=0,i=n.length;!o&&r<i;r++)o=e?n[r].get(t,e):n[r]}else if(s)o=a.root;else if(e)for(;a&&!o;)o=a.type===e?a:void 0,a=a.parent;else o=a.parent;return o||void 0}function u(){var t=this.get("item");return t?t.index:void 0}function f(){return this.index}function g(t,e,n,r){var i,o,s,l=0;if(1===n&&(r=1,n=void 0),e)for(o=e.split("."),s=o.length;t&&l<s;l++)i=t,t=o[l]?t[o[l]]:t;return n&&(n.lt=n.lt||l<s),void 0===t?r?a:"":r?function(){return t.apply(i,arguments)}:t}function v(n,r,i){var o,a,s,l,c,p,u,f=this,g=!Ct&&arguments.length>1,v=f.ctx;if(n){if(f._||(c=f.index,f=f.tag),p=f,v&&v.hasOwnProperty(n)||(v=pt).hasOwnProperty(n)){if(s=v[n],"tag"===n||"tagCtx"===n||"root"===n||"parentTags"===n)return s}else v=void 0;if((!Ct&&f.tagCtx||f.linked)&&(s&&s._cxp||(f=f.tagCtx||st(s)?f:(f=f.scope||f,!f.isTop&&f.ctx.tag||f),void 0!==s&&f.tagCtx&&(f=f.tagCtx.view.scope),v=f._ocps,s=v&&v.hasOwnProperty(n)&&v[n]||s,s&&s._cxp||!i&&!g||((v||(f._ocps=f._ocps||{}))[n]=s=[{_ocp:s,_vw:p,_key:n}],s._cxp={path:jt,ind:0,updateValue:function(t,n){return e.observable(s[0]).setProperty(jt,t),this}})),l=s&&s._cxp)){if(arguments.length>2)return a=s[1]?ft._ceo(s[1].deps):[jt],a.unshift(s[0]),a._cxp=l,a;if(c=l.tagElse,u=s[1]?l.tag&&l.tag.cvtArgs?l.tag.cvtArgs(c,1)[l.ind]:s[1](s[0].data,s[0],ft):s[0]._ocp,g)return ft._ucp(n,r,f,l),f;s=u}return s&&st(s)&&(o=function(){return s.apply(this&&this!==t?this:p,arguments)},d(o,s)),o||s}}function h(t){return t&&(t.fn?t:this.getRsc("templates",t)||dt(t))}function m(t,e,n,r){var o,a,s,l,c,p="number"==typeof n&&e.tmpl.bnds[n-1];if(void 0===r&&p&&p._lr&&(r=""),void 0!==r?n=r={props:{},args:[r]}:p&&(n=p(e.data,e,ft)),p=p._bd&&p,t||p){if(a=e._lc,o=a&&a.tag,n.view=e,!o){if(o=d(new ft._tg,{_:{bnd:p,unlinked:!0,lt:n.lt},inline:!a,tagName:":",convert:t,onArrayChange:!0,flow:!0,tagCtx:n,tagCtxs:[n],_is:"tag"}),l=n.args.length,l>1)for(c=o.bindTo=[];l--;)c.unshift(l);a&&(a.tag=o,o.linkCtx=a),n.ctx=Q(n.ctx,(a?a.view:e).ctx),i(o,n)}o._er=r&&s,o.ctx=n.ctx||o.ctx||{},n.ctx=void 0,s=o.cvtArgs()[0],o._er=r&&s}else s=n.args[0];return s=p&&e._.onRender?e._.onRender(s,e,o):s,void 0!=s?s:""}function _(t,e){var n,r,i,o,a,s,l,d=this;if(d.tagName){if(s=d,d=(s.tagCtxs||[d])[t||0],!d)return}else s=d.tag;if(a=s.bindFrom,o=d.args,(l=s.convert)&&""+l===l&&(l="true"===l?void 0:d.view.getRsc("converters",l)||S("Unknown converter: '"+l+"'")),l&&!e&&(o=o.slice()),a){for(i=[],n=a.length;n--;)r=a[n],i.unshift(x(d,r));e&&(o=i)}if(l){if(l=l.apply(s,i||o),void 0===l)return o;if(a=a||[0],n=a.length,lt(l)&&(l.arg0===!1||1!==n&&l.length===n&&!l.arg0)||(l=[l],a=[0],n=1),e)o=l;else for(;n--;)r=a[n],+r===r&&(o[r]=l[n])}return o}function x(t,e){return t=t[+e===e?"args":"props"],t&&t[e]}function b(t){return this.cvtArgs(t,1)}function w(t,e){var n,r,i=this;if(""+e===e){for(;void 0===n&&i;)r=i.tmpl&&i.tmpl[t],n=r&&r[e],i=i.parent;return n||ot[t][e]}}function y(t,e,n,r,o,a){function s(t){var e=l[t];if(void 0!==e)for(e=lt(e)?e:[e],h=e.length;h--;)q=e[h],isNaN(parseInt(q))||(e[h]=parseInt(q));return e||[0]}e=e||it;var l,d,c,p,u,f,g,h,m,w,y,C,k,j,T,A,P,F,N,R,M,$,V,I,D,q,U,K,J,B,L=0,H="",W=e._lc||!1,Z=e.ctx,z=n||e.tmpl,G="number"==typeof r&&e.tmpl.bnds[r-1];for("tag"===t._is?(l=t,t=l.tagName,r=l.tagCtxs,c=l.template):(d=e.getRsc("tags",t)||S("Unknown tag: {{"+t+"}} "),c=d.template),void 0===a&&G&&(G._lr=d.lateRender&&G._lr!==!1||G._lr)&&(a=""),void 0!==a?(H+=a,r=a=[{props:{},args:[],params:{props:{}}}]):G&&(r=G(e.data,e,ft)),g=r.length;L<g;L++)y=r[L],P=y.tmpl,(!W||!W.tag||L&&!W.tag.inline||l._er||P&&+P===P)&&(P&&z.tmpls&&(y.tmpl=y.content=z.tmpls[P-1]),y.index=L,y.ctxPrm=v,y.render=E,y.cvtArgs=_,y.bndArgs=b,y.view=e,y.ctx=Q(Q(y.ctx,d&&d.ctx),Z)),(n=y.props.tmpl)&&(y.tmpl=e._getTmpl(n),y.content=y.content||y.tmpl),l?W&&W.fn._lr&&(F=!!l.init):(l=new d._ctr,F=!!l.init,l.parent=f=Z&&Z.tag,l.tagCtxs=r,W&&(l.inline=!1,W.tag=l),l.linkCtx=W,(l._.bnd=G||W.fn)?(l._.ths=y.params.props["this"],l._.lt=r.lt,l._.arrVws={}):l.dataBoundOnly&&S(t+" must be data-bound:\n{^{"+t+"}}")),I=l.dataMap,y.tag=l,I&&r&&(y.map=r[L].map),l.flow||(C=y.ctx=y.ctx||{},p=l.parents=C.parentTags=Z&&Q(C.parentTags,Z.parentTags)||{},f&&(p[f.tagName]=f),p[l.tagName]=C.tag=l,C.tagCtx=y);if(!(l._er=a)){for(i(l,r[0]),l.rendering={rndr:l.rendering},L=0;L<g;L++){if(y=l.tagCtx=r[L],V=y.props,l.ctx=y.ctx,!L){if(F&&(l.init(y,W,l.ctx),F=void 0),y.args.length||y.argDefault===!1||l.argDefault===!1||(y.args=M=[y.view.data],y.params.args=["#data"]),j=s("bindTo"),void 0!==l.bindTo&&(l.bindTo=j),void 0!==l.bindFrom?l.bindFrom=s("bindFrom"):l.bindTo&&(l.bindFrom=l.bindTo=j),T=l.bindFrom||j,K=j.length,U=T.length,l._.bnd&&(J=l.linkedElement)&&(l.linkedElement=J=lt(J)?J:[J],K!==J.length&&S("linkedElement not same length as bindTo")),(J=l.linkedCtxParam)&&(l.linkedCtxParam=J=lt(J)?J:[J],U!==J.length&&S("linkedCtxParam not same length as bindFrom/bindTo")),T)for(l._.fromIndex={},l._.toIndex={},m=U;m--;)for(q=T[m],h=K;h--;)q===j[h]&&(l._.fromIndex[h]=m,l._.toIndex[m]=h);W&&(W.attr=l.attr=W.attr||l.attr||W._dfAt),u=l.attr,l._.noVws=u&&u!==Jt}if(M=l.cvtArgs(L),l.linkedCtxParam)for($=l.cvtArgs(L,1),h=U,B=l.constructor.prototype.ctx;h--;)(k=l.linkedCtxParam[h])&&(q=T[h],A=$[h],y.ctx[k]=ft._cp(B&&void 0===A?B[k]:A,void 0!==A&&x(y.params,q),y.view,l._.bnd&&{tag:l,cvt:l.convert,ind:h,tagElse:L}));(N=V.dataMap||I)&&(M.length||V.dataMap)&&(R=y.map,R&&R.src===M[0]&&!o||(R&&R.src&&R.unmap(),N.map(M[0],y,R,!l._.bnd),R=y.map),M=[R.tgt]),w=void 0,l.render&&(w=l.render.apply(l,M),e.linked&&w&&!Et.test(w)&&(n={links:[]},n.render=n.fn=function(){return w},w=O(n,e.data,void 0,!0,e,void 0,void 0,l))),M.length||(M=[e]),void 0===w&&(D=M[0],l.contentCtx&&(D=l.contentCtx===!0?e:l.contentCtx(D)),w=y.render(D,!0)||(o?void 0:"")),H=H?H+(w||""):void 0!==w?""+w:void 0}l.rendering=l.rendering.rndr}return l.tagCtx=r[0],l.ctx=l.tagCtx.ctx,l._.noVws&&l.inline&&(H="text"===u?ct.html(H):""),G&&e._.onRender?e._.onRender(H,e,l):H}function C(t,e,n,r,i,o,a,s){var l,d,c,p=this,f="array"===e;p.content=s,p.views=f?[]:{},p.data=r,p.tmpl=i,c=p._={key:0,useKey:f?0:1,id:""+qt++,onRender:a,bnds:{}},p.linked=!!a,p.type=e||"top",e&&(p.cache={_ct:gt._cchCt}),n&&"top"!==n.type||((p.ctx=t||{}).root=p.data),(p.parent=n)?(p.root=n.root||p,l=n.views,d=n._,p.isTop=d.scp,p.scope=(!t.tag||t.tag===n.ctx.tag)&&!p.isTop&&n.scope||p,d.useKey?(l[c.key="_"+d.useKey++]=p,p.index=Ht,p.getIndex=u):l.length===(c.key=p.index=o)?l.push(p):l.splice(o,0,p),p.ctx=t||n.ctx):e&&(p.root=p)}function k(t){var e,n,r;for(e in Xt)n=e+"s",t[n]&&(r=t[n],t[n]={},ot[n](r,t))}function j(t,e,n){function i(){var e=this;e._={unlinked:!0},e.inline=!0,e.tagName=t}var o,a,s,l=new ft._tg;if(st(e)?e={depends:e.depends,render:e}:""+e===e&&(e={template:e}),a=e.baseTag){e.flow=!!e.flow,a=""+a===a?n&&n.tags[a]||ut[a]:a,a||S('baseTag: "'+e.baseTag+'" not found'),l=d(l,a);for(s in e)l[s]=r(a[s],e[s])}else l=d(l,e);return void 0!==(o=l.template)&&(l.template=""+o===o?dt[o]||dt(o):o),(i.prototype=l).constructor=l._ctr=i,n&&(l._parentTmpl=n),l}function T(t){return this.base.apply(this,t)}function A(t,n,r,i){function o(n){var o,s;if(""+n===n||n.nodeType>0&&(a=n)){if(!a)if(/^\.?\/[^\\:*?"<>]*$/.test(n))(s=dt[t=t||n])?n=s:a=document.getElementById(n);else if("#"===n.charAt(0))a=document.getElementById(n.slice(1));else if(e.fn&&!ft.rTmpl.test(n))try{a=e(n,document)[0]}catch(l){}a&&("SCRIPT"!==a.tagName&&S(n+": Use script block, not "+a.tagName),i?n=a.innerHTML:(o=a.getAttribute(Lt),o&&(o!==Qt?(n=dt[o],delete dt[o]):e.fn&&(n=e.data(a)[Qt])),o&&n||(t=t||(e.fn?Qt:n),n=A(t,a.innerHTML,r,i)),n.tmplName=t=t||o,t!==Qt&&(dt[t]=n),a.setAttribute(Lt,t),e.fn&&e.data(a,Qt,n))),a=void 0}else n.fn||(n=void 0);return n}var a,s,l=n=n||"";if(ft._html=ct.html,0===i&&(i=void 0,l=o(l)),i=i||(n.markup?n.bnds?d({},n):n:{}),i.tmplName=i.tmplName||t||"unnamed",r&&(i._parentTmpl=r),!l&&n.markup&&(l=o(n.markup))&&l.fn&&(l=l.markup),void 0!==l)return l.render||n.render?l.tmpls&&(s=l):(n=R(l,i),q(l.replace(Pt,"\\$&"),n)),s||(s=d(function(){return s.render.apply(s,arguments)},n),k(s)),s}function P(t,e){return st(t)?t.call(e):t}function F(t,e,n){Object.defineProperty(t,e,{value:n,configurable:!0})}function N(t,n){function r(t){c.apply(this,t)}function i(){return new r(arguments)}function o(t,e){for(var n,r,i,o,a,s=0;s<x;s++)i=f[s],n=void 0,i+""!==i&&(n=i,i=n.getter,a=n.parentRef),void 0===(o=t[i])&&n&&void 0!==(r=n.defaultVal)&&(o=P(r,t)),e(o,n&&u[n.type],i,a)}function a(e){e=e+""===e?JSON.parse(e):e;var n,r,i,a,d=0,c=e,p=[];if(lt(e)){for(e=e||[],n=e.length;d<n;d++)p.push(this.map(e[d]));return p._is=t,p.unmap=l,p.merge=s,p}if(e){for(o(e,function(t,e){e&&(t=e.map(t)),p.push(t)}),c=this.apply(this,p),d=x;d--;)if(i=p[d],a=f[d].parentRef,a&&i&&i.unmap)if(lt(i))for(n=i.length;n--;)F(i[n],a,c);else F(i,a,c);for(r in e)r===at||w[r]||(c[r]=e[r])}return c}function s(t,e,n){t=t+""===t?JSON.parse(t):t;var r,a,s,l,d,c,p,u,f,g,h=0,m=this;if(lt(m)){for(p={},f=[],a=t.length,s=m.length;h<a;h++){for(u=t[h],c=!1,r=0;r<s&&!c;r++)p[r]||(d=m[r],v&&(p[r]=c=v+""===v?u[v]&&(w[v]?d[v]():d[v])===u[v]:v(d,u)));c?(d.merge(u),f.push(d)):(f.push(g=i.map(u)),n&&F(g,n,e))}return void(b?b(m).refresh(f,!0):m.splice.apply(m,[0,m.length].concat(f)))}o(t,function(t,e,n,r){e?m[n]().merge(t,m,r):m[n]()!==t&&m[n](t)});for(l in t)l===at||w[l]||(m[l]=t[l])}function l(){function t(t){for(var e=[],n=0,r=t.length;n<r;n++)e.push(t[n].unmap());return e}var e,n,r,i,o=0,a=this;if(lt(a))return t(a);for(e={};o<x;o++)n=f[o],r=void 0,n+""!==n&&(r=n,n=r.getter),i=a[n](),e[n]=r&&i&&u[r.type]?lt(i)?t(i):i.unmap():i;for(n in a)!a.hasOwnProperty(n)||"_"===n.charAt(0)&&w[n.slice(1)]||n===at||st(a[n])||(e[n]=a[n]);return e}var d,c,p,u=this,f=n.getters,g=n.extend,v=n.id,h=e.extend({_is:t||"unnamed",unmap:l,merge:s},g),m="",_="",x=f?f.length:0,b=e.observable,w={};for(r.prototype=h,d=0;d<x;d++)!function(t){t=t.getter||t,w[t]=d+1;var e="_"+t;m+=(m?",":"")+t,_+="this."+e+" = "+t+";\n",h[t]=h[t]||function(n){return arguments.length?void(b?b(this).setProperty(t,n):this[e]=n):this[e]},b&&(h[t].set=h[t].set||function(t){this[e]=t})}(f[d]);return _=new Function(m,_),c=function(){_.apply(this,arguments),(p=arguments[x+1])&&F(this,arguments[x],p)},c.prototype=h,h.constructor=c,i.map=a,i.getters=f,i.extend=g,i.id=v,i}function R(t,n){var r,i=vt._wm||{},o={tmpls:[],links:{},bnds:[],_is:"template",render:E};return n&&(o=d(o,n)),o.markup=t,o.htmlTag||(r=Rt.exec(t),o.htmlTag=r?r[1].toLowerCase():""),r=i[o.htmlTag],r&&r!==i.div&&(o.markup=e.trim(o.markup)),o}function M(t,e){function n(i,o,a){var s,l,d,c=ft.onStore[t];if(i&&typeof i===Bt&&!i.nodeType&&!i.markup&&!i.getTgt&&!("viewModel"===t&&i.getters||i.extend)){for(l in i)n(l,i[l],o);return o||ot}return i&&""+i!==i&&(a=o,o=i,i=void 0),d=a?"viewModel"===t?a:a[r]=a[r]||{}:n,s=e.compile,void 0===o&&(o=s?i:d[i],i=void 0),null===o?i&&delete d[i]:(s&&(o=s.call(d,i,o,a,0)||{},o._is=t),i&&(d[i]=o)),c&&c(i,o,a,s),o}var r=t+"s";ot[r]=n}function $(t){ht[t]=ht[t]||function(e){return arguments.length?(gt[t]=e,ht):gt[t]}}function V(t){function e(e,n){this.tgt=t.getTgt(e,n),n.map=this}return st(t)&&(t={getTgt:t}),t.baseMap&&(t=d(d({},t.baseMap),t)),t.map=function(t,n){return new e(t,n)},t}function E(t,e,n,r,i,o){var a,s,l,d,c,p,u,f,g=r,v="";if(e===!0?(n=e,e=void 0):typeof e!==Bt&&(e=void 0),(l=this.tag)?(c=this,g=g||c.view,d=g._getTmpl(l.template||c.tmpl),arguments.length||(t=l.contentCtx&&st(l.contentCtx)?t=l.contentCtx(t):g)):d=this,d){if(!r&&t&&"view"===t._is&&(g=t),g&&t===g&&(t=g.data),p=!g,Ct=Ct||p,p&&((e=e||{}).root=t),!Ct||vt.useViews||d.useViews||g&&g!==it)v=O(d,t,e,n,g,i,o,l);else{if(g?(u=g.data,f=g.index,g.index=Ht):(g=it,u=g.data,g.data=t,g.ctx=e),lt(t)&&!n)for(a=0,s=t.length;a<s;a++)g.index=a,g.data=t[a],v+=d.fn(t[a],g,ft);else g.data=t,v+=d.fn(t,g,ft);g.data=u,g.index=f}p&&(Ct=void 0)}return v}function O(t,e,n,r,i,o,a,s){var l,c,p,u,f,g,v,h,m,_,x,b,w,y="";if(s&&(m=s.tagName,b=s.tagCtx,n=n?Q(n,s.ctx):s.ctx,t===i.content?v=t!==i.ctx._wrp?i.ctx._wrp:void 0:t!==b.content?t===s.template?(v=b.tmpl,n._wrp=b.content):v=b.content||i.content:v=i.content,b.props.link===!1&&(n=n||{},n.link=!1)),i&&(a=a||i._.onRender,w=n&&n.link===!1,w&&i._.nl&&(a=void 0),n=Q(n,i.ctx),b=!s&&i.tag?i.tag.tagCtxs[i.tagElse]:b),(_=b&&b.props.itemVar)&&("~"!==_[0]&&D("Use itemVar='~myItem'"),_=_.slice(1)),o===!0&&(g=!0,o=0),a&&s&&s._.noVws&&(a=void 0),h=a,a===!0&&(h=void 0,a=i._.onRender),n=t.helpers?Q(t.helpers,n):n,x=n,lt(e)&&!r)for(p=g?i:void 0!==o&&i||new C(n,"array",i,e,t,o,a,v),p._.nl=w,i&&i._.useKey&&(p._.bnd=!s||s._.bnd&&s,p.tag=s),l=0,c=e.length;l<c;l++)u=new C(x,"item",p,e[l],t,(o||0)+l,a,p.content),_&&((u.ctx=d({},x))[_]=ft._cp(e[l],"#data",u)),f=t.fn(e[l],u,ft),y+=p._.onRender?p._.onRender(f,u):f;else p=g?i:new C(x,m||"data",i,e,t,o,a,v),_&&((p.ctx=d({},x))[_]=ft._cp(e,"#data",p)),p.tag=s,p._.nl=w,y+=t.fn(e,p,ft);return s&&(p.tagElse=b.index,b.contentView=p),h?h(y,p):y}function I(t,e,n){var r=void 0!==n?st(n)?n.call(e.data,t,e):n||"":"{Error: "+(t.message||t)+"}";return gt.onError&&void 0!==(n=gt.onError.call(e.data,t,n&&r,e))&&(r=n),e&&!e._lc?ct.html(r):r}function S(t){throw new ft.Err(t)}function D(t){S("Syntax error\n"+t)}function q(t,e,n,r,i){function o(e){e-=v,e&&m.push(t.substr(v,e).replace(Tt,"\\n"))}function a(e,n){e&&(e+="}}",D((n?"{{"+n+"}} block has {{/"+e+" without {{"+e:"Unmatched or missing {{/"+e)+", in template:\n"+t))}function s(s,l,d,u,g,x,b,w,y,C,k,j){(b&&l||y&&!d||w&&":"===w.slice(-1)||C)&&D(s),x&&(g=":",u=Jt),y=y||n&&!i;var T,A,P,F=(l||n)&&[[]],N="",R="",M="",$="",V="",E="",O="",I="",S=!y&&!g;d=d||(w=w||"#data",g),o(j),v=j+s.length,b?f&&m.push(["*","\n"+w.replace(/^:/,"ret+= ").replace(At,"$1")+";\n"]):d?("else"===d&&(Nt.test(w)&&D('For "{{else if expr}}" use "{{else expr}}"'),F=_[9]&&[[]],_[10]=t.substring(_[10],j),A=_[11]||_[0]||D("Mismatched: "+s),_=h.pop(),m=_[2],S=!0),w&&B(w.replace(Tt," "),F,e,n).replace(Ft,function(t,e,n,r,i,o,a,s){return"this:"===r&&(o="undefined"),s&&(P=P||"@"===s[0]),r="'"+i+"':",a?(R+=n+o+",",$+="'"+s+"',"):n?(M+=r+"j._cp("+o+',"'+s+'",view),',E+=r+"'"+s+"',"):e?O+=o:("trigger"===i&&(I+=o),"lateRender"===i&&(T="false"!==s),N+=r+o+",",V+=r+"'"+s+"',",p=p||Vt.test(i)),""}).slice(0,-1),F&&F[0]&&F.pop(),c=[d,u||!!r||p||"",S&&[],K($||(":"===d?"'#data',":""),V,E),K(R||(":"===d?"data,":""),N,M),O,I,T,P,F||0],m.push(c),S&&(h.push(_),_=c,_[10]=v,_[11]=A)):k&&(a(k!==_[0]&&k!==_[11]&&k,_[0]),_[10]=t.substring(_[10],j),_=h.pop()),a(!_&&k),m=_[2]}var l,d,c,p,u,f=gt.allowCode||e&&e.allowCode||ht.allowCode===!0,g=[],v=0,h=[],m=g,_=[,,g];if(f&&e._is&&(e.allowCode=f),n&&(void 0!==r&&(t=t.slice(0,-r.length-2)+xt),t=mt+t+bt),a(h[0]&&h[0][2].pop()[0]),t.replace(rt,s),o(t.length),(v=g[g.length-1])&&a(""+v!==v&&+v[10]===v[10]&&v[0]),n){for(d=L(g,t,n),u=[],l=g.length;l--;)u.unshift(g[l][9]);U(d,u)}else d=L(g,e);return d}function U(t,e){var n,r,i=0,o=e.length;for(t.deps=[],t.paths=[];i<o;i++){t.paths.push(r=e[i]);for(n in r)"_jsvto"!==n&&r.hasOwnProperty(n)&&r[n].length&&!r[n].skp&&(t.deps=t.deps.concat(r[n]))}}function K(t,e,n){return[t.slice(0,-1),e.slice(0,-1),n.slice(0,-1)]}function J(t,e){return"\n\tparams:{args:["+t[0]+"],\n\tprops:{"+t[1]+"}"+(t[2]?",\n\tctx:{"+t[2]+"}":"")+"},\n\targs:["+e[0]+"],\n\tprops:{"+e[1]+"}"+(e[2]?",\n\tctx:{"+e[2]+"}":"")}function B(t,n,r,i){function o(r,o,d,T,A,P,F,N,R,M,$,V,E,O,I,S,q,U,K,J,B){function L(t,e,r,o,l,d,c,p){if(z="."===r,r&&(A=A.slice(e.length),/^\.?constructor$/.test(p||A)&&D(t),z||(t=(M?(i?"":"(ltOb.lt=ltOb.lt||")+"(ob=":"")+(o?'view.ctxPrm("'+o+'")':l?"view":"data")+(M?")===undefined"+(i?"":")")+'?"":view._getOb(ob,"':"")+(p?(d?"."+d:o?"":l?"":"."+r)+(c||""):(p=o?"":l?d||"":r,"")),t+=p?"."+p:"",t=e+("view.data"===t.slice(0,9)?t.slice(5):t)+(M?(i?'"':'",ltOb')+($?",1)":")"):"")),u)){if(H="_linkTo"===a?s=n._jsvto=n._jsvto||[]:f.bd,W=z&&H[H.length-1]){if(W._cpfn){for(;W.sb;)W=W.sb;W.prm&&(W.bnd&&(A="^"+A.slice(1)),W.sb=A,W.bnd=W.bnd||"^"===A[0])}}else H.push(A);$&&!z&&(y[m]=Y,C[m]=k[m].length)}return t}T&&!N&&(A=T+A),P=P||"",E=E||"",d=d||o||E,A=A||R,M&&(M=!/\)|]/.test(B[J-1]))&&(A=A.slice(1).split(".").join("^")),$=$||U||"";var Q,H,W,Z,z,G,X,Y=J;if(!p&&!c){if(F&&D(t),q&&u){if(Q=y[m-1],B.length-1>Y-(Q||0)){if(Q=e.trim(B.slice(Q,Y+r.length)),H=s||g[m-1].bd,W=H[H.length-1],W&&W.prm){for(;W.sb&&W.sb.prm;)W=W.sb;Z=W.sb={path:W.sb,bnd:W.bnd}}else H.push(Z={path:H.pop()});W&&W.sb===Z&&(k[m]=k[m-1].slice(W._cpPthSt)+k[m],k[m-1]=k[m-1].slice(0,W._cpPthSt)),Z._cpPthSt=C[m-1],Z._cpKey=Q,k[m]+=B.slice(j,J),j=J,Z._cpfn=Wt[Q]=Wt[Q]||new Function("data,view,j","//"+Q+"\nvar v;\nreturn ((v="+k[m]+("]"===S?")]":S)+")!=null?v:null);"),k[m-1]+=w[h]&&vt.cache?'view.getCache("'+Q.replace(Pt,"\\$&")+'"':k[m],Z.prm=f.bd,Z.bnd=Z.bnd||Z.path&&Z.path.indexOf("^")>=0}k[m]=""}"["===$&&($="[j._sq("),"["===d&&(d="[j._sq(")}return X=p?(p=!O,p?r:E+'"'):c?(c=!I,c?r:E+'"'):(d?(b[++h]=!0,_[h]=0,u&&(y[m++]=Y++,f=g[m]={bd:[]},k[m]="",C[m]=1),d):"")+(K?h?"":(v=B.slice(v,Y),(a?(a=l=s=!1,"\b"):"\b,")+v+(v=Y+r.length,u&&n.push(f.bd=[]),"\b")):N?(m&&D(t),u&&n.pop(),a="_"+A,l=T,v=Y+r.length,u&&(u=f.bd=n[a]=[],u.skp=!T),A+":"):A?A.split("^").join(".").replace(ft.rPath,L)+($||P):P?P:S?"]"===S?")]":")":V?(w[h]||D(t),","):o?"":(p=O,c=I,'"')),p||c||S&&(w[h]=!1,h--),u&&(p||c||(S&&(b[h+1]&&(f=g[--m],b[h+1]=!1),x=_[h+1]),$&&(_[h+1]=k[m].length+(d?1:0),(A||S)&&(f=g[++m]={bd:[]},b[h+1]=!0))),k[m]=(k[m]||"")+B.slice(j,J),j=J+r.length,p||c||((G=d&&b[h+1])&&(k[m-1]+=d,C[m-1]++),"("===$&&z&&!Z&&(k[m]=k[m-1].slice(x)+k[m],k[m-1]=k[m-1].slice(0,x))),k[m]+=G?X.slice(1):X),p||c||!$||(h++,A&&"("===$&&(w[h]=!0)),p||c||!U||(u&&(k[m]+=$),X+=$),X}var a,s,l,d,c,p,u=n&&n[0],f={bd:u},g={0:f},v=0,h=0,m=0,_={},x=0,b={},w={},y={},C={0:0},k={0:""},j=0;return"@"===t[0]&&(t=t.replace(Dt,".")),d=(t+(r?" ":"")).replace(ft.rPrm,o),u&&(d=k[0]),!h&&d||D(t)}function L(t,e,n){var r,i,o,a,s,l,d,c,p,u,f,g,v,h,m,_,x,b,w,y,C,k,j,T,A,P,F,N,M,$,V,E,O,I=0,S=vt.useViews||e.useViews||e.tags||e.templates||e.helpers||e.converters,q="",K={},B=t.length;for(""+e===e?(b=n?'data-link="'+e.replace(Tt," ").slice(1,-1)+'"':e,e=0):(b=e.tmplName||"unnamed",e.allowCode&&(K.allowCode=!0),e.debug&&(K.debug=!0),f=e.bnds,x=e.tmpls),r=0;r<B;r++)if(i=t[r],""+i===i)q+='+"'+i+'"';else if(o=i[0],"*"===o)q+=";\n"+i[1]+"\nret=ret";else{if(a=i[1],C=!n&&i[2],s=J(i[3],v=i[4]),$=i[6],V=i[7],i[8]?(E="\nvar ob,ltOb={},ctxs=",O=";\nctxs.lt=ltOb.lt;\nreturn ctxs;"):(E="\nreturn ",O=""),k=i[10]&&i[10].replace(At,"$1"),(A="else"===o)?g&&g.push(i[9]):(N=i[5]||gt.debugMode!==!1&&"undefined",f&&(g=i[9])&&(g=[g],I=f.push(1))),S=S||v[1]||v[2]||g||/view.(?!index)/.test(v[0]),(P=":"===o)?a&&(o=a===Jt?">":a+o):(C&&(w=R(k,K),w.tmplName=b+"/"+o,w.useViews=w.useViews||S,L(C,w),S=w.useViews,x.push(w)),A||(y=o,S=S||o&&(!ut[o]||!ut[o].flow),T=q,q=""),j=t[r+1],j=j&&"else"===j[0]),M=N?";\ntry{\nret+=":"\n+",h="",m="",P&&(g||$||a&&a!==Jt||V)){if(F=new Function("data,view,j","// "+b+" "+ ++I+" "+o+E+"{"+s+"};"+O),F._er=N,F._tag=o,F._bd=!!g,F._lr=V,n)return F;U(F,g),_='c("'+a+'",view,',u=!0,h=_+I+",",m=")"}if(q+=P?(n?(N?"try{\n":"")+"return ":M)+(u?(u=void 0,S=p=!0,_+(F?(f[I-1]=F,I):"{"+s+"}")+")"):">"===o?(d=!0,"h("+v[0]+")"):(c=!0,"((v="+v[0]+")!=null?v:"+(n?"null)":'"")'))):(l=!0,"\n{view:view,content:false,tmpl:"+(C?x.length:"false")+","+s+"},"),y&&!j){if(q="["+q.slice(0,-1)+"]",_='t("'+y+'",view,this,',n||g){if(q=new Function("data,view,j"," // "+b+" "+I+" "+y+E+q+O),q._er=N,q._tag=y,g&&U(f[I-1]=q,g),q._lr=V,n)return q;h=_+I+",undefined,",m=")"}q=T+M+_+(g&&I||q)+")",g=0,y=0}N&&!j&&(S=!0,q+=";\n}catch(e){ret"+(n?"urn ":"+=")+h+"j._err(e,view,"+N+")"+m+";}"+(n?"":"\nret=ret"))}q="// "+b+(K.debug?"\ndebugger;":"")+"\nvar v"+(l?",t=j._tag":"")+(p?",c=j._cnvt":"")+(d?",h=j._html":"")+(n?(i[8]?", ob":"")+";\n":',ret=""')+q+(n?"\n":";\nreturn ret;");try{q=new Function("data,view,j",q)}catch(Q){D("Compiled template code:\n\n"+q+'\n: "'+(Q.message||Q)+'"')}return e&&(e.fn=q,e.useViews=!!S),q}function Q(t,e){return t&&t!==e?e?d(d({},e),t):t:e&&d({},e)}function H(t,n){var r,i,o=n.map,a=o&&o.propsArr;if(!a){if(a=[],typeof t===Bt||st(t))for(r in t)i=t[r],r===at||!t.hasOwnProperty(r)||n.props.noFunctions&&e.isFunction(i)||a.push({key:r,prop:i});o&&(o.propsArr=o.options&&a)}return W(a,n)}function W(t,n){var r,i,o,a=n.tag,s=n.props,l=n.params.props,d=s.filter,c=s.sort,p=c===!0,u=parseInt(s.step),f=s.reverse?-1:1;if(!lt(t))return t;if(p||c&&""+c===c?(r=t.map(function(t,e){return t=p?t:g(t,c),{i:e,v:""+t===t?t.toLowerCase():t}}),r.sort(function(t,e){return t.v>e.v?f:t.v<e.v?-f:0}),t=r.map(function(e){return t[e.i]})):(c||f<0)&&!a.dataMap&&(t=t.slice()),st(c)&&(t=t.sort(function(){return c.apply(n,arguments)})),f<0&&(!c||st(c))&&(t=t.reverse()),t.filter&&d&&(t=t.filter(d,n),n.tag.onFilter&&n.tag.onFilter(n)),l.sorted&&(r=c||f<0?t:t.slice(),a.sorted?e.observable(a.sorted).refresh(r):n.map.sorted=r),i=s.start,o=s.end,(l.start&&void 0===i||l.end&&void 0===o)&&(i=o=0),isNaN(i)&&isNaN(o)||(i=+i||0,o=void 0===o||o>t.length?t.length:+o,t=t.slice(i,o)),u>1){for(i=0,o=t.length,r=[];i<o;i+=u)r.push(t[i]);t=r}return l.paged&&a.paged&&$observable(a.paged).refresh(t),t}function Z(t,n,r){var i=this.jquery&&(this[0]||S("Unknown template")),o=i.getAttribute(Lt);return E.call(o&&e.data(i)[Qt]||dt(i),t,n,r)}function z(t){return Ut[t]||(Ut[t]="&#"+t.charCodeAt(0)+";")}function G(t,e){return Kt[e]||""}function X(t){return void 0!=t?$t.test(t)&&(""+t).replace(Ot,z)||t:""}function Y(t){return""+t===t?t.replace(It,z):t}function tt(t){return""+t===t?t.replace(St,G):t}var et=e===!1;e=e&&e.fn?e:t.jQuery;var nt,rt,it,ot,at,st,lt,dt,ct,pt,ut,ft,gt,vt,ht,mt,_t,xt,bt,wt,yt,Ct,kt="v1.0.11",jt="_ocp",Tt=/[ \t]*(\r\n|\n|\r)/g,At=/\\(['"\\])/g,Pt=/['"\\]/g,Ft=/(?:\x08|^)(onerror:)?(?:(~?)(([\w$.]+):)?([^\x08]+))\x08(,)?([^\x08]+)/gi,Nt=/^if\s/,Rt=/<(\w+)[>\s]/,Mt=/[\x00`><"'&=]/g,$t=/[\x00`><\"'&=]/,Vt=/^on[A-Z]|^convert(Back)?$/,Et=/^\#\d+_`[\s\S]*\/\d+_`$/,Ot=Mt,It=/[&<>]/g,St=/&(amp|gt|lt);/g,Dt=/\[['"]?|['"]?\]/g,qt=0,Ut={"&":"&amp;","<":"&lt;",">":"&gt;","\0":"&#0;","'":"&#39;",'"':"&#34;","`":"&#96;","=":"&#61;"},Kt={amp:"&",gt:">",lt:"<"},Jt="html",Bt="object",Lt="data-jsv-tmpl",Qt="jsvTmpl",Ht="For #index in nested block use #getIndex().",Wt={},Zt={},zt=t.jsrender,Gt=zt&&e&&!e.render,Xt={template:{compile:A},tag:{compile:j},viewModel:{compile:N},helper:{},converter:{}};if(ot={jsviews:kt,sub:{rPath:/^(!*?)(?:null|true|false|\d[\d.]*|([\w$]+|\.|~([\w$]+)|#(view|([\w$]+))?)([\w$.^]*?)(?:[.[^]([\w$]+)\]?)?)$/g,rPrm:/(\()(?=\s*\()|(?:([([])\s*)?(?:(\^?)(~?[\w$.^]+)?\s*((\+\+|--)|\+|-|~(?![\w$])|&&|\|\||===|!==|==|!=|<=|>=|[<>%*:?\/]|(=))\s*|(!*?(@)?[#~]?[\w$.^]+)([([])?)|(,\s*)|(?:(\()\s*)?\\?(?:(')|("))|(?:\s*(([)\]])(?=[.^]|\s*$|[^([])|[)\]])([([]?))|(\s+)/g,View:C,Err:l,tmplFn:q,parse:B,extend:d,extendCtx:Q,syntaxErr:D,onStore:{template:function(t,e){null===e?delete Zt[t]:t&&(Zt[t]=e)}},addSetting:$,settings:{allowCode:!1},advSet:a,_thp:i,_gm:r,_tg:function(){},_cnvt:m,_tag:y,_er:S,_err:I,_cp:o,_sq:function(t){return"constructor"===t&&D(""),t}},settings:{delimiters:c,advanced:function(t){return t?(d(vt,t),ft.advSet(),ht):vt}},map:V},(l.prototype=new Error).constructor=l,u.depends=function(){return[this.get("item"),"index"]},f.depends="index",C.prototype={get:p,getIndex:f,ctxPrm:v,getRsc:w,_getTmpl:h,_getOb:g,getCache:function(t){return gt._cchCt>this.cache._ct&&(this.cache={_ct:gt._cchCt}),void 0!==this.cache[t]?this.cache[t]:this.cache[t]=Wt[t](this.data,this,ft)},_is:"view"},ft=ot.sub,ht=ot.settings,!(zt||e&&e.render)){for(nt in Xt)M(nt,Xt[nt]);if(ct=ot.converters,pt=ot.helpers,ut=ot.tags,ft._tg.prototype={baseApply:T,cvtArgs:_,bndArgs:b,ctxPrm:v},it=ft.topView=new C,e){if(e.fn.render=Z,at=e.expando,e.observable){if(kt!==(kt=e.views.jsviews))throw"jquery.observable.js requires jsrender.js "+kt;d(ft,e.views.sub),ot.map=e.views.map}}else e={},et&&(t.jsrender=e),e.renderFile=e.__express=e.compile=function(){throw"Node.js: use npm jsrender, or jsrender-node.js"},e.isFunction=function(t){return"function"==typeof t},e.isArray=Array.isArray||function(t){return"[object Array]"==={}.toString.call(t)},ft._jq=function(t){t!==e&&(d(t,e),e=t,e.fn.render=Z,delete e.jsrender,at=e.expando)},e.jsrender=kt;gt=ft.settings,gt.allowCode=!1,st=e.isFunction,e.render=Zt,e.views=ot,e.templates=dt=ot.templates;for(yt in gt)$(yt);(ht.debugMode=function(t){return void 0===t?gt.debugMode:(gt._clFns&&gt._clFns(),gt.debugMode=t,gt.onError=t+""===t?function(){return t}:st(t)?t:void 0,ht)})(!1),vt=gt.advanced={cache:!0,useViews:!1,_jsv:!1},ut({"if":{render:function(t){var e=this,n=e.tagCtx,r=e.rendering.done||!t&&(n.args.length||!n.index)?"":(e.rendering.done=!0,void(e.selected=n.index));return r},contentCtx:!0,flow:!0},"for":{sortDataMap:V(W),init:function(t,e){this.setDataMap(this.tagCtxs)},render:function(t){var e,n,r,i,o,a=this,s=a.tagCtx,l=s.argDefault===!1,d=s.props,c=l||s.args.length,p="",u=0;if(!a.rendering.done){if(e=c?t:s.view.data,l)for(l=d.reverse?"unshift":"push",i=+d.end,o=+d.step||1,e=[],r=+d.start||0;(i-r)*o>0;r+=o)e[l](r);void 0!==e&&(n=lt(e),p+=s.render(e,!c||d.noIteration),u+=n?e.length:1),(a.rendering.done=u)&&(a.selected=s.index)}return p},setDataMap:function(t){for(var e,n,r,i=this,o=t.length;o--;)e=t[o],n=e.props,r=e.params.props,e.argDefault=void 0===n.end||e.args.length>0,n.dataMap=e.argDefault!==!1&&lt(e.args[0])&&(r.sort||r.start||r.end||r.step||r.filter||r.reverse||n.sort||n.start||n.end||n.step||n.filter||n.reverse)&&i.sortDataMap},flow:!0},props:{baseTag:"for",dataMap:V(H),init:a,flow:!0},include:{flow:!0},"*":{render:o,flow:!0},":*":{render:o,flow:!0},dbg:pt.dbg=ct.dbg=s}),ct({html:X,attr:X,encode:Y,unencode:tt,url:function(t){return void 0!=t?encodeURI(""+t):null===t?t:""}})}return gt=ft.settings,lt=(e||zt).isArray,ht.delimiters("{{","}}","^"),Gt&&zt.views.sub._jq(e),e||zt},window);
 /*!
 *  filename: ej.core.min.js
 *  version : 14.4.0.15
@@ -251,12 +237,144 @@ this.setWidth(),this.$lis&&this.$searchbox.trigger("propertychange"),this.$eleme
 */
 (function(n){typeof define=="function"&&define.amd?define(["./../common/ej.core.min","./ej.checkbox.min"],n):n()})(function(){(function(n,t,r){t.widget("ejMenu","ej.Menu",{element:null,model:null,validTags:["ul"],_setFirst:!1,_rootCss:"e-menu",angular:{terminal:!1},defaults:{height:"",width:"",animationType:"default",orientation:t.Orientation.Horizontal,menuType:"normalmenu",isResponsive:!0,contextMenuTarget:null,htmlAttributes:{},cssClass:"",openOnClick:!1,subMenuDirection:"none",enableCenterAlign:!1,showRootLevelArrows:!0,showSubLevelArrows:!0,enableAnimation:!0,enableSeparator:!0,enabled:!0,fields:{child:null,dataSource:null,query:null,tableName:null,id:"id",parentId:"parentId",text:"text",spriteCssClass:"spriteCssClass",url:"url",imageAttribute:"imageAttribute",htmlAttribute:"htmlAttribute",linkAttribute:"linkAttribute",imageUrl:"imageUrl"},enableRTL:!1,titleText:"Menu",excludeTarget:null,beforeOpen:null,open:null,close:null,mouseover:null,mouseout:null,click:null,keydown:null,create:null,destroy:null},dataTypes:{animationType:"enum",cssClass:"string",titleText:"string",openOnClick:"boolean",enabled:"boolean",enableCenterAlign:"boolean",showArrow:"boolean",showRootLevelArrows:"boolean",showSubLevelArrows:"boolean",enableSeparator:"boolean",isResponsive:"boolean",enableRTL:"boolean",enableAnimation:"boolean",fields:{dataSource:"data",query:"data",child:"data"},excludeTarget:"string",htmlAttributes:"data"},_setModel:function(i){for(var r in i)switch(r){case"menuType":i[r]=this.model.menuType;break;case"fields":this._wireEvents("_off");this.element.empty().insertBefore(this.wrapper);this.wrapper.remove();n.extend(this.model.fields,i[r]);this._intializeData();this.model.enabled||this._wireEvents("_off");break;case"orientation":this._setOrientation(i[r]);break;case"showRootLevelArrows":this._addArrow(i[r],this.model.showSubLevelArrows);break;case"showSubLevelArrows":this._addArrow(this.model.showRootLevelArrows,i[r]);break;case"enableSeparator":this._setSeparator(i[r]);break;case"height":this._setHeight(i[r]);break;case"width":this._setWidth(i[r]);break;case"cssClass":this._setSkin(i[r]);break;case"isResponsive":this.model.isResponsive?this._responsiveLayout():(n(this.resWrap).remove(),n(this.wrapper).removeClass("e-menu-responsive"),n(this.element).removeClass("e-menu-responsive"),this.resWrap=null);break;case"htmlAttributes":this._addAttr(i[r]);break;case"enableRTL":this._setRTL(i[r]);break;case"enableCenterAlign":this._centerAlign(i[r]);break;case"excludeTarget":this.model.excludeTarget=i[r];break;case"enabled":this.model.enabled=i[r];this._controlStatus(i[r]);break;case"animationType":this._setAnimation(i[r]);break;case"enableAnimation":this.model.enableAnimation=i[r];break;case"openOnClick":this._hoverOpen=!i[r];this._hoverClose=!i[r];break;case"subMenuDirection":this._setSubMenuDirection(this.model.subMenuDirection);break;case"titleText":this.model.menuType!=t.MenuType.ContextMenu&&this.model.orientation!="vertical"&&n(this.label).text(i[r])}},_destroy:function(){this.model.menuType==t.MenuType.ContextMenu?this._referenceElement.append(this._cloneElement):this._cloneElement.insertBefore(this.wrapper);this._cloneElement.removeClass("e-menu e-js");this.wrapper.remove()},_init:function(){this._cloneElement=this.element.clone();this.element.css("visibility","hidden");this._setValues();this._intializeData();this.element.css("visibility","visible")},_setValues:function(){this._mouseOver=!0;this._hoverOpen=!0;this._hoverClose=!0;this._isMenuOpen=!1;this._hideSpeed=100;this._showSpeed=100;this._isSubMenuOpen=!1;this._isContextMenuOpen=!1;this._disabledMenuItems=[];this._hiddenMenuItems=[];this._delayMenuHover=0;this._delaySubMenuHover=0;this._delaySubMenuShow=0;this._preventContextOpen=!0;this._setAnimation(this.model.animationType);this._isFocused=!0},_intializeData:function(){t.isNullOrUndefined(this.model.fields)||this.model.fields.dataSource==null?(this._renderMenu(),this._wireEvents("_on")):(this._generateTemplate(this.model.fields.dataSource),this._renderMenu())},_renderMenu:function(){this._renderControl();this._addArrow(this.model.showRootLevelArrows,this.model.showSubLevelArrows);this._renderArrow();this._intializeMenu()},_renderControl:function(){this.model.menuType=="normalmenu"?(this.wrapper=t.buildTag("div"),this.wrapper.addClass(this.model.cssClass+" e-menu-wrap")):this.wrapper=t.buildTag("div.e-menu-wrap");this.model.isResponsive&&this._responsiveLayout();this.model.menuType!=t.MenuType.ContextMenu&&(this.wrapper.insertBefore(this.element),this.wrapper.append(this.element),this.checkBox!=null&&this.checkBox.ejCheckBox({size:"medium",change:this._oncheck}));this.element.addClass("e-menu e-widget e-box").attr({role:"menu",tabindex:0});this._addAttr(this.model.htmlAttributes);this.model.enableRTL&&this._setRTL(this.model.enableRTL);this._setSubMenuDirection(this.model.subMenuDirection);this.model.menuType=="normalmenu"?this.model.orientation=="horizontal"?this.element.addClass("e-horizontal"):this.element.addClass("e-vertical"):this._contextMenu_Template();this._addClass();this.model.enableCenterAlign&&this._centerAlign(this.model.enableCenterAlign);this.model.enableSeparator&&this._setSeparator(!0);this.model.enabled||this.disable()},_responsiveLayout:function(){this.model.menuType!=t.MenuType.ContextMenu&&this.model.orientation!="vertical"&&(this.wrapper.addClass("e-menu-responsive"),this.element.addClass("e-menu-responsive"),this.resWrap=t.buildTag("span.e-menu-res-wrap e-menu-responsive"),this.inResWrap=t.buildTag("span.e-in-wrap e-box e-menu-res-in-wrap"),this.label=t.buildTag("span.e-res-title",this.model.titleText),this.check=t.buildTag("span.e-check-wrap e-icon"),this.checkBox=t.buildTag("input#responsive.e-res-icon","",{opacity:0},{type:"checkbox"}),this.wrapper.append(this.resWrap),this.resWrap.append(this.inResWrap),this.inResWrap.append(this.label).append(this.check),this.check.append(this.checkBox))},_addAttr:function(t){var i=this;n.map(t,function(n,t){t=="class"?i.wrapper.addClass(n):t=="disabled"&&n=="disabled"?i.disable():i.element.attr(t,n)})},_oncheck:function(n){var t=this.element.parents(".e-menu-wrap").children(".e-menu");n.isChecked?t.removeClass("e-res-hide").addClass("e-res-show"):t.removeClass("e-res-show").addClass("e-res-hide")},_addClass:function(){this.element.find('li:has("> ul")').find("> a,> span").addClass("aschild");this.element.find(">li").addClass("e-list").attr({role:"menuitem"});this.element.find("li").find(">a, >span").addClass("e-menulink");var u=this.element.find(".e-list a.aschild"),f=this.element.find(".e-list span.aschild"),t,r;for(i=0;i<u.length;i++)t=n(u[i]),t.siblings().attr({"aria-hidden":!0}),t.parent().attr({"aria-haspopup":!0,role:"menu"}).addClass("e-haschild"),t.siblings("ul").children("li").addClass("e-list").attr("role","menuitem");for(i=0;i<f.length;i++)r=n(f[i]),r.siblings().attr({"aria-hidden":!0}),r.parent().attr({"aria-haspopup":!0,role:"menu"}).addClass("e-haschild"),r.siblings("ul").children("li").addClass("e-list").attr("role","menuitem")},_renderArrow:function(){if(this.model.menuType!=t.MenuType.ContextMenu&&this.model.orientation!="vertical"&&n(n(this.element).find("span.e-menu-arrow")).length==0){var i=t.buildTag("span.e-menu-arrow e-menu-left");n(i).append("<span class='e-arrowMenuOuter'><\/span>").append("<span class='e-arrowMenuInner'><\/span>");this.element.find(">li.e-list.e-haschild").append(i)}},_generateTemplate:function(n){var i=this,r;n instanceof t.DataManager?(r=n.executeQuery(this._columnToSelect(this.model.fields)),r.done(function(n){i._odataFlag=!0;i._generateItemTemplate(n.result);i._wireEvents("_on")})):(i._odataFlag=!1,this._generateItemTemplate(i.model.fields.dataSource),this._wireEvents("_on"))},_generateItemTemplate:function(n){for(var i,t=0;t<n.length;t++)(n[t][this.model.fields.parentId]==null||n[t][this.model.fields.parentId]==0)&&(i=this._menuTemplate(n[t],n,this.model.fields),this.element.append(i))},_menuTemplate:function(i,r,u){var f,o,l,y,c,a,p,e,h,s,v;if(f=n(document.createElement("li")),f.attr("class","e-list"),i[u.htmlAttribute]&&this._setAttributes(i[u.htmlAttribute],f),o=n(document.createElement("a")),o.attr("class","e-menulink"),i[u.imageUrl]&&i[u.imageUrl]!=""?(l=n(document.createElement("img")),l.attr("src",i[u.imageUrl]),i[u.imageAttribute]&&this._setAttributes(i[u.imageAttribute],l),o.append(l)):i[u.spriteCssClass]&&i[u.spriteCssClass]!=""&&(y=n(document.createElement("span")),y.addClass(i[u.spriteCssClass]),o.append(y)),o.append(i[u.text]),i[u.linkAttribute]&&this._setAttributes(i[u.linkAttribute],o),i[u.url]&&o.attr("href",i[u.url]),f.append(o),i[u.id]&&f.prop("id",i[u.id]),t.isNullOrUndefined(u.child)){if(!this._odataFlag&&(e=t.DataManager(u.dataSource).executeLocal(t.Query().where(u.parentId,t.FilterOperators.equal,i[u.id])),e&&e.length>0)){for(h=t.buildTag("ul"),s=0;s<e.length;s++)v=this._menuTemplate(e[s],u.dataSource,u),h.append(v);f.append(h)}}else if(this._odataFlag=!0,u.child.dataSource instanceof t.DataManager)c=this,a=t.Query(),n(f).attr({"aria-haspopup":!0,role:"menu"}).addClass("e-haschild"),a=this._columnToSelect(u.child),a.where(u.child.parentId,t.FilterOperators.equal,i[u.id]),p=u.child.dataSource.executeQuery(a),p.done(function(t){var i=t.result,e,r,o;if(i&&i.length>0){for(e=n(document.createElement("ul")),r=0;r<i.length;r++)o=c._menuTemplate(i[r],u.child.dataSource,u.child),e.append(o);f.append(e);n(f).children("a").addClass("aschild");n(f).parent().hasClass("e-menu")&&c.model.showRootLevelArrows?n(f).children("a.aschild").append(n("<span>").addClass("e-icon e-arrowhead-down")).addClass("e-arrow-space"):c.model.showSubLevelArrows&&n(f).children("a.aschild").append(n("<span>").addClass("e-icon e-arrowhead-right")).addClass("e-arrow-space")}}),p.then(function(){c._renderArrow()});else if(t.isNullOrUndefined(i.child)||(t.isPlainObject(i.child)?e=t.DataManager(u.child.dataSource).executeLocal(t.Query().where(u.child.parentId,t.FilterOperators.equal,i[u.id])):i.child instanceof Array&&(e=i.child)),e&&e.length>0){for(h=n(document.createElement("ul")),s=0;s<e.length;s++)v=this._menuTemplate(e[s],u.child.dataSource,u.child),h.append(v);f.append(h)}return f},_setAttributes:function(n,t){for(var i in n)i=="class"?t.addClass(n[i]):t.attr(i,n[i])},_addArrow:function(t,i){if(t){var r=this.model.orientation=="horizontal"?"e-arrowhead-down":"e-arrowhead-right";this.element.find('>li.e-list:has("> ul")').children("a,span").append(n("<span>").addClass("e-icon "+r)).addClass("e-arrow-space")}else this.element.find('>li.e-list:has("> ul")').children("a,span").removeClass("e-arrow-space").children("span.e-icon").remove();i?this.element.find(">li.e-list > ul li.e-list:has(>ul)").children("a,span").append(n("<span>").addClass("e-icon e-arrowhead-right")).addClass("e-arrow-space"):this.element.find(">li.e-list > ul li.e-list:has(>ul)").children("a,span").removeClass("e-arrow-space").children("span.e-icon").remove()},_intializeMenu:function(){this.model.height!=0&&this._setHeight(this.model.height);this.model.width!=0&&this._setWidth(this.model.width);this.model.menuType=="contextmenu"&&(this.model.openOnClick=!1);this.model.openOnClick&&(this._hoverOpen=!1,this._hoverClose=!1)},_setOrientation:function(n){n=="horizontal"?this.element.removeClass("e-vertical e-horizontal").addClass("e-horizontal"):this.element.removeClass("e-horizontal e-vertical").addClass("e-vertical")},_setHeight:function(n){this.model.orientation=="horizontal"&&n!=="auto"?(n=typeof n=="number"?n+"px":n,this.element.find("> li").find(">a:first").css("line-height",n),this.model.showRootLevelArrows&&this.element.find("> li").find(">a:first").find("> span:first").css({"line-height":n,top:"0px"})):this.element.height(n)},_setWidth:function(n){this.element.css("width",n);this.model.orientation==="horizontal"&&this.model.isResponsive&&this.resWrap.css("width",n)},_setRTL:function(n){n?this.element.removeClass("e-rtl").addClass("e-rtl"):this.element.removeClass("e-rtl");n&&this.model.orientation==="horizontal"?this.wrapper.removeClass("e-menu-rtl").addClass("e-menu-rtl"):this.wrapper.removeClass("e-menu-rtl");this.model.subMenuDirection=n?"left":"right"},_setSubMenuDirection:function(n){n!="left"&&n!="right"&&(this.model.subMenuDirection=this.model.enableRTL?"left":"right")},_setAnimation:function(n){n==="none"?(this._showAnim="none",this._hideAnim="none"):(this._showAnim="slideDown",this._hideAnim="slideUp")},_controlStatus:function(n){n!=!0?this.disable():this.enable()},_centerAlign:function(n){this.model.orientation=="horizontal"&&n?this.element.css("text-align","center"):this.element.css("text-align","inherit")},_columnToSelect:function(n){var u=[],r=t.Query(),i;if(t.isNullOrUndefined(n.query)){for(i in n)i!=="tableName"&&i!=="child"&&i!=="dataSource"&&n[i]&&u.push(n[i]);u.length>0&&r.select(u);this.model.fields.dataSource.dataSource.url.match(n.tableName+"$")||t.isNullOrUndefined(n.tableName)||r.from(n.tableName)}else r=n.query;return r},_max_zindex:function(){var i,r,t;return this.model.menuType=="contextmenu"?(i=n(this._targetElement).parents(),i.push(this._targetElement)):i=n(this.element).parents(),r=n("body").children(),index=r.index(this.popup),r.splice(index,1),n(r).each(function(n,t){i.push(t)}),t=Math.max.apply(t,n.map(i,function(t){if(n(t).css("position")!="static")return parseInt(n(t).css("z-index"))||1})),!t||t<1e4?t=1e4:t+=1,t},_recursiveFunction:function(t,i){var r=this,u=!1;n.each(t,function(n,t){return t.Text==i?(r.selectedItem=t,u=!0,!1):(t.ChildItems!=null&&r._recursiveFunction(t.ChildItems,i),u?!1:void 0)})},_contextMenu_Template:function(){var t=n(".e-menu-wrap #"+this.element[0].id).get(0);t&&n(t.parentElement).remove();this.model.orientation="vertical";this.element.addClass(this.model.cssClass+" e-context");this.element.css("display","none");this._referenceElement=this.element.parent();n("body").append(this.element);this.wrapper.insertBefore(this.element);this.wrapper.append(this.element)},_closeMenu:function(){this._hideAnimation(this.element.find('li.e-list:has("> ul")').find("> ul:visible"),this._hideAnim)},_onMenuIntent:function(n,t,i){t._delayMenuHover=window.setTimeout(function(){if(t._mouseOver==!0&&i){var r=t._showAnim,u=t._hideAnim,f=t._showSpeed,e=t._hideSpeed;t._show(n,r,u)}},this._showSpeed)},_onHide:function(n,t,i){t._delaySubMenuHover=window.setTimeout(function(){if(t._mouseOver==!1&&i){var n=t._id,r=t._hideAnim,u=t._hideSpeed;t._closeAll()}},t._hideSpeed)},_subMenuPos:function(t,i){var e=n(t).offset(),v,y,h=e.left,u=n("ul:first",t),c=n(t).outerWidth(),f,s,l,a,p,o,w;if(e==null||e==r)return!1;f=u.outerWidth()+1;s=document.documentElement.clientWidth+n(document).scrollLeft();this.model.menuType=="normalmenu"?n(t.parentNode).is(this.element)?this.model.orientation=="horizontal"?(u.css("top",n(t).outerHeight()+"px"),this.model.enableRTL?(y=h+c-f<0?h+c-f:1,u.css({left:"auto",right:y+"px"})):(v=s<h+f?h+f-s:1,u.css("left",v*-1+"px"))):i=="left"&&h>f||i=="right"&&s<=e.left+c+f?u.css("left",-(f+4)+"px"):u.css("left",n(t).outerWidth()+4+"px"):i=="left"&&h>f||i=="right"&&s<=e.left+c+f?u.css("left",-(f+4)+"px"):(u.css("left",n(t).outerWidth()+4+"px"),o=u.outerHeight(),l=n(window).height(),l<o?(a=e.top-n(window).scrollTop(),u.css("top",-a+4+"px")):l-e.top<o&&(a=l-e.top-o,u.css("top",a-2+"px"))):(s-=e.left+2*f+4,s<0?(p=f==null?"-206.5px":"-"+(f+5)+"px",u.css("left",p)):u.parent("li.e-list").parent("ul").width()&&i=="right"?u.css("left",u.parent("li.e-list").parent("ul").width()+4+"px"):e.left>f&&u.css("left",-(f+4)+"px"),o=u.outerHeight(),e.top+o>n(window).height()?(w=-o+n(t).outerHeight(),o>e.top+n(t).outerHeight()/2?u.css("top",-(o/2)+"px"):u.css("top",w+"px")):u.css("top","0px"))},_setSkin:function(n){this.wrapper.removeClass(this.model.cssClass).addClass(n+" e-menu-wrap")},_setSeparator:function(n){n?this.element.addClass("e-separator"):this.element.removeClass("e-separator")},_contextMenuEvents:function(t){this[t](n(this.model.contextMenuTarget),"mouseup taphold",this._ContextMenuHandler);this[t](this.element,"contextmenu",this._onDefaultPreventer);this[t](n(this.model.contextMenuTarget),"contextmenu",this._onDefaultPreventer);this[t](n(document),"mousedown",this._onContextClose)},_show:function(t,i,r){var f,u=n("> ul",t),e=this._max_zindex();u.attr({"aria-hidden":!1});this._hideAnimation(n(t).siblings().find(" > ul:visible"),r);n.inArray(this._disabledMenuItems,t)>-1||(u.css("display")!="none"?(f=this.model.openOnClick?n(u):u.children().find("> ul"),this._hideAnimation(f,r)):n("> ul",t).children().find("> ul").hide(),this._subMenuPos(t,this.model.subMenuDirection),u.css({"z-index":e+1}),n(t).children("span.e-menu-arrow").css({"z-index":e+2}),n("> ul",t).css("display")=="block"||n(t).hasClass("e-disable-item")||(this._showAnimation(u,i),u.closest("li").addClass("e-active e-mfocused")),n(t).siblings("li.e-active").length>0&&n(t).siblings("li.e-active").removeClass("e-active e-mfocused"))},_closeAll:function(){this._hideAnimation(this.element.find('li.e-list:has("> ul")').find("> ul:visible"),this._hideAnim);this._hideAnimation(this.element.find("> ul:visible"),this._hideAnim)},_showAnimation:function(n,t){switch(t){case"slideDown":n.slideDown(this.model.enableAnimation?200:0);break;case"none":n.css("display","block")}},_hideAnimation:function(t,i){switch(i){case"slideUp":n(t).attr({"aria-hidden":!0});t.slideUp(this.model.enableAnimation?100:0);break;case"none":t.css("display","none")}t.closest("li").removeClass("e-active e-mfocused")},_removeValue:function(i,r){for(var f=t.browserInfo(),e=f.version==="8.0"&&f.name==="msie"?i[0].outerText:i[0].textContent,o=n(r).length,u=0,s=n(r).children("a").length==0?n(r).children("span"):n(r).children("a");u<=o;){if(n(s[u]).text()===e)return u;u++}},_createSubLevelItem:function(t,i){var r;r=n(document.createElement("ul"));r.append(i);t.append(r);t.attr({role:"menu","aria-haspopup":"true"});t.addClass("e-haschild");this.element.find('li:has("> ul")').find("> a,>span").addClass("aschild e-arrow-space");this._insertArrows(r)},_insertArrows:function(t){this.model.showRootLevelArrows?t.find(">a,>span").append(n("<span>").addClass("e-icon e-arrowhead-down")).addClass("e-arrow-space"):t.find(">a,>span").removeClass("e-arrow-space").find(">span.e-icon").remove();this.model.showSubLevelArrows?t.parent("li.e-list:has(>ul)").children("a,span").append(n("<span>").addClass("e-icon e-arrowhead-right")).addClass("e-arrow-space"):t.parent("li.e-list:has(>ul)").children("a,span").removeClass("e-arrow-space").find(">span.e-icon").remove()},_createMenuItem:function(t){var r,i,u,f;return r=n(document.createElement("li")),r.attr({"class":"e-list",role:"menuitem"}),t.htmlAttribute&&this._setAttributes(t.htmlAttribute,r),t.text&&t.text!=""&&(i=n(document.createElement("a")),i.attr({"class":"e-menulink"}),t.imageUrl&&t.imageUrl!=""?(u=n(document.createElement("img")),u.attr("src",t.imageUrl),t.imageAttribute&&this._setAttributes(t.imageAttribute,u),i.append(u)):t.spriteCssClass&&t.spriteCssClass!=""&&(f=n(document.createElement("span")),f.addClass(t.spriteCssClass),i.append(f)),i.append(t.text),t.linkAttribute&&this._setAttributes(t.linkAttribute,i),t.url&&i.attr("href",t.url),r.append(i)),t.id&&r.prop("id",t.id),this.model.enabled||r.addClass("e-disable-item"),r},_insertNode:function(i,r,u){var e=0,o=0,s=0,f=[];for(n(r).is(this.element)?f.push(this.element):typeof r=="string"?f.push(this.element.find(r)):typeof r=="undefined"?f.push(this.element):f.push(r),o=0;o<f.length;o++)for(s=0;s<f[o].length;s++)for(e=0;e<i.length&&!t.isNullOrUndefined(i[e]);e++)this._addItem(i[e],f[o][s],u)},_addItem:function(t,i,r){var u,f;this._wireEvents("_off");u=this._createMenuItem(t);i=i==="default"?n("#"+t.parentId):n(i);switch(r){case"insert":f=n(i).is(this.element)?i:i.children("ul");f.length!=0?f.append(u):this._createSubLevelItem(i,u);break;case"insertBefore":n(i).is(this.element)?i.prepend(u):u.insertBefore(i);break;case"insertAfter":n(i).is(this.element)?i.append(u):u.insertAfter(i)}this._wireEvents("_on")},_removeItem:function(n){n.siblings("li").length==0?(n.closest("ul").siblings("a.aschild").removeClass("aschild e-arrow-space").children("span.e-icon").remove(),n.closest("ul").hasClass("e-menu")?n.remove():n.closest("ul").remove()):n.remove()},_hiddenElement:function(t){t.length>0&&n.inArray(t[0],this._hiddenMenuItems)==-1&&(t.addClass("e-hidden-item"),this._hiddenMenuItems.push(t[0]))},_showElement:function(t){t.length>0&&n.inArray(t[0],this._hiddenMenuItems)>-1&&(t.removeClass("e-hidden-item"),this._hiddenMenuItems.splice(this._hiddenMenuItems.indexOf(t[0]),1))},_getNodeByID:function(t){return typeof t!="object"&&t!=""&&(t=this.element.find(".e-list"+t)),n(t)},_processItems:function(t,i){for(var u=this._getNodeByID(t),r=0;r<u.length;r++)i?this._showElement(n(u[r])):this._hiddenElement(n(u[r]))},insert:function(n,t){this._insertNode(n,t,"insert")},insertBefore:function(n,t){this._insertNode(n,t,"insertBefore")},insertAfter:function(n,t){this._insertNode(n,t,"insertAfter")},remove:function(t){for(var i=0,r=0,i=0;i<t.length;i++)for(t[i]=typeof t[i]=="string"?this.element.find(t[i]):t[i],r=0;r<t[i].length;r++)t[i][r].tagName==="LI"||t[i][r].tagName==="UL"?this._removeItem(n(t[i][r])):t[i][r].remove()},showContextMenu:function(i,r,u,f,e){if(this._closeMenu(),this._eventArgs=f,t.isNullOrUndefined(f)||!this._checkForExclusion(f.target)){if(this._trigger("beforeOpen",{target:u,events:f}))return!1;if(this._preventContextOpen){if(this._targetElement=t.isNullOrUndefined(u)?t.isNullOrUndefined(target)?this.element:target:u,e){var o=this._calculateContextMenuPosition(f);i=o.X;r=o.Y}this.element.css({left:i,top:r});this.element.css({"z-index":this._max_zindex()+1});this._showAnimation(this.element,this._showAnim);this._isContextMenuOpen=!0;this.element.focus();this._trigger("open",{target:u});this._on(t.getScrollableParents(n(this.model.contextMenuTarget)),"scroll",this.hideContextMenu)}return!1}},_checkForExclusion:function(i){var u,r;if(!t.isNullOrUndefined(this.model.excludeTarget))for(u=this.model.excludeTarget.split(","),r=0;r<u.length;r++)if(n(i).closest(this.model.excludeTarget).is(n.trim(u[r])))return!0},hideContextMenu:function(i){this._closeMenu();this.element.find(".e-mhover").removeClass("e-mhover");this.element.find(".e-mfocused").removeClass("e-mfocused");this._hideAnimation(this.element,this._hideAnim);this._isContextMenuOpen=!1;this._trigger("close",n.extend({events:i},i));this._off(t.getScrollableParents(n(this.model.contextMenuTarget)),"scroll",this.hideContextMenu)},disableItem:function(t){var i=n(this.element.find("li.e-list >a ,li.e-list >span")).filter(function(){return n.trim(n(this).text())===t});i.length>0&&!(n.inArray(i.parent()[0],this._disabledMenuItems)>-1)&&(i.parent().addClass("e-disable-item").attr({"aria-disabled":!0}),i.parent().find(">a.aschild span.e-icon").addClass("e-disable"),this._disabledMenuItems.push(i.parent()[0]))},disableItemByID:function(t){if(t&&t!=""){var i=this.element.find("#"+t)?this.element.find("#"+t)[0]:r;!i||n.inArray(i,this._disabledMenuItems)>-1||(n(i).addClass("e-disable-item").attr({"aria-disabled":!0}),n(i).find(">a.aschild span.e-icon").addClass("e-disable"),this._disabledMenuItems.push(i))}},getHiddenItems:function(){return this._hiddenMenuItems},hideItems:function(n){if(typeof n=="object"&&n.length!==r)for(var t=0;t<n.length;t++)this._processItems(n[t],!1);else this._processItems(n,!1)},showItems:function(n){if(typeof n=="object"&&n.length!==r)for(var t=0;t<n.length;t++)this._processItems(n[t],!0);else this._processItems(n,!0)},enableItem:function(t){var i=n(this.element.find("li.e-list >a ,li.e-list >span")).filter(function(){return n.trim(n(this).text())===t}),r;i.length>0&&n.inArray(i.parent()[0],this._disabledMenuItems)>-1&&(i.parent().removeClass("e-disable-item").attr({"aria-disabled":!1}),i.parent().find(">a.aschild span.e-icon").removeClass("e-disable"),r=this._removeValue(i,this._disabledMenuItems),this._disabledMenuItems.splice(r,1))},enableItemByID:function(t){var i,r;if(t&&t!=""&&(i=this.element.find("#"+t)[0],i&&n.inArray(i,this._disabledMenuItems)>-1))for(n(i).removeClass("e-disable-item").attr({"aria-disabled":!1}),n(i).find(">a.aschild span.e-icon").removeClass("e-disable"),r=this._disabledMenuItems.length-1;r>=0;r--)this._disabledMenuItems[r].id==t&&this._disabledMenuItems.splice(r,1)},disable:function(){this.model.enabled=!1;var i=this.element.find(">li[class~=e-list]"),t=this;n.each(i,function(i,r){n.inArray(r,t._disabledMenuItems)>-1||(n(r).addClass("e-disable-item").attr({"aria-disabled":!0}),n(r).find(">a.aschild span.e-icon").addClass("e-disable"),t._disabledMenuItems.push(r))})},enable:function(){var i=this,t;this.model.enabled=!0;t=this.element.find("li.e-disable-item");n.each(t,function(t,r){n(r).removeClass("e-disable-item").attr({"aria-disabled":!1});n(r).find(">a.aschild span.e-icon").removeClass("e-disable");i._disabledMenuItems.pop(r)})},show:function(n,t,i,r){if(!this.model.enabled)return!1;this.model.menuType=="contextmenu"?this.showContextMenu(n,t,i,r,!1):this.element.css("display","block")},hide:function(n){if(!this.model.enabled)return!1;this.model.menuType=="contextmenu"?this.hideContextMenu(n):(this._closeMenu(),this.element.css("display","none"))},_wireEvents:function(t){this[t](this.element.find("li.e-list"),"mouseout",this._mouseOutHandler);this[t](this.element.find("li.e-list"),"mouseover",this._mouseOverHandler);this[t](this.element,"click",this._onClickHandler);this[t](this.element,"keydown",this._onKeyDownHandler);this[t](this.element,"focus",this._OnFocusHandler);this[t](this.element,"blur",this._OnFocusOutHandler);this.model.menuType=="contextmenu"&&n(this.model.contextMenuTarget)[0]!=null&&this._contextMenuEvents(t);this.model.menuType!="contextmenu"&&(this[t](n(document),"click",this._onDocumentClick),this[t](this.element,"mousedown",this._onMouseDownHandler))},_mouseOverHandler:function(i){var r,f="",e,u;if(this.element.find(".e-mhover").removeClass("e-mhover"),i.currentTarget=n(i.target).closest("li")[0],n(i.currentTarget).hasClass("e-disable-item")?this._isFocused=!1:n(i.currentTarget).addClass("e-mhover"),i.stopPropagation&&i.stopPropagation(),typeof this._delaySubMenuHover!="undefined"&&clearTimeout(this._delaySubMenuHover),typeof this._delaySubMenuHover!="undefined"&&clearTimeout(this._delayMenuHover),this._mouseOver=!0,this._isMenuOpen=!0,this._isSubMenuOpen=n(i.currentTarget.parentNode.parentNode).is(this.element)?!1:!0,i.currentTarget.nodeName=="LI")r=i.currentTarget;else if(i.currentTarget.parentNode)if(i.currentTarget.parentNode.nodeName=="LI")r=i.currentTarget.parentNode;else return!1;else return i.preventDefault(),!1;n(i.currentTarget).hasClass("e-disable-item")||this._onMenuIntent(r,this,this._hoverOpen);n.inArray(r,this._disabledMenuItems)>-1||(e=n(r).children("a,span").text(),f=t.isNullOrUndefined(r)?"":n(r)[0].id,u={text:e,element:r,event:i,ID:f},this._trigger("mouseover",n.extend({events:u},u)))},_onMouseDownHandler:function(t){n(t.target).hasClass("e-menu")&&(this._isFocused=!1)},_mouseOutHandler:function(i){var r,f="",e,u;if(n(i.currentTarget).removeClass("e-mhover"),i.stopPropagation&&i.stopPropagation(),typeof this._delaySubMenuHover!="undefined"&&clearTimeout(this._delaySubMenuHover),typeof this._delaySubMenuHover!="undefined"&&clearTimeout(this._delayMenuHover),this._mouseOver=!1,this._isMenuOpen=!1,i.currentTarget.nodeName=="LI")r=i.currentTarget;else if(i.currentTarget.parentNode)if(i.currentTarget.parentNode.nodeName=="LI")r=i.currentTarget.parentNode;else return!1;else return i.preventDefault(),!1;this._onHide(r,this,this._hoverClose);n.inArray(r,this._disabledMenuItems)>-1||(e=n(r).children("a,span").text(),f=t.isNullOrUndefined(r)?"":n(r)[0].id,u={text:e,element:r,event:i,ID:f},this._trigger("mouseout",n.extend({events:u},u)))},_onClickHandler:function(i){var r,o="",f,s,u,e;if(this._isFocused=!0,f=!1,!n(i.target).closest("li.e-list").hasClass("e-disable-item")&&n(i.target).closest("li.e-list").length>0)r=n(i.target).closest("li.e-list")[0],n(r).is(this.element.find(">li.e-list"))&&(this._activeElement=r);else{n(i.target).is(this.element)&&(this._activeElement=this.element.find(">li:first"));return}n(i.target).is("a")&&n(r).find(">a,>span").hasClass("aschild")&&this.model.openOnClick&&(this._isFocused=!1);!this._hoverOpen&&n(r).find(">a,>span").hasClass("aschild")&&(this._show(r,this._showAnim,this._hideAnim),this._hoverOpen=!1,f=!0);n.inArray(r,this._disabledMenuItems)>-1||(this.model.menuType=="contextmenu"&&this._isContextMenuOpen&&!n(r).hasClass("e-haschild")&&(this._hideAnimation(this.element,this._hideAnim),this._isContextMenuOpen=!1,this._trigger("close",n.extend({events:i},i)),this._off(t.getScrollableParents(n(this.model.contextMenuTarget)),"scroll",this.hideContextMenu)),f||n(r).find(">a,>span").hasClass("aschild")||(this._closeMenu(),this.model.openOnClick&&(this._hoverOpen=!1)),s=n(r).children("a,span").text(),u=n(r).closest("ul").parent("li"),u.length!=0?(parentId=t.isNullOrUndefined(u.attr("id"))?null:u.attr("id"),parentText=u.children("a,span").text()):(parentId=null,parentText=null),o=t.isNullOrUndefined(r)?"":n(r)[0].id,e={text:s,element:r,event:i,selectedItem:this.selectedItem,ID:o,parentId:parentId,parentText:parentText},this._trigger("click",n.extend({events:e},e)),this.selectedItem=null,this.model.openOnClick&&this.model.menuType!="contextmenu"&&this.element.focus())},_onKeyDownHandler:function(i){var c,h,e;if(this.model.menuType!="contextmenu"||this._isContextMenuOpen){var o,f,s="",r=this.element.find(".e-mhover"),u=this.element.find(".e-mfocused"),l;if(!n(r).length>0&&n(this._activeElement).length>0&&(r=u=n(this._activeElement)),i.keyCode==9?(this._isFocused=!1,this._OnFocusOutHandler()):(i.keyCode==37||i.keyCode==38||i.keyCode==39||i.keyCode==40)&&i.preventDefault(),i.keyCode==40&&(this.model.orientation=="horizontal"?this.element.find(">li.e-mhover").children("ul").length>0||n(this._activeElement).length>0?(n(r).children("ul").css("display")==="none"&&this._show(r[r.length-1],this._showAnim,this._hideAnim),r.removeClass("e-mhover e-mfocused").children("ul:first").find("li:first").addClass("e-mhover"),this._activeElement==null?r.addClass("e-mfocused"):n(this._activeElement).addClass("e-mfocused")):(liVisible=r.parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),n(r[r.length-1]).removeClass("e-mfocused e-mhover"),f=n(liVisible[liVisible.index(r)+1]).length>0?n(liVisible[liVisible.index(r[r.length-1])+1]):liVisible.first(),f.addClass("e-mhover")):this.model.orientation!="horizontal"&&(liVisible=r.length==0?this.element.children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"):r.parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),r.removeClass("e-mfocused e-mfocused"),r.length>0?(r.removeClass("e-mhover"),f=n(liVisible[liVisible.index(r[r.length-1])+1]).length>0?n(liVisible[liVisible.index(r[r.length-1])+1]):liVisible.first()):f=liVisible.first(),f.addClass("e-mhover"))),i.keyCode==39&&(this.model.orientation=="horizontal"&&(this.element.find(">li.e-list").hasClass("e-mhover")||n(this._activeElement).length>0)?(r.removeClass("e-mfocused e-mhover"),liVisible=this.element.children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=n(liVisible[liVisible.index(r[r.length-1])+1]).length>0?n(liVisible[liVisible.index(r[r.length-1])+1]):liVisible.first(),f.addClass("e-mhover")):n(r).children("ul").length>0?(r.removeClass("e-mfocused e-mhover"),c=r.children("ul:first").find("li:first"),this._show(r[r.length-1],this._showAnim,this._hideAnim),liVisible=r.addClass("e-mfocused").children("ul:first").children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=n(liVisible[liVisible.index(c)]).length>0?n(liVisible[liVisible.index(c)]):liVisible.first(),f.addClass("e-mhover")):r.children("ul").length<=0&&this.model.orientation=="horizontal"&&r.parent().closest(".e-list").parent().hasClass("e-menu")&&(this._hideAnimation(r.parent(),this._hideAnim),r.removeClass("e-mfocused e-mhover"),n(u[u.length-1]).removeClass("e-mfocused"),liVisible=r.parent().closest(".e-list").parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=n(liVisible[liVisible.index(u[u.length-1])+1]).length>0?n(liVisible[liVisible.index(u[u.length-1])+1]):n(liVisible[liVisible.index(u.first())]),f.addClass("e-mhover"))),i.keyCode==38&&(this.model.orientation=="horizontal"?(liVisible=r.parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),r.removeClass("e-mfocused e-mhover"),f=n(liVisible[liVisible.index(r[r.length-1])-1]).length>0?n(liVisible[liVisible.index(r[r.length-1])-1]):liVisible.last()):this.model.orientation!="horizontal"&&(liVisible=r.length==0?this.element.children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"):r.parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),r.length>0?(r.removeClass("e-mfocused e-mhover"),f=n(liVisible[liVisible.index(r[r.length-1])-1]).length>0?n(liVisible[liVisible.index(r[r.length-1])-1]):liVisible.last()):f=liVisible.last()),f.addClass("e-mhover")),i.keyCode==37&&(this.model.orientation=="horizontal"?this.element.find(">li.e-list").hasClass("e-mhover")||n(this._activeElement).length>0?(r.removeClass("e-mfocused e-mhover"),liVisible=this.element.find("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=n(liVisible[liVisible.index(r[r.length-1])-1]).length>0?n(liVisible[liVisible.index(r[r.length-1])-1]):liVisible.last(),f.addClass("e-mhover")):(this._hideAnimation(r.parent(),this._hideAnim),r.removeClass("e-mfocused e-mhover"),n(u[u.length-1]).removeClass("e-mfocused e-active"),liVisible=r.parent().closest(".e-list").parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=r.parent().closest(".e-list").parent(".e-menu").length>0?n(liVisible[liVisible.index(u[u.length-1])-1]).length>0?n(liVisible[liVisible.index(u[u.length-1])-1]):liVisible.last():n(liVisible[liVisible.index(u[u.length-1])]).length>0?n(liVisible[liVisible.index(u[u.length-1])]):liVisible.last(),f.addClass("e-mhover")):(r.parent("ul.e-menu").length==0||this.model.menuType=="contextmenu"&&r.parent("ul.e-context").length==0)&&(this._hideAnimation(r.parent(),this._hideAnim),r.removeClass("e-mfocused e-mhover"),n(u[u.length-1]).removeClass("e-mfocused"),liVisible=r.parent().closest(".e-list").parent().children("li.e-list:visible:not(.e-hidden-item, .e-disable-item)"),f=n(liVisible[liVisible.index(u[u.length-1])]).length>0?n(liVisible[liVisible.index(u[u.length-1])]):n(liVisible[liVisible.index(u.last())]),f.addClass("e-mhover"))),i.keyCode==13&&(h=n(r).children("a,span").text(),s=t.isNullOrUndefined(n(r)[0])?"":n(r)[0].id,e={menuId:this.element[0].id,text:h,selectedItem:u,ID:s},this.model.menuType=="contextmenu"?this._isContextMenuOpen&&r.length>0&&!u.hasClass("e-disable-item")&&(this.model.click&&this._trigger("click",n.extend({events:e},e)),this.selectedItem=null,this.hideContextMenu(i)):r.length>0&&!r.hasClass("e-disable-item")&&(n(r).find(">a,>span").hasClass("aschild")&&n(r).children("ul").css("display")==="none"?(this._show(r[0],this._showAnim,this._hideAnim),r.removeClass("e-mhover").children("ul:first").find("li:first").addClass("e-mhover")):(this.element.find(".e-mhover >a,.e-mhover >span ").focus(),this.element.find("li.e-list").removeClass("e-mhover e-mfocused"),this._closeAll()),t.isNullOrUndefined(n(r).find(">a").attr("href"))&&this._trigger("click",n.extend({events:e},e)))),i.keyCode==27&&(this.model.menuType=="contextmenu"?this.hideContextMenu(i):this.element.find("li.e-list").removeClass("e-mhover"),this.element.find('li.e-list:has("> ul")').find("> ul:visible").parents("li.e-list").addClass("e-mhover"),this._closeAll()),n(i.target).is(this.element)&&i.target.parentNode)r.length&&(o=r);else return!1;n.inArray(o,this._disabledMenuItems)>-1||(h=n(o).children("a,span").text(),s=t.isNullOrUndefined(o)?"":n(o)[0].id,(this.element.find("li.e-mfocused.e-mhover").length||i.keyCode==13)&&(l=i.keyCode==13?r:this.element.find("li.e-mfocused.e-mhover")),e={text:h,element:o,targetElement:l,event:i,ID:s},this._trigger("keydown",n.extend({events:e},e)));this._activeElement=null;u=this.element.find(".e-mfocused")}},_OnFocusHandler:function(){this.model.menuType!="contextmenu"&&!this.element.find(">li:first").hasClass("e-disable-item")&&this._isFocused&&this.element.find(".e-mhover").length==0?this.element.find(">li:first").addClass("e-mhover"):this._isFocused=!0;this.model.menuType!="contextmenu"&&(this._activeElement=this.element.find(">li:first"))},_OnFocusOutHandler:function(){this._isFocused||(this.element.find("li.e-list").removeClass("e-mhover e-mfocused"),this._closeAll());this._isFocused=!1},_onDocumentClick:function(t){this.model.openOnClick&&(this._hoverOpen=!1);n(t.target).parents("ul.e-menu").is(this.element)||(this.element.find("li.e-list").removeClass("e-mhover e-mfocused"),this._closeAll(),this._isFocused=!0)},_ContextMenuHandler:function(n){var t=!1,r,i,e,u,f;n.type=="taphold"?t=!0:n.button?t=n.button==2:n.which&&(t=n.which==3);r=n.target;t?(i=n,n.type=="taphold"&&(i=n.options.type=="touchstart"?n.options.touches[0]:n.options),e=this._showSpeed,this.showContextMenu(null,null,r,i,!0)):this._isContextMenuOpen&&(u=this._hideAnim,f=this._hideSpeed,this.hideContextMenu(n,u,f))},_calculateContextMenuPosition:function(t){locationX=t.clientX+this.element.width()<n(window).width()?t.pageX:t.pageX-this.element.width();locationY=t.clientY+this.element.height()<n(window).height()?t.pageY:t.clientY>this.element.height()?t.pageY-this.element.height():n(window).height()-this.element.outerHeight();var i=n("body").css("position")!="static"?n("body").offset():{left:0,top:0};return locationX-=i.left,locationY-=i.top,{X:locationX,Y:locationY}},_onDefaultPreventer:function(n){return n.preventDefault(),n.stopPropagation(),!1},_onContextClose:function(t){var e=this,i,r,u,f;this._isContextMenuOpen&&(i=!1,(n(t.target).is(this.element)||n(t.target).parents(".e-context").is(this.element))&&(i=!0),i||(r=this._hideAnim,u=this._hideSpeed,this.hideContextMenu(t,r,u),f=n(t.target).parents(),n.each(f,function(n,t){t.id==e._ContextTargetId})))}});t.MenuType={NormalMenu:"normalmenu",ContextMenu:"contextmenu"};t.Direction={Left:"left",Right:"right",None:"none"};t.AnimationType={None:"none",Default:"default"}})(jQuery,Syncfusion)});
 
+
+$(document).ready(function () {
+    radioButtonInitialization("#check-sql", "SQL authentication", "checkWindows", true, "sql");
+    radioButtonInitialization("#check-windows", "Windows authentication", "checkWindows", false, "windows");
+
+    radioButtonInitialization("#new-db", "New database", "databaseType", true, "0");
+    radioButtonInitialization("#existing-db", "Existing database", "databaseType", false, "1");
+
+    radioButtonInitialization("#file-storage", "File Storage", "IsBlobStorage", true, "0");
+    radioButtonInitialization("#blob-storage", "Azure Blob Storage", "IsBlobStorage", false, "1");
+
+    radioButtonInitialization("#https", "Use HTTPS (Recommended)", "Connection", true, "https");
+    radioButtonInitialization("#http", "Use HTTP", "Connection", false, "http");
+    radioButtonInitialization("#custom-endpoint", "Specify custom endpoints", "Connection", false, "customendpoint");
+
+    dropDownListInitialization('#database-type', 'Server type');
+
+    if (isSiteCreation) {
+        dropDownListInitialization('#tenant-type', 'Tenant Type');
+        dropDownListInitialization('#branding-type', 'Use Branding');
+        inputBoxInitialization('#tenant-name');
+        inputBoxInitialization('#tenant-identifier');
+        inputBoxInitialization('#site-isolation-code', true);
+        inputBoxInitialization("#search-tenant-users");
+        inputBoxInitialization("#input-domain");
+    }
+
+    inputBoxInitialization("#txt-dbname");
+    inputBoxInitialization("#server-dbname");
+    inputBoxInitialization("#imdbname");
+    inputBoxInitialization("#txt-portnumber");
+    inputBoxInitialization("#maintenance-db");
+    inputBoxInitialization("#txt-servername");
+    inputBoxInitialization("#txt-login");
+    inputBoxInitialization("#txt-password-db");
+    inputBoxInitialization("#database-name");
+    inputBoxInitialization("#server-existing-dbname");
+    inputBoxInitialization("#imdb-existing-dbname");
+    inputBoxInitialization("#additional-parameter");
+
+    inputBoxInitialization('#txt-accountname');
+    inputBoxInitialization('#txt-endpoint');
+    inputBoxInitialization('#txt-accesskey');
+    inputBoxInitialization('#txt-containername');
+    inputBoxInitialization('#txt-bloburl');
+
+    inputBoxInitialization('#txt-firstname');
+    inputBoxInitialization('#txt-lastname');
+    inputBoxInitialization('#txt-username');
+    inputBoxInitialization('#txt-emailid');
+    inputBoxInitialization('#new-password');
+    inputBoxInitialization('#txt-confirm-password');
+});
+
+function onDropDownListChange(args) {
+    if (args.element.id == 'database-type')
+        onDatbaseChange(args);
+    if (args.element.id == 'check-windows')
+        onWindowsChange(args);
+    if (args.element.id == 'tenant-type')
+        changeTenantType(args);
+}
+
+function onAuthRadioButtonChange(args) {
+    onWindowsChange(args);
+}
+
+function onDatabaseRadioButtonChange(args) {
+    onDbSelectChange(args);
+}
+
+function onBlobRadioButtonChange(args) {
+    onBlobStorageChange(args);
+}
+
+function onConnectionRadioButtonChange(args) {
+    onConnectionRadioChange(args);
+}
+
+function dropDownListInitialization(id, placeHolder) {
+    var dropDownList = new ejs.dropdowns.DropDownList({
+        index: 0,
+        floatLabelType: "Always",
+        placeholder: placeHolder,
+        change: onDropDownListChange,
+        cssClass: 'e-outline e-custom'
+    });
+
+    dropDownList.appendTo(id);
+}
+
+function inputBoxInitialization(id, isDisable) {
+    var inputbox = new ejs.inputs.TextBox({
+        cssClass: 'e-outline e-custom',
+        floatLabelType: 'Auto'
+    });
+
+    if (isDisable) {
+        inputbox.enabled = false;
+    }
+
+    inputbox.appendTo(id);
+}
+
+function radioButtonInitialization(id, label, name, isChecked, value) {
+
+    var radiobutton = new ejs.buttons.RadioButton({
+        label: label,
+        name: name,
+        checked: isChecked,
+        value: value,
+        change: onAuthRadioButtonChange,
+        cssClass: 'e-custom'
+    });
+
+    if (name == 'checkWindows')
+        radiobutton.change = onAuthRadioButtonChange
+
+    if (name == 'databaseType')
+        radiobutton.change = onDatabaseRadioButtonChange
+
+    if (name == 'IsBlobStorage')
+        radiobutton.change = onBlobRadioButtonChange
+
+    if (name == 'Connection')
+        radiobutton.change = onConnectionRadioButtonChange
+
+    radiobutton.appendTo(id);
+}
+
+
 var userAgent = navigator.userAgent;
 var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
 var timeOut;
 var searchId;
 var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 var clearSearch = false;
+var toastTimeout;
 
 var keyCode = {
     Tab: 9,
@@ -731,16 +849,16 @@ function DateCustomFormat(formatString, dateValue, isTimeFormat) {
     }
 
     else {
-    h = (hhh = dateObject.getHours());
-    if (h == 0) h = 24;
-    if (h > 12) h -= 12;
-    hh = h < 10 ? ("0" + h) : h;
-    AMPM = (ampm = hhh < 12 ? "am" : "pm").toUpperCase();
-    mm = (m = dateObject.getMinutes()) < 10 ? ("0" + m) : m;
-    ss = (s = dateObject.getSeconds()) < 10 ? ("0" + s) : s;
-    datetime = formatString.replace("hhh", hhh).replace("hh", hh).replace("h", h).replace("mm", mm).replace("m", m).replace("ss", ss).replace("s", s).replace("ampm", ampm).replace("AMPM", AMPM);
-}
-return datetime;
+        h = (hhh = dateObject.getHours());
+        if (h == 0) h = 24;
+        if (h > 12) h -= 12;
+        hh = h < 10 ? ("0" + h) : h;
+        AMPM = (ampm = hhh < 12 ? "am" : "pm").toUpperCase();
+        mm = (m = dateObject.getMinutes()) < 10 ? ("0" + m) : m;
+        ss = (s = dateObject.getSeconds()) < 10 ? ("0" + s) : s;
+        datetime = formatString.replace("hhh", hhh).replace("hh", hh).replace("h", h).replace("mm", mm).replace("m", m).replace("ss", ss).replace("s", s).replace("ampm", ampm).replace("AMPM", AMPM);
+    }
+    return datetime;
 }
 
 function isNumberKey(evt) {
@@ -763,7 +881,9 @@ function validateUserName(userName) {
 
 function isValidUrl(url) {
     var regexExpression = /^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(!\/[a-zA-Z0-9-]+[a-zA-Z0-9-]*(\.[a-z]{2,8})?)*?$/gm;
-    if (!regexExpression.test(url)) {
+    var ipAddressRegexExpression = /^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)(?:\:(?:\d|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5]))?$/;
+
+    if (!regexExpression.test(url) && !url.match(ipAddressRegexExpression)) {
         return false;
     } else {
         return true;
@@ -826,7 +946,8 @@ function IsValidContactNumber(contactNumber) {
 }
 
 function onCloseMessageBox() {
-    $("#messageBox").ejDialog("close");
+    $(".e-footer-content").html("");
+    document.getElementById("messageBox").ej2_instances[0].hide();
 }
 
 function onMessageDialogClose() {
@@ -837,9 +958,9 @@ function onMessageDialogClose() {
 
 function messageBox(messageIcon, messageHeader, messageText, type, successCallback, errorCallback, width, height, maxHeight, cssClass) {
     $("#messageBox").find(".message-content").text("");
-    $(".message-box-btn-holder").html("");
+    $(".e-footer-content").html("");
     $(".message-box-close").html("");
-    $("#messageBox").find(".message-header").html("<span class='su " + messageIcon + "'></span> <span class='modal-title' data-toggle='tooltip' data-placement='bottom' data-container='body' title='" + messageHeader + "'  >" + messageHeader + "</h2>");
+    $("#messageBox").find(".e-dlg-header").html("<span class='su " + messageIcon + "'></span> <span class='modal-title' data-toggle='tooltip' data-placement='bottom' data-container='body' title='" + messageHeader + "'  >" + messageHeader + "</h2>");
     $("#messageBox").find(".message-content").html(messageText);
     $("#messageBox").find(".message-content").removeClass("text-left");
     if (type == "error") {
@@ -867,7 +988,7 @@ function messageBox(messageIcon, messageHeader, messageText, type, successCallba
             });
         }
         $(".message-box-close").html(closeIcon);
-        $(".message-box-btn-holder").append(errorButton, successButton);
+        $(".e-footer-content").append(errorButton, successButton);
         $("#messageBox").unbind("keydown");
     }
     else {
@@ -890,7 +1011,7 @@ function messageBox(messageIcon, messageHeader, messageText, type, successCallba
             });
         }
         $(".message-box-close").html(closeIcon);
-        $(".message-box-btn-holder").append(successButton);
+        $(".e-footer-content").append(successButton);
         $("#messageBox").on("keydown", function (event) {
             switch (event.keyCode) {
                 case 13:
@@ -901,23 +1022,18 @@ function messageBox(messageIcon, messageHeader, messageText, type, successCallba
     }
 
     $('[data-toggle="tooltip"]').tooltip();
-    $("#messageBox").ejDialog("open");
+    document.getElementById("messageBox").ej2_instances[0].show();
     $("#messageBox").focus();
-    var sizeobj = $("#messageBox").data("ejDialog");
+    var sizeobj = document.getElementById("messageBox").ej2_instances[0];
     setTimeout(function () {
         if (width != undefined)
-            sizeobj.option("width", width);
-        if (window.innerWidth > 1040) {
-            if (height == undefined)
-                var contentHeight = $("#messageBox").find(".modal-content").length > 0 ? $("#messageBox").find(".modal-content").height() : $("#messageBox").find(".message-content").height();
-            height = contentHeight + 135 + "px";
-        }
-        sizeobj.option("height", height);
+            sizeobj.width = width;
+        sizeobj.height = height;
         if (maxHeight != undefined)
-            sizeobj.option("maxHeight", maxHeight);
+            sizeobj.setMaxHeight(maxHeight);
     }, 50);
     if (cssClass != null && cssClass != undefined) {
-        sizeobj.option("cssClass", cssClass);
+        sizeobj.cssClass = cssClass;
     }
 }
 
@@ -977,8 +1093,9 @@ function GridLocalization() {
 $(document).on("keyup", "#SearchCategory, #search-groups, #search-group-users, #ad-user-import, #userSearchKey,#groupSearchKey, #ad-group-import, #searchItems, #search-schedules, #search-users, #search-ad-users, #search-ad-groups, #search-user-permission, #search-group-permission, #search-database-users,#search-tree, #search-home-page, #search-items, .search-user-holder, .tree-view-search-holder, #search-tenants, #search-app-users, #add-user-search,#search-tenant-users,#add-tenant-search", function (e) {
     var element = "#" + this.id;
     if ($(element).val() != "") {
-        if (element == "#search-home-page") {
+        if (element == "#search-home-page" || element == "#search-tenant-users") {
             $(element).parent().siblings("span.close-icon").css("display", "block");
+            $(element).parent().siblings("span.search-icon").css("display", "none");
         }
         else {
             $(element).siblings("span.close-icon").css("display", "block");
@@ -992,7 +1109,8 @@ $(document).on("keyup", "#SearchCategory, #search-groups, #search-group-users, #
             $(element).siblings("span.search-application").css("display", "none");
         }
     } else {
-        if (element == "#search-home-page") {
+        if (element == "#search-home-page" || element == "#search-tenant-users") {
+            $(element).parent().siblings("span.close-icon").css("display", "none");
             $(element).parent().siblings("span.su-search").css("display", "block");
         }
         else {
@@ -1181,20 +1299,26 @@ function PerformSearch(currentId) {
 }
 
 function SuccessAlert(header, content, duration) {
-    window.top.$("#success-alert").css("display", "table");
+    clearTimeout(toastTimeout);
+    window.top.$('#success-alert').css("display", "none");
     window.top.$("#message-header").html(header);
     window.top.$("#message-content").html(content);
-    setTimeout(function () {
+    window.top.$("#success-alert").css("display", "table");
+    
+    toastTimeout = setTimeout(function () {
         window.top.$('#success-alert').fadeOut()
     }, duration);
 }
 
 function WarningAlert(header, content, duration) {
-    parent.$("#warning-alert").css("display", "table");
+    clearTimeout(toastTimeout);
+    parent.$('#warning-alert').css("display", "none");
     parent.$("#warning-alert #message-header").html(header);
     parent.$(" #warning-alert #message-content").html(content);
+    parent.$("#warning-alert").css("display", "table");
+    
     if (duration != null && duration != "") {
-        setTimeout(function () {
+        toastTimeout = setTimeout(function () {
             parent.$('#warning-alert').fadeOut()
         }, duration);
     }
@@ -1309,7 +1433,7 @@ $(document).ready(function (e) {
     function setClientLocaleCookie(name, exdays) {
         var value = {
             Locale: navigator.language,
-            TimeZoneOffset: new Date().getTimezoneOffset()
+            TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         };
         var exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays++);
@@ -1379,6 +1503,78 @@ function getCurrentPageNumber(pageSize, selectedRecordsCount, totalRecordsCount,
         return 1;
     }
 }
+
+function copyToClipboard(inputId, buttonId) {
+    if (typeof (navigator.clipboard) != 'undefined') {
+        var value = "";
+        if (inputId === "#subscription-id-bi" || inputId == "#subscription-id-reports") {
+            value = $(inputId).text();
+        }
+        else {
+            value = $(inputId).val();
+        }
+        var copyText = $(inputId);
+        copyText.attr("type", "text").select();
+        navigator.clipboard.writeText(value)
+        if (buttonId == "#api-copy-client-secret" || buttonId == "#copy-client-secret") {
+            copyText.attr("type", "password");
+        }
+    }
+    else {
+        var copyText = $(inputId);
+        copyText.attr("type", "text").select();
+        document.execCommand("copy");
+        if (buttonId == "#api-copy-client-secret" || buttonId == "#copy-client-secret") {
+            copyText.attr("type", "password");
+        }    }
+    setTimeout(function () {
+        $(buttonId).attr("data-original-title", window.TM.App.LocalizationContent.Copied);
+        $(buttonId).tooltip('show');
+    }, 200);
+    setTimeout(function () {
+        $(buttonId).attr("data-original-title", window.TM.App.LocalizationContent.ClickToCopy);
+        $(buttonId).tooltip();
+    }, 3000);
+}
+
+
+function bindEj2Data(id, value) {
+    document.getElementById(id).ej2_instances[0].value = value;
+    document.getElementById(id).ej2_instances[0].dataBind();
+}
+
+function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function ValidateIsolationCode(code, id) {
+    var isValid = false;
+
+    $.ajax({
+        type: "POST",
+        url: validateIsolationCodeUrl,
+        data: { code: code },
+        success: function (result) {
+            isValid = result.Status;
+            if (result.Status) {
+                $("#isolation-code-validation").html("");
+                $(id).closest('div').removeClass("e-error");
+                $("#update-isolation-code").attr("disabled", false);
+            } else {
+                $("#isolation-code-validation").html(window.TM.App.LocalizationContent.IsolationCodeValidator);
+                $(id).closest('div').addClass("e-error");
+                $("#update-isolation-code").attr("disabled", true);
+            }
+        }
+    });
+
+    return isValid;
+}
 var userAgent = navigator.userAgent;
 var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
 var isKeyUp = false;
@@ -1386,47 +1582,125 @@ var ruleName;
 var rules;
 var errorContent = "";
 var databaseValidationMessage = window.TM.App.LocalizationContent.OneOrMoreErrors + " " + window.TM.App.LocalizationContent.Click + " " + "<a id='know-more-error'>" + window.TM.App.LocalizationContent.Here + "</a> " + window.TM.App.LocalizationContent.KnowMore + ".";
-var isToGetIntermediateDbDetails = false;
 var systemSettingsDetails, intermediateDbDetails;
 var isNewServerDB = true, isNewIntermediateDB = true;
 var storagetype = window.storageType;
 var storageButtonValue;
 var azureDataforBoldbi = null;
-var brandingType = "";
+
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
     $("#blob-storage-form").hide();
     $("#report-storage").hide();
-    $("#system-settings-filestorage-container").hide();
-    isToGetIntermediateDbDetails = ($("#get-intermediate-db-configuration").val() === "true");
+    $("#system-settings-user-account-container").hide();
 
-    $("#messageBox").ejDialog({
+    var messageBoxDialog = new ej.popups.Dialog({
+        header: "title",
         width: "450px",
-        height: "180px",
-        showOnInit: false,
-        allowDraggable: true,
-        enableResize: false,
-        showHeader: false,
-        enableModal: true,
+        height: "auto",
+        visible: false,
+        allowDragging: true,
+        isModal: true,
+        footerTemplate: "footer",
         close: "onMessageDialogClose"
+    });
+    messageBoxDialog.appendTo("#messageBox");
+
+
+    var autoDeploymentResponseDialog = new ej.popups.Dialog({
+        header: window.TM.App.LocalizationContent.AutoDeployment,
+        content: document.getElementById("auto-deployment-response-dialog-content"),
+        showCloseIcon: false,
+        buttons: [
+            { click: skipAutoDeploy, buttonModel: { content: window.TM.App.LocalizationContent.OKButton } }
+        ],
+        width: '400px',
+        height: '200px',
+        isModal: true,
+        visible: false
+    });
+    autoDeploymentResponseDialog.appendTo("#auto-deployment-response");
+
+    $("#default-tab").popover({
+        html: true,
+        trigger: 'hover',
+        placement: "right",
+        content: isSiteCreation ? window.TM.App.LocalizationContent.SimpleTabSiteCreationMsg : window.TM.App.LocalizationContent.SimpleTabStartupMsg
+    });
+
+    $("#advanced-tab").popover({
+        html: true,
+        trigger: 'hover',
+        placement: "right",
+        content: isSiteCreation ? window.TM.App.LocalizationContent.AdvanceTabSiteCreationMsg : window.TM.App.LocalizationContent.AdvanceTabStartupMsg
+    });
+
+    $("a[data-toggle='tab']").on('click', function (e) {
+        removeError();
+        if ($(this).attr("id") == "advanced-tab") {
+            $("#default-tab").removeClass("active");
+            $("#advanced-tab").addClass("active");
+            if (!isSiteCreation) {
+                $("#label_txt-dbname").html(window.TM.App.LocalizationContent.IDDatabaseName);
+                $("#label_database-name").html(window.TM.App.LocalizationContent.IDDatabaseName);
+            }
+            $("#simple_tab_db_name").hide();
+            $("#advanced_tab_db_name").show();
+            if (getDropDownValue("database-type").toLowerCase() == "mysql" || !isBoldBI && isSiteCreation && isBoldReportsTenantType() || !isBoldBI && !isSiteCreation) {
+                hideDataStore();
+            }
+            else {
+                showDataStore();
+            }
+
+            if (!isSiteCreation) {
+                $(".db-name-info").html(window.TM.App.LocalizationContent.DatabaseInfo);
+                $("#simple_tab_db_name").show();
+                prefillDbNames();
+            }
+
+            isSimpleModeValue = "false";
+        }
+        else {
+            $("#default-tab").addClass("active");
+            $("#advanced-tab").removeClass("active");
+            $("#simple_tab_db_name").show();
+            if (!isSiteCreation) {
+                $("#label_txt-dbname").html(window.TM.App.LocalizationContent.DatabaseName);
+                $("#label_database-name").html(window.TM.App.LocalizationContent.DatabaseName);
+            }
+            $(".db-name-info").html(isBoldBI ? window.TM.App.LocalizationContent.DatabaseInfoBI : window.TM.App.LocalizationContent.DatabaseInfoReports);
+            if (!isSiteCreation) {
+                $(".db-name-info").html(isBoldBI ? window.TM.App.LocalizationContent.DatabaseInfoBI3 : window.TM.App.LocalizationContentDatabaseInfoReports2);
+                prefillDbNames();
+            }
+            $("#advanced_tab_db_name").hide();
+            isSimpleModeValue = "true";
+        }
+        if (isSiteCreation) {
+            ResizeHeightForDOM();
+        }
     });
 
     if ($('meta[name=has-drm-configuration]').attr("content") == "true") {
-        $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
-        $(".startup-content").fadeIn();
-        $("#system-settings-welcome-container").hide();
-        $(".welcome-content").addClass("display-none");
-        $("#system-settings-offline-license-container").hide();
-        $('#auth-type-dropdown').removeClass("hide").addClass("show");
-        $("#system-settings-db-selection-container").slideDown("slow");
-        addTitleForDropdown(".database-dropdown-margin");
+        if (typeof isDockerOrk8s != "undefined" && isDockerOrk8s) {
+            autoDeploy();
+        }
+        else {
+            $("#image-parent-container .startup-image").hide().attr("src", adminSetupImageUrl).fadeIn();
+            $(".startup-content").fadeIn();
+            $("#system-settings-welcome-container").hide();
+            $(".welcome-content").addClass("display-none");
+            $("#system-settings-offline-license-container").hide();
+            $('#auth-type-dropdown').removeClass("hide").addClass("show");
+            $("#system-settings-user-account-container").slideDown("slow");
+            autoFocus("txt-firstname");
+        }
     }
 
-    $("#move-to-next").hide();
-    $("#db-content-holder,#db-config-submit, #ds-db-config-submit").show();
-    $(".sqlcenot").show();
-    $("#new-db").prop("checked", true);
-    $(".sql-server-existing-db, #sql-existing-db-submit, #sql-existing-ds-db-submit").hide();
+    $("#db-content-holder,#db-config-submit").show();
+    $("#advanced_tab_db_name").hide();
+    $(".sql-server-existing-db").hide();
 
     $(window).resize(function () {
         changeFooterPostion();
@@ -1434,772 +1708,663 @@ $(document).ready(function () {
 
     changeFooterPostion();
 
-    $("#tenant-content-holder").validate({
-        errorElement: "span",
-        onkeyup: function (element, event) {
-            if (event.keyCode != 9) {
-                isKeyUp = true;
-                $(element).valid();
-                isKeyUp = false;
-            }
-            else
-                true;
-        },
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            sitename: {
-                isRequired: true,
-                isValidName: true,
-                maxlength: 255
-            },
-            siteidentifier: {
-                required: true,
-                isValidIdentifier: true,
-                maxlength: 255
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).closest(".text-holder").addClass("has-error");
-            $(element).parent().find(".startup-validation").show();
-        },
-        unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).closest(".text-holder").removeClass("has-error");
-            $(element).parent().find(".startup-validation").hide();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(".startup-validation").html(error.html());
-        },
-        messages: {
-            sitename: {
-                isRequired: window.TM.App.LocalizationContent.SiteNameValidator,
-                isValidName: window.TM.App.LocalizationContent.AvoidSpecailCharacters,
-                maxlength: window.TM.App.LocalizationContent.SiteValidation
-            },
-            siteidentifier: {
-                required: window.TM.App.LocalizationContent.SiteIdentifierValidator,
-                isValidIdentifier: window.TM.App.LocalizationContent.AvoidSpecailCharacters,
-                maxlength: window.TM.App.LocalizationContent.SiteValidation
-            }
-        }
-    });
-
-    $.validator.addMethod("isValidIdentifier", function (value, element) {
-        return IsValidIdentifier(value);
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
-
-    $(document).on("input", "#txt-username", function () {
-        if (IsValidUsername($("#txt-username").val())) {
-            $(".admin-form-email").css("padding-top", "24px")
-        }
-        else {
-            if ($("#txt-username").val() != "") {
-                $(".admin-form-email").css("padding-top", "40px")
-            }
-        }
-    });
-
-    $(document).on("click", "#tenant-config-submit", function () {
-        if ($("#tenant-content-holder").valid()) {
-            showWaitingPopup($(".startup-page-container-body"));
-            isValidTenantNameIdentifer($("#txt-site-name").val(), $("#txt-site-identifier").val());
-        }
-    });
-
-    $(document).on("click", "#welcome-page-proceed", function () {
-        $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
-        $(".startup-content").fadeIn();
-        $("#system-settings-welcome-container").hide();
-        $(".welcome-content").addClass("display-none");
-        $('.auth-type').removeClass("hide").addClass("show");
-        $("#system-settings-db-selection-container").slideDown("slow");
-        addTitleForDropdown(".database-dropdown-margin");
-    });
-
-    $("#database-type").on("change", function () {
-        $(".validation-txt-errors").hide();
-        $(".validation-errors").css("display", "none");
-
-        $(".database-name .database-error, .databse-dropdown .database-error").hide();
-
-        $(".has-error").removeClass("has-error");
-        var checkedVal = $("#database-type").val().toLowerCase();
-        switch (checkedVal) {
-            case "mssql":
-                $('#mysql-odbc-dropdown').removeClass("show").addClass("hide");
-                $('.port-num').removeClass("show").addClass("hidden");
-                $('.maintenancedb').removeClass("show").addClass("hidden");
-                $('.auth-type').removeClass("hidden").addClass("show");
-
-                var isWindowsAuth = $("#check-windows").val() === "windows";
-                $("#txt-login").attr("disabled", isWindowsAuth);
-                $("#txt-password-db").attr("disabled", isWindowsAuth);
-
-                $('#db-content-holder').css("display", "block");
-                $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
-                $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
-                $("#new-db").prop("checked", true).trigger("change");
-                $(".databse-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>");
-                $("#database-name").selectpicker("refresh");
-                $(".content-display").hide();
-                $(".show-sql-content").slideDown("slow");
-                $("div.placeholder").remove();
-                DomResize();
-                break;
-            case "mssqlce":
-                $('#db-content-holder').css("display", "none");
-                $('#db-config-submit,#sql-existing-db-submit').addClass("hide");
-                $("#move-to-next,.sqlce-content").removeClass("hide").addClass("show");
-                break;
-            case "mysql":
-                $('.port-num').removeClass("show").addClass("hidden");
-                $('.maintenancedb').removeClass("show").addClass("hidden");
-                $('.auth-type').removeClass("show").addClass("hidden");
-                $('#mysql-odbc-dropdown').removeClass("hide").addClass("show");
-                $('#db-content-holder').css("display", "block");
-                $("#txt-login").attr("disabled", false);
-                $("#txt-password-db").attr("disabled", false);
-                $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
-                $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
-                $("#new-db").prop("checked", true).trigger("change");
-                $(".database-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>Select a database</option>");
-                $("#database-name").selectpicker("refresh");
-                $(".content-display").hide();
-                $(".show-sql-content").slideDown("slow");
-                $("div.placeholder").remove();
-                DomResize();
-                break;
-            case "oracle":
-                $("#oracle-dsn>option:eq(0)").prop("selected", true);
-                $("#oracle-dsn").selectpicker("refresh");
-                $(".database-dropdown-oracle ul").html("");
-                $("#database-name-oracle").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>");
-                $("#database-name-oracle").selectpicker("refresh");
-                $("#new-db-oracle").prop("checked", true).trigger("change");
-                $(".content-display").hide();
-                $(".show-oracle-content").slideDown("slow");
-                $("div.placeholder").remove();
-                DomResize();
-                break;
-            case "postgresql":
-                $('#mysql-odbc-dropdown').removeClass("show").addClass("hide");
-                $('.auth-type').removeClass("show").addClass("hidden");
-                $('.port-num').removeClass("hidden").addClass("show");
-                $('.maintenancedb').removeClass("hidden").addClass("show");
-                $('#db-content-holder').css("display", "block");
-                $("#txt-login").attr("disabled", false);
-                $("#txt-password-db").attr("disabled", false);
-                $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
-                $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
-                $("#new-db").prop("checked", true).trigger("change");
-                $(".database-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>");
-                $("#database-name").selectpicker("refresh");
-                $(".content-display").hide();
-                $(".show-sql-content").slideDown("slow");
-                $("div.placeholder").remove();
-                DomResize();
-                break;
-        }
-
-        $(".system-settings-db-selection-field .txt-holder input[type='text'],.system-settings-db-selection-field .txt-holder input[type='password']").val("");
-
-        $('#txt-portnumber').val("5432");
-        $('#maintenance-db').val("postgres");
-
-        addPlacehoder("#system-settings-db-selection-container");
-        changeFooterPostion();
-    });
-
-    $('.data-store-form').click(function () {
-        if ($(".first-content").text() == "Step 7: Data Store Configuration") {
-            $('.ds-server-help').remove();
-            var dataStoreHelp = '<span class="info-icon su su-info data-store-help"></span>';
-            $("#ds-server-lable").append(dataStoreHelp);
-            $(".data-store-help").popover({
-                trigger: 'hover',
-                placement: 'top',
-                content: isBoldBI ? window.TM.App.LocalizationContent.biStorePopoverContent : window.TM.App.LocalizationContent.reportStorePopoverContent
-            });
-        }
-    });
-
-    $("#check-windows").on("click change", function () {
-        var windowsCheck = $("#check-windows").val() == "windows";
-        var databaseType = $("#database-type").val();
-        $("#auth-type-info").removeClass("show").addClass("hide");
-        if (windowsCheck && databaseType == "MSSQL") {
-            $("#txt-login").val("").attr("disabled", true);
-            $("#txt-password-db").val("").attr("disabled", true);
-            $("#auth-type-info").removeClass("hide").addClass("show");
-        }
-        else if (databaseType == "MSSQL") {
-            $("#txt-login").attr("disabled", false);
-            $("#txt-password-db").attr("disabled", false);
-        }
-        $(".has-error").removeClass("has-error");
-        $(".validation-txt-errors").hide();
-    });
-
-    $("input[name='Connection']").on("click change", function () {
-        var checkedVal = $("input[name='Connection']:checked").val();
-        var accountName = $("#txt-accountname").val();
-        var accessKey = $("#txt-accesskey").val();
-
-        if (checkedVal == "http" || checkedVal == "https") {
-            $(".custom-endpoint-form-element").hide();
-            var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
-            $("#connection-string").val(finalValue);
-
-        } else {
-            var blobUrl = $("#txt-bloburl").val();
-
-            var finalValue = "BlobEndpoint=" + blobUrl + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
-            $("#connection-string").val(finalValue);
-            $(".custom-endpoint-form-element").show();
-        }
-        $("div.placeholder").remove();
-        addPlacehoder("#system-settings-filestorage-container");
-        changeFooterPostion();
-    });
-
-    $("#txt-bloburl,#txt_tableurl,#txt_queueurl,#txt-accountname,#txt-accesskey").on("keyup", function () {
-        var checkedVal = $("input[name='Connection']:checked").val();
-        var accountName = $("#txt-accountname").val();
-        var accessKey = $("#txt-accesskey").val();
-        if (checkedVal == "http" || checkedVal == "https") {
-            var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
-            $("#connection-string").val(finalValue);
-
-        } else {
-            var blobUrl = $("#txt-bloburl").val();
-
-            var finalValue = "BlobEndpoint=" + blobUrl + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
-            $("#connection-string").val(finalValue);
-        }
-    });
-
-    $("input[name='IsBlobStorage']").on("click change", function () {
-        var checkedVal = $("input[name='IsBlobStorage']:checked").val();
-        if (checkedVal == "0") {
-            $("#blob-storage-form").hide("slow");
-            if (storageButtonValue === "tenant") {
-                $(".content-value").slideDown("slow");
-            } else {
-                $(".report-content").slideDown("slow");
-            }
-            $(".storage-checkbox").hide("slow");
-            $(".azure-validation").css("display", "none");
-        } else {
-            $(".content-value").hide();
-            $(".report-content").hide();
-            if (storageButtonValue === "tenant") {
-                $(".storage-checkbox").hide("slow");
-            }
-            else {
-                $(".storage-checkbox").show("slow");
-            }
-            $("#blob-storage-form").slideDown("slow");
-            $(".validation-txt-errors").hide();
-            $(".azure-validation").css("display", "none");
-            $(".has-error").removeClass("has-error");
-            $("div.placeholder").remove();
-        }
-        addPlacehoder("#system-settings-filestorage-container");
-        changeFooterPostion();
-    });
-
-    $("#db-config-submit").on("click", function () {
-        $(".has-error").removeClass("has-error");
-        $(".validation-txt-errors").hide();
-        $(".validation-errors").html("");
-        $(".database-name .database-error, .databse-dropdown .database-error").hide();
-        var canProceed = $("#db-content-holder").valid();
-        if (canProceed) {
-            showWaitingPopup($(".startup-page-container-body"));
-            $(this).prop("disabled", true);
-            $("#db_loader").show();
-            window.serverName = $("#txt-servername").val();
-            window.portNumber = $("#txt-portnumber").val();
-            window.maintenanceDb = $('#maintenance-db').val();
-            window.IsWindowsAuthentication = $("#check-windows").val() == "windows";
-            window.login = $("#txt-login").val();
-            window.password = $("#txt-password-db").val();
-            var databaseType = $("#database-type").val();
-            window.databaseName = $("#txt-dbname").val();
-            window.sslEnabled = $("#secure-sql-connection").is(":checked");
-            doAjaxPost("POST", connectDatabaseUrl,
-                {
-                    data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true })
-                },
-                function (result) {
-                    if (result.Data.key) {
-                        var databaseType = $("#database-type").val();
-                        doAjaxPost("POST", generateDatabaseUrl,
-                            {
-                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true })
-                            },
-                            function (result) {
-                                hideWaitingPopup($(".startup-page-container-body"));
-                                if (result.Data.key) {
-                                    $(".selected").removeClass("selected");
-                                    $("ul li[data-move-to='startup-page-two']").addClass("selected");
-                                    $("#db_loader").hide();
-                                    $("#system-settings-db-selection-container").hide();
-                                    window.connectionString = result.Data.value;
-                                    $("#txt-username").focus();
-                                    delete window.serverName;
-                                    delete window.portNumber;
-                                    delete window.login;
-                                    delete window.password;
-                                    delete window.databaseName;
-                                    delete window.sslEnabled;
-                                    if (isAzureApplication && selfHosted) {
-                                        $("#file-storage").prop("disabled", true);
-                                        $("#blob-storage").prop("checked", true);
-                                        $(".custom-endpoint-form-element, .report-content").hide();
-                                        $(".content-value").hide();
-                                        $("#report-storage").hide();
-                                        storageButtonValue = "tenant";
-                                        $(".storage-checkbox").hide();
-                                        $("body").removeClass("startup-page-container-body");
-
-                                        if (connectionType === "https") {
-                                            $("#https").prop("checked", true);
-                                        } else if (connectionType === "http") {
-                                            $("#http").prop("checked", true);
-                                        }
-
-                                        $("#txt-accountname").val(storageAccountName);
-                                        $("#txt-endpoint").val(blobServiceEndpoint);
-                                        $("#txt-accesskey").val(accessKey);
-                                        $("#txt-containername").val(containerName);
-                                        validate_storage_type();
-                                    }
-                                    else if (isBoldReports && selfHosted || isBoldBI) {
-                                        $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                        $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage).slideDown();
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageMsg).slideDown();
-                                        $(".startup-content a#help-link").attr("href", idStorageConfiguration);
-                                        $("#system-settings-filestorage-container").slideDown("slow");
-                                        $(".custom-endpoint-form-element, .report-content").hide();
-                                        $("#blob-storage-form").hide();
-                                        $("#report-storage").hide();
-                                        storageButtonValue = "tenant";
-                                        $(".storage-checkbox").hide("slow");
-                                        $("body").removeClass("startup-page-container-body");
-                                    }
-                                }
-                                else {
-                                    $("#db-config-submit, #ds-db-config-submit").prop("disabled", false);
-                                    $("#db_loader").hide();
-                                    errorContent = result.Data.value;
-                                    $(".database-name .database-error").html(databaseValidationMessage).show();
-                                }
-                                changeFooterPostion();
-                            }
-                        );
-                        $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
-                        $("#txt-dbname").focus();
-                    }
-                    else {
-                        hideWaitingPopup($(".startup-page-container-body"));
-                        $("#db_config_generate").hide();
-                        $("#db-config-submit, #ds-db-config-submit").show();
-                        $("#db-config-submit, #ds-db-config-submit").prop("disabled", false);
-                        $("#db_loader").hide();
-                        errorContent = result.Data.value;
-                        $(".database-name .database-error").html(databaseValidationMessage).show();
-                    }
-                }
-            );
-        }
-    });
-    $("#ds-db-config-submit").on("click", function () {
-        $("#ds-db-config-submit").attr("disabled", true);
-        showWaitingPopup($(".startup-page-container-body"));
-        if ($("#database-type").val().toLowerCase() === "mssqlce") {
-            dssystemsettings();
-        }
-        else {
-            newDbConfiguration();
-        }
-        hideWaitingPopup($(".startup-page-container-body"));
-    });
-
     $("#db-content-holder").on("keyup", "input", function (event) {
         if (event.keyCode == 13 && $(this).hasClass("site-creation")) {
             $("input[name='databaseType']:checked").val() === "1" ? $("#sql-existing-db-submit, #sql-existing-ds-db-submit").click() : $("#db-config-submit, #ds-db-config-submit").click();
         }
     });
+});
 
-    $(document).on("click", "#move-to-next", function () {
-        showWaitingPopup($(".startup-page-container-body"));
-        var databaseType = $("#database-type").val();
-        $("#db_loader").show();
-        doAjaxPost("POST", generateDatabaseUrl,
-            {
-                data: JSON.stringify({ ServerType: databaseType })
-            },
-            function (result) {
-                $("#startup-page-conatiner").css("height", "");
-                hideWaitingPopup(".startup-page-container-body");
-                if (result.Data.key) {
-                    $(".selected").removeClass("selected");
-                    $("ul li[data-move-to='startup-page-two']").addClass("selected");
-                    $("#db_loader").hide();
-                    $("#system-settings-db-selection-container").hide();
-                    window.connectionString = result.Data.value;
-                    changeFooterPostion();
-                    delete window.serverName;
-                    delete window.portNumber;
-                    delete window.login;
-                    delete window.password;
-                    delete window.databaseName;
-                    delete window.sslEnabled;
-                    addPlacehoder("body");
-                    $("#system-settings-user-account-container").slideDown("slow");
-                    $("body").removeClass("startup-page-container-body");
+function getFormData() {
+    var serverType = getDropDownValue("database-type");
+    var serverName = $("#txt-servername").val();
+    var database = getDropDownValue("database-type").toLowerCase();
+    var portNumber = $("#txt-portnumber").val();
+    var maintenanceDb = $('#maintenance-db').val();
+    var enableSSL = $("#secure-sql-connection").is(":checked");
+    var additionalParameters = $("#additional-parameter").val();
+
+    switch (database) {
+        case "mssqlce":
+            var prefix = $("#tenant-table-prefix").val();
+            break;
+        case "mssql":
+            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
+            var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#databaseName").val();
+            break;
+        case "mysql":
+            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
+            var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
+            break;
+        case "oracle":
+            var prefix = ($("#table-prefix-oracle").val() === "" || $("#new-db-oracle").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix-oracle").val();
+            var databaseName = $("#new-db-oracle").is(":checked") ? $("#client-username").val() : $("#database-name-oracle").val();
+            break;
+        case "postgresql":
+            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
+            var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
+            break;
+    }
+
+    var isNewDatabase = $("#new-db").is(":checked");
+
+    var authenticationType = 0;
+    if (!(getRadioButtonValue("checkWindows") == "windows"))
+        authenticationType = 1;
+
+    var globalAdmin = {
+        UserName: $("#txt-username").val(),
+        FirstName: $("#txt-firstname").val(),
+        LastName: $("#txt-lastname").val(),
+        Email: $("#txt-emailid").val(),
+        Password: $("#new-password").val()
+    };
+    var systemSettingsData = {
+        SQLConfiguration:
+        {
+            ConnectionString: window.connectionString,
+            IntermediateServerConnectionString: window.intermediateServerConnectionString,
+            TenantServerConnectionString: window.tenantServerConnectionString,
+            ServerType: serverType,
+            ServerName: serverName,
+            Port: portNumber,
+            MaintenanceDatabase: maintenanceDb,
+            AuthenticationType: authenticationType,
+            DatabaseName: databaseName,
+            Prefix: prefix,
+            SslEnabled: enableSSL,
+            IsNewDatabase: isNewDatabase,
+            AdditionalParameters: additionalParameters
+        },
+        StorageType: window.storageType
+    };
+
+    var azureData = {
+        AzureBlobStorageUri: window.endpoint,
+        AzureBlobStorageContainerName: window.containername,
+        ConnectionType: window.connectionType,
+        ConnectionString: window.azureconnectionString,
+        AccountName: window.accountname,
+        AccessKey: window.accesskey
+    };
+
+    var tenantInfo = {
+        TenantType: getTenantType(),
+        TenantName: isBoldBI ? "Bold BI Enterprise Dashboards" : "Bold Reports Enterprise Reporting",
+        TenantIdentifier: "site1",
+    };
+
+    $("#global-admin-details").val(JSON.stringify(globalAdmin));
+    $("#system-settings-data").val(JSON.stringify(systemSettingsData));
+    $("#azure-data").val(JSON.stringify(azureData));
+    $("#tenant-info").val(JSON.stringify(tenantInfo));
+}
+
+function validateEmail(email, eventType) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+function changeFooterPostion() {
+    if (window.innerHeight - $("#system-settings-general").height() > 70) {
+        $("#base-footer-div").addClass("footer-fixed");
+    } else {
+        $("#base-footer-div").removeClass("footer-fixed");
+    }
+}
+
+$(document).on("focus", "input[type=text],input[type=password]", function () {
+    if (regexIe8.test(userAgent)) {
+        $(this).next(".placeholder").removeClass("show").addClass("hide");
+    }
+});
+
+$(document).on("focusout", "input[type=text],input[type=password]", function () {
+    if (regexIe8.test(userAgent) && $(this).val() === "") {
+        $(this).next(".placeholder").removeClass("hide").addClass("show");
+    }
+});
+
+$(document).on("focus", ".placeholder", function () {
+    $(this).prev("input").focus();
+});
+
+function addPlacehoder(object) {
+    if (regexIe8.test(userAgent)) {
+        $(object).find("input[type=text],input[type=password]").each(function () {
+            if ($(this).val() === "") {
+                $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder") })).insertAfter(this).show();
+            }
+            else {
+                $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder") })).insertAfter(this).hide();
+            }
+        });
+    }
+}
+
+$(document).on("click", "#info-icon-postgressql", function () {
+    $("#prefix-message-postgresql").css("display", "block");
+});
+
+$(document).on("click", "#info-icon", function () {
+    $("#prefix-message").css("display", "block");
+});
+
+function DomResize() {
+    //$("#startup-page-conatiner").height($("#system-settings-general").height() + $("#base-footer-div").height());
+}
+
+//To  stop animation in radio-button on page rendering
+$(document).on("click", ".css-radio", function () {
+    $(this).siblings("label").removeClass("notransition");
+});
+$(document).on("click", "#database-type-dropdown, .proceed-button", function () {
+    $(".css-radio").siblings("label").addClass("notransition");
+});
+
+function existingDbConfiguration(element) {
+    removeError();
+    DomResize();
+    checkingExistingDB(element);
+}
+
+function checkingExistingDB(element) {
+    $('#details-next').attr("disabled", true);
+
+    window.serverName = $("#txt-servername").val();
+    window.portNumber = $("#txt-portnumber").val();
+    window.maintenanceDb = $('#maintenance-db').val();
+    window.IsWindowsAuthentication = getRadioButtonValue("checkWindows") == "windows";
+    window.login = $("#txt-login").val();
+    window.password = $("#txt-password-db").val();
+    var databaseType = getDropDownValue("database-type");
+
+    window.databaseName = $("#database-name").val();
+    window.serverDatabaseName = $("#server-existing-dbname").val();
+    window.intermediateDatabaseName = $("#imdb-existing-dbname").val();
+    window.sslEnabled = $("#secure-sql-connection").is(":checked");
+    window.additionalParameters = $("#additional-parameter").val();
+   
+    $.ajax({
+        type: "POST",
+        url: connectDatabaseUrl,
+        async: false,
+        data: {
+            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: false, TenantType: getTenantType(), additionalParameters: window.additionalParameters }),
+            isSimpleMode: isSimpleModeSelction(),
+            isSiteCreation: true
+        },
+        success: function (result) {
+            if (result.Data.key) {
+                window.connectionString = result.Data.connectionResponse.ServerConnectionString;
+                window.tenantServerConnectionString = result.Data.connectionResponse.TenantServerConnectionString;
+                window.intermediateServerConnectionString = result.Data.connectionResponse.IntermediateServerConnectionString;
+                var databaseType = getDropDownValue("database-type");
+                $.ajax({
+                    type: "POST",
+                    url: checkTableExistsUrl,
+                    async: false,
+                    data: {
+                        data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: getTenantType(), IsNewDatabase: false, additionalParameters: window.additionalParameters }),
+                        isSimpleMode: isSimpleModeSelction(),
+                        isSiteCreation: true
+                    },
+                    success: function (result) {
+                        var items = result.Data.value;
+                        if (result.Data.key && items.length > 0) {
+
+                            hideWaitingPopup(element);
+                            $('#details-next').removeAttr("disabled");
+
+                            var html = window.TM.App.LocalizationContent.TablesAlreadyExists;
+                            html += "<ol class='list-area'>";
+                            for (var t = 0; t < items.length; t++) {
+                                html += "<li>" + items[t] + "</li>";
+                            }
+                            html += "</ol>";
+                            errorContent = html;
+                            $(".database-error").html(databaseValidationMessage).show();
+
+                        } else if (!result.Data.key && items.length <= 0) {
+                            delete window.serverName;
+                            delete window.portNumber;
+                            delete window.login;
+                            delete window.password;
+                            delete window.databaseName;
+                            delete window.sslEnabled;
+                            hideWaitingPopup(element);
+                            $('#details-next').removeAttr("disabled");
+                            changeFooterPostion();
+                            $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
+                            $("#database-name").focus();
+                        } else {
+                            $('#details-next').removeAttr("disabled");
+                            hideWaitingPopup(element);
+                            errorContent = result.Data.value;
+                            $(".database-error").html(databaseValidationMessage).show();
+                        }
+                    }
+                });
+            } else {
+
+                hideWaitingPopup(element);
+                $('#details-next').removeAttr("disabled");
+                errorContent = result.Data.value;
+                $(".database-error").html(databaseValidationMessage).show();
+            }
+        }
+    });
+}
+
+function newDbConfiguration(element) {
+    removeError();
+    $('#details-next').attr("disabled", true);
+    checkingNewDBConnection(element);
+}
+
+function checkingNewDBConnection(element, actionType) {
+    var result = connectDatabase(element, actionType);
+    
+    if (result.Data != undefined && result.Data.key && actionType == "edit") {
+        var isValidDBDetail = false;
+        $.ajax({
+            type: "POST",
+            url: checkValidDatabaseUrl,
+            async: false,
+            data: { tenantId: tenantId, connectionString: window.connectionString },
+            success: function (response) {
+                if (response.Status) {
+                    isValidDBDetail = true;
                 }
                 else {
-                    $("#db_config_generate").prop("disabled", false);
-                    $("#db_loader").hide();
-                    $("#connection-validation").find(".validation-errors").html(result.Data.value);
-                    $("#connection-validation").show();
+                    if (result.Data != undefined) {
+                        result.Data.value = response.Data;
+                    }
+                    else {
+                        errorContent = response.Data;
+                    }
                 }
             }
-        );
+        });
+    }
+
+    if (result.Data != undefined && result.Data.key && (actionType == "edit" ? isValidDBDetail : true)) {
+        delete window.serverName;
+        delete window.portNumber;
+        delete Window.dns;
+        delete window.login;
+        delete window.password;
+        delete window.databaseName;
+        delete window.sslEnabled;
+            if (actionType == "edit") {
+                updateTenant(waitingPopUpElement, window.tenantServerConnectionString);
+            }
+        if (actionType != "edit") {
+            changeFooterPostion();
+            $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
+        }
+    }
+    else {
+            hideWaitingPopup(element);
+            $('#details-next').removeAttr("disabled");
+        if (result.Data != undefined) {
+            errorContent = result.Data.value;
+        }
+        $(".database-error").html(databaseValidationMessage).show();
+    }
+}
+
+function connectDatabase(element, actionType) {
+    showWaitingPopup(element);
+    var result = "";
+    var isNewDatabase = true;
+    window.serverName = $("#txt-servername").val();
+    window.portNumber = $("#txt-portnumber").val();
+    window.maintenanceDb = $('#maintenance-db').val();
+    window.IsWindowsAuthentication = getRadioButtonValue("checkWindows") == "windows";
+    window.login = $("#txt-login").val();
+    window.password = $("#txt-password-db").val();
+    var databaseType = getDropDownValue("database-type");
+    window.databaseName = $("#txt-dbname").val();
+    window.serverDatabaseName = $("#server-dbname").val();
+    window.intermediateDatabaseName = $("#imdbname").val();
+    window.sslEnabled = $("#secure-sql-connection").is(":checked");
+    window.additionalParameters = $("#additional-parameter").val();
+    if (actionType == "edit") {
+        isNewDatabase = false;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: connectDatabaseUrl,
+        async: false,
+        data: {
+            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabase, TenantType: getTenantType(), additionalParameters: window.additionalParameters }),
+            isSimpleMode: isSimpleModeSelction(),
+            isSiteCreation: true
+        },
+        success: function (serverResult) {
+            hideWaitingPopup(element);
+            if (serverResult.Data.key) {
+                window.connectionString = serverResult.Data.connectionResponse.ServerConnectionString;
+                window.tenantServerConnectionString = serverResult.Data.connectionResponse.TenantServerConnectionString;
+                window.intermediateServerConnectionString = serverResult.Data.connectionResponse.IntermediateServerConnectionString;
+                if (actionType != undefined && actionType == "edit") {
+                    result = { "Data": { "key": true, "value": "connected successfully" } };
+                }
+                else {
+                    result = serverResult;
+                }
+            } else {
+                $('#details-next').removeAttr("disabled");
+                if (serverResult.Data != undefined) {
+                    errorContent = serverResult.Data.value;
+                }
+                $(".database-error").html(databaseValidationMessage).show();
+            }
+        }
     });
 
-    $("#btn_proceed_page1").on("click", function () {
-        $("#steps-container").find(".selected").removeClass("selected");
-        $("li[data-move-to='startup-page-two']").addClass("selected");
+    return result;
+}
 
-        $("#system-settings-db-selection-container").hide();
-        $("#system-settings-filestorage-container").slideDown("slow");
-        $("#txt-username").focus();
-        changeFooterPostion();
+function getDatabaseFormValues() {
+    var formData;
+    var isNewDatabase = $("#new-db").is(":checked");
+    var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
+    var serverType = getDropDownValue("database-type");
+    var maintenanceDb = $('#maintenance-db').val();
+    var authenticationType = 0;
+    var enableSSL = $("#secure-sql-connection").is(":checked");
+    var additionalParameters = $("#additional-parameter").val();
+    if (!(getRadioButtonValue("checkWindows") == "windows"))
+        authenticationType = 1;
+        formData = {
+            SQLConfiguration:
+            {
+                ConnectionString: window.connectionString,
+                IntermediateServerConnectionString: window.intermediateServerConnectionString,
+                TenantServerConnectionString: window.tenantServerConnectionString,
+                ServerType: serverType,
+                AuthenticationType: authenticationType,
+                DatabaseName: databaseName,
+                MaintenanceDatabase: maintenanceDb,
+                SslEnabled: enableSSL,
+                IsNewDatabase: isNewDatabase,
+                AdditionalParameters: additionalParameters
+            },
+            StorageType: $("input[name='IsBlobStorage']:checked").val(),
+            TenantIsolation:
+            {
+                IsEnabled: $("#isolation-enable-switch").is(":checked"),
+                IsolationCode: $("#site-isolation-code").val()
+            },
+            CustomAttribute: [],
+        };
+
+    return formData;
+}
+
+
+function postSystemSettingsData(systemSettingsDetails, azuredetails, userEmail, tenantDetails, brandingType, isAddFromServer) {
+
+    var userEmailData = (userEmail != undefined && userEmail != null) ? JSON.stringify(userEmail) : $("#tenant-email").val();
+    var tenantDetailsData = (tenantDetails != undefined && tenantDetails != null) ? JSON.stringify(tenantDetails) : null;
+    setSystemSettingsData = { systemSettingsData: JSON.stringify(systemSettingsDetails), azureData: JSON.stringify(azuredetails), userEmail: userEmailData, tenantDetails: tenantDetailsData, brandingType: brandingType };
+    $.ajax({
+        type: "POST", url: setSystemSettingsUrl, data: setSystemSettingsData,
+        success: function (setSystemSettingsResponse) {
+            if (isAddFromServer != undefined && isAddFromServer) {
+                hideWaitingPopup(waitingPopUpElement);
+                $("#provide-admin-access-button").attr("disabled", "disabled");
+                var tenantGridObj = parent.$("#tenants_grid").data("ejGrid");
+                tenantGridObj.refreshContent();
+                onAddAdminsDialogClose();
+                parent.$("#add-tenant-popup").ejDialog("close");
+
+                if (parent.window.location.href.indexOf("action=create-new-site") > -1) {
+                    parent.history.pushState(null, '', umsSitesUrl);
+                }
+
+                parent.window.location.href = setSystemSettingsResponse.redirectUrl;
+            }
+            else {
+                showWaitingPopup($(".startup-page-container-body"));
+                window.location = setSystemSettingsResponse.redirectUrl;
+            }
+        }
     });
+}
 
-    $.validator.addMethod("isRequired", function (value, element) {
-        return !isEmptyOrWhitespace(value);
-    }, window.TM.App.LocalizationContent.EnterName);
+function validate_report_storage() {
+    $(".blob-error-message").hide();
+    showWaitingPopup($(".startup-page-conatiner"));
+    var storageType = $("input[name='IsBlobStorage']:checked").val();
+    window.storageType = storageType;
+    var azuredetails = "";
+    var tenantDetails = {
+        TenantName: $("#txt-site-name").val(),
+        TenantIdentifier: $("#txt-site-identifier").val(),
+        TenantType: isBoldBI ? "BoldBIOnPremise" : "BoldReportsOnPremise",
+        UseSiteIdentifier: useSiteIdentifier
+    };
+    var tenantType = isBoldBI ? "Bold BI" : "Bold Reports"
+    if (storageType == "1") {
+        if ($("#blob-storage-form").valid()) {
+            window.accountname = $("#txt-accountname").val();
+            window.endpoint = $("#txt-bloburl").val() == "" ? "https://" + $("#txt-accountname").val() + ".blob.core.windows.net" : $("#txt-bloburl").val();
+            window.accesskey = $("#txt-accesskey").val();
+            window.containername = $("#txt-containername").val();
+            window.storageenable = $(".storage-checkbox").is(":checked");
 
-    $.validator.addMethod("hasWhiteSpace", function (value, element) {
-        return /\s/.test(value);
-    }, window.TM.App.LocalizationContent.HasSpace);
+            var blobUrl = $("#txt-bloburl").val();
+            var connectionType = $("input[name='Connection']:checked").val();
+            var connectionString = "";
 
-    $.validator.addMethod("isValidUser", function (value, element) {
-        return isValidUserName(value)
-    }, window.TM.App.LocalizationContent.UsernameInvalidChar);
 
-    $.validator.addMethod("isValidEmail", function (value, element) {
-        return IsEmail(value);
-    }, window.TM.App.LocalizationContent.EnterValidEmail);
+            if (connectionType == "http" || connectionType == "https") {
+                connectionString = "DefaultEndpointsProtocol=" + connectionType + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
 
-    $.validator.addMethod("isValidName", function (value, element) {
-        return IsValidName("name", value);
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
+            } else {
+                connectionString = "BlobEndpoint=" + blobUrl + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
+            }
+            window.connectionType = connectionType;
+            azuredetails = {
+                AzureBlobStorageUri: window.endpoint,
+                AzureBlobStorageContainerName: window.containername,
+                ConnectionType: window.connectionType,
+                ConnectionString: connectionString,
+                AccountName: window.accountname,
+                AccessKey: window.accesskey
+            };
 
-    $.validator.addMethod("isValidUsername", function (value, element) {
-        return IsValidUsername(value);
-    }, window.TM.App.LocalizationContent.InvalidUsername);
+            var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db";
 
-    $.validator.addMethod("isValidUsernameLength", function (value, element) {
-        return IsValidUsernameLength(value);
-    }, window.TM.App.LocalizationContent.UsernameExceeds);
+            if (window.storageenable == false) {
+                $.ajax({
+                    type: "POST",
+                    url: blobExist,
+                    data: { connectionString: connectionString, containerName: window.containername },
+                    success: function (result) {
+                        if (typeof result.Data != "undefined") {
+                            if (result.Data.Key.toString().toLowerCase() == "true") {
+                                hideWaitingPopup(".startup-page-conatiner");
+                                if (isBoldBI && !isIntermediateDatabaseFormSubmit) {
+                                    azureDataforBoldbi = azuredetails;
+                                    dssystemsettings();
+                                }
 
-    $.validator.addMethod("isValidPrefix", function (value, element) {
-        if (/^[a-zA-Z\_]+$/g.test(value) || value === "") {
-            return true;
+                                if (isIntermediateDatabaseFormSubmit) {
+                                    intermediateDbDetails = getDatabaseFormValues(true);
+                                }
+                                else {
+                                    systemSettingsDetails = getDatabaseFormValues();
+                                }
+                                if (isBoldReports) {
+                                    postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
+                                }
+                            } else {
+                                hideWaitingPopup(".startup-page-conatiner");
+                                $(".azure-validation,.blob-error-message").css("display", "block");
+                                changeFooterPostion();
+                            }
+                        } else {
+                            hideWaitingPopup(".startup-page-conatiner");
+                            $(".azure-validation,.blob-error-message").css("display", "block");
+                            changeFooterPostion();
+                        }
+                    }
+                });
+
+                return false;
+            }
+            else {
+                hideWaitingPopup(".startup-page-conatiner");
+                if (isBoldReports) {
+                    postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
+                }
+            }
         } else {
+            hideWaitingPopup(".startup-page-conatiner");
+            changeFooterPostion();
             return false;
         }
-    }, window.TM.App.LocalizationContent.AvoidNumberSpace);
+    } else {
+        var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db";
 
-
-    $.validator.addMethod("isValidDatabaseName", function (value, element) {
-        if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
-            return true;
+        if (isBoldBI && !isIntermediateDatabaseFormSubmit) {
+            dssystemsettings();
         }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (<>%*?\":`;'[]|\\) " + window.TM.App.LocalizationContent.AvoidLeadingTrailingSpace);
 
-    $.validator.addMethod("sqlUsernamevalidation", function (value, element) {
-        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]/g.test(value)) {
-            return true;
+        if (isIntermediateDatabaseFormSubmit) {
+            intermediateDbDetails = getDatabaseFormValues(true);
         }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\";) " + window.TM.App.LocalizationContent.AvoidLeadingSpace);
-
-    $.validator.addMethod("isValidCredentials", function (value, element) {
-        return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value);
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\";)");
-
-    $.validator.addMethod("mySqlCredentials", function (value, element) {
-        if ((/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|\":<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) || value === "") {
-            return true;
+        else {
+            systemSettingsDetails = getDatabaseFormValues();
         }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " ; " + window.TM.App.LocalizationContent.MySqlAvoidLeadingTrailingSpace);
-
-    $.validator.addMethod("oraclePasswordValidation", function (value, element) {
-        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
-            return true;
+        hideWaitingPopup(".startup-page-conatiner");
+        if (isBoldReports) {
+            postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
         }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (';\") " + window.TM.App.LocalizationContent.OracleAvoidLeadingTrailingSpace);
+    }
+}
 
-    $.validator.addMethod("oracleUsernameValidation", function (value, element) {
-        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value)) {
-            return true;
-        }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (';\")");
+function isSimpleModeSelction() {
+    return isSimpleModeValue === "true";
+}
 
-    $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
-        if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
-            return true;
-        }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
-
-    $.validator.addMethod("postgresqlUsernamevalidation", function (value, element) {
-        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
-            return true;
-        }
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\"\\;) " + window.TM.App.LocalizationContent.PostgresqlAvoidLeadingTrailingSpace);
-
-    $.validator.addMethod("isValidPostgresqlCredentials", function (value, element) {
-        return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value);
-    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\"\\;)");
-
-    $.validator.addMethod("isValidPortNumber", function (value, element) {
-        return /^\d{1,5}$/.test(value) && value < 65536 && !/^[\s]/g.test(value);
-    }, window.TM.App.LocalizationContent.IsValidPort);
-
-    $(".admin-account-fields-container").validate({
-        focusInvalid: false,
-        errorElement: "span",
-        onkeyup: function (element, event) {
-            if ($(element).attr('id') == "txt-username") {
-                $("#user-details").attr("data-username", $("#txt-username").val());
+$(document).on("change", ".storage-checkbox", function () {
+    $(".storage-form").find(".e-error").removeClass("e-error");
+    $(".startup-validation").hide();
+    var value = $("#storage-checkbox").is(":checked");
+    if (value == true) {
+        $.ajax({
+            type: "POST",
+            url: blobDetails,
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                var systemSetting = JSON.parse(data.AzureDetails);
+                document.getElementById("txt-accountname").ej2_instances[0].value = systemSetting.BlobStorageAccountName;
+                document.getElementById("txt-accesskey").ej2_instances[0].value = systemSetting.BlobStorageAccessKey;
+                document.getElementById("txt-containername").ej2_instances[0].value = systemSetting.AzureBlobStorageContainerName;
+                var checkedVal = getRadioButtonValue("Connection");
+                var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + systemSetting.BlobStorageAccountName + ";AccountKey=" + systemSetting.BlobStorageAccessKey;
+                $("#connection-string").val(finalValue);
             }
-            if ($(element).attr('id') == "txt-emailid") {
-                $("#user-details").attr("data-email", $("#txt-emailid").val());
+        });
+    }
+    else {
+        document.getElementById("txt-accountname").ej2_instances[0].value = null;
+        document.getElementById("txt-accesskey").ej2_instances[0].value = null;
+        document.getElementById("txt-containername").ej2_instances[0].value = null;
+        var checkedVal = getRadioButtonValue("Connection");
+        var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=;AccountKey=";
+        $("#connection-string").val(finalValue);
+    }
+});
+
+function getTenantType() {
+    var tenantType = "100";
+    if ($("#tenant-type").length > 0 && isSiteCreation) {
+            dropdownValue = document.getElementById("tenant-type").ej2_instances[0].value;
+        if (dropdownValue === "BoldReportsOnPremise") {
+            tenantType = "BoldReportsOnPremise";
+        }
+        else {
+            tenantType = "BoldBIOnPremise";
+        }
+    }
+    else {
+        tenantType = isBoldBI ? "BoldBIOnPremise" : "BoldReportsOnPremise"
+    }
+
+    return tenantType;
+}
+
+function forceToLower(input) {
+    input.value = input.value.toLowerCase();
+}
+
+function getDropDownValue(id) {
+    return document.getElementById(id).ej2_instances[0].value;
+}
+
+function getRadioButtonValue(name) {
+    return $("input[name='" + name + "']:checked").val();
+}
+
+function autoFocus(id) {
+    document.getElementById(id).ej2_instances[0].focusIn();
+}
+
+function autoDeploy() {
+    showWaitingPopup($(".startup-page-container-body"));
+    $.ajax({
+        type: "GET",
+        url: autoDeploymentUrl,
+        async: false,
+        success: function (result) {
+            if (typeof result.status != "undefined" && result.status) {
+                $.ajax({
+                    url: setSystemSettingsUrl,
+                    type: "POST",
+                    async: false,
+                    data: {
+                        systemSettingsData: result.systemSettingsData,
+                        azureData: result.azureData,
+                        tenantInfo: result.tenantInfo,
+                        globalAdminDetails: result.globalAdminDetails
+                    },
+                    success: function (setSystemSettingsResponse) {
+                        window.location = setSystemSettingsResponse.redirectUrl;
+                    },
+                    error: function (setSystemSettingsResponse) {
+                        hideWaitingPopup($(".startup-page-container-body"));
+                    }
+                });
             }
-            if ($(element).attr('id') == "txt-firstname" || $(element).attr('id') == "txt-lastname") {
-                $("#user-details").attr("data-displayname", $("#txt-firstname").val() + " " + $("#txt-lastname").val());
-            }
-            if (event.keyCode != 9) {
-                isKeyUp = true;
-                $(element).valid();
-                isKeyUp = false;
-            }
-            else
-                true;
-        },
-        onfocusout: function (element) {
-            $(element).valid();
-        },
-        onfocusin: function (element) {
-            if (element.id === "new-password" && $("#new-password").data("toggle") === "popover" && $("#new-password").val() != undefined && $("#new-password").val() != "") {
-                createPasswordPolicyRules();
-            }
-        },
-        rules: {
-            username: {
-                isRequired: true,
-                hasWhiteSpace: false,
-                isValidName: true,
-                isValidUser: true,
-                additionalSpecialCharValidation: true
-            },
-            firstname: {
-                isRequired: true,
-                isValidName: true,
-                additionalSpecialCharValidation: true
-            },
-            lastname: {
-                additionalSpecialCharValidation: true
-            },
-            username: {
-                isRequired: true,
-                isValidUsernameLength: true,
-                isValidUsername: true
-            },
-            email: {
-                isRequired: true,
-                isValidName: true,
-                isValidEmail: true
-            },
-            password: {
-                required: true,
-                isValidPassword: true
-            },
-            confirm: {
-                required: true,
-                equalTo: "#new-password"
-            }
-        },
-        highlight: function (element) {
-            $(element).parent().find(">.startup-validation").show();
-            passwordBoxHightlight(element);
-        },
-        unhighlight: function (element) {
-            passwordBoxUnhightlight(element);
-            $(element).parent().find(">.startup-validation").hide();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
-        },
-        messages: {
-            username: {
-                isRequired: window.TM.App.LocalizationContent.UserNameValidator
-            },
-            firstname: {
-                isRequired: window.TM.App.LocalizationContent.FirstNameValidator
-            },
-            lastname: {
-                isValidName: window.TM.App.LocalizationContent.AvoidSpecailCharacters
-            },
-            email: {
-                isRequired: window.TM.App.LocalizationContent.EmailValidator
-            },
-            password: {
-                required: window.TM.App.LocalizationContent.PasswordValidator,
-                isValidPassword: window.TM.App.LocalizationContent.InvalidPassword
-            },
-            confirm: {
-                required: window.TM.App.LocalizationContent.ConfirmPasswordValidator,
-                equalTo: window.TM.App.LocalizationContent.PasswordsMismatch
+            else {
+                if (typeof result.message != "undefined" && result.message == "skipautodeploy") {
+                    window.location = startUpUrl + "?skipAutoDeploy=true";
+                }
+                else {
+                    hideWaitingPopup($(".startup-page-container-body"));
+                    document.getElementById("auto-deployment-response").ej2_instances[0].show();
+                    $("#auto-deployment-response-dialog-content").css("display", "block");
+                }
             }
         }
     });
+}
 
-    $("#new-password").bind("keyup", function (e) {
-        if ($("#new-password").val() == $("#txt-confirm-password").val()) {
-            $("#txt-confirm-password").closest(".form-group").removeClass("has-error");
-            $("#txt-confirm-password").parent().find(">.startup-validation").hide();
-        }
-        createPasswordPolicyRules();
-    });
+function skipAutoDeploy() {
+    window.location = startUpUrl + "?skipAutoDeploy=true";
+}
 
-    $("#new-password").on("change", function () {
-        createPasswordPolicyRules();
-        $("#new-password").valid();
-    });
-
-
-    $("#txt-password-db").validate({
-        errorElement: "span",
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            password: {
-                isRequired: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
-        },
-        unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
-            changeFooterPostion();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
-            changeFooterPostion();
-        },
-        messages: {
-            password: {
-                isRequired: window.TM.App.LocalizationContent.PasswordValidator
-            }
-        }
-    });
-
-    $("#txt-servername").validate({
-        errorElement: "span",
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            servername: {
-                isRequired: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
-        },
-        unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
-            changeFooterPostion();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
-            changeFooterPostion();
-        },
-        messages: {
-            servername: {
-                isRequired: window.TM.App.LocalizationContent.ServerNamevalidator
-            }
-        }
-    });
-
-    $("#txt-portnumber").validate({
-        errorElement: "span",
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            portnumber: {
-                isRequired: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
-        },
-        unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
-            changeFooterPostion();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
-            changeFooterPostion();
-        },
-        messages: {
-            servername: {
-                isRequired: window.TM.App.LocalizationContent.PortValidator
-            }
-        }
-    });
-
-    $("#txt-login").validate({
-        errorElement: "span",
-        onfocusout: function (element) { $(element).valid(); },
-        rules: {
-            username: {
-                isRequired: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
-        },
-        unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
-            changeFooterPostion();
-        },
-        errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
-            changeFooterPostion();
-        },
-        messages: {
-            username: {
-                isRequired: window.TM.App.LocalizationContent.UserNameValidator
-            }
-        }
-    });
-
+var databaseValidationMessage = window.TM.App.LocalizationContent.OneOrMoreErrors + " " + window.TM.App.LocalizationContent.Click + " " + "<a id='know-more-error'>" + window.TM.App.LocalizationContent.Here + "</a> " + window.TM.App.LocalizationContent.KnowMore + ".";
+$(document).ready(function () {
+    removeError();
     $("#db-content-holder").validate({
         errorElement: "span",
         onkeyup: function (element, event) {
@@ -2235,40 +2400,44 @@ $(document).ready(function () {
                 required: true,
                 isValidDatabaseName: true
             },
+            serverdbname: {
+                required: true,
+                isValidDatabaseName: true
+            },
+            serverexistingdbname: {
+                required: true,
+                isValidDatabaseName: true
+            },
+            designerdbname: {
+                required: true,
+                isValidDatabaseName: true
+            },
+            designerexistingdbname: {
+                required: true,
+                isValidDatabaseName: true
+            },
             tablePrefix: {
                 isValidPrefix: true
             }
         },
         highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).closest(".text-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
-            if ($("#database-type").val().toLowerCase() === "mysql") {
-                $(element).parents("#mysql-odbc-dropdown").find(".startup-validation").show();
-            }
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
             if (element.id === "txt-dbname") {
-                $(".database-name .database-error").html("").hide();
+                $(".database-error").html("").hide();
             }
 
             if (element.id === "database-name") {
-                $(".sql-server-existing-db .database-error").html("").hide();
+                $(".database-error").html("").hide();
             }
         },
         unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).closest(".text-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
-            if ($("#database-type").val().toLowerCase() === "mysql") {
-                $(element).parents("#mysql-odbc-dropdown").find(".startup-validation").hide();
-            }
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
             changeFooterPostion();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").html(error.html());
-            if ($("#database-type").val().toLowerCase() === "mysql") {
-                $(element).parents("#mysql-odbc-dropdown").find(".startup-validation").html(error.html());
-            }
-
+            $(element).closest(".e-outline").siblings(".startup-validation").css("display", "block").html(error.html());
             changeFooterPostion();
         },
         messages: {
@@ -2289,20 +2458,638 @@ $(document).ready(function () {
             },
             databaseName: {
                 required: window.TM.App.LocalizationContent.ExistingDatabaseValidator
+            },
+            serverdbname: {
+                required: window.TM.App.LocalizationContent.TheTenantServerDatabaseValidator
+            },
+            serverexistingdbname: {
+                required: window.TM.App.LocalizationContent.ExistingDatabaseValidator
+            },
+            designerdbname: {
+                required: window.TM.App.LocalizationContent.TheDesignerDatabaseValidator
+            },
+            designerexistingdbname: {
+                required: window.TM.App.LocalizationContent.ExistingDatabaseValidator
             }
         }
     });
 
-    $.validator.addMethod("IsValidEndPoint", function (value, element) {
-        return IsValidEndPoint(value);
-    }, window.TM.App.LocalizationContent.EndPoint);
+    $("#txt-password-db").validate({
+        errorElement: "span",
+        onfocusout: function (element) { $(element).valid(); },
+        rules: {
+            password: {
+                isRequired: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
+        },
+        unhighlight: function (element) {
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
+            changeFooterPostion();
+        },
+        errorPlacement: function (error, element) {
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
+            changeFooterPostion();
+        },
+        messages: {
+            password: {
+                isRequired: window.TM.App.LocalizationContent.PasswordValidator
+            }
+        }
+    });
 
-    $.validator.addMethod("IsCustomEndpoint", function (value, element) {
-        return IsCustomEndPoint(value, element);
-    }, window.TM.App.LocalizationContent.IsValidCustomEndPoint);
-    $.validator.addMethod("IsValidCustomEndPoint", function (value, element) {
-        return IsValidCustomEndPoint(value, element);
-    }, window.TM.App.LocalizationContent.IsValidCustomEndPoint);
+    $("#txt-servername").validate({
+        errorElement: "span",
+        onfocusout: function (element) { $(element).valid(); },
+        rules: {
+            servername: {
+                isRequired: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
+        },
+        unhighlight: function (element) {
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
+            changeFooterPostion();
+        },
+        errorPlacement: function (error, element) {
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
+            changeFooterPostion();
+        },
+        messages: {
+            servername: {
+                isRequired: window.TM.App.LocalizationContent.ServerNamevalidator
+            }
+        }
+    });
+
+    $("#txt-portnumber").validate({
+        errorElement: "span",
+        onfocusout: function (element) { $(element).valid(); },
+        rules: {
+            portnumber: {
+                isRequired: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
+        },
+        unhighlight: function (element) {
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
+            changeFooterPostion();
+        },
+        errorPlacement: function (error, element) {
+            $(element).closest(".e-outline").siblings(".startup-validation").css("display", "block").text(error.html());
+            changeFooterPostion();
+        },
+        messages: {
+            servername: {
+                isRequired: window.TM.App.LocalizationContent.PortValidator
+            }
+        }
+    });
+
+    $("#txt-login").validate({
+        errorElement: "span",
+        onfocusout: function (element) { $(element).valid(); },
+        rules: {
+            username: {
+                isRequired: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
+        },
+        unhighlight: function (element) {
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
+            changeFooterPostion();
+        },
+        errorPlacement: function (error, element) {
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
+            changeFooterPostion();
+        },
+        messages: {
+            username: {
+                isRequired: window.TM.App.LocalizationContent.UserNameValidator
+            }
+        }
+    });
+
+    if (isSiteCreation === "false") {
+        var interval = setInterval(function () {
+            $.ajax({
+                type: "GET",
+                url: progressStatusUrl,
+                success: function (result) {
+                    $(".deployment-status").text(result.Message);
+                    $(".progressBar-container .progress-bar").width(result.Percentage);
+                    if (result.Percentage == "100%") {
+                        clearInterval(interval);
+                        $.ajax({
+                            type: "POST",
+                            url: deleteStatusUrl,
+                            success: function (data) {
+                                if (data) {
+                                    $(".progressBar-container .progress-bar").width("10%")
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }, 3000);
+    }
+});
+
+
+
+
+$(document).on("click", "#know-more-error", function () {
+    messageBox("su-login-error", window.TM.App.LocalizationContent.DatabaseError, errorContent, "success", function () {
+        onCloseMessageBox();
+    });
+});
+
+
+$(document).on("click", "#db-config-submit, #sql-existing-db-submit", function () {
+    var isNewDatabaseTab = $(this).attr("id") == "db-config-submit";
+    removeError();
+    var canProceed = $("#db-content-holder").valid();
+    if (canProceed) {
+        if (typeof isDockerOrk8s != "undefined" && !isDockerOrk8s) {
+            showWaitingPopup($(".startup-waiting-popup"));
+        }
+        $(this).prop("disabled", true);
+        window.serverName = $("#txt-servername").val();
+        window.portNumber = $("#txt-portnumber").val();
+        window.maintenanceDb = $('#maintenance-db').val();
+        window.IsWindowsAuthentication = getRadioButtonValue("checkWindows") == "windows";
+        window.login = $("#txt-login").val();
+        window.password = $("#txt-password-db").val();
+        var databaseType = getDropDownValue("database-type");
+        window.databaseName = isNewDatabaseTab ? $("#txt-dbname").val() : $("#database-name").val();
+        window.serverDatabaseName = isNewDatabaseTab ? $("#server-dbname").val() : $("#server-existing-dbname").val();
+        window.intermediateDatabaseName = isNewDatabaseTab ? $("#imdbname").val() : $("#imdb-existing-dbname").val();
+        window.sslEnabled = $("#secure-sql-connection").is(":checked");
+        window.additionalParameters = $("#additional-parameter").val();
+        if (!isNewDatabaseTab) {
+            var tenantype = $("#tenant-type").val() === "" ? getTenantType() : $("#tenant-type").val();
+        }
+        doAjaxPost("POST", connectDatabaseUrl,
+            {
+                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabaseTab, TenantType: getTenantType(), additionalParameters: window.additionalParameters }),
+                isSimpleMode: isSimpleModeSelction()
+            },
+            function (result) {
+                if (result.Data.key) {
+                    window.connectionString = result.Data.connectionResponse.ServerConnectionString;
+                    window.tenantServerConnectionString = result.Data.connectionResponse.TenantServerConnectionString;
+                    window.intermediateServerConnectionString = result.Data.connectionResponse.IntermediateServerConnectionString;
+                    var databaseType = getDropDownValue("database-type");
+                    if (isNewDatabaseTab) {
+                        doAjaxPost("POST", generateDatabaseUrl,
+                            {
+                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true, additionalParameters: window.additionalParameters }),
+                                isSimpleMode: isSimpleModeSelction()
+                            },
+                            function (result) {
+                                hideWaitingPopup($(".startup-waiting-popup"));
+                                if (result.Data.key) {
+                                    registration(isSimpleModeSelction());
+                                }
+                                else {
+                                    $("#db-config-submit").prop("disabled", false);
+                                    errorContent = result.Data.value;
+                                    $(".database-error").html(databaseValidationMessage).show();
+                                }
+                                changeFooterPostion();
+                            }
+                        );
+                    }
+                    else {
+                        doAjaxPost("POST", checkTableExistsUrl,
+                            {
+                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: tenantype, IsNewDatabase: false, additionalParameters: window.additionalParameters }),
+                                isSimpleMode: isSimpleModeSelction()
+                            },
+                            function (result) {
+                                var items = result.Data.value;
+                                if (result.Data.key && items.length > 0) {
+                                    hideWaitingPopup($(".startup-waiting-popup"));
+                                    var html = window.TM.App.LocalizationContent.TablesAlreadyExists;
+                                    html += "<ol class='list-area'>";
+                                    for (var t = 0; t < items.length; t++) {
+                                        html += "<li>" + items[t] + "</li>";
+                                    }
+                                    html += "</ol>";
+                                    errorContent = html;
+                                    var id = result.Data.isServerError ? "#server-existing-dbname" : "#database-name";
+                                    $(id).closest(".txt-holder").addClass("has-error");
+                                    $(id).parent().find(">.startup-validation").html(databaseValidationMessage).show();
+                                    $(".database-error").html(databaseValidationMessage).show();
+                                    $("#sql-existing-db-submit").prop("disabled", false);
+                                } else if (!result.Data.key && items.length <= 0) {
+                                    doAjaxPost("POST", generateSQLTablesUrl,
+                                        {
+                                            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, IsNewDatabase: false })
+                                        },
+                                        function (result) {
+                                            hideWaitingPopup($(".startup-waiting-popup"));
+                                            if (result.Data.key) {
+                                                registration(isSimpleModeSelction());
+                                            }
+                                            else {
+                                                $("#sql-existing-db-submit").prop("disabled", false);
+                                                $("#db_loader").hide();
+                                                errorContent = result.Data.value;
+                                                $(".database-error").html(databaseValidationMessage).show();
+                                            }
+                                        }
+                                    );
+                                    $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
+                                    $("#database-name").focus();
+                                } else {
+                                    hideWaitingPopup($(".startup-waiting-popup"));
+                                    $("#db_config_generate, #db-config-submit").hide();
+                                    $("#sql-existing-db-submit").show().prop("disabled", false);
+                                    errorContent = result.Data.value;
+                                    $(".database-error").html(databaseValidationMessage).show();
+                                }
+                            });
+                    }
+                   
+                    $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
+                    $("#txt-dbname").focus();
+                }
+                else {
+                    hideWaitingPopup($(".startup-waiting-popup"));
+                    var id = "#txt-dbname";
+                    if (isNewDatabaseTab) {
+                       id = result.Data.connectionResponse.IsServerDatabaseError ? "#txt-dbname" : result.Data.connectionResponse.IsTenantServerDatabaseError ? "#server-dbname" : result.Data.connectionResponse.IsIntermediateServerDatabaseError ? "#imdbname" : id;
+                    }
+                    else {
+                        id = result.Data.connectionResponse.IsServerDatabaseError ? "#database-name" : result.Data.connectionResponse.IsTenantServerDatabaseError ? "#server-existing-dbname" : result.Data.connectionResponse.IsIntermediateServerDatabaseError ? "#imdb-existing-dbname" : id;
+                    }
+                    if (isNewDatabaseTab) {
+                        $("#db-config-submit").show().prop("disabled", false);
+                    }
+                    else {
+                        $("#sql-existing-db-submit").show().prop("disabled", false);
+                    }
+                   
+                    errorContent = result.Data.value;
+                    $(id).closest('div').addClass("e-error");
+                    $(id).closest(".e-outline").siblings(".startup-validation").html(databaseValidationMessage).show();
+                }
+            }
+        );
+    }
+});
+
+function registerApplication(isSimpleMode) {
+    getFormData();
+    hideWaitingPopup($(".startup-waiting-popup"));
+    $(".startup-waiting-popup").addClass("storage-page-content");
+    var elem = $(".system-startUp-settings-bg");
+    elem.ejWaitingPopup({ text: " " });
+    $(".e-text").find(".configuration-status").remove();
+    $(".e-text").append('<span class="configuration-status"></span>');
+    $("#progress-parent-container").show();
+    var globalAdminDetails = $("#global-admin-details").val();
+    var systemSettingsData = $("#system-settings-data").val();
+    var azureData = $("#azure-data").val();
+    var tenantInfo = $("#tenant-info").val();
+    $.ajax({
+        url: setSystemSettingsUrl,
+        type: "POST",
+        data: {
+            systemSettingsData: systemSettingsData,
+            azureData: azureData,
+            tenantInfo: tenantInfo,
+            globalAdminDetails: globalAdminDetails,
+            isSimpleMode: isSimpleMode,
+        },
+        success: function (setSystemSettingsResponse) {
+            window.location = setSystemSettingsResponse.redirectUrl;
+        },
+        error: function (setSystemSettingsResponse) {
+
+        }
+    });
+}
+
+function registration(isSimpleMode) {
+    $("#image-parent-container, #system-settings-db-selection-container").hide();
+    delete window.serverName;
+    delete window.portNumber;
+    delete window.login;
+    delete window.password;
+    delete window.databaseName;
+    delete window.sslEnabled;
+    if (isSimpleMode && !isAzureApplication ) {
+        registerApplication(isSimpleMode);
+    }
+    else if (isAzureApplication && selfHosted) {
+        azureStep();
+    }
+    else {
+        advancedThirdStep();
+    }
+}
+
+function azureStep() {
+    $("#image-parent-container").show();
+    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
+    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage).slideDown();
+    $(".startup-content span.second-content").hide().text(isBoldBI ? window.TM.App.LocalizationContent.StorageBIMsg : window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
+    $(".startup-content a#help-link").attr("href", idStorageConfiguration);
+    $(".startup-waiting-popup").addClass("storage-page-content");
+    $("#system-settings-filestorage-container").slideDown("slow");
+    $("#file-storage").prop("disabled", true);
+    $("#blob-storage").prop("checked", true);
+    $(".custom-endpoint-form-element, .report-content").hide();
+    $("#blob-storage-form").slideDown("slow");
+    $("#report-storage").hide();
+    $(".content-value").hide();
+    storageButtonValue = "tenant";
+    $(".storage-checkbox").hide();
+    $("body").removeClass("startup-page-container-body");
+
+    if (connectionType === "https") {
+        $("#https").prop("checked", true);
+    } else if (connectionType === "http") {
+        $("#http").prop("checked", true);
+    }
+
+    $("#txt-accountname").val(storageAccountName);
+    $("#txt-endpoint").val(blobServiceEndpoint);
+    $("#txt-accesskey").val(accessKey);
+    $("#txt-containername").val(containerName);
+    validate_storage_type();
+}
+
+function advancedThirdStep() {
+    $("#image-parent-container").show();
+    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
+    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage).slideDown();
+    $(".startup-content span.second-content").hide().text(isBoldBI ? window.TM.App.LocalizationContent.StorageBIMsg : window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
+    $(".startup-content a#help-link").attr("href", idStorageConfiguration);
+    $(".startup-waiting-popup").addClass("storage-page-content");
+    $("#system-settings-filestorage-container").slideDown("slow");
+    $(".custom-endpoint-form-element, .report-content").hide();
+    $("#blob-storage-form").hide();
+    $("#report-storage").hide();
+    storageButtonValue = "tenant";
+    $(".storage-checkbox").hide("slow");
+}
+
+function forceToLower(input) {
+    input.value = input.value.toLowerCase();
+}
+
+function DomResize() {
+    //$("#startup-page-conatiner").height($("#system-settings-general").height() + $("#base-footer-div").height());
+}
+
+function onDatbaseChange(args) {
+    removeError();
+    var checkedVal = args.value.toLowerCase();
+    if (!isSiteCreation) {
+        $("#admin-nav").show();
+    }
+    else if (!isBoldReportsTenantType() && isSiteCreation) {
+        $("#admin-nav").show();
+    }
+    else if (isBoldReportsTenantType && isSiteCreation) {
+        $("#admin-nav").hide();
+    }
+
+    showDataStore();
+    switch (checkedVal) {
+        case "mssql":
+            $('.port-num').removeClass("show").addClass("hidden");
+            $('.maintenancedb').removeClass("show").addClass("hidden");
+            $('.auth-type').removeClass("hidden").addClass("show");
+            var isWindowsAuth = getRadioButtonValue("checkWindows") === "windows";
+            document.getElementById("txt-login").ej2_instances[0].enabled = !isWindowsAuth;
+            document.getElementById("txt-password-db").ej2_instances[0].enabled = !isWindowsAuth;
+            $('#db-content-holder').css("display", "block");
+            $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
+            $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
+            $(".content-display").hide();
+            $(".show-sql-content").slideDown("slow");
+            if (!isSiteCreation) {
+                prefillDbNames();
+            }
+            if (!isSiteCreation && isBoldReports) {
+                hideDataStore();
+            }
+            else if (isSiteCreation && isBoldReportsTenantType()) {
+                hideDataStore();
+            }
+            $("div.placeholder").remove();
+            $(".note-additional-parameter a").attr("href", sqlParameter);
+            DomResize();
+            break;
+        case "mssqlce":
+            $('#db-content-holder').css("display", "none");
+            $('#db-config-submit,#sql-existing-db-submit').addClass("hide");
+            $("#move-to-next,.sqlce-content").removeClass("hide").addClass("show");
+            break;
+        case "mysql":
+            $('.port-num').removeClass("hidden").addClass("show");
+            $('.maintenancedb').removeClass("show").addClass("hidden");
+            $('.auth-type').removeClass("show").addClass("hidden");
+            $('#db-content-holder').css("display", "block");
+            document.getElementById("txt-login").ej2_instances[0].enabled = true;
+            document.getElementById("txt-password-db").ej2_instances[0].enabled = true;
+            $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
+            $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
+            $(".content-display").hide();
+            $(".show-sql-content").slideDown("slow");
+            hideDataStore();
+            if (isSiteCreation) {
+                $("#admin-nav").hide();
+            }
+
+            if (!isSiteCreation) {
+                prefillDbNames();
+            }
+           
+            $("div.placeholder").remove();
+            $(".note-additional-parameter a").attr("href", mySQLParameter);
+            DomResize();
+            break;
+        case "oracle":
+            $("#oracle-dsn>option:eq(0)").prop("selected", true);
+            $("#oracle-dsn").selectpicker("refresh");
+            $(".database-dropdown-oracle ul").html("");
+            $("#database-name-oracle").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>");
+            $("#database-name-oracle").selectpicker("refresh");
+            $("#new-db-oracle").prop("checked", true).trigger("change");
+            $(".content-display").hide();
+            $(".show-oracle-content").slideDown("slow");
+            $("div.placeholder").remove();
+            DomResize();
+            break;
+        case "postgresql":
+            $('.auth-type').removeClass("show").addClass("hidden");
+            $('.port-num').removeClass("hidden").addClass("show");
+            $('.maintenancedb').removeClass("hidden").addClass("show");
+            $('#db-content-holder').css("display", "block");
+            document.getElementById("txt-login").ej2_instances[0].enabled = true;
+            document.getElementById("txt-password-db").ej2_instances[0].enabled = true;
+            $('#db-config-submit,#sql-existing-db-submit').removeClass("hide");
+            $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
+            $(".content-display").hide();
+            $(".show-sql-content").slideDown("slow");
+           
+            if (!isSiteCreation) {
+                prefillDbNames();
+            }
+            if (!isSiteCreation && isBoldReports) {
+                hideDataStore();
+            }
+            else if (isSiteCreation && isBoldReportsTenantType()) {
+                hideDataStore();
+            }
+            $("div.placeholder").remove();
+            $(".note-additional-parameter a").attr("href", postgresSQLParameter);
+            DomResize();
+            if (isSiteCreation) {
+                ResizeHeightForDOM();
+            }
+
+            break;
+    }
+        $("#new-db").prop("checked", true).trigger("change");
+
+    if (getRadioButtonValue("databaseType") == "1") {
+        $("#sql-existing-db-submit, .sql-server-existing-db").show();
+        $(".database-name, #db-config-submit").hide();
+    }
+    else {
+        $("#sql-existing-db-submit, .sql-server-existing-db").hide();
+        $(".database-name, #db-config-submit").show();
+    }
+
+    if (actionType.toLowerCase() != "edit") {
+        document.getElementById("txt-login").ej2_instances[0].value = null;
+        document.getElementById("txt-password-db").ej2_instances[0].value = null;
+        document.getElementById("txt-servername").ej2_instances[0].value = null;
+        document.getElementById("additional-parameter").ej2_instances[0].value = null;
+    }
+
+    if (typeof actionType != 'undefined' && actionType.toLowerCase() != "edit") {
+        switch (checkedVal) {
+            case "mysql":
+                $('#txt-portnumber-info').html(window.TM.App.LocalizationContent.MySqlPortInfo);
+                document.getElementById("txt-portnumber").ej2_instances[0].value = "3306";
+                break;
+            case "postgresql":
+                $('#txt-portnumber-info').html(window.TM.App.LocalizationContent.postgresPortInfo);
+                document.getElementById("txt-portnumber").ej2_instances[0].value = "5432";
+                document.getElementById("maintenance-db").ej2_instances[0].value = "postgres";
+                break;
+        }
+    }
+ 
+    addPlacehoder("#system-settings-db-selection-container");
+    changeFooterPostion();
+};
+
+function onWindowsChange(args) {
+    var windowsCheck = args.value == "windows";
+    var databaseType = getDropDownValue("database-type");
+    $("#auth-type-info").removeClass("show").addClass("hide");
+    if (windowsCheck && databaseType == "MSSQL") {
+        document.getElementById("txt-login").ej2_instances[0].enabled = false;
+        document.getElementById("txt-password-db").ej2_instances[0].enabled = false;
+        document.getElementById("txt-login").ej2_instances[0].value = null;
+        document.getElementById("txt-password-db").ej2_instances[0].value = null;
+        $("#auth-type-info").removeClass("hide").addClass("show");
+    }
+    else if (databaseType == "MSSQL") {
+        document.getElementById("txt-login").ej2_instances[0].enabled = true;
+        document.getElementById("txt-password-db").ej2_instances[0].enabled = true;
+    }
+    removeError();
+}
+
+
+function onDbSelectChange() {
+    removeError();
+    if ($("input[name='databaseType']:checked").val() === "1") {
+        $(".sql-server-existing-db, #sql-existing-db-submit").show();
+        $(".database-name, #db-config-submit").hide();
+    } else {
+        $(".sql-server-existing-db, #sql-existing-db-submit").hide();
+        $(".database-name, #db-config-submit").show();
+    }
+
+    var databaseType = getDropDownValue("database-type");
+    if (databaseType == "MySQL") {
+        hideDataStore();
+    }
+    changeFooterPostion();
+    DomResize();
+    if (!isBoldBI) {
+        hideDataStore();
+    }
+}
+
+function prefillDbNames() {
+    document.getElementById("txt-dbname").ej2_instances[0].value = "bold_services";
+    document.getElementById("server-dbname").ej2_instances[0].value = "bold_services_server";
+    document.getElementById("imdbname").ej2_instances[0].value = "bold_services_datastore";
+}
+
+function hideDataStore() {
+    $(".data-store-hide").removeClass("show").addClass("hidden");
+    $(".data-store-existing-db-hide").removeClass("show").addClass("hidden");
+}
+
+function showDataStore() {
+    if (getRadioButtonValue("databaseType") == "1") {
+        $(".data-store-existing-db-hide").removeClass("hidden").addClass("show");
+    }
+    else {
+        $(".data-store-hide").removeClass("hidden").addClass("show");
+    }
+}
+
+function removeError() {
+    $(".e-error").removeClass("e-error");
+    $(".validation-txt-errors").hide();
+    $(".database-error").hide();
+}
+
+$(document).ready(function () {
+    $("#txt-bloburl,#txt_tableurl,#txt_queueurl,#txt-accountname,#txt-accesskey").on("keyup", function () {
+        var checkedVal = $("input[name='Connection']:checked").val();
+        var accountName = $("#txt-accountname").val();
+        var accessKey = $("#txt-accesskey").val();
+        if (checkedVal == "http" || checkedVal == "https") {
+            var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
+            $("#connection-string").val(finalValue);
+
+        } else {
+            var blobUrl = $("#txt-bloburl").val();
+            var finalValue = "BlobEndpoint=" + blobUrl + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
+            $("#connection-string").val(finalValue);
+        }
+    });
 
     $("#blob-storage-form").validate({
         focusInvalid: false,
@@ -2341,16 +3128,17 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".form-group").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
         },
         unhighlight: function (element) {
-            $(element).closest(".form-group").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
+            $(".blob-error-message").css("display", "none");
             changeFooterPostion();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
             changeFooterPostion();
         },
         messages: {
@@ -2358,7 +3146,8 @@ $(document).ready(function () {
                 isRequired: window.TM.App.LocalizationContent.StorageAccount
             },
             endpoint: {
-                isRequired: window.TM.App.LocalizationContent.EndPoint
+                isRequired: window.TM.App.LocalizationContent.EndPoint,
+                IsValidEndPoint: window.TM.App.LocalizationContent.IsValidEndpoint,
             },
             accesskey: {
                 isRequired: window.TM.App.LocalizationContent.AccessKey
@@ -2376,1123 +3165,14 @@ $(document).ready(function () {
     });
 });
 
-function redirectToDataMigration() {
-    var elem = $(".startup-page-container-body");
-    elem.ejWaitingPopup({ text: " " });
-    $(".e-text").find(".configuration-status").remove();
-    $(".e-text").append('<span class="configuration-status"></span>');
-    elem.ejWaitingPopup("show");
-    getFormData();
-    var systemSettingsData = $("#system-settings-data").val();
-    var azureData = $("#azure-data").val();
-    var appDetails = $("#app-details").val();
-    setSystemSettingsData = { systemSettingsData: systemSettingsData, azureData: azureData, appDetails: appDetails };
-    $.ajax({
-        type: "POST", url: setSystemSettingsUrl, data: setSystemSettingsData,
-        success: function (setSystemSettingsResponse) {
-            window.location = setSystemSettingsResponse.redirectUrl;
-        }
-    });
-}
-
-function IsValidEndPoint(domainName) {
-    var filter = /(?:http)s?:\/\/(?:(?!.*\d[\/?:])[a-z0-9\-._~%]+|(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\[[a-z0-9\-._~%!$&'()*+,;=:]+\])(?::\d+)?(?:[\/?][\-A-Z0-9+&@#\/%?=~_|$!:,.;]*)?/i;
-    if (filter.test(domainName)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function IsCustomEndPoint(fieldValue, element) {
-    var connectionType = $("input[name='Connection']:checked").val();
-    if (connectionType == "customendpoint") {
-        if (fieldValue == "")
-            return false;
-        else
-            return true;
-    }
-    else
-        return false;
-}
-
-function IsValidCustomEndPoint(fieldValue, element) {
-    var connectionType = $("input[name='Connection']:checked").val();
-    var accountname = $("#txt-accountname").val();
-    if (connectionType == "customendpoint") {
-        var accountName = $("#txt-accountname").val();
-        var elementDomainName = $(element).val().split(".");
-        var subdomain = elementDomainName.shift();
-        var sndleveldomain = subdomain.split("//");
-        if (sndleveldomain[1] != accountname)
-            return false;
-        else
-            return true;
-    }
-    else
-        return false;
-}
-
-function addTitleForDropdown(className) {
-    var selecterPickerList = $(className + " .btn-group .selectpicker option");
-    for (var i = 0; i < selecterPickerList.length; i++) {
-        var hoveredtext = selecterPickerList.eq(i).attr("title");
-        if (typeof (hoveredtext) !== "undefined") {
-            $(className + " .btn-group .dropdown-menu li").eq(i).find("a").attr("title", hoveredtext).attr("data-toggle", "tooltip").attr("data-placement", "left").attr("data-container", "body");
-        }
-    }
-    $("[data-toggle='tooltip'], .selectpicker").tooltip();
-}
-
-function validateEmail(email, eventType) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-
-function changeFooterPostion() {
-    if (window.innerHeight - $("#system-settings-general").height() > 70) {
-        $("#base-footer-div").addClass("footer-fixed");
-    } else {
-        $("#base-footer-div").removeClass("footer-fixed");
-    }
-}
-
-function isValidUserName(userName) {
-    if (isKeyUp) {
-        return true;
-    }
-    else {
-        var filter = /^[A-Za-z0-9][A-Za-z0-9]*([._-][A-Za-z0-9]+){0,3}$/;
-        return filter.test(userName);
-    }
-
-}
-
-$(document).on("focus", "input[type=text],input[type=password]", function () {
-    if (regexIe8.test(userAgent)) {
-        $(this).next(".placeholder").removeClass("show").addClass("hide");
-    }
-});
-
-$(document).on("focusout", "input[type=text],input[type=password]", function () {
-    if (regexIe8.test(userAgent) && $(this).val() === "") {
-        $(this).next(".placeholder").removeClass("hide").addClass("show");
-    }
-});
-
-
-$(document).on("focus", ".placeholder", function () {
-    $(this).prev("input").focus();
-});
-
-function addPlacehoder(object) {
-    if (regexIe8.test(userAgent)) {
-        $(object).find("input[type=text],input[type=password]").each(function () {
-            if ($(this).val() === "") {
-                $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder") })).insertAfter(this).show();
-            }
-            else {
-                $($("<div>", { "class": "placeholder", text: $(this).attr("placeholder") })).insertAfter(this).hide();
-            }
-        });
-    }
-
-}
-
-function getFormData() {
-    if ($(".admin-account-fields-container").valid()) {
-        showWaitingPopup($(".startup-page-container-body"));
-        var serverType = $("#database-type").val();
-        var serverName = $("#txt-servername").val();
-        var database = $("#database-type").val().toLowerCase();
-        var portNumber = $("#txt-portnumber").val();
-        var maintenanceDb = $('#maintenance-db').val();
-        var enableSSL = $("#secure-sql-connection").is(":checked");
-
-        switch (database) {
-            case "mssqlce":
-                var prefix = $("#tenant-table-prefix").val();
-                break;
-            case "mssql":
-                var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-                var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#databaseName").val();
-                break;
-            case "mysql":
-                var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-                var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
-                break;
-            case "oracle":
-                var prefix = ($("#table-prefix-oracle").val() === "" || $("#new-db-oracle").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix-oracle").val();
-                var databaseName = $("#new-db-oracle").is(":checked") ? $("#client-username").val() : $("#database-name-oracle").val();
-                break;
-            case "postgresql":
-                var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-                var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
-                break;
-        }
-
-
-        var authenticationType = 0;
-        if (!($("#check-windows").val() == "windows"))
-            authenticationType = 1;
-
-        var globalAdmin = {
-            UserName: $("#txt-username").val(),
-            FirstName: $("#txt-firstname").val(),
-            LastName: $("#txt-lastname").val(),
-            Email: $("#txt-emailid").val(),
-            Password: $("#new-password").val()
-        };
-        var systemSettingsData = {
-            SQLConfiguration:
-            {
-                ConnectionString: window.connectionString,
-                ServerType: serverType,
-                ServerName: serverName,
-                Port: portNumber,
-                MaintenanceDatabase: maintenanceDb,
-                AuthenticationType: authenticationType,
-                DatabaseName: databaseName,
-                Prefix: prefix,
-                SslEnabled: enableSSL,
-            },
-            StorageType: window.storageType
-        };
-
-        var azureData = {
-            AzureBlobStorageUri: window.endpoint,
-            AzureBlobStorageContainerName: window.containername,
-            ConnectionType: window.connectionType,
-            ConnectionString: window.azureconnectionString,
-            AccountName: window.accountname,
-            AccessKey: window.accesskey
-        };
-
-        var appDetails = {
-            AppName: $("#app-name").val(),
-            AppUrl: $("#app-url").val(),
-            AppConfigure: $("#app-configure").val(),
-            RedirectUrl: $("#redirect-url").val(),
-            ApplicationType: $("#application-type").val()
-        };
-
-        $("#global-admin-details").val(JSON.stringify(globalAdmin));
-        $("#system-settings-data").val(JSON.stringify(systemSettingsData));
-        $("#azure-data").val(JSON.stringify(azureData));
-        $("#app-details").val(JSON.stringify(appDetails));
-    }
-}
-
-$(document).on("keyup", "#client-username", function () {
-    if (regexIe8.test(userAgent)) {
-        if ($(this).val() === "") {
-            $("#role-name").prop("disabled", true);
-            $("#role-name").val("");
-            $("#role-name").next(".placeholder").removeClass("hide").addClass("show");
-        }
-        else {
-            $("#role-name").prop({ 'disabled': false, 'readonly': true });
-            $("#role-name").focus(this.blur);
-            $("#role-name").val($(this).val().substring(0, 25) + "_role");
-            $("#role-name").next(".placeholder").removeClass("show").addClass("hide");
-
-        }
-    }
-    else if ((userAgent.indexOf("Safari") != -1) && (userAgent.indexOf("Chrome") == -1)) {
-        $("#role-name").val(($(this).val() === "") ? "" : $(this).val().substring(0, 25) + "_role");
-        $("#role-name").css("-webkit-text-fill-color", "black");
-    }
-    else {
-        $("#role-name").val(($(this).val() === "") ? "" : $(this).val().substring(0, 25) + "_role");
-    }
-});
-
-
-$(document).on("change", ".css-radio", function () {
-    $(".database-name .database-error, .sql-server-existing-db .database-error, .databse-dropdown .database-error,.database-name .validation-txt-errors, .sql-server-existing-db .validation-txt-errors").hide();
-    $(".database-name, .databse-dropdown").removeClass("has-error");
-    var database = $("#database-type").val().toLowerCase();
-    switch (database) {
-        case "mssql":
-        case "postgresql":
-            if ($("input[name='databaseType']:checked").val() === "1") {
-                $(".sql-server-existing-db, #sql-existing-db-submit, #sql-existing-ds-db-submit").show();
-                $(".database-name, #db-config-submit,  #ds-db-config-submit").hide();
-                changeFooterPostion();
-                DomResize();
-            } else {
-                $(".sql-server-existing-db, #sql-existing-db-submit,  #sql-existing-ds-db-submit").hide();
-                $(".database-name, #db-config-submit, #ds-db-config-submit").show();
-                $(".databse-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>").selectpicker("refresh");
-                changeFooterPostion();
-                DomResize();
-            }
-            break;
-        case "mysql":
-            if ($("input[name='databaseType']:checked").val() === "1") {
-                $(".sql-server-existing-db, #sql-existing-db-submit, #sql-existing-ds-db-submit").show();
-                $(".database-name, #db-config-submit,  #ds-db-config-submit").hide();
-                changeFooterPostion();
-                DomResize();
-            } else {
-                $(".sql-server-existing-db, #sql-existing-db-submit,  #sql-existing-ds-db-submit").hide();
-                $(".database-name, #db-config-submit, #ds-db-config-submit").show();
-                $(".databse-dropdown ul").html("");
-                $("#database-name").html("<option value='' class='display-none'>Select a database</option>").selectpicker("refresh");
-                changeFooterPostion();
-                DomResize();
-            }
-            break;
-    }
-});
-
-$(document).on("click", ".databse-dropdown .dropdown-toggle", function () {
-    $(".databse-dropdown ul").html("");
-    $("#database-name").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>").selectpicker("refresh");
-    var iswindows = $("#check-windows").val() === "windows";
-    if (!iswindows) {
-        $("#txt-login").valid();
-        $("#txt-servername").valid();
-        $("#txt-password-db").valid();
-        if ($("#txt-login").val() !== "" && $("#txt-servername").val() !== "" && $("#txt-password-db").val() !== "") {
-            var canProceed = true;
-        } else
-            var canProceed = false;
-    }
-    else if ($("#txt-servername").valid()) {
-        var canProceed = true;
-    } else
-        var canProceed = false;
-
-    if (canProceed) {
-        $("#waiting-icon").show();
-        $("#details-next").attr("disabled", true);
-        window.serverName = $("#txt-servername").val();
-        window.portNumber = $("#txt-portnumber").val();
-        window.maintenanceDb = $('#maintenance-db').val();
-        window.IsWindowsAuthentication = $("#check-windows").val() == "windows";
-        window.login = $("#txt-login").val();
-        window.password = $("#txt-password-db").val();
-        var databaseType = $("#database-type").val();
-        window.databaseName = $("#txt-dbname").val();
-        window.sslEnabled = $("#secure-sql-connection").is(":checked");
-        doAjaxPost("POST", getAllDatabaseUrl,
-            {
-                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, sslEnabled: window.sslEnabled })
-            },
-            function (result) {
-                if (result.Data.key) {
-                    $(".databse-dropdown .database-error").hide();
-                    var items = result.Data.value;
-                    var option = "";
-                    if (items.length > 0) {
-                        for (var t = 0; t < items.length; t++) {
-                            option += '<option value=\"' + items[t] + '\">' + items[t] + "</option>";
-                        }
-
-                        $(".databse-dropdown .database-error").html("").hide();
-                        $("#database-name").append(option).selectpicker("refresh");
-                        $(".databse-dropdown .btn-group").addClass("dropup");
-                        for (var i = 0; i < $("#db-content-holder .databse-dropdown .bootstrap-select li a .text").length; i++) {
-                            var dbTitle = $("#db-content-holder .databse-dropdown .bootstrap-select li a .text").eq(i).text();
-                            $("#db-content-holder .databse-dropdown .bootstrap-select li a").eq(i).attr("title", dbTitle);
-                        }
-                    } else {
-                        $("#database-name").selectpicker("refresh").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>").selectpicker("refresh");
-                        $(".databse-dropdown ul").html("<li class='no-results active' title='" + window.TM.App.LocalizationContent.NoDatabase + "' style='display: list-item;'>" + window.TM.App.LocalizationContent.NoDatabase + "</li>");
-                    }
-                    $("#details-next").removeAttr("disabled");
-                    $("#waiting-icon").hide();
-                } else {
-                    $("#database-name").html("<option value='' class='display-none'>" + window.TM.App.LocalizationContent.SelectDatabase + "</option>").selectpicker("refresh");
-                    errorContent = result.Data.value;
-                    $(".databse-dropdown .bootstrap-select.system-settings-startup-page-fields").removeClass("open");
-                    $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-                    $("#waiting-icon").hide();
-                    $("#details-next").removeAttr("disabled");
-                }
-            }
-        );
-    }
-});
-
-$(document).on("click", "#know-more-error", function () {
-    messageBox("su-login-error", window.TM.App.LocalizationContent.DatabaseError, errorContent, "success", function () {
-        onCloseMessageBox();
-    });
-});
-
-$(document).on("click", "#sql-existing-db-submit", function () {
-    $(".has-error").removeClass("has-error");
-    $(".validation-txt-errors").hide();
-    $(".validation-errors").html("");
-    $("#connection-validation").hide();
-    DomResize();
-    var canProceed = $("#db-content-holder").valid();
-    if ($("#database-name").val() == "") {
-        return;
-    }
-    if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name").val())) {
-        canProceed = true;
-    } else {
-        $(".databse-dropdown .database-error").html(window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (<>%*?\":`;'[]|\\) " + window.TM.App.LocalizationContent.AvoidLeadingTrailingSpace).show();
-        return;
-    }
-    if (canProceed) {
-        showWaitingPopup($(".startup-page-container-body"));
-        $(this).prop("disabled", true);
-        $("#db_loader").show();
-        window.serverName = $("#txt-servername").val();
-        window.portNumber = $("#txt-portnumber").val();
-        window.maintenanceDb = $('#maintenance-db').val();
-        window.IsWindowsAuthentication = $("#check-windows").val() == "windows";
-        window.login = $("#txt-login").val();
-        window.password = $("#txt-password-db").val();
-        var databaseType = $("#database-type").val();
-        var prefix = $("#table-prefix").val() === "" ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-        var tenantype = $("#tenant-type").val();
-        window.databaseName = $("#database-name").val();
-        window.sslEnabled = $("#secure-sql-connection").is(":checked");
-        doAjaxPost("POST", connectDatabaseUrl,
-            {
-                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: false })
-            },
-            function (result) {
-                if (result.Data.key) {
-                    var databaseType = $("#database-type").val();
-                    doAjaxPost("POST", checkTableExistsUrl,
-                        {
-                            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, Prefix: prefix, sslEnabled: window.sslEnabled, TenantType: tenantype, IsNewDatabase: false })
-                        },
-                        function (result) {
-                            var items = result.Data.value;
-                            if (result.Data.key && items.length > 0) {
-                                hideWaitingPopup($(".startup-page-container-body"));
-                                var html = window.TM.App.LocalizationContent.TablesAlreadyExists;
-                                html += "<ol class='list-area'>";
-                                for (var t = 0; t < items.length; t++) {
-                                    html += "<li>" + items[t] + "</li>";
-                                }
-                                html += "</ol>";
-                                errorContent = html;
-                                $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-                                $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-                            } else if (!result.Data.key && items.length <= 0) {
-                                doAjaxPost("POST", generateSQLTablesUrl,
-                                    {
-                                        data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, Prefix: prefix, IsNewDatabase: false })
-                                    },
-                                    function (result) {
-                                        hideWaitingPopup($(".startup-page-container-body"));
-                                        if (result.Data.key) {
-                                            $(".selected").removeClass("selected");
-                                            $("ul li[data-move-to='startup-page-two']").addClass("selected");
-                                            $("#db_loader").hide();
-                                            $("#system-settings-db-selection-container").hide();
-                                            window.connectionString = result.Data.value;
-                                            $("#txt-username").focus();
-                                            delete window.serverName;
-                                            delete window.portNumber;
-                                            delete window.login;
-                                            delete window.password;
-                                            delete window.databaseName;
-                                            delete window.sslEnabled;
-                                            if (isAzureApplication && selfHosted) {
-                                                $("#file-storage").prop("disabled", true);
-                                                $("#blob-storage").prop("checked", true);
-                                                $(".custom-endpoint-form-element, .report-content").hide();
-                                                $("#report-storage").hide();
-                                                $(".content-value").hide();
-                                                storageButtonValue = "tenant";
-                                                $(".storage-checkbox").hide();
-                                                $("body").removeClass("startup-page-container-body");
-
-                                                if (connectionType === "https") {
-                                                    $("#https").prop("checked", true);
-                                                } else if (connectionType === "http") {
-                                                    $("#http").prop("checked", true);
-                                                }
-
-                                                $("#txt-accountname").val(storageAccountName);
-                                                $("#txt-endpoint").val(blobServiceEndpoint);
-                                                $("#txt-accesskey").val(accessKey);
-                                                $("#txt-containername").val(containerName);
-                                                validate_storage_type();
-                                            }
-                                            else if (isBoldReports && selfHosted || isBoldBI) {
-                                                $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                                $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage).slideDown();
-                                                $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageMsg).slideDown();
-                                                $(".startup-content a#help-link").attr("href", idStorageConfiguration);
-                                                $("#system-settings-filestorage-container").slideDown("slow");
-                                                $(".custom-endpoint-form-element, .report-content").hide();
-                                                $("#blob-storage-form").hide();
-                                                $("#report-storage").hide();
-                                                storageButtonValue = "tenant";
-                                                $(".storage-checkbox").hide("slow");
-                                                $("body").removeClass("startup-page-container-body");
-                                            }
-                                        } else {
-                                            $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-                                            $("#db_loader").hide();
-                                            errorContent = result.Data.value;
-
-                                            $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-                                        }
-                                    }
-                                );
-                                $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
-                                $("#database-name").focus();
-                            } else {
-                                hideWaitingPopup($(".startup-page-container-body"));
-                                $("#db_config_generate, #db-config-submit, #ds-db-config-submit").hide();
-                                $("#sql-existing-db-submit,#sql-existing-ds-db-submit").show().prop("disabled", false);
-                                $("#db_loader").hide();
-                                errorContent = result.Data.value;
-                                $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-                            }
-                        });
-                } else {
-                    hideWaitingPopup($(".startup-page-container-body"));
-                    $("#db_config_generate, #db-config-submit, #ds-db-config-submit").hide();
-                    $("#sql-existing-db-submit").show().prop("disabled", false);
-                    $("#db_loader").hide();
-                    errorContent = result.Data.value;
-                    $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-                }
-            }
-        );
-    }
-});
-
-function CloseDuplicateListBox() {
-    $("#duplicate-table-list").ejDialog("close");
-}
-
-$(document).on("click", "#info-icon-postgressql", function () {
-    $("#prefix-message-postgresql").css("display", "block");
-});
-
-
-$(document).on("click", "#info-icon", function () {
-    $("#prefix-message").css("display", "block");
-});
-
-$(document).on("click", function (e) {
-    if ($(e.target).attr("id") === "info-icon-oracle") {
-        $("#prefix-message-oracle").css("display", "block");
-    } else {
-        $("#prefix-message-oracle").css("display", "none");
-    }
-    if ($(e.target).attr("id") === "info-icon-dsn-oracle") {
-        $("#dsn-message-oracle").css("display", "block");
-    } else {
-        $("#dsn-message-oracle").css("display", "none");
-    }
-});
-
-$(document).on("click", "#oracle-odbc-dropdown button.dropdown-toggle", function () {
-    var dsn = $("#dsn-count").val();
-    if (dsn <= 0) {
-        $("#oracle-odbc-dropdown ul").html("<li class='no-results active' title='" + window.TM.App.LocalizationContent.NoDsn + "' style='display: list-item;'>" + window.TM.App.LocalizationContent.NoDsn + "</li>");
-        $("#database-name-oracle").selectpicker("refresh");
-    }
-});
-
-function DomResize() {
-    //$("#startup-page-conatiner").height($("#system-settings-general").height() + $("#base-footer-div").height());
-}
-
-
-//To  stop animation in radio-button on page rendering
-$(document).on("click", ".css-radio", function () {
-    $(this).siblings("label").removeClass("notransition");
-});
-$(document).on("click", "#database-type-dropdown, .proceed-button", function () {
-    $(".css-radio").siblings("label").addClass("notransition");
-});
-
-$(document).on("click", "#sql-existing-ds-db-submit", function () {
-    $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", true);
-    showWaitingPopup($(".startup-page-container-body"));
-    existingDbConfiguration();
-    hideWaitingPopup($(".startup-page-container-body"));
-    $("#database-name").val("");
-});
-
-function existingDbConfiguration(element) {
-    $(".has-error").removeClass("has-error");
-    $(".validation-txt-errors").hide();
-    $(".validation-errors").html("");
-    $(".database-name .database-error, .databse-dropdown .database-error").hide();
-    DomResize();
-    if (element == null || element == "" || element == undefined) {
-        var canProceed = $("#db-content-holder").valid();
-    }
-    if ($("#database-name").val() == "") {
-        $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-        return;
-    }
-    if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test($("#database-name").val()) && !/^[\s]+|[\s]+$/g.test($("#database-name").val())) {
-        canProceed = true;
-    } else {
-        $(".database-error").html(window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (<>%*?\":`;'[]|\\) " + window.TM.App.LocalizationContent.AvoidLeadingTrailingSpace).show();
-        $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-        return;
-    }
-    if (element == null || element == "" || element == undefined) {
-        if (canProceed) {
-            checkingExistingDB();
-        }
-        else {
-            $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-        }
-    } else {
-        checkingExistingDB(element);
-    }
-}
-
-function checkingExistingDB(element) {
-    if (element == null || element == "" || element == undefined) {
-        showWaitingPopup($(".startup-page-container-body"));
-        $(this).prop("disabled", true);
-    } else {
-        $('#details-next').attr("disabled", true);
-    }
-    $("#db_loader").show();
-    var checkStartupIntermediateDB = $("#ds-db-config-submit").attr("data-form");
-    window.serverName = $("#txt-servername").val();
-    window.portNumber = $("#txt-portnumber").val();
-    window.maintenanceDb = $('#maintenance-db').val();
-    window.IsWindowsAuthentication = $("#check-windows").val() == "windows";
-    window.login = $("#txt-login").val();
-    window.password = $("#txt-password-db").val();
-    var databaseType = $("#database-type").val();
-    var prefix = $("#table-prefix").val() === "" ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-    var tenantype = $("#tenant-type").val();
-    window.databaseName = $("#database-name").val();
-    window.sslEnabled = $("#secure-sql-connection").is(":checked");
-    var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db" || ($("#details-next").hasClass("intermediate-db2") && !$("#details-next").hasClass("intermediate-db"));
-    if (isIntermediateDatabaseFormSubmit) {
-        isNewIntermediateDB = false;
-    }
-    else {
-        isNewServerDB = false;
-    }
-    $.ajax({
-        type: "POST",
-        url: connectDatabaseUrl,
-        async: false,
-        data: {
-            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: false })
-        },
-        success: function (result) {
-            if (result.Data.key) {
-                var connectionstring = result.Data.data;
-                var databaseType = $("#database-type").val();
-                $.ajax({
-                    type: "POST",
-                    url: checkTableExistsUrl,
-                    async: false,
-                    data: {
-                        data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, Prefix: prefix, sslEnabled: window.sslEnabled, TenantType: tenantype, IsNewDatabase: false })
-                    },
-                    success: function (result) {
-                        var items = result.Data.value;
-                        if (result.Data.key && items.length > 0) {
-                            if (element == null || element == "" || element == undefined) {
-                                hideWaitingPopup($(".startup-page-container-body"));
-                                $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-                            } else {
-                                hideWaitingPopup(element);
-                                $('#details-next').removeAttr("disabled");
-                            }
-
-                            $(".database-error").html(databaseValidationMessage).show();
-
-                            var html = window.TM.App.LocalizationContent.TablesAlreadyExists;
-                            html += "<ol class='list-area'>";
-                            for (var t = 0; t < items.length; t++) {
-                                html += "<li>" + items[t] + "</li>";
-                            }
-                            html += "</ol>";
-                            errorContent = html;
-                            $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-
-                            if (isIntermediateDatabaseFormSubmit) {
-                                isNewIntermediateDB = true;
-                            }
-                            else {
-                                isNewServerDB = true;
-                            }
-                        } else if (!result.Data.key && items.length <= 0) {
-                            $(".selected").removeClass("selected");
-                            $("ul li[data-move-to='startup-page-two']").addClass("selected");
-                            $("#db_loader").hide();
-                            window.connectionString = connectionstring;
-                            $("#txt-username").focus();
-                            delete window.serverName;
-                            delete window.portNumber;
-                            delete window.login;
-                            delete window.password;
-                            delete window.databaseName;
-                            delete window.sslEnabled;
-                            if (element == null || element == "" || element == undefined) {
-                                if ((isAzureApplication && selfHosted) && $("#dialog-body-container").find(".storage-form").length <= 0 && checkStartupIntermediateDB != "intermediate-db") {
-                                    $("#system-settings-db-selection-container").hide();
-                                    $("#file-storage").prop("disabled", true);
-                                    $("#blob-storage").prop("checked", true);
-                                    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage3).slideDown();
-                                    if (isBoldBI) {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageBIMsg).slideDown();
-                                    } else {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
-                                    }
-                                    $(".startup-content a#help-link").attr("href", adminCreation);
-                                    $("#system-settings-filestorage-container").slideDown("slow");
-                                    $(".custom-endpoint-form-element, .content-value").hide();
-                                    $("#file-storage").parent().hide();
-                                    $("#blob-storage").parent().css("margin-left", "130px");
-                                    $(".report-content").hide();
-                                    $("#blob-storage-form").slideDown("slow");
-                                    $(".storage-checkbox").show("slow");
-                                    $("#tenant-storage").hide();
-                                    $("#report-storage").show();
-                                }
-                                else if ((isBoldReports && selfHosted) && $("#dialog-body-container").find(".storage-form").length <= 0 || (isBoldBI && $("#dialog-body-container").find(".storage-form").length <= 0 && checkStartupIntermediateDB != "intermediate-db")) {
-                                    $("#system-settings-db-selection-container").hide();
-                                    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage2).slideDown();
-                                    if (isBoldBI) {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageBIMsg).slideDown();
-                                    } else {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
-                                    }
-                                    $(".startup-content a#help-link").attr("href", adminCreation);
-                                    $("#system-settings-filestorage-container").slideDown("slow");
-                                    $(".custom-endpoint-form-element, .content-value").hide();
-                                    $(".report-content").slideDown("slow");
-                                    $("#blob-storage-form").hide();
-                                    $(".storage-checkbox").hide("slow");
-                                    $("#tenant-storage").hide();
-                                    $("#report-storage").show();
-                                } else {
-                                    dssystemsettings();
-                                }
-                                hideWaitingPopup($(".startup-page-container-body"));
-                            } else {
-                                hideWaitingPopup(element);
-                                $('#details-next').removeAttr("disabled");
-                            }
-                            changeFooterPostion();
-                            $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
-                            $("#database-name").focus();
-                        } else {
-                            if (element == null || element == "" || element == undefined) {
-                                hideWaitingPopup($(".startup-page-container-body"));
-                                $("#sql-existing-db-submit, #sql-existing-ds-db-submit").show().prop("disabled", false);
-                            } else {
-                                $('#details-next').removeAttr("disabled");
-                                hideWaitingPopup(element);
-                            }
-                            $("#db_config_generate, #db-config-submit").hide();
-                            $("#db_loader").hide();
-                            errorContent = result.Data.value;
-                            $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-
-                            if (isIntermediateDatabaseFormSubmit) {
-                                isNewIntermediateDB = true;
-                            }
-                            else {
-                                isNewServerDB = true;
-                            }
-                        }
-                    }
-                });
-            } else {
-                if (element == null || element == "" || element == undefined) {
-                    hideWaitingPopup($(".startup-page-container-body"));
-                    $("#sql-existing-db-submit, #sql-existing-ds-db-submit").show().prop("disabled", false);
-                } else {
-                    hideWaitingPopup(element);
-                    $('#details-next').removeAttr("disabled");
-                }
-                $("#db_config_generate, #db-config-submit").hide();
-                $("#db_loader").hide();
-                errorContent = result.Data.value;
-                $(".databse-dropdown .database-error").html(databaseValidationMessage).show();
-
-                if (isIntermediateDatabaseFormSubmit) {
-                    isNewIntermediateDB = true;
-                }
-                else {
-                    isNewServerDB = true;
-                }
-            }
-        }
-    });
-}
-
-function newDbConfiguration(element) {
-    $(".has-error").removeClass("has-error");
-    $(".validation-txt-errors").hide();
-    $(".validation-errors").html("");
-    $(".database-name .database-error, .databse-dropdown .database-error").hide();
-    if (element == null || element == "" || element == undefined) {
-        var canProceed = $("#db-content-holder").valid();
-        if (canProceed) {
-            showWaitingPopup($(".startup-page-container-body"));
-            $(this).prop("disabled", true);
-            checkingNewDBConnection();
-        }
-        else {
-            $("#ds-db-config-submit").attr("disabled", false);
-        }
-    } else {
-        $('#details-next').attr("disabled", true);
-        checkingNewDBConnection(element);
-    }
-    var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db" || ($("#details-next").hasClass("intermediate-db2") && !$("#details-next").hasClass("intermediate-db"));
-    if (isIntermediateDatabaseFormSubmit) {
-        isNewIntermediateDB = true;
-    }
-    else {
-        isNewServerDB = true;
-    }
-}
-
-function checkingNewDBConnection(element, actionType) {
-    $("#db_loader").show();
-    var result = connectDatabase(element, actionType);
-    if (result.Data != undefined && result.Data.key) {
-        delete window.serverName;
-        delete window.portNumber;
-        delete Window.dns;
-        delete window.login;
-        delete window.password;
-        delete window.databaseName;
-        delete window.sslEnabled;
-        if (actionType != "edit") {
-            var databaseType = $("#database-type").val();
-            $(".selected").removeClass("selected");
-            $("ul li[data-move-to='startup-page-two']").addClass("selected");
-            $("#db_loader").hide();
-            $("#txt-username").focus();
-        }
-        if (element == null || element == "" || element == undefined) {
-            hideWaitingPopup($(".startup-page-container-body"));
-            dssystemsettings();
-        } else {
-            if (actionType == "edit") {
-                updateTenant(waitingPopUpElement, window.connectionString);
-            }
-        }
-        if (actionType != "edit") {
-            changeFooterPostion();
-            $(".db-connect-outer-container").find(".title").html(window.TM.App.LocalizationContent.DatabaseCreation + "!");
-        }
-    }
-    else {
-        if (element == null || element == "" || element == undefined) {
-            hideWaitingPopup($(".startup-page-container-body"));
-            $("#db-config-submit, #ds-db-config-submit").show();
-            $("#db-config-submit, #ds-db-config-submit").prop("disabled", false);
-        } else {
-            hideWaitingPopup(element);
-            $('#details-next').removeAttr("disabled");
-        }
-        $("#db_config_generate").hide();
-        $("#db_loader").hide();
-        if (result.Data != undefined) {
-            errorContent = result.Data.value;
-        }
-        $(".database-name .database-error").html(databaseValidationMessage).show();
-    }
-}
-
-function connectDatabase(element, actionType) {
-    var result = "";
-    var isNewDatabase = true;
-    var checkStartupIntermediateDB = $("#ds-db-config-submit").attr("data-form");
-    window.serverName = $("#txt-servername").val();
-    window.portNumber = $("#txt-portnumber").val();
-    window.maintenanceDb = $('#server-maintenance-db').val();
-    window.IsWindowsAuthentication = $("#check-windows").val() == "windows";
-    window.login = $("#txt-login").val();
-    window.password = $("#txt-password-db").val();
-    var databaseType = $("#database-type").val();
-    window.databaseName = $("#txt-dbname").val();
-    window.sslEnabled = $("#secure-sql-connection").is(":checked");
-    if (actionType == "edit") {
-        isNewDatabase = false;
-    }
-    $.ajax({
-        type: "POST",
-        url: connectDatabaseUrl,
-        async: false,
-        data: {
-            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabase })
-        },
-        success: function (serverResult) {
-            if (serverResult.Data.key) {
-                window.connectionString = serverResult.Data.data;
-                if (actionType != undefined && actionType == "edit") {
-                    result = { "Data": { "key": true, "value": "connected successfully" } };
-                } else {
-                    $.ajax({
-                        type: "POST",
-                        url: checkDatabaseExistForServerUrl,
-                        async: false,
-                        data: {
-                            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true })
-                        },
-                        success: function (dataResult) {
-                            if (dataResult.Data.key) {
-                                if ((isAzureApplication && selfHosted) && $("#dialog-body-container").find(".storage-form").length <= 0 && checkStartupIntermediateDB != "intermediate-db") {
-                                    $("#system-settings-db-selection-container").hide();
-                                    $("#file-storage").prop("disabled", true);
-                                    $("#blob-storage").prop("checked", true);
-                                    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage3).slideDown();
-                                    if (isBoldBI) {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageBIMsg).slideDown();
-                                    } else {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
-                                    }
-                                    $(".startup-content a#help-link").attr("href", adminCreation);
-                                    $("#system-settings-filestorage-container").slideDown("slow");
-                                    $(".custom-endpoint-form-element, .content-value").hide();
-                                    $("#file-storage").parent().hide();
-                                    $("#blob-storage").parent().css("margin-left", "130px");
-                                    $(".report-content").hide();
-                                    $(".content-value").hide();
-                                    $("#blob-storage-form").slideDown("slow");
-                                    $(".storage-checkbox").show("slow");
-                                    $("#tenant-storage").hide();
-                                    $("#report-storage").show();
-                                }
-                                else if (((isBoldReports && selfHosted) && $("#dialog-body-container").find(".storage-form").length <= 0) || (isBoldBI && $("#dialog-body-container").find(".storage-form").length <= 0 && checkStartupIntermediateDB != "intermediate-db")) {
-                                    $("#system-settings-db-selection-container").hide();
-                                    $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
-                                    $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourStorage2).slideDown();
-                                    if (isBoldBI) {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageBIMsg).slideDown();
-                                    } else {
-                                        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.StorageReportsMsg).slideDown();
-                                    }
-                                    $(".startup-content a#help-link").attr("href", serverStorageConfiguration);
-                                    $("#system-settings-filestorage-container").slideDown("slow");
-                                    $(".custom-endpoint-form-element, .content-value").hide();
-                                    $(".report-content").slideDown("slow");
-                                    $("#blob-storage-form").hide();
-                                    $(".storage-checkbox").hide("slow");
-                                    $("#tenant-storage").hide();
-                                    $("#report-storage").show();
-                                }
-                                else {
-                                    result = dataResult;
-                                }
-                            }
-                            else {
-                                result = dataResult;
-                            }
-                        }
-                    });
-                }
-            } else {
-                if (element == null || element == "" || element == undefined) {
-                    hideWaitingPopup($(".startup-page-container-body"));
-                    $("#db-config-submit, #ds-db-config-submit").show();
-                    $("#db-config-submit, #ds-db-config-submit").prop("disabled", false);
-                } else {
-                    hideWaitingPopup(element);
-                    $('#details-next').removeAttr("disabled");
-                }
-                $("#db_config_generate").hide();
-                $("#db_loader").hide();
-                if (serverResult.Data != undefined) {
-                    errorContent = serverResult.Data.value;
-                }
-                $(".database-name .database-error").html(databaseValidationMessage).show();
-            }
-        }
-    });
-
-    return result;
-}
-
-function dssystemsettings() {
-    var tenantType = isBoldBI ? "Bold BI" : "Bold Reports"
-    if (tenantType == "Bold BI") {
-        brandingType = "boldbi"
-    }
-    else {
-        brandingType = "boldreports"
-    }
-    var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db";
-    if (isIntermediateDatabaseFormSubmit) {
-        var tenantDetails = {
-            TenantName: $("#txt-site-name").val(),
-            TenantIdentifier: $("#txt-site-identifier").val(),
-            TenantType: isBoldBI ? "BoldBIOnPremise" : "BoldReportsOnPremise",
-            UseSiteIdentifier: useSiteIdentifier
-        };
-        intermediateDbDetails = getDatabaseFormValues(true);
-    }
-    else {
-        systemSettingsDetails = getDatabaseFormValues();
-    }
-
-    if (isToGetIntermediateDbDetails && !isIntermediateDatabaseFormSubmit) {
-        $("#system-settings-filestorage-container").hide();
-        $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
-        $("#blob-storage-form").hide();
-        $("#report-storage").hide();
-        if (isAzureApplication) {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.DataStoreConfig).slideDown();
-        }
-        else {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.DataStoreConfigforBoldbi).slideDown();
-        }
-        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.PullYourData + " " + dataConnectorsCount + "+ " + window.TM.App.LocalizationContent.DataConnectorsSaveOffline).slideDown();
-        $(".startup-content a").attr("href", serverDataStoreConfiguration);
-        $("#system-settings-db-selection-container").hide().slideDown("slow");
-        $(".database-name #txt-dbname").val("");
-        $("#new-db").trigger("click");
-        $("#ds-db-config-submit").attr("data-form", "intermediate-db");
-        $(".validation-txt-errors").hide();
-        $(".database-error").html("").hide();
-        $("#sql-existing-db-submit, #sql-existing-ds-db-submit").prop("disabled", false);
-        $("#db-config-submit, #ds-db-config-submit").prop("disabled", false);
-    }
-    else {
-        postSystemSettingsData(systemSettingsDetails, azureDataforBoldbi, intermediateDbDetails, null, isIntermediateDatabaseFormSubmit ? tenantDetails : null, brandingType);
-    }
-}
-
-function getDatabaseFormValues(intermediateDb) {
-    var formData;
-    var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
-    var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
-    var serverType = $("#database-type").val();
-    var database = $("#database-type").val().toLowerCase();
-    var maintenanceDb = $('#server-maintenance-db').val();
-    var authenticationType = 0;
-    var enableSSL = $("#secure-sql-connection").is(":checked");
-    if (!($("#check-windows").val() == "windows"))
-        authenticationType = 1;
-
-    if (intermediateDb) {
-        formData = {
-            SQLConfiguration:
-            {
-                ConnectionString: window.connectionString,
-                ServerType: serverType,
-                AuthenticationType: authenticationType,
-                MaintenanceDatabase: maintenanceDb,
-            },
-            StorageType: $("input[name='IsBlobStorage']:checked").val(),
-        };
-    }
-    else {
-        formData = {
-            SQLConfiguration:
-            {
-                ConnectionString: window.connectionString,
-                ServerType: serverType,
-                AuthenticationType: authenticationType,
-                DatabaseName: databaseName,
-                Prefix: prefix,
-                MaintenanceDatabase: maintenanceDb,
-                SslEnabled: enableSSL,
-            },
-            StorageType: $("input[name='IsBlobStorage']:checked").val(),
-            TenantIsolation:
-            {
-                IsEnabled: $("#isolation-enable-switch").is(":checked"),
-                IsolationCode: $("#site-isolation-code").val()
-            },
-            CustomAttribute: [],
-        };
-    }
-
-    return formData;
-}
-
-
-function postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, userEmail, tenantDetails, brandingType, isAddFromServer) {
-    var elem = $(".startup-page-container-body");
-    elem.ejWaitingPopup({ text: " " });
-    $(".e-text").find(".configuration-status").remove();
-    $(".e-text").append('<span class="configuration-status"></span>');
-    elem.ejWaitingPopup("show");
-    showWaitingPopup($(".startup-page-container-body"));
-    var isNewDatabase = isNewServerDB;
-    var isNewImDatabase = isNewIntermediateDB;
-    var userEmailData = (userEmail != undefined && userEmail != null) ? JSON.stringify(userEmail) : $("#tenant-email").val();
-    var tenantDetailsData = (tenantDetails != undefined && tenantDetails != null) ? JSON.stringify(tenantDetails) : null;
-    var intermediateDbData = (intermediateDbDetails != undefined && intermediateDbDetails != null) ? JSON.stringify(intermediateDbDetails) : null;
-    setSystemSettingsData = { systemSettingsData: JSON.stringify(systemSettingsDetails), azureData: JSON.stringify(azuredetails), userEmail: userEmailData, tenantDetails: tenantDetailsData, brandingType: brandingType, intermediateDatabaseDetails: intermediateDbData, isNewDatabase: isNewDatabase, isNewImDatabase: isNewImDatabase };
-    $.ajax({
-        type: "POST", url: setSystemSettingsUrl, data: setSystemSettingsData,
-        success: function (setSystemSettingsResponse) {
-            if (isAddFromServer != undefined && isAddFromServer) {
-                hideWaitingPopup(waitingPopUpElement);
-                $("#provide-admin-access-button").attr("disabled", "disabled");
-                var tenantGridObj = parent.$("#tenants_grid").data("ejGrid");
-                tenantGridObj.refreshContent();
-                onAddAdminsDialogClose();
-                parent.$("#add-tenant-popup").ejDialog("close");
-
-                if (parent.window.location.href.indexOf("action=create-new-site") > -1) {
-                    parent.history.pushState(null, '', umsSitesUrl);
-                }
-
-                parent.window.location.href = setSystemSettingsResponse.redirectUrl;
-            }
-            else {
-                showWaitingPopup($(".startup-page-container-body"));
-                window.location = setSystemSettingsResponse.redirectUrl;
-            }
-        }
-    });
-}
-
-function enableOrDisableDatabaseFormElements(isToDisable) {
-    if ($("#details-next").hasClass("intermediate-db") || (!$(this).hasClass("intermediate-db") && $(this).hasClass("database")) || ($(this).hasClass("intermediate-db") && !$(this).hasClass("database"))) {
-        if ($("#database-type").val().toLowerCase() === "postgresql") {
-            $("#database-type").val("PostgreSQL");
-        }
-        else {
-            $("#database-type").val($("#database-type option:first").val());
-        }
-
-        $("#check-windows").val($("#check-windows option:first").val());
-        $("#database-name").val($("#database-name option:first").val());
-        $("#txt-servername, #txt-portnumber, #txt-login, #txt-password-db, #txt-dbname").val("");
-        $("#secure-sql-connection").attr("checked", false);
-    }
-    $(".tenant-intermediate-database-form .validation-txt-errors").hide();
-    $(".tenant-intermediate-database-form .has-error").removeClass("has-error");
-    $("#database-type, #check-windows, #database-name").attr("disabled", isToDisable).selectpicker("refresh");
-    $("#txt-servername, #txt-portnumber, #txt-dbname, #new-db, #existing-db, #secure-sql-connection").attr("disabled", isToDisable);
-    $("a.my-sql-dropdown").parent().hide();
-    var isWindowsAuth = $("#check-windows").val() === "windows";
-    $("#txt-login").attr("disabled", isWindowsAuth || isToDisable);
-    $("#txt-password-db").attr("disabled", isWindowsAuth || isToDisable);
-}
-
 function validate_storage_type() {
     $(".blob-error-message").hide();
-    showWaitingPopup($(".startup-page-conatiner"));
-    var storageType = $("input[name='IsBlobStorage']:checked").val();
+    var storageType = getRadioButtonValue('IsBlobStorage');
     window.storageType = storageType;
     if (storageType == "1") {
         if ($("#blob-storage-form").valid()) {
             window.accountname = $("#txt-accountname").val();
-            window.endpoint = $("#txt-endpoint").val();
+            window.endpoint = $("#txt-bloburl").val() == "" ? "https://" + $("#txt-accountname").val() + ".blob.core.windows.net" : $("#txt-bloburl").val();
             window.accesskey = $("#txt-accesskey").val();
             window.containername = $("#txt-containername").val();
             window.storageType = storageType;
@@ -3516,502 +3196,102 @@ function validate_storage_type() {
                     if (typeof result.Data != "undefined") {
                         if (result.Data.Key.toString().toLowerCase() == "true") {
                             window.azureconnectionString = result.Data.ConnectionString;
-                            $("#system-settings-filestorage-container").hide();
-                            $("#image-parent-container .startup-image").hide().attr("src", adminSetupImageUrl).fadeIn();
-                            if (isAzureApplication && selfHosted) {
-                                $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YoureAnAdmin).slideDown();
-                            }
-                            else {
-                                $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YoureAnAdmin2).slideDown();
-                            }
-
-                            $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.AdminHaveControl).slideDown();
-                            $(".startup-content a#help-link").attr("href", serverStorageConfiguration);
-                            $("#system-settings-user-account-container").slideDown("slow");
-                            hideWaitingPopup(".startup-page-conatiner");
-                            changeFooterPostion();
+                            $("#image-parent-container, #system-settings-filestorage-container").hide();
+                            registerApplication(isSimpleModeSelction());
+                            return false;
                         } else {
-                            hideWaitingPopup(".startup-page-conatiner");
+                            hideWaitingPopup(".startup-waiting-popup");
                             $(".azure-validation,.blob-error-message").css("display", "block");
                             changeFooterPostion();
                         }
                     } else {
-                        hideWaitingPopup(".startup-page-conatiner");
+                        hideWaitingPopup(".startup-waiting-popup");
                         $(".azure-validation,.blob-error-message").css("display", "block");
                         changeFooterPostion();
                     }
                 }
             });
+
             return false;
         } else {
-            hideWaitingPopup(".startup-page-conatiner");
+            hideWaitingPopup(".startup-waiting-popup");
             changeFooterPostion();
             return false;
         }
     } else {
-        delete window.accountname;
-        $("div.placeholder").remove();
-        hideWaitingPopup(".startup-page-conatiner");
-        $("#system-settings-filestorage-container").hide();
-        $("#image-parent-container .startup-image").hide().attr("src", adminSetupImageUrl).fadeIn();
-        $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YoureAnAdmin2).slideDown();
-        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.AdminHaveControl).slideDown();
-        $(".startup-content a#help-link").attr("href", adminCreation);
-        $("#system-settings-user-account-container").slideDown("slow");
-        $("body").removeClass("startup-page-container-body");
-        changeFooterPostion();
+        $("#image-parent-container, #system-settings-filestorage-container").hide();
+        registerApplication(isSimpleModeSelction());
         return false;
     }
 }
 
-function isValidTenantNameIdentifer(tenantName, tenantIdentifier) {
-        if (IsValidIdentifier($.trim(tenantIdentifier))) {
-            $.ajax({
-                type: "POST",
-                url: checkTenantIdentifierExistUrl,
-                data: { tenantName: tenantName, tenantIdentifier: tenantIdentifier },
-                async: false,
-                success: function (data) {
-                    hideWaitingPopup($(".startup-page-container-body"));
-                    if (data.Result || data.ResultIdentifier) {
-                        if (data.Value != null && data.ResultIdentifier) {
-                            $("#txt-site-identifier").closest(".txt-holder").addClass("has-error");
-                            $("#txt-site-identifier").parent().find(".startup-validation").html(data.Value).show();
-                        }
-                        else {
-                            $("#txt-site-identifier").closest(".txt-holder").removeClass("has-error");
-                            $("#txt-site-identifier").parent().find(".startup-validation").html("").hide();
-                            goToDatabasePart();
-                        }
-                    } else {
-                        $("#txt-site-identifier").closest(".txt-holder").removeClass("has-error");
-                        $("#txt-site-identifier").parent().find(".startup-validation").html("").hide();
-                        goToDatabasePart();
-                    }
-                }
-            });
-        }
-    else {
-        hideWaitingPopup($(".startup-page-container-body"));
-    }
-}
 
-function goToDatabasePart() {
-    $("#system-settings-tenant-container").hide();
-    $("#system-settings-db-selection-container").slideDown("slow");
-    $(".startup-image").removeClass("image-con-part");
-    $(".second-content").removeClass("site-description");
-    $("#image-parent-container .startup-image").hide().attr("src", serverDbImageUrl).fadeIn();
-    if (isAzureApplication) {
-        if (isBoldBI) {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourBIDatabase).slideDown();
-        }
-        else {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourDatabase).slideDown();
-        }
-    }
-    else {
-        if (isBoldBI) {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourBIDatabase2).slideDown();
-        }
-        else {
-            $(".startup-content span.first-content").hide().text(window.TM.App.LocalizationContent.YourDatabase2).slideDown();
-        }
-    }
+function onConnectionRadioChange(args) {
+    var checkedVal = args.value;
+    var accountName = $("#txt-accountname").val();
+    var accessKey = $("#txt-accesskey").val();
 
-    if (isBoldBI) {
-        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.DatabaseMsg).slideDown();
-    }
-    else {
-        $(".startup-content span.second-content").hide().text(window.TM.App.LocalizationContent.DatabaseReportsMsg).slideDown();
-    }
-}
+    if (checkedVal == "http" || checkedVal == "https") {
+        $(".custom-endpoint-form-element").hide();
+        var finalValue = "DefaultEndpointsProtocol=" + checkedVal + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
+        $("#connection-string").val(finalValue);
 
-function validate_report_storage() {
-    $("a.my-sql-dropdown").parent().hide();
-    $(".blob-error-message").hide();
-    showWaitingPopup($(".startup-page-conatiner"));
-    var storageType = $("input[name='IsBlobStorage']:checked").val();
-    window.storageType = storageType;
-    var azuredetails = "";
-    var tenantDetails = {
-        TenantName: $("#txt-site-name").val(),
-        TenantIdentifier: $("#txt-site-identifier").val(),
-        TenantType: isBoldBI ? "BoldBIOnPremise" : "BoldReportsOnPremise",
-        UseSiteIdentifier: true
-    };
-    var tenantType = isBoldBI ? "Bold BI" : "Bold Reports"
-    if (storageType == "1") {
-        if ($("#blob-storage-form").valid()) {
-            window.accountname = $("#txt-accountname").val();
-            window.endpoint = $("#txt-endpoint").val();
-            window.accesskey = $("#txt-accesskey").val();
-            window.containername = $("#txt-containername").val();
-            window.storageenable = $(".storage-checkbox").is(":checked");
-
-            var blobUrl = $("#txt-bloburl").val();
-            var connectionType = $("input[name='Connection']:checked").val();
-            var connectionString = "";
-            var storageEndPoint = $("#txt-endpoint").val();
-
-
-            if (connectionType == "http" || connectionType == "https") {
-                connectionString = "DefaultEndpointsProtocol=" + connectionType + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
-
-            } else {
-                connectionString = "BlobEndpoint=" + blobUrl + ";AccountName=" + window.accountname + ";AccountKey=" + window.accesskey;
-            }
-            window.connectionType = connectionType;
-            azuredetails = {
-                AzureBlobStorageUri: window.endpoint,
-                AzureBlobStorageContainerName: window.containername,
-                ConnectionType: window.connectionType,
-                ConnectionString: connectionString,
-                AccountName: window.accountname,
-                AccessKey: window.accesskey
-            };
-
-            var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db";
-
-            if (isBoldBI && !isIntermediateDatabaseFormSubmit) {
-                azureDataforBoldbi = azuredetails;
-                dssystemsettings();
-            }
-
-            if (isIntermediateDatabaseFormSubmit) {
-                intermediateDbDetails = getDatabaseFormValues(true);
-            }
-            else {
-                systemSettingsDetails = getDatabaseFormValues();
-            }
-            if (window.storageenable == false) {
-                $.ajax({
-                    type: "POST",
-                    url: blobExist,
-                    data: { connectionString: connectionString, containerName: window.containername },
-                    success: function (result) {
-                        if (typeof result.Data != "undefined") {
-                            if (result.Data.Key.toString().toLowerCase() == "true") {
-                                hideWaitingPopup(".startup-page-conatiner");
-                                if (isBoldReports) {
-                                    postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
-                                }
-                            } else {
-                                hideWaitingPopup(".startup-page-conatiner");
-                                $(".azure-validation,.blob-error-message").css("display", "block");
-                                changeFooterPostion();
-                            }
-                        } else {
-                            hideWaitingPopup(".startup-page-conatiner");
-                            $(".azure-validation,.blob-error-message").css("display", "block");
-                            changeFooterPostion();
-                        }
-                    }
-                });
-
-                if (isBoldBI && $("#database-type").val().toLowerCase() === "mysql") {
-                    $("#database-type").val($("#database-type option:first").val()).selectpicker("refresh").trigger("change");
-                    $("a.my-sql-dropdown").parent().hide();
-                }
-                return false;
-            }
-            else {
-                hideWaitingPopup(".startup-page-conatiner");
-                if (isBoldReports) {
-                    postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
-                }
-            }
-        } else {
-            hideWaitingPopup(".startup-page-conatiner");
-            changeFooterPostion();
-            return false;
-        }
     } else {
-        var isIntermediateDatabaseFormSubmit = $("#ds-db-config-submit").data("form") === "intermediate-db";
+        var blobUrl = $("#txt-bloburl").val();
 
-        if (isBoldBI && !isIntermediateDatabaseFormSubmit) {
-            dssystemsettings();
-        }
-
-        if (isIntermediateDatabaseFormSubmit) {
-            intermediateDbDetails = getDatabaseFormValues(true);
-        }
-        else {
-            systemSettingsDetails = getDatabaseFormValues();
-        }
-        hideWaitingPopup(".startup-page-conatiner");
-        if (isBoldReports) {
-            postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, null, tenantDetails, tenantType);
-        }
+        var finalValue = "BlobEndpoint=" + blobUrl + ";AccountName=" + accountName + ";AccountKey=" + accessKey;
+        $("#connection-string").val(finalValue);
+        $(".custom-endpoint-form-element").show();
     }
-
-    if (isBoldBI && $("#database-type").val().toLowerCase() === "mysql") {
-        $("#database-type").val($("#database-type option:first").val()).selectpicker("refresh").trigger("change");
-        $("a.my-sql-dropdown").parent().hide();
-    }
+    $("div.placeholder").remove();
+    addPlacehoder("#system-settings-filestorage-container");
+    changeFooterPostion();
 }
 
-function IsValidIdentifier(inputString) {
-    var regex = /^[a-zA-Z0-9-]+$/;
-    return regex.test(inputString) || inputString == "";
+function onBlobStorageChange(args) {
+    var checkedVal = args.value;
+    if (checkedVal == "0") {
+        $("#blob-storage-form").hide("slow");
+        if (storageButtonValue === "tenant") {
+            $(".content-value").slideDown("slow");
+        } else {
+            $(".report-content").slideDown("slow");
+        }
+        $(".storage-checkbox").hide("slow");
+        $(".azure-validation").css("display", "none");
+    } else {
+        $(".content-value").hide();
+        $(".report-content").hide();
+        if (storageButtonValue === "tenant") {
+            $(".storage-checkbox").hide("slow");
+        }
+        else {
+            $(".storage-checkbox").show("slow");
+        }
+        $("#blob-storage-form").slideDown("slow");
+        $(".validation-txt-errors").hide();
+        $(".azure-validation").css("display", "none");
+        $(".e-error").removeClass("e-error");
+        $("div.placeholder").remove();
+        ResizeHeightForDOM();
+    }
+    addPlacehoder("#system-settings-filestorage-container");
+    changeFooterPostion();
 }
 
-$(document).on("change", ".storage-checkbox", function () {
-    var value = $("#storage-checkbox").is(":checked");
-    if (value == true) {
-        $.ajax({
-            type: "POST",
-            url: blobDetails,
-            dataType: 'json',
-            success: function (data) {
-                var systemSetting = JSON.parse(data.AzureDetails);
-                $("#txt-accountname").val(systemSetting.BlobStorageAccountName);
-                $("#txt-endpoint").val(systemSetting.AzureBlobStorageUri);
-                $("#txt-accesskey").val(systemSetting.BlobStorageAccessKey);
-                $("#txt-containername").val(systemSetting.AzureBlobStorageContainerName);
-                $("input[name='Connection']").change();
 
-                var validator = $("#blob-storage-form").validate();
-                validator.form();
-            }
-        });
-    }
-    else {
-        $("#txt-accountname").val("");
-        $("#txt-endpoint").val("");
-        $("#txt-accesskey").val("");
-        $("#txt-containername").val("");
-    }
-});
-$(document).on("ready", function () {
-    $(".show-hide-password").on("mousedown", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
-        }
-        else {
-            $(this).siblings("input").attr('type', 'password');
-        }
-    });
-
-    $(".show-hide-password").on("mouseup", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
-        }
-        else {
-            $(this).siblings("input").attr('type', 'password');
-        }
-    });
-
-    //For the purpose of Responsive layout
-    $(".show-hide-password").bind("touchstart", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr("type", "text");
-        }
-        else {
-            $(this).siblings("input").attr("type", "password");
-        }
-    });
-    $(".show-hide-password").on("touchend", function () {
-        if ($(this).siblings("input").is(":password")) {
-            $(this).siblings("input").attr('type', 'text');
-        }
-        else {
-            $(this).siblings("input").attr('type', 'password');
-        }
-    });
-
-    $(".show-hide-password").mouseleave(function () {
-        $(this).siblings("input").attr('type', 'password');
-    });
-
-    if (window.innerWidth < 1041) {
-        $(".show-hide-password").on("click", function () {
-            if ($(this).siblings("input").is(":password")) {
-                $(this).siblings("input").attr('type', 'text');
-            }
-            else {
-                $(this).siblings("input").attr('type', 'password');
-            }
-        });
-    }
-});
-var userAgent = navigator.userAgent;
-var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
-var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-var selectedAdmins = [];
-var gridAdminData = [];
-var isFirstRequest = false;
-var waitingPopUpElement = "";
-var tenantNameinDB = "";
-var tenantIdentifierinDB = "";
-var gridHeight = 355;
-var databaseFormData, intermediateFormData, clonedDBFormData, azuredetails;
-var storageFlag = 0;
-var previousIndex = [];
 var prevTenantIdentifier = "";
-var prevDomain = "";
-var haveTenantIdentifier = true;
-
 
 $(document).ready(function () {
-    if (isCommonLogin) {
-        $(".selector").addClass("selector-alignment");
-    }
-
-    $('[data-toggle="popover"]').popover();
-    var defaultTenantType = $("#tenant-type").val();
-
-    if (defaultTenantType == "BoldReportsOnPremise") {
-        $(".tenant-type-brand").html("Enterprise Reporting");
-    }
-    else {
-        $(".tenant-type-brand").html("Embedded BI");
-    }
-
-    if (actionType.toLowerCase() != "edit") {
-        if (useSiteIdentifierEnable) {
-            $(".site-url-identifier").removeClass("hide");
-        }
-        else {
-            $(".site-url-identifier").addClass("hide");
-        }
-
-        var dropdownValue = $("#tenant-type").val();
-        if (dropdownValue === "BoldReportsOnPremise") {
-            $(".site-default-text").html("").html(boldReportsPath);
-        }
-        else {
-            $(".site-default-text").html("").html(boldBiPath);
-        }
-        $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
-        $(".site-url").attr("data-content", $(".site-domain") + $(".site-default-text").text());
-    }
-
-    waitingPopUpElement = parent.$("#add-tenant-popup");
-    if (actionType.toLowerCase() == "edit") {
-        $("#total-step").html("").html(" 2");
-        $(".add-tenant-popup-title label").html("Edit site");
-        $(".branding-type").addClass("hide");
-        $(".administrator, .select-intermediate-database, #selection-intermediate-db, #selection-storage, .select-storage, #selectionadmin, #selectiondb .hr-tag, #selection-intermediate-db .hr-tag, #selection-data-security, .get-data-security").css("display", "none");
-        $(".selector-icons").addClass("icon-alignment");
-        $(".selector").removeClass("selector-alignment");
-        $(".selector-content").addClass("content-alignment");
-        $("#new-domain-div").css("display", "none");
-        getTenant(tenantId);
-    } else {
-        if (isBoldBI) {
-            $(".selector").addClass("selector-alignment");
-        }
-        hideWaitingPopup(waitingPopUpElement);
-    }
-    $("#search-area").hide();
-    addPlacehoder("body");
-    $(".placeholder").css("display", "none");
-    if (isSafari) {
-        $("#search-tenant-users").css("width", "1px");
-    }
-
-    $("#duplicate-table-list").ejDialog({
-        width: "450px",
-        showOnInit: false,
-        allowDraggable: true,
-        enableResize: false,
-        height: "230px",
-        showHeader: false,
-        enableModal: true
-    });
-
-    $(document).on("keydown", "#search-tenant-users", function (e) {
-        $("#validation-user-error").hide();
-        $.xhrPool.abortAll();
-        var currentKeyCode = parseInt(e.which);
-        var element = "#" + this.id;
-        if (timeOut != null) {
-            clearTimeout(timeOut);
-            timeOut = null;
-        }
-        if (currentKeyCode === keyCode.Enter) {
-            PerformSearch(element);
-        }
-        else if (excludedSearchKeys.indexOf(currentKeyCode) === -1) {
-            timeOut = setTimeout(function () {
-                PerformSearch(element);
-            }, 900);
-        }
-    });
-
-    $("#file-storage, #blob-storage").click(function () {
-        if ($("#file-storage").is(":checked")) {
-            height = $(window).height() - $(".modal-header").height() - 210;
-            modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() - 210;
-        } else {
-            height = $(window).height() - $(".modal-header").height() - 210 + 250;
-            modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
-        }
-
-        if (height > modalheight) {
-            $(".dialog-body-div").css("height", height);
-        } else {
-            $(".dialog-body-div").css("height", modalheight);
-        }
-        gridHeight = height;
-    });
-
-    $("#check-windows").on("click change", function () {
-        var windowsCheck = $("#check-windows").val() == "windows";
-        var databaseType = $("#database-type").val();
-
-        if (windowsCheck && databaseType == "MSSQL") {
-            $(".dialog-body-div").css("height", "auto");
-        }
-    });
-
-    $(document).on("keyup", "input", function (event) {
-        if (event.keyCode == 13 && $(this).attr("id") != "search-tenant-users") {
-            $("#details-next").click();
-        }
-    });
-
-    $('#tenant-type').change(function () {
-        var dropdownValue = $("#tenant-type").val();
-
-        if (dropdownValue === "BoldReportsOnPremise") {
-            item = "reports";
-            $("#selection-intermediate-db").css("display", "none");
-            $(".select-intermediate-database").css("display", "none");
-            $(".get-data-security").css("display", "none");
-            $("#selection-data-security").css("display", "none");
-            $(".selector").removeClass("selector-alignment");
-            $(".select-storage").html(window.TM.App.LocalizationContent.SelectStorage);
-            $("#header-description").html(window.TM.App.LocalizationContent.BoldReportsMultiTenancy);
-            $(".site-default-text").html("").html(boldReportsUrl);
-            $(".tenant-type-brand").html("Enterprise Reporting");
-            $(".branding-type").children(".bootstrap-select").children(".dropdown-toggle").find("span.filter-option").html("Enterprise Reporting");
-        }
-        else if (dropdownValue === "BoldBIOnPremise") {
-            item = "dashboards";
-            $("#selection-intermediate-db").css("display", "inline");
-            $(".select-intermediate-database").css("display", "inline");
-            $(".get-data-security").css("display", "inline");
-            $("#selection-data-security").css("display", "inline");
-            $(".selector").addClass("selector-alignment");
-            $(".select-intermediate-database").html(window.TM.App.LocalizationContent.SiteDataStore);
-            $(".select-storage").html(window.TM.App.LocalizationContent.SelectStorage);
-            $("#header-description").html(window.TM.App.LocalizationContent.BoldBiMultiTenancy);
-            $(".site-default-text").html("").html(boldBIUrl);
-            $(".tenant-type-brand").html("Embedded BI");
-            $(".branding-type").children(".bootstrap-select").children(".dropdown-toggle").find("span.filter-option").html("Embedded BI");
-        }
-    });
-
     $('#enable-ssl').change(function () {
-        if (dropdownValue === "BoldReportsOnPremise") {
+        if (isBoldReportsTenantType()) {
             if ($("#tenant-identifier").val() == "") {
                 $(".site-default-text").html("").html(boldReportsPath);
             }
             else {
                 $(".site-default-text").html("").html(boldReportsUrl + $("#tenant-identifier").val());
             }
+            $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
             $(".site-id-name").html("");
         }
         else {
@@ -4021,27 +3301,15 @@ $(document).ready(function () {
             else {
                 $(".site-default-text").html("").html(boldBIUrl + $("#tenant-identifier").val());
             }
+            $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
             $(".site-id-name").html("");
         }
 
         $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text());
     });
 
-    $(".site-url").attr("data-content", $(".site-default-text").text() + $(".site-id-name").text());
-
-    $("[data-toggle='popover']").popover({
-        container: 'body',
-        trigger: 'hover',
-    });
-
-    $(".site-url").hover(function () {
-        $(".add-tenant-dialog-wrapper").nextAll(".popover").find(".arrow").css("left", "50%");
-        $(".add-tenant-dialog-wrapper").nextAll(".popover").css("left", "30%");
-    });
-
     $(document).on("keyup", "#tenant-identifier", function (event) {
-        var dropdownValue = $("#tenant-type").val();
-        if (dropdownValue === "BoldReportsOnPremise") {
+        if (isBoldReportsTenantType()) {
             $(".site-default-text").html("").html(boldReportsUrl);
         }
         else {
@@ -4050,21 +3318,19 @@ $(document).ready(function () {
 
         $(".site-id-name").html($(this).val());
         $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
-        $(".site-url").attr("data-content", $(".site-domain") + $(".site-default-text").text() + $(".site-id-name").text());
+        $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text() + $(".site-id-name").text());
     });
 
-    $(document).on("keyup", "#input-domain", function (event) {
-        var enableSsl = $("#enable-ssl").val();
+    $(document).on("change keyup", "#input-domain", function (event) {
         if (actionType.toLowerCase() == "edit") {
-            var dropdownValue = $("#tenant-type").val();
-            if (dropdownValue === "BoldReportsOnPremise") {
+            if (isBoldReportsTenantType()) {
                 if ($("#tenant-identifier").val() == "") {
                     $(".site-default-text").html("").html(boldReportsPath);
                 }
                 else {
                     $(".site-default-text").html("").html(boldReportsUrl + $("#tenant-identifier").val());
                 }
-                    $(".site-id-name").html("");
+                $(".site-id-name").html("");
             }
             else {
                 if ($("#tenant-identifier").val() == "") {
@@ -4075,53 +3341,42 @@ $(document).ready(function () {
                 }
                 $(".site-id-name").html("");
             }
-            $(".site-domain").html(enableSsl + "://" + $(this).val());
+            $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
             $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text());
         }
         else {
-            $(".site-domain").html(enableSsl + "://" + $(this).val());
-            $(".site-url").attr("data-content", $(".site-default-text").text() + $(".site-domain") + $(".site-id-name").text());
+            $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
+            $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text() + $(".site-id-name").text());
         }
         $("#tenant-identifier-validation-error").css("display", "none");
         $("#tenant-identifier-empty-validation-error").css("display", "none");
+        $("#domain-validation-error").css("display", "none");
+        $("#enable-ssl").css("margin-bottom", "5px");
+        $("#domain-validation-error").html("");
         $(".empty-validation-error").css("padding-bottom", "0px");
         $(".identifier-info").css("padding-top", "20px");
-    });
-
-    $(document).on("change", "input[name=newdomain]", function () {
-        if ($('input[name="newdomain"]').is(':checked')) {
-            $("#input-domain").attr("disabled", false);
-            $(".input-group-addon").children(".btn-group").children(".dropdown-toggle").removeClass("disabled");
-            $("#enable-ssl").removeAttr("disabled");
-        }
-        else {
-            $("#input-domain").attr("disabled", true);
-            $(".input-group-addon").children(".btn-group").children(".dropdown-toggle").addClass("disabled");
-        }
     });
 
     $(document).on("change", "input[name=identifier]", function () {
         if ($('input[name="identifier"]').prop("checked")) {
             if (actionType.toLowerCase() == "edit") {
-                var dropdownValue = $("#tenant-type").val();
-                if (dropdownValue === "BoldReportsOnPremise") {
+                if (isBoldReportsTenantType()) {
                     $(".site-default-text").html("").html(boldReportsPath);
                 }
                 else {
                     $(".site-default-text").html("").html(boldBiPath);
                 }
                 $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
-                $(".site-url").attr("data-content", $(".site-domain") + $(".site-default-text").text());
+                $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text());
             }
             else {
-                var dropdownValue = $("#tenant-type").val();
-                if (dropdownValue === "BoldReportsOnPremise") {
+                if (isBoldReportsTenantType()) {
                     $(".site-default-text").html("").html(boldReportsPath);
                 }
                 else {
                     $(".site-default-text").html("").html(boldBiPath);
                 }
-                $(".site-url").attr("data-content", $(".site-domain") + $(".site-default-text").text());
+                $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text());
             }
             prevTenantIdentifier = $("#tenant-identifier").val();
             $("#tenant-identifier").val("");
@@ -4148,8 +3403,7 @@ $(document).ready(function () {
                     $("#tenant-identifier").attr("disabled", true);
                 }
                 if (haveTenantIdentifier == false) {
-                    var dropdownValue = $("#tenant-type").val();
-                    if (dropdownValue === "BoldReportsOnPremise") {
+                    if (isBoldReportsTenantType()) {
                         $(".site-default-text").html("").html(boldReportsUrl);
                     }
                     else {
@@ -4157,11 +3411,10 @@ $(document).ready(function () {
                     }
                     $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
                     $(".site-id-name").html("");
-                    $(".site-url").attr("data-content", $(".site-domain") + "/" + $(".site-default-text").text() + "/" + $(".site-id-name").html());
+                    $(".site-url").attr("data-content", $(".site-domain").html() + "/" + $(".site-default-text").text() + "/" + $(".site-id-name").html());
                 }
                 else {
-                    var dropdownValue = $("#tenant-type").val();
-                    if (dropdownValue === "BoldReportsOnPremise") {
+                    if (isBoldReportsTenantType()) {
                         $(".site-default-text").html("").html(boldReportsUrl);
                     }
                     else {
@@ -4169,74 +3422,11 @@ $(document).ready(function () {
                     }
                     $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
                     $(".site-id-name").html(prevTenantIdentifier);
-                    $(".site-url").attr("data-content", $(".site-domain") + "/" + $(".site-default-text").text() + "/" + $(".site-id-name").html());
+                    $(".site-url").attr("data-content", $(".site-domain").html() + "/" + $(".site-default-text").text() + "/" + $(".site-id-name").html());
                 }
             }
         }
     });
-
-    $(document).on("change", "#enable-ssl", function () {
-        $(".site-domain").html($(this).val() + "://" + $("#input-domain").val());
-    });
-
-    function siteIdentifierValidation() {
-        var domain = $("#input-domain").val();
-        var tenantIdentifier = $("#tenant-identifier").val();
-        $.ajax({
-            type: "POST",
-            url: tenantIdentifierValidationUrl,
-            async: false,
-            data: { domain: domain, tenantIdentifier: tenantIdentifier },
-            success: function (data) {
-                if (data.Data) {
-                    if (data.SiteIdentityError) {
-                        $("#input-domain").closest("div").addClass("has-error");
-                        $("#tenant-identifier-empty-validation-error").css("display", "block");
-                        $("#tenant-identifier-empty-validation-error").html(data.Value);
-                    }
-                    else {
-                        $("#input-domain").closest("div").removeClass("has-error");
-                        $("#tenant-identifier-empty-validation-error").css("display", "none");
-                        $("#tenant-identifier-empty-validation-error").html("");
-                    }
-                }
-            }
-        });
-    }
-
-    function checkServerHealthStatus() {
-        var domain = "";
-        var dropdownValue = $("#tenant-type").val();
-        if (dropdownValue === "BoldReportsOnPremise") {
-            domain = $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldReportsPath;
-        }
-        else {
-            domain = $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldBiPath;
-        }
-        $.ajax({
-            type: "POST",
-            url: checkHealthStatusUrl,
-            async: false,
-            data: { domain: domain },
-            success: function (data) {
-                if (!data.Data) {
-                    $("#input-domain").closest("div").addClass("has-error");
-                    $("#domain-validation-error").css("display", "block");
-                    $("#domain-validation-error").html(window.TM.App.LocalizationContent.InvalidDomain);
-                }
-                else {
-                    $("#input-domain").closest("div").removeClass("has-error");
-                    $("#domain-validation-error").css("display", "none");
-                    $("#domain-validation-error").html("");
-                }
-
-            }
-        });
-    }
-    function getTenantUrl(url, tenantIdentifier) {
-        var tenantUrl = url + "/" + tenantIdentifier;
-        return tenantUrl;
-    }
 
     $("#input-domain").validate({
         errorElement: "span",
@@ -4248,15 +3438,15 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
         },
         unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
         },
         messages: {
             domainname: {
@@ -4276,15 +3466,15 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
         },
         unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
         },
         messages: {
             tenantidentifier: {
@@ -4304,15 +3494,15 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").show();
         },
         unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").text(error.html());
+            $(element).closest(".e-outline").siblings(".startup-validation").text(error.html());
         },
         messages: {
             tenantname: {
@@ -4343,7 +3533,7 @@ $(document).ready(function () {
             tenantidentifier: {
                 required: true,
                 isValidIdentifier: true,
-                maxlength: 255
+                maxlength: 64
             },
             domainname: {
                 isDomainRequired: true,
@@ -4351,17 +3541,15 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".txt-holder").addClass("has-error");
-            $(element).closest(".text-holder").addClass("has-error");
-            $(element).parent().find(">.startup-validation").show();
+            $(element).closest('div').addClass("e-error");
+            $(element).closest(".e-outline").siblings(".startup-validation").css("display", "block");
         },
         unhighlight: function (element) {
-            $(element).closest(".txt-holder").removeClass("has-error");
-            $(element).closest(".text-holder").removeClass("has-error");
-            $(element).parent().find(">.startup-validation").hide();
+            $(element).closest('div').removeClass('e-error');
+            $(element).closest(".e-outline").siblings(".startup-validation").hide();
         },
         errorPlacement: function (error, element) {
-            $(element).parent().find(">.startup-validation").html(error.html());
+            $(element).closest(".e-outline").siblings(".startup-validation").html(error.html());
         },
         messages: {
             tenantname: {
@@ -4372,7 +3560,7 @@ $(document).ready(function () {
             tenantidentifier: {
                 required: window.TM.App.LocalizationContent.SiteIdentifierValidator,
                 isValidIdentifier: window.TM.App.LocalizationContent.AvoidSpecailCharacters,
-                maxlength: window.TM.App.LocalizationContent.SiteValidation
+                maxlength: window.TM.App.LocalizationContent.SiteIdentifierValidation
             },
             messages: {
                 domainname: {
@@ -4382,547 +3570,92 @@ $(document).ready(function () {
             }
         }
     });
-
-    $.validator.addMethod("isRequired", function (value, element) {
-        return !isEmptyOrWhitespace(value);
-    }, "Please enter the name.");
-
-    $.validator.addMethod("isDomainRequired", function (value, element) {
-        return !isEmptyOrWhitespace(value);
-    }, window.TM.App.LocalizationContent.Urlvalidator);
-
-    $.validator.addMethod("isValidName", function (value, element) {
-        return parent.IsValidName("name", value);
-    }, "Please avoid special characters.");
-
-    $.validator.addMethod("isValidIdentifier", function (value, element) {
-        return IsValidIdentifier(value);
-    }, "Please avoid special characters.");
-
-    $.validator.addMethod("isValidUrl", function (value, element) {
-        return isValidUrl(value);
-        var givenUrl = $("#input-domain").val();
-        var url = parseURL(givenUrl);
-        if (isValidUrl(value) == false || parseInt(url.port) > 65535)
-            return false;
-        else
-            return true;
-    }, window.TM.App.LocalizationContent.DomainValidator);
-
-    $(document).on("click", "#details-next", function () {
-        $(this).attr("disabled", true);
-        if (!useSiteIdentifierEnable && $("#tenant-identifier").val() != "" && actionType.toLowerCase() == "edit") {
-            checkServerHealthStatus();
-            $("#input-domain").closest("div").addClass("has-error");
-            $("#tenant-identifier-validation-error").css("display", "block");
-            $("#tenant-identifier-validation-error").html(window.TM.App.LocalizationContent.DisAllowTenantIdentifier);
-                    }
-        if (($("#input-domain").val() != prevDomain || $('input[name="identifier"]').prop("checked")) && !useSiteIdentifierEnable) {
-            checkServerHealthStatus();
-            siteIdentifierValidation();
-        }
-        if ($(".tenant-database-form").hasClass("hide") && $(this).hasClass("database") && $("#tenant-registration-form").find(".has-error").length == 0) {
-            var tenantIdentifier = $("#tenant-identifier").val().trim();
-            var tenantName = $("#tenant-name").val().trim();
-            var tenantType = $("#tenant-type").val();
-            isBoldBI = tenantType === "BoldBIOnPremise"
-            var canProceed = $("#tenant-registration-form").valid();
-            if (canProceed) {
-                showWaitingPopup(waitingPopUpElement);
-                tenantNameIdentiferCheck(tenantName, tenantIdentifier);
-            } else {
-                $(this).removeAttr("disabled");
-            }
-        }
-        else if ($(this).hasClass("intermediate-db") && $(".tenant-database-form").find(".has-error").length == 0) {
-            if ($(".tenant-database-form #db-content-holder").valid()) {
-                if ($("input[name='databaseType']:checked").val() === "1") {
-                    existingDbConfiguration(waitingPopUpElement);
-                } else {
-                    newDbConfiguration(waitingPopUpElement);
-                }
-                if (!$(".database-error").is(":visible")) {
-                    preserveFormData();
-
-                    var dropdownValue = $("#tenant-type").val();
-                    if (dropdownValue === "BoldBIOnPremise") {
-                        var isNextDataStore = true;
-                        saveDatabaseValuesTemporarly();
-                        $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataStore);
-                        $("#header-description").html(window.TM.App.LocalizationContent.PullYourData + " " + dataConnectorsCount + "+ " + window.TM.App.LocalizationContent.DataConnectorsSaveOffline);
-                        moveStepper("front", 3);
-                        $(this).attr("data-form", "intermediate-db");
-                        if (actionType.toLowerCase() == "edit") {
-                            $(this).attr("value", "Update");
-                            $(this).removeClass("intermediate-db").addClass("update");
-                        } else {
-                            $(this).attr("value", "Next");
-                            if (isBoldBI) {
-                                $(this).removeClass("intermediate-db").addClass("intermediate-db2");
-                                $(this).attr("data-form", "");
-                            }
-                            else {
-                                $(this).removeClass("intermediate-db").addClass("user");
-                            }
-                        }
-
-                        $(this).removeAttr("disabled").addClass("next-alignment");
-                        $(".tenant-database-form").addClass("tenant-intermediate-database-form").removeClass("tenant-database-form");
-
-                        if (intermediateFormData != undefined) {
-                            fillPreservedFormData(intermediateFormData);
-                        }
-                        else if (databaseFormData != undefined) {
-                            fillPreservedFormData(clonedDBFormData);
-                        }
-
-                        if (item === "dashboards") {
-                            $("#no-need-datastore").css("display", "none");
-                        }
-                        else {
-                            $("#no-need-datastore").css({ "display": "block", "margin-top": "24px" });
-                        }
-
-                        $('.ds-server-help').remove();
-                        var dataStoreHelp = '<span class="info-icon su su-info data-store-help"></span>';
-                        $("#ds-server-lable").append(dataStoreHelp);
-                        $(".data-store-help").popover({
-                            trigger: 'hover',
-                            placement: 'top',
-                            content: isBoldBI ? window.TM.App.LocalizationContent.biStorePopoverContent : window.TM.App.LocalizationContent.reportStorePopoverContent
-                        });
-                    }
-                    else {
-                        if (!isBoldBI) {
-                            $(this).removeClass("intermediate-db2");
-                        }
-
-                        saveDatabaseValuesTemporarly();
-                        nextToStoragePage();
-                    }
-                }
-                $('#details-next').removeAttr("disabled");
-            }
-            else {
-                $(this).removeAttr("disabled");
-            }
-        }
-        else if ($(".tenant-user-form").hasClass("hide") && $(this).hasClass("user") && $(".tenant-database-form").find(".has-error").length == 0 && $(".tenant-intermediate-database-form").hasClass("show") && !isBoldBI) {
-            if (item === "dashboards" && $(".tenant-intermediate-database-form #db-content-holder").valid()) {
-                if ($("input[name='databaseType']:checked").val() === "1") {
-                    existingDbConfiguration(waitingPopUpElement);
-                } else {
-                    newDbConfiguration(waitingPopUpElement);
-                }
-            }
-            if (!$(".database-error").is(":visible")) {
-                saveDatabaseValuesTemporarly(true);
-                preserveFormData(true);
-                if ($(".tenant-intermediate-database-form #db-content-holder").valid()) {
-                    showWaitingPopup(waitingPopUpElement);
-                    $("#details-back").show().removeClass("back-button");
-                    $("#header-title").html(window.TM.App.LocalizationContent.SelectSiteAdmin);
-                    $("#header-description").text(window.TM.App.LocalizationContent.AdminControlSite);
-                    $(".tenant-intermediate-database-form #system-settings-db-selection-container").hide();
-                    moveStepper("front", 4);
-                    nextToUserPage();
-                }
-            }
-            else {
-                $(this).removeAttr("disabled");
-            }
-            $(this).removeAttr("disabled");
-        }
-        else if ($(".tenant-user-form").hasClass("hide") && $(this).hasClass("intermediate-db2") && $(".tenant-database-form").find(".has-error").length == 0 && $(".tenant-intermediate-database-form").hasClass("show")) {
-            if (item === "dashboards" && $(".tenant-intermediate-database-form #db-content-holder").valid()) {
-                if ($("input[name='databaseType']:checked").val() === "1") {
-                    existingDbConfiguration(waitingPopUpElement);
-                } else {
-                    newDbConfiguration(waitingPopUpElement);
-                }
-            }
-            if (!$(".database-error").is(":visible")) {
-                saveDatabaseValuesTemporarly(true);
-                preserveFormData(true);
-                if ($(".tenant-intermediate-database-form #db-content-holder").valid()) {
-                    $(".tenant-intermediate-database-form #system-settings-db-selection-container").hide();
-                    $(this).attr("data-form", "");
-                    nextToStoragePage();
-                }
-                else {
-                    $(this).removeAttr("disabled");
-                }
-            }
-            $(this).removeAttr("disabled");
-        }
-
-        else if ($(this).hasClass("data-security") && $(".storage-form").find(".has-error").length == 0) {
-            systemSettingsDetails.StorageType = $("input[name='IsBlobStorage']:checked").val();
-            preserveStorageFormData();
-            if ($("#blob-storage-form").valid()) {
-                showWaitingPopup(waitingPopUpElement);
-                $(".storage-form #system-settings-filestorage-container").hide();
-                moveStepper("front", 5);
-                nextToDataSecurityPage();
-            }
-            else {
-                $(this).removeAttr("disabled");
-            }
-        }
-        else if (($(".tenant-user-form").hasClass("hide") && $(this).hasClass("user")) && $(".storage-form").find(".has-error").length == 0) {
-            if (isBoldBI) {
-                moveStepper("front", 6);
-                systemSettingsDetails.TenantIsolation.IsEnabled = $("#isolation-enable-switch").is(":checked");
-                systemSettingsDetails.TenantIsolation.IsolationCode = $("#site-isolation-code").val();
-                systemSettingsDetails.CustomAttribute = addSiteAttribute;
-                if (systemSettingsDetails.TenantIsolation.IsEnabled && !parent.ValidateIsolationCode(systemSettingsDetails.TenantIsolation.IsolationCode)) {
-                    $("#isolation-code-validation").html(window.TM.App.LocalizationContent.IsolationCodeValidator);
-                    $("#site-isolation-code").addClass("has-error");
-                } else {
-                    $("#isolation-code-validation").html("");
-                    $("#site-isolation-code").removeClass("has-error");
-                    nextToUserPage();
-                }
-            }
-            else {
-                systemSettingsDetails.StorageType = $("input[name='IsBlobStorage']:checked").val();
-                preserveStorageFormData();
-                if ($("#blob-storage-form").valid()) {
-                    showWaitingPopup(waitingPopUpElement);
-                    $(".storage-form #system-settings-filestorage-container").hide();
-                    moveStepper("front", 4);
-                    nextToUserPage();
-                }
-            }
-            $(this).removeAttr("disabled");
-        }
-        else if ($(".tenant-user-form").hasClass("hide") && $(this).hasClass("update") && $(".tenant-database-form").find(".has-error").length == 0) {
-            var proceed = $("#db-content-holder").valid();
-            if (proceed) {
-                showWaitingPopup(waitingPopUpElement);
-                $("#details-back").show().removeClass("back-button");
-                if ($("#database-type").val().toLowerCase() == "mssql" || $("#database-type").val().toLowerCase() == "postgresql" || $("#database-type").val().toLowerCase() == "mysql") {
-                    checkingNewDBConnection(waitingPopUpElement, actionType);
-                } else {
-                    updateTenant(waitingPopUpElement);
-                }
-            } else {
-                $(this).removeAttr("disabled");
-            }
-        }
-        else {
-            if ($(".tenant-user-form").hasClass("show") && $(".tenant-user-form").find(".has-error").length == 0 && selectedAdmins.length != 0) {
-                showWaitingPopup("add-tenant-popup");
-                $("#details-back").show().removeClass("back-button");
-                addTenant();
-            } else {
-                $("#validation-user-error").show();
-                $(this).removeAttr("disabled");
-            }
-        }
-        Resize();
-        ResizeHeightForDOM();
-
-        if (isNextDataStore != undefined && isNextDataStore && actionType != "edit") {
-            if ($("#database-type").val().toLowerCase() == "mysql") {
-                $("#database-type").val($("#database-type option:first").val()).change();
-            }
-
-            $("a.my-sql-dropdown").parent().hide();
-        }
-    });
-
-    $(document).on("click", "#details-back", function () {
-        if ($("#details-next").hasClass("intermediate-db") || $("#details-next").hasClass("update")) {
-            $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-            $(".tenant-database-form, #step-2").removeClass("show").addClass("hide");
-            $("#details-back").hide().addClass("back-button");
-            $(".tenant-registration-form, #step-1").removeClass("hide").addClass("show");
-            $("#dialog-header").css("display", "none");
-            $("#header-title").show();
-            $("#header-title").html(window.TM.App.LocalizationContent.SiteCreation);
-            if (item === "dashboards") {
-                $("#header-description").html(window.TM.App.LocalizationContent.BoldBiMultiTenancy);
-            }
-            else {
-                $("#header-description").html(window.TM.App.LocalizationContent.BoldReportsMultiTenancy);
-            }
-            if ($('input[name="identifier"]').prop("checked") || (actionType.toLowerCase() == "edit" && haveTenantIdentifier)) {
-                $("#tenant-identifier").attr("disabled", true);
-            }
-            else {
-                $("#tenant-identifier").attr("disabled", false);
-            }
-            $("#details-next").removeClass("user update").addClass("database");
-            moveStepper("back", 1);
-            $("#header-logo").css("display", "inline-block");
-            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton).removeClass("next-alignment");
-        }
-        else if ($("#details-next").hasClass("data-security")) {
-            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-            $(".tenant-registration-form, #step-1").removeClass("show").addClass("hide");
-            $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-            $(".storage-form, #step-2").removeClass("show").addClass("hide");
-            $(".data-security-form").removeClass("show").addClass("hide");
-            $("#dialog-body-container").removeClass("grid-height-control");
-            if (isBoldBI) {
-                $("#header-title").show();
-                $("#header-description").show();
-                $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataStore);
-                $("#header-description").html(window.TM.App.LocalizationContent.PullYourData + " " + dataConnectorsCount + "+ " + window.TM.App.LocalizationContent.DataConnectorsSaveOffline);
-                $(".tenant-intermediate-database-form #system-settings-db-selection-container").show();
-                $(".tenant-intermediate-database-form").removeClass("hide").addClass("show");
-                $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
-                $("#dialog-body-container").addClass("grid-alignment");
-                moveStepper("back", 3);
-                $("#details-next").removeClass("data-security").addClass("intermediate-db2");
-                $("#no-need-datastore").css("display", "none");
-            }
-
-            $("#details-back").show().removeClass("back-button");
-            $(".tenant-database-form, #step-2").removeClass("hide").addClass("show");
-
-            if (!isBoldBI) {
-                $("#dialog-body-container").removeClass("grid-alignment");
-                $("#stepper #current-step").text("2");
-            }
-
-            if ($("#database-type").val().toLowerCase() === "postgresql" || $("#database-type").val().toLowerCase() === "mysql") {
-                $('.auth-type').removeClass("show").addClass("hide");
-            }
-            else {
-                $('.auth-type').removeClass("hide").addClass("show");
-            }
-
-            $("#system-settings-db-selection-container").show();
-            $("#no-need-datastore").css("display", "none");
-            $("#search-area").hide();
-            var dropdownValue = $("#tenant-type").val();
-            if (dropdownValue === "BoldBIOnPremise") {
-                var isNextDataStore = true;
-            }
-        }
-        else if ($("#details-next").hasClass("intermediate-db2")) {
-            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-            $(".tenant-registration-form, #step-1").removeClass("show").addClass("hide");
-            $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-            $(".storage-form, #step-2").removeClass("show").addClass("hide");
-            $("#details-back").show().removeClass("back-button");
-            $(".tenant-database-form, #step-2").removeClass("hide").addClass("show");
-            $("#dialog-body-container").removeClass("grid-alignment");
-            $("#dialog-body-container").removeClass("grid-height-control");
-            $("#dialog-body-container").removeClass("grid-height-control");
-            $("#stepper #current-step").text("2");
-
-            if ($("#database-type").val().toLowerCase() === "postgresql" || $("#database-type").val().toLowerCase() === "mysql") {
-                $('.auth-type').removeClass("show").addClass("hide");
-            }
-            else {
-                $('.auth-type').removeClass("hide").addClass("show");
-            }
-
-            $("#system-settings-db-selection-container").show();
-            $("#details-next").removeClass("user").addClass("intermediate-db");
-            $("#no-need-datastore").css("display", "none");
-            moveStepper("back", 2);
-            $("#header-title").show();
-            $("#header-title").html(window.TM.App.LocalizationContent.SelectDatabaseTitle);
-            $("#header-description").text(window.TM.App.LocalizationContent.PlaceToCreateShare + " " + window.TM.App.LocalizationContent.DashboardsDot).show();
-            $("#search-area").hide();
-            $(".storage-form #system-settings-filestorage-container").hide();
-            $(".tenant-intermediate-database-form").addClass("tenant-database-form").removeClass("tenant-intermediate-database-form");
-
-            $('.data-store-help').remove();
-            var serverHelp = '<span class="info-icon su su-info ds-server-help"></span>';
-            $("#ds-server-lable").append(serverHelp);
-            $(".ds-server-help").popover({
-                trigger: 'hover',
-                placement: 'top',
-                content: isBoldBI ? window.TM.App.LocalizationContent.biServerPopoverContent : window.TM.App.LocalizationContent.reportServerPopoverContent
-            });
-
-            preserveFormData(true);
-            enableOrDisableDatabaseFormElements(false);
-            fillPreservedFormData(databaseFormData);
-        }
-        else if ($("#details-next").hasClass("user")) {
-            if (isBoldBI) {
-                moveStepper("back", 4);
-            }
-            else {
-                moveStepper("back", 3);
-            }
-            $("#details-back").show().addClass("back-button");
-            $("#search-area").hide();
-
-            var dropdownValue = $("#tenant-type").val();
-            if (dropdownValue === "BoldBIOnPremise") {
-                if ($("#database-type").val().toLowerCase() === "postgresql" || $("#database-type").val().toLowerCase() === "mysql") {
-                    $('.auth-type').removeClass("show").addClass("hide");
-                }
-                else {
-                    $('.auth-type').removeClass("hide").addClass("show");
-                }
-
-                if (item === "dashboards") {
-                    if (isBoldBI) {
-                        $(".storage-form #system-settings-filestorage-container").show();
-                        $(".storage-checkbox").hide();
-                        $(".storage-form, #step-2").removeClass("hide").addClass("show");
-                        var storageType = $("input[name='IsBlobStorage']:checked").val();
-                        if (storageType == "1") {
-                            $(".report-content").hide();
-                            $(".storage-checkbox").show();
-                        }
-                        else {
-                            $(".report-content").slideDown("slow");
-                        }
-                        $(".storage-form #blob-storage-form").addClass("site-creation");
-                    }
-                    else {
-                        $("#no-need-datastore").css("display", "none");
-                    }
-                }
-                else {
-                    $("#no-need-datastore").css({ "display": "block", "margin-top": "24px" });
-                }
-
-                if (isBoldBI) {
-                    $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                    $(".data-security-form").removeClass("show").addClass("hide");
-                    $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                    $("#details-next").removeClass("user").addClass("data-security");
-                }
-                else {
-                    $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataStore);
-                    $("#header-description").html(window.TM.App.LocalizationContent.PullYourData + " " + dataConnectorsCount + "+ " + window.TM.App.LocalizationContent.DataConnectorsSaveOffline);
-                    $(".tenant-intermediate-database-form #system-settings-db-selection-container").show();
-                    $(".tenant-intermediate-database-form").removeClass("hide").addClass("show");
-                    $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                    $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                    $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
-                    $("#dialog-body-container").addClass("grid-alignment");
-                }
-            }
-            else {
-                moveStepper("back", 2);
-                $("#system-settings-db-selection-container").show();
-                $("#header-title").show();
-                $("#header-title").html(window.TM.App.LocalizationContent.SelectDatabaseTitle);
-                $("#header-description").text(window.TM.App.LocalizationContent.PlaceToCreateShare + " " + window.TM.App.LocalizationContent.ReportsDot).show();
-                $(".skip-intermediate-db-container").hide();
-                $(".storage-form #system-settings-filestorage-container").hide();
-                $("#details-next").removeClass("user").addClass("intermediate-db");
-                $(".tenant-intermediate-database-form").addClass("tenant-database-form").removeClass("tenant-intermediate-database-form");
-                preserveFormData(true);
-                enableOrDisableDatabaseFormElements(false);
-                fillPreservedFormData(databaseFormData);
-
-                $("#details-back").show().removeClass("back-button");
-                $(".tenant-database-form, #step-2").removeClass("hide").addClass("show");
-
-                if (!isBoldBI) {
-                    $("#dialog-body-container").removeClass("grid-alignment");
-                    $("#stepper #current-step").text("2");
-                }
-
-                if ($("#database-type").val().toLowerCase() === "postgresql") {
-                    $('.auth-type').removeClass("show").addClass("hide");
-                }
-                else {
-                    $('.auth-type').removeClass("hide").addClass("show");
-                }
-
-                $("#system-settings-db-selection-container").show();
-                $("#no-need-datastore").css("display", "none");
-                $("#search-area").hide();
-
-            }
-        }
-        else {
-            if (isBoldBI) {
-                moveStepper("back", 5);
-            }
-            else {
-                moveStepper("back", 3);
-            }
-            $("#details-back").show().addClass("back-button");
-            $("#search-area").hide();
-            var dropdownValue = $("#tenant-type").val();
-            if (dropdownValue === "BoldBIOnPremise") {
-                if ($("#database-type").val().toLowerCase() === "postgresql") {
-                    $('.auth-type').removeClass("show").addClass("hide");
-                }
-                else {
-                    $('.auth-type').removeClass("hide").addClass("show");
-                }
-
-                if (isBoldBI) {
-                    $("#header-title").hide();
-                    $("#header-description").hide();
-                    $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                    $(".data-security-form").removeClass("hide").addClass("show");
-                    $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                    $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
-                    $("#dialog-body-container").removeClass("grid-alignment");
-                    $("#dialog-body-container").removeClass("grid-height-control");
-                }
-                else {
-                    $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataStore);
-                    $("#header-description").html(window.TM.App.LocalizationContent.PullYourData + " " + dataConnectorsCount + "+ " + window.TM.App.LocalizationContent.DataConnectorsSaveOffline);
-                    $(".tenant-intermediate-database-form #system-settings-db-selection-container").show();
-                    $(".tenant-intermediate-database-form").removeClass("hide").addClass("show");
-                    $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                    $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                    $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
-                    $("#dialog-body-container").addClass("grid-alignment");
-                }
-            }
-            else {
-                $("#header-title").hide();
-                $("#header-description").hide();
-                $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
-                $(".storage-form #system-settings-filestorage-container").show();
-                $(".storage-form, #step-2").removeClass("hide").addClass("show");
-                var storageType = $("input[name='IsBlobStorage']:checked").val();
-                if (storageType == "1") {
-                    $(".report-content").hide();
-                    $(".storage-checkbox").show();
-                }
-                else {
-                    $(".report-content").show();
-                }
-
-                $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-                $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
-                $("#dialog-body-container").removeClass("grid-alignment");
-                $("#dialog-body-container").removeClass("grid-height-control");
-            }
-        }
-        Resize();
-        ResizeHeightForDOM();
-
-        if (isNextDataStore != undefined && isNextDataStore) {
-            $("a.my-sql-dropdown").parent().hide();
-        }
-    });
-
-    $(document).on("click", "#add-tenant-close", function () {
-        if (parent.window.location.href.indexOf('?') > -1) {
-            parent.history.pushState('', document.title, parent.window.location.pathname);
-        }
-
-        parent.$("#add-tenant-popup").ejDialog("close");
-    });
-    Resize();
-    ResizeHeightForDOM();
 });
+
+function changeTenantType(args) {
+    if (actionType != null && actionType != undefined && actionType.toLowerCase() != "edit") {
+        if (isBoldReportsTenantType()) {
+            item = "reports";
+            $("#enable-ssl").val(reportScheme);
+            $("#input-domain").val(reportDomain);
+            $(".get-data-security").css("display", "none");
+            $("#selection-data-security").css("display", "none");
+            $(".selector").removeClass("selector-alignment");
+            $(".select-storage").html(window.TM.App.LocalizationContent.SelectStorage);
+            $("#header-description").html(window.TM.App.LocalizationContent.BoldReportsMultiTenancy);
+            if (useSiteIdentifierEnable) {
+                $(".site-default-text").html("").html(boldReportsUrl);
+            }
+            else {
+                $(".site-default-text").html("").html(boldReportsPath);
+            }
+            if (isCommonLogin) {
+                document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[1].style.display = "block";
+                document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[0].style.display = "none";
+            }
+
+            document.getElementById("branding-type").ej2_instances[0].value = "Enterprise Reporting";
+            $(".isolation-part").addClass("hide");
+            $(".data-security-note").html(window.TM.App.LocalizationContent.BoldReportsDataSecurityNote);
+        }
+        else {
+            item = "dashboards";
+            $("#enable-ssl").val(biScheme);
+            $("#input-domain").val(biDomain);
+            $(".get-data-security").css("display", "inline");
+            $("#selection-data-security").css("display", "inline");
+            $(".selector").addClass("selector-alignment");
+            $(".select-intermediate-database").html(window.TM.App.LocalizationContent.SiteDataStore);
+            $(".select-storage").html(window.TM.App.LocalizationContent.SelectStorage);
+            $("#header-description").html(window.TM.App.LocalizationContent.BoldBiMultiTenancy);
+            if (useSiteIdentifierEnable) {
+                $(".site-default-text").html("").html(boldBIUrl);
+            }
+            else {
+                $(".site-default-text").html("").html(boldBiPath);
+            }
+        
+            if (isCommonLogin) {
+                document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[0].style.display = "block";
+                document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[1].style.display = "none";
+            }
+            document.getElementById("branding-type").ej2_instances[0].value = "Embedded BI";
+            $(".isolation-part").removeClass("hide");
+            $(".data-security-note").html(window.TM.App.LocalizationContent.BoldBIDataSecurityNote);
+        }
+    }
+}
+var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+
+$(document).ready(function () {
+    if (isSafari) {
+        $("#search-tenant-users").css("width", "1px");
+    }
+
+    $(document).on("keydown", "#search-tenant-users", function (e) {
+        $("#validation-user-error").hide();
+        $.xhrPool.abortAll();
+        var currentKeyCode = parseInt(e.which);
+        var element = "#" + this.id;
+        if (timeOut != null) {
+            clearTimeout(timeOut);
+            timeOut = null;
+        }
+        if (currentKeyCode === keyCode.Enter) {
+            PerformSearch(element);
+        }
+        else if (excludedSearchKeys.indexOf(currentKeyCode) === -1) {
+            timeOut = setTimeout(function () {
+                PerformSearch(element);
+            }, 900);
+        }
+    });
+});
+
 function listUsersForAdminSelection() {
     var requestUrl = getAllUsersUrl;
     $("#add_admins_grid").ejGrid({
-        dataSource: ej.DataManager({ url: requestUrl, adaptor: "UrlAdaptor" }),
+        dataSource: ej.DataManager({ url: requestUrl + "?externalFilter=true", adaptor: "UrlAdaptor" }),
         gridLines: ej.Grid.GridLines.None,
         allowSorting: true,
         allowSelection: true,
@@ -4931,6 +3664,7 @@ function listUsersForAdminSelection() {
         scrollSettings: { height: gridHeight - (140 + $("#header-description").outerHeight()), allowVirtualScrolling: true },
         selectionType: ej.Grid.SelectionType.Multiple,
         selectionSettings: { selectionMode: ["row"] },
+        pageSettings: { pageSize: 25 },
         enableRowHover: true,
         create: "fnCreateForAdmin",
         templateRefresh: "refreshTemplateForAdmin",
@@ -5137,11 +3871,12 @@ $(document).on("click", "#clear-search", function () {
     $("#validation-user-error").hide();
     $("#search-tenant-users").removeClass("search-width");
     $(".close-icon").css("display", "none");
-    $(".su-search").css("display", "block").addClass("su-search-alignment");
+    $(".su-search").css("display", "block");
     $(".placeholder").removeClass("show").addClass("hide");
     var gridObj = $("#add_admins_grid").data("ejGrid");
     gridObj.clearSelection();
     selectedAdmins = [];
+	gridHeight = 500;
     listUsersForAdminSelection();
     gridObj.refreshContent();
 });
@@ -5150,30 +3885,932 @@ $(document).on("click", ".e-filtericon", function () {
     $(".e-caption").addClass("pull-left");
 });
 
-function addTenant() {
-    var siteIdentifier = true;
-    if ($('input[name="identifier"]').is(':checked')) {
-        siteIdentifier = false;
+$(document).on("click", ".sort", function () {
+    var gridObj = $("#add_admins_grid").data("ejGrid");
+    showWaitingPopup($(".model-body"));
+    var sorting = $("#order").attr("data-value");
+    if (gridObj != undefined) {
+        gridObj.model.sortSettings.sortedColumns = [{ field: "Name", direction: sorting }];
+        gridObj.refreshContent();
+        if (sorting == "ascending") {
+            $("#order").attr("data-value", "descending");
+            $("#order").attr("data-original-title", "Sort by descending");
+        } else {
+            $("#order").attr("data-value", "ascending");
+            $("#order").attr("data-original-title", "Sort by ascending");
+        }
+        window.setTimeout('hideWaitingPopup($(".model-body"));', 500);
+    }
+});
+$(document).ready(function () {
+
+    //user account validation methods
+    $.validator.addMethod("isRequired", function (value, element) {
+        return !isEmptyOrWhitespace(value);
+    }, window.TM.App.LocalizationContent.EnterName);
+
+    $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
+        if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
+
+    $.validator.addMethod("isValidName", function (value, element) {
+        return IsValidName("name", value);
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
+
+    $.validator.addMethod("hasWhiteSpace", function (value, element) {
+        return /\s/.test(value);
+    }, window.TM.App.LocalizationContent.HasSpace);
+
+    $.validator.addMethod("isValidUser", function (value, element) {
+        return isValidUserName(value)
+    }, window.TM.App.LocalizationContent.UsernameInvalidChar);
+
+    $.validator.addMethod("isValidUsername", function (value, element) {
+        return IsValidUsername(value);
+    }, window.TM.App.LocalizationContent.InvalidUsername);
+
+    $.validator.addMethod("isValidUsernameLength", function (value, element) {
+        return IsValidUsernameLength(value);
+    }, window.TM.App.LocalizationContent.UsernameExceeds);
+
+    $.validator.addMethod("isValidEmail", function (value, element) {
+        return IsEmail(value);
+    }, window.TM.App.LocalizationContent.EnterValidEmail);
+
+    //database validation methods
+
+    $.validator.addMethod("isValidPrefix", function (value, element) {
+        if (/^[a-zA-Z\_]+$/g.test(value) || value === "") {
+            return true;
+        } else {
+            return false;
+        }
+    }, window.TM.App.LocalizationContent.AvoidNumberSpace);
+
+    $.validator.addMethod("isValidDatabaseName", function (value, element) {
+        if (/^[a-zA-Z_0-9@~!#\$\^&()+=\-,\.\/\{\} ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (<>%*?\":`;'[]|\\) " + window.TM.App.LocalizationContent.AvoidLeadingTrailingSpace);
+
+    $.validator.addMethod("sqlUsernamevalidation", function (value, element) {
+        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]/g.test(value)) {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\";) " + window.TM.App.LocalizationContent.AvoidLeadingSpace);
+
+    $.validator.addMethod("isValidCredentials", function (value, element) {
+        return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|:<>\? ]+$/.test(value);
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\";)");
+
+
+
+    $.validator.addMethod("mySqlCredentials", function (value, element) {
+        if ((/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\\',\.\/\{\}\|\":<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) || value === "") {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " ; " + window.TM.App.LocalizationContent.MySqlAvoidLeadingTrailingSpace);
+
+    $.validator.addMethod("oraclePasswordValidation", function (value, element) {
+        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (';\") " + window.TM.App.LocalizationContent.OracleAvoidLeadingTrailingSpace);
+
+    $.validator.addMethod("oracleUsernameValidation", function (value, element) {
+        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\\,\.\/\{\}\|:<>\? ]+$/.test(value)) {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (';\")");
+
+    $.validator.addMethod("additionalSpecialCharValidation", function (value, element) {
+        if (/^[a-zA-Z_0-9`~!\$\^()=\-\.\{\} ]+$/.test(value) || value === "") {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters);
+
+    $.validator.addMethod("postgresqlUsernamevalidation", function (value, element) {
+        if (/^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value) && !/^[\s]+|[\s]+$/g.test(value)) {
+            return true;
+        }
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\"\\;) " + window.TM.App.LocalizationContent.PostgresqlAvoidLeadingTrailingSpace);
+
+    $.validator.addMethod("isValidPostgresqlCredentials", function (value, element) {
+        return /^[a-zA-Z_0-9@`~!#\$\^%&*()+=\-\[\]\',\.\/\{\}\|:<>\? ]+$/.test(value);
+    }, window.TM.App.LocalizationContent.AvoidSpecailCharacters + " (\"\\;)");
+
+    $.validator.addMethod("isValidPortNumber", function (value, element) {
+        return /^\d{1,5}$/.test(value) && value < 65536 && !/^[\s]/g.test(value);
+    }, window.TM.App.LocalizationContent.IsValidPort);
+
+
+    //storage validation
+    $.validator.addMethod("IsValidEndPoint", function (value, element) {
+        return IsValidEndPoint(value);
+    }, window.TM.App.LocalizationContent.EndPoint);
+
+    $.validator.addMethod("IsCustomEndpoint", function (value, element) {
+        return IsCustomEndPoint(value, element);
+    }, window.TM.App.LocalizationContent.IsValidCustomEndPoint);
+    $.validator.addMethod("IsValidCustomEndPoint", function (value, element) {
+        return IsValidCustomEndPoint(value, element);
+    }, window.TM.App.LocalizationContent.IsValidCustomEndPoint);
+
+
+    //site configuration validation
+    $.validator.addMethod("isRequired", function (value, element) {
+        return !isEmptyOrWhitespace(value);
+    }, "Please enter the name.");
+
+    $.validator.addMethod("isDomainRequired", function (value, element) {
+        return !isEmptyOrWhitespace(value);
+    }, window.TM.App.LocalizationContent.Urlvalidator);
+
+    $.validator.addMethod("isValidName", function (value, element) {
+        return parent.IsValidName("name", value);
+    }, "Please avoid special characters.");
+
+    $.validator.addMethod("isValidIdentifier", function (value, element) {
+        return IsValidIdentifier(value);
+    }, "Please avoid special characters.");
+
+    $.validator.addMethod("isValidUrl", function (value, element) {
+        return isValidUrl(value);
+        var givenUrl = $("#input-domain").val();
+        var url = parseURL(givenUrl);
+        if (isValidUrl(value) == false || parseInt(url.port) > 65535)
+            return false;
+        else
+            return true;
+    }, window.TM.App.LocalizationContent.DomainValidator);
+});
+
+function isValidUserName(userName) {
+    if (isKeyUp) {
+        return true;
     }
     else {
-        siteIdentifier = true;
+        var filter = /^[A-Za-z0-9][A-Za-z0-9]*([._-][A-Za-z0-9]+){0,3}$/;
+        return filter.test(userName);
     }
+
+}
+
+function IsValidEndPoint(domainName) {
+    var filter = /(?:http)s?:\/\/(?:(?!.*\d[\/?:])[a-z0-9\-._~%]+|(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\[[a-z0-9\-._~%!$&'()*+,;=:]+\])(?::\d+)?(?:[\/?][\-A-Z0-9+&@#\/%?=~_|$!:,.;]*)?/i;
+    if (filter.test(domainName)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function IsCustomEndPoint(fieldValue, element) {
+    var connectionType = $("input[name='Connection']:checked").val();
+    if (connectionType == "customendpoint") {
+        if (fieldValue == "")
+            return false;
+        else
+            return true;
+    }
+    else
+        return false;
+}
+
+function IsValidCustomEndPoint(fieldValue, element) {
+    var connectionType = $("input[name='Connection']:checked").val();
+    var accountname = $("#txt-accountname").val();
+    if (connectionType == "customendpoint") {
+        var accountName = $("#txt-accountname").val();
+        var elementDomainName = $(element).val().split(".");
+        var subdomain = elementDomainName.shift();
+        var sndleveldomain = subdomain.split("//");
+        if (sndleveldomain[1] != accountname)
+            return false;
+        else
+            return true;
+    }
+    else
+        return false;
+}
+
+function IsValidIdentifier(inputString) {
+    var regex = /^[a-zA-Z0-9-]+$/;
+    return regex.test(inputString) || inputString == "";
+}
+$(document).on("ready", function () {
+    $(".show-hide-password").on("click", function () {
+        if ($(this).siblings("input").is(":password")) {
+            $(this).siblings("input").attr('type', 'text').val();
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
+        }
+        else {
+            $(this).siblings("input").attr('type', 'password');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
+        }
+    });
+
+    //For the purpose of Responsive layout
+    $(".show-hide-password").bind("touchstart", function () {
+        if ($(this).siblings("input").is(":password")) {
+            $(this).siblings("input").attr("type", "text");
+        }
+        else {
+            $(this).siblings("input").attr("type", "password");
+        }
+    });
+    $(".show-hide-password").on("touchend", function () {
+        if ($(this).siblings("input").is(":password")) {
+            $(this).siblings("input").attr('type', 'text');
+        }
+        else {
+            $(this).siblings("input").attr('type', 'password');
+        }
+    });
+
+  
+    if (window.innerWidth < 1041) {
+
+        $(".show-hide-password").on("click", function () {
+            if ($(this).siblings("input").is(":password")) {
+                $(this).siblings("input").attr('type', 'text');
+            }
+            else {
+                $(this).siblings("input").attr('type', 'password');
+            }
+        });
+    }
+
+
+    //Ej2 inputbox show/hide password
+    $(".show-hide-password-ej2").on("click", function () {
+        if ($(this).siblings().find("input").is(":password")) {
+            $(this).siblings().find("input").attr('type', 'text');
+            $(this).removeClass('su-show').addClass('su-hide').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoHide);
+            $(this).tooltip('show');
+        }
+        else {
+            $(this).siblings().find("input").attr('type', 'password');
+            $(this).removeClass('su-hide').addClass('su-show').attr("data-original-title", window.TM.App.LocalizationContent.ClicktoView);
+            $(this).tooltip('show');
+        }
+    });
+
+    $(".show-hide-password-ej2").bind("touch", function () {
+        if ($(this).siblings().find("input").is(":password")) {
+            $(this).siblings().find("input").attr('type', 'text');
+            $(this).removeClass('su-show');
+            $(this).addClass('su-hide');
+
+        }
+        else {
+            $(this).siblings().find("input").attr('type', 'password');
+            $(this).removeClass('su-hide');
+            $(this).addClass('su-show');
+
+        }
+    });
+});
+var userAgent = navigator.userAgent;
+var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
+var isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+var selectedAdmins = [];
+var gridAdminData = [];
+var isFirstRequest = false;
+var waitingPopUpElement = "";
+var tenantNameinDB = "";
+var tenantIdentifierinDB = "";
+var gridHeight = 355;
+var databaseFormData, intermediateFormData, clonedDBFormData, azuredetails;
+var storageFlag = 0;
+var previousIndex = [];
+var prevDomain = "";
+var haveTenantIdentifier = true;
+var validateTimer;
+var validateInterval = 1000;
+
+$(document).ready(function () {
+    if (isCommonLogin) {
+        $(".selector").addClass("selector-alignment");
+    }
+
+    $('[data-toggle="popover"]').popover();
+
+    if (isBoldReportsTenantType() && isCommonLogin) {
+        document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[1].style.display = "block";
+        document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[0].style.display = "none";
+    }
+    else if (!isBoldReportsTenantType() && isCommonLogin) {
+        document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[1].style.display = "none";
+        document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[0].style.display = "block";
+    }
+
+    if (!isCommonLogin && isBoldBIMultiTenant.toLowerCase() == "true") {
+        document.getElementById("tenant-type").ej2_instances[0].enabled = false;
+    }
+    if (!isCommonLogin && isBoldReportsMultiTenant.toLowerCase() == "true") {
+        document.getElementById("tenant-type").ej2_instances[0].enabled = false;
+    }
+
+    if (isBoldReportsTenantType()) {
+        document.getElementById("branding-type").ej2_instances[0].value = "Enterprise Reporting";
+        $(".selector").removeClass("selector-alignment");
+    }
+    else {
+        document.getElementById("branding-type").ej2_instances[0].value = "Embedded BI";
+        $(".selector").addClass("selector-alignment");
+    }
+
+    if (isCommonLogin && !isBoldReportsTenantType()) {
+        $("#enable-ssl").val(biScheme);
+        $("#input-domain").val(biDomain);
+    }
+    else if (isCommonLogin && isBoldReportsTenantType()) {
+        $("#enable-ssl").val(reportScheme);
+        $("#input-domain").val(reportDomain);
+    }
+
+    if (isBoldReportsTenantType()) {
+        $("#selection-data-security").css("display", "none");
+        $("#selection-data-security").children(".circle").css("display", "none");
+        $("#selection-data-security").children(".hr-tag").css("display", "none");
+        $(".get-data-security").addClass("hide");
+    }
+
+    if (actionType.toLowerCase() != "edit") {
+        if (useSiteIdentifierEnable) {
+            $(".site-url-identifier").removeClass("hide");
+        }
+        else {
+            $(".site-url-identifier").addClass("hide");
+        }
+
+        if (isBoldReportsTenantType()) {
+            $(".site-default-text").html("").html(boldReportsPath);
+        }
+        else {
+            $(".site-default-text").html("").html(boldBiPath);
+        }
+        $(".site-domain").html($("#enable-ssl").val() + "://" + $("#input-domain").val());
+        $(".site-url").attr("data-content", $(".site-domain").html() + $(".site-default-text").text());
+    }
+
+    waitingPopUpElement = parent.$("#add-tenant-popup");
+    if (actionType.toLowerCase() == "edit") {
+        $("#total-step").html("").html(" 2");
+        $(".add-tenant-popup-title label").html("Edit site");
+        $(".branding-type").addClass("hide");
+        $(".administrator,  #selection-storage, .select-storage, #selectionadmin, #selectiondb .hr-tag, #selection-intermediate-db .hr-tag, #selection-data-security, .get-data-security").css("display", "none");
+        $(".selector-icons").addClass("icon-alignment");
+        $(".selector").removeClass("selector-alignment");
+        $(".selector-content").addClass("content-alignment");
+        getTenant(tenantId);
+    } else {
+        if (isBoldBI) {
+            $(".selector").addClass("selector-alignment");
+        }
+        autoFocus("tenant-name");
+        hideWaitingPopup(waitingPopUpElement);
+    }
+    $("#search-area").hide();
+    addPlacehoder("body");
+    $(".placeholder").css("display", "none");
+
+    $("#duplicate-table-list").ejDialog({
+        width: "450px",
+        showOnInit: false,
+        allowDraggable: true,
+        enableResize: false,
+        height: "230px",
+        showHeader: false,
+        enableModal: true
+    });
+
+    $("#file-storage, #blob-storage").click(function () {
+        if ($("#file-storage").is(":checked")) {
+            $("#blob-storage-form").validate().resetForm();
+            height = $(window).height() - $(".modal-header").height() - 210;
+            modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() - 210;
+        } else {
+            height = $(window).height() - $(".modal-header").height() - 210 + 250;
+            modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
+        }
+
+        if (height > modalheight) {
+            $(".dialog-body-div").css("height", height);
+        } else {
+            $(".dialog-body-div").css("height", modalheight);
+        }
+        gridHeight = height;
+    });
+
+    $("#check-windows").on("click change", function () {
+        var windowsCheck = getRadioButtonValue("checkWindows") == "windows";
+        var databaseType = getDropDownValue("database-type");
+
+        if (windowsCheck && databaseType == "MSSQL") {
+            $(".dialog-body-div").css("height", "auto");
+        }
+    });
+
+    $(document).on("keyup", "input", function (event) {
+        if (event.keyCode == 13 && $(this).attr("id") != "search-tenant-users") {
+            $("#details-next").click();
+        }
+    });
+
+    $("[data-toggle='popover']").popover({
+        container: 'body',
+        trigger: 'hover',
+    });
+
+    function siteIdentifierValidation() {
+        var domain = $("#input-domain").val();
+        var tenantIdentifier = $("#tenant-identifier").val();
+        $.ajax({
+            type: "POST",
+            url: tenantIdentifierValidationUrl,
+            async: false,
+            data: { domain: domain, tenantIdentifier: tenantIdentifier },
+            success: function (data) {
+                if (data.Data) {
+                    if (data.SiteIdentityError) {
+                        $("#input-domain").closest("div").addClass("e-error");
+                        $("#tenant-identifier-empty-validation-error").css("display", "block");
+                        $("#tenant-identifier-empty-validation-error").html(data.Value);
+                    }
+                    else {
+                        $("#input-domain").closest("div").removeClass("e-error");
+                        $("#tenant-identifier-empty-validation-error").css("display", "none");
+                        $("#tenant-identifier-empty-validation-error").html("");
+                    }
+                }
+            }
+        });
+    }
+
+    function checkServerHealthStatus() {
+        var domain = "";
+        if (isBoldReportsTenantType()) {
+            domain = $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldReportsPath;
+        }
+        else {
+            domain = $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldBiPath;
+        }
+        $.ajax({
+            type: "POST",
+            url: checkHealthStatusUrl,
+            async: false,
+            data: { domain: domain },
+            success: function (data) {
+                if (!data.Data) {
+                    $("#input-domain").closest("div").addClass("e-error");
+                    $("#domain-validation-error").css("display", "block");
+                    $("#enable-ssl").css("margin-bottom", "15px");
+                    $("#domain-validation-error").html(window.TM.App.LocalizationContent.InvalidDomain);
+                }
+                else {
+                    $("#input-domain").closest("div").removeClass("e-error");
+                    $("#domain-validation-error").css("display", "none");
+                    $("#enable-ssl").css("margin-bottom", "5px");
+                    $("#domain-validation-error").html("");
+                }
+            }
+        });
+    }
+
+    $(document).on("click", "#details-next", function () {
+        $(this).attr("disabled", true);
+        checkServerHealthStatus();
+        if (!useSiteIdentifierEnable && $("#tenant-identifier").val() != "" && actionType.toLowerCase() == "edit" && $("#tenant-registration-form").find(".e-error").length == 0) {
+            $("#tenant-identifier").closest("div").addClass("e-error");
+            $("#tenant-identifier-validation-error").css("display", "block");
+            $("#tenant-identifier-validation-error").html(window.TM.App.LocalizationContent.DisAllowTenantIdentifier);
+        }
+        if (($("#input-domain").val() != prevDomain || $('input[name="identifier"]').prop("checked")) && !useSiteIdentifierEnable) {
+            siteIdentifierValidation();
+        }
+        if ($("#tenant-registration-form").find(".e-error").length == 0) {
+            if ($(".tenant-database-form").hasClass("hide") && $(this).hasClass("database") && $("#tenant-registration-form").find(".e-error").length == 0) {
+                var tenantIdentifier = $("#tenant-identifier").val().trim();
+                var tenantName = $("#tenant-name").val().trim();
+                var canProceed = $("#tenant-registration-form").valid();
+                if (canProceed) {
+                    showWaitingPopup(waitingPopUpElement);
+                    tenantNameIdentiferCheck(tenantName, tenantIdentifier);
+                } else {
+                    $(this).removeAttr("disabled");
+                }
+            }
+            else if ($(this).hasClass("storage-config") && $(".tenant-database-form").find(".e-error").length == 0) {
+                if ($(".tenant-database-form #db-content-holder").valid()) {
+
+                    if ($("input[name='databaseType']:checked").val() === "1") {
+                        existingDbConfiguration(waitingPopUpElement);
+                    } else {
+                        newDbConfiguration(waitingPopUpElement);
+                    }
+
+                    if (!$(".database-error").is(":visible")) {
+                        if (!isBoldReportsTenantType()) {
+                            if ($("#txt-password-db").is(":text")) {
+                                $("#txt-password-db").parent().find(".show-hide-password").click();
+                                $("#txt-password-db").parent().find(".tooltip").css("display", "none");
+                            }
+
+                            saveDatabaseValuesTemporarly();
+                            moveStepper("front", 3);
+
+                            if (actionType.toLowerCase() == "edit") {
+                                $(this).attr("value", "Update");
+                                $(this).removeClass("storage-config").addClass("update");
+                            } else {
+                                $(this).attr("value", "Next");
+                                nextToStoragePage();
+                            }
+
+                            $(this).removeAttr("disabled").addClass("next-alignment");
+
+                        }
+                        else {
+                            saveDatabaseValuesTemporarly();
+                            nextToStoragePage();
+                        }
+                    }
+                    $('#details-next').removeAttr("disabled");
+                }
+                else {
+                    $(this).removeAttr("disabled");
+                }
+            }
+            else if ($(this).hasClass("data-security") && $(".storage-form").find(".e-error").length == 0) {
+                systemSettingsDetails.StorageType = $("input[name='IsBlobStorage']:checked").val();
+                preserveStorageFormData();
+                if ($("#blob-storage-form").valid()) {
+                    showWaitingPopup(waitingPopUpElement);
+                    if (!($("#file-storage").is(":checked"))) {
+                        $.ajax({
+                            type: "POST",
+                            url: blobExist,
+                            data: { connectionString: azuredetails.ConnectionString, containerName: window.containername },
+                            success: function (result) {
+                                hideWaitingPopup(waitingPopUpElement);
+                                if (typeof result.Data != "undefined") {
+                                    if (result.Data.Key.toString().toLowerCase() == "true") {
+                                        $(".azure-validation,.blob-error-message").css("display", "none");
+                                        $(".storage-form #system-settings-filestorage-container").hide();
+                                        if (!isBoldReportsTenantType()) {
+                                            moveStepper("front", 4);
+                                            nextToDataSecurityPage();
+                                        }
+                                        else {
+                                            moveStepper("front", 4);
+                                            nextToUserPage();
+                                        }
+                                    }
+                                    else {
+                                        $(".azure-validation,.blob-error-message").css("display", "block");
+                                    }
+                                }
+                                else {
+                                    $(".azure-validation,.blob-error-message").css("display", "block");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        $(".storage-form #system-settings-filestorage-container").hide();
+                        if (!isBoldReportsTenantType()) {
+                            nextToDataSecurityPage();
+                            moveStepper("front", 4);
+                        }
+                        else {
+                            moveStepper("front", 4);
+                            nextToUserPage();
+                        }
+                    }
+                    $(this).removeAttr("disabled");
+                }
+                else {
+                    $(this).removeAttr("disabled");
+                }
+            }
+            else if (($(".tenant-user-form").hasClass("hide") && $(this).hasClass("user")) && $(".storage-form").find(".e-error").length == 0) {
+                systemSettingsDetails.TenantIsolation.IsEnabled = $("#isolation-enable-switch").is(":checked");
+                systemSettingsDetails.TenantIsolation.IsolationCode = document.getElementById("site-isolation-code").ej2_instances[0].value;
+                systemSettingsDetails.CustomAttribute = addSiteAttribute;
+
+                if (systemSettingsDetails.TenantIsolation.IsEnabled) {
+                    parent.ValidateIsolationCode(systemSettingsDetails.TenantIsolation.IsolationCode, "#site-isolation-code")
+                }
+
+                if ($(".data-security-form").find(".e-error").length == 0) {
+                    if (!isBoldReportsTenantType()) {
+                        nextToUserPage();
+                        moveStepper("front", 5);
+                    }
+                    else {
+                        systemSettingsDetails.StorageType = $("input[name='IsBlobStorage']:checked").val();
+                        preserveStorageFormData();
+                        if ($("#blob-storage-form").valid()) {
+                            showWaitingPopup(waitingPopUpElement);
+                            if (!($("#file-storage").is(":checked"))) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: blobExist,
+                                    data: { connectionString: azuredetails.ConnectionString, containerName: window.containername },
+                                    success: function (result) {
+                                        hideWaitingPopup(waitingPopUpElement);
+                                        if (typeof result.Data != "undefined") {
+                                            if (result.Data.Key.toString().toLowerCase() == "true") {
+                                                $(".azure-validation,.blob-error-message").css("display", "none");
+                                                $(".storage-form #system-settings-filestorage-container").hide();
+                                                moveStepper("front", 4);
+                                                nextToUserPage();
+                                            }
+                                            else {
+                                                $(".azure-validation,.blob-error-message").css("display", "block");
+                                            }
+                                        }
+                                        else {
+                                            $(".azure-validation,.blob-error-message").css("display", "block");
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                $(".storage-form #system-settings-filestorage-container").hide();
+                                moveStepper("front", 4);
+                                nextToUserPage();
+                            }
+                            $(this).removeAttr("disabled");
+                        }
+                        else {
+                            $(this).removeAttr("disabled");
+                        }
+                    }
+                }
+                $(this).removeAttr("disabled");
+            }
+            else if ($(".tenant-user-form").hasClass("hide") && $(this).hasClass("update") && $(".tenant-database-form").find(".e-error").length == 0) {
+                var proceed = $("#db-content-holder").valid();
+                if (proceed) {
+                    showWaitingPopup(waitingPopUpElement);
+                    $("#details-back").show().removeClass("back-button");
+                    if (getDropDownValue("database-type").toLowerCase() == "mssql" || getDropDownValue("database-type").toLowerCase() == "postgresql" || getDropDownValue("database-type").toLowerCase() == "mysql") {
+                        checkingNewDBConnection(waitingPopUpElement, actionType);
+                    } else {
+                        updateTenant(waitingPopUpElement);
+                    }
+                } else {
+                    $(this).removeAttr("disabled");
+                }
+            }
+            else {
+                if ($(".tenant-user-form").hasClass("show") && $(".tenant-user-form").find(".has-error").length == 0 && selectedAdmins.length != 0) {
+                    showWaitingPopup("add-tenant-popup");
+                    $("#details-back").show().removeClass("back-button");
+                    addTenant();
+                } else {
+                    $("#validation-user-error").show();
+                    $(this).removeAttr("disabled");
+                }
+            }
+            Resize();
+            ResizeHeightForDOM();
+        }
+        else {
+            $(this).removeAttr("disabled");
+        }
+    });
+
+    $(document).on("click", "#details-back", function () {
+        if ($("#details-next").hasClass("storage-config") || $("#details-next").hasClass("update")) {
+            $(".tenant-user-form").removeClass("show").addClass("hide");
+            $(".tenant-database-form").removeClass("show").addClass("hide");
+            $("#details-back").hide().addClass("back-button");
+            $(".tenant-registration-form").removeClass("hide").addClass("show");
+            $("#dialog-header").css("display", "none");
+            $("#header-title").show();
+            $("#header-title").html(window.TM.App.LocalizationContent.SiteCreation);
+            if (item === "dashboards") {
+                $("#header-description").html(window.TM.App.LocalizationContent.BoldBiMultiTenancy);
+            }
+            else {
+                $("#header-description").html(window.TM.App.LocalizationContent.BoldReportsMultiTenancy);
+            }
+            if ($('input[name="identifier"]').prop("checked")) {
+                $("#tenant-identifier").attr("disabled", true);
+            }
+            else {
+                $("#tenant-identifier").attr("disabled", false);
+            }
+            $("#details-next").removeClass("user update").addClass("database");
+            moveStepper("back", 1);
+            $("#header-logo").css("display", "inline-block");
+            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton).removeClass("next-alignment");
+            if ($("#txt-password-db").is(":text")) {
+                $("#txt-password-db").parent().find(".show-hide-password").click();
+                $("#txt-password-db").parent().find(".tooltip").css("display", "none");
+            }
+        }
+        else if ($("#details-next").hasClass("data-security")) {
+            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
+            $(".tenant-registration-form").removeClass("show").addClass("hide");
+            $(".tenant-user-form").removeClass("show").addClass("hide");
+            $(".storage-form").removeClass("show").addClass("hide");
+            $(".data-security-form").removeClass("show").addClass("hide");
+            $("#dialog-body-container").removeClass("grid-height-control");
+            $("#header-title").show();
+            $("#header-description").show();
+            $("#details-next").removeClass("data-security").addClass("storage-config");
+            moveStepper("back", 2);
+
+            if (isBoldBI) {
+                $("#system-settings-db-selection-container").removeClass("hide").addClass("show");
+
+                $("#no-need-datastore").css("display", "none");
+
+                $("#header-title").html(window.TM.App.LocalizationContent.SelectDatabaseTitle);
+                $("#header-description").text(window.TM.App.LocalizationContent.PlaceToCreateShare + " " + window.TM.App.LocalizationContent.DashboardsDot).show();
+                $("#search-area").hide();
+                $(".storage-form #system-settings-filestorage-container").hide();
+            }
+            else {
+                $("#header-title").html(window.TM.App.LocalizationContent.SelectDatabaseTitle);
+                $("#header-description").text(window.TM.App.LocalizationContent.PlaceToCreateShare + " " + window.TM.App.LocalizationContent.ReportsDot).show();
+            }
+
+            $("#details-back").show().removeClass("back-button");
+            $(".tenant-database-form").removeClass("hide").addClass("show");
+
+            if (!isBoldBI) {
+                $("#dialog-body-container").removeClass("grid-alignment");
+                $("#stepper #current-step").text("2");
+            }
+
+            if (getDropDownValue("database-type").toLowerCase() === "postgresql" || getDropDownValue("database-type").toLowerCase() === "mysql") {
+                $('.auth-type').removeClass("show").addClass("hide");
+            }
+            else {
+                $('.auth-type').removeClass("hide").addClass("show");
+            }
+
+            $("#search-area").hide();
+        }
+        else if ($("#details-next").hasClass("user")) {
+            moveStepper("back", 3);
+            $("#details-back").show().addClass("back-button");
+            $("#search-area").hide();
+            $("#header-title").html(window.TM.App.LocalizationContent.SelectStorage);
+            $("#header-title").show();
+            if (getDropDownValue("database-type").toLowerCase() === "postgresql" || getDropDownValue("database-type").toLowerCase() === "mysql") {
+                $('.auth-type').removeClass("show").addClass("hide");
+            }
+            else {
+                $('.auth-type').removeClass("hide").addClass("show");
+            }
+
+            $(".storage-form #system-settings-filestorage-container").show();
+            $(".storage-checkbox").hide();
+            $(".storage-form, #step-2").removeClass("hide").addClass("show");
+            var storageType = $("input[name='IsBlobStorage']:checked").val();
+            if (storageType == "1") {
+                $(".report-content").hide();
+                $(".storage-checkbox").show();
+            }
+            else {
+                $(".report-content").slideDown("slow");
+            }
+            $(".storage-form #blob-storage-form").addClass("site-creation");
+
+
+            $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
+            $(".data-security-form").removeClass("show").addClass("hide");
+            $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
+            $("#details-next").removeClass("user").addClass("data-security");
+
+            if (!isBoldReportsTenantType()) {
+                $("#header-description").html(window.TM.App.LocalizationContent.StorageBIMsg).show();
+            }
+            else {
+                $("#header-description").text(window.TM.App.LocalizationContent.StorageReportsMsg).show();
+                $("#details-back").show().removeClass("back-button");
+
+                if (!isBoldBI) {
+                    $("#dialog-body-container").removeClass("grid-alignment");
+                    $("#stepper #current-step").text("2");
+                }
+            }
+            $("#search-area").hide();
+        }
+        else {
+            $("#details-back").show().addClass("back-button");
+            $("#search-area").hide();
+            if (!isBoldReportsTenantType()) {
+                if (getDropDownValue("database-type").toLowerCase() === "postgresql") {
+                    $('.auth-type').removeClass("show").addClass("hide");
+                }
+                else {
+                    $('.auth-type').removeClass("hide").addClass("show");
+                }
+                $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataSecurity);
+                $("#header-description").hide();
+                $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
+                $(".data-security-form").removeClass("hide").addClass("show");
+
+                $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
+                $("#details-next").removeClass("submit").addClass("user").removeAttr("disabled");
+                moveStepper("back", 4);
+            }
+            else {
+                $(".storage-form #system-settings-filestorage-container").show();
+                $(".storage-checkbox").hide();
+                $(".storage-form, #step-2").removeClass("hide").addClass("show");
+                var storageType = $("input[name='IsBlobStorage']:checked").val();
+                if (storageType == "1") {
+                    $(".report-content").hide();
+                    $(".storage-checkbox").show();
+                }
+                else {
+                    $(".report-content").slideDown("slow");
+                }
+                $(".storage-form #blob-storage-form").addClass("site-creation");
+
+
+                $(".tenant-user-form, #step-3").removeClass("show").addClass("hide");
+                $(".data-security-form").removeClass("show").addClass("hide");
+                $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
+                $("#details-next").removeClass("user").addClass("data-security");
+
+                if (!isBoldReportsTenantType()) {
+                    $("#header-description").html(window.TM.App.LocalizationContent.StorageBIMsg).show();
+                }
+                else {
+                    $("#header-description").text(window.TM.App.LocalizationContent.StorageReportsMsg).show();
+                    $("#details-back").show().removeClass("back-button");
+
+                    if (!isBoldBI) {
+                        $("#dialog-body-container").removeClass("grid-alignment");
+                        $("#stepper #current-step").text("2");
+                    }
+                }
+                $("#search-area").hide();
+                moveStepper("back", 3);
+
+            }
+            $("#dialog-body-container").removeClass("grid-alignment");
+            $("#dialog-body-container").removeClass("grid-height-control");
+        }
+        Resize();
+        ResizeHeightForDOM();
+    });
+
+    $(document).on("click", "#add-tenant-close", function () {
+        if (parent.window.location.href.indexOf('?') > -1) {
+            parent.history.pushState('', document.title, parent.window.location.pathname);
+        }
+
+        parent.$("#add-tenant-popup").ejDialog("close");
+    });
+    Resize();
+    ResizeHeightForDOM();
+});
+
+function isBoldReportsTenantType() {
+    var dropdownValue = $("#tenant-type").val();
+    if (document.getElementById("tenant-type").ej2_instances != undefined) {
+        dropdownValue = document.getElementById("tenant-type").ej2_instances[0].value;
+    }
+
+    if (dropdownValue === "BoldReportsOnPremise") {
+        return true;
+    }
+
+    return false;
+}
+
+function addTenant() {
     var tenantInfo = {
-        TenantType: $("#tenant-type").val(),
+        TenantType: getDropDownValue("tenant-type"),
         TenantName: $("#tenant-name").val(),
         TenantIdentifier: $("#tenant-identifier").val(),
         DNS: $(".site-domain").html(),
         UseSiteIdentifier: useSiteIdentifierEnable
     };
 
-    var brandingType = $(".branding-type").children(".bootstrap-select").children(".dropdown-toggle").find("span.filter-option").html();
+    var brandingType = getDropDownValue("branding-type");
     if (brandingType == "Embedded BI") {
         brandingType = "boldbi";
     }
     else if (brandingType == "Enterprise Reporting") {
         brandingType = "boldreports"
     }
-    postSystemSettingsData(systemSettingsDetails, azuredetails, intermediateDbDetails, selectedAdmins, tenantInfo, brandingType, true);
+    postSystemSettingsData(systemSettingsDetails, azuredetails, selectedAdmins, tenantInfo, brandingType, true);
 
 }
 
@@ -5184,6 +4821,7 @@ function nextToUserPage() {
         $("#stepper #current-step").text("3");
         $(".tenant-user-form, #step-3").removeClass("hide").addClass("show");
         $("#details-next").attr("value", window.TM.App.LocalizationContent.CreateLaunchSite);
+        $("#details-next").removeClass("data-security").addClass("submit").removeAttr("disabled");
         $("#details-next").removeClass("user").addClass("submit").removeAttr("disabled");
         $(".data-security-form").removeClass("show").addClass("hide");
         $("#dialog-body-container").addClass("grid-alignment");
@@ -5193,13 +4831,11 @@ function nextToUserPage() {
         $("#details-back").show().removeClass("back-button");
         $("#header-title").html(window.TM.App.LocalizationContent.SelectSiteAdmin);
         $("#header-description").text(window.TM.App.LocalizationContent.AdminControlSite);
-        if (!isBoldBI) {
-            $(".storage-form #system-settings-filestorage-container").hide();
-            $(".storage-checkbox").hide();
-            $(".storage-form, #step-2").removeClass("show").addClass("hide");
-            $(".report-content").hide();
-            $(".storage-form #blob-storage-form").addClass("site-creation");
-        }
+        $(".storage-form #system-settings-filestorage-container").hide();
+        $(".storage-checkbox").hide();
+        $(".storage-form, #step-2").removeClass("show").addClass("hide");
+        $(".report-content").hide();
+        $(".storage-form #blob-storage-form").addClass("site-creation");
         gridHeight = 500;
         $("#search-area").show();
         listUsersForAdminSelection();
@@ -5218,23 +4854,14 @@ function getTenant(id) {
                 var tenantInformation = data.TenantDetails;
                 tenantNameinDB = tenantInformation.Tenant.TenantName;
                 tenantIdentifierinDB = tenantInformation.Tenant.TenantIdentifier;
-                $("#tenant-name").val(tenantNameinDB);
-                $("#tenant-identifier").val(tenantInformation.Tenant.TenantIdentifier);
-                $("#tenant-identifier").prop('disabled', true);
-                if (data.TenantType === "BoldBIOnPremise") {
-                    $("#tenant-type").html('<option value="BoldBIOnPremise" class="">Embedded BI</option>');
-                } else {
-                    $("#tenant-type").html('<option value="BoldReportsOnPremise" class="">Enterprise Reporting</option>');
-                }
-                $("#tenant-type").val(data.TenantType);
-                $("#tenant-type").attr("disabled", true);
+                document.getElementById("tenant-name").ej2_instances[0].value = tenantNameinDB;
+                document.getElementById("tenant-identifier").ej2_instances[0].value = tenantInformation.Tenant.TenantIdentifier;
+                $("#tenant-identifier").prop('disabled', false);
+                document.getElementById("tenant-type").ej2_instances[0].value = data.TenantType;
+                document.getElementById("tenant-type").ej2_instances[0].enabled = false;
                 $("#input-domain").val(data.DNS);
-                $("#input-domain").attr("disabled", false);
-                $("#enable-ssl").val(data.Protocol)
-                $("#enable-ssl").removeAttr("disabled");
-                $(".input-group-addon").children(".btn-group").children(".dropdown-toggle").removeClass("disabled");
+                $("#enable-ssl").val(data.Protocol);
                 prevDomain = $("#input-domain").val();
-                var dropdownValue = $("#tenant-type").val();
                 $(".site-domain").html("");
                 if (data.TenantDetails.Tenant.UseSiteIdentifier) {
                     $(".site-domain").html("").html(data.TenantDetails.Tenant.DNS + "/site/" + tenantInformation.Tenant.TenantIdentifier);
@@ -5242,12 +4869,13 @@ function getTenant(id) {
                 else {
                     $(".site-domain").html("").html(data.TenantDetails.Tenant.DNS);
                 }
+                $(".site-url").attr("data-content", $(".site-domain").html());
                 haveTenantIdentifier = data.TenantDetails.Tenant.UseSiteIdentifier;
-                if (dropdownValue === "BoldReportsOnPremise") {
+                if (isBoldReportsTenantType()) {
                     item = "reports";
                     $("#header-description").html(window.TM.App.LocalizationContent.BoldReportsMultiTenancy);
                 }
-                else if (dropdownValue === "BoldBIOnPremise") {
+                else {
                     item = "dashboards";
                     $("#header-description").html(window.TM.App.LocalizationContent.BoldBiMultiTenancy);
                 }
@@ -5273,60 +4901,40 @@ function getTenant(id) {
             if (data.DatabaseDetails != "" || data.DatabaseDetails != null || data.DatabaseDetails != undefined) {
                 var databaseInformation = JSON.parse(data.DatabaseDetails);
                 var authentication = "";
+                $("#admin-nav").hide();
                 if (databaseInformation.ServerType == 0) {
-                    $('#database-type').attr("disabled", true).addClass("disabled");
-                    $("#txt-servername").val(databaseInformation.ServerName);
-                    $("#txt-dbname").val(databaseInformation.DatabaseName).prop("disabled", true);
-                    $(".new-db,.existing-db").css("display", "none");
+                    fillCommonDatbaseValues(databaseInformation);
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
                     if (databaseInformation.AuthenticationType == 0) {
                         authentication = "windows";
                         $("#txt-login, #txt-password-db").prop("disabled", true);
                     } else {
                         authentication = "sql";
-                        $("#txt-login").val(databaseInformation.UserName);
+                        document.getElementById("txt-login").ej2_instances[0].value = databaseInformation.UserName;
                     }
-                    $("#check-windows").find("option").each(function () {
-                        if ($(this).val() == authentication) {
-                            $(this).attr("selected", "selected");
-                        }
-                    });
-                    $('.selectpicker').selectpicker('refresh');
-                    $(".database-name").css("padding-top", "0");
+                    if (authentication === "windows") {
+                        $("#check-windows").prop("checked", true);
+                        document.getElementById("txt-login").ej2_instances[0].enabled = false;
+                        document.getElementById("txt-password-db").ej2_instances[0].enabled = false;
+                    }
                 } else if (databaseInformation.ServerType === 1) {
-                    $("#database-type").find("option").each(function () {
-                        if ($(this).val().toLowerCase() === "mysql") {
-                            $(this).attr("selected", "selected");
-                        }
-                    });
+                    document.getElementById("database-type").ej2_instances[0].value = "MySQL";
+                    fillCommonDatbaseValues(databaseInformation);
                     $('.auth-type').removeClass("show").addClass("hide");
                     $('.port-num').removeClass("show").addClass("hide");
-                    $("#mysql-odbc-dropdown").addClass("show").removeClass("hide");
-                    $('#database-type').attr("disabled", true).addClass("disabled");
-                    $("#txt-servername").val(databaseInformation.ServerName);
-                    $("#txt-dbname").val(databaseInformation.DatabaseName).prop("disabled", true);
-                    $(".new-db,.existing-db").css("display", "none");
+                    document.getElementById("txt-portnumber").ej2_instances[0].value = databaseInformation.Port;
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
-                    $("#txt-login").val(databaseInformation.UserName);
-                    $('.selectpicker').selectpicker('refresh');
+                    document.getElementById("txt-login").ej2_instances[0].value = databaseInformation.UserName;
                     $(".database-name").css("padding-top", "0");
                 } else if (databaseInformation.ServerType === 4) {
-                    $("#database-type").find("option").each(function () {
-                        if ($(this).val().toLowerCase() === "postgresql") {
-                            $(this).attr("selected", "selected");
-                        }
-                    });
+                    document.getElementById("database-type").ej2_instances[0].value = "PostgreSQL";
+                    fillCommonDatbaseValues(databaseInformation);
                     $('.auth-type').removeClass("show").addClass("hide");
                     $('.port-num, .maintenancedb').removeClass("hide hidden").addClass("show");
-                    $("#server-maintenance-db").val(data.TenantDetails.MaintenanceDatabase);
-                    $('#database-type').attr("disabled", true).addClass("disabled");
-                    $("#txt-servername").val(databaseInformation.ServerName);
-                    $("#txt-portnumber").val(databaseInformation.Port);
-                    $("#txt-dbname").val(databaseInformation.DatabaseName).prop("disabled", true);
-                    $(".new-db,.existing-db").css("display", "none");
+                    document.getElementById("maintenance-db").ej2_instances[0].value = data.TenantDetails.MaintenanceDatabase;
+                    document.getElementById("txt-portnumber").ej2_instances[0].value = databaseInformation.Port;
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
-                    $("#txt-login").val(databaseInformation.UserName);
-                    $('.selectpicker').selectpicker('refresh');
+                    document.getElementById("txt-login").ej2_instances[0].value = databaseInformation.UserName;
                     $(".database-name").css("padding-top", "0");
                 } else {
                     $("#database-type").find("option").each(function () {
@@ -5335,7 +4943,6 @@ function getTenant(id) {
                         }
                     });
                     $('#database-type').attr("disabled", true).addClass("disabled");
-                    $('.selectpicker').selectpicker('refresh');
                     $('#db-content-holder').css("display", "none");
                     $('#db-config-submit,#sql-existing-db-submit').addClass("hide");
                     $(".sqlce-content").removeClass("hide").addClass("show");
@@ -5354,9 +4961,20 @@ function getTenant(id) {
     });
 }
 
+
+function fillCommonDatbaseValues(databaseInformation) {
+    document.getElementById("database-type").ej2_instances[0].enabled = false;
+    $(".db-selection-radio").css("display", "none");
+    $(".new-db,.existing-db").css("display", "none");
+    document.getElementById("txt-servername").ej2_instances[0].value = databaseInformation.ServerName;
+    document.getElementById("txt-dbname").ej2_instances[0].value = databaseInformation.DatabaseName;
+    document.getElementById("additional-parameter").ej2_instances[0].value = databaseInformation.AdditionalParameters;
+    $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
+}
+
 function updateTenant(waitingPopUpElement, connectionString) {
     var name = $("#tenant-name").val();
-    var tenantUrl = ($("#tenant-type").val() === "BoldBIOnPremise") ? $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldBiPath : $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldReportsPath;
+    var tenantUrl = (getTenantType() === "BoldBIOnPremise") ? $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldBiPath : $("#enable-ssl").val() + "://" + $("#input-domain").val() + boldReportsPath;
     var siteIdentifier = true;
     if ((!useSiteIdentifierEnable && !haveTenantIdentifier) || $('input[name="identifier"]').prop("checked")) {
         siteIdentifier = false;
@@ -5365,10 +4983,11 @@ function updateTenant(waitingPopUpElement, connectionString) {
         siteIdentifier = true;
     }
     var tenantIdentifier = $("#tenant-identifier").val();
+    var additionalParameters = $("#additional-parameter").val();
     $.ajax({
         type: "POST",
         url: updateTenantDetailsUrl,
-        data: { tenantId: tenantId, tenantName: name, tenantIdentifier: tenantIdentifier, tenantUrl: tenantUrl, databaseDetails: connectionString, useSiteIdentifier: siteIdentifier },
+        data: { tenantId: tenantId, tenantName: name, tenantIdentifier: tenantIdentifier, tenantUrl: tenantUrl, databaseDetails: connectionString, additionalParameters: additionalParameters, useSiteIdentifier: siteIdentifier },
         success: function (data) {
             if (data.result == true) {
                 hideWaitingPopup(waitingPopUpElement);
@@ -5400,49 +5019,44 @@ function Resize() {
     }
 }
 
-$(document).on("click", ".sort", function () {
-    var gridObj = $("#add_admins_grid").data("ejGrid");
-    showWaitingPopup($(".model-body"));
-    var sorting = $("#order").attr("data-value");
-    if (gridObj != undefined) {
-        gridObj.model.sortSettings.sortedColumns = [{ field: "Name", direction: sorting }];
-        gridObj.refreshContent();
-        if (sorting == "ascending") {
-            $("#order").attr("data-value", "descending");
-        } else {
-            $("#order").attr("data-value", "ascending");
-        }
-        window.setTimeout('hideWaitingPopup($(".model-body"));', 500);
-    }
-});
 
 function ResizeHeightForDOM() {
-    var height = $(window).height() - $(".modal-header").height() - 210;
-    var modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 50;
-    if ($(".tenant-registration-form").hasClass("show")) {
-        height = $(window).height() - $(".modal-header").height() - 210 + 100;
-        modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
-    }
+    var height = /*$(window).height() - $(".modal-header").height() - 210*/"";
+    var modalheight = /*$("#dialog-body-container").height() + $("#dialog-body-header").height() + 50*/"";
+    //if ($(".tenant-registration-form").hasClass("show")) {
+    //    height = $(window).height() - $(".modal-header").height() - 210 + 100;
+    //    modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
+    //}
 
     if ($(".storage-form").hasClass("show")) {
         if ($("#file-storage").is(":checked")) {
             height = $(window).height() - $(".modal-header").height() - 210;
             modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
         } else {
-            height = $(window).height() - $(".modal-header").height() - 210 + 250;
+            height = $(window).height() - $(".modal-header").height() - 210 + 280;
             modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
         }
     }
 
-    if ($(".tenant-user-form").hasClass("show")) {
-        height = $(window).height() - $(".modal-header").height() - 210;
-        modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
-    }
+    //if ($(".tenant-user-form").hasClass("show")) {
+    //    height = $(window).height() - $(".modal-header").height() - 210;
+    //    modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
+    //}
 
-    if ($(".data-security-form").hasClass("show")) {
-        height = $(window).height() - $(".modal-header").height() - 210;
-        modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
-    }
+    //if ($(".data-security-form").hasClass("show")) {
+    //    height = $(window).height() - $(".modal-header").height() - 210;
+    //    modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
+    //}
+
+    //if ($(".tenant-database-form").hasClass("show")) {
+    //    var databaseType = getDropDownValue("database-type").toLowerCase();
+
+    //    if (databaseType == "postgresql") {
+    //        height = 1225;
+    //        modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
+    //    }
+
+    //}
 
     if (height > modalheight) {
         $(".dialog-body-div").css("height", height);
@@ -5452,109 +5066,8 @@ function ResizeHeightForDOM() {
     gridHeight = height;
 }
 
-function saveDatabaseValuesTemporarly(isInterMediateDb) {
-    if (isInterMediateDb) {
-        intermediateDbDetails = getDatabaseFormValues(true);
-    }
-    else {
-        systemSettingsDetails = getDatabaseFormValues();
-    }
-}
-
-function preserveFormData(isIntermediateDb) {
-    if (!isIntermediateDb) {
-        databaseFormData = {
-            databaseType: $("#database-type").val(),
-            serverName: $("#txt-servername").val(),
-            authenticationType: $("#check-windows").val(),
-            portNumber: $("#txt-portnumber").val(),
-            userName: $("#txt-login").val(),
-            password: $("#txt-password-db").val(),
-            isNewDbChecked: $("#new-db").is(":checked"),
-            databaseName: $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val(),
-            sslEnabled: $("#secure-sql-connection").is(":checked")
-        };
-        if (intermediateFormData == undefined) {
-            clonedDBFormData = {
-                databaseType: $("#database-type").val(),
-                serverName: $("#txt-servername").val(),
-                authenticationType: $("#check-windows").val(),
-                portNumber: $("#txt-portnumber").val(),
-                userName: $("#txt-login").val(),
-                password: $("#txt-password-db").val(),
-                isNewDbChecked: true,
-                databaseName: "",
-                sslEnabled: $("#secure-sql-connection").is(":checked")
-            };
-        }
-    }
-    else {
-        intermediateFormData = {
-            databaseType: $("#database-type").val(),
-            serverName: $("#txt-servername").val(),
-            authenticationType: $("#check-windows").val(),
-            portNumber: $("#txt-portnumber").val(),
-            userName: $("#txt-login").val(),
-            password: $("#txt-password-db").val(),
-            isNewDbChecked: $("#new-db").is(":checked"),
-            databaseName: $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val(),
-            sslEnabled: $("#secure-sql-connection").is(":checked")
-        };
-    }
-}
-
-function fillPreservedFormData(formData) {
-    if (formData.isSkipIntermediateDb || formData.databaseType.toLowerCase() == "mysql" && !($("#details-next").hasClass("intermediate-db"))) {
-        if (!$("#skip-intermediate-db").is(":checked")) {
-            $("#skip-intermediate-db").trigger("click");
-        }
-        else {
-            enableOrDisableDatabaseFormElements(true);
-        }
-    }
-    else {
-        $("#database-type").val(formData.databaseType).selectpicker("refresh");
-        $("#txt-servername").val(formData.serverName);
-
-        if (formData.databaseType.toLowerCase() === "mssql") {
-            $("#check-windows").val(formData.authenticationType).trigger("change");
-            $(".auth-type").removeClass("hide").addClass("show");
-        }
-        else {
-            $(".auth-type").removeClass("show").addClass("hide");
-        }
-
-        if (formData.databaseType.toLowerCase() === "postgresql") {
-            $("#txt-portnumber").val(formData.portNumber);
-            $('.port-num').removeClass("hide").addClass("show");
-        }
-        else {
-            $('.port-num').removeClass("show").addClass("hide");
-        }
-
-        if (formData.databaseType.toLowerCase() === "mysql") {
-            $("#mysql-odbc-dropdown").removeClass("hide").addClass("show");
-        }
-        else {
-            $("#mysql-odbc-dropdown").removeClass("show").addClass("hide");
-        }
-
-        if (formData.authenticationType.toLowerCase() === "sql") {
-            $("#txt-login").val(formData.userName);
-            $("#txt-password-db").val(formData.password);
-        }
-
-        if (formData.isNewDbChecked) {
-            $("#new-db").trigger("click");
-            $("#txt-dbname").val(formData.databaseName);
-        }
-        else {
-            $("#existing-db").trigger("click");
-            $("#database-name").val(formData.databaseName).selectpicker("refresh");
-        }
-
-        $('#secure-sql-connection').prop('checked', formData.sslEnabled);
-    }
+function saveDatabaseValuesTemporarly() {
+    systemSettingsDetails = getDatabaseFormValues();
 }
 
 function moveStepper(direction, stepToMove) {
@@ -5562,10 +5075,18 @@ function moveStepper(direction, stepToMove) {
         if (direction.toLowerCase() === "front") {
             $(".selector-icons .selector-panel:nth-child(" + stepToMove + ")").prev().addClass("selectedOval");
             $(".selector-icons .selector-panel:nth-child(" + stepToMove + ")").find(".circle").addClass("selectedClass");
+            if (isCommonLogin && isBoldReportsTenantType() && stepToMove === 4) {
+                stepToMove = 5
+            }
+            $(".selector-content span:nth-child(" + stepToMove + ")").addClass("selectedContent");
         }
         else if (direction.toLowerCase() === "back") {
             $(".selector-icons .selector-panel:nth-child(" + (stepToMove + 1) + ")").find(".circle").removeClass("selectedClass");
             $(".selector-icons .selector-panel:nth-child(" + stepToMove + ")").removeClass("selectedOval");
+            if (isCommonLogin && isBoldReportsTenantType() && stepToMove === 3) {
+                stepToMove = 4
+            }
+            $(".selector-content span:nth-child(" + (stepToMove + 1) + ")").removeClass("selectedContent");
         }
     }
 }
@@ -5584,21 +5105,21 @@ function tenantNameIdentiferCheck(tenantName, tenantIdentifier) {
                 hideWaitingPopup(waitingPopUpElement);
                 if (data.Result || data.ResultIdentifier) {
                     if (data.Value != null && data.ResultIdentifier && tenantIdentifier != tenantIdentifierinDB) {
-                        $("#tenant-identifier").closest("div").addClass("has-error");
+                        $("#tenant-identifier").closest("div").addClass("e-error");
                         $("#tenant-identifier-validation-error").css("display", "block");
                         $("#tenant-identifier-validation-error").html(data.Value);
                     }
                     else if (data.Result && tenantName != tenantNameinDB) {
-                        $("#tenant-name").closest("div").addClass("has-error");
+                        $("#tenant-name").closest("div").addClass("e-error");
                         $("#tenant-name-validation-error").css("display", "block");
                         $("#tenant-name-validation-error").html(window.TM.App.LocalizationContent.SiteNameExists);
                     } else {
-                        $("#tenant-name").closest("div").removeClass("has-error");
+                        $("#tenant-name").closest("div").removeClass("e-error");
                         $("#tenant-name-validation-error").css("display", "none");
                         nextToDatabasePage();
                     }
                 } else {
-                    $("#tenant-name, #tenant-identifier").closest("div").removeClass("has-error");
+                    $("#tenant-name, #tenant-identifier").closest("div").removeClass("e-error");
                     $("#tenant-name-validation-error,#tenant-identifier-validation-error").css("display", "none");
                     $(".identifier-info").css("padding-top", "20px");
                     nextToDatabasePage();
@@ -5607,9 +5128,6 @@ function tenantNameIdentiferCheck(tenantName, tenantIdentifier) {
                     $("#tenant-name, #details-next, #tenant-identifier").removeAttr("disabled");
                 } else {
                     $("#tenant-name, #details-next, #tenant-identifier").removeAttr("disabled");
-                }
-                if (actionType.toLowerCase() == "edit" && haveTenantIdentifier) {
-                    $("#tenant-identifier").attr("disabled", true);
                 }
             }
         });
@@ -5626,23 +5144,24 @@ function tenantNameIdentiferCheck(tenantName, tenantIdentifier) {
     }
 }
 
-
-function IsValidIdentifier(inputString) {
-    var regex = /^[a-zA-Z0-9-]+$/;
-    return regex.test(inputString) || inputString == "";
-}
-
 function nextToDatabasePage() {
     $("#dialog-header").css("display", "block");
     $("#header-logo").css("display", "none");
     $("#header-title").html(window.TM.App.LocalizationContent.SelectDatabaseTitle);
     $("#header-description").html(window.TM.App.LocalizationContent.PlaceToCreateShare + " " + item + ".");
     $("#used-tenant-name").html($("#tenant-name").val());
-    if ($("#tenant-type").val() === "BoldReportsOnPremise") {
-        $("#used-tenant-identifier").html(authorityUrl + boldReportsUrl + $("#tenant-identifier").val());
-    }
-    else if ($("#tenant-type").val() === "BoldBIOnPremise") {
+
+    if (isBoldReportsTenantType()) {
+        var helpData = "Enterprise Reporting";
         $("#used-tenant-identifier").html($(".url-part").text().replace(/\s/g, '').replace("i.e", ''));
+        $(".db-name-info").html(window.TM.App.LocalizationContent.DatabaseInfoReports);
+        $(".tenant-sql-db-content").html(helpData);
+    }
+    else {
+        var helpData = "Embedded BI";
+        $("#used-tenant-identifier").html($(".url-part").text().replace(/\s/g, '').replace("i.e", ''));
+        $(".db-name-info").html(window.TM.App.LocalizationContent.DatabaseInfoBI);
+        $(".tenant-sql-db-content").html(helpData);
     }
 
     moveStepper("front", 2);
@@ -5653,7 +5172,7 @@ function nextToDatabasePage() {
     $(".tenant-database-form, #step-2").removeClass("hide").addClass("show");
     $("#dialog-body-container").removeClass("grid-alignment");
 
-    if ($("#database-type").val().toLowerCase() === "postgresql" || $("#database-type").val().toLowerCase() === "mysql") {
+    if (getDropDownValue("database-type").toLowerCase() === "postgresql" || getDropDownValue("database-type").toLowerCase() === "mysql") {
         $('.auth-type').removeClass("show").addClass("hide");
     }
     else {
@@ -5662,26 +5181,36 @@ function nextToDatabasePage() {
 
     $(".tenant-database-form #system-settings-db-selection-container").show();
     $(".tenant-database-form #db-content-holder").addClass("site-creation");
+
+    if (isBoldReportsTenantType() || actionType.toLowerCase() === "edit") {
+        $("#admin-nav").hide();
+    }
+    else {
+        $("#admin-nav").show();
+    }
+    autoFocus("txt-servername");
     if (actionType.toLowerCase() === "edit") {
         $("#details-next").attr("value", window.TM.App.LocalizationContent.UpdateButton);
         $("#details-next").removeClass("database").addClass("update");
     } else {
         $("#details-next").attr("value", window.TM.App.LocalizationContent.NextButton);
-        $("#details-next").removeClass("database").addClass("intermediate-db");
+        $("#details-next").removeClass("database").addClass("storage-config");
     }
 
     $("#details-next").removeAttr("disabled").addClass("next-alignment");
 }
 
 function nextToStoragePage() {
-    var dropdownValue = $("#tenant-type").val();
-    $("#header-title").hide();
-    $("#header-description").hide();
-    if (dropdownValue === "BoldBIOnPremise") {
-        moveStepper("front", 4);
+    $("#header-title").show();
+    $("#header-title").html(window.TM.App.LocalizationContent.SelectStorage);
+    $("#header-description").show();
+    if (!isBoldReportsTenantType()) {
+        $("#header-description").html(window.TM.App.LocalizationContent.StorageBIMsg);
     } else {
-        moveStepper("front", 3);
+        $("#header-description").html(window.TM.App.LocalizationContent.StorageReportsMsg);
     }
+
+    moveStepper("front", 3);
     if (isAzureApplication) {
         $(".storage-checkbox").show("slow");
         $("#file-storage").prop("disabled", true);
@@ -5694,18 +5223,18 @@ function nextToStoragePage() {
         $(".storage-form #system-settings-filestorage-container").show();
         $("#file-storage").parent().hide();
         $(".report-content").hide();
-        $("#blob-storage").parent().css("margin-left", "130px");
+        $("#blob-storage").parent().hide();
+        $(".storage-checkbox").css("margin-top", "5px");
         $("#blob-storage-form").slideDown("slow");
         $(".storage-form #blob-storage-form").addClass("site-creation");
         $("#dialog-body-container").removeClass("grid-alignment");
         $("#details-next").attr("value", "Next");
-        if (dropdownValue === "BoldBIOnPremise") {
-            $("#details-next").removeClass("intermediate-db2").addClass("data-security");
+        if (isBoldReportsTenantType()) {
+            $("#details-next").removeClass("storage-config").addClass("user");
         }
         else {
-            $("#details-next").removeClass("intermediate-db").addClass("user");
-        }
-        $("#details-next").removeAttr("disabled").addClass("next-alignment");
+            $("#details-next").removeClass("storage-config").addClass("data-security");
+        } $("#details-next").removeAttr("disabled").addClass("next-alignment");
     }
     else {
         var storageType = $("input[name='IsBlobStorage']:checked").val();
@@ -5726,19 +5255,21 @@ function nextToStoragePage() {
         $(".storage-form #blob-storage-form").addClass("site-creation");
         $("#dialog-body-container").removeClass("grid-alignment");
         $("#details-next").attr("value", "Next");
-        if (dropdownValue === "BoldBIOnPremise") {
-            $("#details-next").removeClass("intermediate-db2").addClass("data-security");
+        if (isBoldReportsTenantType()) {
+            $("#details-next").removeClass("storage-config").addClass("user");
         }
         else {
-            $("#details-next").removeClass("intermediate-db").addClass("user");
+            $("#details-next").removeClass("storage-config").addClass("data-security");
         }
         $("#details-next").removeAttr("disabled").addClass("next-alignment");
     }
 }
 
 function nextToDataSecurityPage() {
-    $("#header-title").hide();
-    $("#header-description").hide();
+    $("#header-title").show();
+    $("#header-title").html(window.TM.App.LocalizationContent.ConfigureDataSecurity);
+    $("#header-description").html("");
+
     if (isAzureApplication) {
         $(".storage-checkbox").show("slow");
         $("#file-storage").prop("disabled", true);
@@ -5788,7 +5319,7 @@ function nextToDataSecurityPage() {
 function preserveStorageFormData() {
     var storageType = $("input[name='IsBlobStorage']:checked").val();
     window.accountname = $("#txt-accountname").val();
-    window.endpoint = $("#txt-endpoint").val();
+    window.endpoint = $("#txt-bloburl").val() == "" ? "https://" + $("#txt-accountname").val() + ".blob.core.windows.net" : $("#txt-bloburl").val();
     window.accesskey = $("#txt-accesskey").val();
     window.containername = $("#txt-containername").val();
     window.storageenable = $(".storage-checkbox").is(":checked");
@@ -5820,22 +5351,30 @@ function preserveStorageFormData() {
 function enableIsolationCode() {
     var isEnabled = $("#isolation-enable-switch").is(":checked");
     if (isEnabled) {
-        $("#site-isolation-code").removeAttr("disabled");
+        document.getElementById("site-isolation-code").ej2_instances[0].enabled = true;
         $("#isolation-code").focus();
     } else {
-        $("#site-isolation-code").attr('disabled', 'disabled');
+        document.getElementById("site-isolation-code").ej2_instances[0].enabled = false;
         $("#isolation-code-validation").html("");
-        $("#site-isolation-code").removeClass("has-error");
+        document.getElementById("site-isolation-code").ej2_instances[0].value = null;
+        $("#site-isolation-code").closest('div').removeClass("e-error");
     }
 }
 
-$(document).on("focusin keyup", "#site-isolation-code", function (e) {
-    var isolationCode = $("#site-isolation-code").val().trim();
-    if (!parent.ValidateIsolationCode(isolationCode)) {
-        $("#isolation-code-validation").html(window.TM.App.LocalizationContent.IsolationCodeValidator);
-        $("#site-isolation-code").addClass("has-error");
-    } else {
-        $("#isolation-code-validation").html("");
-        $("#site-isolation-code").removeClass("has-error");
-    }
+$(document).on("keyup", "#site-isolation-code", function (e) {
+    clearTimeout(validateTimer);
+    validateTimer = setTimeout(validateCode, validateInterval);
+});
+
+$(document).on("keydown", "#site-isolation-code", function (e) {
+    clearTimeout(validateTimer);
+});
+
+function validateCode() {
+    ValidateIsolationCode($("#site-isolation-code").val(), "#site-isolation-code");
+}
+
+$(window).load(function () {
+    Resize();
+    ResizeHeightForDOM();
 });

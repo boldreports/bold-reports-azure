@@ -8,20 +8,36 @@ $(document).ready(function () {
     var mainFileName;
     var favName;
     var currentDate = $.now();
+    var prevLang = $("#language").val();
+    dropDownListInitialization('#time-zone', window.TM.App.LocalizationContent.TimeZone);
+    dropDownListInitialization('#date-format', window.TM.App.LocalizationContent.DateFormat);
+    dropDownListInitialization('#time_format', window.TM.App.LocalizationContent.TimeFormat);
+    dropDownListInitialization('#language', window.TM.App.LocalizationContent.Language);
+    dropDownListInitialization('#enable-ssl', window.TM.App.LocalizationContent.Language);
+    document.getElementById("enable-ssl").ej2_instances[0].value = isSecureConnection ? "https" : "http";
+    document.getElementById("enable-ssl").ej2_instances[0].text = isSecureConnection ? "https" : "http";
+    document.getElementById("time-zone").ej2_instances[0].value = selectedTimeZoneValue;
+    document.getElementById("time-zone").ej2_instances[0].text = selectedTimeZoneText;
+    document.getElementById("time_format").ej2_instances[0].value = selectedTimeFormatValue;
+    document.getElementById("time_format").ej2_instances[0].text = selectedTimeFormatText;
+    document.getElementById("date-format").ej2_instances[0].value = selectedDateFormatValue;
+    document.getElementById("date-format").ej2_instances[0].text = selectedDateFormatText;
+    document.getElementById("language").ej2_instances[0].value = selectedLanguageValue;
+    document.getElementById("language").ej2_instances[0].text = selectedLanguageText;
+       
     if ($("#time_format").is(":checked")) {
         $(".time").html(window.TM.App.LocalizationContent.TimeFormatTrue);
     } else {
         $(".time").html(window.TM.App.LocalizationContent.TimeFormatFalse);
     }
     $("#mail-password").show();
-    $(".input-group-addon .btn.selectpicker").css("height", window.innerWidth <= 1366 ? "28" : "32");
 
     $("#upload-login-image").ejUploadbox({
 
         saveUrl: window.fileUploadUrl + "?imageType=loginlogo&&timeStamp=" + currentDate,
         autoUpload: true,
         showFileDetails: false,
-        buttonText: { browse: ".  .  ." },
+        buttonText: { browse: window.TM.App.LocalizationContent.LogoButton },
         extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
         height: window.innerWidth <= 1366 ? 26 : 30,
         begin: function () {
@@ -37,6 +53,7 @@ $(document).ready(function () {
                 $("#upload-login-image-textbox").closest("div").addClass("has-error");
                 $("#upload-login-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='login-screen']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = loginFileExtension == ".svg" ? loginFileExtension : ".png";
@@ -48,6 +65,7 @@ $(document).ready(function () {
             $("#upload-login-image-textbox").closest("div").removeClass("has-error");
             $("#upload-login-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='login-screen']").tooltip("hide");
         }
     });
 
@@ -55,7 +73,7 @@ $(document).ready(function () {
         saveUrl: window.fileUploadUrl + "?imageType=mainlogo&&timeStamp=" + currentDate,
         autoUpload: true,
         showFileDetails: false,
-        buttonText: { browse: ".  .  ." },
+        buttonText: { browse: window.TM.App.LocalizationContent.LogoButton },
         extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
         height: window.innerWidth <= 1366 ? 26 : 30,
         begin: function () {
@@ -71,6 +89,7 @@ $(document).ready(function () {
                 $("#upload-main-screen-image-textbox").closest("div").addClass("has-error");
                 $("#upload-main-screen-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='header-logo']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = mainFileExtension == ".svg" ? mainFileExtension : ".png";
@@ -82,6 +101,7 @@ $(document).ready(function () {
             $("#upload-main-screen-image-textbox").closest("div").removeClass("has-error");
             $("#upload-main-screen-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='header-logo']").tooltip("hide");
         }
     });
 
@@ -89,8 +109,8 @@ $(document).ready(function () {
         saveUrl: window.fileUploadUrl + "?imageType=favicon&&timeStamp=" + currentDate,
         autoUpload: true,
         showFileDetails: false,
-        buttonText: { browse: ".  .  ." },
-        extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
+        buttonText: { browse: window.TM.App.LocalizationContent.FavIconButton},
+        extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG,.ico,.ICO",
         height: window.innerWidth <= 1366 ? 26 : 30,
         begin: function () {
             ShowWaitingProgress("#content-area", "show");
@@ -105,6 +125,7 @@ $(document).ready(function () {
                 $("#upload-favicon-image-textbox").closest("div").addClass("has-error");
                 $("#upload-favicon-image-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='favicon']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = favExtension == ".svg" ? favExtension : ".png";
@@ -116,6 +137,7 @@ $(document).ready(function () {
             $("#upload-favicon-image-textbox").closest("div").removeClass("has-error");
             $("#upload-favicon-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='favicon']").tooltip("hide");
         }
     });
 
@@ -124,7 +146,7 @@ $(document).ready(function () {
         saveUrl: window.fileUploadUrl + "?imageType=emaillogo&&timeStamp=" + currentDate,
         autoUpload: true,
         showFileDetails: false,
-        buttonText: { browse: ".  .  ." },
+        buttonText: { browse: window.TM.App.LocalizationContent.LogoButton },
         extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
         height: window.innerWidth <= 1366 ? 26 : 30,
         begin: function () {
@@ -140,6 +162,7 @@ $(document).ready(function () {
                 $("#upload-emaillogo-textbox").closest("div").addClass("has-error");
                 $("#upload-emaillogo-textbox").parent().find(".e-box").addClass("upload-error-border");
             }
+            $("#image-container").find(".tooltip-container[data-image='email-logo']").tooltip("hide");
         },
         complete: function () {
             var fileExtension = emailFileExtension == ".svg" ? emailFileExtension : ".png";
@@ -151,13 +174,45 @@ $(document).ready(function () {
             $("#upload-emaillogo-image-textbox").closest("div").removeClass("has-error");
             $("#upload-emaillogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
             ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='email-logo']").tooltip("hide");
         }
 
     });
 
-    $("div.date-format-radio input[type=radio]").each(function () {
-        if (this.value == window.SystemSettingsProperties.DateFormat) {
-            $("#" + this.id).attr("checked", "checked");
+    $("#upload-poweredlogo-image").ejUploadbox({
+
+        saveUrl: window.fileUploadUrl + "?imageType=poweredlogo&&timeStamp=" + currentDate,
+        autoUpload: true,
+        showFileDetails: false,
+        buttonText: { browse: window.TM.App.LocalizationContent.LogoButton },
+        extensionsAllow: ".PNG,.png,.jpg,.JPG,.jpeg,.JPEG,.svg,.SVG",
+        height: window.innerWidth <= 1366 ? 26 : 30,
+        begin: function () {
+            ShowWaitingProgress("#content-area", "show");
+        },
+        fileSelect: function (e) {
+            poweredFileExtension = e.files[0].extension.toLowerCase();
+            poweredFileName = e.files[0].name;
+        },
+        error: function () {
+            if (poweredFileExtension !== ".png" && poweredFileExtension !== ".jpg" && poweredFileExtension !== ".jpeg" && poweredFileExtension !== ".svg") {
+                $("#upload-poweredlogo-image-textbox").addClass("validation-error-image").val(window.TM.App.LocalizationContent.InValidFileFormat);
+                $("#upload-poweredlogo-image-textbox").closest("div").addClass("has-error");
+                $("#upload-poweredlogo-image-textbox").parent().find(".e-box").addClass("upload-error-border");
+            }
+            $("#image-container").find(".tooltip-container[data-image='powered-logo']").tooltip("hide");
+        },
+        complete: function () {
+            var fileExtension = poweredFileExtension == ".svg" ? poweredFileExtension : ".png";
+            window.SystemSettingsProperties.PoweredByLogo = "powered_logo_" + currentDate + fileExtension;
+            var imageUrl = window.baseRootUrl + "content/images/application/" + "powered_logo_" + currentDate + fileExtension + "?v=" + $.now();
+            $("#display-powered-logo").attr("src", imageUrl);
+            $("#upload-poweredlogo-image-textbox").removeClass("ValidationErrorImage").val(poweredFileName);
+            $("#upload-poweredlogo-image-textbox").removeClass("validation-error-image");
+            $("#upload-poweredlogo-image-textbox").closest("div").removeClass("has-error");
+            $("#upload-poweredlogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+            ShowWaitingProgress("#content-area", "hide");
+            $("#image-container").find(".tooltip-container[data-image='powered-logo']").tooltip("hide");
         }
     });
 
@@ -190,7 +245,7 @@ $(document).ready(function () {
             isUrlChange = true;
         }
         var isReloadPage = false;
-        if ($("#enable-ssl").val() != $("#scheme_value").attr("data-value") || $("#site_url").attr("data-original-value") !== $("#site_url").val()) {
+        if ($("#enable-ssl").val() != $("#scheme_value").attr("data-value") || $("#site_url").attr("data-original-value") !== $("#site_url").val() || prevLang != $("#language").val()) {
             isReloadPage = true;
         }
         var siteURL = $("#site_url").val();
@@ -224,74 +279,86 @@ $(document).ready(function () {
             MainScreenLogo: window.SystemSettingsProperties.MainScreenLogo,
             FavIcon: window.SystemSettingsProperties.FavIcon,
             EmailLogo: window.SystemSettingsProperties.EmailLogo,
+            PoweredByLogo: window.SystemSettingsProperties.PoweredByLogo,
             WelcomeNoteText: $("#txt_welcome_note").val(),
-            TimeZone: $("#time-zone").val(),
-            DateFormat: $("input:radio[name=date_format]:checked").val(),
+            TimeZone: document.getElementById("time-zone").ej2_instances[0].value,
+            DateFormat: document.getElementById("date-format").ej2_instances[0].value,
             MailSettingsAddress: $("#mail-user-name").val(),
-            MailSettingsAuthType: parseInt($("#mail-authentication-type").val()),
-            MailSettingsUserName: parseInt($("#mail-authentication-type").val()) === 1 ? $("#sender-user-name").val() : "",
-            MailSettingsPassword: parseInt($("#mail-authentication-type").val()) === 1 ? $("#mail-password").val() : "",
+            MailSettingsAuthType: parseInt($("input[name='mail-authentication-type']:checked").val()),
+            MailSettingsUserName: parseInt($("input[name='mail-authentication-type']:checked").val()) === 1 ? $("#sender-user-name").val() : "",
+            MailSettingsPassword: parseInt($("input[name='mail-authentication-type']:checked").val()) === 1 ? $("#mail-password").val() : "",
             MailSettingsHost: $("#smtp-address").val(),
             MailSettingsSenderName: $("#mail-display-name").val(),
             MailSettingsPort: parseInt($("#port-number").val()),
             MailSettingsIsSecureAuthentication: enableSecureMail,
-            BaseUrl: $("#enable-ssl").val() + "://" + $("#site_url").val(),
+            BaseUrl: document.getElementById("enable-ssl").ej2_instances[0].value + "://" + $("#site_url").val(),
+            EnableDomainChange: $("#domain-change").is(":checked"),
             MachineName: $("#machineName").val(),
             HostDomain: $("#hostDomain").val(),
-            IsSecureConnection: $("#enable-ssl").val() === "https",
-            Language: $("#language").val(),
+            IsSecureConnection: document.getElementById("enable-ssl").ej2_instances[0].value === "https",
+            Language: document.getElementById("language").ej2_instances[0].value,
             IsEnablePoweredBySyncfusion: $("#enablepoweredbysyncfusion").is(":checked"),
             IsEnableCopyrightInfo: $("#enablecopyrightinfo").is(":checked"),
-            TimeFormat: $("#time_format").is(":checked")
+            CopyrightInformation: $("#site-copyright").val(),
+            TimeFormat: document.getElementById("time_format").ej2_instances[0].value,
         };
 
         $.ajax({
             type: "POST",
             url: window.updateSystemSettingsUrl,
             data: { systemSettingsData: JSON.stringify(systemSettingsData) },
-            beforeSend: ShowWaitingProgress("#content-area", "show"),
+            beforeSend: showWaitingPopup($("#server-app-container")),
             success: function (result) {
                 if (isReloadPage) {
                     if (isUrlChange) {
-                        window.location.href = $("#enable-ssl").val() + "://" + siteURL + location.pathname;
+                        window.location.href = document.getElementById("enable-ssl").ej2_instances[0].value + "://" + siteURL + location.pathname;
                     }
                     else {
-                        window.location.href = $("#enable-ssl").val() + "://" + location.host + location.pathname;
+                        window.location.href = document.getElementById("enable-ssl").ej2_instances[0].value + "://" + location.host + location.pathname;
                     }
                 } else {
-                    $("#application-logo").attr("src", window.baseRootUrl + "content/images/application/" + systemSettingsData.MainScreenLogo);
+                    if (systemSettingsData.MainScreenLogo != "main_logo.svg") {
+                        $("#application-logo").attr("src", window.baseRootUrl + "content/images/application/" + systemSettingsData.MainScreenLogo);
+                    }
+                    
+                    if (systemSettingsData.PoweredByLogo != "powered_by_logo.svg") {
+                        $("#poweredbysyncfusion img").attr("src", window.baseRootUrl + "content/images/application/" + systemSettingsData.PoweredByLogo);
+                    }
+                    $("#copyrightinfo").html(systemSettingsData.CopyrightInformation);
                     var link = document.createElement("link");
                     link.type = "image/x-icon";
                     link.rel = "shortcut icon";
-                    link.href = window.baseRootUrl + "content/images/application/" + systemSettingsData.FavIcon;
+                    if (systemSettingsData.FavIcon != "favicon.ico") {
+                        link.href = window.baseRootUrl + "content/images/application/" + systemSettingsData.FavIcon;
+                    }
                     document.getElementsByTagName("head")[0].appendChild(link);
                     var pageTitle = document.title.split("-")[0] + " - " + $("#site-orgname").val();
                     document.title = pageTitle;
                 }
 
                 if (result.status) {
-                    if ($("#enablepoweredbysyncfusion").is(":checked")) {
-                        $("#poweredbysyncfusion").removeClass("hide").addClass("show");
-                    } else {
-                        $("#poweredbysyncfusion").removeClass("show").addClass("hide");
-                    }
-                    if ($("#enablecopyrightinfo").is(":checked")) {
-                        $("#copyrightinfo").removeClass("hide").addClass("show");
-                    } else {
-                        $("#copyrightinfo").removeClass("show").addClass("hide");
-                    }
-                    if ($("#enablepoweredbysyncfusion").is(":checked") && $("#enablecopyrightinfo").is(":checked")) {
-                        $("#footer-separator").removeClass("hide").addClass("show");
-                    } else {
-                        $("#footer-separator").removeClass("show").addClass("hide");
-                    }
-                    SuccessAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdated, 7000);
-                    SetCookie();
+                        if ($("#enablepoweredbysyncfusion").is(":checked")) {
+                            $("#poweredbysyncfusion").removeClass("hide").addClass("show");
+                        } else {
+                            $("#poweredbysyncfusion").removeClass("show").addClass("hide");
+                        }
+                        if ($("#enablecopyrightinfo").is(":checked")) {
+                            $("#copyrightinfo").removeClass("hide").addClass("show");
+                        } else {
+                            $("#copyrightinfo").removeClass("show").addClass("hide");
+                        }
+                        if ($("#enablepoweredbysyncfusion").is(":checked") && $("#enablecopyrightinfo").is(":checked")) {
+                            $("#footer-separator").removeClass("hide").addClass("show");
+                        } else {
+                            $("#footer-separator").removeClass("show").addClass("hide");
+                        }
+                        SuccessAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdated, 7000);
+                        SetCookie();
                 } else {
                     WarningAlert(messageHeader, window.TM.App.LocalizationContent.SiteSettingsUpdateFalied, 7000);
                     $(".error-message, .success-message").css("display", "none");
                 }
-                ShowWaitingProgress("#content-area", "hide");
+                hideWaitingPopup($("#server-app-container"));
             }
         });
     });
@@ -335,7 +402,7 @@ $(document).ready(function () {
     });
 
     $.validator.addMethod("isValidUrl", function (value, element) {
-        var givenUrl = $("#enable-ssl").val() + "://" + $("#site_url").val();
+        var givenUrl = document.getElementById("enable-ssl").ej2_instances[0].value + "://" + $("#site_url").val();
         var url = parseURL(givenUrl);
         if (parseInt(url.port) > 65535)
             return false;
@@ -365,9 +432,17 @@ $(document).ready(function () {
         },
         onfocusout: function (element) { $(element).valid(); },
         rules: {
+            "site_name": {
+                isRequired: true,
+                maxlength: 255
+            },
             "site_url": {
                 isRequired: true,
                 isValidUrl: true
+            },
+            "copy_right_info": {
+                isRequired: true,
+                maxlength: 255
             }
         },
         highlight: function (element) {
@@ -375,14 +450,30 @@ $(document).ready(function () {
         },
         unhighlight: function (element) {
             $(element).closest("div").removeClass("has-error");
-            $(element).parent().parent().next().next().find("span.validation-errors").html("");
+            if (element.id == "site_url") {
+                $(element).parent().parent().next().html("");
+            }
+            else {
+                $(element).parent().find("span.validation-errors").html("");
+            }
         },
         errorPlacement: function (error, element) {
-            $(element).parent().parent().next().next().find("span.validation-errors").html(error);
+            if (element.attr("id") == "site_url") {
+                $(element).parent().parent().next().html(error);
+            }
+            else {
+                $(element).parent().find("span.validation-errors").html(error);
+            }
         },
         messages: {
+            "site_name": {
+                isRequired: window.TM.App.LocalizationContent.OrganizationName
+            },
             "site_url": {
                 isRequired: window.TM.App.LocalizationContent.Urlvalidator
+            },
+            "copy_right_info": {
+                isRequired: window.TM.App.LocalizationContent.CopyRightValidator
             }
         }
     });
@@ -400,6 +491,7 @@ $(document).ready(function () {
                         $(element).valid();
                     }
                 }
+
                 isKeyUp = false;
             }
             else
@@ -438,10 +530,10 @@ $(document).ready(function () {
             }
         },
         highlight: function (element) {
-            $(element).closest(".form-group").addClass("has-error");
+            $(element).closest("div").addClass("has-error");
         },
         unhighlight: function (element) {
-            $(element).closest(".form-group").removeClass("has-error");
+            $(element).closest("div").removeClass("has-error");
             $(element).parent().find("span.validation-errors").html("");
         },
         errorPlacement: function (error, element) {
@@ -543,7 +635,6 @@ $(document).ready(function () {
             } else {
                 $("#windows-ad").tab("show");
                 $("#update-active-dir-settings").show();
-                //$("#UpdateAzureADSettings-bottom").addClass("hidden");
                 $("#save-db-settings").hide();
                 $("#connect-database").hide();
                 $("#change-connection").hide();
@@ -556,9 +647,17 @@ $(document).ready(function () {
     $(document).on("change", "#enablepoweredbysyncfusion", function () {
         if ($("#enablepoweredbysyncfusion").is(":checked") == false) {
             $("#poweredbysyncfusion").removeClass("show").hide();
+            $("#upload-poweredlogo-image").children().find(".e-uploadinput").attr('disabled', true);
+            $(".footer-logo").find(".logo-description h3").addClass('powerdby-logo-disabled');
+            $(".footer-logo").find(".logo-description p").addClass('powerdby-logo-disabled');
+            $("#upload-poweredlogo-image").children().find("#upload-poweredlogo-image_SelectButton").addClass('powerdby-logo-link-disabled');
         }
         else {
             $("#poweredbysyncfusion").removeClass("hide").show();
+            $("#upload-poweredlogo-image").children().find(".e-uploadinput").attr('disabled', false);
+            $(".footer-logo").find(".logo-description h3").removeClass('powerdby-logo-disabled');
+            $(".footer-logo").find(".logo-description p").removeClass('powerdby-logo-disabled');
+            $("#upload-poweredlogo-image").children().find("#upload-poweredlogo-image_SelectButton").removeClass('powerdby-logo-link-disabled');
         }
         addFooterSeparator();
     });
@@ -566,28 +665,61 @@ $(document).ready(function () {
     $(document).on("change", "#enablecopyrightinfo", function () {
         if ($("#enablecopyrightinfo").is(":checked") == false) {
             $("#copyrightinfo").removeClass("show").hide();
+            $("#site-copyright").attr('disabled', 'disabled');
         }
         else {
             $("#copyrightinfo").removeClass("hide").show();
+            $("#site-copyright").removeAttr('disabled');
         }
         addFooterSeparator();
     });
-    $("#mail-authentication-type").selectpicker("refresh");
+
+    if (typeof (isEnableCopyrightInfo) != "undefined" && isEnableCopyrightInfo) {
+        $("#enablecopyrightinfo").attr("checked", true);
+        $("#copyrightinfo").removeClass("hide").addClass("show");
+        $('#site-copyright').attr('disabled', false);
+    }
+    else {
+        $("#enablecopyrightinfo").attr("checked", false)
+        $("#copyrightinfo").removeClass("hide").addClass("hide");
+        $('#site-copyright').attr('disabled', true);
+    }
+
+    if (typeof (isEnablePoweredBySyncfusion) != "undefined" && isEnablePoweredBySyncfusion) {
+        $("#enablepoweredbysyncfusion").attr("checked", true)
+        $("#poweredbysyncfusion").removeClass("hide").addClass("show");
+        $("#upload-poweredlogo-image").children().find(".e-uploadinput").attr('disabled', false);
+        $(".footer-logo").find(".logo-description h3").removeClass('powerdby-logo-disabled');
+        $(".footer-logo").find(".logo-description p").removeClass('powerdby-logo-disabled');
+        $("#upload-poweredlogo-image").children().find("#upload-poweredlogo-image_SelectButton").removeClass('powerdby-logo-link-disabled');
+    }
+    else {
+        $("#enablepoweredbysyncfusion").attr("checked", false)
+        $("#poweredbysyncfusion").removeClass("hide").addClass("hide");
+        $("#upload-poweredlogo-image").children().find(".e-uploadinput").attr('disabled', true);
+        $(".footer-logo").find(".logo-description h3").addClass('powerdby-logo-disabled');
+        $(".footer-logo").find(".logo-description p").addClass('powerdby-logo-disabled');
+        $("#upload-poweredlogo-image").children().find("#upload-poweredlogo-image_SelectButton").addClass('powerdby-logo-link-disabled');
+    }
 });
 
 $(document).on("change", "#secure-mail-authentication", function () {
     getEmailPassword();
 });
 
-$(document).on("change", "#mail-authentication-type", function () {
+$(document).on("change", "input[name='mail-authentication-type']", function () {
     var authTextBoxes = $(".mail-credentials");
 
     if (parseInt($(this).val()) === 1) {
         authTextBoxes.removeAttr("disabled");
     } else {
-        authTextBoxes.attr("disabled", "disabled").val("").parent().parent().removeClass("has-error");
+        authTextBoxes.attr("disabled", "disabled").val("").parent().removeClass("has-error");
         authTextBoxes.siblings(".validation-errors").text("");
     }
+});
+
+$(document).on("change click", '[data-id="enable-ssl"], #site_url', function () {
+    $(".exist-domain-info").addClass("show").removeClass("hide");
 });
 
 $(document).on("mouseenter", ".highlight-image", function () {
@@ -687,6 +819,9 @@ function RemoveUploadBoxError() {
     $("#upload-favicon-image-textbox").removeClass("ValidationErrorImage").val(window.TM.App.LocalizationContent.BrowsePath);
     $("#upload-favicon-image-textbox").closest("div").removeClass("has-error");
     $("#upload-favicon-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
+    $("#upload-poweredogo-image-textbox").removeClass("ValidationErrorImage").val(window.TM.App.LocalizationContent.BrowsePath);
+    $("#upload-poweredogo-image-textbox").closest("div").removeClass("has-error");
+    $("#upload-poweredogo-image-textbox").parent().find(".e-box").removeClass("upload-error-border");
 }
 
 function parseURL(str) {

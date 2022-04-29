@@ -12,6 +12,11 @@
     var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var reportServerApiUrl = new DashboardServerApiEndPoints(globalAppSettings).BoldReportsApiUrl();
+    var reportServiceUrl = designerServiceUrl + "/api/Designer";
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
 }
 
 
@@ -23,13 +28,27 @@
     <title>Create Data Source - @globalAppSettings.SystemSettings.OrganizationName</title>
     @if (ServerAppConfig.IsSelfHosted)
     {
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+</environment>
         <environment include="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
         </environment>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
@@ -38,27 +57,35 @@
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
-        </environment>      
+        </environment>
+
         <environment include="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
         </environment>
     }
     else
     {
-        @*<link href="@ServerAppConfig.ReportServiceCdnLink/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />*@
-        @*<script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/extension.config.js'></script>
-            <script type='text/javascript' src='@ServerAppConfig.ReportServiceCdnLink/extensions/ssas.data.js'></script>*@
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
         <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
-        @*<link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-base.css" rel="stylesheet" />
-            <link href="@ServerAppConfig.StaticCdnLink/css/essentialjs/ej2-notifications.css" rel="stylesheet" />*@
+        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
+        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js"></script>
@@ -67,16 +94,41 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js"></script>
         </environment>
+
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        </environment>
     }
-    <script>
-        let isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
-        let isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
-        let datasource = "@Url.Action("DataSources", "DataSources")";
-        let isWindows = @Json.Serialize(@isWindowsPlatform);
-        var dataConnectorPath = isSelfHosted ? "@reportServerResourceUrl" + "/cdn/scripts/datasource/dataconnectors.json" : "https://cdn.boldreports.com/static/essentialjs/scripts/datasources/dataconnectors.json";
-    </script>
+<script>
+        var isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var datasource = "@Url.Action("DataSources", "DataSources")";
+        var isWindows = @Json.Serialize(@isWindowsPlatform);
+        var designerToken = "@ViewBag.AccessToken";
+        var connectionList = null;
+        var availableDSList = [];
+        var designerInstance;
+        var serverURL = "@reportServerApiUrl";
+        var serviceURL = "@designerServiceUrl" + "/api/Designer";
+        var getDataConnectors = "@designerServiceUrl" + "/api/v1.0/configuration/GetDataConnectors/";
+        var custombrandName = "@ServerAppConfig.CustomBrandName";
+        var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
+        var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+</script>
 </head>
 <body class="cd" ng-app="createDataSourceApp">
+    <div id="designer" style="display:none !important"></div>
     <div class="loader-blue loader-icon cd-loader" id="layout-body-loader-icon">
         <svg class="circular">
             <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
@@ -84,25 +136,17 @@
     </div>
 
     <environment include="Development,CloudDevelopment">
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/extensions/ssas.data.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
     </environment>
     <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
