@@ -1,0 +1,176 @@
+﻿@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<script>
+    var addDatasetUrl = "@Url.Action("AddSharedDataset", "DataSets")";
+    var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
+    var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "Datasets")";
+    var oldDatasetID = "";
+
+    function load() {
+        if (($(parent.window).width()) > 1400) {
+            $(".dialog").addClass("iframe");
+        }
+
+        if (($(parent.window).width()) < 1400) {
+            $(".dialog").removeClass("iframe");
+        }
+    }
+</script>
+
+@Html.Partial("~/Views/Shared/_LoaderIcon.cshtml")
+
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js"></script>
+</environment>
+
+<body onload="load()">
+    <div id="PopupContainer" class="dialog">
+        <div class="col-md-12 dialog-header">
+            <div class="col-xs-11 no-padding">
+                <span class="su su-copy Head-icon"></span>
+                <span class="PopupTitle">[[[Change Data source]]]</span>
+                <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
+            </div>
+            <div class="col-xs-1 no-padding">
+                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose close-dialog"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        @if (TempData["ErrorMessage"] == null)
+        {
+            if (isSelfHosted && ViewBag.Action == "ChangeDataSource")
+            {
+                <form class="dialog-body col-xs-12 no-padding copy-move-category" id="copy_dataset_form">
+                    <div class="copyitem-parent" id="copyitem_parent_div">
+
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="item-name-division">
+                            <div class="col-xs-3 no-padding text-right text-label">[[[Dataset name]]]<span class="mandatory"></span></div>
+                            <div class=" no-padding col-xs-1"></div>
+                            <div class="col-xs-7 no-padding">
+                                <span>
+                                    <input type="text" id="copy_dataset_name" name="itemName" maxlength="255" value="@ViewBag.FullItemName" class="form-control site-orgname-fields text" />
+                                    <span id="validate_dataset_name" class="validation-message text"></span>
+                                    <div id="plugin_validation" class="validation-message text"></div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="enable-overwrite-shareddataset col-xs-12 padding10 no-right-padding">
+                            <div class="col-xs-3 no-padding"></div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                @Html.CheckBox("overwrite_shareddataset", new { @class = "material-checkbox-overwrite" })
+                                <label for="overwrite_shareddataset" class="toggle-space">
+                                    <span class="checkbox-text">[[[Overwrite]]]</span>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="ItemIdHidden" value="@Context.Request.Form[" itemId"]" />
+                        <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
+                        <div id="copy_dataset">
+                            <div class="col-xs-12 padding20 no-bottom-padding no-top-padding" id="copy_dataset_label_division">
+                                <hr id="copy_dataset_separator" />
+                                <label class="col-xs-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
+                                <label class="col-xs-3 no-padding text-right text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
+                            </div>
+                            <ul class="list-unstyled" id="change_datasource_div"></ul>
+                        </div>
+                    </div>
+                </form>
+            }
+            else if (!isSelfHosted)
+            {
+                <form class="dialog-body col-xs-12 no-padding copy-move-category" id="item_action_form">
+                    <div class="copyitem-parent" id="copyitem_parent_div">
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="item-name-division">
+                            <div class="col-xs-3 no-padding text-right text-label">[[[Name]]]<span class="mandatory">*</span></div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-7 no-padding">
+                                <span>
+                                    <input type="text" id="copy_dataset_name" name="itemName" maxlength="255" value="@ViewBag.FullItemName" class="form-control site-orgname-fields text" />
+                                    <span id="validate_dataset_name" class="validation-message text"></span>
+                                    <div id="plugin_validation" class="validation-message text"></div>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="ItemIdHidden" value="@Context.Request.Form[" itemId"]" />
+                        <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
+                        <div class="enable-overwrite-shareddataset col-xs-12 padding10 no-right-padding">
+                            <div class="col-xs-3 no-padding"></div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                @Html.CheckBox("overwrite_shareddataset", new { @class = "material-checkbox-overwrite" })
+                                <label for="overwrite_shareddataset" class="toggle-space">
+                                    <span class="checkbox-text">[[[Overwrite]]]</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="copy_dataset">
+                            <div class="col-xs-12 padding20 no-bottom-padding no-top-padding" id="copy_dataset_label_division">
+                                <hr id="copy_dataset_separator" />
+                                <label class="col-xs-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
+                                <label class="col-xs-3 no-padding text-right text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
+                            </div>
+                            <ul class="list-unstyled" id="change_datasource_div"></ul>
+                        </div>
+                    </div>
+                </form>
+            }
+            <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                <div class="col-xs-6">
+                    <span class="ErrorMessage text-left"></span>
+                    <span class="SuccessMessage"></span>
+                </div>
+                <div class="col-xs-6 rightAlign">
+                    <input type="button" title="" id="copy_dataset_button" class="app-button app-primary-button app-btn-primary" onclick="addDataSet()" value="[[[Save]]]" />
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Cancel]]]" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="dialog-body col-xs-12 no-padding">
+                <div class="col-xs-12 no-left-padding padding20 no-right-padding bottom-margin30">
+                    <div class="permission-denied">@TempData["ErrorMessage"]</div>
+                </div>
+                <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                    <div class="col-xs-12 no-padding text-center">
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script>
+        $(document).ready(function () {
+            var sharedDataSource = @Html.Raw(Json.Serialize(ViewBag.SharedDataSource));
+            var availableSharedDS = @Html.Raw(Json.Serialize(ViewBag.AvailableSharedDS));
+            oldDatasetID = "@ViewBag.ItemId";
+        if (sharedDataSource && sharedDataSource.length > 0) {
+            $("#copy_dataset").css('display', 'block');
+        }
+        var html = "";
+        for (var dataSource = 0; dataSource < sharedDataSource.length; dataSource++) {
+            html += '<li class="copy-shared-datasource"><div class="col-xs-12 padding20 top-padding20 bottom-padding20" id="action-datasource-division"><div class="col-xs-3 no-padding text-right text-label">' + sharedDataSource[dataSource].Name + '</div>' +
+                '<div class="col-xs-1 no-padding"></div><div class="col-xs-7 no-padding dropup"><select class="datasource-picker" id="sharedDataSourceList' + dataSource + '" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:230px" data-size="3" title="' + 'SelectDataSource' + '">';
+            var option = "";
+            for (var dataset = 0; dataset < availableSharedDS.length; dataset++) {
+                option += '<option data-key=' + sharedDataSource[dataSource].Name + ' data-id=' + availableSharedDS[dataset].Id + ' value=' + availableSharedDS[dataset].Name + '>' + availableSharedDS[dataset].Name + '</option>';
+            }
+            html += option + '</select ></div></div></li>';
+        }
+        $("#change_datasource_div").html(html);
+        for (var dataSource = 0; dataSource < sharedDataSource.length; dataSource++) {
+            $("#sharedDataSourceList" + dataSource).selectpicker("refresh");
+        }
+        window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+                    });
+    </script>
+</body>

@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <link href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.min.css" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.min.css" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.min.js"></script>
+        </environment>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
+    }
+    else
+    {
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.min.css" />
+        </environment>
+        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
+        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.min.js"></script>
+        </environment>
+        <script type="text/javascript" src="@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
+    }
+    <script>
+        let basePath = "@Url.Content("~/")";
+        let dataset = "@Url.Action("datasets", "datasets")";
+    </script>
+</head>
+<body ng-app="createDataSetApp">
+    <div class="cds-container" ng-controller="createDataSetCtrl">
+        @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_Header.cshtml"); }
+        <div class="cds-cards" ng-if="!useExistingDataSource">
+            @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_DataSetCards.cshtml"); }
+        </div>
+        <div class="cds-existing-container" ng-if="useExistingDataSource">
+            @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_DataSet.cshtml"); }
+        </div>
+        <div class="ds-toast"></div>
+
+    </div>
+</body>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset.min.js"></script>
+</environment>
+</html>

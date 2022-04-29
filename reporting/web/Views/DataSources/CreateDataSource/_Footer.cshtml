@@ -1,0 +1,9 @@
+﻿<div class="cd-footer-container" ng-controller="connectDataFooterCtrl">
+    <div ng-if="!datasetCreation">
+        <button type="button" class="cd-footer-save-btn secondary-button app-btn-secondary" ng-click="onSaveBtnClick()">Save and Exit</button>
+        <button type="button" class="cd-footer-dataset-btn primary-button app-btn-primary" ng-click="onDataSetBtnClick()">Save and Create DataSet</button>
+    </div>
+    <div ng-if="datasetCreation">
+        <button type="button" class="cd-footer-connect-btn primary-button app-btn-primary" ng-click="onProceedBtnClick()">Proceed to Query Designer</button>
+    </div>
+</div>

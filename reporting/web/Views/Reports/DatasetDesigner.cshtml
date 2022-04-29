@@ -1,0 +1,499 @@
+﻿<!DOCTYPE html>
+@using System.Globalization;
+@{
+    Layout = null;
+    var reportPath = string.Empty;
+    var categoryName = string.Empty;
+    var reportName = string.Empty;
+    var datasourceName = string.Empty;
+    var globalAppSettings = _globalAppSettings;
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+
+    if (!string.IsNullOrWhiteSpace(ViewBag.datasourceName))
+    {
+        datasourceName = ViewBag.datasourceName;
+    }
+    var language = CultureInfo.CurrentCulture.Name;
+    var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var faviconLogo = globalAppSettings.SystemSettings.FavIcon;
+    var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
+}
+
+<html lang="en" style="height:100%;width:100%">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    @if (ViewBag.datasetName != null)
+    {
+        <title>@Html.Raw(ViewBag.datasetName) - [[[Design Dataset]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+    }
+    else
+    {
+        <title>Untitled - [[[Design Dataset]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+    }
+
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css"  />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css"/>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
+        </environment>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-data.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-svg-base.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/querydesigner/ej.localetexts.@string.Concat(language,".js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
+        </environment>
+        <link href="@reportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+        </environment>
+        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
+        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
+        </environment>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-data.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
+        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportdesigner.min.js'></script>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/qrbarcode.reportitem.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/barcode.reportitem.js'></script>
+    }
+
+    <link rel="icon" href="@faviconLogo" onerror="if (this.href !== null && this.href.toLowerCase() !== '@cdnLink/cdn/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon') this.href = '@cdnLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon';" />
+
+    @if (!ServerAppConfig.IsCustomThemeForMenu)
+    {
+        <style>
+            :root {
+                --nav-menu-bg-color: var(--white);
+                --nav-menu-text-color: var(--primary-black);
+                --nav-menu-text-sec-color: var(--grey-700);
+                --nav-menu-content-color: var(--grey-800);
+                --nav-menu-active-color: var(--blue-lighter);
+                --nav-menu-active-text-color: var(--blue);
+                --nav-menu-active-sec-color: var(--blue);
+                --nav-menu-active-content-color: var(--grey-800);
+                --nav-menu-hover-color: var(--grey-300);
+                --nav-menu-hover-text-color: var(--primary-black);
+                --nav-menu-hover-text-sec-color: var(--grey-700);
+                --nav-menu-hover-content-color: var(--grey-800);
+                --nav-menu-create-icon-bgcolor: var(--blue);
+                --nav-menu-separtor-icon-color: var(--grey-400);
+                --item-menu-hover-bg-color: var(--white);
+                --item-menu-hover-border-color: var(--blue);
+                --item-menu-section-bg-color: var(--blue-lighten);
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            :root {
+            @ServerAppConfig.ThemeStyle
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-section-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-bg-color: var( --nav-menu-hover-color);
+                --item-menu-hover-border-color: var( --nav-menu-hover-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+
+    <script>
+        var controlId = 'container';
+		var isEditReport = false;
+
+        var designerToken = "@ViewBag.AccessToken";
+        var categoryName = "@Html.Raw(categoryName)";
+        var reportName = "@Html.Raw(reportName)";
+        var datasetName = "@Html.Raw(ViewBag.datasetName)";
+        var description = "@Html.Raw(ViewBag.description)";
+        var isEdit = "@ViewBag.isEdit";
+		var datasource = "@Html.Raw(ViewBag.datasourceName)";
+        isEdit = isEdit.toLowerCase();
+
+		if(isEdit === "true"){
+		    isEditReport = true;
+        }
+
+        var serviceUrl = "@reportServiceUrl.TrimEnd('/')" + "/api/Designer";
+        var isSubmit = true;
+		var ctrlId = 'container';
+
+		$(document).ready(function () {
+            renderQueryDesigner();
+
+            $(document).on("click", "#btn-item-preview", function () {
+                $("#btn-item-design").show();
+                $(".design-item").css("display", "block");
+                $("#btn-item-preview").hide();
+                $(".preview-item").css("display", "none");
+            });
+            $(document).on("click", "#btn-item-design", function () {
+                $("#btn-item-preview").show();
+                $(".preview-item").css("display", "block");
+                $("#btn-item-design").hide();
+                $(".design-item").css("display", "none");
+            });
+        });
+
+		function renderQueryDesigner() {
+        var designerModel = {
+            serviceUrl: serviceUrl,
+        toolbarSettings: {
+            items: ej.QueryDesigner.ToolbarItems.All & ~ej.QueryDesigner.ToolbarItems.Cancel & ~ej.QueryDesigner.ToolbarItems.Save & ~ej.QueryDesigner.ToolbarItems.InputDataSet
+        },
+        create: $.proxy(controlInitialization, this),
+        toolbarRendering: $.proxy(renderQueryToolbar, this),
+        reportServerUrl: "@reportServerApiUrl",
+        serviceAuthorizationToken: designerToken,
+        locale: '@language'
+       };
+        var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
+        }
+
+	   function controlInitialization(args) {
+		if(isEditReport){
+           editDataSet(datasetName);
+		}else{
+		    newDataSet(datasource);
+		}
+      }
+
+function renderQueryToolbar(args) {
+    var toolbarTarget = $(args.target);
+    toolbarTarget.find('#' + ctrlId + '_table_edit_dataset').parent().css('display','none');
+    var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
+    var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save and Exit]]]", {}, { id: ctrlId + '_query_save_btn' });
+    $divsave.append(saveButton);
+    toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divsave);
+    saveButton.ejButton({
+        width: '83px', showRoundedCorner: false, size: 'mini',
+        contentType: ej.ContentType.TextOnly, 'height': '25px',
+        'click': $.proxy(this.saveQueryDataSet, this)
+    });
+    var $divcancel = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
+    var cancelButton = this.btnCancelTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Cancel]]]", {}, { id: ctrlId + '_query_cancel_btn' });
+    $divcancel.append(cancelButton);
+    toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divcancel);
+    cancelButton.ejButton({
+        width: '78px', showRoundedCorner: false, size: 'mini',
+        contentType: ej.ContentType.TextOnly, 'height': '25px',
+        'click': $.proxy(this.cancelDataSet, this)
+    });
+}
+
+function cancelDataSet() {
+    window.location.href = '@Url.Action("DataSets", "DataSets")';
+}
+
+function saveQueryDataSet(event) {
+    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+    queryDesigner.getDataSet(function (args) {
+        doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+            'designerAction': isEditReport ? 'SaveSharedDataSet' : 'CreateSharedDataSet',
+            'sharedData': args.newSharedDataSet,
+            'name': datasetName,
+            'sharedDataMapping': args.sharedDataMapping,
+            'customData': {
+                'description': description
+            }
+        }), {
+            fnction: function (args) {
+                if (args && typeof (args) === 'string' && args.indexOf('Sf_Exception') !== -1) {
+                    alertMessage(false)
+                } else {
+                    alertMessage(true);
+                    if (!isEditReport) {
+                        isEditReport = true;
+                    }
+                }
+            },
+            indicator: [function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                },
+                function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                }]
+        });
+    });
+}
+
+function alertMessage(status) {
+    var toastMessage;
+    var className;
+    var toastTitle;
+    if (status) {
+        if (isEditReport) {
+            toastMessage = "[[[DataSet has been updated successfully]]]";
+        } else {
+            toastMessage = "[[[DataSet has been added successfully]]]";
+        }
+        className = 'e-toast-success';
+        toastTitle = "[[[Success!]]]";
+    } else {
+        if (isEditReport) {
+            toastMessage = "[[[An error occured to update the dataset]]]";
+        } else {
+            toastMessage = "[[[An error occured to add the dataset]]]";
+        }
+        className = 'e-toast-danger';
+        toastTitle = "[[[Error!]]]";
+    }
+    var toast = new ejs.notifications.Toast({
+        title: toastTitle,
+        content: toastMessage,
+        target: document.body,
+        cssClass: className,
+        timeOut: 3000,
+        position: { X: 'Right', Y: 'Top' },
+        showCloseButton: true,
+        newestOnTop: true,
+        animation: {
+            hide: { effect: 'SlideRightOut' },
+            show: { effect: 'SlideRightIn' }
+        }
+    });
+    toast.appendTo('#toast-message-container');
+    toast.show();	
+    if (status) {
+        setTimeout(cancelDataSet, 3000);
+    }
+}
+
+function newDataSet(selectData) {
+    var designer = $('#' + ctrlId).data('boldReportQueryDesigner');
+    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+        'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
+    }), {
+        fnction: function (args) {
+            var dataSources = [];
+            for (var index = 0; index < args.length; index++) {
+                var dataSource = ej.ReportUtil.createDataSource();
+                dataSource.ConnectionProperties = null;
+                dataSource.DataSourceReference = args[index].Id;
+                dataSource.Name = args[index].Name;
+                dataSources.push(dataSource);
+            }
+            designer.datasetName = datasetName;
+            designer.newDataSet(selectData, dataSources);
+        },
+        indicator: [function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+            },
+            function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+            }]
+    });
+}
+
+function editDataSet(dataSetName) {
+    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+        'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
+    }), {
+        fnction: function (args) {
+            var dataSources = [];
+            for (var index = 0; index < args.length; index++) {
+                var dataSource = ej.ReportUtil.createDataSource();
+                dataSource.ConnectionProperties = null;
+                dataSource.DataSourceReference = args[index].Id;
+                dataSource.Name = args[index].Name;
+                dataSources.push(dataSource);
+            }
+            editSharedDataSet(dataSetName, dataSources);
+        },
+        indicator: [function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+            },
+            function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+            }]
+    });
+}
+
+function downloadDataSet() {
+    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+    queryDesigner.getDataSet(function (args) {
+        ej.ReportUtil.doPostBack(serviceUrl + '/PostDesignerAction/', { 'name': args.newSharedDataSet.Name + '.rsd', 'sharedData': JSON.stringify(args.newSharedDataSet) }, queryDesigner);
+    });
+}
+
+function editSharedDataSet(dataSetName, dataSources) {
+    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+        'designerAction': ej.ReportUtil.DesignerAction.sharedDataSet,
+        'reportInfo': {
+            'dataSetRefer': dataSetName
+        }
+    }), {
+            fnction: function (args) {
+            queryDesigner.datasetName = datasetName;
+            queryDesigner.editDataSet(args, dataSources);
+        },
+        indicator: [function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+            },
+            function () {
+                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+            }]
+    });
+}
+
+function doAjaxPost(url, jsonObj, callBack) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        async: true,
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: jsonObj,
+        beforeSend: function (req) {
+            req.setRequestHeader('ServerUrl', '@reportServerApiUrl');
+            req.setRequestHeader('serviceAuthorizationToken', designerToken);
+            if (callBack && callBack.indicator && callBack.indicator.length > 0) {
+                ej.ReportUtil.invokeCallBack(callBack.indicator[0], {});
+            }
+        },
+        success: function (data) {
+            if (data && typeof (data.Data) !== 'undefined') {
+                data = data.Data;
+            }
+            var jsonData = data;
+            if (callBack) {
+                if (callBack.indicator && callBack.indicator.length > 0) {
+                    ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+                }
+                if (callBack.fnction) {
+                    ej.ReportUtil.invokeCallBack(callBack.fnction, jsonData);
+                }
+            }
+        },
+        error: function (msg, textStatus, errorThrown) {
+            if (callBack && callBack.indicator && callBack.indicator.length > 0) {
+                ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+            }
+        }
+    });
+}
+    </script>
+</head>
+<body style="overflow:hidden;position:static;margin:0; padding: 0;height:100%;width:100%">
+    <div id="toast-message-container"></div>
+    <div id="container" style="height:100%;width:100%"></div>
+</body>
+</html>

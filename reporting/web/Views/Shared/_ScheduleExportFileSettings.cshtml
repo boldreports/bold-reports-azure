@@ -1,0 +1,136 @@
+﻿﻿@{
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
+    var globalAppSettings = _globalAppSettings;
+    var defaultPath = ViewBag.Path;
+}
+<script type="text/javascript">
+    var exportPathExist = "@Url.Action("CheckExportPathExist", "Administration")";
+    var UpdateScheduleExportFileSetting = "@Url.Action("UpdateScheduleExportFileSetting", "Administration")";
+    initializeFileSetting(1);
+    function EnablePasswordCondition() {
+        EnablePasswordConditionSection();
+        $("#password-condition-container").show();
+        $("#default-password-info").hide();
+    };
+    function DisablePasswordCondition() {
+        DisablePasswordConditionSection();
+        $("#password-condition-container").hide();
+        $("#default-password-info").show();
+    };
+
+    $(document)
+        .ready(function () {
+            $("#default-password, #custom-password").prop("disabled", "disabled");
+            $("#enable-password-protection").prop("disabled", "disabled");
+        });
+</script>
+
+<form id="look-and-feel-form" class="col-md-12 form-horizontal no-padding" autocomplete="off">
+    <div id="schedule-settings-body" class="general-sub-section admin-page-body schedule-password-body">
+        <h3 class="title col-xs-12  sub-section-heading">[[[Mail attachment]]]</h3>
+         @*<div id="schedule-settings-body" class="admin-page-body schedule-password-body">*@
+        <div class="col-lg-12 col-md-12 col-sm-12 check-box-label form-group">
+            <input type="checkbox" id="enable-compression" />
+            <label class="app-checkbox-label normal-font notransition" for="enable-compression">Enable File Compression</label>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 no-padding form-group">
+@Html.Label("enable-password-protection-label", "[[[Enable Password Protection]]]", new { @class = "col-lg-4 col-md-4 col-sm-4 app-textbox-label no-margin notransition" })
+<div class="col-lg-8 col-md-8 col-sm-8 no-margin form-input-field pull-left switch-align">
+    <span class="material-switch text-left">
+        <input type="checkbox" id="enable-password-protection" name="isPasswordProtected" />
+        <label for="enable-password-protection" class="label-primary cls-margin-top"></label>
+    </span>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 no-padding form-group">
+@Html.Label("password-type-label", "[[[Password Type]]]", new { @class = "col-lg-4 col-md-4 col-sm-4  app-textbox-label no-margin password-label-align" })
+<div class="col-lg-8 col-md-8 col-sm-8 no-margin form-input-field pull-left">
+    <div class="pull-left col-lg-4 col-md-4 col-sm-4 no-margin no-padding">
+@Html.RadioButton("password-type", "", new { @class = "css-radio", @checked = "checked", onclick = "DisablePasswordCondition()", id = "default-password" })
+@Html.Label("default-password", "[[[Default Password]]]", new { @class = "pull-left app-radio-label normal-font cls-margin-top8 notransition" })
+</div>
+<div class="pull-left col-lg-4 col-md-4 col-sm-4 no-margin no-padding">
+@Html.RadioButton("password-type", false, new { @class = "css-radio", onclick = "EnablePasswordCondition()", id = "custom-password" })
+@Html.Label("custom-password", "[[[Custom Password]]]", new { @class = "pull-left app-radio-label normal-font cls-margin-top8 notransition" })
+</div>
+<div class="bg-info col-lg-8 col-md-8 col-sm-8" id="default-password-info">
+    [[[Default password creation uses the first and last four characters of your email address.]]]
+</div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 no-padding form-group" id="password-condition-container" style="display: none">
+@Html.Label("password-condition-label", "[[[Password Condition]]]", new { @class = "col-lg-4 col-md-4 col-sm-4  app-textbox-label no-margin notransition passwordcondition-label-align" })
+<div class="col-lg-8 col-md-8 col-sm-8 no-margin form-input-field pull-left" id="password-condition-section">
+    <div class="password-condition-section col-lg-12 col-md-12 col-sm-12 cls-margin-bot">
+        <div class="i-search-fields  pull-left">
+            <select data-width="50px" class="select-picker no-padding field-key-position" disabled="disabled" data-size="2"></select>
+        </div>
+        <div class="pull-left cls-margin">
+@Html.TextBox("field-key-count", "", new { @class = "form-control field-key-count pull-left numeric-text-box", disabled = "disabled" })
+</div>
+<div class="pull-left">
+@Html.Label("field-key-label", "[[[character of]]]", new { @class = "pull-left app-textbox-label no-margin notransition" })
+<div class="i-search-fields  pull-left cls-padleft10">
+    <select data-width="90px" class="selectpicker select-picker field-key" disabled="disabled" data-size="4"></select>
+</div>
+</div>
+<span class="su-add pwd-condition-btn app-textbox-label no-margin" data-toggle="tooltip" data-placement="right" title="[[[Add New Condition]]]"></span>
+</div>
+</div>
+</div>
+</div>
+@if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
+    {
+<div class="branding-sub-section admin-page-body">
+    <h3 class="title col-xs-12  sub-section-heading blur-whitelable-content">[[[Save as file]]]</h3>
+    <div class="mail-attachment col-sm-12 col-xs-12 no-padding no-margin">
+        <div class="col-sm-12 col-xs-12 save-as-file-types" style="display:block !important">
+            <div class="col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-4  app-textbox-label no-margin password-label-align no-padding label-align-center"><label class="path-label" style="font-weight:normal">[[[Export path]]]</label></div>
+                <div class="col-sm-4 col-xs-4">
+                    <input type="text" class="form-control" id="export-directory-path" value="@globalAppSettings.SystemSettings.DirectoryPath" dataType="string">
+                    <div class="col-sm-3 col-xs-3 no-padding label-align-center directory-check" style="display: none;"></div>
+                </div>
+                <div class="export-info col-sm-2 col-xs-2 label-align-center">
+                    <span class="dropdown-toggle cursor-type" id="export-path-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                    <div class="col-xs-2 dropdown-menu" id="exportpath-help-message" role="menu">
+                        [[[You have to provide root directory path for saving the scheduled report on server location. This will be a default root directory path ]]] @defaultPath [[[for saving the schedule report on server folder. You can also store it in any other local server folder.]]]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="branding-sub-section admin-page-body">
+        <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP Settings]]]</h3>
+        <div id="location-export-options" class="col-sm-8 col-xs-8 no-margin">
+            <div id="enable-checkbox">
+                <input type="checkbox" id="location-export" />
+                <label class="app-checkbox-label normal-font notransition" for="location-export">FTP Location Export</label>
+            </div>
+            <form class="col-sm-12 col-xs-12 no-padding" id="ftp-form">
+                <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Host]]]</label>
+                        <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
+                        <div id="hostname-validation" style="display: none"></div>
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Username]]]</label>
+                        <input type="text" class="form-control ftp-user-name" id="ftp-settings-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
+                        <div id="username-validation" style="display: none"></div>
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+                        <label class="path-label">[[[Password]]]</label>
+                        <input type="password" class="form-control password-field ftp-password" id="ftp-settings-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
+                        <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
+                        <div id="password-validation" style="display: none"></div>
+                    </div>
+                    <div id="ftp-validation-message"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+</form>
