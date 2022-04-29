@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+    <html class="report-server">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+        <title>
+            @ViewBag.Title
+        </title>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-datasets.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-datasets.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/edit-datasets.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/edit-datasets.min.js"></script>
+        </environment>
+
+    <script>
+    var editDatasetUrl = "@Url.Action("EditDataset", "Datasets")";
+    var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
+
+    $(function () {
+        createEditDatasetPopup(@Html.Raw(Json.Serialize(ViewData["datasetInfo"])));
+    })
+    </script>
+</head>
+<body>
+    <div id="PopupContainer" class="no-padding dialog edit-dataset">
+        <div class="col-xs-12 dialog-header">
+            <span class="su su-dataset Head-icon"></span>
+            <span class="PopupTitle">[[[Update Dataset]]]</span>
+            <a onclick="closePopup()" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+        </div>
+
+        <div class="dialog-body col-xs-12 no-padding file-content-height">
+            <div id="general-file-container">
+                <table class="edit-dataset-table">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-2 text-right"><div class="dataset-name">[[[Name]]]<span class="mandatory">*</span></div></td>
+                            <td class="col-md-10">
+                                <span>
+                                    <input type="text" id="file_name" name="Name" class="form-control text-field  text" maxlength="255" tabindex="1" />
+                                    <div id="validate-name" class="validation-message text"></div>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-2 text-right"><div class="">[[[Description]]]</div></td>
+                            <td class="col-xs-10">
+                                <textarea style="resize: none;" name="description" class="form-control text-field  text" maxlength="1024" id="file_description" tabindex="2"></textarea>
+                                <span class="notification help-text">
+                                    *[[[1024 characters maximum]]]
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-xs-12 dataset-dialog-footer rightAlign">
+            <div class="pull-right">
+                <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" onclick="onUpdateClick()" disabled tabindex="4">
+                <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditDataSet" onclick="closePopup()" value="[[[Cancel]]]" tabindex="4">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

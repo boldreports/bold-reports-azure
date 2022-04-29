@@ -1,0 +1,319 @@
+﻿@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+    var customHelpLinkDomain = "@(ServerAppConfig.AllowCustomHelpLink ? ServerAppConfig.AppSettings.Documentation.BaseUri : string.Empty)";
+    var custombrandName = "@ServerAppConfig.CustomBrandName";
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+}
+
+<!DOCTYPE html>
+<html class="dashboard-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <style>
+        body {
+            background-color: white !important;
+            padding: 0.5em 1em !important;
+        }
+    </style>
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+</head>
+<body class="schedule-dialog">
+    <script>
+        var manageLicenseUrl = "@(isSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
+        var contactUsUrl = "https://www.@(GlobalAppSettings.BrandingDomain)/contact";
+    </script>
+    <input type="hidden" data-item-type="dashboard" id="itemType" />
+    <input type="hidden" value="@ViewBag.Fullname" id="fullname" />
+    <input type="hidden" value="@ViewBag.Username" id="userName" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.OrganizationName" id="orgName" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.TimeFormat.ToString()" id="timeFormat" />
+
+    <div class="modal" tabindex="-1" role="dialog" id="schedule-div">
+        <span id="item-id" hidden>@Context.Request.Query["itemId"]</span>
+        <div class="modal-dialog col-lg-12 popup-header no-margin no-padding" role="document">
+            <div class="modal-content col-lg-12" id="popup-container" data-spy="scroll">
+                <div class="modal-header no-margin col-sm-12">
+                    <div class="col-sm-10 col-xs-10 no-padding pull-left nav-top"><span title="[[[Schedule]]]" class="su su-nav-schedule col-lg-1 col-xs-1 col-sm-1 col-md-1 header-icon"></span><span class="popup-title schedule-popup-title ellipsis col-lg-9 col-xs-9 col-sm-9 col-md-9 no-padding"></span></div>
+                    <div class="col-sm-2 col-xs-2 title no-padding"><a href="javascript:void(0);" class="popup-close" title="[[[Close]]]"><span id="schedule-popup" class="su su-close pull-right"></span></a></div>
+                    <div id="windowCaption" class="report-name no-padding col-xs-12 link-item-name ellipsis" style="font-size: 12px;">
+                        [[[Create a data driven or a time based schedule]]]
+                    </div>
+                </div>
+                <div class="modal-body share-popup col-xs-12" id="schedule-dialog">
+                    <div class="col-sm-12 col-xs-12 no-margin no-padding schedule-popup-body">
+                        <div class="col-sm-12 col-xs-12 no-padding">
+                            <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Category ]]]<span class="mandatory">*</span></label></div>
+                            <div class="category-dropdown col-sm-4 col-xs-4">
+                                <select id="selected_category" data-live-search="true" title='[[[Select category]]]' name="categoryId" class="selectpicker col-sm-4 col-xs-4" data-size="5" data-none-results-text="[[[No results match]]]">
+                                    @if (ViewBag.CategoryId != null)
+                                    {
+                                        <option value="@ViewBag.CategoryId" selected="selected">@Context.Request.Query["categoryName"].ToString()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
+                                    }
+
+                                </select>
+                                <span id="category-message" class="ErrorMessage validate-error">[[[Please select category]]]</span>
+                                <input type="hidden" id="category_change_validation" name="isCategoryChanged" value="false" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no-padding">
+                            <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Report ]]]<span class="mandatory">*</span></label></div>
+                            <div class="dashboard-dropdown col-sm-4 col-xs-4">
+                                <select id="selected_dashboard" data-live-search="true" title='[[[Select report]]]' name="dashboardId" class="selectpicker col-sm-4 col-xs-4" data-size="5" data-none-results-text="[[[No results match]]]">
+                                    @if (Context.Request.Query["actionType"].ToString().ToLower() == "create")
+                                    {
+
+                                        if (@Context.Request.Query["itemId"] != "")
+                                        {
+                                            <option value="@Context.Request.Query["itemId"]" selected="selected">@Context.Request.Query["itemName"].ToString()</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select report]]]</option>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        <option value="@Context.Request.Query["itemId"]" selected="selected">@Context.Request.Query["itemName"].ToString()</option>
+                                    }
+
+                                </select>
+                                <input type="hidden" id="dashboard_change_validation" name="isDashboardChanged" value="false" />
+                                <span id="dashboard-message" class="ErrorMessage validate-error">[[[Please select report]]]</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no-padding">
+                            <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Schedule Name ]]]<span class="mandatory">*</span></label></div>
+                            <div class="col-sm-4 col-xs-4 name-field">
+                                <input type="text" class="form-control cls-schname" name="" id="schedule-name" maxlength="100">
+                                <div class="validate-error" id="schedule-name-error-container">
+                                    <div id="schedule-name-validator"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (isSelfHosted)
+                        {
+                            <div class="col-sm-12 col-xs-12 no-padding">
+                                <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Export FileName ]]]<span class="mandatory">*</span></label></div>
+                                <div class="col-sm-4 col-xs-4 name-field">
+                                    <input type="text" class="form-control cls-schname" name="" id="export-filename" maxlength="100" value="{:ScheduleName}-{:ReportName}-{:Timestamp}">
+                                    <div class="validate-error" id="export-filename-error-container">
+                                        <div id="schedule-name-validator"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6 filename-dropdown">
+                                    <select id="file-template-variable-drop-box" data-live-search="true" title="[[[Select variables]]]" name="" class="selectpicker file-template" style="width:183px;" data-size="7" multiple="" data-none-results-text="[[[No results match]]]">
+                                        @if (Enum.GetValues(typeof(CustomFileTemplate)).Length > 0)
+                                        {
+                                            @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
+                                            {
+                                                <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                                        }
+
+                                    </select>
+                                    <span id="export-filename-error-message" class="ErrorMessage validate-error">[[[Please select variables for export filename]]]</span>
+                                </div>
+                            </div>
+                        }
+
+                        @*@if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
+                            {
+                                <div class="col-sm-12 col-xs-12 no-padding alert-type">
+                                    <div class="col-sm-2 col-xs-2 no-padding"><label>[[[Data Alerts]]]</label></div>
+                                    <div class="col-sm-3 col-xs-3 line-removal">
+                                        <span class="material-switch">
+                                            <input type="checkbox" id="data-alerts" />
+                                            <label for="data-alerts" class="label-primary"></label>
+                                        </span>
+                                        <div class="col-sm-1 col-xs-1 no-padding data-alert-info">
+                                            <span class="dropdown-toggle cursor-type pull-left" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                            <div class="col-xs-2 dropdown-menu data-alert-description">
+                                                [[[Receive email notifications when specified criteria is met; for example, when the total sales value is greater than $10,000.]]]
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-9 col-xs-9 data-alerts-disabled bg-warning">
+                                        <div class="alert-img col-xs-1 no-padding">
+                                            <span class="su su-warning-alt"></span>
+                                        </div>
+                                        <span class="data-alerts-disabled-text col-xs-11 no-padding text-warning" style="margin-top: 10px;">Data Alert is temporarily unavailable due to technical reasons. We regret the inconvenience caused.</span>
+                                    </div>
+                                </div>
+                            }*@
+
+                        <div id="data-changes-div">
+                            <div id="serialize-columninfo" class="hide"></div>
+                            <div id="serialize-conditioninfo" class="hide"></div>
+                            <div id="alert-value" class="hide">[[[false]]]</div>
+                            <div id="previous-data" class="hide"></div>
+                        </div>
+
+
+                        <div class="col-sm-12 col-xs-12 no-padding parameter-option" style="height: 44px;">
+                            <div class="col-sm-2 col-xs-2 no-padding  align-center">
+                                @Html.Label("enable-parameter", "[[[Set parameters]]]", new { @class = "" })
+                            </div>
+                            <div class="col-sm-5 col-xs-5 pull-left">
+                                <span class="material-switch text-left">
+                                    <input type="checkbox" name="Enabled" id="enable-parameter" />
+                                    <label class="label-primary" for="enable-parameter"></label>
+                                </span>
+                                <div class="reportparameter-tag label-align-center no-margin" style="display: none;">
+                                    <span class="dropdown-toggle cursor-type" id="report-parameter-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                    <div class="col-xs-2 dropdown-menu" id="reportparameter-help-message" role="menu">
+                                        [[[The selected report does not have any parameters.]]]
+                                    </div>
+                                </div>
+                                <span class="validation-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-xs-12 no-padding enabled-div">
+                            <div class="col-sm-2 col-xs-2 no-padding  align-center">
+                                @Html.Label("enable-schedule", "[[[Enabled]]]", new { @class = "enabled-label" })
+                            </div>
+                            <div class="col-sm-10 col-xs-10 pull-left no-margin enabled-label-div line-removal">
+                                <span class="material-switch text-left">
+                                    <input type="checkbox" name="Enabled" id="enable-schedule" checked="checked" />
+                                    <label class="label-primary" for="enable-schedule"></label>
+                                </span>
+                                <span class="validation-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <div class="col-sm-12 col-xs-12 no-margin" id="next-container">
+                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button app-btn-secondary pull-left button-left">
+                        <input id="schedule-next-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button app-btn-secondary leftmargin pull-right">
+                        <input id="schedule-next" title="[[[Next]]]" type="button" value="[[[Next]]]" tabindex="4" class="primary-button app-btn-primary pull-right">
+                    </div>
+                    <div id="submit-container" class="col-sm-12 col-xs-4 no-margin">
+                        <input id="schedule-back" type="button" title="[[[Back]]]" value="[[[Back]]]" tabindex="6" class="secondary-button app-btn-secondary pull-left button-left">
+                        <input id="schedule-submit-cancel" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" tabindex="5" class="secondary-button app-btn-secondary leftmargin pull-right button-right">
+                        <input id="schedule-submit" title="[[[Schedule]]]" type="button" value="[[[Schedule]]]" tabindex="4" class="primary-button app-btn-primary pull-right button-right">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+</body>
+</html>
+
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.min.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js"></script>
+</environment>
+
+<script>
+    var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
+    var actionType = "@Context.Request.Query["actionType"].ToString()";
+    var itemId = "@Context.Request.Query["itemId"].ToString()";
+    var itemName = "@Context.Request.Query["itemName"].ToString()";
+    var scheduleId = "@Context.Request.Query["scheduleId"].ToString()";
+    @*var multiDashboardName = "@HttpContext.Current.Request.QueryString["multiDashboardName"].ToString()";*@
+    var categoryName = "@Context.Request.Query["categoryName"].ToString()";
+    var getReportUrl = "@Url.Action("GetItems", "reports")";
+    var getScheduleInfoUrl = "@Url.Action("GetScheduleInfo", "scheduler")";
+    @*var getChildDashboardUrl = "@Url.Action("GetChildDashboards", "scheduler")";*@
+    var checkScheduleNameExistUrl = "@Url.Action("CheckScheduleNameExist", "scheduler")";
+    var emailEditor = "@Url.Action("EmailEditor", "scheduler")";
+    var recurrenceType = "@Url.Action("ScheduleRecurrenceType", "scheduler")";
+    var scheduleRecipients = "@Url.Action("RecipientsList", "scheduler")";
+    @*var dataChanges = "@Url.Action("DataChanges", "scheduler")";
+    var getwidgetUrl = "@Url.Action("GetWidgets", "scheduler")";*@
+    var getCategoryUrl = "@Url.Action("GetCategories", "scheduler")";
+    var getTenantStatusUrl = "@Url.Action("GetTenantStatus", "PartialView")";
+    var getNotificationCountUrl = "@Url.Action("GetNotificationCount", "PartialView")";
+    var passwordOptions = "@Url.Action("ZipFilePassword", "scheduler")";
+    var getExportFileSettingInfoUrl = "@Url.Action("GetExportFileSettingInfo", "Scheduler")";
+    var getScheduleFileSettingTypeUrl = "@Url.Action("GetScheduleFileSettingType", "Scheduler")";
+    var getSchedulerParameter = "@Url.Action("SchedulerParameter", "scheduler")";
+    var reportHasParameterUrl = "@Url.Action("CheckReportHasParameter", "scheduler")";
+    var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
+    var exportPathExistUrl = "@Url.Action("CheckExportPathExist", "scheduler")";
+    var editSchedulerParameter = "@Url.Action("EditSchedulerParameter", "scheduler")";
+    var subjectItem = "@Url.Action("GetSubjectItem", "scheduler")";
+    var getScheduleContentUrl = "@Url.Action("GetScheduleCustomBody", "scheduler")";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    $("#selected_dashboard,#selected_category").selectpicker();
+    var parameterObj;
+    var reportparameterObj;
+    checkReportHasParameter();
+    if (actionType == "Create") {
+        createSchedule(itemId, itemName, categoryName)
+    }
+    else {
+        editSchedule(scheduleId, itemId, itemName, categoryName)
+    }
+    if (($(parent.window).width()) > 1400) {
+        $(".schedule-dialog").addClass("lg-schedule-flexible");
+    }
+
+    if (($(parent.window).width()) < 1400) {
+        $(".schedule-dialog").removeClass("lg-schedule-flexible");
+    }
+    addPlacehoder("#schedule-dialog");
+
+    function checkReportHasParameter() {
+        if (itemId !== 'undefined' && itemId !== "") {
+            $.ajax({
+                type: "POST",
+                url: reportHasParameterUrl,
+                async: false,
+                data: { itemId: itemId },
+                success: function (data) {
+                    if (data.Result) {
+                        $(".reportparameter-tag").css("display", "none");
+                    } else {
+                        $("#enable-parameter").prop("disabled", true);
+                        $("#enable-parameter").prop("checked", false);
+                        $(".reportparameter-tag").css("display", "block");
+                    }
+                }
+            });
+        }
+    }
+
+
+</script>

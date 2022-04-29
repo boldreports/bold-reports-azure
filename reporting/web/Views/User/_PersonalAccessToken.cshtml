@@ -1,0 +1,144 @@
+﻿﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/embed-settings.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/embed-settings.min.css" />
+    </environment>
+
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/embed-settings.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/embed-settings.min.js"></script>
+    </environment>
+
+}
+
+
+@section MainSection{
+    <script>
+        var isGenerateAuthenticationTokenUrl = "@Url.Action("GetToken", "User")";
+        $(document).ready(function () {
+            var getLinkInputObj = $("#secret-code");
+            var getLinkCopyLinkobj = $("#secret-code-copy");
+
+            $(document).on("click", "#generate-token", function (e) {
+                $(".message-content").addClass("messagebox-align");
+                if (!isChrome) {
+                    $(".message-content").css("vertical-align", "initial");
+                }
+                messageBox("su su-embed", window.Server.App.LocalizationContent.GenerateHeader, window.Server.App.LocalizationContent.GenerateConfirmationMessage, "error", generateAuthenticationToken);
+            });
+
+            function generateAuthenticationToken() {
+                onCloseMessageBox();
+                $("#secret-code-link").css("display", "block");
+                $("#body").ejWaitingPopup("show");
+                $.ajax({
+                    type: "POST",
+                    url: isGenerateAuthenticationTokenUrl,
+                    data: ({
+                        expiryDays: parseInt($('#expiration-days').val())
+                    }),
+                    success: function (data) {
+                        if (data) {
+                            authenticationTokenChange(data);
+                            SuccessAlert(window.Server.App.LocalizationContent.TokenSettings, window.Server.App.LocalizationContent.GenerateTokenSuccessAlert, 7000);
+                        }
+                        $("#body").ejWaitingPopup("hide");
+                    },
+                    error: function () {
+                        WarningAlert("", window.Server.App.LocalizationContent.InternalServerError, 7000);
+                    }
+                });
+            }
+
+            function authenticationTokenChange(data) {
+                $("#secret-code-copy").tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy).tooltip("fixTitle");
+                $("#secret-code").removeAttr("disabled");
+                $("#secret-code-copy").removeAttr("disabled");
+                $("#secret-code").val(data)
+                $(".secret-code-notification").text(window.Server.App.LocalizationContent.NotificationMessage + " " + $('#expiration-days').val() + " " + window.Server.App.LocalizationContent.NotificationDays);
+                $(".secret-code-notification").show();
+            }
+
+            getLinkCopyLinkobj.on("click", function (e) {
+                if (!getLinkInputObj.is(":disabled")) {
+                    getLinkCopyLinkobj.tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy).tooltip("fixTitle").tooltip("show");
+                    getLinkInputObj.select();
+                    if (/Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor)) {
+                        getLinkCopyLinkobj.removeClass("su su-copy");
+                        getLinkCopyLinkobj.attr("data-original-title", "");
+                    }
+                    else {
+                        document.execCommand('copy');
+                        getLinkCopyLinkobj.attr("data-original-title", window.Server.App.LocalizationContent.Copysuccess);
+                        getLinkCopyLinkobj.tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.Copysuccess).tooltip("fixTitle").tooltip("show");
+                        setTimeout(function () { getLinkCopyLinkobj.attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy); getLinkCopyLinkobj.tooltip(); }, 3000);
+                    }
+                }
+            });
+
+            getLinkCopyLinkobj.removeClass("focusdiv");
+            getLinkInputObj.on("focusin", function () {
+                getLinkCopyLinkobj.addClass("focusdiv");
+            });
+            getLinkInputObj.on("focusout", function () {
+                getLinkCopyLinkobj.removeClass("focusdiv");
+            });
+        })
+    </script>
+
+@await Html.PartialAsync("_ProfileMenu")
+
+<div id="embed-settings-container" class="col-xs-12 admin-page-container">
+    <div id="embed-settings-header" class="col-xs-12 admin-page-header">
+        <hgroup>
+            <h1 class="h2 page-title">
+                [[[PERSONAL ACCESS TOKEN]]]
+            </h1>
+        </hgroup>
+    </div>
+    <div id="embed-settings-body" class="admin-page-body">
+        <div id="get-secret-code" class="row input-field-wrapper">
+            <div class="col-xs-8 form-group expiry-dropdown">
+                @Html.Label("expiration", "[[[Expiration]]]", new { @class = "app-textbox-label col-md-4" })
+                <div class="form-input-field col-md-2">
+                    @Html.DropDownList("expiry", ViewBag.ExpirationDays as IEnumerable<SelectListItem>, new { @class = "selectpicker form-control", id = "expiration-days" })
+                </div>
+            </div>
+            <div class="col-xs-8 field-container-dashboard">
+                <label class="col-md-4 app-textbox-label activation">
+                    [[[Authentication token]]]
+                </label>
+                <div class="col-md-7 secret-code-container">
+                    <div id="secret-code-link" class="col-xs-6" style="display:none">
+                        <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Authentication token]]]" autocomplete="off" disabled="disabled" onClick="this.setSelectionRange(0, this.value.length)">
+                        <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
+                    </div>
+                    <button type="button" title="" id="generate-token" class="primary-button app-btn-primary">
+                        [[[Generate Token]]]
+                    </button>
+                    <div class="tool-tip col-xs-1">
+                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                        <div class="dropdown-menu" role="menu">[[[With this Access token, reporting controls can be securely embedded in your application. It is also used to access all the Report Server REST APIs.]]]</div>
+                    </div>
+                    <div class="col-lg-5 bg-warning secret-code-notification">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+

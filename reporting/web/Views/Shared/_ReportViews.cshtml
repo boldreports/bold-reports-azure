@@ -1,0 +1,175 @@
+﻿@inject ServerPrincipal _identityResponse
+@{
+    var enableComment = "false";
+    var isUserAuthenticated = "false";
+    if (_identityResponse != null && _identityResponse.IsAuthenticated)
+    {
+        enableComment = "true";
+        isUserAuthenticated = "true";
+    }
+    else
+    {
+        enableComment = "false";
+        isUserAuthenticated = "false";
+    }
+}
+<script>
+    $(document).ready(function () {
+
+        try {
+            sameOrigin = window.parent.location.host == window.location.host;
+        }
+        catch (e) {
+            sameOrigin = false;
+        }
+
+        var dashboardViewWaitingPopupTemplateId = createLoader("report-view-toogle");
+        $("#report-view-toogle").ejWaitingPopup({ template: $("#" + dashboardViewWaitingPopupTemplateId) });
+
+        if (@enableComment == true)
+        {
+            $(".options li#comments").css("display", "block");
+        }
+        else
+        {
+            $(".options li#comments").css("display", "none");
+        }
+
+        if ((@ViewBag.IsPublic == true && @isUserAuthenticated == true)) {
+            $("#save-view, #reset-view").attr("disabled", false);
+            $("[data-toggle=tooltip]").tooltip("enable");
+        }
+        else if((@ViewBag.IsPublic == true && @isUserAuthenticated == false)) {
+            $("#save-view, #reset-view").attr("disabled", true);
+            $("[data-toggle=tooltip]").tooltip("disable");
+        }
+
+        $("#messageBox").ejDialog({
+            width: ((sameOrigin ? parent.window.innerWidth : window.innerWidth) > 460) ? "450px" : ((sameOrigin ? parent.window.innerWidth : window.innerWidth) - 10),
+            height: "150px",
+            showOnInit: false,
+            allowDraggable: true,
+            enableResize: false,
+            showHeader: false,
+            enableModal: true,
+            close: "onMessageDialogClose"
+        });
+    });
+</script>
+<div class="list-group server-report-view" id="report-view-toogle" style="display: block">
+    <div id="header-pane">
+        <span class="view-heading" id="view-heading" style="display: none">
+            [[[CURRENT VIEW]]]
+        </span>
+        <div class="col-xs-2 no-padding" id="close-view">
+            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" style="display: none" onclick="CloseReportView()"><span class="su su-close"></span></a>
+        </div>
+    </div>
+
+    <nav class="list-group" style="display: none" id="report-views">
+        <div id="entire-label-section">
+            <div style="display: none" id="save-section" class="save-section">
+                <div class="input-group">
+                    <div id="filter-name-input">
+                        <input type="text" class="form-control" placeholder="[[[Unsaved View]]]" aria-describedby="basic-addon1" id="filter_name">
+                    </div>
+                    <span class="input-group-addon su su-tick cursor-pointer save-filter" id="save-filter" data-toggle="tooltip" data-original-title="[[[Save View]]]"></span>
+                    <span class="input-group-addon su su-close cursor-pointer" id="clear-txt" data-toggle="tooltip" data-original-title="[[[Cancel]]]"></span>
+                </div>
+            </div>
+            <div id="save-lable-section" class="" style="display: none">
+                <label class="cursor-default txt-overflow">[[[Unsaved View]]]</label>
+                <div class="saved-views" id="new-save" style="display: none">
+                    <div class="su">
+                        <button class="su-save cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save]]]" id="save-view"></button>
+                    </div>
+                    <div class="su ">
+                        <button class="su-reset clear cursor-pointer" id="reset-view" data-toggle="tooltip" data-original-title="[[[Reset]]]"></button>
+                    </div>
+                </div>
+                <div class="saved-views" id="saved-filter-update" style="display: none">
+                    <div class="su">
+                        <span class="su-saveas cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save As]]]" id="save-as-view"></span>
+                    </div>
+                    <div class="su">
+                        <span class="su-save cursor-pointer" data-toggle="tooltip" data-original-title="[[[Update]]]" id="update-view" viewid="@ViewBag.ViewId"></span>
+                    </div>
+                    <div class="su" id="">
+                        <span class="su-reset clear cursor-pointer" data-toggle="tooltip" data-original-title="[[[Reset]]]"></span>
+                    </div>
+                </div>
+                <div class="saved-views" id="saved-filter-Saveas" style="display: none">
+                    <div class="su">
+                        <span class="su-saveas cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save As]]]" id="save-as-view"></span>
+                    </div>
+                    <div class="su" id="">
+                        <span class="su-reset clear cursor-pointer" data-toggle="tooltip" data-original-title="[[[Reset]]]"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none" id="save-as-section" class="save-section">
+                <input type="text" class="form-control" placeholder="[[[Untitled View]]]" aria-describedby="basic-addon1" id="filter_name">
+                <span class="input-group-addon su su-tick cursor-pointer save-filter" id="save-filter" data-toggle="tooltip" data-original-title="[[[Save View]]]"></span>
+                <span class="input-group-addon su su-close cursor-pointer clear" id="clear-txt" data-toggle="tooltip" data-original-title="[[[Clear]]]"></span>
+            </div>
+            <div id="current-view" style="display: none">
+            </div>
+        </div>
+        <div id="nofilters" style="float: left">
+            <div class="cursor-default" style="display: block">
+                <label class="cursor-default txt-overflow">[[[No filters applied.]]]</label>
+                <br style="clear: both">
+            </div>
+        </div>
+        <div id="unsaved-filter-title" style="display: block;">
+            <label class="cursor-default applied-filters">[[[Applied Filters:]]]</label>
+        </div>
+        <div id="unsaved-filter" style="display: block;max-height: 250px">
+            <div id="unsaved-filter-parameter" style="float: left">
+            </div>
+        </div>
+        <div id="saved-filter" style="display: block;">
+        </div>
+    </nav>
+</div>
+
+<div id="delete-div" style="display: none" class="col-lg-12 no-padding">
+    <div id="PopupContainerDelete">
+        <div class="col-md-12 header-menu header-pad-top header-menu-margin">
+            <div class="col-xs-6 no-padding">
+                <span class="su su-delete Head-icon"></span>
+                <span class="PopupTitle">[[[Delete View]]]</span>
+            </div>
+            <div class="col-xs-6 no-padding">
+                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onDeleteItemDialogClose()"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        <div class="dialogBody col-xs-12 no-padding delete-dialog-body">
+            <div>
+                <div class="deleteItem">
+                    <span id="delete-content"><span>[[[Are you sure you want to delete the view ]]] — </span><span id="delete_item_name" class="delete-item-body highlight-name delete_item_name"></span> ?</span>
+                    <span style="width: 354px; float: left" class="message-content text-center" id="delete-confirmation">[[[View has been deleted successfully]]]</span>
+                    <span style="width: 320px; float: left" class="message-content text-center" id="delete-error">[[[Try again later]]]</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 dialogFooter no-right-padding no-left-padding">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-8 no-padding rightAlign validationArea">
+                <input type="button" class="critical-action-button app-btn-danger rightAlign" value="[[[Yes]]]" id="delete_item" tabindex="1" />
+                <input type="button" id="CancelDelete" class="secondary-button app-btn-secondary rightAlign" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
+            </div>
+            <div class="col-xs-8 no-padding centerAlign successArea" style="display: none">
+                <input title="" type="button" id="ok-button" class="secondary-button app-btn-secondary PopupClose pull-center" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageBox">
+    <div class="message-header"></div>
+    <div class="message-box-close"></div>
+    <div class="message-content text-center"></div>
+    <div class="message-box-btn-holder"></div>
+</div>

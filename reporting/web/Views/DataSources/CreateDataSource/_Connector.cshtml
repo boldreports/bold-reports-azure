@@ -1,0 +1,51 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var designerToken = ViewBag.AccessToken;
+}
+<script>
+    let saveURL = "@Url.Action("Save", "DataSources")";
+</script>
+<div class="cd-connector-container" ng-controller="connectorContainerCtrl">
+
+    <div class="dc-container" ng-controller="connectorCtrl">
+        <div class="dc-scroller-container rs-scroller">
+            <div class="dc-scroller">
+                <div class="dc-header"></div>
+                <div class="dc-description"></div>
+                <div class="dc-config-container">
+                    <div class="dc-config">
+                        @{
+                            string serviceURL = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/') + "/api/Designer";
+                            string reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+                            string isAzureApplication = ServerAppConfig.IsAzureApplication.ToString().ToLower();
+                        }
+                        <div class="data-designer-container">
+                            <div id="dataDesigner" ng-style="{'display': datasetCreation ? 'none' : 'block'}" boldReportDesigner e-serviceUrl="@serviceURL" e-reportServerUrl="@reportServerApiUrl" e-isAzureApp=@isAzureApplication e-reportDataExtensions="reportDataExtensions" e-create="onDesignerCreate" e-serviceAuthorizationToken="@designerToken">
+                                <div class="dataContainer e-reportdesigner-designer-configuration"></div>
+                            </div>
+                            <div class="dc-dataset-form-container" ng-style="{'display': !datasetCreation ? 'none' : 'block'}">
+                                @{ Html.RenderPartial("~/Views/Items/_DataSetForm.cshtml"); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- dialog component-->
+    <div id="dataDesignerAlertDialog" ej-dialog e-showOnInit="false" e-allowDraggable="true" e-enableResize="false" e-width="400px" e-enableModal="true" e-showHeader="false" e-closeOnEscape="true">
+        <div class="data-designer-modal-header">
+            <div class="data-designer-modal-header-content">Cancel Data Connection</div>
+            <div class="data-designer-modal-header-close-btn" ng-click="onAlertNoBtnClick()"></div>
+        </div>
+        <div class="data-designer-modal-body">
+            @*<img class="data-designer-modal-body-img" alt="warning" src="@(ServerAppConfig.CdnLink + "/images/warning.svg")" />*@
+            <div class="data-designer-modal-body-content">Do you want to cancel establishing data connection?</div>
+        </div>
+        <div class="data-designer-modal-footer">
+            <button type="button" class="data-designer-alert-yes-btn primary-button app-btn-primary" ng-click="onAlertYesBtnClick()">Yes</button>
+            <button type="button" class="data-designer-alert-no-btn secondary-button app-btn-secondary" ng-click="onAlertNoBtnClick()">No</button>
+        </div>
+    </div>
+    @{ Html.RenderPartial("~/Views/DataSources/CreateDataSource/_Footer.cshtml"); }
+</div>
