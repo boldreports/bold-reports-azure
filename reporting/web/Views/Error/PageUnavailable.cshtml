@@ -2,8 +2,18 @@
 @{
     Layout = null;
     var globalAppSettings = _globalAppSettings;
-    var cdnLink = (Context.Request.PathBase.ToString().Equals("/") ? string.Empty : Context.Request.PathBase.ToString()) + ServerAppConfig.AppSettings.EndPoints.CdnLink + "/images";
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var cdnLink = string.Empty;
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        cdnLink = (Context.Request.PathBase.ToString().Equals("/") ? string.Empty : Context.Request.PathBase.ToString()) + ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/') + "/images";
+        reportServerResourceUrl = (Context.Request.PathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink).TrimEnd('/');
+    }
+    else
+    {
+        cdnLink = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/') + "/cdn/images";
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 <html>
 <head>

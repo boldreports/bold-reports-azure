@@ -13,27 +13,20 @@
     <member name="F:System.Web.Configuration.MembershipPasswordCompatibilityMode.Framework40">
       <summary>Passwords are in ASP.NET 4 mode.</summary>
     </member>
-    <member name="T:System.Web.Hosting.CustomLoaderAttribute">
-      <summary>[Supported in the .NET Framework 4.5.1 and later versions] Provides a custom loader to ASP.NET so that an application can provide its own implementation of the hosting environment.</summary>
-    </member>
-    <member name="M:System.Web.Hosting.CustomLoaderAttribute.#ctor(System.Type)">
-      <summary>[Supported in the .NET Framework 4.5.1 and later versions] Initializes a new instance of the <see cref="T:System.Web.Hosting.CustomLoaderAttribute" /> class.</summary>
-    </member>
-    <member name="P:System.Web.Hosting.CustomLoaderAttribute.CustomLoaderType">
-      <summary>[Supported in the .NET Framework 4.5.1 and later versions] Gets the type of the custom loader.</summary>
-      <returns>The type of the custom loader.</returns>
-    </member>
     <member name="T:System.Web.Security.MembershipCreateStatus">
       <summary>Describes the result of a <see cref="M:System.Web.Security.Membership.CreateUser(System.String,System.String)" /> operation.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateEmail">
-      <summary>The e-mail address already exists in the database for the application.</summary>
+    <member name="F:System.Web.Security.MembershipCreateStatus.Success">
+      <summary>The user was successfully created.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateProviderUserKey">
-      <summary>The provider user key already exists in the database for the application.</summary>
+    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidUserName">
+      <summary>The user name was not found in the database.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateUserName">
-      <summary>The user name already exists in the database for the application.</summary>
+    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidPassword">
+      <summary>The password is not formatted correctly.</summary>
+    </member>
+    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidQuestion">
+      <summary>The password question is not formatted correctly.</summary>
     </member>
     <member name="F:System.Web.Security.MembershipCreateStatus.InvalidAnswer">
       <summary>The password answer is not formatted correctly.</summary>
@@ -41,26 +34,23 @@
     <member name="F:System.Web.Security.MembershipCreateStatus.InvalidEmail">
       <summary>The e-mail address is not formatted correctly.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidPassword">
-      <summary>The password is not formatted correctly.</summary>
+    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateUserName">
+      <summary>The user name already exists in the database for the application.</summary>
+    </member>
+    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateEmail">
+      <summary>The e-mail address already exists in the database for the application.</summary>
+    </member>
+    <member name="F:System.Web.Security.MembershipCreateStatus.UserRejected">
+      <summary>The user was not created, for a reason defined by the provider.</summary>
     </member>
     <member name="F:System.Web.Security.MembershipCreateStatus.InvalidProviderUserKey">
       <summary>The provider user key is of an invalid type or format.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidQuestion">
-      <summary>The password question is not formatted correctly.</summary>
-    </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.InvalidUserName">
-      <summary>The user name was not found in the database.</summary>
+    <member name="F:System.Web.Security.MembershipCreateStatus.DuplicateProviderUserKey">
+      <summary>The provider user key already exists in the database for the application.</summary>
     </member>
     <member name="F:System.Web.Security.MembershipCreateStatus.ProviderError">
       <summary>The provider returned an error that is not described by other <see cref="T:System.Web.Security.MembershipCreateStatus" /> enumeration values.</summary>
-    </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.Success">
-      <summary>The user was successfully created.</summary>
-    </member>
-    <member name="F:System.Web.Security.MembershipCreateStatus.UserRejected">
-      <summary>The user was not created, for a reason defined by the provider.</summary>
     </member>
     <member name="T:System.Web.Security.MembershipCreateUserException">
       <summary>The exception that is thrown when a user is not successfully created by a membership provider.</summary>
@@ -121,11 +111,11 @@
     <member name="F:System.Web.Security.MembershipPasswordFormat.Clear">
       <summary>Passwords are not encrypted.</summary>
     </member>
-    <member name="F:System.Web.Security.MembershipPasswordFormat.Encrypted">
-      <summary>Passwords are encrypted using the encryption settings determined by the machineKey Element (ASP.NET Settings Schema) element configuration.</summary>
-    </member>
     <member name="F:System.Web.Security.MembershipPasswordFormat.Hashed">
       <summary>Passwords are encrypted one-way using the SHA1 hashing algorithm.</summary>
+    </member>
+    <member name="F:System.Web.Security.MembershipPasswordFormat.Encrypted">
+      <summary>Passwords are encrypted using the encryption settings determined by the machineKey Element (ASP.NET Settings Schema) element configuration.</summary>
     </member>
     <member name="T:System.Web.Security.MembershipProvider">
       <summary>Defines the contract that ASP.NET implements to provide membership services using custom membership providers.</summary>
