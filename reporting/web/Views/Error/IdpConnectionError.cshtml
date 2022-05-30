@@ -3,7 +3,15 @@
     Layout = null;
     var cdnLink = @GlobalAppSettings.CdnDomain;
     var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = (Context.Request.PathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink).TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 <!DOCTYPE html>
 <html>
