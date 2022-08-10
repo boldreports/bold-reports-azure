@@ -1,0 +1,246 @@
+﻿@{
+    Layout = null;
+    bool isParameterHidden;
+    var hasdependent = "";
+    var hasdependentValue = "";
+    var hasdependentboolValue = "";
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportId = ViewBag.ItemId;
+    var reportName = ViewBag.FullItemName;
+    var reportParameter = ViewBag.ReportParameter;
+    var dashboardUrl = Url.Action("Reports", "Reports");
+    var downloadUrl = dashboardUrl.TrimEnd('/').Remove(dashboardUrl.LastIndexOf('/'));
+}
+@using BoldReports.Web
+@model List<ReportParameterInfo>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.js"></script>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.min.css" />
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.min.css" />
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerdialog.min.js"></script>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+</environment>
+<body class="export-dialog">
+    <input type="hidden" value="@ViewBag.Username" id="userName" />
+
+    <div class="col-md-12 dialog-header" style="margin-top:20px;margin-left:5px">
+        <div class="col-xs-11 no-padding">
+            <span class="su su-export Head-icon"></span>
+            <span class="PopupTitle"><b>[[[Export Report]]]</b></span>
+            <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
+        </div>
+        <div class="col-xs-1 no-padding" style="right:-65px">
+            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose"><span id="ExportClose" class="su su-close"></span></a>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-xs-12 no-padding parameter-popup-body" id="parameters-panel">
+
+        <div class="col-sm-12 col-xs-12 export-format" id="export-format-container" style="margin-top:20px;margin-left:-10px">
+            <div class="col-sm-2 col-xs-2 export-format format-align-header" id="export-header"><label class="clslab">[[[Export Format]]]</label></div>
+            <div class="col-sm-2 col-xs-2 export-format format-align" id="pdfFormat" style="margin-left:20px">
+                <div>
+                    <input type="radio" id="pdf-export" class="css-radio" value="PDF" name="exportFormats" checked="checked" />
+                    <label for="pdf-export" class="pointer normal-font notransition">PDF</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="excelFormat">
+                <div>
+                    <input type="radio" id="excel-export" class="css-radio" value="Excel" name="exportFormats" />
+                    <label for="excel-export" class="pointer normal-font notransition">Excel</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="wordFormat">
+                <div>
+                    <input type="radio" id="word-export" class="css-radio" value="Word" name="exportFormats" />
+                    <label for="word-export" class="pointer normal-font notransition">Word</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="htmlFormat">
+                <div>
+                    <input type="radio" id="html-export" class="css-radio" value="HTML" name="exportFormats" />
+                    <label for="html-export" class="pointer normal-font notransition">HTML</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="pptFormat">
+                    <div>
+                        <input type="radio" id="ppt-export" class="css-radio" value="PPT" name="exportFormats" />
+                        <label for="ppt-export" class="pointer normal-font notransition">PPT</label>
+                    </div>
+                </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="csvFormat">
+                <div>
+                    <input type="radio" id="csv-export" class="css-radio" value="CSV" name="exportFormats" />
+                    <label for="csv-export" class="pointer normal-font notransition">CSV</label>
+                </div>
+                <input type="text" class="form-control" id="csv-delimiter" maxlength="1" style="display: none;position:absolute;margin-left: 60px;margin-top:-32px">
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="xmlFormat">
+                <div>
+                    <input type="radio" id="xml-export" class="css-radio" value="XML" name="exportFormats" />
+                    <label for="xml-export" class="pointer normal-font notransition">XML</label>
+                </div>
+            </div>
+            <div id="csv-delimiter-validation" style="display: none;margin-top: 29px; position:absolute;right:26px;">[[[Please enter a valid delimiter value]]]</div>
+        </div>
+        @if (Model.Count > 0)
+        {
+            <div class="col-sm-2 col-xs-2 export-format format-align-header" id="export-header" style="margin-top:30px;margin-left:5px"><label class="clslab">[[[Filter Parameters]]]</label></div>
+
+            @foreach (var parameter in @Model)
+            {
+                isParameterHidden = parameter.Hidden == null ? false : parameter.Hidden.Value;
+                hasdependent = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependent" : "";
+                hasdependentValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentValue" : "";
+                hasdependentboolValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentboolValue" : "";
+                <div class="col-sm-12 col-xs-12 no-padding" style="margin-left:20px; margin-top: 7px">
+                    @if (parameter.Prompt == null)
+                    {
+                        <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Name</label></div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Prompt</label></div>
+                    }
+                    @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
+                    {
+                        <div class="col-sm-4 col-xs-4 parameter-input">
+                            <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" data-size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
+                                @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
+                                {
+                                    foreach (var parameterData in parameter.ReportParameterData)
+                                    {
+                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+                    else if (parameter.DataType == ParamType.Boolean || parameter.ElementType == ElementType.RadioButton)
+                    {
+                        <div class="col-sm-4 col-xs-4 boolean parameter-input parameter-boolean">
+                            <div class="col-sm-5 col-xs-5">
+                                <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
+                                <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <input id="false-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="false" @(isParameterHidden ? "disabled" : "")>
+                                <label for="false" class="pointer normal-font notransition">[[[False]]]</label>
+                            </div>
+                        </div>
+                    }
+                    else if (parameter.DataType == ParamType.DateTime && parameter.ElementType == ElementType.DateTime)
+                    {
+                        <div class="col-sm-4 col-xs-4 parameter-input parameter-datetime" style="padding-left: 6px">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                        </div>
+                    }
+                    else
+                    {
+                        if (parameter.Values != null)
+                        {
+                            <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count > 0 ? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", new List<string>())" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+                        }
+                    }
+                <div class="page-indent text">
+                    @if (parameter.Values == null || !parameter.Values.Any())
+                    {
+                        @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default", disabled = "true" })
+                        @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
+                        <div class="parameter-tool-tip">
+                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                            <div class="dropdown-menu" id="parameter" role="menu">[[[There is no default value configured for this parameter.]]]</div>
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
+                        @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
+                    }
+                </div>
+                    <div class="col-sm-4 col-xs-4 no-padding validate-error" id="@parameter.Name-error-container">
+                        <div id="@parameter.Name-parameter-validator"></div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div id="error-message" style="display:none;margin-left:200px;color:#a94442">
+        <span>Please select parameter</span>
+    </div>
+
+    <div class="modal-footer col-xs-12" style="position:fixed;bottom:0px">
+        <div class="col-sm-12 col-xs-12 no-margin">
+            <input id="ExportCancelButton" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" class="secondary-button leftmargin pull-right" />
+            <input id="ExportButton" title="[[[Export]]]" type="button" value="[[[Export]]]" class="primary-button pull-right app-btn-primary" style="margin-right:15px" />
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        parent.$("#export-popup-container_wrapper").ejWaitingPopup("hide");
+    });
+    var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
+    var createdItemId = "@Context.Request.Query["itemId"].ToString()";
+    var exportReportUrl = "@downloadUrl" + "/items/exportfile";
+    var fileExport = "@downloadUrl" + "/items/exportreport";
+    var ReportId = "@reportId";
+    var ReportName = "@reportName";
+    window.parameterObj = @Html.Raw(Json.Serialize(Model));
+    window.reportparameterObj = @Html.Raw(Json.Serialize(ViewBag.ReportParameter));
+    window.reportParamType = {
+        Boolean: @((int)ParamType.Boolean),
+        DateTime:  @((int)ParamType.DateTime),
+        Float:  @((int)ParamType.Float),
+        Integer: @((int)ParamType.Integer),
+        String:  @((int)ParamType.String),
+    };
+    window.reportElementType = {
+        MultiValue:  @((int)ElementType.MultiValue),
+        RadioButton: @((int)ElementType.RadioButton),
+        DateTime: @((int)ElementType.DateTime),
+        ComboBox: @((int)ElementType.ComboBox),
+        Textbox: @((int)ElementType.Textbox),
+        Checkbox: @((int)ElementType.Checkbox),
+    };
+    window.reportParameterType = {
+        String: @((int)BoldReports.RDL.DOM.DataTypes.String),
+        Boolean:  @((int)BoldReports.RDL.DOM.DataTypes.Boolean),
+        DateTime:  @((int)BoldReports.RDL.DOM.DataTypes.DateTime),
+        Integer: @((int)BoldReports.RDL.DOM.DataTypes.Integer),
+        Float:  @((int)BoldReports.RDL.DOM.DataTypes.Float),
+        Decimal: @((int)BoldReports.RDL.DOM.DataTypes.Decimal),
+    };
+</script>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.min.js"></script>
+</environment>
