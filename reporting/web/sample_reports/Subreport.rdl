@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+        <ReportItems>
+          <Subreport Name="SubReport1">
+            <Left>0pt</Left>
+            <Top>0pt</Top>
+            <Height>75pt</Height>
+            <Width>150pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <ReportName>/Tutorial Sample/SubReport Child</ReportName>
+            <Parameters>
+              <Parameter Name="InvoiceID">
+                <Value>=Parameters!InvoiceID.Value</Value>
+              </Parameter>
+            </Parameters>
+          </Subreport>
+        </ReportItems>
+        <Height>75pt</Height>
+      </Body>
+      <Width>150pt</Width>
+      <Page>
+        <PageHeight>841.68pt</PageHeight>
+        <PageWidth>595.44pt</PageWidth>
+        <PageFooter>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>0pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+        </PageFooter>
+        <LeftMargin>18pt</LeftMargin>
+        <RightMargin>18pt</RightMargin>
+        <TopMargin>0pt</TopMargin>
+        <BottomMargin>0pt</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="NorthWindIO">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=dataplatformdemodata.syncfusion.com;Initial Catalog=Northwind;User ID=demoreadonly@data-platform-demo;Password=N@c)=Y8s*1&amp;dh</ConnectString>
+      </ConnectionProperties>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="InvoiceDetails">
+      <Fields>
+        <Field Name="OrderID">
+          <DataField>OrderID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>NorthWindIO</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT DISTINCT OrderID FROM [Order Details]</CommandText>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="InvoiceID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>11077</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Invoice ID</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>InvoiceDetails</DataSetName>
+          <ValueField>OrderID</ValueField>
+          <LabelField>OrderID</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>

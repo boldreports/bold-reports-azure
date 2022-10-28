@@ -1,0 +1,108 @@
+﻿@model List<ItemDetail>
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+<html class="report-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>
+        [[[Select Dataset]]]
+    </title>
+    <script>
+        var addDatasetUrl = "@Url.Action("AddSharedDataset", "DataSets")";
+        var datasetselectdatasourceUrl = "@Url.Action("DatasetSelectDataSource", "DataSets")";
+        var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
+        var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "DataSets")";
+
+        function load() {
+            $('[data-toggle="tooltip"]').tooltip();
+            if (($(parent.window).width()) > 1400) {
+                $(".dialog").addClass("iframe");
+            }
+
+            if (($(parent.window).width()) < 1400) {
+                $(".dialog").removeClass("iframe");
+            }
+        }
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-dataset.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-dataset.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/select-dataset.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-dataset.min.js"></script>
+    </environment>
+</head>
+<body style="background-color:white" onload="load();">
+    <div id="PopupContainer" class="col-lg-12 no-padding dialog">
+        <div class="col-xs-12 dialog-header">
+            <span class="su su-dataset Head-icon"></span>
+            <span class="PopupTitle">[[[Select Dataset -]]]</span>
+            <span class="rdl-dataset-name">@ViewData["sourceName"]</span>
+                <a href="javascript:void(0);" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose" onclick="closeNewDatasetPopup()"><span class="su su-close"></span></a>
+</div>
+        <div id="dataset_popup_module" class="dialog-body col-xs-12 no-padding">
+            <div class='col-md-12 no-padding no-top-margin' id='new_datasetrsd_tab_content'>
+                <div class='new-dataset-popup-btns dataset-btns'>
+                    <div id="dataset_validation" style="color: #A94442; display: none; height: 0;"></div>
+                    <div class='create-dataset-btns pull-right'>
+                        <input type='button' value='[[[Select]]]' id='publish_dataset' onclick="onSubmitDataset()" class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
+                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewDatasetPopup()" tabindex="16">
+                    </div>
+                </div>
+            </div>
+
+            @if (Convert.ToBoolean(ViewData["createPermission"]) == true)
+            {
+                <div class='col-md-12 share-popup-header no-top-margin'>
+                    <div id="dataset_tabs" class="col-md-12">
+                        <span class="dataset-tab-active heading" id="avl_dataset_tab" onclick="onAvailableDatasetTabSelect()">[[[Available]]]</span>
+                        <div id="rdl_new_tab_arrow" class="downArrow"></div>
+                    </div>
+                </div>
+            }
+
+            <div id='dataset_header_line' class='horizontal-splitline'></div>
+            <div id='avl_dataset_tab_content' class='col-md-12 no-top-margin rdl-dataset-tab-contents'>
+                <div class='col-md-12 no-top-margin new-dataset-content-holder'>
+                    <div id='available_dataset_table_header' class='col-md-12'>
+                        <div class='col-md-10 no-padding no-margin heading'>[[[Dataset]]]</div>
+                        <div class='col-md-2 no-padding no-margin heading'>[[[Created By]]]</div>
+                    </div>
+                    <div class='col-md-12 no-padding no-margin' id='available_dataset_table_holder'>
+                        <table id='available_dataset_table'>
+                            @for (var dataset = 0; dataset < Model.Count; dataset++)
+                            {
+                                if (@ViewData["selectedDataset"]!=null && @ViewData["selectedDataset"].ToString() == @Model[dataset].Id.ToString())
+                                {
+                                    <tr class="available-dataset-select" data-setid="@Model[dataset].Id"><td><span>@Model[dataset].Name</span></td><td>@Model[dataset].CreatedByDisplayName</td></tr>
+                                }
+                                else
+                                {
+                                    <tr data-setid="@Model[dataset].Id"><td><span>@Model[dataset].Name</span></td><td>@Model[dataset].CreatedByDisplayName</td></tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class='horizontal-splitline no-top-margin'></div>
+            </div>
+            <input type="hidden" id="publishedFileName" value="none">
+            <input type="hidden" id="rsd_filename" value="Browse file path">           
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        parent.$("#addDataSetDom_wrapper").ejWaitingPopup("hide");
+    });
+</script>
