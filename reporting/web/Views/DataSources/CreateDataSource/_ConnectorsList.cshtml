@@ -1,0 +1,26 @@
+﻿<div class="dc-list-container" ng-controller="connectorListCtrl">
+    <div class="dc-filter">
+        <div class="dc-filter-header">Select Connector</div>
+        <div class="dc-filter-description">Quickly connect your data from data sources such as SQL, files, and web APIs.</div>
+        <div class="dc-filter-widget-container">
+            <div class="dc-filter-ddl-container">
+                <select class="dc-filter-ddl" ej-dropdownlist e-width="200px" e-height="28px" e-dataBound="onDdlDataBound" e-cssClass="dc-filter-ddl-wrapper" e-value="categorySelection" e-datasource="categories" e-fields="fields"></select>
+            </div>
+            <div class="dc-filter-autocomplete-container">
+                <input type="text" class="dc-filter-autocomplete e-autocomplete e-js e-input" ng-model="searchText" placeholder="Search Data Source">
+                <span ng-click="onAutocompleteTailClick($event)" ng-class="searchText.length ? 'dc-delete': 'dc-search'"></span>
+            </div>
+        </div>
+    </div>
+    <div class="dc-list">
+        <div class="dc-list-header" ng-if="loadingStatus">Service Connectors</div>
+        <div class="dc-list-cards">
+            <div class="dc-list-card" ng-mouseenter="onDataListHover($event)" ng-mouseleave="onDataListHover($event)" ng-repeat="(key, value) in connectorList">
+                <div class="dc-list-info" data-title="{{value.description}}"></div>
+                <div class="{{value.iconClassName}} e-rpt-connection-img-tile dc-list-img">{{value.isCustomConnector ? value.displayName : ''}}</div>
+                <div class="dc-list-select-btn" ng-click="onDataConnectorSelect(value)">Select</div>
+            </div>
+            <div class="ds-list-card-empty" ng-if="!loadingStatus" ng-class="connectorList.length ? '': 'active'">No records to display</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@model LogResponse
+
+@using System.Configuration
+@{
+    var globalAppSettings = _globalAppSettings;
+
+    ViewBag.Title = "[[[Notifications]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.MessageBox = false;
+    var idPAvatarUrl = globalAppSettings.SystemSettings.IDPUrl + "/User/Avatar";
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SystemNotifications);
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+
+@section Scripts{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/notification-listing.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2.dialog.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/notification-listing.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/notification-listing.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2.dialog.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/notification-listing.min.js"></script>
+    </environment>
+
+    <script>
+        $(document).ready(function () {
+            $("#notifciation-page-container #user-notification-container").show();
+            $("#user-system-notification").hide();
+            userNotificationContainer.show().removeClass("user-notification-close").addClass("user-notification-open");
+            ejs.popups.createSpinner({
+                target: document.getElementById('notifciation-page-container')
+            });
+            ejs.popups.setSpinner({ type: 'Material' });
+            ejs.popups.showSpinner(document.getElementById('notifciation-page-container'));
+            var notificationController = angular.element(userNotificationObj).scope();
+            notificationController.getUserSystemNotification();
+        });
+    </script>
+}
+
+@section MainSection{
+    <div id="notifciation-page-container">
+        @await Html.PartialAsync("~/Views/Notification/_UserNotificationPartial.cshtml")
+    </div>
+}

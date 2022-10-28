@@ -1,0 +1,508 @@
+<?xml version="1.0"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style />
+        <ReportItems>
+          <Chart Name="TopStoresChart">
+            <Left>90.75pt</Left>
+            <Top>8.0978pt</Top>
+            <Height>335.8477pt</Height>
+            <Width>360.75pt</Width>
+            <CustomProperties>
+              <CustomProperty>
+                <Name>__Upgraded2005__</Name>
+                <Value>__Upgraded2005__</Value>
+              </CustomProperty>
+            </CustomProperties>
+            <Style>
+              <BackgroundColor>White</BackgroundColor>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>TopCustomers</DataSetName>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Sale Amount</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="TopStoresChart_StoreName">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!StoreName.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <Label>=Fields!StoreName.Value</Label>
+                  <DataElementOutput>Output</DataElementOutput>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="Series1">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Round(Sum(Fields!SaleAmount.Value)/1000)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style>
+                          <FontSize>7.128pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <Format>'$'#,0;('$'#,0)</Format>
+                          <Color>#ffffff</Color>
+                        </Style>
+                        <UseValueAsLabel>false</UseValueAsLabel>
+                        <Label>=Round(Sum(Fields!SaleAmount.Value)/1000)</Label>
+                        <Visible>true</Visible>
+                      </ChartDataLabel>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                      <ChartMarker>
+                        <Style />
+                      </ChartMarker>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Subtype>Doughnut</Subtype>
+                  <ChartEmptyPoints>
+                    <Style />
+                    <ChartMarker>
+                      <Style />
+                    </ChartMarker>
+                    <ChartDataLabel>
+                      <Style />
+                      <UseValueAsLabel>false</UseValueAsLabel>
+                      <Visible>false</Visible>
+                    </ChartDataLabel>
+                  </ChartEmptyPoints>
+                  <Style />
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                  <ChartSmartLabel>
+                    <Disabled>false</Disabled>
+                    <AllowOutSidePlotArea>Partial</AllowOutSidePlotArea>
+                    <CalloutLineAnchor>None</CalloutLineAnchor>
+                    <CalloutLineColor>Black</CalloutLineColor>
+                    <CalloutLineStyle>Solid</CalloutLineStyle>
+                    <CalloutStyle>Underline</CalloutStyle>
+                    <ShowOverlapped>false</ShowOverlapped>
+                    <MarkerOverlapping>false</MarkerOverlapping>
+                    <MinMovingDistance>0pt</MinMovingDistance>
+                  </ChartSmartLabel>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <Border>
+                        <Width>0.75000pt</Width>
+                        <Style>None</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Margin>True</Margin>
+                    <Interval>1</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffset>1</IntervalOffset>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Type>None</Type>
+                      <Length>0</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Type>None</Type>
+                      <Length>0</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <Minimum>null</Minimum>
+                    <Maximum>null</Maximum>
+                    <PreventFontShrink>true</PreventFontShrink>
+                    <PreventFontGrow>true</PreventFontGrow>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </ChartAxisTitle>
+                    <CrossAt>null</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>null</Minimum>
+                    <Maximum>null</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <Format>$#,###</Format>
+                      <Border>
+                        <Width>0.75000pt</Width>
+                        <Style>None</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption>Sales (thousands)</Caption>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Margin>True</Margin>
+                    <ChartMajorGridLines>
+                      <Enabled>True</Enabled>
+                      <Style>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Type>None</Type>
+                      <Length>0</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Type>None</Type>
+                      <Length>0</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <Scalar>true</Scalar>
+                    <PreventFontShrink>true</PreventFontShrink>
+                    <PreventFontGrow>true</PreventFontGrow>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </ChartAxisTitle>
+                    <CrossAt>null</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>null</Minimum>
+                    <Maximum>null</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <ChartThreeDProperties>
+                  <Enabled>false</Enabled>
+                  <ProjectionMode>Perspective</ProjectionMode>
+                  <Perspective>0</Perspective>
+                  <Rotation>30</Rotation>
+                  <Inclination>30</Inclination>
+                  <DepthRatio>100</DepthRatio>
+                  <Shading>Simple</Shading>
+                  <GapDepth>100</GapDepth>
+                  <WallThickness>15</WallThickness>
+                  <Clustered>true</Clustered>
+                </ChartThreeDProperties>
+                <Style>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Hidden>false</Hidden>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <Color>#333333</Color>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>BottomRight</Position>
+                <DockOutsideChartArea>true</DockOutsideChartArea>
+                <ChartLegendTitle>
+                  <Caption />
+                  <TitleSeparator>None</TitleSeparator>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </ChartLegendTitle>
+                <AutoFitTextDisabled>true</AutoFitTextDisabled>
+                <HeaderSeparator>None</HeaderSeparator>
+                <ColumnSeparator>None</ColumnSeparator>
+                <ColumnSpacing>0</ColumnSpacing>
+                <InterlacedRows>false</InterlacedRows>
+                <EquallySpacedItems>false</EquallySpacedItems>
+                <Reversed>Auto</Reversed>
+                <TextWrapThreshold>0</TextWrapThreshold>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Title1">
+                <Caption>Sales (in thousands)</Caption>
+                <Hidden>false</Hidden>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <TextAlign>General</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>#333333</Color>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>Custom</Palette>
+            <ChartCustomPaletteColors>
+              <ChartCustomPaletteColor>#072448</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#54d2d2</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#ffcb00</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#f8aa4b</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#ff4800</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#008080</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#0000ff</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#9c399c</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#01ff00</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#ff00ff</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#008080</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#ffff00</ChartCustomPaletteColor>
+              <ChartCustomPaletteColor>#808080</ChartCustomPaletteColor>
+            </ChartCustomPaletteColors>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>Gray</BackgroundColor>
+                <Color>White</Color>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="NoDataMessage">
+              <Caption>No Data Available</Caption>
+              <Hidden>false</Hidden>
+              <Style>
+                <TextAlign>General</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <Position>RightTop</Position>
+              <DockOffset>0</DockOffset>
+              <TextOrientation>Auto</TextOrientation>
+            </ChartNoDataMessage>
+          </Chart>
+        </ReportItems>
+        <Height>353.543pt</Height>
+      </Body>
+      <Width>543.75pt</Width>
+      <Page>
+        <PageHeight>841.68pt</PageHeight>
+        <PageWidth>595.44pt</PageWidth>
+        <PageHeader>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>37.5pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Rectangle Name="Rectangle4">
+              <Left>0pt</Left>
+              <Top>0pt</Top>
+              <Height>37.5pt</Height>
+              <Width>543.75pt</Width>
+              <Style>
+                <BackgroundColor>#555b63</BackgroundColor>
+                <Border>
+                  <Color>Gray</Color>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+              <ReportItems>
+                <Textbox Name="Title">
+                  <Left>5.99184pt</Left>
+                  <Top>8.24184pt</Top>
+                  <Height>23.74992pt</Height>
+                  <Width>111.7505pt</Width>
+                  <Style>
+                    <BackgroundColor>#555b63</BackgroundColor>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                  </Style>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Doughnut Chart</Value>
+                          <Style>
+                            <FontSize>12.0002pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Color>#ffffff</Color>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Left</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+            </Rectangle>
+          </ReportItems>
+        </PageHeader>
+        <LeftMargin>26.25pt</LeftMargin>
+        <RightMargin>22.5pt</RightMargin>
+        <TopMargin>18pt</TopMargin>
+        <BottomMargin>18pt</BottomMargin>
+        <ColumnSpacing>36pt</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Description>Adventure Works top five sales people and stores. This report illustrates a dataset with queries containing the TOP clause. It also illustrates the use of tables, charts, parameters, calculated fields, and drillthrough links.</Description>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="AdventureWorks">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=dataplatformdemodata.syncfusion.com;Initial Catalog=AdventureWorks;user id=demoreadonly@data-platform-demo;password=N@c)=Y8s*1&amp;dh</ConnectString>
+      </ConnectionProperties>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="TopCustomers">
+      <Fields>
+        <Field Name="StoreName">
+          <DataField>StoreName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SaleAmount">
+          <DataField>SaleAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ProductSubcategoryID">
+          <DataField>ProductSubcategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ProductCategoryID">
+          <DataField>ProductCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>AdventureWorks</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT TOP 5 S.Name AS StoreName, SUM(SOH.SubTotal) AS SaleAmount, PS.ProductSubcategoryID, 
+            PS.ProductCategoryID
+FROM        Production.Product P INNER JOIN
+            Production.ProductSubcategory PS ON P.ProductSubcategoryID = PS.ProductSubcategoryID INNER JOIN
+            Sales.SalesOrderDetail SOD ON P.ProductID = SOD.ProductID INNER JOIN
+            Sales.Customer CU INNER JOIN
+            Sales.SalesOrderHeader SOH ON CU.CustomerID = SOH.CustomerID INNER JOIN
+            Sales.Store S ON CU.CustomerID = S.CustomerID ON SOD.SalesOrderID = SOH.SalesOrderID
+GROUP BY    S.Name, PS.ProductSubcategoryID, PS.ProductCategoryID
+ORDER BY    SUM(SOH.SubTotal) DESC</CommandText>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>
