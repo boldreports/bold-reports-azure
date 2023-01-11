@@ -19,10 +19,10 @@ Task("Default")
     CreateDirectory("../GitLeaksReport");
     if (FileExists("../gitleaks.toml"))
     {
-        StartProcess("../gitleaks.exe", new ProcessSettings {Arguments ="detect --report-path ../GitLeaksReport/gitleaks-report.json -c ../gitleaks.toml"});
+        StartProcess("../gitleaks.exe", new ProcessSettings {Arguments ="detect --verbose --report-path ../GitLeaksReport/gitleaks-report.json -c ../gitleaks.toml"});
     }
     else { 
-        StartProcess("../gitleaks.exe", new ProcessSettings {Arguments ="detect --report-path ../GitLeaksReport/gitleaks-report.json"});
+        StartProcess("../gitleaks.exe", new ProcessSettings {Arguments ="detect --verbose --report-path ../GitLeaksReport/gitleaks-report.json"});
     }    
 });
    
