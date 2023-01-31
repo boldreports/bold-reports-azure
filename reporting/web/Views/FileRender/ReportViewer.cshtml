@@ -38,10 +38,12 @@
     @if (ServerAppConfig.IsSelfHosted)
     {
         <link href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />
+        <link href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.reportviewer.min.css" rel="stylesheet" type="text/css" />
     }
     else
     {
         <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/custom.salesforce.reportviewer.min.css" rel="stylesheet" type="text/css" />
     }
     @if (!isMobile)
     {
@@ -97,10 +99,12 @@
         {
             <environment include="Development,CloudDevelopment">
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render.js"></script>
             </environment>
             <environment exclude="Development,CloudDevelopment">
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render.min.js"></script>
             </environment>
         }
@@ -108,10 +112,12 @@
         {
             <environment include="Development,CloudDevelopment">
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-mobile.js"></script>
             </environment>
             <environment exclude="Development,CloudDevelopment">
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
                 <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-mobile.min.js"></script>
             </environment>
         }
@@ -146,6 +152,7 @@
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/custom.salesforce.min.js'></script>
         @if (!isMobile)
         {
             <environment include="Development,CloudDevelopment">
@@ -394,6 +401,7 @@
     var isAdmin = "@isAdmin";
     var ItemType = "@ViewBag.ItemType";
     var customFontsName = [];
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
 
         function renderComments() {
             var src = $("#commentModuleContainer iframe").attr("src");
@@ -432,6 +440,12 @@
         $("#commentImage_popup").ejDialog("close");
         $("#commentImage_popup_image").attr('src', "");
     }
+
+    $(document).on("click", "#sync_report_viewer_toolbar_li_parameter", function () {
+        if (!$("#commentModuleContainer").hasClass("displayNone")) {
+            renderComments();
+        }
+    });
 
     function commentSection() {
         var $ulContainer = $("#sync_report_viewer_toolbarContainer ");
@@ -801,4 +815,12 @@
             }
         }
 
+    if (!isSelfHosted) {
+        document.addEventListener("DOMContentLoaded", function (event) {
+            $.ajax({
+                type: "Get",
+                url: "/robots.txt",
+            });
+        })
+    }
 </script>

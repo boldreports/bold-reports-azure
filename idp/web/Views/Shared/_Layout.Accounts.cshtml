@@ -4,7 +4,7 @@
 @{
     var includeHeader = ViewBag.IncludeHeader != null ? ViewBag.IncludeHeader : false;
     var loginBackgroundImage = ViewBag.LoginBackgroundImage;
-    var headerLogo = (ViewBag.LoginLogo != null) ? ViewBag.LoginLogo : Url.Content($"{CloudAppConfig.TenantManagementUrl.TrimEnd('/')}/logos?type=login");
+    var headerLogo = (ViewBag.LoginLogo != null) ? ViewBag.LoginLogo : Url.Content($"{CloudAppConfig.BoldReportsLoginLogoUrl.TrimEnd('/')}/logos?type=login");
 }
 <!DOCTYPE html>
 <html>
@@ -138,7 +138,7 @@
         <div class="account-child">
             <div class="account-bg">
                 <div class="account-header">
-                    <img alt="Login Logo" src="@headerLogo" onerror="this.onerror=null;this.src='@Url.Content("~/images/" + GlobalAppSettings.Branding + "/application/" + IconFileNames.DefaultErrorImage)';" />
+                    <a href="~/login"><img alt="Log-in Logo" src="@headerLogo" onerror="if (this.src != '@Url.Content(CloudAppConfig.BoldReportsLoginLogoUrl)') this.src = '@Url.Content(CloudAppConfig.BoldReportsLoginLogoUrl)';" /></a>
                 </div>
                 @RenderSection("MainSection", true)
             </div>

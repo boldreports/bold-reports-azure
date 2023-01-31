@@ -1,16 +1,8 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
-
-    if (ViewBag.AdImport)
-    {
-        ViewBag.Title = "[[[Active Directory users import]]] - " + globalAppSettings.SystemSettings.OrganizationName;
-    }
-    else
-    {
-        ViewBag.Title = "[[[Azure AD users import]]] - " + globalAppSettings.SystemSettings.OrganizationName;
-    }
-    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportAzureAdUsers);
+    ViewBag.Title = (ViewBag.AdImport ? "[[[Active Directory users import]]] - " : "[[[Azure AD users import]]] - ") + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = ViewBag.AdImport ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportADUsers) : GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportAzureAdUsers);
 }
 
 

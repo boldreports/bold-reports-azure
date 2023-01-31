@@ -572,7 +572,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         miscellaneous: {
@@ -877,7 +877,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         miscellaneous: {
@@ -1006,7 +1006,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         miscellaneous: {
@@ -1096,7 +1096,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibilityCategory: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         miscellaneousCategory: {
@@ -1509,7 +1509,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         position: {
@@ -1640,7 +1640,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         miscellaneous: {
@@ -1895,6 +1895,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
             }
         },
         elasticSearchDatasource: {
+            connectionType: 'Tipo di connessione',
             authenticationType: 'Tipo di autenticazione',
             window: 'finestre',
             server: 'server ElasticSearch',
@@ -1903,6 +1904,10 @@ ej.ReportDesigner.Locale['it-IT'] = {
             userName: 'Nome utente',
             password: 'Parola d\'ordine',
             port: 'Porta',
+            connectionTypes: {
+                elasticSQL: 'Elasticsearch SQL',
+                openDistro: 'Apri distribuzione'
+            },
             basicOption: {
                 serverName: 'Nome del server',
                 database: 'Banca dati'
@@ -1913,6 +1918,10 @@ ej.ReportDesigner.Locale['it-IT'] = {
                 password: 'Specifica la password',
                 serverName: 'Specifica il nome del server',
                 databaseName: 'Specificare il nome del database'
+            },
+            noteMessage: {
+                note: 'Nota: ',
+                message: 'Per connetterti a un\'istanza Elasticsearch ospitata da Amazon Web Service, utilizza il tipo di connessione Open Distro.'
             }
         },
         postgreSQLDatasource: {
@@ -2504,7 +2513,24 @@ ej.ReportDesigner.Locale['it-IT'] = {
                 headerText: 'Trova',
                 contentText: 'Trova il testo nel rapporto.'
             },
+            performance: {
+                headerText: 'Metriche delle prestazioni',
+                contentText: 'Vengono visualizzate le metriche di rendimento del rapporto.',
+            },
             viewDesign: 'Chiudi anteprima',
+        },
+        PerformanceMetricsDialog: {
+            title: 'Segnala le metriche delle prestazioni',
+            reportProcessing: 'Tempo di elaborazione del rapporto',
+            datasetProcessing: 'Tempo di elaborazione del set di dati',
+            parse: 'Tempo di analisi',
+            evaluate: 'Valuta il tempo',
+            render: 'Tempo di rendering',
+            layout: 'Tempo di layout',
+            datasetDetails: {
+                rows: 'Conteggio righe',
+                dataRetrival: 'Tempo di recupero dei dati'
+            },
         },
         pagesetupDialog: {
             close: 'Vicina',
@@ -2547,7 +2573,8 @@ ej.ReportDesigner.Locale['it-IT'] = {
                 imageQuality: 'Qualità dell\'immagine',
                 imageQualityTypes: [{ text: 'Basso', value: '2' },
                     { text: 'medio', value: '5' },
-                    { text: 'Alto', value: '10' }]
+                    { text: 'Alto', value: '10' }],
+                usePrintSizes: 'Usa le impostazioni della pagina di stampa'
             },
             pdfOptions: {
                 header: 'Impostazioni PDF',
@@ -2702,7 +2729,8 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         waterMark: {
             selectOption: 'Selezionare l\'opzione',
-            selectValue: 'Seleziona un valore'
+            selectValue: 'Seleziona un valore',
+            noDataFound: 'Nessun dato trovato'
         },
         errorMessage: {
             startMessage: 'Report Viewer ha riscontrato alcuni problemi durante il caricamento di questo rapporto. per favore',
@@ -2757,7 +2785,8 @@ ej.ReportDesigner.Locale['it-IT'] = {
         selectAll: 'Seleziona tutto',
         viewButton: 'Visualizza rapporto',
         parameterBlock: 'Blocco parametri',
-        parameterProcessingMessage: 'Caricamento dei valori dei parametri ...'
+        parameterProcessingMessage: 'Caricamento dei valori dei parametri ...',
+        parameterBlockTitle: 'Parametri del rapporto'
     },
     sortData: {
         sorting: 'Ordinamento',
@@ -3188,7 +3217,11 @@ ej.ReportDesigner.Locale['it-IT'] = {
         dragOnDrop: 'Trascina selezione',
         categoryList: ' Elenco delle categorie',
         removeDataField: 'Rimuovi campo dati',
-        dataFieldSettings: 'Impostazioni del campo dati'
+        dataFieldSettings: 'Impostazioni del campo dati',
+        warningMessage: {
+            title: 'Assegnazione dati',
+            contentMessage: 'L\'aggiunta di più di 5 {categoryName} causerà un ritardo nel rendering.Vuoi aggiungere comunque ?'
+        }
     },
     reportProperty: {
         header: 'Intestazione',
@@ -3467,7 +3500,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosto',
             toggleItem: 'Attiva oggetto',
             intialToggleState: 'Stato di commutazione iniziale'
         },
@@ -3658,7 +3691,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile'
+            hidden: 'Nascosta'
         },
         miscellaneous: {
             categoryName: 'Miscellanea',
@@ -3859,7 +3892,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         staticGroupProp: {
@@ -4169,6 +4202,10 @@ ej.ReportDesigner.Locale['it-IT'] = {
                 commonContent: 'Il filtro è attivo ',
                 booleanValidation: ' non ha valori su cui filtrare. Fornisci i valori per il filtro.',
                 stringValidation: ' non ha valori corretti su cui filtrare. '
+            },
+            queryCondition: {
+                and: 'E',
+                or: 'O'
             }
         },
         previewArea: {
@@ -4577,7 +4614,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile'
+            hidden: 'Nascosta'
         }
     },
     mapProperty: {
@@ -4666,6 +4703,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         basicSettings: {
             categoryName: 'Impostazioni di base',
+            polygonLayerName: 'Nome livello poligonos',
             shapeType: 'forme',
             datasetName: 'Dataset',
             bindData: 'Dati vincolanti',
@@ -4775,7 +4813,7 @@ ej.ReportDesigner.Locale['it-IT'] = {
         },
         visibility: {
             categoryName: 'Visibilità',
-            visible: 'Visibile',
+            hidden: 'Nascosta',
             toggleItem: 'Attiva oggetto'
         },
         styleTooltip: 'Stile',

@@ -1,6 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = "[[[Published Resources]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManagePublishedReports);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 
@@ -44,7 +45,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     {{if PublishJobHistory[0].Status == "Failed" || PublishJobHistory[0].Status == "Success"}}
                                     <li class="menu-group">
-                                        <a href="javascript:void(0);" title="[[[Syncronize]]]" onclick="onConfirmSynchronizeDialog()">
+                                        <a href="javascript:void(0);" title="[[[Synchronize]]]" onclick="onConfirmSynchronizeDialog()">
                                             <i class="su su-synchronize"></i>
                                             <span class="menu-text">[[[Synchronize]]]</span>
                                         </a>

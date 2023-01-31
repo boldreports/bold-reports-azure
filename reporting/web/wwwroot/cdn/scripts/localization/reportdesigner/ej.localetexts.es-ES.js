@@ -1,23 +1,23 @@
 ej.ReportDesigner.Locale['es-ES'] = {
     itemPanel: {
-        waterMarkText: 'Widgets de búsqueda',
+        waterMarkText: 'Buscar widgets',
         noDataFound: 'No se encontraron coincidencias...',
         customCategory: 'Códigos de barras',
-        customRptItemName: 'Código de barras 1D',
-        dataRequirements: 'Requerimientos de datos',
-        labelText: 'Artículo Panel Contenedor',
+        dataRequirements: 'Requisitos de datos',
+        customRptItemName: 'Código de barra 1D',
+        labelText: 'Contenedor de panel de elementos',
         expandText: 'Expandir',
-        collapseText: 'Colapso',
+        collapseText: 'Contraer',
         customTooltip: {
             tooltip: {
-                requirements: 'Agregar un elemento de informe al área de diseñador.',
-                description: 'Muestra el elemento de informe personalizado.',
-                title: 'Informe personalizado'
+                requirements: 'Añadir elemento de informe al área de diseño.',
+                description: 'Muestra elemento de informe personalizado.',
+                title: 'Elemento de informe personalizado'
             }
         },
         groupItems: {
             basicItems: {
-                groupName: 'Artículos básicos',
+                groupName: 'Elementos básicos',
                 Items: {
                     'line': {
                         displayText: 'Línea',
@@ -30,24 +30,24 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     'image': {
                         displayText: 'Imagen',
                         tooltip: {
-                            requirements: 'Para mostrar una imagen de la base de datos, incruste la imagen.',
+                            requirements: 'Para mostrar una imagen de la base de datos, insertar la imagen.',
                             description: 'Muestra las imágenes.',
                             title: 'Imagen'
                         }
                     },
                     'textBox': {
-                        displayText: 'Caja de texto',
+                        displayText: 'Cuadro de texto',
                         tooltip: {
-                            requirements: 'Agrega cualquier texto.',
-                            description: 'Affiche du texte statique et dynamique..',
-                            title: 'Caja de texto'
+                            requirements: 'Añadir cualquier texto.',
+                            description: 'Muestra un texto estático y dinámico.',
+                            title: 'Cuadro de texto'
                         }
                     },
                     'rectangle': {
                         displayText: 'Rectángulo',
                         tooltip: {
-                            requirements: 'Combina uno o más elementos del informe dentro de él.',
-                            description: 'Elemento contenedor gráfico.',
+                            requirements: 'Combinar uno o más elementos de informe en su interior.',
+                            description: 'Elemento contenedor de gráfico.',
                             title: 'Rectángulo'
                         }
                     }
@@ -60,23 +60,23 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Columna',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara valores para un conjunto de elementos desordenados en varias categorías usando las barras verticales dispuestas horizontalmente.',
+                            description: 'Compara los valores de un conjunto de elementos no ordenados en varias categorías utilizando las barras verticales dispuestas horizontalmente.',
                             title: 'Columna'
                         }
                     },
                     'bar': {
-                        displayText: 'Bar',
+                        displayText: 'Barra',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara valores para un conjunto de elementos desordenados en varias categorías usando las barras horizontales dispuestas verticalmente.',
-                            title: 'Bar'
+                            description: 'Compara los valores de un conjunto de elementos no ordenados en varias categorías utilizando las barras horizontales dispuestas verticalmente.',
+                            title: 'Barra'
                         }
                     },
                     'stackedColumn': {
                         displayText: 'Columna apilada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples usando las barras apiladas verticalmente.',
+                            description: 'Compara varias medidas utilizando las barras apiladas verticalmente.',
                             title: 'Columna apilada'
                         }
                     },
@@ -84,7 +84,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Barra apilada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples usando las barras apiladas horizontalmente.',
+                            description: 'Compara varias medidas utilizando las barras apiladas horizontalmente.',
                             title: 'Barra apilada'
                         }
                     },
@@ -92,7 +92,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Columna de rango',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra un rango de datos trazando dos valores Y por punto de datos',
+                            description: 'Muestra un intervalo de datos trazando dos valores y por punto de datos.',
                             title: 'Columna de rango'
                         }
                     },
@@ -100,24 +100,24 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Barra de rango',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra un rango de datos trazando dos valores Y por punto de datos horizontalmente',
+                            description: 'Muestra un rango de datos trazando horizontalmente dos valores y por punto de datos.',
                             title: 'Barra de rango'
                         }
                     },
                     'stackedColumnPercent': {
-                        displayText: 'Columna apilada100%',
+                        displayText: 'Columna apilada al 100%',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples como partes de un todo usando las barras apiladas verticalmente.',
-                            title: 'Columna apilada100%'
+                            description: 'Compara varias medidas como partes de un todo utilizando las barras apiladas verticalmente.',
+                            title: 'Columna apilada al 100%'
                         }
                     },
                     'stackedBarPercent': {
-                        displayText: 'Barre empilée100%',
+                        displayText: 'Barra apilada al 100%',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples como partes de un todo usando las barras apiladas horizontalmente.',
-                            title: 'Barre empilée100%'
+                            description: 'Compara varias medidas como partes de un todo utilizando las barras apiladas horizontalmente.',
+                            title: 'Barra apilada al 100%'
                         }
                     }
                 }
@@ -129,16 +129,16 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Barra de datos',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Representa múltiples puntos de datos, pero generalmente ilustran solo uno, a menudo utilizado en tablas y matrices.',
+                            description: 'Representa varios puntos de datos, pero normalmente sólo ilustra uno; se utiliza a menudo en tablas y matrices.',
                             title: 'Barra de datos'
                         }
                     },
                     'sparkline': {
-                        displayText: 'Sparkline',
+                        displayText: 'Minigráfico',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Presenta múltiples puntos de datos y sus variaciones de una manera muy condensada, a menudo utilizada en tablas y matrices.',
-                            title: 'Sparkline'
+                            description: 'Presenta múltiples puntos de datos y sus variaciones de forma muy condensada, a menudo se utiliza en tablas y matrices.',
+                            title: 'Minigráfico'
                         }
                     },
                     'indicator': {
@@ -157,17 +157,17 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     'radialgauge': {
                         displayText: 'Medidor radial',
                         tooltip: {
-                            requirements: '1 valor y 0 o 1 valor inicial / final.',
-                            description: 'Visualice tendencias a través de indicadores clave de rendimiento como valores y objetivos.',
+                            requirements: '1 valor y 0 o 1 valor de inicio/fin.',
+                            description: 'Visualiza las tendencias a través de indicadores clave de rendimiento como valores y objetivos.',
                             title: 'Medidor radial'
                         }
                     },
                     'lineargauge': {
-                        displayText: 'Medidor lineal',
+                        displayText: 'Medidor linear',
                         tooltip: {
-                            requirements: '1 valor y 0 o 1 valor inicial / final.',
-                            description: 'Visualice tendencias a través de indicadores clave de rendimiento como valores y objetivos. A menudo se usa en tablas y matrices.',
-                            title: 'Medidor lineal'
+                            requirements: '1 valor y 0 o 1 valor de inicio/fin.',
+                            description: 'Visualiza tendencias a través de indicadores clave de rendimiento como valores y objetivos. Suelen utilizarse en tablas y matrices.',
+                            title: 'Medidor linear'
                         }
                     }
                 }
@@ -176,34 +176,34 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 groupName: 'Proporción',
                 Items: {
                     'pie': {
-                        displayText: 'Tarta',
+                        displayText: 'Circular',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra las proporciones de la contribución de cada artículo al total en forma de sectores de sectores.',
-                            title: 'Tarta'
+                            description: 'Muestra las proporciones de la contribución de cada elemento al total en forma de círculo con sectores.',
+                            title: 'Circular'
                         }
                     },
                     'explodedPie': {
-                        displayText: 'Pie estallado',
+                        displayText: 'Circular seccionado',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Enfatiza una porción individual de un gráfico circular.',
-                            title: 'Pie estallado'
+                            description: 'Destaca una porción individual de un gráfico circular.',
+                            title: 'Circular seccionado'
                         }
                     },
                     'doughnut': {
-                        displayText: 'Rosquilla',
+                        displayText: 'Anillo',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra las proporciones de cada contribución de artículos al total en forma de rodajas de donuts.',
-                            title: 'Rosquilla'
+                            description: 'Muestra las proporciones de la contribución de cada elemento al total en forma de rodajas de anillos.',
+                            title: 'Anillo'
                         }
                     },
                     'pyramid': {
                         displayText: 'Pirámide',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra la comparación proporcional entre valores de una manera progresivamente creciente.',
+                            description: 'Muestra la comparación proporcional entre valores de forma progresiva.',
                             title: 'Pirámide'
                         }
                     },
@@ -211,7 +211,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Embudo',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra la comparación proporcional entre valores de una manera progresivamente decreciente.',
+                            description: 'Muestra la comparación proporcional entre valores de forma progresivamente decreciente.',
                             title: 'Embudo'
                         }
                     }
@@ -221,58 +221,58 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 groupName: 'Distribución',
                 Items: {
                     'area': {
-                        displayText: 'Zona',
+                        displayText: 'Área',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara valores para un conjunto de elementos desordenados en varias categorías a través de las curvas rellenas ordenadas verticalmente.',
-                            title: 'Zona'
+                            description: 'Compara los valores de un conjunto de elementos no ordenados a través de varias categorías mediante las curvas rellenas ordenadas verticalmente.',
+                            title: 'Área'
                         }
                     },
                     'smoothArea': {
-                        displayText: 'Área suave',
+                        displayText: 'Área suavizada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara los valores de un conjunto de elementos desordenados en varias categorías a través de las curvas rellenas ordenadas verticalmente con una superficie lisa.',
-                            title: 'Área suave'
+                            description: 'Compara los valores de un conjunto de elementos no ordenados en varias categorías a través de las curvas rellenas ordenadas verticalmente con superficie lisa.',
+                            title: 'Área suavizada'
                         }
                     },
                     'stackedArea': {
                         displayText: 'Área apilada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples a través de las curvas llenas apiladas verticalmente.',
+                            description: 'Compara los valores de un conjunto de elementos no ordenados en varias categorías a través de las curvas rellenas ordenadas verticalmente con superficie lisa.',
                             title: 'Área apilada'
                         }
                     },
                     'stackedAreaPercent': {
-                        displayText: 'Área apilada100%',
+                        displayText: 'Área apilada al 100%',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara medidas múltiples como partes de un todo a través de las curvas llenas apiladas verticalmente.',
-                            title: 'Área apilada100%'
+                            description: 'Compara varias medidas como partes de un todo a través de las curvas rellenas apiladas verticalmente.',
+                            title: 'Área apilada al 100%'
                         }
                     },
                     'line': {
                         displayText: 'Línea',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra las tendencias para el análisis durante un tiempo con puntos de datos conectados utilizando las líneas rectas.',
+                            description: 'Muestra las tendencias de análisis a lo largo de un tiempo con puntos de datos conectados mediante líneas rectas.',
                             title: 'Línea'
                         }
                     },
                     'smoothLine': {
-                        displayText: 'Línea suave',
+                        displayText: 'Línea suavizada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara la distribución de valores durante un período de tiempo conectado utilizando líneas suaves.',
-                            title: 'Línea suave'
+                            description: 'Compara la distribución de valores a lo largo de un periodo de tiempo conectado mediante las líneas lisas.',
+                            title: 'Línea suavizada'
                         }
                     },
                     'steppedLine': {
                         displayText: 'Línea escalonada',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compara la distribución de valores durante un período de tiempo conectado utilizando las líneas escalonadas.',
+                            description: 'Compara la distribución de valores a lo largo de un periodo de tiempo conectado mediante las líneas escalonadas.',
                             title: 'Línea escalonada'
                         }
                     },
@@ -280,23 +280,23 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Línea con marcadores',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Compare los cambios en el mismo período de tiempo para más de un grupo.',
+                            description: 'Compara los cambios durante el mismo periodo de tiempo para más de un grupo.',
                             title: 'Línea con marcadores'
                         }
                     },
                     'smoothLineWithMarkers': {
-                        displayText: 'SmoothLine con marcadores',
+                        displayText: 'Línea suavizada con marcadores',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Los valores trazados se representan con un punto de marcador y esos puntos se conectan usando una línea suave.',
-                            title: 'SmoothLine con marcadores'
+                            description: 'Los valores trazados se representan con un punto marcador y esos puntos se conectan mediante una línea suavizada.',
+                            title: 'Línea suavizada con marcadores'
                         }
                     },
                     'scatter': {
                         displayText: 'Dispersión',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra una serie como un conjunto de puntos y los valores están representados por la posición de los puntos en el gráfico.',
+                            description: 'Muestra una serie como un conjunto de puntos y los valores se representan mediante la posición de los puntos en el gráfico.',
                             title: 'Dispersión'
                         }
                     },
@@ -312,7 +312,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Polar',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Muestra una serie como un conjunto de puntos que están agrupados por categoría en un círculo de 360 ​​grados.',
+                            description: 'Muestra una serie como un conjunto de puntos agrupados por categorías en un círculo de 360 grados.',
                             title: 'Polar'
                         }
                     },
@@ -328,16 +328,16 @@ ej.ReportDesigner.Locale['es-ES'] = {
                         displayText: 'Área de rango',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Un tipo de gráfico de área en el que, en lugar de comenzar en el eje, el área está representada por el espacio entre dos valores.',
+                            description: 'Tipo de gráfico de áreas en el que, en lugar de empezar en el eje, el área se representa por el espacio entre dos valores.',
                             title: 'Área de rango'
                         }
                     },
                     'smoothRangeArea': {
-                        displayText: 'Área de rango suave',
+                        displayText: 'Área de rango lisa',
                         tooltip: {
                             requirements: '1 o más valores y 1 o más columnas.',
-                            description: 'Líneas curvas para conectar puntos de datos en lugar de líneas rectas',
-                            title: 'Área de rango suave'
+                            description: 'Líneas curvas para conectar puntos de datos en lugar de rectas.',
+                            title: 'Área de rango lisa'
                         }
                     }
                 }
@@ -346,26 +346,26 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 groupName: 'Regiones de datos',
                 Items: {
                     'tablix': {
-                        displayText: 'Mesa',
+                        displayText: 'Tabla',
                         tooltip: {
-                            requirements: '1 o más filas / columnas.',
-                            description: 'Mostrar los datos paginados en formato tabular.',
-                            title: 'Mesa'
+                            requirements: '1 o más filas/columnas.',
+                            description: 'Muestra los datos paginados en formato tabular.',
+                            title: 'Tabla'
                         }
                     },
                     'list': {
                         displayText: 'Lista',
                         tooltip: {
-                            requirements: '1 o más filas / columnas.',
-                            description: 'Una lista muestra los datos en formato libre. Coloque los campos en cualquier lugar dentro de la lista.',
+                            requirements: '1 o más filas/columnas.',
+                            description: 'Una lista muestra datos en formato libre. Coloca los campos en cualquier lugar de la lista.',
                             title: 'Lista'
                         }
                     },
                     'matrix': {
                         displayText: 'Matriz',
                         tooltip: {
-                            requirements: '1 o más valores y 1 o más filas / columnas.',
-                            description: 'Mostrar datos resumidos en formato de tabla cruzada.',
+                            requirements: '1 o más valores y 1 o más filas/columnas.',
+                            description: 'Muestra datos resumidos en formato de tabla cruzada.',
                             title: 'Matriz'
                         }
                     }
@@ -377,20 +377,20 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     'map': {
                         displayText: 'Mapa',
                         tooltip: {
-                            requirements: 'Mostrar un mapa al informe.',
-                            description: 'Muestra datos analíticos en un contexto geográfico.',
+                            requirements: 'Mostrar un mapa del informe.',
+                            description: 'Muestra los datos analíticos sobre un fondo geográfico.',
                             title: 'Mapa'
                         }
                     }
                 }
             },
             subReports: {
-                groupName: 'Informes secundarios',
+                groupName: 'Subinformes',
                 Items: {
                     'subreport': {
                         displayText: 'Subinforme',
                         tooltip: {
-                            requirements: 'Mostrar / Incrustar el informe en el informe principal.',
+                            requirements: 'Mostrar/incorporar el informe en el informe principal.',
                             description: 'Muestra otro informe en el cuerpo principal del informe.',
                             title: 'Subinforme'
                         }
@@ -403,86 +403,86 @@ ej.ReportDesigner.Locale['es-ES'] = {
         newReport: 'Nuevo',
         open: 'Abierto',
         openMenu: {
-            fromDevice: 'Del dispositivo',
-            fromServer: 'Del servidor',
+            fromDevice: 'Desde dispositivo',
+            fromServer: 'Desde servidor',
         },
-        save: 'Salvar',
+        save: 'Guardar',
         saveMenu: {
-            saveLabel: 'Salvar',
+            saveLabel: 'Guardar',
             saveAs: 'Guardar como',
             subMenu: {
-                toDevice: 'Al dispositivo',
-                toServer: 'Al servidor'
+                toDevice: 'A dispositivo',
+                toServer: 'A servidor'
             }
         },
         cut: 'Cortar',
-        copy: 'Dupdo',
+        copy: 'Copiar',
         paste: 'Pegar',
-        deleteItem: 'Borrar',
+        deleteItem: 'Eliminar',
         undo: 'Deshacer',
         redo: 'Rehacer',
-        zoomIn: 'acercarse',
-        zoomOut: 'Disminuir el zoom',
-        header: 'Encabezamiento',
+        zoomIn: 'Acercar',
+        zoomOut: 'Alejar',
+        header: 'Encabezado',
         footer: 'Pie de página',
-        order: 'Orden',
+        order: 'Ordenar',
         orderMenu: {
             sendBackward: 'Enviar atrás',
-            bringForward: 'Adelantar',
-            sendToBack: 'Mandado hacia atras',
+            bringForward: 'Traer adelante',
+            sendToBack: 'Enviar al fondo',
             bringToFront: 'Traer al frente'
         },
         left: 'Alinear a la izquierda',
         center: 'Centrar',
         right: 'Alinear a la derecha',
-        top: 'Alineación superior',
-        middle: 'Medio',
-        bottom: 'Alineación inferior',
+        top: 'Alinear arriba',
+        middle: 'Alinear en el medio',
+        bottom: 'Alinear abajo',
         distributeHorizontally: 'Distribuir horizontalmente',
         distributeVertically: 'Distribuir verticalmente',
         centerHorizontally: 'Centrar horizontalmente',
         centerVertically: 'Centrar verticalmente',
-        sizing: 'Dimensionamiento',
+        sizing: 'Tamaño',
         sizingMenu: {
             sameSize: 'Mismo tamaño',
             sameWidth: 'Mismo ancho',
-            sameHeight: 'Misma altura'
+            sameHeight: 'Mismo alto'
         },
-        alignToGrid: 'Alinear a la red',
-        sizeToGrid: 'Tamaño a la cuadrícula',
-        gridLine: 'Líneas de cuadrícula',
-        snapToShape: 'Ajustar a forma',
+        alignToGrid: 'Alinear a cuadrícula',
+        sizeToGrid: 'Ordenar a cuadrícula',
+        gridLine: 'Líneas de la cuadrícula',
+        snapToShape: 'Ajustar a la forma',
         fullScreen: 'Pantalla completa',
-        preview: 'Avance',
+        preview: 'Vista preliminar',
         reportUpload: {
-            alertLabel: 'Subir',
-            alertMessage: 'Error al cargar el archivo. Por favor carga de nuevo'
+            alertLabel: 'Cargar',
+            alertMessage: 'Error cargando archivo. Por favor, cargar nuevamente'
         },
         grouping: 'Agrupamiento',
-        view: 'Ver'
+        view: 'Vista'
     },
     newReport: {
-        title: 'Nuevo reporte',
-        fileName: 'Nombre del archivo',
-        waterMark: 'Reportar nombre',
+        title: 'Nuevo informe',
+        fileName: 'Nombre de archivo',
+        waterMark: 'Nombre de informe',
         create: 'Crear',
         cancel: 'Cancelar',
-        close: 'Cerca',
+        close: 'Cerrar',
     },
     reportAction: {
-        linkTo: 'Enlace a',
+        linkTo: 'Vincular a',
         report: 'Informe',
         url: 'URL',
-        linkUrl: 'Enlace URL al elemento de informe',
-        none: 'Ninguna',
+        linkUrl: 'Vincular url a elemento del informe',
+        none: 'Ninguno',
         linkBookmark: 'Marcador'
     },
     linkReport: {
         reportCaption: 'Informe',
-        labelText: 'Subinforme de enlace al elemento de informe',
+        labelText: 'Vincular el subinforme al elemento del informe',
         reportDialog: 'Abrir diálogo de informe',
         setParameter: 'Establecer parámetros',
-        dialogHeader: 'Diseñador de informes',
+        dialogHeader: 'Diseñador de informe',
         alertContent: 'No se puede acceder a los informes del servidor.'
     },
     imageProperty: {
@@ -491,7 +491,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             source: 'Fuente',
             sourceTypes: {
                 external: 'Externo',
-                embedded: 'Incrustado',
+                embedded: 'Insertado',
                 database: 'Base de datos'
             },
             value: 'Valor',
@@ -504,44 +504,44 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 xPng: 'imagen/x-png'
             }
         },
-        categoryName: 'Enlazar',
-        linkReport: 'Informe de enlace',
+        categoryName: 'Vínculo',
+        linkReport: 'Vincular informe',
         URL: 'URL',
         appearance: {
             categoryName: 'Apariencia',
             styleTooltip: 'Estilo',
             colorTooltip: 'Color',
-            sizeTooltip: 'tamaño',
+            sizeTooltip: 'Tamaño',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             }
         },
         size: {
@@ -549,38 +549,38 @@ ej.ReportDesigner.Locale['es-ES'] = {
             paddingTypes: {
                 label: 'Relleno',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
-            sizing: 'Dimensionamiento',
+            sizing: 'Tamaño',
             sizeTypes: {
-                auto: 'Tamaño automático',
-                fit: 'Ajuste',
-                proportional: 'FitProportional',
-                clip: 'Acortar'
+                auto: 'Autoajustar',
+                fit: 'Ajustado',
+                proportional: 'Ajuste proporcional',
+                clip: 'Clip'
             }
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
-            toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            categoryName: 'Misceláneo',
             customAttributes: 'Atributos personalizados',
-            zIndex: 'ÍndiceZ',
+            toolTip: 'Información sobre herramientas',
+            documentMap: 'Mapa de documento',
+            zIndex: 'Índice Z',
             bookmark: 'Marcador'
         }
     },
@@ -588,139 +588,139 @@ ej.ReportDesigner.Locale['es-ES'] = {
         commonProperties: {
             showBorder: 'Mostrar borde',
             border: {
-                default: 'Frontera',
-                left: 'Izquierda',
-                top: 'Parte superior',
-                right: 'Derecha',
-                bottom: 'Fondo'
+                default: 'Borde',
+                left: 'Izquierdo',
+                top: 'Superior',
+                right: 'Derecho',
+                bottom: 'Inferior'
             },
             background: 'Color de fondo',
             font: 'Fuente',
             fontStyle: 'Estilo de fuente',
-            labelRotation: 'Rotación de la etiqueta',
-            categoryAxis: 'Categoría Eje',
+            labelRotation: 'Rotación de etiqueta',
+            categoryAxis: 'Eje de categoría',
             valueAxis: 'Eje de valor',
-            defaultText: 'Defecto',
-            auto: 'Auto',
+            defaultText: 'Predeterminado',
+            auto: 'Automático',
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado',
-                dashDot: 'Guion punto',
-                dashDotDot: 'DashDotDot'
+                none: 'Ninguno',
+                double: 'Doble',
+                dashed: 'Guiones',
+                dotted: 'Puntos',
+                dashDot: 'Guiones y puntos',
+                dashDotDot: 'Guion-punto-punto'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
             horizontalAlignments: {
                 near: 'Cerca',
                 far: 'Lejos',
             },
             textAlignments: {
-                right: 'Derecha',
-                bottom: 'Fondo',
-                center: 'Centrar',
-                topLeft: 'Arriba a la izquierda',
-                topCenter: 'Centro Superior',
-                topRight: 'Parte superior derecha',
-                rightTop: 'Justo arriba',
-                rightCenter: 'Centro de la derecha',
-                rightBottom: 'Boton derecho',
-                bottomLeft: 'BottomLeft',
-                bottomCenter: 'Parte inferior central',
-                bottomRight: 'Abajo a la derecha',
-                leftTop: 'LeftTop',
-                leftCenter: 'Centro izquierda',
-                leftBottom: 'Abajo a la izquierda',
+                right: 'Derecho',
+                bottom: 'Inferior',
+                center: 'Centro',
+                topLeft: 'Superior izquierda',
+                topCenter: 'Superior central',
+                topRight: 'Superior derecha',
+                rightTop: 'Derecha superior',
+                rightCenter: 'Derecha central',
+                rightBottom: 'Derecha inferior',
+                bottomLeft: 'Inferior izquierda',
+                bottomCenter: 'Inferior central',
+                bottomRight: 'Inferior derecha',
+                leftTop: 'Izquierda superior',
+                leftCenter: 'Izquierda central',
+                leftBottom: 'Izquierda inferior',
             },
             fontStyleTypes: {
                 normal: 'Normal',
-                italic: 'Itálico'
+                italic: 'Italic'
             },
             fontWeightTypes: {
-                light: 'Ligero',
+                light: 'Ligera',
                 bold: 'Negrita'
             }
         },
         noDataMessage: {
-            categoryName: 'Sin datos',
+            categoryName: 'No hay datos',
             caption: 'Mensaje',
-            hidden: 'Ocultar sin datos',
+            hidden: 'Ocultar no hay datos',
             showBorder: 'Mostrar borde',
-            borderColor: 'Color del borde',
-            borderSize: 'Tamaño del borde',
+            borderColor: 'Color de borde',
+            borderSize: 'Tamaño de borde',
             fontLabel: 'Fuente',
             background: 'Color de fondo',
             position: 'Posición',
             font: {
                 categoryName: 'Fuente',
                 color: 'Color de fuente',
-                family: 'Familia tipográfica',
+                family: 'Familia de fuente',
                 size: 'Tamaño de fuente',
                 style: 'Estilo de fuente',
-                weight: 'Peso de fuente'
+                weight: 'Ancho de fuente'
             },
             fontStyle: {
                 label: 'Estilo de fuente',
                 fontItem: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    italic: 'Itálico'
+                    italic: 'Italic'
                 },
                 fontWeight: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    thin: 'Delgado',
-                    extraLight: 'Extra ligero',
-                    light: 'Ligero',
+                    thin: 'Delgada',
+                    extraLight: 'Extraligera',
+                    light: 'Ligera',
                     medium: 'Medio',
-                    semiBold: 'Semi negrita',
+                    semiBold: 'Seminegrita',
                     bold: 'Negrita',
-                    extraBold: 'Extra Negrita',
-                    heavy: 'Pesado',
+                    extraBold: 'Extranegrita',
+                    heavy: 'Fuerte',
                 }
             }
         },
         basicSettings: {
             categoryName: 'Ajustes básicos',
             chartType: {
-                categoryName: 'Tipo de carta',
+                categoryName: 'Tipo de gráfico',
                 column: 'Columna',
                 stackedColumn: 'Columna apilada',
-                stackedColumnPercent: 'Columna apilada100%',
-                bar: 'Bar',
+                stackedColumnPercent: 'Columna apilada al 100%',
+                bar: 'Barra',
                 stackedBar: 'Barra apilada',
-                stackedBarPercent: 'Barra apilada100%',
-                pie: 'Tarta',
-                explodedPie: 'Pastel Explotado',
-                doughnut: 'Rosquilla',
+                stackedBarPercent: 'Barra apilada al 100%',
+                pie: 'Circular',
+                explodedPie: 'Circular seccionado',
+                doughnut: 'Anillo',
                 pyramid: 'Pirámide',
                 funnel: 'Embudo',
-                area: 'Zona',
-                smoothArea: 'Área lisa',
+                area: 'Área',
+                smoothArea: 'Área suavizada',
                 stackedArea: 'Área apilada',
-                stackedAreaPercent: 'Área apilada 100%',
+                stackedAreaPercent: 'Área apilada al 100%',
                 line: 'Línea',
-                smoothLine: 'Línea lisa',
+                smoothLine: 'Línea suavizada',
                 steppedLine: 'Línea escalonada',
                 lineWithMarkers: 'Línea con marcadores',
-                smoothLineWithMarkers: 'Línea lisa con marcadores',
+                smoothLineWithMarkers: 'Línea suavizada con marcadores',
                 scatter: 'Dispersión',
                 bubble: 'Burbuja',
                 polar: 'Polar',
@@ -728,47 +728,47 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 rangeArea: 'Área de rango',
                 rangeColumn: 'Columna de rango',
                 rangeBar: 'Barra de rango',
-                smoothRangeArea: 'Área de rango suave',
-                alertSwitchChartType: 'Se cambiará todo el tipo de Serie. ¿Quieres continuar?'
+                smoothRangeArea: 'Área de rango lisa',
+                alertSwitchChartType: 'Se cambiarán todos los tipos de serie. ¿Quieres continuar?'
             },
             legendProperties: {
                 booleanPropertyLabel: 'Mostrar leyenda',
                 title: 'Título',
-                titleFont: 'Fuente del titulo',
-                titleFontStyle: 'Título Estilo de fuente',
-                titleAlignment: 'Alineación del título',
+                titleFont: 'Fuente de título',
+                titleFontStyle: 'Estilo de fuente de título',
+                titleAlignment: 'Alineamiento de título',
                 position: 'Posición de leyenda',
                 enableCustomBounds: 'Habilitar límites personalizados'
             },
-            chooseSeries: 'Elija la serie'
+            chooseSeries: 'Seleccionar series'
         },
         categoryName: 'Apariencia',
         chartArea: {
-            categoryName: 'Área del gráfico',
+            categoryName: 'Área de gráfico',
             colorPalette: 'Paleta de color',
             colorPaletteTypes: {
-                earthTones: 'Tonos terrestres',
-                excel: 'Sobresalir',
+                earthTones: 'Tonos tierra',
+                excel: 'Excel',
                 grayScale: 'Escala de grises',
                 pastel: 'Pastel',
-                semiTransparent: 'Semitransparente',
+                semiTransparent: 'SemiTransparente',
                 berry: 'Baya',
                 chocolate: 'Chocolate',
                 fire: 'Fuego',
-                seaGreen: 'Mar verde',
-                brightPastel: 'BrightPastel',
+                seaGreen: 'Verde marino',
+                brightPastel: 'Pastel brillante',
                 pacific: 'Pacífico',
-                pacificLight: 'Luz del Pacífico',
-                pacificSemiTransparent: 'Pacífico semi transparente',
+                pacificLight: 'Luz pacífica',
+                pacificSemiTransparent: 'Pacífico semitransparente',
                 custom: 'Personalizado'
             },
             customColors: 'Colores personalizados'
         },
         forecast: {
-            categoryName: 'Configuración de pronóstico',
-            enableSettings: 'Permitir',
+            categoryName: 'Ajustes de pronóstico',
+            enableSettings: 'Habilitar',
             forecastlength: 'Longitud (puntos)',
-            confidenceInterval: 'Intervalo de confianza',
+            confidenceInterval: 'Nivel de confianza',
             seasonality: 'Estacionalidad (puntos)',
             enableSeries: 'Pronóstico',
             forecastColor: 'Color de pronóstico',
@@ -776,165 +776,165 @@ ej.ReportDesigner.Locale['es-ES'] = {
             confidenceColor: 'Color de confianza',
             bandStyle: 'Estilo de banda de confianza',
             confidenceBandTypes: {
-                fill: 'Llenar',
+                fill: 'Relleno',
                 linetype: 'Línea',
                 dot: 'Punto'
             }
         },
         title: {
             categoryName: 'Título',
-            booleanPropertyLabel: 'Mostrar título de gráfico',
+            booleanPropertyLabel: 'Mostrar gráfico',
             label: 'Texto del título',
             position: 'Posición del título'
         },
         axis: {
             booleanPropertyLabel: 'Habilitar eje',
             title: 'Título del eje',
-            alignment: 'Alineación',
+            alignment: 'Alineamiento',
             lineStyle: 'Estilo de línea',
-            labelOverflowMode: 'Modo de desbordamiento de etiqueta',
+            labelOverflowMode: 'Modo etiqueta de desbordamiento',
             overFlowModeTypes: {
                 trim: 'Recortar',
-                hide: 'Esconder',
+                hide: 'Ocultar',
             },
-            labelFont: 'Fuente de etiqueta',
-            labelFormat: 'Formato de etiqueta',
+            labelFont: 'Etiqueta de fuente',
+            labelFormat: 'Etiqueta de formato',
             interval: 'Intervalo',
             intervalType: 'Tipo de intervalo',
             intervalTypes: {
-                default: 'Defecto',
+                default: 'Predeterminado',
                 number: 'Número',
                 years: 'Años',
                 months: 'Meses',
-                days: 'Dias',
+                days: 'Días',
                 hours: 'Horas',
                 minutes: 'Minutos',
                 seconds: 'Segundos',
-                milliseconds: 'Milisegundas',
+                milliseconds: 'Milisegundos',
                 weeks: 'Semanas'
             },
-            enableMajorTicks: 'Habilitar las garrapatas principales',
-            enableMinorTicks: 'Habilitar marcaciones menores',
+            enableMajorTicks: 'Habilitar ticks mayores',
+            enableMinorTicks: 'Habilitar ticks menores',
             tickProperties: {
-                sizeLabel: 'Tamaño de la garrapata',
-                colorLabel: 'Marque Color',
-                width: 'Anchura',
-                length: 'Longitud'
+                sizeLabel: 'Tamaño de tick',
+                colorLabel: 'Color de tick',
+                width: 'Ancho',
+                length: 'Largo'
             },
-            tickPosition: 'Marque la posición',
+            tickPosition: 'Posición del tick',
             lineProperties: {
-                color: 'Color de linea',
+                color: 'Color de línea',
                 size: 'Tamaño de línea',
                 style: 'Estilo de línea'
             },
             gridLineProperties: {
-                color: 'Color de línea de rejilla',
-                size: 'Tamaño de línea de rejilla',
+                color: 'Color de línea de cuadrícula',
+                size: 'Tamaño de línea de cuadrícula',
                 style: 'Estilo de línea de cuadrícula'
             },
             chartTicks: {
-                length: 'Longitud de la garrapata',
-                width: 'Ancho de garrapata'
+                length: 'Largo del tick',
+                width: 'Ancho del tick'
             },
-            labelsAutofitDisabled: 'Autoajuste de etiquetas desactivado',
+            labelsAutofitDisabled: 'Etiquetas autoajuste desactivado',
             margin: 'Margen',
-            maximum: 'Máxima',
-            minimum: 'Mínima',
+            maximum: 'Máximo',
+            minimum: 'Mínimo',
             horizontalAxis: 'Eje horizontal',
             verticalAxis: 'Eje vertical',
             includeZero: 'Incluir cero'
         },
         gridLine: {
-            categoryName: 'Cuadricula',
+            categoryName: 'Línea de cuadrícula',
             style: {
-                booleanPropertyLabel: 'Mostrar Minor Cuadricula',
-                major: 'Estilo principal de Cuadricula',
-                minor: 'Estilo Menor de Cuadricula'
+                booleanPropertyLabel: 'Mostrar línea de cuadrícula menor',
+                major: 'Estilo de línea de cuadrícula mayor',
+                minor: 'Estilo de línea de cuadrícula menor'
             }
         },
         pageBreak: {
             categoryName: 'Salto de página',
             booleanPropertyLabel: 'Habilitar salto de página',
-            breakLocation: 'Lugar de descanso',
+            breakLocation: 'Ubicación de salto',
             breakLocationTypes: {
-                none: 'Ninguna',
-                start: 'comienzo',
-                end: 'final',
-                startAndEnd: 'InicioAndEnd',
+                none: 'Ninguno',
+                start: 'Inicio',
+                end: 'Fin',
+                startAndEnd: 'Inicio y fin',
                 between: 'Entre',
             },
-            pageNumberReset: 'Restablecer número de página',
-            pageName: 'Nombre de la página'
+            pageNumberReset: 'Reiniciar número de página',
+            pageName: 'Nombre de página'
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
-            toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            categoryName: 'Misceláneo',
             customAttributes: 'Atributos personalizados',
-            alertHeader: 'Informe de tabla',
-            bookmark: 'Marcador',
-            alertMessage: 'Formato de atributos personalizados no válido Ejemplo de formato correcto: \'AttrName1 = Value1, AttrName2 = Value2 \'.'
+            toolTip: 'Información sobre herramientas',
+            documentMap: 'Mapa de documento',
+            alertHeader: 'Gráfico de elemento de informe',
+            alertMessage: 'Formato de atributos personalizados no válido. Ejemplo de formato correcto: \'AttrName1= Value1, AttrName2 = Value2\'.',
+            bookmark: 'Marcador'
         },
         seriesSettings: {
-            headerName: 'Propiedades de la serie',
+            headerName: 'Propiedades de series',
             basicSettings: {
                 categoryName: 'Ajustes básicos',
-                seriesBorder: 'Borde de la serie',
-                seriesColor: 'Color de la serie',
+                seriesBorder: 'Borde de series',
+                seriesColor: 'Color de series',
                 smartLabelProperties: {
                     booleanPropertyLabel: 'Habilitar etiqueta inteligente',
                     labelStyle: 'Estilo de etiqueta',
                     value: 'Valor',
                     position: {
-                        outside: 'Fuera de',
-                        inside: 'Dentro',
-                        outsideInColumn: 'OutsideInColumn'
+                        outside: 'Afuera',
+                        inside: 'Adentro',
+                        outsideInColumn: 'Fuera en columna'
                     },
                     style: {
-                        pieLabelStyle: 'Estilo de etiqueta de tarta',
+                        pieLabelStyle: 'Estilo de etiqueta de circular',
                         funnelLabelStyle: 'Estilo de etiqueta de embudo',
                         pyramidLabelStyle: 'Estilo de etiqueta de pirámide',
                         barLabelStyle: 'Estilo de etiqueta de barra',
-                        smartLabelStyle: 'Estilo de etiqueta'
+                        smartLabelStyle: 'Estilo de etiqueta de etiqueta inteligente'
                     }
                 }
             },
-            link: 'Enlace',
+            link: 'Vínculo',
             markerProperties: {
-                categoryName: 'Configuración de marcadores',
+                categoryName: 'Ajustes de marcadores',
                 booleanPropertyLabel: 'Mostrar marcador',
                 color: 'Color',
                 typePropertyLabel: 'Tipo de marcador',
                 types: {
                     square: 'Cuadrado',
-                    circle: 'Circulo',
+                    circle: 'Círculo',
                     diamond: 'Diamante',
                     triangle: 'Triángulo',
-                    cross: 'Cruzar',
-                    star5: 'Star5',
+                    cross: 'Cruz',
+                    star5: '5 Estrellas',
                 },
                 size: 'Tamaño'
             },
             dataLabelProperties: {
-                categoryName: 'Configuración de etiquetas de datos',
+                categoryName: 'Ajustes de etiqueta de datos',
                 booleanPropertyLabel: 'Mostrar etiqueta de datos',
                 formatPropertyLabel: 'Formato',
                 labelPropertyText: 'Etiqueta',
-                valueAsText: 'Use el valor como etiqueta',
+                valueAsText: 'Usar valor como etiqueta',
                 types: {
                     valueX: '#VALX',
                     valueY: '#VALY',
@@ -946,37 +946,37 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     index: '#ÍNDICE',
                     percent: '#POR CIENTO',
                     total: '#TOTAL',
-                    axisLabel: '#ETIQUETA AXIS'
+                    axisLabel: '#ETIQUETA DE EJE'
                 }
             },
             miscellaneous: {
-                categoryName: 'Diverso',
+                categoryName: 'Misceláneo',
                 toolTip: 'Información sobre herramientas',
                 customLegendText: 'Texto de leyenda'
             }
         },
         borderStyle: 'Estilo de borde',
-        borderColor: 'Color del borde',
+        borderColor: 'Color de borde',
         borderSize: 'Tamaño de borde',
         fontStyle: 'Estilo de fuente',
         fontWeight: 'Peso de fuente',
         fontSize: 'Tamaño de fuente',
         fontColor: 'Color de fuente',
-        fontFamily: 'Familia tipográfica',
+        fontFamily: 'Familia de fuente',
         fontStyleTooltip: 'Estilo',
         fontWeightTooltip: 'Peso',
-        fontSizeTooltip: 'tamaño',
+        fontSizeTooltip: 'Tamaño',
         fontColorTooltip: 'Color',
-        fontFamilyTooltip: 'Familia tipográfica',
+        fontFamilyTooltip: 'Familia de fuente',
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
+        sizeTooltip: 'Tamaño',
         dataElement: {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             }
@@ -986,148 +986,148 @@ ej.ReportDesigner.Locale['es-ES'] = {
         basicSettings: {
             categoryName: 'Ajustes básicos',
             labelText: 'Línea',
-            color: 'Color de linea',
+            color: 'Color de línea',
             size: 'Tamaño de línea',
             style: 'Estilo de línea',
             styleTypes: {
                 solid: 'Sólido',
-                dashed: 'Disparo',
-                dotted: 'Punteado',
+                dashed: 'Guiones',
+                dotted: 'Puntos',
             },
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura',
+            width: 'Ancho',
+            height: 'Alto',
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
-            documentMap: 'Mapa del documento',
+            categoryName: 'Misceláneo',
+            documentMap: 'Mapa de documento',
             customAttributes: 'Atributos personalizados',
             bookmark: 'Marcador'
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño'
+        sizeTooltip: 'Tamaño'
     },
     gaugeProperty: {
         basicSettingsCategory: {
             basicSettings: 'Ajustes básicos',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                none: 'Ninguno',
+                double: 'Doble',
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
-            backGround: 'Fondo',
+            backGround: 'Color de fondo',
             styleTooltip: 'Estilo',
             colorTooltip: 'Color',
-            sizeTooltip: 'tamaño'
+            sizeTooltip: 'Tamaño'
         },
         positionCategory: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto',
         },
         dataCategory: {
             label: 'Datos',
             datasetName: 'Conjunto de datos',
-            noneOptionLabel: 'Ninguna',
+            noneOptionLabel: 'Ninguno',
             filters: 'Filtros'
         },
         labelCategory: {
-            label: 'etiqueta',
+            label: 'Etiqueta',
             enableLabel: 'Habilitar etiqueta',
             labelTarget: 'Objetivo',
             labelText: 'Texto',
-            alignment: 'Alineación del texto',
+            alignment: 'Alineación de texto',
             alignmentTypes: {
-                leftAlignment: 'Izquierdo',
-                centerAlignment: 'Centrar',
-                rightAlignment: 'Derecho',
-                topAlignment: 'Parte superior',
-                middleAlignment: 'Medio',
-                bottomAlignment: 'Fondo'
+                leftAlignment: 'Izquierda',
+                centerAlignment: 'Centro',
+                rightAlignment: 'Derecha',
+                topAlignment: 'Superior',
+                middleAlignment: 'Mitad',
+                bottomAlignment: 'Inferior'
             },
             textDecoration: 'Decoración',
             textDecorationTypes: {
-                underline: 'Subrayar',
-                lineThrough: 'Línea a través',
-                overline: 'Sobre la línea'
+                underline: 'Subrayado',
+                lineThrough: 'Tachado',
+                overline: 'Suprarrayado'
             }
         },
         visibilityCategory: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         miscellaneousCategory: {
-            categoryName: 'Diverso',
+            categoryName: 'Misceláneo',
             customattributes: 'Atributos personalizados',
-            documentMap: 'Mapa del documento',
-            pageName: 'Nombre de la página',
+            documentMap: 'Mapa de documento',
+            pageName: 'Nombre de página',
             bookmark: 'Marcador'
         },
         commonCategory: {
             fontCategory: {
                 font: 'Fuente',
                 fontSize: 'Tamaño de fuente',
-                fontFamily: 'Familia tipográfica',
+                fontFamily: 'Familia de fuente',
                 fontColor: 'Color de fuente',
                 fontStyle: 'Estilo de fuente',
                 fontWeight: 'Peso de fuente',
                 fontWeights: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
                     thin: 'Delgada',
-                    extraLight: 'Extra ligero',
+                    extraLight: 'Extralígera',
                     light: 'Ligera',
                     medium: 'Medio',
-                    semiBold: 'Semi negrita',
+                    semiBold: 'Seminegrita',
                     bold: 'Negrita',
-                    extraBold: 'Extra negrita',
-                    heavy: 'Pesada',
+                    extraBold: 'Extranegrita',
+                    heavy: 'Fuerte',
                 },
                 fontStyles: {
-                    italic: 'Itálica'
+                    italic: 'Italic'
                 }
             }
         },
@@ -1135,8 +1135,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             }
@@ -1146,99 +1146,99 @@ ej.ReportDesigner.Locale['es-ES'] = {
         typesCategory: {
             categoryName: 'Tipos de indicadores',
             types: {
-                threeColoredArrows: 'Tres flechas de colores',
+                threeColoredArrows: 'Flechas de tres colores',
                 threeGrayArrows: 'Tres flechas grises',
-                threeUpDownTriangles: 'Tres Triángulos UpDown',
+                threeUpDownTriangles: 'Tres triángulos arriba-abajo',
                 fourGrayArrows: 'Cuatro flechas grises',
                 fourColoredArrows: 'Cuatro flechas de colores',
                 fiveGrayArrows: 'Cinco flechas grises',
                 fiveColoredArrows: 'Cinco flechas de colores',
                 threeCircledSymbols: 'Tres símbolos circulares',
-                threeUncircledSymbols: 'Tres símbolos no circulados',
+                threeUncircledSymbols: 'Tres símbolos sin círculo',
                 threeFlags: 'Tres banderas',
-                threeUnrimmedTrafficLights: 'Tres semáforos sin borde',
-                threeRimmedTrafficLights: 'Tres semáforos con borde',
+                threeUnrimmedTrafficLights: 'Tres semáforos sin bordes',
+                threeRimmedTrafficLights: 'Tres semáforos con bordes',
                 threeSigns: 'Tres signos',
                 fourTrafficLights: 'Cuatro semáforos',
                 redToBlack: 'Rojo a negro',
                 threeStars: 'Tres estrellas',
                 fiveStars: 'Cinco estrellas',
-                fourRatings: 'Cuatro calificaciones',
+                fourRatings: 'Cuatro clasificaciones',
                 fiveRatings: 'Cinco clasificaciones',
                 fiveQuarters: 'Cinco cuartos',
                 fiveBlocks: 'Cinco bloques',
-                custom: 'Personalizada'
+                custom: 'Personalizado'
             }
         },
         valueCategory: {
-            categoryName: 'Valor del indicador',
+            categoryName: 'Valor indicador',
             value: 'Valor',
             measurementUnit: 'Unidad de medida',
             min: 'Mínimo',
             max: 'Máximo',
             numeric: 'Numérico',
-            percentage: 'Porcentaje'
+            percentage: 'Por ciento'
         },
         states: {
             categoryName: 'Estados indicadores',
             icons: {
-                circle: 'Circulo',
+                circle: 'Círculo',
                 flag: 'Bandera',
-                arrowDown: 'Flecha hacia abajo',
-                arrowDownIncline: 'Inclinación de flecha hacia abajo',
-                arrowSide: 'Lado de la flecha',
+                arrowDown: 'Flecha abajo',
+                arrowDownIncline: 'Flecha inclinada hacia abajo',
+                arrowSide: 'Flecha lateral',
                 arrowUp: 'Flecha arriba',
-                arrowUpIncline: 'Flecha hacia arriba',
-                boxesNoneFilled: 'Cajas Ninguna llena',
-                boxesOneFilled: 'Cajas Una Llenas',
-                boxesTwoFilled: 'Cajas Dos Llenas',
-                boxesThreeFilled: 'Cajas Tres Llenas',
-                boxesAllFilled: 'Cajas llenas',
-                quartersNoneFilled: 'Cuartos Ninguno lleno',
+                arrowUpIncline: 'Flecha inclinada hacia arriba',
+                boxesNoneFilled: 'Casillas no rellenadas',
+                boxesOneFilled: 'Casillas una llena',
+                boxesTwoFilled: 'Casillas dos llenas',
+                boxesThreeFilled: 'Casillas tres llenas',
+                boxesAllFilled: 'Casillas todas llenas',
+                quartersNoneFilled: 'Cuartos ninguno rellenados',
                 quartersOneFilled: 'Cuartos uno lleno',
-                quartersTwoFilled: 'Cuartos Dos Llenos',
-                quartersThreeFilled: 'Tres cuartos llenos',
+                quartersTwoFilled: 'Cuartos dos llenos',
+                quartersThreeFilled: 'Cuartos tres llenos',
                 quartersAllFilled: 'Cuartos todos llenos',
-                signalMeterNoneFilled: 'Medidor de señal Ninguno lleno',
+                signalMeterNoneFilled: 'Medidor de señal no rellenado',
                 signalMeterOneFilled: 'Medidor de señal uno lleno',
                 signalMeterTwoFilled: 'Medidor de señal dos lleno',
                 signalMeterThreeFilled: 'Medidor de señal tres lleno',
                 signalMeterFourFilled: 'Medidor de señal cuatro lleno',
-                starQuartersNoneFilled: 'Cuartos Estelares Ninguno Lleno',
-                starQuartersOneFilled: 'Trimestre uno lleno',
+                starQuartersNoneFilled: 'Cuartos de estrella no rellenados',
+                starQuartersOneFilled: 'Cuartos de estrella uno lleno',
                 starQuartersTwoFilled: 'Cuartos de estrella dos llenos',
-                starQuartersThreeFilled: 'Trimestre estrella lleno tres',
-                starQuartersAllFilled: 'Cuartos de estrellas llenos',
+                starQuartersThreeFilled: 'Cuartos de estrella tres llenos',
+                starQuartersAllFilled: 'Cuartos de estrella todos uno llenos',
                 threeSignsCircle: 'Círculo de tres signos',
                 threeSignsDiamond: 'Diamante de tres signos',
                 threeSignsTriangle: 'Triángulo de tres signos',
                 threeSymbolCheck: 'Verificación de tres símbolos',
                 threeSymbolCross: 'Cruz de tres símbolos',
                 threeSymbolExclamation: 'Exclamación de tres símbolos',
-                threeSymbolUnCircledCheck: 'Cheque sin círculo de tres símbolos',
+                threeSymbolUnCircledCheck: 'Verificación sin círculo de tres símbolos',
                 threeSymbolUnCircledCross: 'Cruz sin círculo de tres símbolos',
                 threeSymbolUnCircledExclamation: 'Exclamación sin círculo de tres símbolos',
                 trafficLight: 'Semáforo',
-                trafficLightUnrimmed: 'Semáforo sin borde',
-                triangleDash: 'Guión triangular',
-                triangleDown: 'Triángulo Abajo',
+                trafficLightUnrimmed: 'Semáforo sin bordes',
+                triangleDash: 'Triángulo de guiones',
+                triangleDown: 'Triángulo abajo',
                 triangleUp: 'Triángulo arriba',
-                lightArrowDown: 'Flecha de luz hacia abajo',
-                lightArrowDownIncline: 'Flecha de luz hacia abajo',
-                lightArrowSide: 'Lado de la flecha de luz',
-                lightArrowUp: 'Flecha de luz hacia arriba',
-                lightArrowUpIncline: 'Inclinación de flecha ligera hacia arriba',
-                buttonStop: 'Botón de parada',
-                buttonPlay: 'Botón de juego',
-                buttonPause: 'Pausa de botón',
-                faceSmile: 'Cara sonrisa',
-                faceNeutral: 'Cara neutral',
-                faceFrown: 'Ceño fruncido',
-                none: 'Ninguna'
+                lightArrowDown: 'Flecha de luz abajo',
+                lightArrowDownIncline: 'Flecha de luz inclinada hacia abajo',
+                lightArrowSide: 'Flecha de luz lateral',
+                lightArrowUp: 'Flecha de luz arriba',
+                lightArrowUpIncline: 'Flecha de luz inclinada hacia arriba',
+                buttonStop: 'Botón de detener',
+                buttonPlay: 'Botón de reproducir',
+                buttonPause: 'Botón de pausa',
+                faceSmile: 'Rostro sonriente',
+                faceNeutral: 'Rostro neutro',
+                faceFrown: 'Rostro ceño fruncido',
+                none: 'Ninguno'
             }
         },
         miscellaneous: {
-            categoryName: 'Diverso',
+            categoryName: 'Misceláneo',
             toolTip: 'Información sobre herramientas'
         }
     },
@@ -1246,30 +1246,30 @@ ej.ReportDesigner.Locale['es-ES'] = {
         scaleCategory: {
             scale: 'Escala',
             min: 'Mínimo',
-            max: 'Máxima',
+            max: 'Máximo',
             interval: 'Intervalo',
-            reverseDirection: 'Direccion contraria',
-            scaleBarWidth: 'Anchura',
+            reverseDirection: 'Dirección opuesta',
+            scaleBarWidth: 'Ancho',
             scaleBarColor: 'Color',
             linearTypecategory: {
                 linearType: 'Tipo',
                 horizontal: 'Horizontal',
                 vertical: 'Vertical',
-                auto: 'Auto'
+                auto: 'Automático'
             },
             scaleLabelsCategory: {
                 showScaleLabels: 'Etiquetas',
                 showScaleLabelsAtEnd: 'Mostrar etiquetas al final'
             },
             ticksCategory: {
-                tickMark: 'Marca de la señal',
-                majorTick: 'Garrapata mayor',
-                minorTick: 'Garrapata menor',
-                majorTickPlacement: 'Colocación de garrapatas principales',
-                minorTickPlacement: 'Colocación menor de garrapatas',
+                tickMark: 'Marca tick',
+                majorTick: 'Tick mayor',
+                minorTick: 'Tick menor',
+                majorTickPlacement: 'Ubicación del tick mayor',
+                minorTickPlacement: 'Ubicación del tick menor',
                 tickInterval: 'Intervalo',
-                tickLength: 'Longitud',
-                tickWidth: 'Anchura',
+                tickLength: 'Largo',
+                tickWidth: 'Ancho',
                 tickColor: 'Color'
             },
             pointerCategory: {
@@ -1279,14 +1279,14 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 pointerType: 'Tipo',
                 pointerTypes: {
                     marker: 'Marcador',
-                    bar: 'Bar'
+                    bar: 'Barra'
                 },
-                pointerWidth: 'Anchura',
+                pointerWidth: 'Ancho',
                 pointerColor: 'Color',
-                markerLength: 'Longitud del marcador',
-                markerStyle: 'Estilo de marcador',
+                markerLength: 'Largo del marcador',
+                markerStyle: 'Estilo del marcador',
                 markerStyles: {
-                    circle: 'Circulo',
+                    circle: 'Círculo',
                     rectangle: 'Rectángulo',
                     triangle: 'Triángulo',
                     diamond: 'Diamante'
@@ -1295,24 +1295,24 @@ ej.ReportDesigner.Locale['es-ES'] = {
             rangeCategory: {
                 range: 'Rango',
                 enableRange: 'Habilitar rango',
-                rangeWidth: 'Anchura',
-                startRange: 'comienzo',
-                endRange: 'Final',
-                startWidth: 'comienzo',
-                endWidth: 'Final',
+                rangeWidth: 'Ancho',
+                startRange: 'Inicio',
+                endRange: 'Fin',
+                startWidth: 'Inicio',
+                endWidth: 'Fin',
                 rangeColor: 'Color'
             }
         },
         commonCategory: {
             placementCategory: {
-                placement: 'Colocación',
-                inside: 'Dentro',
-                outside: 'Fuera de',
-                cross: 'Cruzar'
+                placement: 'Ubicación',
+                inside: 'Adentro',
+                outside: 'Afuera',
+                cross: 'Cruzado'
             },
             miscellaneousCategory: {
                 tooltip: 'Información sobre herramientas',
-                miscellaneous: 'Diversa'
+                miscellaneous: 'Misceláneo'
             }
         }
     },
@@ -1320,21 +1320,21 @@ ej.ReportDesigner.Locale['es-ES'] = {
         scaleCategory: {
             scale: 'Escala',
             min: 'Mínimo',
-            max: 'Máxima',
+            max: 'Máximo',
             interval: 'Intervalo',
-            reverseDirection: 'Direccion contraria',
+            reverseDirection: 'Dirección opuesta',
             angle: 'Ángulo',
-            startAngle: 'comienzo',
-            sweepAngle: 'barrer',
-            scaleBarWidth: 'Anchura',
+            startAngle: 'Inicio',
+            sweepAngle: 'Circular',
+            scaleBarWidth: 'Ancho',
             scaleBarColor: 'Color',
-            pivotX: 'PivotX',
-            pivotY: 'Pivote Y',
+            pivotX: 'EjeX',
+            pivotY: 'EjeY',
             radialTypecategory: {
                 radialType: 'Tipo',
                 radial: 'Radial',
-                halfCircle: 'Medio circulo',
-                auto: 'Auto'
+                halfCircle: 'Semicírculo',
+                auto: 'Automático'
             },
             scaleLabelsCategory: {
                 showScaleLabels: 'Etiquetas',
@@ -1342,14 +1342,14 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 rotateScaleLabels: 'Rotar etiquetas'
             },
             ticksCategory: {
-                tickMark: 'Marca de la señal',
-                majorTick: 'Garrapata mayor',
-                minorTick: 'Garrapata menor',
-                majorTickPlacement: 'Colocación de garrapatas principales',
-                minorTickPlacement: 'Colocación menor de garrapatas',
+                tickMark: 'Marca tick',
+                majorTick: 'Tick mayor',
+                minorTick: 'Tick menor',
+                majorTickPlacement: 'Ubicación del tick mayor',
+                minorTickPlacement: 'Ubicación del tick menor',
                 tickInterval: 'Intervalo',
-                tickLength: 'Longitud',
-                tickWidth: 'Anchura',
+                tickLength: 'Largo',
+                tickWidth: 'Ancho',
                 tickColor: 'Color'
             },
             pointerCategory: {
@@ -1359,43 +1359,43 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 pointerType: 'Tipo',
                 pointerTypes: {
                     needle: 'Aguja',
-                    bar: 'Bar',
+                    bar: 'Barra',
                     marker: 'Marcador'
                 },
-                pointerWidth: 'Anchura',
+                pointerWidth: 'Ancho',
                 pointerColor: 'Color',
-                markerLength: 'Longitud del marcador',
-                markerStyle: 'Estilo de marcador',
+                markerLength: 'Largo del marcador',
+                markerStyle: 'Estilo del marcador',
                 markerStyles: {
-                    circle: 'Circulo',
+                    circle: 'Círculo',
                     rectangle: 'Rectángulo',
                     triangle: 'Triángulo',
                     diamond: 'Diamante'
                 },
-                showPointerCap: 'Gorra',
-                capWidth: 'Anchura',
+                showPointerCap: 'Tapón',
+                capWidth: 'Ancho',
                 capColor: 'Color'
             },
             rangeCategory: {
                 range: 'Rango',
                 enableRange: 'Habilitar rango',
-                rangeWidth: 'Anchura',
-                startRange: 'comienzo',
-                endRange: 'Final',
-                startWidth: 'comienzo',
-                endWidth: 'Final',
+                rangeWidth: 'Ancho',
+                startRange: 'Inicio',
+                endRange: 'Fin',
+                startWidth: 'Inicio',
+                endWidth: 'Fin',
                 rangeColor: 'Color'
             }
         },
         commonCategory: {
             placementCategory: {
-                inside: 'Dentro',
-                outside: 'Fuera de',
-                cross: 'Cruzar'
+                inside: 'Adentro',
+                outside: 'Afuera',
+                cross: 'Cruzado'
             },
             miscellaneousCategory: {
                 tooltip: 'Información sobre herramientas',
-                miscellaneous: 'Diversa'
+                miscellaneous: 'Misceláneo'
             }
         }
     },
@@ -1406,43 +1406,43 @@ ej.ReportDesigner.Locale['es-ES'] = {
         appearance: {
             categoryName: 'Apariencia',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                none: 'Ninguno',
+                double: 'Doble',
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             }
         },
         noRows: {
-            categoryName: 'Sin Filas',
+            categoryName: 'No hay filas',
             font: {
                 categoryName: 'Fuente',
                 color: 'Color de fuente',
-                family: 'Familia tipográfica',
+                family: 'Familia de fuente',
                 size: 'Tamaño de fuente',
                 style: 'Estilo de fuente',
                 weight: 'Peso de fuente'
@@ -1450,99 +1450,99 @@ ej.ReportDesigner.Locale['es-ES'] = {
             fontStyle: {
                 label: 'Estilo de fuente',
                 fontItem: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    italic: 'Itálico'
+                    italic: 'Italic'
                 },
                 fontWeight: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    thin: 'Delgado',
-                    extraLight: 'Extra ligero',
-                    light: 'Ligero',
+                    thin: 'Delgada',
+                    extraLight: 'Extraligera',
+                    light: 'Ligera',
                     medium: 'Medio',
-                    semiBold: 'Semi negrita',
+                    semiBold: 'Seminegrita',
                     bold: 'Negrita',
-                    extraBold: 'Extra Negrita',
-                    heavy: 'Pesado',
+                    extraBold: 'Extranegrita',
+                    heavy: 'Fuerte',
                 }
             },
             textDecoration: {
                 categoryName: 'Decoración de texto',
-                defaultStyle: 'Defecto',
-                none: 'Ninguna',
-                underLine: 'Subrayar',
-                overLine: 'Sobre la línea',
-                lineThrough: 'Línea a través'
+                defaultStyle: 'Predeterminado',
+                none: 'Ninguno',
+                underLine: 'Subrayado',
+                overLine: 'Suprarrayado',
+                lineThrough: 'Tachado'
             },
             format: 'Formato',
-            lineHeight: 'Altura de la línea',
+            lineHeight: 'Alto de línea',
             message: 'Mensaje',
             paddingTypes: {
                 label: 'Relleno',
                 left: 'Izquierda',
                 right: 'Derecha',
-                top: 'Parte superior',
-                bottom: 'Fondo',
+                top: 'Superior',
+                bottom: 'Inferior',
             },
             textAlign: {
-                categoryName: 'Texto alineado',
-                default: 'Defecto',
+                categoryName: 'Alineación de texto',
+                default: 'Predeterminado',
                 left: 'Izquierda',
                 right: 'Derecha',
-                center: 'Centrar'
+                center: 'Centro'
             },
             verticalAlign: {
                 categoryName: 'Alineación vertical',
-                default: 'Defecto',
-                top: 'Parte superior',
-                middle: 'Medio',
-                bottom: 'Fondo'
+                default: 'Predeterminado',
+                top: 'Superior',
+                middle: 'Mitad',
+                bottom: 'Inferior'
             },
             writingMode: {
                 categoryName: 'Modo de escritura',
-                default: 'Defecto',
+                default: 'Predeterminado',
                 horizontal: 'Horizontal',
                 vertical: 'Vertical',
-                rotateProperty: 'Girar270'
+                rotateProperty: 'Rotar 270'
             }
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura',
+            width: 'Ancho',
+            height: 'Alto',
         },
         miscellaneous: {
-            categoryName: 'Diverso',
-            keepTogether: 'Mantenerse juntos',
+            categoryName: 'Misceláneo',
+            keepTogether: 'Mantener junto',
             toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            documentMap: 'Mapa de documento',
             customAttributes: 'Atributos personalizados',
             bookmark: 'Marcador'
         },
         fontStyleTooltip: 'Estilo',
         fontWeightTooltip: 'Peso',
-        fontSizeTooltip: 'tamaño',
+        fontSizeTooltip: 'Tamaño',
         fontColorTooltip: 'Color',
-        fontFamilyTooltip: 'Familia tipográfica',
+        fontFamilyTooltip: 'Familia de fuente',
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
+        sizeTooltip: 'Tamaño',
         dataElement: {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             }
@@ -1551,48 +1551,48 @@ ej.ReportDesigner.Locale['es-ES'] = {
     rectangleProperty: {
         basicSettings: {
             categoryName: 'Ajustes básicos',
-            styleTooltip: 'Estilo',
-            colorTooltip: 'Color',
-            sizeTooltip: 'tamaño',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                none: 'Ninguno',
+                double: 'Doble',
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
-            backGround: 'Fondo'
+            backGround: 'Color de fondo',
+            styleTooltip: 'Estilo',
+            colorTooltip: 'Color',
+            sizeTooltip: 'Tamaño'
         },
         backgroundImage: {
             categoryName: 'Imagen de fondo',
             source: 'Fuente',
             sourceTypes: {
                 external: 'Externo',
-                embedded: 'Incrustado',
+                embedded: 'Insertado',
                 database: 'Base de datos'
             },
             value: 'Valor',
@@ -1607,11 +1607,11 @@ ej.ReportDesigner.Locale['es-ES'] = {
             repeatProperty: {
                 categoryName: 'Repetir',
                 repeat: 'Repetir',
-                repeatX: 'Repetir X',
-                repeatY: 'Repetir Y',
-                defaultType: 'Defecto',
-                clip: 'Fragmento de una película',
-                fit: 'Ajuste'
+                repeatX: 'RepetirX',
+                repeatY: 'RepetirY',
+                defaultType: 'Predeterminado',
+                clip: 'Clip',
+                fit: 'Ajustado'
             }
         },
         pageBreak: {
@@ -1619,11 +1619,11 @@ ej.ReportDesigner.Locale['es-ES'] = {
             enableProperty: {
                 labelText: 'Habilitar salto de página',
                 breakLocation: {
-                    labelText: 'Break Location',
-                    none: 'Ninguna',
-                    start: 'Comienzo',
+                    labelText: 'Ubicación de salto de página',
+                    none: 'Ninguno',
+                    start: 'Inicio',
                     end: 'Fin',
-                    startAndEnd: 'StartAndEnd',
+                    startAndEnd: 'Inicio y fin',
                     between: 'Entre'
                 },
                 pageNumberReset: 'Restablecer número de página'
@@ -1633,22 +1633,22 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura',
+            width: 'Ancho',
+            height: 'Alto',
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
-            keepTogether: 'Mantenerse juntos',
-            pageName: 'Nombre de la página',
+            categoryName: 'Misceláneo',
+            keepTogether: 'Mantener junto',
+            pageName: 'Nombre de página',
             toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            documentMap: 'Mapa de documento',
             customAttributes: 'Atributos personalizados',
             bookmark: 'Marcador'
         },
@@ -1656,8 +1656,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida',
                 contentsOnly: 'Solo contenido'
@@ -1672,56 +1672,56 @@ ej.ReportDesigner.Locale['es-ES'] = {
         saveFile: {
             saveAsReport: 'Guardar como informe',
             name: 'Nombre',
-            save: 'Salvar',
+            save: 'Guardar',
         },
-        close: 'Cerca',
+        close: 'Cerrar',
         cancel: 'Cancelar',
-        waterMark: 'Reportar nombre',
+        waterMark: 'Nombre de informe',
         emptyMessage: 'Esta categoría está vacía',
         alertMessage: {
-            reportServer: 'Servidor de informes',
-            selectCategory: 'Seleccione Categoría',
+            reportServer: 'Servidor de informe',
+            selectCategory: 'Por favor, seleccionar categoría',
         },
         warningMessage: {
-            fileNameLabel: 'Un artículo "',
-            fileNameExist: '.rdl" ya existe. ¿Desea reemplazar el elemento existente?',
-            populateCategory: 'El diseñador de informes no pudo recuperar los recursos del servidor de informes',
+            fileNameLabel: 'Un elemento "',
+            fileNameExist: '.rdl" ya existe. ¿Quieres sustituir el elemento existente?',
+            populateCategory: 'El diseñador de informes no ha podido recuperar los recursos del ReportServer.',
         },
-        reloadAriaLabelText: 'Examinar Recargar',
+        reloadAriaLabelText: 'Recargar explorador',
         containerAriaLabelText: 'Examinar contenedor de archivos'
     },
     publishReport: {
         title: 'Publicar como informe',
         publish: 'Publicar',
         category: 'Categoría',
-        selectCategory: 'Por favor crea una categoría',
+        selectCategory: 'Por favor, crear una categoría',
         createCategory: 'Crear categoría',
-        categoryPermission: 'Habilite el permiso de creación para crear una nueva categoría',
+        categoryPermission: 'Habilitar permiso de creación para crear una nueva categoría',
         categoryname: 'Nombre',
-        emptyName: 'Por favor ingrese un nombre para el informe',
-        invalidName: 'Los siguientes caracteres no son compatibles: \ \' +, []% #',
+        emptyName: 'Por favor, ingresar nombre de informe',
+        invalidName: 'No se admiten los siguientes caracteres: \' + , [ ] % #',
         description: 'Descripción',
-        maxCharacter: '* 1024 caracteres como máximo',
+        maxCharacter: '*1024 caracteres como máximo',
         markaspublic: 'Marcar como público',
         cancel: 'Cancelar',
-        closeToolTip: 'Cerca',
-        tags: 'etiquetas',
-        newTag: 'Nuevo día',
-        tagWaterMark: 'Etiqueta de búsqueda',
-        splCharacter: 'Los caracteres especiales no son compatibles',
+        closeToolTip: 'Cerrar',
+        tags: 'Etiquetas',
+        newTag: 'Nueva Etiqueta',
+        tagWaterMark: 'Buscar etiqueta',
+        splCharacter: 'No se admiten caracteres especiales',
         addCategory: {
             title: 'Nueva categoría',
             name: 'Nombre',
             description: 'Descripción',
-            emptyValidation: 'Por favor ingrese el nombre de la categoría',
-            duplicateNameValidation: 'El nombre del artículo ya existe',
+            emptyValidation: 'Por favor, ingresar el nombre de la categoría',
+            duplicateNameValidation: 'El nombre del elemento ya existe',
             createActionFailure: 'Error al crear categoría en el servidor',
-            saveLabel: 'Salvar'
+            saveLabel: 'Guardar'
         },
         warningMessage: {
-            sameNameError: 'Ya existe un informe con el mismo nombre en la categoría.',
-            replaceMessage: '. ¿Quieres cambiarlo?',
-            publishAsReport: 'Publicar como informe',
+            sameNameError: 'Ya existe un informe con el mismo nombre en la categoría',
+            replaceMessage: '. ¿Quieres sustituirlo?',
+            publishAsReport: 'Publicar como informe'
         },
     },
     expressionMenu: {
@@ -1731,84 +1731,84 @@ ej.ReportDesigner.Locale['es-ES'] = {
         role: 'Menú de expresiones'
     },
     propertyPanel: {
-        property: 'Propiedades',
+        property: 'PROPIEDADES',
         data: 'DATOS',
         name: 'Nombre',
         toolTipStyle: 'Estilo',
         toolTipColor: 'Color',
-        toolTipWidth: 'Anchura',
-        setSorts: 'Establecer clases',
+        toolTipWidth: 'Ancho',
+        setSorts: 'Establecer ordenamiento',
         setFilters: 'Establecer filtros',
         customAttributes: 'Establecer atributos',
         advancedOptions: 'Opciones avanzadas',
         closeAdvance: 'Cerrar opciones avanzadas',
         codemodules: 'Código',
         expressionList: {
-            top: 'Parte superior',
+            top: 'Superior',
             right: 'Derecha',
-            bottom: 'Fondo',
+            bottom: 'Inferior',
             left: 'Izquierda',
             style: 'Estilo',
             color: 'Color',
             size: 'Tamaño',
-            fontFamily: 'Familia tipográfica',
-            width: 'Anchura',
-            height: 'Altura',
+            fontFamily: 'Familia de fuente',
+            width: 'Ancho',
+            height: 'Alto',
             weight: 'Peso',
             image: 'Imagen'
         },
         alertMessage: {
             emptyNameValidation: 'El nombre no puede estar vacío',
-            duplicateNameValidation: 'Nombre ya existe',
+            duplicateNameValidation: 'El nombre ya existe',
             invalidCharacterValidation: 'El nombre no debe contener espacios ni caracteres especiales',
-            alertDialogHeader: 'Propiedades',
+            alertDialogHeader: 'PROPIEDADES',
             specialCharacterValidation: 'El valor de la propiedad no debe contener espacios ni caracteres especiales.'
         },
         unitType: {
-            inchText: 'en',
+            inchText: 'In',
             centimeterText: 'cm',
-            pixelText: 'píxel',
+            pixelText: 'pixel',
             pointText: 'pt',
             millimeterText: 'mm',
             picaText: 'pc'
         },
-        setGroups: 'Grupos establecidos',
+        setGroups: 'Establecer grupos',
         addDataset: 'Añadir conjunto de datos',
-        dataAlertMsg: 'No se ha añadido ninguna conjunto de datos !',
+        dataAlertMsg: '¡Conjunto de datos no añadido!',
         NoDataFound: 'Datos no encontrados',
         None: 'Ninguno',
         propertyEdit: 'Editar',
-        itemCountWaterMark: 'artículos',
-        back: 'atrás',
+        itemCountWaterMark: 'elementos',
+        back: 'Volver',
         propertyEditorAlert: {
-            title: 'Editora de propiedades',
-            content: '¿Quieres cancelar la editora de propiedades?'
+            title: 'Editor de propiedades',
+            content: '¿Quieres cancelar el editor de propiedades?'
         }
     },
     dataSource: {
-        newDatasource: 'NUEVO DATOSOURCE',
-        sharedData: 'FUENTE DE DATOS COMPARTIDOS',
+        newDatasource: 'NUEVA FUENTE DE DATOS',
+        sharedData: 'FUENTE DE DATOS COMPARTIDA',
         datasource: 'FUENTES DE DATOS',
-        switchLabel: 'Cambiar al panel de datos',
+        switchLabel: 'Cambiar a panel de datos',
         previousPanel: 'Panel anterior',
         datasourceLabel: 'Nombre de fuente de datos',
         datasourceList: {
             data: 'Datos',
             contextMenu: {
                 edit: 'Editar',
-                deleteItem: 'Borrar',
+                deleteItem: 'Eliminar',
                 create: 'Crear conjunto de datos',
-                clone: 'Clon'
+                clone: 'Clonar'
             }
         },
         datasourceType: {
             existOption: 'Existente',
             newOption: 'Crear nuevo',
-            selectDatasoure: 'Seleccione la fuente de datos',
-            connectDatasource: 'Conectar fuente de datos',
-            datasourceType: 'Elige el tipo para conectarte',
+            selectDatasoure: 'Seleccionar el conjunto de datos',
+            connectDatasource: 'Conectar conjunto de datos',
+            datasourceType: 'Escoger el tipo para conectar',
             sqlLabel: 'Microsoft SQL',
-            azuresqldwlabel: 'Almacenamiento de datos SQL de Azure',
+            azuresqldwlabel: 'Almacén de datos Azure SQL',
             sqlCeLabel: 'SQLCE',
             odbcLabel: 'ODBC',
             oracleLabel: 'Oracle',
@@ -1816,21 +1816,21 @@ ej.ReportDesigner.Locale['es-ES'] = {
             xmlLabel: 'XML',
             jsonLabel: 'JSON',
             csvLabel: 'CSV',
-            excelLabel: 'Sobresalir',
+            excelLabel: 'Excel',
             mysqlLabel: 'MySQL',
             elasticSearchLabel: 'Elastic Search',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
-            sharedLabel: 'Compartido',
+            sharedLabel: 'Shared',
             cdataLabel: 'CDATA',
-            snowflakeLabel: 'Copo de nieve',
-            ssasLabel: 'Servicios de análisis de Microsoft SQL',
+            snowflakeLabel: 'Snowflake',
+            ssasLabel: 'Microsoft SQL Analysis Services',
             verticaLabel: 'Vertica',
             gcsqlLabel: 'Google Cloud SQL',
             redshiftLabel: 'Amazon Redshift',
-            amazonAuroraLabel: 'Amazonas Aurora',
+            amazonAuroraLabel: 'Amazon Aurora',
             amazonRDSLabel: 'Amazon RDS',
-            webapilabel: 'API web',
+            webapilabel: 'Web API',
             postgresqllabel: 'PostgreSQL',
             odatalabel: 'OData'
         },
@@ -1838,186 +1838,195 @@ ej.ReportDesigner.Locale['es-ES'] = {
             newConnection: 'NUEVA CONEXIÓN',
             editConnection: 'EDITAR CONEXIÓN',
             name: 'Nombre',
-            save: 'Salvar',
+            save: 'Guardar',
             connect: 'Conectar',
             cancel: 'Cancelar',
-            disclaimerText: 'Al conectarse, acepta estos',
-            disclaimerLink: 'condiciones',
-            disclaimerTooltip: 'El Cliente reconoce y acepta que al solicitar a {customBrandName} que se conecte a esta fuente de datos (que incluye datos, sistemas de almacenamiento, entorno y otros sistemas constituyentes) en nombre del Cliente, el Cliente certifica que tiene los derechos y licencias adecuados de los propietarios de la fuente de datos para permitir Cliente y {customBrandName} en nombre del Cliente para conectarse y utilizar la fuente de datos. El cliente acepta indemnizar completamente a {customBrandName} por todas y cada una de las reclamaciones y tarifas. Si el Cliente no está de acuerdo, el Cliente no debe solicitar que {customBrandName} se conecte a la fuente de datos.'
+            disclaimerText: 'Al conectarse, aceptas estas condiciones',
+            disclaimerLink: 'términos',
+            disclaimerTooltip: 'El cliente reconoce y acepta que, al solicitar a {customBrandName} que se conecte a esta fuente de datos (que incluye datos, sistemas de almacenamiento, entorno y otros sistemas constituyentes) en nombre del cliente, el cliente certifica que dispone de los derechos y licencias adecuados de los propietarios de la fuente de datos para permitir al cliente y a {customBrandName} en nombre del cliente conectarse a la fuente de datos y utilizarla. El cliente acepta indemnizar completamente a {customBrandName} por todas y cada una de las reclamaciones y honorarios. Si el cliente no está de acuerdo, no deberá solicitar a {customBrandName} que se conecte a la fuente de datos.'
         },
         advanceDatasource: {
             authentication: 'Autenticación',
-            prompt: 'Rápido',
-            none: 'Ninguna',
+            prompt: 'Prompt',
+            none: 'Ninguno',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
+            promptLabel: 'Texto prompt',
             savePassword: 'Guardar contraseña',
             connectionString: 'Cadena de conexión',
-            authenticationType: 'tipo de autenticación',
-            promptLabel: 'Mensaje de texto',
+            authenticationType: 'Tipo de autenticación',
             alertMessage: {
-                alertUserName: 'Especifique el nombre de usuario',
-                alertPassword: 'Especifique la contraseña',
-                alertConnectionString: 'Especifique la cadena de conexión',
-                alertPrompt: 'Especificar el texto del mensaje'
+                alertUserName: 'Especificar nombre de usuario',
+                alertPassword: 'Especificar contraseña',
+                alertPrompt: 'Especificar texto prompt',
+                alertConnectionString: 'Especificar cadena de conexión',
             }
         },
         sqlDatasource: {
             authenticationType: 'Tipo de autenticación',
-            window: 'ventanas',
-            sqlServer: 'servidor SQL',
+            window: 'Windows',
+            sqlServer: 'Servidor SQL',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            switchLabel: 'Panel de avance de fuente de datos',
-            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la consulta. ¿Quieres usar el diseñador visual de todos modos?',
+            switchLabel: 'Panel de avance de la fuente de datos',
+            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la cadena de conexión. ¿Quieres utilizar el diseñador visual de todos modos? ',
             basicOption: {
-                serverName: 'Nombre del servidor',
+                serverName: 'Nombre de servidor',
                 savePassword: 'Guardar contraseña',
                 database: 'Base de datos',
                 advanceSwitch: 'Opciones avanzadas'
             },
             advanceOption: {
                 connectionString: 'Cadena de conexión',
-                promptLabel: 'Texto rápido',
-                prompt: 'Rápido',
-                none: 'Ninguna',
+                promptLabel: 'Texto prompt',
+                prompt: 'Prompt',
+                none: 'Ninguno',
                 savePassword: 'Guardar contraseña',
-                basicSwitch: 'Opciones basicas',
-                impersonate: 'Habilitar usuario suplantado'
+                basicSwitch: 'Opciones básicas',
+                impersonate: 'Habilitar suplantación de usuario'
             },
             alertMessage: {
-                connectionString: 'Especifique la cadena de conexión',
-                promptText: 'Especifique el texto de aviso',
-                userName: 'Especifique el nombre de usuario',
-                password: 'Especifique la contraseña',
-                serverName: 'Especifique el nombre del servidor',
-                databaseName: 'Especifique el nombre de la base de datos'
+                connectionString: 'Especificar cadena de conexión',
+                promptText: 'Especificar texto prompt',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña',
+                serverName: 'Especificar nombre de servidor',
+                databaseName: 'Especificar nombre de base de datos'
             }
         },
         elasticSearchDatasource: {
+            connectionType: 'Tipo de conexión',
             authenticationType: 'Tipo de autenticación',
-            window: 'ventanas',
-            server: 'servidor ElasticSearch',
-            none: 'Ninguna',
-            basicHttp: 'Autenticación HTTP básica',
+            window: 'Windows',
+            server: 'Servidor ElasticSearch',
+            none: 'Ninguno',
+            basicHttp: 'Autenticación HTTP Basic',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
             port: 'Puerto',
+            connectionTypes: {
+                elasticSQL: 'Elasticsearch SQL',
+                openDistro: 'Distribución abierta'
+            },
             basicOption: {
-                serverName: 'Nombre del servidor',
+                serverName: 'Nombre de servidor',
                 database: 'Base de datos'
             },
             alertMessage: {
-                port: 'Especifique el número de puerto',
-                userName: 'Especifique el nombre de usuario',
-                password: 'Especifique la contraseña',
-                serverName: 'Especifique el nombre del servidor',
-                databaseName: 'Especifique el nombre de la base de datos'
+                port: 'Especificar número de puerto',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña',
+                serverName: 'Especificar nombre de servidor',
+                databaseName: 'Especificar nombre de base de datos'
+            },
+            noteMessage: {
+                note: 'Nota: ',
+                message: 'Para conectarse a una instancia de Elasticsearch alojada en Amazon Web Service, utilice el tipo de conexión Open Distro.'
             }
         },
         postgreSQLDatasource: {
-            serverName: 'Nombre del servidor',
+            serverName: 'Nombre de servidor',
             database: 'Base de datos',
             port: 'Puerto',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
             savePassword: 'Guardar contraseña',
-            basicSwitch: 'Opciones basicas',
+            basicSwitch: 'Opciones básicas',
             advanceSwitch: 'Opciones avanzadas',
-            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
-            switchLabel: 'AdvancePanel de fuente de datos',
+            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la cadena de conexión. ¿Quieres utilizar el diseñador visual de todos modos?',
+            switchLabel: 'Panel de avance de la fuente de datos',
             alertMessage: {
-                aletServerName: 'Especifique el nombre del servidor',
-                aletPort: 'Especifique el número de puerto',
-                alertUserName: 'Especifique el nombre de usuario',
-                alertPassword: 'Especifique la contraseña',
-                alertDatabase: 'Especifique el nombre de la base de datos'
+                aletServerName: 'Especificar nombre de servidor',
+                aletPort: 'Especificar número de puerto',
+                alertUserName: 'Especificar nombre de usuario',
+                alertPassword: 'Especificar contraseña',
+                alertDatabase: 'Especificar nombre de base de datos'
             }
         },
         sqlceDatasource: {
             connectionString: 'Cadena de conexión',
             authenticationType: 'Tipo de autenticación',
             authentication: 'Autenticación',
-            none: 'Ninguna',
+            none: 'Ninguno',
             password: 'Contraseña',
             savePassword: 'Guardar contraseña',
             alertMessage: {
-                connectionString: 'Especifique la cadena de conexión',
-                password: 'Especificar la contraseña'
+                connectionString: 'Especificar cadena de conexión',
+                password: 'Especificar contraseña'
             }
         },
         odbcDatasource: {
             connectionString: 'Cadena de conexión',
             authenticationType: 'Tipo de autenticación',
             authentication: 'Autenticación',
-            prompt: 'Rápido',
-            none: 'Ninguna',
+            prompt: 'Prompt',
+            none: 'Ninguno',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            promptLabel: 'Texto de aviso',
+            promptLabel: 'Texto prompt',
             savePassword: 'Guardar contraseña',
             alertMessage: {
-                connectionString: 'Especificar la cadena de conexión',
-                promptText: 'Especificar el texto de aviso',
-                userName: 'Especificar el nombre de usuario',
-                password: 'Especificar la contraseña'
+                connectionString: 'Especificar cadena de conexión',
+                promptText: 'Especificar texto prompt',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña'
             }
         },
         oracleDatasource: {
             connectionString: 'Cadena de conexión',
             authenticationType: 'Tipo de autenticación',
             authentication: 'Autenticación',
-            prompt: 'Rápido',
-            none: 'Ninguna',
+            prompt: 'Prompt',
+            none: 'Ninguno',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            promptLabel: 'Texto de aviso',
+            promptLabel: 'Texto Prompt',
             savePassword: 'Guardar contraseña',
             alertMessage: {
-                connectionString: 'Especificar la cadena de conexión',
-                promptText: 'Especificar el texto de aviso',
-                userName: 'Especificar el nombre de usuario',
-                password: 'Especificar la contraseña'
+                connectionString: 'Especificar cadena de conexión',
+                promptText: 'Especificar texto prompt',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña'
             }
         },
         oledbDatasource: {
             connectionString: 'Cadena de conexión',
             authenticationType: 'Tipo de autenticación',
             authentication: 'Autenticación',
-            prompt: 'Rápido',
-            none: 'Ninguna',
+            prompt: 'Prompt',
+            none: 'Ninguno',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            promptLabel: 'Texto de aviso',
+            promptLabel: 'Texto prompt',
             savePassword: 'Guardar contraseña',
             alertMessage: {
-                connectionString: 'Especificar la cadena de conexión',
-                prompt: 'Especificar el texto de aviso',
-                userName: 'Especificar el nombre de usuario',
-                password: 'Especificar la contraseña'
+                connectionString: 'Especificar cadena de conexión',
+                prompt: 'Especificar texto prompt',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña'
             }
         },
         webapiDatasource: {
             url: 'URL',
             methodType: 'Método',
-            get: 'OBTENER',
-            post: 'ENVIAR',
-            requestBody: 'Cuerpo de solicitud',
-            requestRaw: 'Cruda',
-            parameter: 'Parámetro(s)',
-            header: 'Encabezamiento(s)',
+            get: 'GET',
+            post: 'POST',
+            requestBody: 'Solicitar cuerpo',
+            requestRaw: 'Raw',
+            parameter: 'Parámetro (s)',
+            header: 'Encabezado (s)',
             dataFormat: 'Formato de datos',
             json: 'JSON',
             csv: 'CSV',
             xml: 'XML',
-            firstRow: 'Considere la primera fila como encabezado',
-            authenticationType: 'tipo de autenticación',
+            firstRow: 'Considerar la primera fila como encabezado',
+            authenticationType: 'Tipo de autenticación',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
             separatorTypes: {
                 comma: 'Coma',
                 space: 'Espacio',
-                tab: 'Lengüeta',
+                tab: 'Tabulación',
                 semicolon: 'Punto y coma',
                 custom: 'Personalizado'
             },
@@ -2025,68 +2034,68 @@ ej.ReportDesigner.Locale['es-ES'] = {
             delimiter: 'Delimitador',
             alertMessage: {
                 urlValidation: 'URL inválida',
-                userNameValidation: 'Especifique el nombre de usuario',
-                passwordValidation: 'Especifique la contraseña',
-                fieldsValidation: 'Especificar valor en campos',
-                delimiterAlert: 'Especifica el delimitador'
+                userNameValidation: 'Especificar nombre de usuario',
+                passwordValidation: 'Especificar contraseña',
+                fieldsValidation: 'Especificar valor en los campos',
+                delimiterAlert: 'Especificar delimitador'
             },
-            none: 'Ninguna',
-            basicHttp: 'Autenticación Http Básica',
+            none: 'Ninguno',
+            basicHttp: 'Autenticación HTTP Basic',
             addField: 'AÑADIR',
-            deleteField: 'Eliminar campo',
+            deleteField: 'Borrar campo',
             key: 'Llave',
             value: 'Valor',
             closeToolTip: 'Cerrar',
             pagination: {
                 pagination: 'Tipo de paginación',
                 offset: {
-                    offset: 'Compensar',
-                    maxRow: 'Max Filas',
-                    startFieldName: 'Nombre del campo de inicio',
-                    startValue: 'Valor inicial',
-                    limitFieldName: 'Limite el nombre del campo',
+                    offset: 'Offset',
+                    maxRow: 'Filas máx',
+                    startFieldName: 'Iniciar nombre de campo',
+                    startValue: 'Valor de inicio',
+                    limitFieldName: 'Nombre de campo límite',
                     limitValue: 'Valor límite',
-                    passHeader: 'Pase por encabezado',
-                    lookHeader: 'Mira en el encabezado',
-                    totalRecord: 'Ruta de registros totales',
-                    dataIndicator: 'Ruta del indicador de datos',
+                    passHeader: 'Paso por encabezado',
+                    lookHeader: 'Mirar en encabezado',
+                    totalRecord: 'Ruta total de registros',
+                    dataIndicator: 'Ruta de indicador de datos',
                     limitField: 'límite',
-                    resultTotalRecord: 'result.total',
-                    resultDataIndicator: 'result.data.value',
+                    resultTotalRecord: 'resultado.total',
+                    resultDataIndicator: 'valor.resultado.datos',
                 },
                 nextpage: {
-                    nextpage: 'Siguiente página',
-                    maxIteration: 'Max iteraciones',
-                    nextPageName: 'Nombre de campo de la página siguiente',
-                    nextPageValue: 'Valor de la página siguiente',
-                    pageSizeFieldName: 'Nombre del campo Tamaño de página',
+                    nextpage: 'Página siguiente',
+                    maxIteration: 'Interacciones máx',
+                    nextPageName: 'Nombre de campo de la siguiente página',
+                    nextPageValue: 'Valor de la siguiente página',
+                    pageSizeFieldName: 'Nombre de campo del tamaño de página',
                     pageSizeValue: 'Valor del tamaño de página',
-                    totalPagesPathName: 'Ruta total de páginas',
+                    totalPagesPathName: 'Ruta del total de páginas',
                     page: 'página',
-                    pageSize: 'tamaño de página',
-                    resultTotalPages: 'resultado.paginas totales',
+                    pageSize: 'Tamaño de página',
+                    resultTotalPages: 'resultado.totalPpaginas',
                 },
                 nexttoken: {
-                    nexttoken: 'Token siguiente',
-                    nextTokenFieldName: 'Nombre del campo de token siguiente',
-                    nextTokenPathName: 'Siguiente ruta de token',
-                    resultNextToken: 'resultado.siguiente PageToken',
-                    nextTokenPath: 'nextToken',
+                    nexttoken: 'Siguiente token',
+                    nextTokenFieldName: 'Nombre de campo del siguiente token',
+                    nextTokenPathName: 'Ruta del siguiente token',
+                    resultNextToken: 'resultado.próximoTokendePágina',
+                    nextTokenPath: 'próximoToken',
                 },
                 nexturl: {
-                    nexturl: 'URL siguiente',
-                    nextURLPathName: 'Siguiente ruta URL',
-                    resultNextURL: 'resultado.metadatos.siguiente URL',
+                    nexturl: 'Siguiente url',
+                    nextURLPathName: 'Ruta de la siguiente url',
+                    resultNextURL: 'resultado.metadatos.siguienteUrl',
                 },
                 alertMessage: {
-                    startFieldNameWarning: 'El nombre del campo de inicio no puede estar vacío',
+                    startFieldNameWarning: 'El nombre del campo inicio no puede estar vacío',
                     limitFieldNameWarning: 'El nombre del campo límite no puede estar vacío',
-                    dataFieldPathWarning: 'Los registros totales o la ruta del indicador de datos deben estar presentes',
-                    nextPageFieldNameWarning: 'El nombre del campo de la página siguiente no puede estar vacío',
-                    nextPageSizeFieldNameWarning: 'El nombre del campo Tamaño de página no puede estar vacío',
-                    nextTokenFieldNameWarning: 'El siguiente nombre de campo Token no puede estar vacío',
-                    nextTokenFieldValueWarning: 'El siguiente valor del campo Token no puede estar vacío',
-                    nextUrlPathWarning: 'El siguiente campo URL no puede estar vacío',
+                    dataFieldPathWarning: 'Deben estar presentes los registros totales o la ruta del indicador de datos',
+                    nextPageFieldNameWarning: 'El nombre del campo siguiente no puede estar vacío',
+                    nextPageSizeFieldNameWarning: 'El nombre del campo tamaño de página no puede estar vacío',
+                    nextTokenFieldNameWarning: 'El nombre del campo siguiente token no puede estar vacío',
+                    nextTokenFieldValueWarning: 'El valor del campo siguiente token no puede estar vacío',
+                    nextUrlPathWarning: 'El campo siguiente URL no puede estar vacío',
                 }
             }
         },
@@ -2094,62 +2103,62 @@ ej.ReportDesigner.Locale['es-ES'] = {
             jsonType: 'Tipo',
             jsonTypes: {
                 inLine: 'En línea',
-                upload: 'Expediente',
-                external: 'Externa'
+                upload: 'Archivo',
+                external: 'Externo'
             },
             inLineText: 'En línea',
             filePath: 'Ruta de archivo',
-            urlLabel: 'Externa',
-            maxFileSize: 'Tamaño máximo de archivo: 20 MB',
-            uploadCompleted: 'Subida completada',
-            uploadFailed: 'Subida fallida',
-            uploadInitiate: 'Iniciando carga ...',
-            fileExceed: 'El archivo seleccionado excede el límite de tamaño de archivo de ',
+            urlLabel: 'Externo',
+            maxFileSize: 'Tamaño de archivo máximo: 20 MB',
+            uploadCompleted: 'Carga completada',
+            uploadFailed: 'Carga fallida',
+            uploadInitiate: 'Iniciando carga...',
+            fileExceed: 'El archivo seleccionado excede el límite de tamaño de ',
             uploadProgress: 'Cargando ',
             alertMessage: {
                 jsonAlert: 'Especificar datos JSON',
-                uploadAlert: 'Por favor seleccione un archivo',
+                uploadAlert: 'Por favor, seleccionar un archivo',
                 urlAlert: 'URL inválida',
                 xmlAlert: 'Especificar datos XML',
-                delimiterAlert: 'Especifica el delimitador'
+                delimiterAlert: 'Especificar delimitador'
             },
             waterMark: {
-                xmlInline: 'Pegue datos XML aquí',
-                jsonInline: 'Pegue los datos JSON aquí'
+                xmlInline: 'Pegar datos XML aquí',
+                jsonInline: 'Pegar datos JSON aquí'
             },
             separatorTypes: {
                 comma: 'Coma',
                 space: 'Espacio',
-                tab: 'Lengüeta',
+                tab: 'Tabulación',
                 semicolon: 'Punto y coma',
                 custom: 'Personalizado'
             },
             separator: 'Separador',
             delimiter: 'Delimitador',
-            firstRowHeader: 'Considere la primera fila como encabezado',
-            extractType: 'Tipo de extracto',
+            firstRowHeader: 'Considerar la primera fila como encabezado',
+            extractType: 'Extraer tipo',
             extractTypes: {
                 workSheets: 'Hojas de trabajo',
-                tables: 'Mesas'
+                tables: 'Tablas'
             }
         },
         mysqlDatasource: {
-            serverName: 'Nombre del servidor',
+            serverName: 'Nombre de servidor',
             port: 'Puerto',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
             savePassword: 'Guardar contraseña',
             database: 'Base de datos',
-            basicSwitch: 'Opciones basicas',
+            basicSwitch: 'Opciones básicas',
             advanceSwitch: 'Opciones avanzadas',
-            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
-            switchLabel: 'AdvancePanel de fuente de datos',
+            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la cadena de conexión. ¿Quieres utilizar el diseñador visual de todos modos?',
+            switchLabel: 'Panel de avance de la fuente de datos',
             alertMessage: {
-                userName: 'Especifique el nombre de usuario',
-                password: 'Especifique la contraseña',
-                serverName: 'Especifique el nombre del servidor',
-                port: 'Especifique el número de puerto',
-                database: 'Especifique el nombre de la base de datos'
+                serverName: 'Especificar nombre de servidor',
+                port: 'Especificar número de puerto',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña',
+                database: 'Especificar nombre de base de datos'
             }
         },
         googleCloudSQL: {
@@ -2167,263 +2176,263 @@ ej.ReportDesigner.Locale['es-ES'] = {
             mysqlEngine: 'MySQL',
             psqlEngine: 'PostgreSQL',
             auroraMysqlEngine: 'Amazon Aurora MySQL',
-            auroraPsqlEngine: 'Amazon Aurora PostgreSQL',
+            auroraPsqlEngine: 'Amazon Aurora PSQL',
             mariaDbEngine: 'MariaDB',
-            sqlserver: 'servidor SQL',
-            oracle: 'Oráculo'
+            sqlserver: 'Servidor SQL',
+            oracle: 'Oracle'
         },
         snowflakeDatasource: {
-            serverName: 'Nombre del servidor',
+            serverName: 'Nombre de servidor',
             serverWatermark: 'Ejemplo',
             database: 'Base de datos',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
             savePassword: 'Guardar contraseña',
-            basicSwitch: 'Opciones basicas',
+            basicSwitch: 'Opciones básicas',
             advanceSwitch: 'Opciones avanzadas',
-            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
-            switchLabel: 'AdvancePanel de fuente de datos',
+            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la cadena de conexión. ¿Quieres utilizar el diseñador visual de todos modos?',
+            switchLabel: 'Panel de avance de la fuente de datos',
             alertMessage: {
-                serverName: 'Especifique el nombre del servidor',
-                userName: 'Especifique el nombre de usuario',
-                password: 'Especifique la contraseña',
-                database: 'Especifique el nombre de la base de datos'
+                serverName: 'Especificar nombre de servidor',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña',
+                database: 'Especificar nombre de base de datos'
             }
         },
         verticaDatasource: {
-            serverName: 'Nombre del servidor',
+            serverName: 'Nombre de servidor',
             database: 'Base de datos',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            port: 'Puerto',
             savePassword: 'Guardar contraseña',
-            basicSwitch: 'Opciones basicas',
+            basicSwitch: 'Opciones básicas',
+            port: 'Puerto',
             advanceSwitch: 'Opciones avanzadas',
-            switchAlert: 'Si cambia al diseñador visual, se descartarán los cambios manuales realizados en la cadena de conexión. ¿Quieres usar el diseñador visual de todos modos?',
-            switchLabel: 'AdvancePanel de fuente de datos',
+            switchAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la cadena de conexión. ¿Quieres utilizar el diseñador visual de todos modos?',
+            switchLabel: 'Panel de avance de la fuente de datos',
             alertMessage: {
-                serverName: 'Especifique el nombre del servidor',
-                userName: 'Especifique el nombre de usuario',
-                password: 'Especifique la contraseña',
-                port: 'Especifique el número de puerto',
-                database: 'Especifique el nombre de la base de datos'
+                serverName: 'Especificar nombre de servidor',
+                userName: 'Especificar nombre de usuario',
+                password: 'Especificar contraseña',
+                port: 'Especificar número de puerto',
+                database: 'Especificar nombre de base de datos'
             }
         },
         sharedDatasource: {
-            datasource: 'Fuente de datos compartida',
-            alertMessage: 'Seleccione una fuente de datos compartida'
+            datasource: 'FUENTE DE DATOS COMPARTIDA',
+            alertMessage: 'Seleccionar una fuente de datos compartida'
         },
         alertMessage: {
             headerLabel: 'Fuente de datos',
             connectionFailed: 'El diseñador de informes no pudo conectar la fuente de datos',
-            dataExtensionFailed: 'El proveedor de datos seleccionado no está disponible. Por favor, compruebe la extensión de datos.',
+            dataExtensionFailed: 'El proveedor de datos seleccionado no está disponible. Por favor, verifica la extensión de los datos.',
             dataSourceNotFound: 'La fuente de datos no está disponible para el conjunto de datos seleccionado.',
             connectStringValidation: 'Como la cadena de conexión contiene expresiones en la fuente de datos ',
-            validationMessage: ' Por favor, actualice con una cadena de conexión válida.',
-            executionMessage: ', No podemos ejecutar el conjunto de datos para esta conexión.',
+            validationMessage: ' Por favor, actualizar con una cadena de conexión válida.',
+            executionMessage: ', no podemos ejecutar el conjunto de datos para esta conexión.',
             confirmMessage: ' ¿Seguro que quieres guardar la fuente de datos?',
-            deleteValue: 'Eliminar origen de datos \'',
-            emptyNameVaildation: 'Especifique el nombre de la fuente de datos',
-            duplicateName: 'El nombre especificado ya existe en la lista Fuente de datos',
+            deleteValue: 'Eliminar fuente de datos \'',
+            emptyNameVaildation: 'Especificar el nombre de la fuente de datos',
+            duplicateName: 'El nombre especificado ya existe en la lista de fuentes de datos',
             invalidCharacterValidation: 'El nombre no debe contener espacios ni caracteres especiales',
-            sharedPermissionValidation: 'La creación de fuentes de datos se ha restringido, excepto la fuente de datos compartida.'
+            sharedPermissionValidation: 'Se ha restringido la creación de fuentes de datos, excepto fuentes de datos compartidas.'
         },
         descriptionText: {
-            amazonAuroraInfo: 'Amazon Aurora es un servicio de base de datos relacional desarrollado y ofrecido por Amazon Web Services. El conector de Amazon Aurora le permite acceder a los datos de las bases de datos de Amazon Aurora dentro del {customBrandName} Designer.',
-            azureSqlInfo: 'Azure SQL Data Warehouse es una oferta de servicio de almacenamiento de datos empresarial basado en la nube de Microsoft. Aprovecha el procesamiento masivamente paralelo para ejecutar rápidamente consultas complejas en petabytes de datos. El conector de Azure SQL Data Warehouse le permite acceder a los datos de las bases de datos de Azure SQL Data Warehouse dentro del {customBrandName} Designer.',
-            cdataInfo: 'CDATA es una base de datos SQL distribuida y altamente escalable que puede ejecutarse en cualquier lugar. Ofrece el máximo rendimiento para cargas de trabajo transaccionales y analíticas con estructuras de datos relacionales familiares. El conector cdata le permite acceder a datos de bases de datos cdata con un punto final MySQL dentro del {customBrandName} Designer.',
-            csvInfo: 'Lleve sus archivos CSV al {customBrandName} Designer y prepare informes para ver la historia que vive en sus datos.',
-            excelInfo: 'Traiga sus archivos de Excel como tablas u hojas de trabajo al diseñador {customBrandName}. Explore y juegue con sus datos, prepare informes para ver la historia que vive en sus datos.',
-            googleBigQueryInfo: 'BigQuery es un servicio web RESTful que permite el análisis interactivo de conjuntos de datos masivos que trabajan en conjunto con Google Storage. Es un software como servicio sin servidor que se puede utilizar de forma complementaria con MapReduce.',
-            jsonInfo: 'Lleve sus archivos JSON al {customBrandName} Designer cargándolos para preparar informes y ver la historia que vive en sus datos.',
-            mariadbInfo: 'MariaDB es una bifurcación desarrollada por la comunidad y con soporte comercial del sistema de administración de bases de datos relacionales MySQL que garantiza que seguirá siendo de código abierto. El conector MariaDB le permite acceder a los datos de las bases de datos MariaDB dentro del {customBrandName} Designer.',
-            memsqlInfo: 'MemSQL es una base de datos SQL distribuida y altamente escalable que puede ejecutarse en cualquier lugar. Ofrece el máximo rendimiento para cargas de trabajo transaccionales y analíticas con estructuras de datos relacionales familiares. El conector MemSQL le permite acceder a datos de bases de datos MemSQL dentro del {customBrandName} Designer.',
-            microsoftsqlInfo: 'SQL Server es el sistema de administración de bases de datos relacionales de Microsoft.Como uno de los servidores de bases de datos más confiables y confiables del mercado, viene con una variedad de servicios de valor agregado como análisis, informes y más, además del sistema de administración de base de datos central. El conector de SQL Server le permite acceder a los datos de las bases de datos del servidor Microsoft SQL dentro del {customBrandName} Designer.',
-            ssasInfo: 'SQL Server Analysis Services (SSAS) es la tecnología de la pila de Microsoft Business Intelligence para desarrollar soluciones de procesamiento analítico en línea (OLAP). En términos simples, puede usar SSAS para crear cubos usando datos de data marts / data warehouse para un análisis de datos más profundo y rápido.',
-            mysqlInfo: 'MySQL es un sistema de administración de bases de datos relacionales de código abierto y de libre acceso, que se destaca principalmente por su procesamiento rápido, confiabilidad comprobada y facilidad y flexibilidad de uso. El conector MySQL le permite acceder a datos de bases de datos MySQL dentro del {customBrandName} Designer.',
-            elasticSearchInfo: 'Elasticsearch es un motor de búsqueda basado en la biblioteca Lucene. Proporciona un motor de búsqueda de texto completo distribuido y con capacidad para múltiples inquilinos con una interfaz web HTTP y documentos JSON sin esquema. Elasticsearch se puede utilizar para buscar todo tipo de documentos. También proporciona una búsqueda escalable, tiene una búsqueda casi en tiempo real y es compatible con múltiples inquilinos. El conector de Elasticsearch le permite acceder a los datos de los clústeres de Elasticsearch dentro del {customBrandName} Designer.',
-            odataInfo: 'OData es un protocolo abierto que permite la creación y consumo de APIs RESTful consultables e interoperables de forma sencilla y estándar. Conéctese con {customBrandName} Designer y cree informes para ver la historia que vive en sus datos.',
-            odbcInfo: 'Un controlador ODBC utiliza la interfaz Open Database Connectivity (ODBC) de Microsoft que permite que las aplicaciones accedan a los datos en los sistemas de administración de bases de datos (DBMS) utilizando SQL como estándar para acceder a los datos.',
-            oledbInfo: 'OLE DB es la interfaz de programa de aplicación (API) estratégica de bajo nivel de Microsoft para acceder a diferentes fuentes de datos. OLE DB incluye no solo las capacidades de Lenguaje de consulta estructurado (SQL) de la interfaz de datos estándar patrocinada por Microsoft, Conectividad abierta de bases de datos (ODBC), sino que también incluye acceso a datos distintos de los datos SQL.',
-            oracleInfo: 'Oracle es una base de datos relacional de nivel empresarial con funciones analíticas avanzadas. El conector de Oracle le permite acceder a los datos de las bases de datos de Oracle dentro del {customBrandName} Designer.',
-            psqlInfo: 'PostgreSQL es un sistema de base de datos relacional de objetos poderoso y de código abierto que enfatiza la extensibilidad y el cumplimiento de estándares. El conector de PostgreSQL le permite acceder a los datos de las bases de datos de PostgreSQL dentro del {customBrandName} Designer.',
-            snowflakeInfo: 'Snowflake es un almacén de datos basado en la nube que proporciona una plataforma ilimitada para almacenar y recuperar datos. A diferencia de las arquitecturas tradicionales de disco compartido / nada compartido de un solo clúster, Snowflake tiene una arquitectura de datos compartidos de clústeres múltiples que es dinámica y altamente escalable gracias a los sistemas de almacenamiento basados ​​en la nube de clase empresarial.',
-            webAPIInfo: 'Conéctese con {customBrandName} Designer utilizando casi todas las fuentes de datos que tienen una API REST. Cree informes y vea la historia que vive en sus datos.',
-            xmlInfo: 'Lleve sus archivos XML al {customBrandName} Designer y prepare informes para ver la historia que vive en sus datos.',
-            verticaInfo: 'Vertica es el almacén de análisis unificado más avanzado, que combina el poder de un almacenamiento en columnas de alto rendimiento, compresión avanzada, proyecciones optimizadas y un motor de consultas SQL de procesamiento paralelo masivo con análisis avanzado y aprendizaje automático, para que pueda desbloquear el verdadero potencial de sus datos sin límites ni compromisos. El conector Vertica le permite acceder a los datos de las bases de datos Vertica dentro del {customBrandName} Designer.',
-            gcsqlInfo: 'Google Cloud SQL es un servicio de base de datos totalmente administrado basado en MySQL y PostgreSQL. El conector de Google Cloud SQL le permite acceder a los datos de las bases de datos de Google Cloud SQL dentro del {customBrandName} Designer.',
-            redshiftInfo: 'Amazon Redshift es un almacén de datos rápido y escalable que hace que sea simple y rentable analizar todos los datos en su almacén de datos y lago de datos. Está construido sobre PostgreSQL. El conector de Amazon Redshift le permite acceder a los datos de las bases de datos de Amazon Redshift dentro del {customBrandName} Designer.',
-            rdsInfo: 'Amazon Relational Database Service (Amazon RDS) es un servicio web que facilita la configuración, el funcionamiento y el escalado de una base de datos relacional en la nube de AWS. Proporciona capacidad rentable y redimensionable para reducir la automatización de tareas administrativas. Proporciona motores de base de datos como Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database y Microsoft SQL Server. El conector de Amazon RDS le permite acceder a los datos de las bases de datos de Amazon RDS dentro del {customBrandName} Designer.'
+            amazonAuroraInfo: 'Amazon Aurora es un servicio de base de datos relacional desarrollado y ofrecido por Amazon Web Services. El conector de Amazon Aurora te permite acceder a los datos de las bases de datos de Amazon Aurora dentro del diseñador de {customBrandName}.',
+            azureSqlInfo: 'El almacén de datos Azure SQL es una oferta de servicio de almacén de datos empresariales basada en la nube de Microsoft. Aprovecha el procesamiento paralelo masivo para ejecutar rápidamente consultas complejas en petabytes de datos. El conector de Azure SQL te permite acceder a los datos de las bases de datos del almacén de datos Azure SQL desde el diseñador de {customBrandName}.',
+            cdataInfo: 'CDATA es una base de datos SQL distribuida y altamente escalable que puede ejecutarse en cualquier lugar. Ofrece el máximo rendimiento para cargas de trabajo transaccionales y analíticas con estructuras de datos relacionales familiares. El conector cdata te permite acceder a datos de bases de datos cdata con la terminal MySQL dentro del diseñador {customBrandName}.',
+            csvInfo: 'Lleva tus archivos CSV al diseñador de {customBrandName} y preparar informes para ver el historial que residen en tus datos.',
+            excelInfo: 'Lleva tus archivos de Excel como tablas u hojas de cálculo al diseñador de {customBrandName}. Explora y juega con tus datos, prepara informes para ver el historial que reside en tus datos.',
+            googleBigQueryInfo: 'BigQuery es un servicio web RESTful que permite el análisis interactivo de conjuntos de datos masivos trabajando conjuntamente con Google Storage. Se trata de un software como servicio sin servidor que puede utilizarse de forma complementaria con MapReduce.',
+            jsonInfo: 'Lleva tus archivos JSON al diseñador de {customBrandName} cargándolos para preparar informes y ver el historial que vive en tus datos.',
+            mariadbInfo: 'MariaDB es una bifurcación del sistema de gestión de bases de datos relacionales MySQL, desarrollada por la comunidad y con soporte comercial, que garantiza que seguirá siendo de código abierto. El conector MariaDB permite acceder a datos de bases de datos MariaDB desde el diseñador {customBrandName}.',
+            memsqlInfo: 'MemSQL es una base de datos SQL distribuida y altamente escalable que puede ejecutarse en cualquier lugar. Ofrece el máximo rendimiento para cargas de trabajo transaccionales y analíticas con estructuras de datos relacionales familiares. El conector MemSQL te permite acceder a los datos de las bases de datos MemSQL dentro del diseñador de {customBrandName}.',
+            microsoftsqlInfo: 'El servidor SQL es el sistema de gestión de bases de datos relacionales de Microsoft, uno de los servidores de bases de datos más fiables del mercado, que incluye una serie de servicios de valor añadido, como análisis, generación de informes, etc., además del sistema de gestión de bases de datos principal. El conector del servidor SQL permite acceder a los datos de las bases de datos del servidor Microsoft SQL desde el diseñador {customBrandName}.',
+            ssasInfo: 'SQL Server Analysis Services (SSAS) es la tecnología de herramientas empresariales de Microsoft para desarrollar soluciones de procesamiento analítico en línea (OLAP). En términos sencillos, puedes utilizar SSAS para crear cubos utilizando datos de data marts / data warehouse para un análisis de datos más profundo y rápido.',
+            mysqlInfo: 'MySQL es un sistema de gestión de bases de datos relacionales de código abierto y de libre acceso, que destaca sobre todo por su rapidez de procesamiento, su probada fiabilidad y su facilidad y flexibilidad de uso. El conector MySQL te permite acceder a los datos de las bases de datos MySQL dentro del diseñador {customBrandName}.',
+            elasticSearchInfo: 'Elasticsearch es un motor de búsqueda basado en la biblioteca lucene. Proporciona un motor de búsqueda de texto completo distribuido y multiusuario con una interfaz web HTTP y documentos JSON sin esquemas. Elasticsearch puede utilizarse para buscar todo tipo de documentos. También proporciona búsqueda escalable, tiene búsqueda casi en tiempo real y soporta multitenencia. El conector Elasticsearch permite acceder a datos de clústeres Elasticsearch dentro del diseñador {customBrandName}.',
+            odataInfo: 'OData es un protocolo abierto que permite la creación y el consumo de API RESTful consultables e interoperables de forma sencilla y estándar. Conéctate con el diseñador de {customBrandName} y crea informes para ver el historial de tus datos.',
+            odbcInfo: 'Un controlador ODBC utiliza la interfaz Open Database Connectivity (ODBC) de Microsoft que permite a las aplicaciones acceder a los datos de los sistemas de gestión de bases de datos (SGBD) utilizando SQL como estándar de acceso a los datos.',
+            oledbInfo: 'OLE DB es la interfaz de programa de aplicación (API) estratégica de bajo nivel de Microsoft para acceder a distintas fuentes de datos. OLE DB incluye no sólo las capacidades del lenguaje de consulta estructurado (SQL) de la interfaz de datos estándar Open Database Connectivity (ODBC), patrocinada por Microsoft, sino también el acceso a datos distintos de SQL.',
+            oracleInfo: 'Oracle es una base de datos relacional de nivel empresarial con funciones analíticas avanzadas. El conector de Oracle te permite acceder a los datos de las bases de datos de Oracle dentro del diseñador {customBrandName}.',
+            psqlInfo: 'PostgreSQL es un potente sistema de base de datos objeto-relacional de código abierto que enfatiza la extensibilidad y el cumplimiento de estándares. El conector PostgreSQL te permite acceder a datos de bases de datos PostgreSQL dentro del diseñador {customBrandName}.',
+            snowflakeInfo: 'Snowflake es un almacén de datos basado en la nube que proporciona una plataforma sin límites para almacenar y recuperar datos. A diferencia de las arquitecturas tradicionales de un solo clúster con disco compartido/nada compartido, Snowflake tiene como arquitectura de datos compartidos varios clústeres que son dinámicos y altamente escalables gracias a sistemas de almacenamiento de clase empresarial basados en la nube.',
+            webAPIInfo: 'Conéctate con el diseñador de {customBrandName} utilizando casi todas las fuentes de datos que tienen una API REST. Elabora informes y descubre el historial que reside en tus datos.',
+            xmlInfo: 'Lleva tus archivos XML al diseñador de {customBrandName} y prepara informes para ver el historial que reside en tus datos.',
+            verticaInfo: 'Vertica es el almacén de análisis unificado más avanzado, que combina la potencia de un motor de consulta SQL de alto rendimiento, almacenamiento en columnas, compresión avanzada, proyecciones optimizadas y procesamiento masivo en paralelo con análisis avanzados y aprendizaje automático, para que pueda liberar el verdadero potencial de tus datos sin límites ni concesiones. El conector Vertica te permite acceder a los datos de las bases de datos Vertica dentro del diseñador de {customBrandName}.',
+            gcsqlInfo: 'Google Cloud SQL es un servicio de base de datos totalmente gestionado basado en MySQL y PostgreSQL. El conector de Google Cloud SQL te permite acceder a los datos de las bases de datos de Google Cloud SQL dentro del diseñador de {customBrandName}.',
+            redshiftInfo: 'Amazon Redshift es un almacén de datos rápido y escalable que simplifica y rentabiliza el análisis de todos los datos de tu almacén y lago de datos. Se basa en PostgreSQL. El conector de Amazon Redshift te permite acceder a los datos de las bases de datos de Amazon Redshift desde el diseñador de {customBrandName}.',
+            rdsInfo: 'Amazon Relational Database Service (Amazon RDS) es un servicio web que facilita la configuración, el funcionamiento y el escalado de una base de datos relacional en la nube de AWS. Proporciona capacidad rentable y redimensionable para reducir la automatización de las tareas administrativas. Ofrece motores de bases de datos como Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database y Microsoft SQL Server. El conector de Amazon RDS te permite acceder a los datos de las bases de datos de Amazon RDS dentro del diseñador de {customBrandName}.'
         }
     },
     imageManager: {
-        headerText: 'Administrador de imagen',
-        addImageButton: 'Añadir imagen',
-        deleteImage: 'Eliminar imagen incrustada',
-        image: 'Imagen',
+        headerText: 'GESTOR DE IMÁGENES',
+        addImageButton: 'AÑADIR IMAGEN',
+        deleteImage: 'Eliminar imagen insertada',
+        image: 'Imagen'
     },
     linkParameter: {
         title: 'Parámetros',
-        headerText: 'Parámetro de enlace',
-        descriptionText: 'Parámetros del informe',
+        headerText: 'Vincular parámetros',
+        descriptionText: 'Parámetros de informe',
         addText: 'AÑADIR',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        nameWaterMark: 'Nombre del parámetro',
+        nameWaterMark: 'Nombre de parámetro',
         valueWaterMark: 'Valor',
-        errorMessage: 'Ingrese un valor para esta propiedad',
-        closeToolTip: 'Cerca'
+        errorMessage: 'Ingresar un valor para esta propiedad',
+        closeToolTip: 'Cerrar'
     },
     filter: {
-        title: 'Filtrar',
-        descriptionLable: 'Incluye filas donde las siguientes condiciones son verdaderas.',
+        title: 'Filtro',
+        descriptionLable: 'Incluir filas donde las siguientes condiciones sean verdaderas',
         add: 'AÑADIR',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
         valueWaterMark: 'Valor',
-        fieldWaterMark: 'Elegir campo',
-        closeToolTip: 'Cerca',
-        deleteField: 'Eliminar campo',
+        fieldWaterMark: 'Escoger campo',
+        closeToolTip: 'Cerrar',
+        deleteField: 'Borrar campo',
         errorMessage: {
-            booleanValidation: 'El valor no es un valor booleano.',
-            intValidation: 'El valor no es un número entero.',
-            floatValidation: 'El valor no es un flotador.',
-            dateTimeValidation: 'El valor es un formato de fecha / hora no válido.',
-            topBottomFilter: 'Los operadores de filtro% superior e inferior% requieren un tipo de datos flotante o entero.',
-            expressionValidation: 'Elegir valor para el campo de expresión'
+            booleanValidation: 'El valor no es un valor booleano',
+            intValidation: 'El valor no es un entero',
+            floatValidation: 'El valor no es un flotante.',
+            dateTimeValidation: 'El valor no es un formato válido de fecha/hora.',
+            topBottomFilter: 'Los operadores de filtro Superior % e Inferior % requieren un tipo de dato flotante o entero.',
+            expressionValidation: 'Seleccionar valor para el campo de expresión'
         },
         operatorTypes: {
-            like: 'Me gusta',
-            topN: 'TopN',
-            bottomN: 'BottomN',
-            topPercent: 'Top%',
-            bottomPercent: 'Bottom%',
+            like: 'Como',
+            topN: 'SuperiorN',
+            bottomN: 'InferiorN',
+            topPercent: 'Superior%',
+            bottomPercent: 'Inferior%',
             between: 'Entre',
             inFilter: 'En',
         }
     },
     dataField: {
-        title: 'Campos de información',
-        descriptionLable: 'Incluir las filas del campo de datos',
+        title: 'Campos de datos',
+        descriptionLable: 'Incluir filas de campo de datos',
         add: 'AÑADIR',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        deleteField: 'Eliminar campo',
-        fieldNameWaterMark: 'Nombre del campo',
-        closeToolTip: 'Cerca',
+        deleteField: 'Borrar campo',
+        fieldNameWaterMark: 'Nombre de campo',
+        closeToolTip: 'Cerrar',
         errorMessages: {
-            emptyField: 'Especifique el nombre del campo',
-            invalidCharacters: 'El nombre del campo no debe contener espacios y caracteres especiales',
-            sameCharacter: 'El nombre del campo ya existe'
+            emptyField: 'Especificar nombre de campo',
+            invalidCharacters: 'El nombre de campo no debe contener espacios ni caracteres especiales',
+            sameCharacter: 'El nombre de campo ya existe'
         },
         dsNameLabel: 'Nombre',
-        dsNameWaterMark: 'Nombre de datos',
+        dsNameWaterMark: 'Nombre de dato',
         dsNameValidation: {
-            emptyName: 'Especifique el nombre del conjunto de datos',
-            duplicateName: 'El nombre especificado ya existe en la lista Dataset',
-            specialCharacter: 'El nombre de Dataset no debe contener espacios y caracteres especiales'
+            emptyName: 'Especificar nombre del conjunto de datos',
+            duplicateName: 'El nombre especificado ya existe en la lista de conjunto de datos',
+            specialCharacter: 'El nombre del conjunto de datos no debe contener espacios ni caracteres especiales'
         }
     },
     dataPanel: {
         itemTooltip: {
-            properties: 'Propiedades',
+            properties: 'PROPIEDADES',
             data: 'Datos',
             parameters: 'Parámetros',
-            imageManager: 'Administrador de imagen',
+            imageManager: 'GESTOR DE IMÁGENES',
             expand: 'Expandir',
-            collapse: 'Colapso'
+            collapse: 'Reducir'
         },
         dataSourceNewAlert: {
             title: 'Fuente de datos',
-            contentMessage: '¿Desea cancelar la creación del origen de datos?',
+            contentMessage: '¿Quieres cancelar la creación de la fuente de datos?',
         },
         dataSourceEditAlert: {
             title: 'Fuente de datos',
-            contentMessage: '¿Desea cancelar la edición del origen de datos?',
+            contentMessage: '¿Quieres cancelar la edición de la fuente de datos?',
         },
         dataSetNewAlert: {
             title: 'Conjunto de datos',
-            contentMessage: '¿Desea cancelar la creación del conjunto de datos?',
+            contentMessage: '¿Quieres cancelar la creación del conjunto de datos?',
         },
         dataSetEditAlert: {
             title: 'Conjunto de datos',
-            contentMessage: '¿Desea cancelar la edición del conjunto de datos?',
+            contentMessage: '¿Quieres cancelar la edición del conjunto de datos?',
         },
         parameterNewAlert: {
             title: 'Parámetro',
-            contentMessage: '¿Desea cancelar la creación de parámetros?',
+            contentMessage: '¿Quieres cancelar la creación del parámetro?',
         },
         parameterEditAlert: {
             title: 'Parámetro',
-            contentMessage: '¿Desea cancelar la edición de parámetros?',
+            contentMessage: '¿Quieres cancelar la edición del parámetro?',
         },
         licenseAlert: {
-            ok: 'DE ACUERDO',
-            close: 'Cerca',
+            ok: 'OK',
+            close: 'Cerrar',
         }
     },
     dataSet: {
         headerText: 'DATOS',
-        newData: 'AGREGAR DATOSET',
+        newData: 'Añadir conjunto de datos',
         switchLabel: 'Cambiar al panel de fuente de datos',
-        toggleCollapse: 'Botón de alternar para contraer los campos del conjunto de datos',
-        toggleExpand: 'Botón de alternar para expandir los campos del conjunto de datos',
-        datasetLabel: 'Nombre del conjunto de datos',
-        fieldsLabel: 'Nombre del campo',
-        dataSearch: 'Búsqueda de campos de conjunto de datos',
+        toggleCollapse: 'Botón para contraer los campos del conjunto de datos',
+        toggleExpand: 'Botón para expandir los campos del conjunto de datos',
+        datasetLabel: 'Nombre de conjunto de datos',
+        fieldsLabel: 'Nombre de campo',
+        dataSearch: 'Búsqueda de campos de conjuntos de datos',
         shareDataset: {
-            headerText: 'NUEVO DATASET',
-            editHeaderText: 'EDITAR DATASET',
-            save: 'Salvar',
+            headerText: 'NUEVO CONJUNTO DE DATOS',
+            editHeaderText: 'EDITAR CONJUNTO DE DATOS',
+            save: 'Guardar',
             cancel: 'Cancelar',
             nameLable: 'Nombre',
-            sharedDatasetLabel: 'Shared Dataset',
+            sharedDatasetLabel: 'Conjunto de datos compartido',
             errorMessage: {
-                nameValidation: 'Especifique el nombre del conjunto de datos',
-                datasetValidation: 'Seleccione un DataSource compartido',
-                duplicateName: 'El nombre especificado ya existe en la lista del conjunto de datos',
+                nameValidation: 'Especificar nombre del conjunto de datos',
+                datasetValidation: 'Seleccionar una fuente de datos compartida',
+                duplicateName: 'El nombre especificado ya existe en la lista de conjuntos de datos',
                 specialCharacter: 'El nombre no debe contener espacios ni caracteres especiales'
             }
         },
         contextMenu: {
             edit: 'Editar',
-            remove: 'Borrar',
-            cloneDataset: 'Clon',
+            remove: 'Eliminar',
+            cloneDataset: 'Clonar',
             refreshDataset: 'Actualizar',
-            filter: 'Filtrar',
+            filter: 'Filtro',
             setField: 'Campos',
             parameter: 'Parámetros'
         },
-        datasourceSwitcher: 'Fuentes de datos',
+        datasourceSwitcher: 'FUENTES DE DATOS',
         deleteDataset: 'Eliminar conjunto de datos',
-        deleteField: 'Eliminar campo',
-        newDataText: 'Nuevos datos',
-        sharedDataText: 'Datos compartidos',
+        deleteField: 'Borrar campo',
+        newDataText: 'Nuevo dato',
+        sharedDataText: 'Dato compartido',
         dataRestriction: {
-            dsCreateRestriction: 'La creación de la fuente de datos ha sido restringida',
+            dsCreateRestriction: 'Se ha restringido la creación de fuentes de datos',
             title: 'Datos'
         },
         dataFieldSearch: {
-            errorMessage: 'No se encontraron coincidencias',
+            errorMessage: 'No se han encontrado coincidencias',
             searchText: 'Buscar'
         },
         dataTab: {
-            dataSourceTabHeader: 'FUENTE DE DATOS',
+            dataSourceTabHeader: 'Fuente de datos',
             dataSetTabHeader: 'CONJUNTO DE DATOS'
         }
     },
     reportViewer: {
         toolbar: {
             print: {
-                headerText: 'Impresión',
-                contentText: 'Imprimir el informe'
+                headerText: 'Imprimir',
+                contentText: 'Imprimir informe'
             },
             exportformat: {
                 headerText: 'Exportar',
-                contentText: 'Seleccione el formato de archivo exportado',
+                contentText: 'Seleccionar formato de archivo exportado',
                 Pdf: 'PDF',
-                Excel: 'Sobresalir',
-                Word: 'Palabra',
+                Excel: 'Excel',
+                Word: 'Word',
                 Html: 'HTML',
                 PPT: 'PowerPoint',
                 CSV: 'CSV',
@@ -2431,127 +2440,145 @@ ej.ReportDesigner.Locale['es-ES'] = {
             },
             first: {
                 headerText: 'Ir a la primera',
-                contentText: 'Ir a la primera página del informe.'
+                contentText: 'Ir a la primera página del informe'
             },
             last: {
-                headerText: 'Ir al último',
-                contentText: 'Ir a la última página del informe.'
+                headerText: 'Ir a la última',
+                contentText: 'Ir a la última página del informe'
             },
             next: {
-                headerText: 'Ir a Siguiente',
-                contentText: 'Ir a la página siguiente del informe.'
+                headerText: 'Ir a la siguiente',
+                contentText: 'Ir a la siguiente página del informe'
             },
             previous: {
-                headerText: 'Ir a Anterior',
-                contentText: 'Ir a la página anterior del informe.'
+                headerText: 'Ir a la anterior',
+                contentText: 'Ir a la página anterior del informe'
             },
             back: {
-                headerText: 'Ir a los padres',
-                contentText: 'Volver al informe de los padres.'
+                headerText: 'Ir al padre',
+                contentText: 'Ir al informe padre'
             },
             documentMap: {
-                headerText: 'Mapa del documento',
-                contentText: 'Mostrar u ocultar el mapa del documento.'
+                headerText: 'Mapa de documento',
+                contentText: 'Mostrar u ocultar el mapa del documento'
             },
             parameter: {
                 headerText: 'Parámetro',
-                contentText: 'Mostrar u ocultar el panel de parámetros.'
+                contentText: 'Mostrar u ocultar el panel de parámetros'
             },
             zoomIn: {
-                headerText: 'Acercarse',
-                contentText: 'Agrandar el informe.'
+                headerText: 'Acercar',
+                contentText: 'Hacer zoom al informe'
             },
             zoomOut: {
-                headerText: 'Disminuir el zoom',
-                contentText: 'Alejar del informe.'
+                headerText: 'Alejar',
+                contentText: 'Alejar el informe'
             },
             refresh: {
-                headerText: 'Refrescar',
-                contentText: 'Actualizar el informe.'
+                headerText: 'Actualizar',
+                contentText: 'Actualizar informe'
             },
             stop: {
                 headerText: 'Detener',
-                contentText: 'Dejar de procesar el informe.'
+                contentText: 'Detener el procesamiento del informe'
             },
             printLayout: {
-                headerText: 'Diseño de impresión',
-                contentText: 'Cambiar entre el diseño de impresión y los modos normales.'
+                headerText: 'Imprimir diseño',
+                contentText: 'Cambiar entre imprimir diseño y los modos normales'
             },
             pageIndex: {
                 headerText: 'Número de página',
-                contentText: 'número de página actual para ver.'
+                contentText: 'Ver número de página actual'
             },
             zoom: {
-                headerText: 'Enfocar',
-                contentText: 'Zoom para acercar o alejar el informe.'
+                headerText: 'Zoom',
+                contentText: 'Hacer zoom o alejar el informe'
             },
             fittopage: {
-                headerText: 'Ajustar a la página',
-                contentText: 'Montar la página del informe al contenedor.',
+                headerText: 'Ajustar a página',
+                contentText: 'Ajustar página de reporte al contenedor',
                 pageWidth: 'Ancho de página',
-                pageHeight: 'Toda la pagina'
+                pageHeight: 'Página completa'
             },
             pagesetup: {
-                headerText: 'Configurar página',
-                contentText: 'Elija la opción de configuración de página para cambiar el tamaño del papel, la orientación y los márgenes.'
+                headerText: 'Ajustes de página',
+                contentText: 'Seleccionar la opción de ajustes de página para cambiar el tamaño, la orientación y los márgenes'
             },
             exportsetup: {
-                headerText: 'Configuración de exportación',
-                contentText: 'Elija la opción de configuración de exportación para establecer la calidad de imagen,'
-                    + 'guardar el tipo de palabra y el documento de Excel.'
+                headerText: 'Ajustes de exportación',
+                contentText: 'Seleccionar la opción de ajustes de exportación para establecer la calidad de la imagen'
+                    + 'guardar tipo de documento word y excel'
             },
             find: {
                 headerText: 'Encontrar',
-                contentText: 'Busque texto en el informe.'
+                contentText: 'Encontrar texto en el informe'
+            },
+            performance: {
+                headerText: 'Métricas de rendimiento',
+                contentText: 'Se muestran las métricas de rendimiento del informe.',
             },
             viewDesign: 'Cerrar vista previa',
         },
+        PerformanceMetricsDialog: {
+            title: 'Métricas de rendimiento de informes',
+            reportProcessing: 'Tiempo de procesamiento del informe',
+            datasetProcessing: 'Tiempo de procesamiento del conjunto de datos',
+            parse: 'Tiempo de análisis',
+            evaluate: 'evaluar el tiempo',
+            render: 'Tiempo de renderizado',
+            layout: 'Tiempo de diseño',
+            datasetDetails: {
+                rows: 'Recuento de filas',
+                dataRetrival: 'Tiempo de recuperación de datos'
+            },
+        },
         pagesetupDialog: {
-            close: 'Cerca',
+            close: 'Cerrar',
             paperSize: 'Tamaño de papel',
-            height: 'Altura',
-            width: 'Anchura',
-            margins: 'márgenes',
-            top: 'Parte superior',
-            bottom: 'Fondo',
+            height: 'Alto',
+            width: 'Ancho',
+            margins: 'Márgenes',
+            top: 'Superior',
+            bottom: 'Inferior',
             right: 'Derecha',
             left: 'Izquierda',
             pageUnits: 'Unidades de página',
-            unitin: 'en',
+            unitin: 'In',
             unitcm: 'cm',
             inches: 'Pulgadas',
-            centimeters: 'centímetros',
+            centimeters: 'Centímetros',
             paperTypes: [
                 { text: 'A3', value: 'A3' },
                 { text: 'A4', value: 'A4' },
-                { text: 'B4 (JIS)', value: 'B4(JIS)' },
-                { text: 'B5 (JIS)', value: 'B5(JIS)' },
-                { text: 'Sobre #10', value: 'Envelope #10' },
-                { text: 'Sobre monarca', value: 'Envelope Monarch' },
-                { text: 'Ejecutivo', value: 'Executive' },
+                { text: 'B4(JIS)', value: 'B4(JIS)' },
+                { text: 'B5(JIS)', value: 'B5(JIS)' },
+                { text: 'Sobre #10', value: 'Sobre #10' },
+                { text: 'Sobre monarca', value: 'Sobre monarca' },
+                { text: 'Ejecutivo', value: 'Ejecutivo' },
                 { text: 'Legal', value: 'Legal' },
-                { text: 'Letra', value: 'Letter' },
-                { text: 'Tabloide', value: 'Tabloid' },
-                { text: 'Personalizado', value: 'Custom' }
+                { text: 'Carta', value: 'Carta' },
+                { text: 'Tabloide', value: 'Tabloide' },
+                { text: 'Personalizado', value: 'Personalizado' }
             ],
             orientation: 'Orientación',
-            portrait: 'Retrato',
-            landscape: 'Paisaje',
-            doneButton: 'DE ACUERDO',
+            portrait: 'Vertical',
+            landscape: 'Horizontal',
+            doneButton: 'OK',
             cancelButton: 'Cancelar'
         },
         exportsetupDialog: {
-            close: 'Cerca',
+            close: 'Cerrar',
             commonOptions: {
-                header: 'Configuraciones comunes',
-                imageQuality: 'La calidad de imagen',
+                header: 'Ajustes comunes',
+                imageQuality: 'Calidad de imagen',
                 imageQualityTypes: [{ text: 'Bajo', value: '2' },
                     { text: 'Medio', value: '5' },
-                    { text: 'Elevado', value: '10' }]
+                    { text: 'Alto', value: '10' }],
+                usePrintSizes: 'Ajustes para el uso de la página de impresión'
             },
             pdfOptions: {
-                header: 'Configuración de PDF',
-                complexScript: 'Escritura compleja',
+                header: 'Ajustes PDF',
+                complexScript: 'Guión complejo',
                 conformance: 'Nivel de conformidad',
                 conformanceTypes: [
                     { text: 'Ninguno', value: 0 },
@@ -2564,137 +2591,137 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     { text: 'Pdf/A2U', value: 7 },
                     { text: 'Pdf/A3A', value: 8 },
                     { text: 'Pdf/A3U', value: 9 }
-                ]
+                ],
             },
             securityOptions: {
-                header: 'Configuraciones de seguridad',
+                header: 'Ajustes de seguridad',
                 enableProtection: 'Habilitar protección',
                 protect: 'Contraseña para proteger',
-                edit: 'Contraseña para editar',
+                edit: 'Contraseña para editar'
             },
             wordOptions: {
-                header: 'Configuración de palabras',
+                header: 'Ajustes de Word',
                 protection: 'Tipo de protección',
                 topSpacing: 'Espaciado superior',
                 bottomSpacing: 'Espaciado inferior',
                 formatList: [
-                    { text: 'Documento de Word 97-2003 (.doc)', value: 0 },
-                    { text: 'Plantilla de Word 97-2003 (.dot)', value: 1 },
-                    { text: 'Documento de Word (.docx)', value: 2 },
-                    { text: 'Documento XML abierto estricto 2007 (.docx)', value: 3 },
-                    { text: 'Documento XML abierto estricto 2010 (.docx)', value: 4 },
-                    { text: 'Documento XML abierto estricto 2013 (.docx)', value: 5 },
-                    { text: 'Plantilla XML abierta estricta 2007 (.dotx)', value: 6 },
-                    { text: 'Plantilla XML abierta estricta 2010 (.dotx)', value: 7 },
-                    { text: 'Plantilla XML abierta estricta 2013 (.dotx)', value: 8 },
-                    { text: 'Documento habilitado para macros de Word 2007 (.docm)', value: 9 },
-                    { text: 'Documento habilitado para macros de Word 2010 (.docm)', value: 10 },
-                    { text: 'Documento habilitado para macros de Word 2013 (.docm)', value: 11 },
-                    { text: 'Plantilla habilitada para macros de Word 2007 (.dotm)', value: 12 },
-                    { text: 'Plantilla habilitada para macros de Word 2010 (.dotm)', value: 13 },
-                    { text: 'Plantilla habilitada para macros de Word 2013 (.dotm)', value: 14 },
-                    { text: 'Formato de texto enriquecido (.rtf)', value: 15 },
-                    { text: 'Texto sin formato (.txt)', value: 16 },
-                    { text: 'Página web (.html)', value: 18 }
+                    { text: 'Documento Word 97-2003 (.doc)', value: 0 },
+                    { text: 'Plantilla Word 97-2003 (.dot)', value: 1 },
+                    { text: 'Documento Word (.docx)', value: 2 },
+                    { text: 'Documento Strict Open XML 2007 (.docx)', value: 3 },
+                    { text: 'Documento Strict Open XML 2010 (.docx)', value: 4 },
+                    { text: 'Documento Strict Open XML 2013 (.docx)', value: 5 },
+                    { text: 'Plantilla Strict Open XML 2007 (.dotx)', value: 6 },
+                    { text: 'Plantilla Strict Open XML 2010 (.dotx)', value: 7 },
+                    { text: 'Plantilla Strict Open XML 2013 (.dotx)', value: 8 },
+                    { text: 'Documento Word Habilitado para macros 2007 (.docm)', value: 9 },
+                    { text: 'Documento Word Habilitado para macros 2010 (.docm)', value: 10 },
+                    { text: 'Documento Word Habilitado para macros 2013 (.docm)', value: 11 },
+                    { text: 'Plantilla Word Habilitada para macros 2007 (.dotm)', value: 12 },
+                    { text: 'Plantilla Word Habilitada para macros 2010 (.dotm)', value: 13 },
+                    { text: 'Plantilla Word Habilitada para macros 2013 (.dotm)', value: 14 },
+                    { text: 'Rich text format (.rtf)', value: 15 },
+                    { text: 'Plain text (.txt)', value: 16 },
+                    { text: 'Web page (.html)', value: 18 }
                 ],
                 layoutTypes: [
-                    { text: 'Por defecto', value: 0 },
+                    { text: 'Predeterminado', value: 0 },
                     { text: 'Nivel superior', value: 1 }
                 ],
                 protectionTypes: [
-                    { text: 'Sin protección', value: -1 },
+                    { text: 'No Protection', value: -1 },
                     { text: 'Permitir solo revisiones', value: 0 },
                     { text: 'Permitir solo comentarios', value: 1 },
-                    { text: 'Solo permitir campos de formulario', value: 2 },
+                    { text: 'Permitir solo campos de forma', value: 2 },
                     { text: 'Permitir solo lectura', value: 3 }
                 ],
             },
-            layoutOption: 'Opción de diseño',
+            layoutOption: 'Opciones de diseño',
             saveType: 'Guardar tipo',
             pptOptions: {
-                header: 'Configuración de PowerPoint',
+                header: 'Ajustes de PowerPoint',
                 pptTypes: [
-                    { text: 'PowerPoint 97to2003 Presentation (.ppt)', value: 0 },
-                    { text: 'PowerPoint 2007 Presentation (.pptx)', value: 1 },
-                    { text: 'PowerPoint 2010 Presentation (.pptx)', value: 2 },
-                    { text: 'PowerPoint 2013 Presentation (.pptx)', value: 3 }
+                    { text: 'Presentación PowerPoint 97 a 2003 (.pptx)', value: 0 },
+                    { text: 'Presentación PowerPoint 2007 (.pptx)', value: 1 },
+                    { text: 'Presentación PowerPoint 2010 (.pptx)', value: 2 },
+                    { text: 'Presentación PowerPoint 2013 (.pptx)', value: 3 }
                 ]
             },
-            doneButton: 'DE ACUERDO',
+            doneButton: 'OK',
             cancelButton: 'Cancelar',
             csvOptions: {
+                formatter: 'Valores formateados',
+                header: 'Ajustes CSV',
                 delimiter: 'Delimitador de campo',
-                formatter: 'Valores con formato',
-                header: 'Configuración de CSV',
                 qualifier: 'Calificador de texto',
                 customVal: 'Valor personalizado',
                 qualifierList: [
-                    { text: 'Doble comillas', value: '"' },
-                    { text: 'Comillas simples', value: '\'' },
-                    { text: 'Ninguna', value: '' },
-                    { text: 'Personalizado', value: 'Custom' }
+                    { text: 'Comillas dobles', value: '"' },
+                    { text: 'Comillas sencillas', value: '\'' },
+                    { text: 'Ninguno', value: '' },
+                    { text: 'Personalizado', value: 'Personalizado' }
                 ],
                 delimiterList: [
                     { text: 'Coma', value: ',' },
                     { text: 'Espacio', value: ' ' },
-                    { text: 'Pestaña', value: '   ' },
+                    { text: 'Tabulación', value: '   ' },
                     { text: 'Punto y coma', value: ';' },
-                    { text: 'Personalizado', value: 'Custom' }
+                    { text: 'Personalizado', value: 'Personalizado' }
                 ]
             },
             htmlOptions: {
-                header: 'Configuración HTML',
+                header: 'Ajustes HTML',
                 separator: 'Separador de página'
             },
             excelOptions: {
-                header: 'Configuración de Excel',
-                sheetProtection: 'Protección de hojas',
+                header: 'Ajustes de excel',
+                sheetProtection: 'Protección de hoja',
                 disableCellFormat: 'Deshabilitar formato de celda',
                 readonly: 'Solo lectura',
                 saveTypes: [
-                    { text: 'Libro de Excel97to2003 (.xls)', value: 0 },
+                    { text: 'Libro de Excel 97 a 2003 (.xls)', value: 0 },
                     { text: 'Libro de Excel 2007 (.xlsx)', value: 1 },
-                    { text: 'Libro de Excel 2010 (.xlsx)', value: 2 },
-                    { text: 'Libro de Excel 2013 (.xlsx)', value: 3 },
+                    { text: 'Libro de Excel 2010  (.xlsx)', value: 2 },
+                    { text: 'Libro de Excel 2013  (.xlsx)', value: 3 },
                     { text: 'Libro de Excel 2016 (.xlsx) ', value: 4 }
                 ],
                 sheetProtectionTypes: [
-                    { text: 'Ninguna', value: 0 },
+                    { text: 'Ninguno', value: 0 },
                     { text: 'Objetos', value: 1 },
-                    { text: 'Escenarios', value: 2 },
-                    { text: 'Formateo de celdas', value: 4 },
-                    { text: 'Columnas de formato', value: 8 },
-                    { text: 'Formateo de filas', value: 16 },
+                    { text: 'Escenario', value: 2 },
+                    { text: 'Formato de celdas', value: 4 },
+                    { text: 'Formato de columnas', value: 8 },
+                    { text: 'Formato de filas', value: 16 },
                     { text: 'Insertar columnas', value: 32 },
                     { text: 'Insertar filas', value: 64 },
-                    { text: 'Inserción de hipervínculos', value: 128 },
-                    { text: 'Eliminación de columnas', value: 256 },
-                    { text: 'Eliminación de filas', value: 512 },
+                    { text: 'Insertar hipervínculos', value: 128 },
+                    { text: 'Eliminar columnas', value: 256 },
+                    { text: 'Eliminar filas', value: 512 },
                     { text: 'Celdas bloqueadas', value: 1024 },
-                    { text: 'Clasificación', value: 2048 },
-                    { text: 'Filtración', value: 4096 },
+                    { text: 'Ordenar', value: 2048 },
+                    { text: 'Filtros', value: 4096 },
                     { text: 'Uso de tablas dinámicas', value: 8192 },
                     { text: 'Celdas desbloqueadas', value: 16384 },
                     { text: 'Contenido', value: 32768 },
-                    { text: 'Todos', value: 65535 }
+                    { text: 'Todo', value: 65535 }
                 ],
                 disableCellFormatTypes: [
-                    { text: 'Ninguna', value: 0 },
-                    { text: 'Todos', value: 1 },
-                    { text: 'Frontera', value: 2 },
+                    { text: 'Ninguno', value: 0 },
+                    { text: 'Todo', value: 1 },
+                    { text: 'Borde', value: 2 },
                     { text: 'Estilo', value: 3 }
                 ],
                 layoutOptionTypes: [
-                    { text: 'Por defecto', value: 0 },
-                    { text: 'Ignorar combinación de celdas', value: 1 }
+                    { text: 'Predeterminado', value: 0 },
+                    { text: 'Ignorar combinar celda', value: 2 }
                 ],
             }
         },
         findAlertMessage: {
-            resultsEndReached: 'Has llegado al final de los resultados de búsqueda. Si desea continuar, '
-                + 'cierre el cuadro de diálogo y busque de nuevo.',
-            noResultsFound: 'El texto especificado no coincide con ninguno de los contenidos del informe. '
-                + 'Cambie su palabra clave de búsqueda y vuelva a intentarlo.'
+            resultsEndReached: 'Has llegado al final de los resultados de la búsqueda. Para continuar, '
+                + 'cierra el cuadro de diálogo y vuelve a buscar.',
+            noResultsFound: 'El texto especificado no coincide con ninguno de los contenidos en el informe. '
+                + 'Cambia la palabra clave de búsqueda y vuelve a intentarlo.'
         },
         credential: {
             userName: 'Nombre de usuario',
@@ -2702,80 +2729,82 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         waterMark: {
             selectOption: 'Seleccionar opción',
-            selectValue: 'Seleccione un valor'
+            selectValue: 'Seleccionar un valor',
+            noDataFound: 'Datos no encontrados'
         },
         errorMessage: {
-            startMessage: 'El Visor de informes encontró algunos problemas al cargar este informe. Por favor',
-            middleMessage: 'Haga clic aquí',
+            startMessage: 'El visualizador de informes ha tenido problemas al cargar este informe. Por favor ',
+            middleMessage: 'Haz clic aquí',
             endMessage: 'para ver los detalles del error',
             closeMessage: 'Cerrar este mensaje',
-            exportAjaxFailureMsg: 'No se puede exportar el documento debido a una falla en la conexión del servicio de informes.',
-            printAjaxFailureMsg: 'No se puede imprimir el documento debido a una falla en la conexión del servicio de informes.',
-            reportLoadAjaxFailureMsg: 'No se puede avanzar la acción de Informe debido a una falla en la conexión del Servicio de Reportes',
-            cancelReportProcessMsg: 'El procesamiento del informe fue cancelado.'
+            exportAjaxFailureMsg: 'No se ha podido exportar el documento debido a un fallo en la conexión del servicio de informes.',
+            printAjaxFailureMsg: 'No se ha podido imprimir el documento debido a un fallo en la conexión del servicio de informes.',
+            reportLoadAjaxFailureMsg: 'No se ha podido avanzar en la acción del informe debido a un fallo en la conexión del servicio de informes.',
+            cancelReportProcessMsg: 'El procesamiento de informe fue cancelado'
         },
         progressMessage: {
-            exportLoadingMessage: 'Preparando el documento de exportación ... Por favor espere ...',
-            printLoadingMessage: 'Preparando datos de impresión ... Por favor espere ...',
-            printPreparationMessage: 'Preparando datos de impresión ... {0}% completado ... Por favor espere ...',
-            exportPreparationMessage: 'Preparando el documento de exportación ... {0}% completado ... Por favor espere ...',
-            cancelText: 'cancelar'
+            exportLoadingMessage: 'Preparando la exportación del documento... Por favor, espera...',
+            printLoadingMessage: 'Preparando datos de impresión... Por favor espera...',
+            printPreparationMessage: 'Preparando datos de impresión... {0}% completado... Por favor espera...',
+            exportPreparationMessage: 'Preparando la exportación del documento... {0}% completado... Por favor espera...',
+            cancelText: 'Cancelar',
         },
         alertMessage: {
-            close: 'Cerca',
-            title: 'Visor de informes',
-            done: 'DE ACUERDO',
+            close: 'Cerrar',
+            title: 'Visualizador de informes',
+            done: 'OK',
             showDetails: 'Mostrar detalles',
             hideDetails: 'Ocultar detalles',
             reportLoad: 'Informe cargado:',
-            RVERR0001: 'El visor de informes no pudo cargar el informe',
-            RVERR0002: 'El visor de informes no pudo procesar el informe',
-            RVERR0003: 'Se produjo un error en la devolución de datos de ajax',
-            RVERR0004: 'Seleccione un valor para el parámetro',
-            RVERR0005: 'Al parámetro {nombre de parámetro} le falta un valor',
-            RVERR0006: 'Por favor ingrese la entrada del tipo de datos flotante',
-            RVERR0007: 'Ingrese la entrada de tipo de datos enteros',
-            RVERR0008: 'El Visor de informes no pudo validar las credenciales del origen de datos',
-            RVERR0009: 'Los márgenes están superpuestos o están fuera del papel. Ingrese un tamaño de margen diferente.',
-            RVERR0010: 'Ingrese un valor para el parámetro',
-            RVERR0011: 'El parámetro no puede estar en blanco',
+            RVERR0001: 'El visualizador de informes no pudo cargar el informe',
+            RVERR0002: 'El visualizador de informes no pudo procesar el informe',
+            RVERR0003: 'Se ha producido un error en la transmisión de datos ajax',
+            RVERR0004: 'Seleccionar un valor para el parámetro',
+            RVERR0005: 'Al parámetro {parameter name} le falta un valor',
+            RVERR0006: 'Por favor, introducir la entrada del tipo de datos flotantes',
+            RVERR0007: 'Ingresar la entrada del tipo de datos entero',
+            RVERR0008: 'El visualizador de informes no pudo validar las credenciales de la fuente de datos',
+            RVERR0009: 'Los márgenes están superpuestos o fuera del papel. Introduce un tamaño de margen diferente.',
+            RVERR0010: 'Indicar un valor para el parámetro',
+            RVERR0011: 'El parámetro no puede estar vacío',
             RVERR0012: 'El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo.'
         },
         reportItemLabel: {
-            Tablix: 'Elemento de informe de Tablix',
-            Textbox: 'Elemento de informe de cuadro de texto',
-            Chart: 'Elemento de informe de gráfico',
-            Image: 'Elemento de informe de imagen',
+            Tablix: 'Elemento de informe tablix',
+            Textbox: 'Elemento de informe de la caja de texto',
+            Chart: 'Elemento de informe del gráfico',
+            Image: 'Elemento de informe de la imagen',
             Custom: 'Elemento de informe personalizado',
             Rectangle: 'Elemento de informe rectangular',
-            Map: 'Elemento de informe de mapa',
-            Gauge: 'Elemento de informe de indicador',
+            Map: 'Elemento de informe del mapa',
+            Gauge: 'Elemento de informe de calibre',
             Indicator: 'Elemento de informe del indicador',
             Line: 'Elemento de informe de línea',
-            Subreport: 'Sub elemento del informe'
+            Subreport: 'Elemento del subinforme'
         },
         selectAll: 'Seleccionar todo',
-        viewButton: 'Vista del informe',
-        parameterBlock: 'Bloque de parámetros',
-        parameterProcessingMessage: 'Cargando valores de parámetro ...'
+        viewButton: 'Ver informe',
+        parameterBlock: 'Bloqueo de parámetro',
+        parameterProcessingMessage: 'Cargando valores de parámetros ...',
+        parameterBlockTitle: 'Parámetros de informe'
     },
     sortData: {
-        sorting: 'Clasificación',
-        headerText: 'Filtro de clasificación',
+        sorting: 'Ordenar',
+        headerText: 'Ordenar filtro',
         add: 'AÑADIR',
-        changeSortingOptions: 'Cambiar opciones de clasificación.',
+        changeSortingOptions: 'Cambiar opciones de ordenación',
         sortBy: 'Ordenar por',
-        thenBy: 'Entonces por',
+        thenBy: 'Luego por',
         direction: {
             ascending: 'Ascendente',
             descending: 'Descendente',
         },
-        chooseField: 'Elige el campo',
-        errorMessage: 'Elegir valor para el campo de expresión',
-        ok: 'DE ACUERDO',
+        chooseField: 'Escoger campo',
+        errorMessage: 'Seleccionar valor para el campo de expresión',
+        ok: 'OK',
         cancel: 'Cancelar',
-        close: 'Cerca',
-        deleteField: 'Eliminar campo'
+        close: 'Cerrar',
+        deleteField: 'Borrar campo'
     },
     groupData: {
         grouping: 'Agrupamiento',
@@ -2783,26 +2812,27 @@ ej.ReportDesigner.Locale['es-ES'] = {
         headerTextLabel: 'Etiqueta de grupo',
         name: 'Nombre',
         label: 'Etiqueta',
-        changeGroupingOptions: 'Cambiar las opciones de agrupamiento.',
+        changeGroupingOptions: 'Cambiar opciones de agrupamiento',
         add: 'AÑADIR',
         groupBy: 'Agrupar por',
         andOn: 'Y en',
-        chooseField: 'Elegir campo',
-        ok: 'DE ACUERDO',
+        chooseField: 'Escoger campo',
+        ok: 'OK',
         cancel: 'Cancelar',
-        close: 'Cerca',
+        close: 'Cerrar',
         errorMessage: {
-            duplicateName: 'Por favor ingrese el nombre válido',
-            emptyValueValidation: 'Elegir valor para un campo de expresión',
+            duplicateName: 'Por favor, introduce el nombre válido',
+            emptyValueValidation: 'Seleccionar valor para el campo de expresión',
         },
-        deleteField: 'Eliminar campo'
+        deleteField: 'Borrar campo'
     },
     alertMessage: {
-        yes: 'Sí',
+        yes: 'Si',
         no: 'No',
+        ok: 'OK',
         showDetails: 'Mostrar detalles',
         hideDetails: 'Ocultar detalles',
-        close: 'Cerca'
+        close: 'Cerrar'
     },
     parameter: {
         listPanel: {
@@ -2810,7 +2840,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             newParameter: 'NUEVO PARÁMETRO',
             submenu: {
                 edit: 'Editar',
-                remove: 'Borrar'
+                remove: 'Eliminar'
             },
             alertTitle: 'Parámetro'
         },
@@ -2818,20 +2848,20 @@ ej.ReportDesigner.Locale['es-ES'] = {
             newHeaderText: 'NUEVO PARÁMETRO',
             editHeaderText: 'EDITAR PARÁMETRO',
             nameLabel: 'Nombre',
-            promptLable: 'Rápido',
-            dataTypeLable: 'Tipo de datos',
+            promptLable: 'Prompt',
+            dataTypeLable: 'Tipo de dato',
             blankValueLable: 'Permitir valor en blanco ("")',
             nullValueLable: 'Permitir valor nulo',
-            multipleValueLable: 'Permitir múltiples valores',
+            multipleValueLable: 'Permitir valores múltiples',
             uniqueValueLabel: 'Mostrar valores únicos',
-            sortValueLabel: 'Habilitar clasificación',
+            sortValueLabel: 'Habilitar ordenar',
             visibilityLable: 'Visibilidad',
             assignValueLable: 'Asignar valores >>',
-            save: 'Salvar',
+            save: 'Guardar',
             cancel: 'Cancelar',
             editLayout: 'Editar diseño',
             sorting: {
-                ascending: 'ascendente',
+                ascending: 'Ascendente',
                 descending: 'Descendente'
             },
             visibility: {
@@ -2840,111 +2870,112 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 internal: 'Interno'
             },
             dataType: {
-                stringType: 'Cuerda',
+                stringType: 'Cadena',
                 booleanType: 'Booleano',
-                dateTimeType: 'Booleano',
+                dateTimeType: 'Fecha hora',
                 integerType: 'Entero',
-                floatType: 'Flotador'
+                floatType: 'Flotante'
             }
         },
         errorMessage: {
-            nameField: 'Por favor ingrese el nombre',
-            promptField: 'Por favor ingrese el valor',
+            nameField: 'Por favor, ingresar nombre',
+            promptField: 'Por favor, ingresar valor',
             nameAlreadyExists: 'El nombre del parámetro ya existe'
         },
         warningMessage: {
             specialCharacter: 'El nombre no debe contener espacios ni caracteres especiales',
-            multipleValueAlert: 'Se especificaron múltiples valores predeterminados. El parámetro no permite valores múltiples.',
+            multipleValueAlert: 'Se han especificado múltiples valores por defecto. El parámetro no permite valores múltiples.',
             nullValueAlert: 'En el campo de valor, se especificó un valor nulo. El parámetro no permite valores nulos. '
         },
         alertMessage: {
-            confirmNullCheck: 'Los valores disponibles o predeterminados pueden contener valor nulo, ¿desea habilitar la casilla de verificación permitir el valor nulo?',
-            confirmBlankValue: 'Los valores disponibles o predeterminados pueden contener un valor en blanco, ¿desea habilitar la casilla de verificación de valor en blanco?',
-            dataTypeChange: 'Al cambiar el tipo de datos, se descartarán los cambios realizados en los valores disponibles y predeterminados. ¿Desea cambiar el tipo de datos de todos modos? ',
+            confirmNullCheck: 'Los valores disponibles o por defecto pueden contener un valor nulo, ¿quieres activar la casilla permitir valores nulos?',
+            confirmBlankValue: 'Los valores disponibles o por defecto pueden contener un valor en blanco, ¿quieres activar la casilla de verificación del valor en blanco?',
+            dataTypeChange: 'Al cambiar el tipo de datos se descartarán los cambios realizados en los valores disponibles y por defecto. ¿Quieres cambiar el tipo de datos de todos modos?',
             deleteConfirmation: 'Eliminar parámetro de informe'
         },
         assignData: {
             title: 'Parámetro',
             availableValue: 'Valor disponible',
             defaultValue: 'Valor por defecto',
-            none: 'Ninguna',
+            none: 'Ninguno',
             specify: 'Especificar',
             query: 'Valor de consulta',
-            ok: 'DE ACUERDO',
+            ok: 'OK',
             cancel: 'Cancelar',
             availableFields: {
-                specifyDescriptionText: 'Agregue los valores disponibles para los parámetros:',
-                queryDescriptionText: 'Elija el conjunto de datos y los campos para los valores disponibles:',
+                specifyDescriptionText: 'Añadir los valores disponibles para los parámetros:',
+                queryDescriptionText: 'Seleccionar el conjunto de datos y los campos para los valores disponibles:',
                 nameFieldWaterMark: 'Etiqueta',
                 valueFieldWaterMark: 'Valor'
             },
             defaultFields: {
-                specifyDescriptionText: 'Agregue los valores predeterminados para los parámetros:',
-                queryDescriptionText: 'Elija el conjunto de datos y los campos para los valores predeterminados:',
-                defValueWaterMark: 'Elija el valor predeterminado '
+                specifyDescriptionText: 'Añadir los valores por defecto de los parámetros:',
+                queryDescriptionText: 'Seleccionar el conjunto de datos y los campos para los valores por defecto:',
+                defValueWaterMark: 'Seleccionar valor por defecto'
             },
-            datasetWaterMark: 'Elegir valor del conjunto de datos',
-            valueWaterMark: 'Elegir valor',
-            lableWaterMark: 'Elegir etiqueta',
+            datasetWaterMark: 'Seleccionar valor de conjunto de datos',
+            valueWaterMark: 'Seleccionar valor',
+            lableWaterMark: 'Seleccionar etiqueta',
             add: 'AÑADIR',
             datasetLableText: 'Conjunto de datos',
             valueLableText: 'Campo de valor',
-            labelFieldText: 'Etiqueta de campo',
+            labelFieldText: 'Campo de etiqueta',
             errorMessage: {
-                boolTypeCheck: 'El valor no es un valor booleano.',
+                boolTypeCheck: 'El valor no es un valor booleano',
                 dateTypeCheck: 'El valor es un formato de fecha no válido.',
-                intTypeCheck: 'El valor no es un número entero.',
-                floatTypeCheck: 'El valor no es un flotador.',
+                intTypeCheck: 'El valor no es un entero',
+                floatTypeCheck: 'El valor no es un flotante.',
                 multipleValuesCheck: 'Un parámetro multivalor no puede incluir valores nulos',
-                emptyDatasetField: 'El campo de conjunto de datos es obligatorio.',
-                emptyDatasetValue: 'Se requiere un campo de valor.',
-                labelFieldSyntax: 'El valor ingresado en el campo de etiqueta no es una sintaxis de token válida.',
-                valueFieldSyntax: 'El valor ingresado en el campo de valor no es una sintaxis de token válida.',
-                emptyValue: 'El campo de valor está en blanco. El parámetro no permite valores en blanco.',
+                emptyDatasetField: 'El campo conjunto de datos es obligatorio.',
+                emptyDatasetValue: 'El campo valor es obligatorio.',
+                labelFieldSyntax: 'El valor introducido en el campo de etiqueta no es una sintaxis de token válida.',
+                valueFieldSyntax: 'El valor introducido en el campo de valor no es una sintaxis de token válida.',
+                emptyValue: 'El campo de valor está vacío. El parámetro no permite valores en blanco.',
+                nullValue: 'En el campo de valor, se especificó un valor nulo. El parámetro no permite valores nulos. '
             },
-            closeToolTip: 'Cerca',
-            deleteField: 'Eliminar campo'
+            closeToolTip: 'Cerrar',
+            deleteField: 'Borrar campo'
         }
     },
     formatData: {
-        title: 'Formato de diálogo ',
+        title: 'Diálogo de formato',
         typeSelect: 'Tipo',
         typeFormat: {
             numberType: {
                 labelText: 'Número',
-                decimalPlaces: 'Lugares decimales',
-                decimalWatermark: 'Ingrese valor',
+                decimalPlaces: 'Ubicación de decimales',
+                decimalWatermark: 'Ingresar valor',
                 negativeValues: 'Valores negativos',
                 showZeroAs: {
                     showZeroAs: 'Mostrar cero como',
-                    none: '(ninguna)'
+                    none: '(ninguno)'
                 },
                 representationLabel: 'Representación',
                 representationTypes: {
-                    thousands: 'Miles de personas',
+                    thousands: 'Miles',
                     millions: 'Millones',
                     billions: 'Miles de millones',
                 },
-                useRegionFormating: 'Use el formato regional',
-                use1000Separator: 'Use 1000 Separador (,)'
+                useRegionFormating: 'Utilizar formato regional',
+                use1000Separator: 'Para separar 1000, usar (,)'
             },
             currency: {
                 labelText: 'Moneda',
-                decimalPlaces: 'Lugares decimales',
+                decimalPlaces: 'Ubicación de decimales',
                 negativeValues: 'Valores negativos',
-                culture: 'Moneda Cultura',
+                culture: 'Cultura de moneda',
                 showZeroAs: {
-                    none: '(ninguna)'
+                    none: '(ninguno)'
                 },
                 representationLabel: 'Representación',
                 representationTypes: {
-                    thousands: 'Miles de personas',
+                    thousands: 'Miles',
                     millions: 'Millones',
                     billions: 'Miles de millones',
                 },
-                useRegionFormating: 'Use el formato regional',
-                use1000Separator: 'Use 1000 Separador (,)',
-                includeSpace: 'Incluye un espacio'
+                useRegionFormating: 'Utilizar formato regional',
+                use1000Separator: 'Para separar 1000, usar (,)',
+                includeSpace: 'Incluir un espacio'
             },
             date: {
                 typeLabel: 'Fecha',
@@ -2955,241 +2986,245 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 valueTypeLabel: 'Hora'
             },
             percentage: {
-                typeLabel: 'Porcentaje',
-                decimalPlaces: 'Lugares decimales',
-                includeSpace: 'Incluye un espacio'
+                typeLabel: 'Por ciento',
+                decimalPlaces: 'Ubicación de decimales',
+                includeSpace: 'Incluir un espacio'
             },
             scientific: {
                 typeLabel: 'Científico',
-                decimalPlaces: 'Lugares decimales'
+                decimalPlaces: 'Ubicación de decimales'
             },
             custom: {
                 typeLabel: 'Personalizado',
                 customFormat: 'Formato personalizado'
             },
         },
-        preview: 'Avance',
-        ok: 'DE ACUERDO',
+        preview: 'Vista previa',
+        ok: 'OK',
         cancel: 'Cancelar',
-        close: 'Cerca',
-        deleteField: 'Eliminar campo'
+        close: 'Cerrar',
+        deleteField: 'Borrar campo'
     },
     expression: {
         title: 'Expresión',
         descriptionText: 'Establecer expresión para: ',
         optionLabel: 'Opciones',
-        dataLabel: 'DATOS',
+        dataLabel: 'Datos',
         descritionLabel: 'Descripción',
         exampleLabelText: 'Ejemplo',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        closeToolTip: 'Cerca',
+        closeToolTip: 'Cerrar',
         textAreaWaterMark: 'Expresión',
         category: {
-            builtInFields: 'Campos incorporados',
+            builtInFields: 'Campos integrados',
             operators: 'Operadores',
             functions: 'Funciones'
         },
         parameters: 'Parámetros',
         variables: 'Variables',
-        optionWaterMark: 'Seleccione una opcion',
-        dataWaterMark: 'Seleccione una información',
-        reportData: 'No se encontraron datos de informes',
+        optionWaterMark: 'Seleccionar una opción',
+        dataWaterMark: 'Seleccionar un dato',
+        reportData: 'No se encontró informe de datos',
         description: {
-            executionTime: 'La fecha y la hora en que los informes comienzan a ejecutarse.',
-            overallPageNumber: 'El número de página general actual solo se puede usar en el encabezado o pie de página.',
-            overallTotalPages: 'El número total de páginas en el informe solo se puede usar en el encabezado y pie de página..',
-            pageName: 'El nombre de la página actual en el informe se puede usar solo en el encabezado o pie de página.',
-            pageNumber: 'El número de página actual que se puede restablecer mediante el uso de saltos de página',
-            reportFolder: 'La ruta completa a la carpeta que contiene el informe no incluye la URL del servidor de informes.',
-            reportName: 'La URL del servidor de informes donde se ejecuta el informe.',
-            reportServerUrl: 'La URL del servidor de informes en el que se ejecuta el informe.',
-            totalPages: 'El número total de páginas en la secuencia de página continua actual solo se puede usar en el encabezado y pie de página. El número puede restablecerse mediante el uso de saltos de página.',
+            executionTime: 'Fecha y hora que los informes comienzan a operar',
+            overallPageNumber: 'El número actual total de página puede ser usado en el encabezado o en el pie de página',
+            overallTotalPages: 'El número total de páginas puede ser usado solo en el encabezado o en el pie de página',
+            pageName: 'El nombre de la página actual en el informe puede ser usado solo en el encabezado o en el pie de página',
+            pageNumber: 'El número de página actual puede ser reiniciado usando saltos de páginas',
+            reportFolder: 'La ruta completa de la carpeta que almacena el informe no incluye la URL del servidor del informe',
+            reportName: 'URL del servidor del informe donde dicho informe opera',
+            reportServerUrl: 'URL del servidor del informe el cual dicho informe comienza a operar',
+            totalPages: 'El número total de páginas en la secuencia continua de páginas actual sólo puede utilizarse en el encabezado y pie de página. El número se puede restablecer mediante saltos de página.',
             language: 'El ID de idioma del cliente que ejecuta el informe.',
             userID: 'El ID del usuario que ejecuta el informe.',
-            powerNumberType: 'Aumenta un número al poder de otro número.',
+            powerNumberType: 'Eleva un número a la potencia de otro número.',
             multiply: 'Multiplica dos números.',
-            integerDivision: 'Divide dos números y devuelve un número entero.',
+            integerDivision: 'Divide dos números y devuelve un entero.',
             floatDivision: 'Divide dos números y devuelve un punto flotante.',
-            modulus: 'Divide dos números y devuelve solo el resto.',
-            add: 'Agrega dos números y se puede usar para concatenar dos cadenas.',
-            difference: 'Otorga la diferencia entre dos números o indica el valor negativo de una expresión numérica.',
-            lesser: 'Menos que.',
-            lesserOrEqual: 'Menos que o igual a.',
-            greater: 'Mas grande que.',
-            greaterOrEqual: 'Mayor qué o igual a.',
-            equal: 'Igual a.',
-            notEqual: 'No igual a.',
-            like: 'Compara dos cadenas.',
+            modulus: 'Divide dos números y devuelve sólo el resto.',
+            add: 'Suma dos números y se puede utilizar para concatenar dos cadenas.',
+            difference: 'Da la diferencia entre dos números o indica el valor negativo de una expresión numérica.',
+            lesser: 'Menor que.',
+            lesserOrEqual: 'Menor que o igual que.',
+            greater: 'Mayor que.',
+            greaterOrEqual: 'Mayor que o igual que.',
+            equal: 'Igual que.',
+            notEqual: 'No es igual que.',
+            like: 'Compara dos cadenas',
             isOperator: 'Compara dos variables de referencia de objeto.',
             expression: 'Genera una concatenación de cadenas de dos expresiones.',
-            stringType: 'Agrega dos números y se puede usar para concatenar dos cadenas.',
-            and: 'Realiza una conjunción lógica en dos expresiones booleanas, o una conjunción bit a bit en dos',
-            not: 'Realiza una negación lógica en una expresión booleana o en una negación a nivel de bit en una expresión numérica.',
-            or: 'Se utiliza para realizar una disyunción lógica en dos expresiones booleanas, o una disyunción bit a bit en dos valores numéricos.',
-            xor: 'Realiza una operación de exclusión lógica en dos expresiones booleanas, o en un bit exclusión en dos expresiones numéricas.',
-            andAlso: 'Realiza un cortocircuito de la conjunción lógica en dos expresiones.',
-            orElse: 'Se usa para realizar un cortocircuito de disyunción lógica en dos expresiones.',
-            left: 'Realiza un desplazamiento aritmético a la izquierda en un patrón de bits.',
-            right: 'Realiza un desplazamiento aritmético a la derecha en un patrón de bits.',
-            asc: 'Devuelve un valor entero que representa el código de carácter correspondiente a un personaje.',
+            stringType: 'Suma dos números, y se puede utilizar para concatenar dos cadenas.',
+            and: 'Lleva a cabo una conjunción lógica sobre dos expresiones booleanas, o una conjunción bit a bit sobre dos ',
+            not: 'Lleva a cabo la negación lógica de una expresión booleana, o la negación bit a bit de una expresión numérica.',
+            or: 'Se utiliza para realizar una disyunción lógica sobre dos expresiones booleanas, o una disyunción bit a bit sobre dos valores numéricos.',
+            xor: 'Realiza una operación de exclusión lógica sobre dos expresiones booleanas, o una exclusión bit a bit sobre dos expresiones numéricas.',
+            andAlso: 'Lleva a cabo una conjunción lógica de cortocircuito en dos expresiones.',
+            orElse: 'Se utiliza para realizar la disyunción lógica de cortocircuito en dos expresiones.',
+            left: 'Realiza un desplazamiento aritmético a la izquierda sobre un patrón de bits.',
+            right: 'Realiza un desplazamiento aritmético a la derecha sobre un patrón de bits.',
+            asc: 'Devuelve un valor entero que representa el código de carácter correspondiente a un carácter.',
             ascW: 'Devuelve un valor entero que representa el código de carácter correspondiente a un carácter.',
-            chr: 'Devuelve el carácter asociado con el código de carácter especificado.',
-            chrW: 'Devuelve el carácter asociado con el código de carácter especificado.',
-            filter: 'Devuelve una matriz basada en cero que contiene un subconjunto de una matriz de cadenas basada en criterios de filtro especificados.',
-            formatStringType: 'Devuelve una cadena formateada según las instrucciones en una expresión de cadena de formato.',
-            currency: 'Devuelve una expresión formateada como un valor de moneda utilizando el símbolo de moneda definido en el panel de control del sistema.',
-            dateTime: 'Devuelve una expresión de cadena que representa un valor de fecha / hora.',
+            chr: 'Devuelve el carácter asociado al código de carácter especificado.',
+            chrW: 'Devuelve el carácter asociado al código de carácter especificado.',
+            filter: 'Devuelve un array de base cero que contiene un subconjunto de un array de cadenas basado en los criterios de filtrado especificados.',
+            formatStringType: 'Devuelve una cadena formateada según las instrucciones de una expresión de formato de cadena.',
+            currency: 'Devuelve una expresión formateada como valor monetario utilizando el símbolo de moneda definido en el panel de control del sistema.',
+            dateTime: 'Devuelve una expresión de cadena que representa un valor de fecha/hora.',
             numberType: 'Devuelve una expresión formateada como un número.',
-            percent: 'Devuelve una expresión formateada como un porcentaje (es decir, multiplicado por 100).',
+            percent: 'Devuelve una expresión formateada como porcentaje (es decir, multiplicada por 100).',
             getChar: 'Devuelve un valor char que representa el carácter del índice especificado en la cadena suministrada.',
-            inStr: 'Devuelve un entero que especifica la posición de inicio de la primera aparición de una cadena dentro de otra.',
-            inStrRev: 'Devuelve la posición de la primera aparición de una cadena dentro de otra, empezando por el lado derecho de la cuerda.',
-            join: 'Devuelve una cadena creada uniendo una cantidad de subcadenas en una matriz.',
-            lCase: 'Devuelve una cadena o un carácter convertido a minúscula.',
-            leftStringType: 'Devuelve una cadena que contiene un número específico de caracteres del lado izquierdo de una cadena.',
-            stringLength: 'Devuelve un número entero que contiene el número de caracteres en una cadena o el número.',
-            lSet: 'Devuelve una cadena alineada a la izquierda que contiene la cadena especificada ajustada a la longitud especificada.',
-            leftTrim: 'Devuelve la cadena sin espacios finales del lado izquierdo en la cadena dada.',
-            middle: 'Devuelve una cadena que contiene un número específico de caracteres de una cadena.',
-            replace: 'Devuelve una cadena en la cual una subcadena especificada ha sido reemplazada por otra.',
-            rightString: 'Devuelve una cadena en la cual una subcadena especificada ha sido reemplazada por otra.',
+            inStr: 'Devuelve un entero que especifica la posición inicial de la primera aparición de una cadena dentro de otra.',
+            inStrRev: 'Devuelve la posición de la primera aparición de una cadena dentro de otra, empezando por el lado derecho de la cadena.',
+            join: 'Devuelve una cadena creada uniendo un número de subcadenas en un array.',
+            lCase: 'Devuelve una cadena o carácter convertido a minúsculas.',
+            leftStringType: 'Devuelve una cadena que contiene un número especificado de caracteres del lado izquierdo de una cadena.',
+            stringLength: 'Devuelve un entero que contiene el número de caracteres de una cadena o el número.',
+            lSet: 'Devuelve una cadena alineada a la izquierda que contiene la cadena especificada ajustada a la longitud establecida.',
+            leftTrim: 'Devuelve la cadena sin espacios finales a la izquierda en la cadena dada.',
+            middle: 'Devuelve una cadena que contiene un número especificado de caracteres de una cadena.',
+            replace: 'Devuelve una cadena en la que una subcadena especificada ha sido sustituida por otra.',
+            rightString: 'Devuelve una cadena que contiene un número especificado de caracteres de la parte derecha de una cadena.',
             rightSet: 'Devuelve una cadena alineada a la derecha que contiene la cadena especificada ajustada a la longitud especificada.',
-            rightTrim: 'Devuelve la cadena sin espacios finales del lado derecho en la cadena dada.',
-            stringSpace: 'Devuelve una cadena que consta de la cantidad de espacios especificada.',
-            splitString: 'Devuelve una matriz unidimensional basada en cero que contiene un número especificado de subcadenas.',
+            rightTrim: 'Devuelve la cadena sin espacios finales a la derecha en la cadena dada.',
+            stringSpace: 'Devuelve una cadena formada por el número de espacios especificado.',
+            splitString: 'Devuelve una matriz unidimensional de base cero que contiene un número especificado de subcadenas.',
             strComp: 'Devuelve -1, 0 o 1, según el resultado de una comparación de cadenas.',
             strConv: 'Devuelve una cadena convertida como se especifica.',
-            duplicateString: 'Devuelve una cadena u objeto que consiste en el carácter especificado repetido el número de veces especificado.',
+            duplicateString: 'Devuelve una cadena u objeto consistente en el carácter especificado repetido el número de veces especificado.',
             strReverse: 'Devuelve una cadena en la que se invierte el orden de los caracteres de una cadena especificada.',
             trim: 'Devuelve la cadena sin espacios finales en la cadena dada',
-            upperCase: 'Devuelve una cadena o carácter que contiene la cadena especificada convertida a mayúscula.',
-            cDate: 'Convertir a la fecha.',
-            dateAdd: 'Devuelve un valor de fecha que contiene valores de fecha y hora a los que se ha agregado un intervalo de tiempo especificado.',
-            dateDiff: 'Devuelve un valor largo que especifica la cantidad de intervalos de tiempo entre dos valores de fecha.',
-            datePart: 'Devuelve un valor entero que contiene el componente especificado de un valor de fecha determinado.',
-            dateSerial: 'Devuelve un valor de fecha que representa un año, mes y día especificados, con la información de hora configurada para midnight (00:00:00).',
-            dateString: 'Devuelve o establece un valor de cadena que representa la fecha actual de acuerdo con su sistema.',
-            dateValue: 'Devuelve un valor de fecha que contiene la información de fecha representada por una cadena, con la información de tiempo.',
+            upperCase: 'Devuelve una cadena o carácter que contiene la cadena especificada convertida a mayúsculas.',
+            cDate: 'Convertir a fecha',
+            dateAdd: 'Devuelve un valor de fecha que contiene valores de fecha y hora a los que se ha añadido un intervalo de tiempo especificado.',
+            dateDiff: 'Devuelve un valor largo que especifica el número de intervalos de tiempo entre dos valores de fecha.',
+            datePart: 'Devuelve un valor entero que contiene el componente especificado de un valor de fecha dado.',
+            dateSerial: 'Devuelve un valor de fecha que representa un año, mes y día especificados, con la información horaria establecida en medianoche (00:00:00).',
+            dateString: 'Devuelve o establece un valor de cadena que representa la fecha actual según tu sistema.',
+            dateValue: 'Devuelve un valor de fecha que contiene la información de fecha representada por una cadena, con la información de hora.',
             day: 'Devuelve un valor entero del 1 al 31 que representa el día del mes.',
-            format: 'Devuelve una expresión de cadena que representa el valor de fecha / hora.',
+            format: 'Devuelve una expresión de cadena que representa un valor de fecha/hora.',
             hour: 'Devuelve un valor entero de 0 a 23 que representa la hora del día.',
             minute: 'Devuelve un valor entero de 0 a 59 que representa el minuto de la hora.',
             month: 'Devuelve un valor entero del 1 al 12 que representa el mes del año.',
             monthName: 'Devuelve un valor de cadena que contiene el nombre del mes especificado.',
-            now: 'Devuelve un valor de fecha que contiene la fecha y hora actual de acuerdo con su sistema.',
+            now: 'Devuelve un valor de fecha que contiene la fecha y hora actuales según tu sistema.',
             second: 'Devuelve un valor entero de 0 a 59 que representa el segundo del minuto.',
-            timeOfDay: 'Devuelve o establece un valor de fecha que contiene la hora actual del día de acuerdo con su sistema.',
-            timer: 'Devuelve un valor doble que representa el número de segundos transcurridos desde la medianoche.',
-            timeSerial: 'Devuelve un valor de fecha que representa una hora, minuto y segundo especificados, con la información de fecha establecida con relación al 1 de enero del año 1.',
-            timeString: 'Devuelve o establece un valor de cadena que representa la hora actual del día de acuerdo con su sistema.',
-            timeValue: 'Devuelve un valor de fecha que contiene la información de tiempo representada por una cadena, con la información de fecha establecida al 1 de enero del año 1.',
-            timeToday: 'Devuelve o establece un valor de fecha que contiene la fecha actual de acuerdo con su sistema.',
+            timeOfDay: 'Devuelve o establece un valor de fecha que contiene la hora actual del día según tu sistema.',
+            timer: 'Devuelve un valor doble que representa el número de segundos transcurridos desde medianoche.',
+            timeSerial: 'Devuelve un valor de fecha que representa una hora, minuto y segundo especificados, con la información de la fecha establecida relativa al 1 de enero del año 1.',
+            timeString: 'Devuelve o establece un valor de cadena que representa la hora actual del día según tu sistema.',
+            timeValue: 'Devuelve un valor de fecha que contiene la información horaria representada por una cadena, con la información de fecha establecida al 1 de enero del año 1.',
+            timeToday: 'Devuelve o establece un valor de fecha que contiene la fecha actual según tu sistema.',
             timeWeekday: 'Devuelve un valor entero que contiene un número que representa el día de la semana.',
             timeWeekdayName: 'Devuelve un valor de cadena que contiene el nombre del día de la semana especificado.',
-            year: 'Devuelve un valor entero del 1 al 9999 que representa el año.',
-            abs: 'Devuelve el valor absoluto de un número de punto flotante de precisión simple.',
+            year: 'Devuelve un valor entero de 1 a 9999 que representa el año.',
+            abs: 'Devuelve el valor absoluto de un número de coma flotante de precisión simple.',
             acos: 'Devuelve el ángulo cuyo coseno es el número especificado.',
             asin: 'Devuelve el ángulo cuyo seno es el número especificado.',
             atan: 'Devuelve el ángulo cuya tangente es el número especificado.',
             atan2: 'Devuelve el ángulo cuya tangente es el cociente de dos números especificados.',
             bigMultiply: 'Produce el producto completo de dos números de 32 bits.',
-            ceiling: 'Devuelve el entero más pequeño que es mayor o igual que el entero especificado.',
+            ceiling: 'Devuelve el entero más pequeño que sea mayor o igual que el entero especificado.',
             cos: 'Devuelve el coseno del ángulo especificado.',
             cosh: 'Devuelve el coseno hiperbólico del ángulo especificado.',
             exponent: 'Devuelve e elevado a la potencia especificada.',
-            fixNumberType: 'Devuelve una parte entera de un número.',
-            floor: 'Devuelve el entero más grande menor o igual que el entero especificado.',
-            integer: 'Devuelve una parte entera de un número.',
+            fixNumberType: 'Devuelve una porción entera de un número.',
+            floor: 'Devuelve el mayor entero menor o igual que el entero especificado.',
+            integer: 'Devuelve una porción entera de un número.',
             logrithm: 'Devuelve el logaritmo natural (base e) de un número especificado.',
             logrithm10: 'Devuelve el logaritmo de base 10 de un número especificado.',
             maximum: 'Devuelve el valor máximo de todos los valores no nulos de la expresión especificada.',
-            minimum: 'Devuelve el valor mínimo de todos los valores no nulos de la expresión especificada.',
+            minimum: 'Devuelve el valor mínimo de entre todos los valores no nulos de la expresión especificada.',
             power: 'Devuelve un número especificado elevado a la potencia especificada.',
             random: 'Devuelve un número aleatorio de tipo único.',
-            round: 'Redondea un valor de coma flotante de precisión doble al entero más cercano.',
+            round: 'Redondea un valor de coma flotante de doble precisión al entero más cercano.',
             sign: 'Devuelve un valor que indica el signo de un entero con signo de 8 bits.',
             sin: 'Devuelve el seno del ángulo especificado.',
             sinh: 'Devuelve el seno hiperbólico del ángulo especificado.',
             squareRoot: 'Devuelve la raíz cuadrada de un número especificado.',
             tangent: 'Devuelve la tangente del ángulo especificado.',
             tangentH: 'Devuelve la tangente hiperbólica del ángulo especificado.',
-            isArray: 'Devuelve un valor booleano que indica si la variable apunta a una matriz.',
-            isDate: 'Devuelve un valor booleano que indica si una expresión representa un valor válido',
-            isNothing: 'Devuelve un valor booleano que indica si una expresión no tiene ningún objeto.',
-            isNumeric: 'Devuelve un valor booleano que indica si una expresión puede ser evaluado como un número.',
+            isArray: 'Devuelve un valor booleano que indica si la variable apunta a un array.',
+            isDate: 'Devuelve un valor booleano que indica si una expresión representa un válido.',
+            isNothing: 'Devuelve un valor booleano que indica si una expresión no tiene objeto.',
+            isNumeric: 'Devuelve un valor booleano que indica si una expresión puede ser evaluada como un número.',
             flowChoose: 'Selecciona y devuelve un valor de una lista de argumentos.',
-            flowIIf: 'Devuelve uno de dos objetos según la evaluación de una expresión.',
-            switchFlow: 'Evalúa una lista de expresiones y devuelve un valor de objeto correspondiente a la primera expresión en la lista que es verdadera.',
-            avg: 'Devuelve el promedio de todos los valores no nulos de la expresión especificada.',
+            flowIIf: 'Devuelve uno de dos objetos dependiendo de la evaluación de una expresión.',
+            switchFlow: 'Evalúa una lista de expresiones y devuelve un valor de objeto correspondiente a la primera expresión de la lista que sea verdadera.',
+            avg: 'Devuelve la media de todos los valores no nulos de la expresión especificada.',
             count: 'Devuelve un recuento de los valores de la expresión especificada.',
-            countDistinct: 'Devuelve un recuento de todos los valores distintos de los especificados.',
-            countRows: 'Devuelve un recuento de filas dentro del alcance especificado.',
+            countDistinct: 'Devuelve un recuento de todos los valores distintos de la expresión especificada.',
+            countRows: 'Devuelve un recuento de filas dentro del ámbito especificado.',
             first: 'Devuelve el primer valor de la expresión especificada.',
             last: 'Devuelve el último valor de la expresión especificada.',
-            standardDev: 'Devuelve la desviación estándar de todos los valores no nulos de los especificados.',
-            standardDevP: 'Devuelve la desviación estándar de la población de todos los valores no nulos de la expresión especificada.',
+            standardDev: 'Devuelve la desviación estándar de todos los valores no nulos de la expresión especificada.',
+            standardDevP: 'Devuelve la desviación estándar poblacional de todos los valores no nulos de la expresión especificada.',
             sum: 'Devuelve una suma de los valores de la expresión especificada.',
             variance: 'Devuelve la varianza de todos los valores no nulos de la expresión especificada.',
             varianceP: 'Devuelve la varianza poblacional de todos los valores no nulos de la expresión especificada.',
-            runningValue: 'Utiliza una función específica para devolver un agregado en ejecución de la expresión especificada',
+            runningValue: 'Utiliza una función especificada para devolver un agregado en ejecución de la expresión especificada.',
             aggregate: 'Devuelve un agregado personalizado de la expresión especificada, según lo definido por el proveedor de datos.',
-            doubleDeclining: 'Devuelve un doble que especifica la depreciación de un activo para un período de tiempo específico utilizando el método de saldo decreciente doble o cualquier otro método que especifique.',
-            futureValue: 'Devuelve el valor doble especificando el valor futuro de una anualidad basada en pagos fijos periódicos y una tasa de interés fija.',
-            interestPayment: 'Devuelve el valor doble que especifica el pago de intereses para un período determinado de una anualidad basado en pagos fijos periódicos y una tasa de interés fija.',
-            numberOfPeriods: 'Devuelve un valor doble que especifica el número de períodos de una anualidad basada en pagos fijos periódicos y una tasa de interés fija.',
-            annuityPayment: 'Devuelve un valor doble que especifica el pago de una anualidad basada en pagos fijos periódicos y una tasa de interés fija.',
-            principalPayment: 'Devuelve un valor doble que especifica el pago del principal para un período determinado de una anualidad basado en pagos fijos periódicos y una tasa de interés fija.',
-            presentValue: 'Devuelve un valor doble que especifica el valor presente de una anualidad basada en pagos fijos periódicos a ser pagados en el futuro y una tasa de interés fija.',
-            rateOfInterest: 'Devuelve un valor doble que especifica la tasa de interés por período para una anualidad.',
-            straightLine: 'Devuelve un valor doble que especifica la depreciación lineal de un activo por un período único.',
-            sumOfYearsDigits: 'Devuelve un valor doble que especifica la depreciación de los dígitos de la suma de años de un activo por un período especificado.',
-            convertBool: 'Convertir a Boolean.',
+            doubleDeclining: 'Devuelve un valor doble que especifica la depreciación de un activo para un período de tiempo específico utilizando el método de doble saldo decreciente o algún otro método que usted especifique.',
+            futureValue: 'Devuelve un valor doble que especifica el valor futuro de una anualidad basada en pagos fijos periódicos y un tipo de interés fijo.',
+            interestPayment: 'Devuelve un valor doble que especifica el pago de intereses para un periodo determinado de una anualidad basada en pagos periódicos fijos y un tipo de interés fijo.',
+            numberOfPeriods: 'Devuelve un valor doble que especifica el número de periodos de una anualidad basada en pagos fijos periódicos y un tipo de interés fijo.',
+            annuityPayment: 'Devuelve un valor doble que especifica el pago de una anualidad basada en pagos periódicos fijos y un tipo de interés fijo.',
+            principalPayment: 'Devuelve un valor doble que especifica el pago del principal para un periodo determinado de una anualidad basada en pagos fijos periódicos y un tipo de interés fijo.',
+            presentValue: 'Devuelve un valor doble que especifica el valor actual de una anualidad basada en pagos periódicos fijos a pagar en el futuro y un tipo de interés fijo.',
+            rateOfInterest: 'Devuelve un valor doble que especifica el tipo de interés por periodo de una anualidad.',
+            straightLine: 'Devuelve un valor doble que especifica la depreciación lineal de un activo para un solo período.',
+            sumOfYearsDigits: 'Devuelve un valor doble que especifica la depreciación de los dígitos de la suma de años de un activo para un período especificado.',
+            convertBool: 'Convertir a booleano.',
             convertByte: 'Convertir a byte.',
             convertChar: 'Convertir a char.',
-            convertDate: 'Convertir a la fecha.',
+            convertDate: 'Convertir a fecha',
             convertDouble: 'Convertir a doble.',
             convertDecimal: 'Convertir a decimal.',
             convertInteger: 'Convertir a entero.',
             convertLong: 'Convertir a largo.',
             convertObject: 'Convertir a objeto.',
             convertShort: 'Convertir a corto.',
-            convertSingle: 'Convertir a single.',
+            convertSingle: 'Convertir a sencillo.',
             convertString: 'Convertir a cadena.',
-            fix: 'Devuelve una parte entera de un número.',
+            fix: 'Devuelve una porción entera de un número.',
             hexaDecimal: 'Devuelve una cadena que representa el valor hexadecimal de un número.',
-            integerPortion: 'Devuelve una parte entera de un número.',
+            integerPortion: 'Devuelve una porción entera de un número.',
             octal: 'Devuelve una cadena que representa el valor octal de un número.',
             stringOfNumber: 'Devuelve una cadena que representa un número.',
-            stringAsNumeric: 'Devuelve números en una cadena como un valor numérico del tipo apropiado.',
-            inScope: 'Devuelve verdadero si la instancia actual está dentro del alcance especificado.',
-            depthLevel: 'Devuelve un número entero basado en cero que representa el nivel de profundidad actual.',
-            lookup: 'Utilice Búsqueda para recuperar el valor del conjunto de datos especificado para un par nombre-valor donde hay una relación de 1 a 1. Por ejemplo, para un campo de ID en una tabla, puede usar Búsqueda para recuperar el campo de Nombre correspondiente de un conjunto de datos que no está vinculado a la región de datos.',
-            lookupSet: 'Utilice LookupSet para recuperar un conjunto de valores del conjunto de datos especificado para un par nombre-valor donde hay una relación de 1 a muchos. Por ejemplo, para un identificador de cliente en una tabla, puede usar LookupSet para recuperar todos los números de teléfono asociados para ese cliente de un conjunto de datos que no está vinculado a la región de datos.',
+            stringAsNumeric: 'Devuelve los números de una cadena como un valor numérico del tipo apropiado.',
+            inScope: 'Devuelve verdadero si la instancia actual está dentro del ámbito especificado.',
+            depthLevel: 'Devuelve un entero de base cero que representa el nivel de profundidad actual.',
+            lookup: 'Utiliza buscar para recuperar el valor del conjunto de datos especificado para un par nombre-valor en el que exista una relación 1 a 1. Por ejemplo, para un campo ID de una tabla, puedes utilizar buscar para recuperar el campo nombre correspondiente de un conjunto de datos que no esté vinculado a la región de datos.',
+            lookupSet: 'Utiliza LookupSet para recuperar un conjunto de valores del conjunto de datos especificado para un par nombre-valor en el que exista una relación de 1 a muchos. Por ejemplo, para un identificador de cliente de una tabla, puedes utilizar LookupSet para recuperar todos los números de teléfono asociados a ese cliente de un conjunto de datos que no esté vinculado a la región de datos.',
             previous: 'Devuelve el valor de la expresión para la fila de datos anterior.',
-            rowNumber: 'Devuelve un conteo en ejecución de todas las filas en el alcance especificado.',
-            renderInteractive: 'Un booleano que indica si la solicitud de representación actual utiliza un formato interactivo.',
+            rowNumber: 'Devuelve un recuento en ejecución de todas las filas en el ámbito especificado.',
+            renderInteractive: 'Un booleano que indica si la solicitud de renderizado actual utiliza un formato interactivo.',
             renderFormatName: 'El nombre del renderizador registrado en el archivo de configuración de ReportServer.'
         },
         errorMessage: {
             emptyValue: 'El valor no puede estar vacío',
-            invalidValue: 'no es un valor válido'
+            invalidValue: 'No es un valor válido'
         }
     },
     dataAssign: {
         measures: 'Medidas',
         dimensions: 'Dimensiones',
-        addDataset: 'Agregar conjunto de datos',
-        errorMessagePrefix: 'Aún no ha configurado una conjunto de datos.',
-        errorMessageSuffix: 'Agregue una conjunto de datos para vincular datos para informar elementos en su diseñador.',
+        addDataset: 'Añadir conjunto de datos',
+        errorMessagePrefix: 'Aún no has configurado un conjunto de datos.',
+        errorMessageSuffix: 'Añadir un conjunto de datos para vincular datos a elementos de informe en tu diseñador.',
         search: 'Buscar',
         dragOnDrop: 'Arrastrar y soltar',
-        categoryList: ' Lista de categoría',
-        removeDataField: 'Eliminar campo de datos',
-        dataFieldSettings: 'Configuraciones de campo de datos'
+        categoryList: 'Lista de categoría',
+        removeDataField: 'Borrar campo de datos',
+        dataFieldSettings: 'Ajustes del campo de datos',
+        warningMessage: {
+            title: 'Asignar datos',
+            contentMessage: 'Añadir más de 5 {categoryName} causará un retraso en la visualización. ¿Quieres añadirlas de todos modos?'
+        }
     },
     reportProperty: {
-        header: 'Encabezamiento',
+        header: 'Encabezado',
         body: 'Cuerpo',
         footer: 'Pie de página',
         report: 'Informe',
@@ -3197,35 +3232,35 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Ajustes básicos',
             background: 'Color de fondo',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
-                double: 'Double',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                none: 'Ninguno',
+                double: 'Doble',
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             }
         },
         generalSettings: {
@@ -3238,19 +3273,19 @@ ej.ReportDesigner.Locale['es-ES'] = {
             paddingTypes: {
                 label: 'Relleno',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             }
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto'
         },
         codeModule: {
             code: 'Código',
@@ -3262,40 +3297,40 @@ ej.ReportDesigner.Locale['es-ES'] = {
             types: {
                 left: 'Izquierda',
                 right: 'Derecha',
-                bottom: 'Fondo',
-                top: 'Parte superior'
+                bottom: 'Inferior',
+                top: 'Superior'
             }
         },
         pageUnit: {
             header: 'Unidades de página',
-            label: 'Unidad de la página',
+            label: 'Unidad de página',
             types: {
                 inches: 'Pulgadas',
                 centimeters: 'Centímetros',
-                pixels: 'Píxel',
+                pixels: 'Pixels',
                 points: 'Puntos',
                 millimeters: 'Milímetros',
                 picas: 'Picas'
             }
         },
         columns: {
-            header: 'Columna de la página',
+            header: 'Columna de página',
             label: 'Columnas',
-            columnSpacing: 'Espaciado de columna'
+            columnSpacing: 'Espaciado de columnas'
         },
         interactiveSize: {
             categoryName: 'Tamaño interactivo',
             enable: 'Habilitar',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto'
         },
         paperSize: {
             orientation: 'Orientación',
             header: 'Tamaño de papel',
             label: 'Tamaño de papel',
             orientationTypes: {
-                landScape: 'Paisaje',
-                portrait: 'Retrato'
+                landScape: 'Horizontal',
+                portrait: 'Vertical'
             },
             types: {
                 a3Size: 'A3',
@@ -3303,7 +3338,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
                 b4Size: 'B4(JIS)',
                 b5Size: 'B5(JIS)',
                 envelope: 'Sobre #10',
-                envelopeMonarch: 'Sobre Monarca',
+                envelopeMonarch: 'Sobre monarca',
                 executive: 'Ejecutivo',
                 legal: 'Legal',
                 letter: 'Carta',
@@ -3313,7 +3348,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
+        sizeTooltip: 'Tamaño',
         reportLanguage: {
             categoryName: 'Idioma',
             labelText: 'Idioma'
@@ -3323,7 +3358,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             source: 'Fuente',
             sourceTypes: {
                 external: 'Externo',
-                embedded: 'Incrustado',
+                embedded: 'Insertado',
                 database: 'Base de datos'
             },
             value: 'Valor',
@@ -3338,20 +3373,20 @@ ej.ReportDesigner.Locale['es-ES'] = {
             repeatProperty: {
                 categoryName: 'Repetir',
                 repeat: 'Repetir',
-                repeatX: 'Repetir X',
-                repeatY: 'Repetir Y',
-                defaultType: 'Defecto',
-                clip: 'Fragmento de una película',
-                fit: 'Ajuste'
+                repeatX: 'RepetirX',
+                repeatY: 'RepetirY',
+                defaultType: 'Predeterminado',
+                clip: 'Clip',
+                fit: 'Ajustado'
             }
         },
         reportMiscellaneous: {
-            categoryName: 'Diverso',
-            consumeWhiteSpace: 'Consumir espacio en blanco del contenedor',
+            categoryName: 'Misceláneo',
             customAttributes: 'Atributos personalizados',
+            consumeWhiteSpace: 'Consumir espacio en blanco del contenedor',
             reportVersion: 'Versión',
             reportversions: {
-                default: 'Defecto',
+                default: 'Predeterminado',
                 RDL2010: 'RDL2010',
                 RDL2016: 'RDL2016'
             }
@@ -3366,34 +3401,34 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Ajustes básicos',
             font: {
                 categoryName: 'Fuente',
-                defaultStyle: 'Defecto',
+                defaultStyle: 'Predeterminado',
                 normal: 'Normal',
-                italic: 'Itálico'
+                italic: 'Italic'
             },
             fontStyle: {
                 categoryName: 'Estilo de fuente',
-                defaultStyle: 'Defecto',
+                defaultStyle: 'Predeterminado',
                 normal: 'Normal',
-                thin: 'Delgado',
-                extraLight: 'Extra ligero',
-                light: 'Ligero',
+                thin: 'Delgada',
+                extraLight: 'Extraligera',
+                light: 'Ligera',
                 medium: 'Medio',
-                semiBold: 'Semi Negrita',
+                semiBold: 'Seminegrita',
                 bold: 'Negrita',
-                extraBold: 'Extra Negrita',
-                heavy: 'Pesado'
+                extraBold: 'Extranegrita',
+                heavy: 'Fuerte'
             },
             textDecoration: {
                 categoryName: 'Decoración de texto',
-                defaultStyle: 'Defecto',
-                none: 'Ninguna',
-                underline: 'Subrayar',
-                lineThrough: 'Línea a través',
-                overline: 'Sobre la línea'
+                defaultStyle: 'Predeterminado',
+                none: 'Ninguno',
+                underline: 'Subrayado',
+                lineThrough: 'Tachado',
+                overline: 'Suprarrayado'
             },
             format: 'Formato',
             markupType: {
-                categoryName: 'Tipo de marcado',
+                categoryName: 'Tipo de marca',
                 plaintext: 'Texto sin formato',
                 html: 'HTML'
             }
@@ -3401,101 +3436,101 @@ ej.ReportDesigner.Locale['es-ES'] = {
         alignment: {
             categoryName: 'Alineación',
             textAlignment: {
-                categoryName: 'Alineación del texto',
-                defaultStyle: 'Defecto',
+                categoryName: 'Alineación de texto',
+                defaultStyle: 'Predeterminado',
                 left: 'Izquierda',
-                center: 'Centrar',
+                center: 'Centro',
                 right: 'Derecha'
             },
             verticalAlignment: {
-                categoryName: 'Alineamiento vertical',
-                defaultStyle: 'Defecto',
-                top: 'Parte superior',
-                middle: 'Medio',
-                bottom: 'Fondo'
+                categoryName: 'Alineación vertical',
+                defaultStyle: 'Predeterminado',
+                top: 'Superior',
+                middle: 'Mitad',
+                bottom: 'Inferior'
             },
-            lineSpacing: 'Linjehöjd'
+            lineSpacing: 'Alto de línea'
         },
         appearance: {
             categoryName: 'Apariencia',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
             background: 'Color de fondo'
         },
-        link: 'Enlazar',
-        linkReport: 'Informe de enlace',
+        link: 'Vínculo',
+        linkReport: 'Vincular informe',
         URL: 'URL',
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             sizeLabel: 'Tamaño',
             left: 'Izquierda',
-            top: 'Parte superior',
-            width: 'Anchura',
-            height: 'Altura'
+            top: 'Superior',
+            width: 'Ancho',
+            height: 'Alto'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo',
-            intialToggleState: 'Estado de alternancia inicial'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento',
+            intialToggleState: 'Estado de conmutación inicial'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
+            categoryName: 'Misceláneo',
             canGrow: 'Puede crecer',
-            canShrink: 'Puede reducir',
+            canShrink: 'Puede reducirse',
             toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            documentMap: 'Mapa de documento',
             customAttributes: 'Atributos personalizados',
             bookmark: 'Marcador'
         },
         paragraphSettings: {
-            categoryName: 'Configuración de párrafo',
+            categoryName: 'Ajustes de párrafos',
             textAlignment: {
-                categoryName: 'Alineación del texto',
-                defaultStyle: 'Defecto',
+                categoryName: 'Alineación de texto',
+                defaultStyle: 'Predeterminado',
                 left: 'Izquierda',
-                center: 'Centrar',
+                center: 'Centro',
                 right: 'Derecha'
             },
             indent: {
-                categoryName: 'Sangrar',
+                categoryName: 'Sangría',
                 leftIndent: 'Izquierda',
                 rightIndent: 'Derecha'
             },
             space: {
                 categoryName: 'Espacio',
-                topSpace: 'Parte superior',
-                bottomSpace: 'Fondo'
+                topSpace: 'Superior',
+                bottomSpace: 'Inferior'
             },
             listLevel: {
                 categoryName: 'Nivel de lista',
@@ -3507,45 +3542,45 @@ ej.ReportDesigner.Locale['es-ES'] = {
             },
             listStyle: {
                 categoryName: 'Estilo de lista',
-                none: 'Ninguna',
-                numbered: 'Numerado',
-                bulleted: 'Bulleted'
+                none: 'Ninguno',
+                numbered: 'Enumerado',
+                bulleted: 'Con viñetas'
             }
         },
         padding: {
             label: 'Relleno',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             right: 'Derecha',
-            bottom: 'Fondo'
+            bottom: 'Inferior'
         },
         contextMenu: {
             cut: 'Cortar',
-            copy: 'Dupdo',
+            copy: 'Copiar',
             paste: 'Pegar',
             expression: 'Expresión',
-            pasteAlert: 'Su navegador no admite el acceso directo al portapapeles. Utilice el método abreviado de teclado Ctrl + V en lugar de la operación de pegado.'
+            pasteAlert: 'Tu navegador no admite el acceso directo al portapapeles. Por favor, utiliza el atajo de teclado Ctrl+V en lugar de la operación de pegado.'
         },
         fontStyle: 'Estilo de fuente',
         fontWeight: 'Peso de fuente',
         fontSize: 'Tamaño de fuente',
         fontColor: 'Color de fuente',
-        fontFamily: 'Familia tipográfica',
+        fontFamily: 'Familia de fuente',
         fontStyleTooltip: 'Estilo',
         fontWeightTooltip: 'Peso',
-        fontSizeTooltip: 'tamaño',
+        fontSizeTooltip: 'Tamaño',
         fontColorTooltip: 'Color',
-        fontFamilyTooltip: 'Familia tipográfica',
+        fontFamilyTooltip: 'Familia de fuente',
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
+        sizeTooltip: 'Tamaño',
         selectedText: 'Texto seleccionado',
         interActiveSort: {
-            categoryName: 'Ordenar por usuario',
+            categoryName: 'Clasificación de usuario',
             userSort: {
                 labelText: 'Ordenar expresión',
                 scopePropertyLabel: 'Ordenar alcance de expresión',
-                targetPropertyLabel: 'Ordenar objetivo'
+                targetPropertyLabel: 'Ordenar objetivos'
             }
         },
         localization: {
@@ -3553,17 +3588,17 @@ ej.ReportDesigner.Locale['es-ES'] = {
             labelText: 'Idioma',
             direction: {
                 directionLabel: 'Dirección',
-                leftToRight: 'De izquierda a derecha',
-                rightToLeft: 'De derecha a izquierda',
-                default: 'defecto'
+                leftToRight: 'LTR',
+                rightToLeft: 'RTL',
+                default: 'Predeterminado'
             },
             writingMode: {
                 labelText: 'Modo de escritura',
                 types: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     horizontal: 'Horizontal',
                     vertical: 'Vertical',
-                    rotate: 'Girar270'
+                    rotate: 'Rotar 270'
                 }
             }
         },
@@ -3571,13 +3606,13 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             },
             elementStyle: {
-                auto: 'Auto',
+                auto: 'Automático',
                 attribute: 'Atributo',
                 element: 'Elemento',
                 categoryName: 'Estilo'
@@ -3585,27 +3620,27 @@ ej.ReportDesigner.Locale['es-ES'] = {
         }
     },
     designPanel: {
-        headerText: 'Encabezamiento',
+        headerText: 'Encabezado',
         footerText: 'Pie de página',
-        pasteAlert: 'Solo se admiten elementos básicos en el área de encabezado y pie de página',
+        pasteAlert: 'Solo se admiten elementos básicos en las zonas de encabezado y pie de página',
         pasteTitle: 'Pegar',
-        headerAreaLabel: 'Encabezado de área de diseño',
-        bodyAreaLabel: 'Área de diseño del cuerpo',
-        footerAreaLabel: 'Pie de área de diseño',
+        headerAreaLabel: 'Encabezado del área de diseño',
+        bodyAreaLabel: 'Cuerpo del área diseño',
+        footerAreaLabel: 'Pie de página del área de diseño',
         rdlSwitcherAlert: {
-            headerContent: 'Reporte',
-            bodyContent: 'El informe es una degradación a la versión anterior de la versión actual y algunas funciones no son compatibles con esta versión. Quieres continuar ?'
+            headerContent: 'Informe',
+            bodyContent: 'El informe es un retroceso de la versión actual y algunas funciones no son compatibles con esta versión. ¿Quieres continuar?'
         }
     },
     designContextMenu: {
         cutItem: 'Cortar',
-        copyItem: 'Dupdo',
+        copyItem: 'Copiar',
         pasteItem: 'Pegar',
-        deleteItem: 'Borrar',
+        deleteItem: 'Eliminar',
         insertItem: 'Insertar',
-        addHeader: 'Agregar encabezado',
+        addHeader: 'Añadir encabezado',
         removeHeader: 'Eliminar encabezado',
-        addFooter: 'Agregar pie de página',
+        addFooter: 'Añadir pie de página',
         removeFooter: 'Eliminar pie de página',
         chartItem: 'Gráfico',
     },
@@ -3614,71 +3649,71 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
-            sizeLabel: 'tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            top: 'Superior',
+            sizeLabel: 'Tamaño',
+            width: 'Ancho',
+            height: 'Alto'
         },
         appearance: {
             categoryName: 'Apariencia',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Dashed',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
-            backGround: 'Fondo'
+            backGround: 'Color de fondo'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible'
+            hidden: 'Oculto'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
+            categoryName: 'Misceláneo',
             toolTip: 'Información sobre herramientas',
             bookmark: 'Marcador'
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño'
+        sizeTooltip: 'Tamaño'
     },
     tablixProperty: {
         data: {
             categoryName: 'Datos',
             datasetName: 'Conjunto de datos',
-            datasetNone: 'Ninguna'
+            datasetNone: 'Ninguno'
         },
         noRows: {
-            categoryName: 'Sin Filas',
+            categoryName: 'Sin filas',
             font: {
                 categoryName: 'Fuente',
                 color: 'Color de fuente',
-                family: 'Familia tipográfica',
+                family: 'Familia de fuente',
                 size: 'Tamaño de fuente',
                 style: 'Estilo de fuente',
                 weight: 'Peso de fuente'
@@ -3686,110 +3721,110 @@ ej.ReportDesigner.Locale['es-ES'] = {
             fontStyle: {
                 label: 'Estilo de fuente',
                 fontItem: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    italic: 'Itálico'
+                    italic: 'Italic'
                 },
                 fontWeight: {
-                    default: 'Defecto',
+                    default: 'Predeterminado',
                     normal: 'Normal',
-                    thin: 'Delgado',
-                    extraLight: 'Extra ligero',
-                    light: 'Ligero',
+                    thin: 'Delgada',
+                    extraLight: 'Extraligera',
+                    light: 'Ligera',
                     medium: 'Medio',
-                    semiBold: 'Semi negrita',
+                    semiBold: 'Seminegrita',
                     bold: 'Negrita',
-                    extraBold: 'Extra Negrita',
-                    heavy: 'Pesado',
+                    extraBold: 'Extranegrita',
+                    heavy: 'Fuerte',
                 }
             },
             textDecoration: {
                 categoryName: 'Decoración de texto',
-                defaultStyle: 'Defecto',
-                none: 'Ninguna',
-                underline: 'Subrayar',
-                overline: 'Sobre la línea',
-                lineThrough: 'Línea a través'
+                defaultStyle: 'Predeterminado',
+                none: 'Ninguno',
+                underline: 'Subrayado',
+                overline: 'Suprarrayado',
+                lineThrough: 'Tachado'
             },
             format: 'Formato',
-            lineHeight: 'Altura de la línea',
+            lineHeight: 'Alto de línea',
             message: 'Mensaje',
             paddingTypes: {
                 label: 'Relleno',
                 left: 'Izquierda',
                 right: 'Derecha',
-                top: 'Parte superior',
-                bottom: 'Fondo',
+                top: 'Superior',
+                bottom: 'Inferior',
             },
             textAlign: {
-                categoryName: 'Texto alineado',
-                default: 'Defecto',
+                categoryName: 'Alineación de texto',
+                default: 'Predeterminado',
                 left: 'Izquierda',
                 right: 'Derecha',
-                center: 'Centrar'
+                center: 'Centro'
             },
             verticalAlign: {
                 categoryName: 'Alineación vertical',
-                default: 'Defecto',
-                top: 'Parte superior',
-                middle: 'Medio',
-                bottom: 'Fondo'
+                default: 'Predeterminado',
+                top: 'Superior',
+                middle: 'Mitad',
+                bottom: 'Inferior'
             },
             writingMode: {
                 categoryName: 'Modo de escritura',
-                default: 'Defecto',
+                default: 'Predeterminado',
                 horizontal: 'Horizontal',
                 vertical: 'Vertical',
-                rotateProperty: 'Girar270'
+                rotateProperty: 'Rotar 270'
             }
         },
         appearance: {
             categoryName: 'Apariencia',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
             backGround: 'Color de fondo'
         },
         miscellaneous: {
-            categoryName: 'Diverso',
+            categoryName: 'Misceláneo',
             noRowsMessage: 'Mensaje sin filas',
-            pageName: 'Nombre de la página',
-            keepTogether: 'Mantenerse juntos',
+            pageName: 'Nombre de página',
+            keepTogether: 'Mantener junto',
             customAttributes: 'Atributos personalizados',
             toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            documentMap: 'Mapa de documento',
             bookmark: 'Marcador'
         },
         headers: {
-            categoryName: 'encabezamiento',
+            categoryName: 'Encabezados',
             fixedRow: 'Fila fija',
             fixedColumn: 'Columna fija',
             repeatRow: 'Repetir fila',
@@ -3797,92 +3832,92 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         font: {
             categoryName: 'Fuente',
-            defaultStyle: 'Defecto',
+            defaultStyle: 'Predeterminado',
             normal: 'Normal',
-            italic: 'Itálico'
+            italic: 'Italic'
         },
         fontStyle: {
             categoryName: 'Estilo de fuente',
-            defaultStyle: 'Defecto',
+            defaultStyle: 'Predeterminado',
             normal: 'Normal',
-            thin: 'Delgado',
-            extraLight: 'Extra ligero',
-            light: 'Ligero',
+            thin: 'Delgada',
+            extraLight: 'Extraligera',
+            light: 'Ligera',
             medium: 'Medio',
-            semiBold: 'Semi Negrita',
+            semiBold: 'Seminegrita',
             bold: 'Negrita',
-            extraBold: 'Extra Negrita',
-            heavy: 'Pesado'
+            extraBold: 'Extranegrita',
+            heavy: 'Fuerte'
         },
         textDecoration: {
             categoryName: 'Decoración de texto',
-            defaultStyle: 'Defecto',
-            none: 'Ninguna',
-            underline: 'Subrayar',
-            lineThrough: 'Línea a través',
-            overline: 'Sobre la línea'
+            defaultStyle: 'Predeterminado',
+            none: 'Ninguno',
+            underline: 'Subrayado',
+            lineThrough: 'Tachado',
+            overline: 'Suprarrayado'
         },
         alignment: {
             categoryName: 'Alineación',
             textAlignment: {
-                categoryName: 'Alineación del texto',
-                defaultStyle: 'Defecto',
+                categoryName: 'Alineación de texto',
+                defaultStyle: 'Predeterminado',
                 left: 'Izquierda',
-                center: 'Centrar',
+                center: 'Centro',
                 right: 'Derecha'
             },
             verticalAlignment: {
-                categoryName: 'Alineamiento vertical',
-                defaultStyle: 'Defecto',
-                top: 'Parte superior',
-                middle: 'Medio',
-                bottom: 'Fondo'
+                categoryName: 'Alineación vertical',
+                defaultStyle: 'Predeterminado',
+                top: 'Superior',
+                middle: 'Mitad',
+                bottom: 'Inferior'
             }
         },
         padding: {
             label: 'Relleno',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             right: 'Derecha',
-            bottom: 'Fondo'
+            bottom: 'Inferior'
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior',
+            top: 'Superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            width: 'Ancho',
+            height: 'Alto'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         staticGroupProp: {
             categoryName: 'Ajustes básicos',
             filters: 'Filtros',
-            sorts: 'Clases',
+            sorts: 'Ordenamiento',
             fixedData: 'Datos fijos',
-            groupExp: 'Los grupos',
+            groupExp: 'Grupos',
             hideIfNoRows: 'Ocultar si no hay filas',
-            keepWithGroup: 'Mantener con el grupo',
-            repeatOnNewPage: 'Repetir en nueva pagina',
+            keepWithGroup: 'Mantener con grupo',
+            repeatOnNewPage: 'Repetir en una nueva página',
             afterGroup: 'Después',
-            beforeGroup: 'antes de',
+            beforeGroup: 'Antes',
             pageBreak: {
                 categoryName: 'Salto de página',
                 enablePageBreak: 'Habilitar salto de página',
                 breakLocation: {
-                    categoryName: 'Lugar de descanso',
-                    none: 'Ninguna',
-                    start: 'Comienzo',
+                    categoryName: 'Ubicación de salto de página',
+                    none: 'Ninguno',
+                    start: 'Inicio',
                     end: 'Fin',
-                    startAndEnd: 'InicioAndEnd',
+                    startAndEnd: 'Inicio y fin',
                     between: 'Entre'
                 },
-                pageNumberReset: 'Restablecer número de página',
+                pageNumberReset: 'Reinicio de número de página',
             }
         },
         waterMark: {
@@ -3894,64 +3929,64 @@ ej.ReportDesigner.Locale['es-ES'] = {
         },
         fontStyleTooltip: 'Estilo',
         fontWeightTooltip: 'Peso',
-        fontSizeTooltip: 'tamaño',
+        fontSizeTooltip: 'Tamaño',
         fontColorTooltip: 'Color',
-        fontFamilyTooltip: 'Familia tipográfica',
+        fontFamilyTooltip: 'Familia de fuente',
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
-        tablixMember: 'Miembro de Tablix',
+        sizeTooltip: 'Tamaño',
+        tablixMember: 'Miembro de tablix',
         dataElement: {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             }
         }
     },
     rowColumnGroup: {
-        rowGroupLable: 'Grupos de fila',
+        rowGroupLable: 'Grupos de filas',
         columnGroupLable: 'Grupos de columnas',
         tablixAlertHeader: 'Tablix',
-        alertMessage: 'Habilitar la opción expandir para seleccionar el elemento de informe tablix',
+        alertMessage: 'Habilitar la opción de expansión para seleccionar el elemento del informe tablix',
         contextMenu: {
             addgroup: 'Añadir grupo',
             advanced: 'Avanzado',
             deletegroup: 'Eliminar grupo',
-            addtotal: 'Agregar total',
-            groupProperties: 'Propiedades del grupo',
-            addColumnGroup: 'Agregar grupo de columnas',
-            addRowGroup: 'Agregar grupo de filas'
+            addtotal: 'Añadir total',
+            groupProperties: 'Propiedades de grupo',
+            addColumnGroup: 'Añadir grupo de columnas',
+            addRowGroup: 'Añadir grupo de filas'
         },
         contextSubMenu: {
             adjacentafter: 'Adyacente después',
             adjacentbefore: 'Adyacente antes',
-            childgroup: 'Grupo de niños',
-            parentgroup: 'Grupo de padres',
+            childgroup: 'Grupo hijo',
+            parentgroup: 'Grupo padre',
             totalafter: 'Después',
-            totalbefore: 'antes de'
+            totalbefore: 'Antes'
         },
         errorMessage: {
-            createData: 'El informe no tiene conjunto de datos. Crear datos para agregar grupo en tablix.',
-            assignData: 'Los datos no están asignados para tablix. Asigne datos en tablix para agregar grupo.',
-            dataNotAvailable: 'Los datos asignados no existen en el informe. Cree nuevos o enlace los datos existentes a tablix.',
-            detailGroup: 'No se puede insertar el grupo dentro del grupo de detalles.'
+            createData: 'El informe no tiene conjunto de datos. Crear datos para añadir grupo en tablix.',
+            assignData: 'Los datos no están asignados para tablix. Asignar datos en tablix para añadir grupo.',
+            dataNotAvailable: 'Los datos asignados no existen en el informe. Crear nuevo o vincular los datos existentes a tablix.',
+            detailGroup: 'No se puede insertar grupo dentro de grupo de detalle.'
         },
-        tablixGroupingPanel: 'Panel de agrupación Tablix',
-        tablixRowColumnContainer: 'Contenedor de grupo de filas y columnas Tablix',
-        tablixRowGroup: 'Contenedor de grupo de filas Tablix',
-        tablixColumnGroup: 'Contenedor de grupo de columnas Tablix',
-        tablixAddGroupMenu: 'Menú Agregar grupo de Tablix',
-        groupAdvanceMenu: 'Menú avanzado del panel de agrupación Tablix'
+        tablixGroupingPanel: 'Panel de agrupamiento tablix',
+        tablixRowColumnContainer: 'Contenedor de grupos de filas y columnas de tablix',
+        tablixRowGroup: 'Contenedor de grupo de filas tablix',
+        tablixColumnGroup: 'Contenedor de grupo de columnas tablix',
+        tablixAddGroupMenu: 'Menú añadir grupo tablix',
+        groupAdvanceMenu: 'Menú avanzado del panel de agrupación tablix'
     },
     tablixContextMenu: {
         rowMenu: {
             insertRow: 'Insertar fila',
-            above: 'Encima',
-            below: 'Abajo'
+            above: 'Arriba',
+            below: 'Debajo'
         },
         columnMenu: {
             insertColumn: 'Insertar columna',
@@ -3959,31 +3994,31 @@ ej.ReportDesigner.Locale['es-ES'] = {
             right: 'Derecha'
         },
         rowGroupMenu: {
-            insideGroupAbove: 'Grupo interno - arriba',
-            insideGroupBelow: 'Dentro del Grupo - Abajo',
-            outsideGroupAbove: 'Grupo exterior - arriba',
-            outsideGroupBelow: 'Grupo Exterior - Abajo'
+            insideGroupAbove: 'Grupo interior - Arriba',
+            insideGroupBelow: 'Grupo interior - Debajo',
+            outsideGroupAbove: 'Grupo externo - Arriba',
+            outsideGroupBelow: 'Grupo externo - Debajo'
         },
         columnGroupMenu: {
-            insideGroupLeft: 'Grupo interno - izquierda',
-            insideGroupRight: 'Dentro del grupo - derecha',
-            outsideGroupLeft: 'Grupo exterior - izquierda',
-            outsideGroupRight: 'Grupo exterior - derecha',
+            insideGroupLeft: 'Grupo interior - Izquierda',
+            insideGroupRight: 'Grupo interior - Derecho',
+            outsideGroupLeft: 'Grupo externo- Izquierda',
+            outsideGroupRight: 'Grupo externo- Derecho',
         },
         deleteRows: 'Eliminar filas',
         deleteColumns: 'Eliminar columnas',
-        rowVisibility: 'Visibilidad de la fila',
-        columnVisibility: 'Visibilidad de la columna',
-        tablixProperties: 'Propiedades de Tablix',
-        splitcells: 'Células partidas',
-        mergecells: 'Combinar células',
+        rowVisibility: 'Visibilidad de fila',
+        columnVisibility: 'Visibilidad de columna',
+        tablixProperties: 'Propiedades tablix',
+        splitcells: 'Dividir celdas',
+        mergecells: 'Combinar celdas',
         groupMenu: {
             adjacentAbove: 'Adyacente arriba',
-            adjacentBelow: 'Adyacente a continuación',
-            adjacentleft: 'Adyacente a la izquierda',
-            adjacentright: 'Derecho adyacente',
-            childGroup: 'Grupo infantil',
-            parentGroup: 'Grupo de padres',
+            adjacentleft: 'Adyacente izquierda',
+            adjacentright: 'Adyacente derecha',
+            adjacentBelow: 'Adyacente debajo',
+            childGroup: 'Grupo resultado',
+            parentGroup: 'Grupo padre',
             deleteRowGroup: 'Eliminar grupo de filas',
             deleteColGroup: 'Eliminar grupo de columnas',
             addRowGroup: 'Grupo de filas',
@@ -3997,101 +4032,101 @@ ej.ReportDesigner.Locale['es-ES'] = {
             total: 'Añadir total',
             row: 'Fila',
             column: 'Columna',
-            before: 'antes de',
+            before: 'Antes',
             after: 'Después'
         },
         cellMenu: {
             addExpression: 'Añadir expresión',
-            editExpression: 'Editar Expresión',
+            editExpression: 'Editar expresión',
             datasource: 'Añadir fuente de datos',
             noFields: 'No hay campos',
             addText: 'Añadir texto',
             editText: 'Editar texto'
         },
         basicItems: {
-            deleteItem: 'Borrar',
+            deleteItem: 'Eliminar',
             cut: 'Cortar',
-            copy: 'Dupdo',
+            copy: 'Copiar',
             paste: 'Pegar'
         }
     },
     tablixAlertDialog: {
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
         closeToolTip: 'Cerrar',
         deleteRowTitle: 'Eliminar filas',
-        deleteRow: 'Eliminar solo las filas',
+        deleteRow: 'Solo eliminar filas',
         deleteRowGroup: 'Eliminar filas y grupos asociados',
-        deleteRowContent: 'Eliminar opciones de fila',
-        deleteBodyRow: 'El cuerpo de Tablix debe contener al menos una fila.',
+        deleteRowContent: 'Eliminar opciones de filas',
+        deleteBodyRow: 'El cuerpo de tablix debe contener al menos una fila.',
         deleteColumnTitle: 'Eliminar columnas',
-        deleteColumn: 'Eliminar columnas solamente',
-        deleteColumnGroup: 'Eliminar columnas y grupos asociados.',
-        deleteColumnContent: 'Eliminar opciones de columna',
-        deleteBodyColumn: 'El cuerpo de Tablix debe contener al menos una columna.',
-        deleteGroup: 'Eliminar solo el grupo',
+        deleteColumn: 'Solo eliminar columnas',
+        deleteColumnGroup: 'Eliminar columnas y grupos asociados',
+        deleteColumnContent: 'Eliminar opciones de columnas',
+        deleteBodyColumn: 'El cuerpo de tablix debe contener al menos una columna.',
+        deleteGroup: 'Solo eliminar grupo',
         deleteGroupRowColumn: 'Eliminar grupo y filas y columnas relacionadas',
         deleteGroupTitle: 'Eliminar grupo',
         deleteGroupContent: 'Eliminar opciones de grupo',
         deleteStructure: 'Estructura de grupo no disponible.',
-        removeRowAlert: 'Error al eliminar la fila en el elemento del informe Tablix ',
+        removeRowAlert: 'Fallo al eliminar fila en elemento de informe tablix',
         removeRow: 'Eliminar filas',
         removeColumn: 'Eliminar columnas',
         addRow: 'Añadir fila',
         addColumn: 'Añadir columna',
-        removeColumnAlert: 'Error al eliminar la columna en el elemento del informe Tablix',
-        addRowAlert: 'Error al agregar la fila en el elemento del informe Tablix',
-        addColumnAlert: 'Error al agregar la columna en el elemento de informe de Tablix'
+        removeColumnAlert: 'Error al eliminar columna en elemento de informe tablix',
+        addRowAlert: 'Error al añadir fila en elemento de informe tablix',
+        addColumnAlert: 'Error al añadir columna en elemento de informe tablix'
     },
     cellMergingAlertInfo: {
-        merge: 'Combinar células',
-        mergeAlert: 'Error al combinar las celdas en el elemento de informe Tablix',
-        split: 'Células partidas',
-        splitAlert: 'Error al dividir las celdas en el ítem del reporte Tablix'
+        merge: 'Combinar celdas',
+        mergeAlert: 'Error al combinar celdas en elemento de informe tablix',
+        split: 'Dividir celdas',
+        splitAlert: 'Error al dividir celdas en elemento de informe tablix'
     },
     tablixAlertInfo: {
         addGroup: 'Añadir grupo',
         removeGroup: 'Eliminar grupo',
-        adjacentAfterAlert: 'Error al agregar el grupo adyacente en la estructura de jerarquía',
-        adjacentBeforeAlert: 'Error al agregar el grupo adyacente en la estructura de jerarquía',
-        childGroupALert: 'Error al agregar grupo secundario en la estructura de jerarquía',
-        title: 'Elemento de informe de Tablix',
-        parentGroupAlert: 'Error al agregar el grupo padre en la estructura de jerarquía',
-        removeGroupAlert: 'Error al eliminar el grupo en la estructura de jerarquía',
-        selectedMemberAlert: 'El miembro seleccionado no es un miembro del grupo',
-        pasteActionAlert: 'La información no se puede publicar porque el área de copia y el área de pegado no tienen el mismo tamaño y forma.',
+        adjacentAfterAlert: 'Error al añadir grupo adyacente en estructura jerárquica',
+        adjacentBeforeAlert: 'Error al añadir grupo adyacente en estructura jerárquica',
+        childGroupALert: 'Error al añadir grupo hijo en estructura jerárquica',
+        title: 'Elemento de informe tablix',
+        parentGroupAlert: 'Error al añadir el grupo padre en la estructura jerárquica',
+        removeGroupAlert: 'Error al eliminar grupo en estructura jerárquica',
+        selectedMemberAlert: 'El miembro seleccionado no es miembro del grupo',
+        pasteActionAlert: 'La información no se puede contabilizar porque el área de copia y el área de pegado no tienen el mismo tamaño y forma.',
         pasteTitle: 'Pegar'
     },
     tablixGroup: {
-        title: 'Grupo Tablix',
+        title: 'Grupo tablix',
         headerTxt: 'Etiqueta de grupo',
         groupBy: 'Agrupar por:',
-        chooseField: 'Elegir campo',
+        chooseField: 'Escoger campo',
         showDetailData: 'Mostrar datos detallados',
         addGroupHeader: 'Añadir encabezado',
         addGroupFooter: 'Añadir pie de página',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        closeToolTip: 'Cerca'
+        closeToolTip: 'Cerrar'
     },
     tablixDataAssignMenu: {
         datasource: 'Añadir fuente de datos',
         addExpression: 'Añadir expresión',
-        editExpression: 'Editar Expresión',
+        editExpression: 'Editar expresión',
         addText: 'Añadir texto',
         editText: 'Editar texto',
         search: 'Buscar',
         noFieldsFound: 'No se encontraron campos'
     },
     tablixTotalAlert: {
-        headerLabel: 'Añadir encabezado total',
+        headerLabel: 'Añadir total de encabezados',
         staticLabel: 'Añadir total',
-        headerMessage: 'Error al agregar la fila o columna total al encabezado del grupo en el elemento de informe Tablix',
-        staticMessage: 'Error al agregar la fila o columna total al cuerpo de Tablix en el elemento de informe de Tablix'
+        headerMessage: 'Error al añadir fila o columna total al encabezado de grupo en elemento de informe tablix',
+        staticMessage: 'Error al añadir fila o columna total al cuerpo del tablix en elemento de informe tablix'
     },
     tablixAddTextDialog: {
-        save: 'Salvar',
-        add: 'Añadir',
+        save: 'Guardar',
+        add: 'AÑADIR',
         cancel: 'Cancelar',
         closeToolTip: 'Cerrar',
         addText: 'Añadir texto',
@@ -4099,64 +4134,64 @@ ej.ReportDesigner.Locale['es-ES'] = {
     },
     reportParameter: {
         title: 'Parámetros',
-        validationMessage: 'Especifique el parámetro de consulta válido',
-        descriptionText: 'Parámetros del informe',
+        validationMessage: 'Especificar parámetro de consulta válido',
+        descriptionText: 'Parámetros de informe',
         addText: 'AÑADIR',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        nameWaterMark: 'Nombre del parámetro',
+        nameWaterMark: 'Nombre de parámetro',
         valueWaterMark: 'Valor',
-        closeToolTip: 'Cerca',
-        deleteField: 'Eliminar campo'
+        closeToolTip: 'Cerrar',
+        deleteField: 'Borrar campo'
     },
     queryDesigner: {
         storeParameter: {
             title: 'Parámetros',
-            ok: 'DE ACUERDO',
+            ok: 'OK',
             cancel: 'Cancelar',
             parameterLable: 'Parámetro',
             nullLable: 'Nulo',
             valueLable: 'Valor',
-            dataTypeLable: 'Tipo de datos',
-            closeToolTip: 'Cerca'
+            dataTypeLable: 'Tipo de dato',
+            closeToolTip: 'Cerrar'
         },
         parameter: {
             title: 'Parámetros',
-            ok: 'DE ACUERDO',
+            ok: 'OK',
             cancel: 'Cancelar',
             parameterLable: 'Parámetro',
             nullLable: 'Nulo',
             valueLable: 'Valor',
-            dataTypeLable: 'Tipo de datos',
-            auto: 'Auto',
-            text: 'texto',
-            closeToolTip: 'Cerca'
+            dataTypeLable: 'Tipo de dato',
+            auto: 'Automático',
+            text: 'Texto',
+            closeToolTip: 'Cerrar'
         },
         filter: {
             title: 'Filtros de consulta',
             descriptionLable: 'Lista de filtros de tabla',
             add: 'AÑADIR',
-            save: 'DE ACUERDO',
+            save: 'OK',
             cancel: 'Cancelar',
             nullLable: 'Nulo',
-            trueLable: 'Cierto',
+            trueLable: 'Verdadero',
             falseLable: 'Falso',
             parameterTooltip: 'Incluir como parámetro',
-            closeToolTip: 'Cerca',
+            closeToolTip: 'Cerrar',
             numberType: 'Número',
-            stringType: 'Cuerda',
+            stringType: 'Cadena',
             intOperatorType: {
-                equals: 'Igual',
-                doesNotEqual: 'No es igual',
-                greaterThan: 'Mas grande que',
-                greaterThanOrEqual: 'Pero grande que',
-                lessThan: 'Menos que',
-                lessThanOrEqual: 'Menos que o igual a',
+                equals: 'Iguales',
+                doesNotEqual: 'Desigual',
+                greaterThan: 'Mayor que',
+                greaterThanOrEqual: 'Mayor que o igual que',
+                lessThan: 'Menor que',
+                lessThanOrEqual: 'Menor que o igual que',
                 between: 'Entre',
-                notBetween: 'No entre'
+                notBetween: 'No Entre'
             },
             stringOpertorType: {
-                equals: 'Igual',
+                equals: 'Iguales',
                 startsWith: 'Comienza con',
                 endWith: 'Termina con',
                 contains: 'Contiene',
@@ -4164,102 +4199,106 @@ ej.ReportDesigner.Locale['es-ES'] = {
             },
             errorMessage: {
                 dateValidation: 'El valor es un formato de fecha no válido.',
-                commonContent: 'El filtro en ',
-                booleanValidation: ' no tiene ningún valor para filtrar. Proporcione los valores para el filtro.',
+                commonContent: 'El filtro ',
+                booleanValidation: ' no tiene valores para filtrar. Por favor, proporciona los valores para el filtro.',
                 stringValidation: ' no tiene los valores adecuados para filtrar. '
+            },
+            queryCondition: {
+                and: 'Y',
+                or: 'O'
             }
         },
         previewArea: {
-            dataPreview: 'Vista previa de datos',
-            noRecords: 'No hay registros que mostrar',
-            generatePreview: 'Generar vista previa',
+            dataPreview: 'Vista preliminar de datos',
+            noRecords: 'No hay registros para mostrar',
+            generatePreview: 'Generar vista preliminar',
             executeRecords: 'Ejecutar para previsualizar registros',
-            record: 'Grabar',
-            records: 'Archivos',
-            retrieved: 'Obtenido',
-            loadRecord: 'Carga más',
+            record: 'Registro',
+            records: 'Registros',
+            retrieved: 'Recuperado',
+            loadRecord: 'Cargar más',
             update: 'Actualizar',
-            previewContainer: 'Contenedor de vista previa de datos'
+            previewContainer: 'Contenedor de vista preliminar de datos'
         },
         schemaArea: {
             search: 'Buscar',
-            matchesFound: 'No se encontraron coincidencias',
-            rename: 'Rebautizar',
-            searchInfo: 'Recupera la información coincidente del esquema recuperado actualmente',
-            aggregation: 'Agregar',
+            matchesFound: 'No se han encontrado coincidencias',
+            rename: 'Renombrar',
+            searchInfo: 'Recupera la información coincidente del esquema actual',
+            aggregation: 'Sumar',
             dialogHeader: 'Conjunto de datos',
             alertMessage: {
-                datasourceAlert: 'Seleccione una fuente de datos para configurar el conjunto de datos de informe',
+                datasourceAlert: 'Seleccionar una fuente de datos para configurar el conjunto de datos del informe',
                 removeTable: 'Las tablas asociadas a continuación se eliminarán con esto',
                 duplicateName: 'El nombre de columna especificado ya existe',
-                duplicateDatasetName: 'El nombre especificado ya existe en la lista de Dataset',
+                duplicateDatasetName: 'El nombre especificado ya existe en la lista de conjunto de datos',
                 datasetSpecialCharacter: 'El nombre no debe contener espacios ni caracteres especiales',
                 specialCharacter: 'El nombre de la columna no debe contener caracteres especiales.',
-                switcherAlert: 'El cambio al diseñador visual descartará los cambios manuales realizados en la consulta. ¿Quieres usar el diseñador visual de todos modos? '
+                switcherAlert: 'Al cambiar al diseñador visual se descartarán los cambios manuales realizados en la consulta. ¿Quieres utilizar el diseñador visual de todos modos?'
             },
             errorMessage: {
-                specifyName: 'Especifique el nombre de la columna',
-                specifyDatasetName: 'Especifique el nombre del conjunto de datos',
-                previewFailed: 'Conjunto de datos no pudo obtener una vista previa de la tabla seleccionada',
-                specifyQuery: 'Especifique la consulta Dataset',
-                selectTable: 'Seleccione la tabla para guardar el conjunto de datos',
-                queryFailed: 'Conjunto de datos no pudo guardar la consulta de la tabla seleccionada',
-                refreshFailed: 'No se pudo actualizar el conjunto de datos {datasetName}, requiere uno o más valores de entrada. Edite y guarde el conjunto de datos.',
-                tableProcedure: 'Conjunto de datos no pudo recuperar el procedimiento de tabla seleccionado',
+                specifyName: 'Especificar nombre de columna',
+                specifyDatasetName: 'Especificar nombre del conjunto de datos',
+                previewFailed: 'Error al previsualizar la tabla seleccionada',
+                specifyQuery: 'Especificar la consulta del conjunto de datos',
+                selectTable: 'Seleccionar tabla para guardar el conjunto de datos',
+                queryFailed: 'Error en el conjunto de datos al guardar la consulta de la tabla seleccionada',
+                refreshFailed: 'No se ha podido actualizar el conjunto de datos {datasetName}, requiere uno o más valores de entrada. Por favor, edita y guarda el conjunto de datos.',
+                tableProcedure: 'Error en el conjunto de datos al recuperar el procedimiento de tabla seleccionado',
                 deleteTableFailure: 'Error al eliminar la tabla seleccionada',
                 joinTableFailure: 'Error al unir las tablas seleccionadas',
-                confirmPermission: 'Se recuperaron grandes registros, la representación llevará tiempo. ¿Quieres cargar de todos modos?'
+                confirmPermission: 'Registros enormes recuperados, la renderización llevará algo de tiempo. ¿Quieres cargar de todos modos?'
             },
-            dragSurface: 'Arrastre Contenedor de superficie',
-            searchSchema: 'Esquema de búsqueda',
+            dragSurface: 'Arrastrar contenedor de superficie',
+            searchSchema: 'Buscar esquema',
             fieldTable: 'Tabla de campo',
             closeFieldTable: 'Cerrar tabla',
             fieldSelection: 'Selector de campo',
-            selectAndDeselectAll: 'Seleccionar y anular la selección de todas las columnas'
+            selectAndDeselectAll: 'Seleccionar y deseleccionar todas las columnas'
         },
         toolBar: {
             datasourceLable: 'Fuente de datos',
             datasetName: 'Nombre',
-            run: 'correr',
-            join: 'Unirse',
+            run: 'Ejecutar',
+            join: 'Unir',
             expression: 'Expresión',
-            filter: 'Filtrar',
+            filter: 'Filtro',
             code: 'Código',
             finish: 'Terminar',
             cancel: 'Cancelar',
             parameter: 'Parámetro',
-            datasourceWaterMark: 'Seleccione una fuente de datos',
-            autoPreview: 'Vista previa automática'
+            datasourceWaterMark: 'Seleccionar una fuente de datos',
+            autoPreview: 'Vista preliminar automática'
         },
         joiner: {
-            title: 'Unión de consultas',
-            descriptionLable: 'Lista de relaciones de tabla',
+            title: 'Unificador de consultas',
+            descriptionLable: 'Lista de tabla de relaciones',
             add: 'AÑADIR',
-            save: 'DE ACUERDO',
+            save: 'OK',
             cancel: 'Cancelar',
-            closeToolTip: 'Cerca',
-            addField: 'Agregue campo',
+            closeToolTip: 'Cerrar',
+            addField: 'Añadir campo',
             leftTableWaterMark: 'Tabla izquierda',
-            rightTableWaterMark: 'Mesa derecha',
-            leftFieldWaterMark: 'Jardín izquierdo',
-            rightFieldWaterMark: 'El jardín derecho',
+            rightTableWaterMark: 'Tabla derecha',
+            leftFieldWaterMark: 'Campo izquierdo',
+            rightFieldWaterMark: 'Campo derecho',
             operatorWaterMark: 'Operador',
-            joinTypeWaterMark: 'Unirse al tipo',
+            joinTypeWaterMark: 'Unir tipo',
             joinTypes: {
                 inner: 'Interior',
-                outer: 'Izquierda Exterior',
-                rightOuter: 'Derecha Exterior',
-                fullOuter: 'Completo exterior'
+                outer: 'Exterior izquierdo',
+                rightOuter: 'Exterior derecho',
+                fullOuter: 'Exterior completo'
             },
             errorMessage: {
-                removeField: 'Cada relación debe tener una condición de campo. Por lo tanto, no permite borrar este campo ',
+                removeField: 'Cada relación debe tener una condición de campo. Por lo tanto, no permite eliminar este campo.',
                 noRelationAlert: ' no tiene relación con otras tablas',
-                selectLeftTable: 'Seleccione el valor de la tabla izquierda',
-                selectRightTable: 'Seleccione el valor de la tabla correcta',
-                selectRelation: 'Seleccione la relación para las tablas',
-                selectLeftColumn: 'Seleccione el valor de la columna izquierda del campo fila #',
-                selectRightColumn: 'Seleccione el valor de la columna derecha de la fila del campo #',
-                selectOperator: 'Seleccione el operador de la fila de campo #',
+                selectLeftTable: 'Seleccionar el valor izquierdo de la tabla',
+                selectRightTable: 'Seleccionar el valor derecho de la tabla',
+                selectRelation: 'Seleccionar la relación para las tablas',
+                selectLeftColumn: 'Seleccionar el valor de la columna izquierda del campo fila #',
+                selectRightColumn: 'Seleccionar el valor de la columna derecha del campo fila #',
+                selectOperator: 'Seleccionar el operador del campo fila #',
                 relationExists: 'Ya existe relación entre tablas',
                 saveJoinerAlert: 'Error al unir las tablas seleccionadas'
             }
@@ -4268,301 +4307,301 @@ ej.ReportDesigner.Locale['es-ES'] = {
             title: 'Diálogo de credenciales',
             userName: 'Nombre de usuario',
             password: 'Contraseña',
-            userNameErrorMessage: 'Por favor ingrese el nombre de usuario',
-            passwordErrorMessage: 'Por favor, ingrese contraseña',
+            userNameErrorMessage: 'Por favor, introduce el nombre de usuario',
+            passwordErrorMessage: 'Por favor, introduce la contraseña',
             connect: 'Conectar',
-            close: 'Cerca',
-            credentialLabel: 'Credenciales de fuente de datos'
+            close: 'Cerrar',
+            credentialLabel: 'Credenciales de la fuente de datos'
         },
         queryExpression: {
             title: 'Expresiones de consulta',
             functionLabel: 'Funciones',
-            columnLabel: 'Configuración de columna',
+            columnLabel: 'Ajustes de columna',
             expressionLabel: 'Expresión',
             nameLabel: 'Nombre',
             descriptionLabel: 'Descripción ',
             exampleLabelText: 'Ejemplo',
-            ok: 'Salvar',
+            ok: 'Guardar',
             cancel: 'Cancelar',
             add: 'AÑADIR',
             textAreaWaterMark: 'Expresión de consulta',
             nameFieldWaterMark: 'Nombre de expresión',
-            closeToolTip: 'Cerca',
+            closeToolTip: 'Cerrar',
             errorMessage: {
-                saveAlert: 'La expresión no se guarda. ¿Quieres guardar y continuar?',
-                bracketSyntax: 'Sintaxis incorrecta cerca de abrir / cerrar paréntesis.',
-                parseAlert: 'El diseñador de informes no pudo analizar la expresión especificada.',
-                nameAlert: 'El campo de nombre no debe estar vacío.',
-                emptyAlert: 'El campo de expresión no debe estar vacío.',
+                saveAlert: 'La expresión no está guardada. ¿Quieres guardar y continuar?',
+                bracketSyntax: 'Sintaxis incorrecta cerca de corchete(s) de apertura/cierre',
+                parseAlert: 'El diseñador de informes no ha podido analizar la expresión especificada.',
+                nameAlert: 'El campo nombre no debe estar vacío.',
+                emptyAlert: 'El campo expresión no debe estar vacío.',
                 duplicateName: 'El nombre de expresión especificado ya existe',
                 specialCharacter: 'El nombre de la expresión no debe contener caracteres especiales.',
                 referenceError: '¡La columna no puede ser referida dentro de su propia expresión!',
-                invalidSyntax: 'Sintaxis inválida cerca de Abrir / Cerrar grupo (s).',
+                invalidSyntax: 'Sintaxis no válida cerca de corchete(s) de apertura/cierre',
                 retrieveExpression: 'El diseñador de informes no pudo recuperar la expresión especificada.',
             },
             datasetTitle: 'Conjunto de datos',
             expressions: {
-                all: 'Todas',
+                all: 'Todo',
                 numbers: 'Números',
                 logical: 'Lógico',
                 conditional: 'Condicional',
                 date: 'Fecha',
-                stringType: 'Cuerda',
+                stringType: 'Cadena',
                 text: 'Texto',
-                miscellenuous: 'Diverso ',
+                miscellenuous: 'Misceláneo ',
                 abs: 'Devuelve el valor absoluto de la expresión dada.',
                 acos: 'Devuelve el coseno inverso (también conocido como arcocoseno) de la expresión numérica dada.',
                 asin: 'Devuelve el seno inverso (también conocido como arcoseno) de la expresión numérica dada.',
-                atan: 'Devuelve la tangente inversa (también conocida como arcotangente) de la expresión numérica dada.',
+                atan: 'Devuelve la tangente inversa (también conocida como arctangente) de la expresión numérica dada.',
                 cos: 'Devuelve el coseno del ángulo especificado en radianes de la expresión dada.',
-                degree: 'Devuelve el ángulo en grados para el que se especifica en radianes de la expresión numérica dada.',
+                degree: 'Devuelve el ángulo en grados para el que se especificó en radianes de la expresión numérica dada.',
                 exponent: 'Devuelve el valor exponencial de la expresión dada.',
-                logrithm: 'Devuelve el logaritmo de la expresión dada a la base especificada.',
+                logrithm: 'Devuelve el logaritmo de la expresión dada en la base especificada.',
                 pi: 'Devuelve el valor constante de PI.',
                 power: 'Devuelve el valor de la expresión dada (expresión1) a la potencia especificada (expresión2).',
-                radians: 'Devuelve el ángulo en radianes para el que se especifica en grados en la expresión numérica dada.',
+                radians: 'Devuelve el ángulo en radianes para el que se especificó en grados en la expresión numérica dada.',
                 round: 'Devuelve un valor redondeado.',
                 sign: 'Devuelve un valor que representa el signo positivo (+1), cero (0) o negativo (-1) de la expresión numérica dada.',
                 sin: 'Devuelve el seno del ángulo especificado en radianes de la expresión dada.',
                 squareRoot: 'Devuelve la raíz cuadrada de la expresión numérica dada.',
                 tan: 'Devuelve la tangente de la expresión numérica dada.',
-                ifCondition: 'Devuelve una parte verdadera o una parte falsa, según la evaluación de la expresión.',
-                ifNull: 'Si la expresión es numérica / cadena / fecha, devuelve la primera expresión. Si la primera expresión es NULL, devuelve la segunda expresión.',
-                isNotNull: 'Si numérica / cuerda / expresión de fecha es NULL, devuelve una cadena que representa falso; de lo contrario representa verdadero.',
-                isNull: 'Si numérica / cuerda / expresión de fecha es NULL, devuelve una cadena que representa verdadero; de lo contrario representa falso.',
-                and: 'Devuelve verdadero si ambas expresiones se evalúan como verdaderas.',
-                notOperation: 'Devuelve verdadero si ambas expresiones se evalúan como verdaderas.',
+                ifCondition: 'Devuelve la parte verdadera o la parte falsa, dependiendo de la evaluación de la expresión.',
+                ifNull: 'Si la expresión es numérica/cadena/fecha, devuelve la primera expresión. Si la primera expresión es un valor NULO, devuelve la segunda expresión.',
+                isNotNull: 'Si la expresión numérica / cadena / fecha es un valor NULO, devuelve una cadena que representa falso; en caso contrario, representa verdadero.',
+                isNull: 'Si la expresión numérica/cadena/fecha es un valor NULO, devuelve una cadena que representa verdadero; en caso contrario, representa falso.',
+                and: 'Devuelve verdadero si ambas expresiones se evalúan como verdadero.',
+                notOperation: 'Devuelve el valor lógico inverso de la expresión evaluada.',
                 orOperation: 'Devuelve verdadero si alguna de las expresiones se evalúa como verdadera.',
-                addDate: 'Agrega la cantidad de días a la fecha especificada.',
+                addDate: 'Añade el número de días a la fecha especificada.',
                 name: 'Devuelve una cadena que representa la parte de fecha especificada de la expresión de fecha dada.',
                 part: 'Devuelve un valor entero que representa la parte de fecha especificada de la expresión de fecha dada.',
-                sub: 'Devuelve la fecha restada de la fecha especificada.',
+                sub: 'Devuelve la fecha sustraída de la fecha especificada.',
                 day: 'Devuelve un valor numérico que representa la parte del día de la fecha especificada.',
                 dateDiff: 'Devuelve un valor numérico que representa la diferencia entre dos fechas especificadas.',
                 hour: 'Devuelve la hora de la fecha dada como un entero.',
-                minute: 'Devuelve un valor numérico que representa la parte de los minutos de la fecha resultante de la expresión de fecha especificada.',
+                minute: 'Devuelve un valor numérico que representa la parte del minuto de la fecha resultante de la expresión de fecha especificada.',
                 month: 'Devuelve un valor numérico que representa la parte del mes de la fecha resultante de la expresión de fecha especificada.',
-                now: 'Devuelve la fecha y hora actual.',
+                now: 'Devuelve la fecha y hora actuales.',
                 today: 'Devuelve la fecha actual.',
                 year: 'Devuelve un valor numérico que representa la parte del año de la fecha resultante de la expresión de fecha especificada.',
-                char: 'Convierte el código ASCII entero dado en un personaje.',
+                char: 'Convierte el código ASCII entero dado en un carácter.',
                 concat: 'Devuelve un valor de cadena resultante de la concatenación de dos o más valores de cadena.',
-                contains: 'Devuelve true si la expresión de cadena dada contiene la expresión de subcadena especificada.',
-                endsWith: 'Devuelve verdadero si la expresión de cadena dada finaliza con la expresión de subcadena especificada.',
-                left: 'Devuelve el número especificado de caracteres desde el inicio de la expresión de cadena dada.',
+                contains: 'Devuelve verdadero si la expresión de cadena dada contiene la expresión de subcadena especificada.',
+                endsWith: 'Devuelve verdadero si la expresión de cadena dada termina con la expresión de subcadena especificada.',
+                left: 'Devuelve el número especificado de caracteres a partir del inicio de la expresión de la cadena dada.',
                 length: 'Devuelve el logaritmo natural de la expresión dada.',
-                lower: 'Devuelve un valor de cadena convertido en minúsculas a partir de la expresión de cadena dada.',
-                leftTrim: 'Devuelve el valor de cadena con los espacios en blanco iniciales eliminados de la expresión de cadena.',
-                maximum: 'Devuelve el valor máximo en la expresión dada.',
-                minimum: 'Devuelve el valor mínimo en la expresión dada.',
+                lower: 'Devuelve un valor de cadena convertido a minúsculas a partir de la expresión de cadena dada.',
+                leftTrim: 'Devuelve el valor de la cadena con los espacios en blanco iniciales eliminados de la expresión de cadena.',
+                maximum: 'Devuelve el valor máximo de la expresión dada.',
+                minimum: 'Devuelve el valor mínimo de la expresión dada.',
                 right: 'Devuelve el número especificado de caracteres desde el final de la expresión de cadena dada.',
-                rightTrim: 'Devuelve la cadena sin espacios finales del lado derecho en la cadena dada.',
+                rightTrim: 'Devuelve la cadena sin espacios finales a la derecha en la cadena dada.',
                 startswith: 'Devuelve verdadero si las expresiones de cadena dadas comienzan con la expresión de subcadena especificada.',
-                subString: 'Devuelve una longitud específica de cadena a partir del índice específico de la expresión de cadena dada.',
-                upper: 'Devuelve un valor de cadena convertido en mayúscula a partir de una expresión de cadena determinada.'
+                subString: 'Devuelve una longitud específica de cadena a partir de un índice específico de la expresión de cadena dada.',
+                upper: 'Devuelve un valor de cadena convertido a mayúsculas a partir de una expresión de cadena dada.'
             }
         }
     },
     chartItem: {
         categoryItems: {
-            yvalue: 'Y Valor(s)',
+            yvalue: 'Valor(es) Y',
             size: 'Tamaño(s)',
-            xvalue: 'X Valor(s)',
+            xvalue: 'Valor(es) X',
             column: 'Columna',
             row: 'Fila(s)',
-            high: 'Alta(s)',
-            low: 'Baja(s)'
+            high: 'Alto(s)',
+            low: 'Bajo(s)'
         },
         categoryItemsMenu: {
             filter: 'Filtros',
-            sort: 'Ordena',
+            sort: 'Ordenamiento',
             group: 'Grupos',
             expression: 'Expresión',
-            aggregate: 'Agregar',
-            none: 'Ninguna'
+            aggregate: 'Sumar',
+            none: 'Ninguno'
         },
         validationMessage: 'El tipo de gráfico no es compatible con el diseñador.'
     },
     codeDialog: {
-        title: 'Módulo de código',
-        ok: 'DE ACUERDO',
+        title: 'Módulo del código',
+        ok: 'OK',
         cancel: 'Cancelar',
         add: 'AÑADIR',
         closeToolTip: 'Cerrar',
         reference: {
             title: 'Referencias',
             waterMark: 'Referencia',
-            errorMessage: 'El campo esta vacio',
-            headerText: 'Lista de referencias de montaje',
-            referenceTooltip: 'Agregue una referencia de ensamblaje para utilizar sus funciones de ensamblaje en el informe.',
+            errorMessage: 'El campo está vacío',
+            headerText: 'Lista de referencias de ensamblaje',
+            referenceTooltip: 'Añadir una referencia de ensamblado para utilizar tus funciones de ensamblado en el informe.',
             referenceSuffixToolTip: ' sobre referencias de ensamblaje RDL.'
         },
         classes: {
-            title: 'Las clases',
-            nameFieldWaterMark: 'Nombre de la clase',
+            title: 'Clases',
+            nameFieldWaterMark: 'Nombre de clase',
             instanceFieldWaterMark: 'Nombre de instancia',
-            emptyFieldValidation: 'Los campos estan vacios',
-            emptyInstanceValueValidation: 'El campo esta vacio',
+            emptyFieldValidation: 'Los campos están vacíos',
+            emptyInstanceValueValidation: 'El campo está vacío',
             headerText: 'Lista de instancias de clase',
-            toolTip: 'Agregue instancias de clase para acceder a sus funciones de objeto en el informe.',
+            toolTip: 'Añadir instancias de clase para acceder a tus funciones de objeto en el informe.',
             toolTipSuffix: ' sobre las clases RDL.'
         },
         code: {
             title: 'Código',
             headerText: 'Función de código VB para informe',
-            tooltip: 'El motor de informes {customBrandName} admite funciones de código VB para integrarse con elementos y datos del informe.',
+            tooltip: 'El motor de informes de {customBrandName} admite funciones de código VB para integrarse con el elemento y los datos del informe.',
             toolTipSuffix: ' sobre el módulo de código RDL.'
         },
         customCode: 'Editor de código personalizado',
         deleteReference: 'Eliminar campo de referencia',
         deleteClass: 'Eliminar campo de clase',
-        refer: ' Referirse a ',
-        article: 'Artículo de MSDN'
+        refer: ' Consultar el ',
+        article: 'Artículo MSDN'
     },
     customAttributeDialog: {
-        title: 'Atributo personalizado',
+        title: 'Atributos personalizados',
         propertyName: 'Nombre',
         propertyValue: 'Valor',
-        ok: 'Okay',
+        ok: 'OK',
         cancel: 'Cancelar',
         add: 'AÑADIR',
         nameField: 'El campo de nombre está vacío',
         sameNameAlert: 'El nombre especificado ya existe en la lista',
         closeToolTip: 'Cerrar',
         headerText: 'Cambiar propiedades personalizadas',
-        deleteField: 'Delete Field'
+        deleteField: 'Borrar campo'
     },
     previewData: {
-        title: 'Vista previa de datos',
-        ok: 'DE ACUERDO',
+        title: 'Previsualizar datos',
+        ok: 'OK',
         cancel: 'Cancelar',
-        description: 'Enlazar datos JSON para vista previa',
+        description: 'Vincular datos JSON para vista preliminar',
         close: 'Cerrar',
-        infoToolTip: 'El informe requiere datos en formato JSON para obtener una vista previa y contiene la clave y el valor en la lista de formato de matriz.',
+        infoToolTip: 'El informe requiere datos en formato JSON para previsualizar y contiene la clave y el valor en la lista de formato array.',
         jsonHeader: 'Datos JSON:',
-        errorMessage: 'Especifique el formato JSON válido',
+        errorMessage: 'Especificar el formato JSON válido',
         previewDataAlert: {
-            title: 'Vista previa de datos',
-            alertMessage: 'Quieres cambiar al diseñador de informes ?'
+            title: 'Previsualizar datos',
+            alertMessage: '¿Quieres cambiar al diseñador de informes?'
         }
     },
     sampleDataSource: {
-        sampleDSHeader: 'DATOS DE MUESTRA DE IMPORTACIÓN',
-        addText: 'Añadir',
+        sampleDSHeader: 'IMPORTAR DATOS DE MUESTRA',
+        addText: 'AÑADIR',
         searchText: 'Buscar',
-        noDataFound: 'Datos no encontrados.',
-        welcomeContentPrefix: 'Comience creando una fuente de datos',
-        welcomeContentSuffix: 'Puede conectarse a sus propios datos personalizados o puede importar uno de los datos compartidos predefinidos que ofrecemos.',
-        sampleDSText: 'importar datos de muestra',
+        noDataFound: 'No se encontraron datos',
+        welcomeContentPrefix: 'Empieza por crear una fuente de datos',
+        welcomeContentSuffix: 'Puedes conectarte a tus propios datos personalizados o puedes importar uno de los datos compartidos predefinidos que ofrecemos.',
+        sampleDSText: 'IMPORTAR DATOS DE MUESTRA',
         exploreSampleText: 'Explorar datos de muestra',
-        accordionText: 'Comience su primer informe y explore las opciones de personalización utilizando los datos de muestra.',
+        accordionText: 'Poner en marcha tu primer informe y explorar las opciones de personalización utilizando los datos de muestra.',
         errorMessage: 'Error de red',
-        alertHeaderText: 'Datos de importacion',
-        alertMessage: 'Report Designer no pudo importar los datos del servidor de informes',
+        alertHeaderText: 'Importar datos',
+        alertMessage: 'El diseñador de informes no pudo importar los datos de ReportServer.',
         refreshButton: 'Actualizar fuente de datos',
-        exploreContainer: 'Fuente de datos Explorar contenedor',
+        exploreContainer: 'Contenedor del explorador de fuentes de datos',
         showHide: 'Mostrar ocultar'
     },
     field: {
         title: 'Campos',
-        nameWaterMark: 'Nombre del campo',
+        nameWaterMark: 'Nombre de campo',
         sourceWaterMark: 'Fuente de campo',
-        ok: 'DE ACUERDO',
+        ok: 'OK',
         cancel: 'Cancelar',
-        description: 'Cambiar consulta y campos calculados.',
-        query: 'Campo de consulta',
+        description: 'Cambiar consulta y campos calculados',
+        query: 'Campo consulta',
         calculated: 'Campo calculado',
-        fieldError: 'El campo esta vacio',
-        fieldsError: 'Los campos estan vacios',
+        fieldError: 'El campo está vacío',
+        fieldsError: 'Los campos están vacíos',
         add: 'AÑADIR',
         closeToolTip: 'Cerrar',
-        invalidFormat: 'El nombre del campo no debe contener espacios y caracteres especiales',
-        sameFieldName: 'El nombre del campo ya existe',
-        deleteField: 'Eliminar campo'
+        invalidFormat: 'El nombre de campo no debe contener espacios ni caracteres especiales',
+        sameFieldName: 'El nombre de campo ya existe',
+        deleteField: 'Borrar campo'
     },
     parameterLayout: {
         title: 'Diseño de parámetros',
-        ok: 'Okay',
+        ok: 'OK',
         cancel: 'Cancelar',
-        closeToolTip: 'Cerca',
+        closeToolTip: 'Cerrar',
         deleteConfirmation: {
             title: 'Parámetro',
             deleteCell: 'Eliminar parámetro de informe',
-            deleteCells: 'Eliminar parámetros del informe'
+            deleteCells: 'Eliminar parámetros de informe'
         }
     },
     parameterContextMenu: {
         rowMenu: {
             insertRow: 'Insertar fila',
-            above: 'Encima',
-            below: 'Abajo'
+            above: 'Arriba',
+            below: 'Debajo'
         },
         columnMenu: {
             insertColumn: 'Insertar columna',
-            left: 'Izquierda',
+            left: 'izquierda',
             right: 'Derecha'
         },
-        deleteCell: 'Borrar',
+        deleteCell: 'Eliminar',
         deleteColumn: 'Eliminar columna',
-        deleteRow: 'Borrar fila'
+        deleteRow: 'Eliminar fila'
     },
     commonProperty: {
         commonProperties: 'Propiedades comunes',
         basicSettings: {
             categoryName: 'Ajustes básicos',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             borderProperties: {
-                defaultColor: 'Color del borde',
+                defaultColor: 'Color de borde',
                 defaultSize: 'Tamaño de borde',
                 defaultStyle: 'Estilo de borde',
                 leftColor: 'Color de borde izquierdo',
                 leftSize: 'Tamaño de borde izquierdo',
                 leftStyle: 'Estilo de borde izquierdo',
-                topColor: 'Color superior del borde',
-                topSize: 'Tamaño superior de borde',
-                topStyle: 'Estilo superior de borde',
+                topColor: 'Color de borde superior',
+                topSize: 'Tamaño de borde superior',
+                topStyle: 'Estilo de borde superior',
                 rightColor: 'Color de borde derecho',
                 rightSize: 'Tamaño de borde derecho',
                 rightStyle: 'Estilo de borde derecho',
-                bottomColor: 'Color de fondo del borde',
-                bottomSize: 'Tamaño del borde inferior',
-                bottomStyle: 'Estilo de fondo de borde'
+                bottomColor: 'Color de borde inferior',
+                bottomSize: 'Tamaño de borde inferior',
+                bottomStyle: 'Estilo de borde inferior'
             },
             backGround: 'Color de fondo',
             styleTooltip: 'Estilo',
             colorTooltip: 'Color',
-            sizeTooltip: 'tamaño'
+            sizeTooltip: 'Tamaño'
         },
         fontSettings: {
-            categoryName: 'Configuraciones de fuente',
+            categoryName: 'Ajustes de fuente',
             fontLabel: 'Fuente',
             fontStyleLabel: 'Estilo de fuente',
-            fontFamily: 'Familia tipográfica',
+            fontFamily: 'Familia de fuente',
             fontColor: 'Color de fuente',
             fontSize: 'Tamaño de fuente',
             fontStyle: 'Estilo de fuente',
             fontWeight: 'Peso de fuente',
             fontStyles: {
                 normal: 'Normal',
-                default: 'Defecto',
-                italic: 'Itálica'
+                default: 'Predeterminado',
+                italic: 'Italic'
             },
             fontWeights: {
                 normal: 'Normal',
-                default: 'Defecto',
+                default: 'Predeterminado',
                 bold: 'Negrita',
                 light: 'Ligera'
             }
@@ -4571,15 +4610,15 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Posición',
             label: 'Posición',
             left: 'Izquierda',
-            top: 'Parte superior'
+            top: 'Superior'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible'
+            hidden: 'Oculto'
         }
     },
     mapProperty: {
-        fontFamilyTooltip: 'Familia tipográfica',
+        fontFamilyTooltip: 'Familia de fuente',
         fontWeightTooltip: 'Peso',
         commonProperties: {
             font: 'Fuente',
@@ -4587,73 +4626,73 @@ ej.ReportDesigner.Locale['es-ES'] = {
             fontWeight: 'Peso de fuente',
             fontSize: 'Tamaño de fuente',
             fontColor: 'Color de fuente',
-            fontFamily: 'Familia tipográfica',
+            fontFamily: 'Familia de fuente',
             fontStyles: {
                 normal: 'Normal',
-                default: 'Defecto',
-                italic: 'Itálica',
+                default: 'Predeterminado',
+                italic: 'Italic',
             },
             fontWeights: {
                 normal: 'Normal',
-                default: 'Defecto',
+                default: 'Predeterminado',
                 bold: 'Negrita',
                 light: 'Ligera',
             },
             textAlignments: {
-                center: 'Centrar',
-                right: 'Derecho',
+                center: 'Centro',
+                right: 'Derecha',
                 left: 'Izquierda'
             },
             mapColorRule: {
                 categoryName: 'Regla de color de forma',
                 colorRuleEnable: 'Habilitar regla de color',
-                dataValue: 'Valor de los datos',
+                dataValue: 'Valor de dato',
                 colorType: 'Tipo',
                 colorRuleType: {
-                    colorRange: 'Gama de colores',
+                    colorRange: 'Rango de color',
                     colorPalette: 'Paleta de color',
                     custom: 'Personalizado'
                 },
                 distribution: 'Tipo de distribución',
                 distributionTypes: {
                     optimal: 'Óptimo',
-                    equalDistribution: 'Distribución igual',
-                    equalInterval: 'Intervalo igual',
-                    custom: 'Personalizada'
+                    equalDistribution: 'Distribución equitativa',
+                    equalInterval: 'Intervalo equitativo',
+                    custom: 'Personalizado'
                 },
-                startValue: 'Valor inicial',
-                endValue: 'Valor final',
-                bucketCount: 'Conteo de cubos',
+                startValue: 'Valor de inicio',
+                endValue: 'Valor de fin',
+                bucketCount: 'Recuento de cubos',
                 buckets: 'Cubos',
                 palette: 'Paleta',
                 paletteTypes: {
                     random: 'Aleatorio',
                     light: 'Ligero',
-                    semiTransparent: 'Semi transparente',
+                    semiTransparent: 'SemiTransparente',
                     brightPastel: 'Pastel brillante',
                     pacific: 'Pacífico'
                 },
                 customColors: 'Colores personalizados',
-                startColor: 'Color de inicio',
-                middleColor: 'Color medio',
+                startColor: 'Color inicial',
+                middleColor: 'Color intermedio',
                 endColor: 'Color final',
                 legendName: 'Nombre de leyenda',
                 legendText: 'Texto de leyenda',
-                showInColorScale: 'Mostrar en escala de colores'
+                showInColorScale: 'Mostrar escala de color'
             },
             position: {
-                topLeft: 'Arriba a la izquierda',
-                topCenter: 'Centro Superior',
-                topRight: 'Parte superior derecha',
-                rightTop: 'Justo arriba',
-                rightCenter: 'Centro de la derecha',
-                rightBottom: 'Boton derecho',
-                bottomLeft: 'BottomLeft',
-                bottomCenter: 'Parte inferior central',
-                bottomRight: 'Abajo a la derecha',
-                leftTop: 'LeftTop',
-                leftCenter: 'Centro izquierda',
-                leftBottom: 'Abajo a la izquierda'
+                topLeft: 'Superior izquierda',
+                topCenter: 'Superior central',
+                topRight: 'Superior derecha',
+                rightTop: 'Derecha superior',
+                rightCenter: 'Derecha central',
+                rightBottom: 'Derecha inferior',
+                bottomLeft: 'Inferior izquierda',
+                bottomCenter: 'Inferior central',
+                bottomRight: 'Inferior derecha',
+                leftTop: 'Izquierda superior',
+                leftCenter: 'Izquierda central',
+                leftBottom: 'Izquierda inferior'
             }
         },
         mapTitle: {
@@ -4671,8 +4710,8 @@ ej.ReportDesigner.Locale['es-ES'] = {
             mapProjection: {
                 projectionType: 'Tipo de proyección',
                 mapProjectionTypes: {
-                    equirectangular: 'Equirectangular',
-                    mercator: 'Mercator',
+                    equirectangular: 'Equirrectangular',
+                    mercator: 'Proyección de mercator',
                     eckert1: 'Eckert1',
                     eckert3: 'Eckert3',
                     hammerAitoff: 'HammerAitoff',
@@ -4686,18 +4725,18 @@ ej.ReportDesigner.Locale['es-ES'] = {
         appearance: {
             categoryName: 'Apariencia',
             borderTypes: {
-                default: 'Frontera',
+                default: 'Borde',
                 left: 'Izquierda',
-                top: 'Parte superior',
+                top: 'Superior',
                 right: 'Derecha',
-                bottom: 'Fondo'
+                bottom: 'Inferior'
             },
             borderStyles: {
                 solid: 'Sólido',
-                none: 'Ninguna',
+                none: 'Ninguno',
                 double: 'Doble',
-                dashed: 'Disparo',
-                dotted: 'Punteado'
+                dashed: 'Guiones',
+                dotted: 'Puntos'
             },
             backGround: 'Color de fondo'
         },
@@ -4705,105 +4744,105 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryLegend: 'Leyenda',
             showLegend: 'Habilitar leyenda',
             showBorder: 'Mostrar borde',
-            border: 'Frontera',
+            border: 'Borde',
             backgroundColor: 'Color de fondo',
             legendPosition: 'Posición',
             mapLegendMode: {
                 legendMode: 'Modo leyenda',
                 mapLegendTypes: {
-                    default: 'Defecto',
-                    interactive: 'Interactiva'
+                    default: 'Predeterminado',
+                    interactive: 'Interactivo'
                 }
             },
             legendFont: 'Fuente',
             legendFontStyle: 'Estilo de fuente',
             legendTitle: 'Título',
-            titleFont: 'Fuente del titulo',
-            titleFontStyle: 'Estilo de fuente del título',
+            titleFont: 'Fuente de título',
+            titleFontStyle: 'Estilo de fuente de título',
         },
         pageBreak: {
             categoryName: 'Salto de página',
             enablePageBreak: 'Habilitar salto de página',
-            breakLocation: 'Lugar de descanso',
+            breakLocation: 'Ubicación de salto de página',
             breakLocationTypes: {
-                none: 'Ninguna',
-                start: 'comienzo',
-                end: 'final',
-                startAndEnd: 'InicioAndEnd',
-                between: 'Entre',
+                none: 'Ninguno',
+                start: 'Inicio',
+                end: 'Fin',
+                startAndEnd: 'InicioYFin',
+                between: 'Entre'
             },
-            pageNumberReset: 'Restablecer número de página',
-            pageName: 'Nombre de la página'
+            pageNumberReset: 'Reinicio de número de página',
+            pageName: 'Nombre de página'
         },
         polygonTemplate: {
-            categoryName: 'Configuraciones de forma',
+            categoryName: 'Ajustes de forma',
             showLabel: 'Mostrar etiqueta',
             backgroundColor: 'Color de fondo',
-            border: 'Frontera',
+            border: 'Borde',
             font: 'Fuente',
             fontStyle: {
                 categoryName: 'Estilo de fuente',
-                defaultStyle: 'Defecto',
+                defaultStyle: 'Predeterminado',
                 normal: 'Normal',
-                italic: 'Itálico'
+                italic: 'Italic'
             },
             fontWeight: {
-                default: 'Defecto',
+                default: 'Predeterminado',
                 normal: 'Normal',
-                thin: 'Delgado',
-                extraLight: 'Extra ligero',
-                light: 'Ligero',
+                thin: 'Delgada',
+                extraLight: 'Extraligera',
+                light: 'Ligera',
                 medium: 'Medio',
-                semiBold: 'Semi Negrita',
+                semiBold: 'Seminegrita',
                 bold: 'Negrita',
-                extraBold: 'Extra Negrita',
-                heavy: 'Pesado'
+                extraBold: 'Extranegrita',
+                heavy: 'Fuerte',
             },
-            label: 'Texto de etiqueta',
+            label: 'Label Text',
             tooltip: 'Información sobre herramientas',
             visibility: 'Visibilidad'
         },
         position: {
             categoryName: 'Posición',
             label: 'Posición',
+            top: 'Superior',
             left: 'Izquierda',
-            top: 'Parte superior',
             sizeLabel: 'Tamaño',
-            width: 'Anchura',
-            height: 'Altura'
+            height: 'Alto',
+            width: 'Ancho'
         },
         visibility: {
             categoryName: 'Visibilidad',
-            visible: 'Visible',
-            toggleItem: 'Alternar artículo'
+            hidden: 'Oculto',
+            toggleItem: 'Alternar elemento'
         },
         styleTooltip: 'Estilo',
         colorTooltip: 'Color',
-        sizeTooltip: 'tamaño',
+        sizeTooltip: 'Tamaño',
         fontcolortooltip: 'Color',
-        fontsizetooltip: 'tamaño',
+        fontsizetooltip: 'Tamaño',
         fontstyletooltip: 'Estilo de fuente',
         miscellaneous: {
-            categoryMiscellaneous: 'Diverso',
+            categoryMiscellaneous: 'Misceláneo',
             toolTip: 'Información sobre herramientas',
-            documentMap: 'Mapa del documento',
+            documentMap: 'Mapa de documento',
             customAttributes: 'Atributos personalizados',
             bookmark: 'Marcador'
         },
         spatial: {
             categoryName: 'Espacial',
-            fielddefinitions: 'Definiciones de campo',
+            fielddefinitions: 'Definiciones de campos',
             polygons: 'Polígonos'
         },
         mapErrorMessage: {
             headerText: 'Mapa',
-            polygonErrorMessage: 'Error al convertir el geojson con polígonos actualizados.',
-            vectorDataToGeoJson: 'No se pudo recuperar el geojson de los datos vectoriales',
-            shapeData: 'Datos de forma de mapa no configurados en el diseñador',
-            shapeDateToGeoJson: 'No se pudo recuperar el geojson de los datos de formas.',
+            polygonErrorMessage: 'Error al convertir el formato geojson con polígonos actualizados.',
+            vectorDataToGeoJson: 'Error al recuperar el formato geojson de los datos vectoriales',
+            shapeData: 'Datos de forma del mapa no configurados en el diseñador',
+            shapeDateToGeoJson: 'Error al recuperar el geojson de los datos de forma',
             multiLayer: 'El mapa no admite varias capas en el diseñador',
-            polygonLayer: 'El mapa solo admite la capa de polígono en el diseñador',
-            fileTypes: 'El mapa solo admite tipos incrustados y archivo de forma en el diseñador',
+            polygonLayer: 'El mapa sólo admite capas poligonales en el diseñador',
+            fileTypes: 'El mapa sólo admite tipos de archivo incrustados y de forma en el diseñador',
             unSupported: 'El mapa no es compatible con el diseñador'
         },
         mapMarker: {
@@ -4813,21 +4852,21 @@ ej.ReportDesigner.Locale['es-ES'] = {
             enableSizeRule: 'Habilitar regla de tamaño',
             sizeRule: {
                 categoryName: 'Regla de tamaño de marcador',
-                startSize: 'Tamaño de inicio',
-                endSize: 'Tamaño final',
+                startSize: 'Iniciar tamaño',
+                endSize: 'Finalizar tamaño',
                 markers: 'Marcadores'
             },
             markerTemplate: {
-                categoryName: 'Configuraciones de marcador',
+                categoryName: 'Ajustes de marcador',
                 showMarker: 'Habilitar marcador',
-                background: 'Antecedentes',
+                background: 'Fondo',
                 markerStyle: 'Estilo',
-                markerSize: 'Talla',
+                markerSize: 'Tamaño',
                 tooltip: 'Información sobre herramientas',
                 latitude: 'Latitud',
                 longitude: 'Longitud',
                 markerStyles: {
-                    circle: 'Circulo',
+                    circle: 'Círculo',
                     none: 'Ninguno',
                     rectangle: 'Rectángulo',
                     diamond: 'Diamante',
@@ -4837,19 +4876,19 @@ ej.ReportDesigner.Locale['es-ES'] = {
                     pentagon: 'Pentágono'
                 },
                 markerImage: {
-                    type: 'Tipo de Mimica',
-                    mode: 'Modo de cambio de tamaño',
+                    type: 'Tipo MIME',
+                    mode: 'Modo redimensionar',
                     source: 'Fuente',
                     color: 'Color transparente',
                     value: 'Valor',
                     sourceTypes: {
-                        external: 'Externa',
-                        embedded: 'Incrustada',
+                        external: 'Externo',
+                        embedded: 'Insertado',
                         database: 'Base de datos'
                     },
                     resizeModes: {
-                        autofit: 'Autoajuste',
-                        none: 'Ninguna'
+                        autofit: 'Auto ajuste',
+                        none: 'Ninguno'
                     }
                 }
             }
@@ -4858,35 +4897,35 @@ ej.ReportDesigner.Locale['es-ES'] = {
             categoryName: 'Elemento de datos',
             elementName: 'Nombre',
             elementOutput: {
-                auto: 'Auto',
-                noOutput: 'Ninguna salida',
+                auto: 'Automático',
+                noOutput: 'NoSalida',
                 categoryName: 'Salida',
                 output: 'Salida'
             }
         }
     },
     mapBindingFields: {
-        headerText: 'BindingField Pairs',
+        headerText: 'Pares de campos de enlaces',
         addText: 'AÑADIR',
         updateText: 'Actualizar',
-        fieldName: 'Nombre del campo',
-        bindingExpression: 'Expresión vinculante',
-        deletefield: 'Eliminar campo',
+        fieldName: 'Nombre de campo',
+        bindingExpression: 'Expresión de enlace',
+        deletefield: 'Borrar campo',
         errorMessage: {
-            bindingExpError: 'Elija el valor para la expresión de enlace',
-            fieldNameError: 'Elija el valor para el nombre del campo',
-            warningMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?'
+            bindingExpError: 'Elegir valor para expresión de enlace',
+            fieldNameError: 'Elegir valor para nombre de campo',
+            warningMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?'
         }
     },
     mapBucket: {
-        headerText: 'MapBucket',
+        headerText: 'Cubo de mapa',
         addText: 'AÑADIR',
         updateText: 'Actualizar',
-        startValue: 'Valor inicial',
-        endValue: 'Valor final',
-        deletefield: 'Eliminar campo',
+        startValue: 'Valor de inicio',
+        endValue: 'Valor de fin',
+        deletefield: 'Borrar campo',
         errorMessage: {
-            warningMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?'
+            warningMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?'
         }
     },
     mapPolygons: {
@@ -4895,26 +4934,26 @@ ej.ReportDesigner.Locale['es-ES'] = {
         polygonText: 'Polígono de mapa',
         updateText: 'Actualizar',
         editPolygon: 'Editar',
-        deletePolygon: 'Eliminar polígono',
-        properties: 'Propiedades poligonales',
-        closeText: 'Cerca',
-        saveText: 'Salvar',
+        deletePolygon: 'Borrar polígono',
+        properties: 'Propiedades de polígono',
+        closeText: 'Cerrar',
+        saveText: 'Guardar',
         data: 'Datos',
         spatial: 'Espacial',
-        vectorData: 'Datos vectoriales',
+        vectorData: 'Datos de vector',
         errorMessage: {
-            warningMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?'
+            warningMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?'
         }
     },
     mapMarkerStyle: {
         headerText: 'Marcador de mapa',
         updateText: 'Actualizar',
         add: 'AÑADIR',
-        label: 'Estilo de marcador',
+        label: 'Estilo del marcador',
         deletefield: 'Eliminar',
-        errorMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?',
+        errorMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?',
         styles: {
-            circle: 'Circulo',
+            circle: 'Círculo',
             none: 'Ninguno',
             rectangle: 'Rectángulo',
             diamond: 'Diamante',
@@ -4925,16 +4964,16 @@ ej.ReportDesigner.Locale['es-ES'] = {
         }
     },
     mapFieldDefinition: {
-        mapFieldTitle: 'Definiciones de campo de mapa',
-        fieldName: 'Nombre del campo',
-        dataType: 'Tipo de datos',
-        mapAlertMessage: 'Los cambios que ha realizado podrían no guardarse. ¿Todavía quieres continuar?',
+        mapFieldTitle: 'Definiciones de campos de mapa',
+        fieldName: 'Nombre de campo',
+        dataType: 'Tipo de dato',
+        mapAlertMessage: 'Es posible que no se guarden los cambios que has realizado. ¿Quieres continuar?',
         addText: 'AÑADIR',
         errorMessage: {
-            errorEmptyMessage: 'Especifica el nombre del campo',
-            sameCharacterMessage: 'Nombre del campo ya existe'
+            errorEmptyMessage: 'Especificar nombre de campo',
+            sameCharacterMessage: 'El nombre de campo ya existe'
         },
-        updateText: 'ACTUALIZAR'
+        updateText: 'Actualizar'
     },
     mapCustomColors: {
         headerText: 'Colores personalizados',
@@ -4942,7 +4981,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         add: 'AÑADIR',
         label: 'Color',
         deletefield: 'Eliminar',
-        errorMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?',
+        errorMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?',
     },
     reportVariable: {
         headerText: 'Variables',
@@ -4950,12 +4989,12 @@ ej.ReportDesigner.Locale['es-ES'] = {
         updateText: 'Actualizar',
         name: 'Nombre',
         value: 'Valor',
-        deletefield: 'Eliminar',
+        deletefield: 'Borrar campo',
         checkBoxTooltip: 'Solo lectura',
         errorMessage: {
-            warningMessage: 'Es posible que los cambios que haya realizado no se actualicen.¿Todavía quieres continuar?',
+            warningMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?',
             emptyAlert: 'El nombre no puede estar vacío',
-            duplicateName: 'Nombre ya existe',
+            duplicateName: 'El nombre ya existe',
             specialCharacter: 'El nombre no debe contener espacios ni caracteres especiales'
         }
     },
@@ -4963,29 +5002,29 @@ ej.ReportDesigner.Locale['es-ES'] = {
         headerText: 'Estados indicadores',
         addText: 'AÑADIR',
         updateText: 'Actualizar',
-        deletefield: 'Eliminar campo',
-        indicatorStyle: 'Icono',
+        deletefield: 'Borrar campo',
+        indicatorStyle: 'Ícono',
         color: 'Color',
-        start: 'comienzo',
-        end: 'Final',
+        start: 'Inicio',
+        end: 'Fin',
         scaleFactor: 'Factor de escala',
-        indicatorStateValue: 'Valor del estado del indicador',
+        indicatorStateValue: 'Valor de estado indicador',
         errorMessage: {
-            warningMessage: 'Es posible que los cambios que haya realizado no se actualicen. ¿Todavía quieres continuar?'
+            warningMessage: 'Es posible que los cambios que has realizado no se actualicen. ¿Quieres continuar?'
         }
     },
     webDataExpression: {
         title: 'Datos de conexión',
-        ok: 'Okay',
+        ok: 'OK',
         cancel: 'Cancelar',
-        closeToolTip: 'Cerca',
+        closeToolTip: 'Cerrar',
         url: 'URL',
-        rawData: 'Datos sin procesar',
-        parameters: 'Parámetro(s)',
-        headers: 'Encabezamiento(s)',
+        rawData: 'Datos Raw',
+        parameters: 'Parámetro (s)',
+        headers: 'Encabezado (s)',
         username: 'Nombre de usuario',
         password: 'Contraseña',
         valueWaterMark: 'Valor',
-        emptyValue: 'Especifique el valor de la expresión'
+        emptyValue: 'Especificar el valor de la expresión'
     }
 };

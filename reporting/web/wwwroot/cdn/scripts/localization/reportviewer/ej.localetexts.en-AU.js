@@ -1511,7 +1511,24 @@
                         exportsetup: {
                             headerText: 'Export Setup',
                             contentText: 'Choose export setup option to set the image quality, save type of word, and excel document.'
+                        },
+                        performance: {
+                            headerText: 'Performance Metrics',
+                            contentText: 'Report performance metrics are shown.',
                         }
+                    },
+                    PerformanceMetricsDialog: {
+                        title: 'Report Performance Metrics',
+                        reportProcessing: 'Report Processing Time',
+                        datasetProcessing: 'DataSet Processing Time',
+                        parse: 'Parsing Time',
+                        evaluate: 'Evaluate Time',
+                        render: 'Rendering Time',
+                        layout: 'Layout Time',
+                        datasetDetails: {
+                            rows: 'Rows Count',
+                            dataRetrival: 'Data Retrieval Time'
+                        },
                     },
                     pagesetupDialog: {
                         close: 'Close',
@@ -1543,7 +1560,8 @@
                             imageQualityTypes:
                                 [{ text: "Low", value: "2" },
                                 { text: "Medium", value: "5" },
-                                { text: "High", value: "10" }]
+                                { text: "High", value: "10" }],
+                            usePrintSizes: 'Use Print Page Settings'
                         },
                         pdfOptions: {
                             header: 'PDF Settings',
@@ -1670,7 +1688,8 @@
                     },
                     waterMark: {
                         selectOption: 'Select option',
-                        selectValue: 'Select a value'
+                        selectValue: 'Select a value',
+                        noDataFound: 'No Data Found'
                     },
                     errorMessage: {
                         startMessage: 'Report Viewer encountered some issues loading this report. Please',
@@ -1725,7 +1744,8 @@
                     selectAll: 'Select All',
                     viewButton: 'View Report',
                     parameterBlock: 'Parameter Block',
-                    parameterProcessingMessage: 'Loading parameter values ...'
+                    parameterProcessingMessage: 'Loading parameter values ...',
+                    parameterBlockTitle: 'Report Parameters'
                 };
                 break;
             case "ejRibbon":

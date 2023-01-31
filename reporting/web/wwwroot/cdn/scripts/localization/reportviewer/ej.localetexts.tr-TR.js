@@ -98,7 +98,24 @@ ej.ReportViewer.Locale["tr-TR"] = {
         exportsetup: {
             headerText: 'Dışa Aktarma Kurulumu',
             contentText: "Görüntü kalitesini ayarlamak, sözcük türünü kaydetmek ve belgeyi excel'de ayarlamak için dışa aktarma kurulumu seçeneğini seçin."
+        },
+        performance: {
+            headerText: 'Performans Metrikleri',
+            contentText: 'Rapor performans metrikleri gösterilir.',
         }
+    },
+    PerformanceMetricsDialog: {
+        title: 'Rapor Performans Metrikleri',
+        reportProcessing: 'Rapor İşleme Süresi',
+        datasetProcessing: 'Veri Kümesi İşleme Süresi',
+        parse: 'Ayrıştırma Süresi',
+        evaluate: 'Zamanı Değerlendir',
+        render: 'İşleme Süresi',
+        layout: 'Düzen Süresi',
+        datasetDetails: {
+            rows: 'Satır Sayısı',
+            dataRetrival: 'Veri Alma Süresi'
+        },
     },
     pagesetupDialog: {
         close: 'Kapat',
@@ -130,7 +147,8 @@ ej.ReportViewer.Locale["tr-TR"] = {
             imageQualityTypes:
                 [{ text: "Düşük", value: "2" },
                 { text: "Orta", value: "5" },
-                { text: "Yüksek", value: "10" }]
+                { text: "Yüksek", value: "10" }],
+            usePrintSizes: 'Yazdırma Sayfası Ayarlarını Kullan'
        },
         findAlertMessage: {
             resultsEndReached: 'Arama sonuçlarının sonuna ulaştınız. Devam etmek istiyorsanız, iletişim kutusunu kapatın ve tekrar arayın.',
@@ -256,7 +274,8 @@ ej.ReportViewer.Locale["tr-TR"] = {
     },
     waterMark: {
         selectOption: 'Seçeneği Seç',
-        selectValue: 'Bir değer seçin'
+        selectValue: 'Bir değer seçin',
+        noDataFound: 'Veri bulunamadı'
     },
     errorMessage: {
         startMessage: 'Rapor Görüntüleyici bu raporu yükleyen bazı sorunlarla karşılaştı. Lütfen',
@@ -297,5 +316,6 @@ ej.ReportViewer.Locale["tr-TR"] = {
     },
     selectAll: 'Hepsini seç',
     viewButton: "Raporu görüntüle",
-    parameterProcessingMessage: 'Laddar beroende parametrar ...'
+    parameterProcessingMessage: 'Laddar beroende parametrar ...',
+    parameterBlockTitle: 'Rapor Parametreleri'
 };

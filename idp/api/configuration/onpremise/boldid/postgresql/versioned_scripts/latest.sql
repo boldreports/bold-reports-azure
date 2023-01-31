@@ -1,2 +1,1 @@
-﻿ALTER TABLE BOLDTC_SAMLSettings ADD IsSloEnabled smallint NOT NULL DEFAULT 0
-;
+﻿

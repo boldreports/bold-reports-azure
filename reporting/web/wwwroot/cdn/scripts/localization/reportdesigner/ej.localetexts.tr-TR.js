@@ -572,7 +572,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         miscellaneous: {
@@ -877,7 +877,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         miscellaneous: {
@@ -1006,7 +1006,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         miscellaneous: {
@@ -1096,7 +1096,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibilityCategory: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         miscellaneousCategory: {
@@ -1509,7 +1509,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         position: {
@@ -1640,7 +1640,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         miscellaneous: {
@@ -1895,6 +1895,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             }
         },
         elasticSearchDatasource: {
+            connectionType: 'Bağlantı türü',
             authenticationType: 'Kimlik Doğrulama Türü',
             window: 'pencereler',
             server: 'ElasticSearch Server',
@@ -1903,6 +1904,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             userName: 'Kullanıcı adı',
             password: 'Parola',
             port: 'Liman',
+            connectionTypes: {
+                elasticSQL: 'Elasticsearch SQL\'i',
+                openDistro: 'Dağıtımı Aç'
+            },
             basicOption: {
                 serverName: 'Sunucu adı',
                 database: 'Veri tabanı'
@@ -1913,6 +1918,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 password: 'Parolayı belirtin',
                 serverName: 'Sunucu adını belirtin',
                 databaseName: 'Veritabanı adını belirtin'
+            },
+            noteMessage: {
+                note: 'Not: ',
+                message: 'Amazon Web Hizmeti tarafından barındırılan bir Elasticsearch bulut sunucusuna bağlanmak için lütfen Açık Dağıtım Bağlantı Türünü kullanın.'
             }
         },
         postgreSQLDatasource: {
@@ -2504,7 +2513,24 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 headerText: 'Bul',
                 contentText: 'Rapordaki metni bulun.'
             },
+            performance: {
+                headerText: 'Performans Metrikleri',
+                contentText: 'Rapor performans metrikleri gösterilir.',
+            },
             viewDesign: 'Önizlemeyi Kapat',
+        },
+        PerformanceMetricsDialog: {
+            title: 'Rapor Performans Metrikleri',
+            reportProcessing: 'Rapor İşleme Süresi',
+            datasetProcessing: 'Veri Kümesi İşleme Süresi',
+            parse: 'Ayrıştırma Süresi',
+            evaluate: 'Zamanı Değerlendir',
+            render: 'İşleme Süresi',
+            layout: 'Düzen Süresi',
+            datasetDetails: {
+                rows: 'Satır Sayısı',
+                dataRetrival: 'Veri Alma Süresi'
+            },
         },
         pagesetupDialog: {
             close: 'Kapat',
@@ -2547,7 +2573,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 imageQuality: 'Görüntü kalitesi',
                 imageQualityTypes: [{ text: 'Düşük', value: '2' },
                     { text: 'Orta', value: '5' },
-                    { text: 'Yüksek', value: '10' }]
+                    { text: 'Yüksek', value: '10' }],
+                usePrintSizes: 'Yazdırma Sayfası Ayarlarını Kullan'
             },
             pdfOptions: {
                 header: 'PDF Ayarları',
@@ -2702,7 +2729,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         waterMark: {
             selectOption: 'Seçeneği seçin',
-            selectValue: 'Bir değer seçin'
+            selectValue: 'Bir değer seçin',
+            noDataFound: 'Veri bulunamadı'
         },
         errorMessage: {
             startMessage: 'Rapor Görüntüleyici bu raporu yüklerken bazı sorunlarla karşılaştı. Lütfen',
@@ -2757,7 +2785,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         selectAll: 'Hepsini seç',
         viewButton: 'Raporu görüntüle',
         parameterBlock: 'Parametre Bloğu',
-        parameterProcessingMessage: 'Parametre değerlerini yükleme ...'
+        parameterProcessingMessage: 'Parametre değerlerini yükleme ...',
+        parameterBlockTitle: 'Rapor Parametreleri'
     },
     sortData: {
         sorting: 'Sıralama',
@@ -2837,7 +2866,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             },
             visibility: {
                 visible: 'Gözle görülür',
-                hidden: 'Gizli',
+                hidden: 'Gizlenmiş',
                 internal: 'İç'
             },
             dataType: {
@@ -3188,7 +3217,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         dragOnDrop: 'Sürükle bırak',
         categoryList: ' Kategori Listesi',
         removeDataField: 'Veri Alanını Kaldır',
-        dataFieldSettings: 'Veri Alanı Ayarları'
+        dataFieldSettings: 'Veri Alanı Ayarları',
+        warningMessage: {
+            title: 'Veri Ataması',
+            contentMessage: '5\'ten {categoryName} Zeilen eklemek, oluşturma gecikmesine neden olur.Yine de eklemek ister misin ?'
+        }
     },
     reportProperty: {
         header: 'Üstbilgi',
@@ -3467,7 +3500,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir',
             intialToggleState: 'İlk Geçiş Durumu'
         },
@@ -3658,7 +3691,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür'
+            hidden: 'Gizlenmiş'
         },
         miscellaneous: {
             categoryName: 'Çeşitli',
@@ -3859,7 +3892,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         staticGroupProp: {
@@ -4169,6 +4202,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 commonContent: 'Filtre ',
                 booleanValidation: ' filtrelenecek herhangi bir değere sahip değil. Lütfen filtre değerlerini sağlayın.',
                 stringValidation: ' filtrelemek için uygun değerlere sahip değil. '
+            },
+            queryCondition: {
+                and: 'VE',
+                or: 'VEYA'
             }
         },
         previewArea: {
@@ -4577,7 +4614,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür'
+            hidden: 'Gizlenmiş'
         }
     },
     mapProperty: {
@@ -4666,6 +4703,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         basicSettings: {
             categoryName: 'Temel Ayarlar',
+            polygonLayerName: 'Çokgen Katman Adı',
             shapeType: 'Şekiller',
             datasetName: 'Veri Kümesi',
             bindData: 'Veri Bağlama',
@@ -4775,7 +4813,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         visibility: {
             categoryName: 'Görünürlük',
-            visible: 'Gözle görülür',
+            hidden: 'Gizlenmiş',
             toggleItem: 'Öğeyi Değiştir'
         },
         styleTooltip: 'Tarzı',

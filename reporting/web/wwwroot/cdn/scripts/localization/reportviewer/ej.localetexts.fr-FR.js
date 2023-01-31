@@ -98,7 +98,24 @@ ej.ReportViewer.Locale["fr-FR"] = {
         exportsetup: {
             headerText: 'Exporter la configuration',
             contentText: 'Choisissez l’option d’installation d’exportation pour définir la qualité de l’image, enregistrer le type de mot et excel document.'
+        },
+        performance: {
+            headerText: 'Indicateurs de performance',
+            contentText: 'Les mesures de performances des rapports sont affichées.',
         }
+    },
+    PerformanceMetricsDialog: {
+        title: 'Rapporter les mesures de performance',
+        reportProcessing: 'Délai de traitement du rapport',
+        datasetProcessing: 'Temps de traitement de lensemble de données',
+        parse: 'Temps danalyse',
+        evaluate: 'Évaluer le temps',
+        render: 'Temps de rendu',
+        layout: 'Temps de mise en page',
+        datasetDetails: {
+            rows: 'Nombre de lignes',
+            dataRetrival: 'Temps de récupération des données'
+        },
     },
     pagesetupDialog: {
         close: "Fermer",
@@ -130,7 +147,8 @@ ej.ReportViewer.Locale["fr-FR"] = {
             imageQualityTypes:
                 [{ text: "Meugler", value: "2" },
                 { text: "Moyen", value: "5" },
-                { text: "Haut", value: "10" }]
+                { text: "Haut", value: "10" }],
+            usePrintSizes: 'Utiliser les paramètres d`impression de page'
         },
         pdfOptions: {
             header: 'Paramètres PDF',
@@ -255,7 +273,8 @@ ej.ReportViewer.Locale["fr-FR"] = {
     },
     waterMark: {
         selectOption: "S閘ectionnez l'option",
-        selectValue: "S閘ectionnez une valeur"
+        selectValue: "S閘ectionnez une valeur",
+        noDataFound: "Aucune donnée disponible"
     },
     errorMessage: {
         startMessage: "Visionneuse de rapports a rencontré des problèmes lors du chargement de ce rapport. S'il vous plaît",
@@ -296,5 +315,6 @@ ej.ReportViewer.Locale["fr-FR"] = {
     },
     selectAll: "Tout s閘ectionner",
     viewButton: "Voir le rapport",
-    parameterProcessingMessage: 'Chargement des paramètres dépendants ...'
+    parameterProcessingMessage: 'Chargement des paramètres dépendants ...',
+    parameterBlockTitle: 'Paramètres du rapport'
 };

@@ -43,6 +43,7 @@
                     parent.$("#rsd_filename").val(filename);
                     $("#upload_browse_file").val(filename);
                     window.parent.$("#rsd_filename").val(filename);
+                    window.parent.$("#file_name").val(filename.slice(0, -4));
                     $('#browse_file').attr('title', filename);
                     parent.$("#datasource_list_table").html("");
                     $("#rsd_file_upload_btn").removeAttr("disabled");

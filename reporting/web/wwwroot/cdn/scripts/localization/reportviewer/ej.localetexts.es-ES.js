@@ -11,248 +11,305 @@ ej.DatePicker.Locale["es-ES"] = {
 ej.ReportViewer.Locale["es-ES"] = {
     toolbar: {
         print: {
-            headerText: "Impresión",
-            contentText: "Imprimir el informe"
+            headerText: "Imprimir",
+            contentText: "Imprimir informe"
         },
         exportformat: {
             headerText: "Exportar",
-            contentText: "Seleccione el formato de archivo exportado",
+            contentText: "Seleccionar formato de archivo exportado",
             Pdf: "PDF",
-            Excel: "Sobresalir",
-            Word: "Palabra",
-            Html: "html",
-            PPT: 'PowerPoint',
-            CSV: 'CSV',
-            XML: 'XML'
+            Excel: "Excel",
+            Word: "Word",
+            Html: "HTML",
+            PPT: "PowerPoint",
+            CSV: "CSV",
+            XML: "XML"
         },
         first: {
-            headerText: "primero",
-            contentText: "Ir a la primera página del informe."
-        },
-        previous: {
-            headerText: "Anterior",
-            contentText: "Ir a la página anterior del informe."
-        },
-        next: {
-            headerText: "Siguiente",
-            contentText: "Ir a la página siguiente del informe."
+            headerText: "Ir a la primera",
+            contentText: "Ir a la primera página del informe"
         },
         last: {
-            headerText: "Último",
-            contentText: "Ir a la última página del informe."
+            headerText: "Ir a la última",
+            contentText: "Ir a la última página del informe"
+        },
+        next: {
+            headerText: "Ir a la siguiente",
+            contentText: "Ir a la siguiente página del informe"
+        },
+        previous: {
+            headerText: "Ir a la anterior",
+            contentText: "Ir a la página anterior del informe"
+        },
+        back: {
+            headerText: "Ir al padre",
+            contentText: "Ir al informe padre"
         },
         documentMap: {
-            headerText: "Mapa del documento",
-            contentText: "Mostrar u ocultar el mapa del documento."
+            headerText: "Mapa de documento",
+            contentText: "Mostrar u ocultar el mapa del documento"
         },
         parameter: {
             headerText: "Parámetro",
-            contentText: "Mostrar u ocultar el panel de parámetros."
+            contentText: "Mostrar u ocultar el panel de parámetros"
         },
         zoomIn: {
-            headerText: "Acercarse",
-            contentText: "Agrandar el informe."
+            headerText: "Acercar",
+            contentText: "Hacer zoom al informe"
         },
         zoomOut: {
-            headerText: "Disminuir el zoom",
-            contentText: "Alejar del informe."
+            headerText: "Alejar",
+            contentText: "Alejar el informe"
         },
         refresh: {
-            headerText: "Refrescar",
-            contentText: "Actualizar el informe."
-        },
-        find: {
-            headerText: 'Encontrar',
-            contentText: 'Busque texto en el informe.'
+            headerText: "Actualizar",
+            contentText: "Actualizar informe"
         },
         stop: {
-            headerText: 'Detener',
-            contentText: 'Dejar de procesar el informe.'
+            headerText: "Detener",
+            contentText: "Detener el procesamiento del informe"
         },
         printLayout: {
-            headerText: "Diseño de impresión",
-            contentText: "Cambiar entre el diseño de impresión y los modos normales."
+            headerText: "Imprimir diseño",
+            contentText: "Cambiar entre imprimir diseño y los modos normales"
         },
         pageIndex: {
             headerText: "Número de página",
-            contentText: "número de página actual para ver."
+            contentText: "Ver número de página actual"
         },
         zoom: {
-            headerText: "Enfocar",
-            contentText: "Zoom para acercar o alejar el informe."
-        },
-        back: {
-            headerText: "Espalda",
-            contentText: "Volver al informe de los padres."
+            headerText: "Zoom",
+            contentText: "Hacer zoom o alejar el informe"
         },
         fittopage: {
-            headerText: "Ajustar a la página",
-            contentText: "Montar la página del informe al contenedor.",
+            headerText: "Ajustar a página",
+            contentText: "Ajustar página de reporte al contenedor",
             pageWidth: "Ancho de página",
-            pageHeight: "Toda la pagina"
+            pageHeight: "Página completa"
         },
         pagesetup: {
-            headerText: "Configurar página",
-            contentText: "Elija la opción de configuración de página para cambiar el tamaño del papel, la orientación y los márgenes."
+            headerText: "Ajustes de página",
+            contentText: "Seleccionar la opción de ajustes de página para cambiar el tamaño, la orientación y los márgenes"
         },
         exportsetup: {
-            headerText: 'Configuración de exportación',
-            contentText: 'Elija la opción de configuración de exportación para establecer la calidad de imagen,'
-                + 'guardar el tipo de palabra y el documento de Excel.'
+            headerText: "Ajustes de exportación",
+            contentText: "Seleccionar la opción de ajustes de exportación para establecer la calidad de la imagen"
+                + "guardar tipo de documento word y excel"
+        },
+        find: {
+            headerText: "Encontrar",
+            contentText: "Encontrar texto en el informe"
+        },
+        performance: {
+            headerText: 'Métricas de rendimiento',
+            contentText: 'Se muestran las métricas de rendimiento del informe.',
         }
     },
+    PerformanceMetricsDialog: {
+        title: 'Métricas de rendimiento de informes',
+        reportProcessing: 'Tiempo de procesamiento del informe',
+        datasetProcessing: 'Tiempo de procesamiento del conjunto de datos',
+        parse: 'Tiempo de análisis',
+        evaluate: 'evaluar el tiempo',
+        render: 'Tiempo de renderizado',
+        layout: 'Tiempo de diseño',
+        datasetDetails: {
+            rows: 'Recuento de filas',
+            dataRetrival: 'Tiempo de recuperación de datos'
+        },
+    },
     pagesetupDialog: {
-        close: "Cerca",
+        close: "Cerrar",
         paperSize: "Tamaño de papel",
-        height: "Altura",
-        width: "Anchura",
-        margins: "márgenes",
-        top: "Parte superior",
-        bottom: "Fondo",
+        height: "Alto",
+        width: "Ancho",
+        margins: "Márgenes",
+        top: "Superior",
+        bottom: "Inferior",
         right: "Derecha",
         left: "Izquierda",
-        pageUnits: 'Unidades de página',
-        unitin: 'en',
-        unitcm: 'cm',
-        inches: 'Pulgadas',
-        centimeters: 'centímetros',
+        pageUnits: "Unidades de página",
+        unitin: "In",
+        unitcm: "cm",
+        inches: "Pulgadas",
+        centimeters: "Centímetros",
+        paperTypes: [
+            { text: "A3", value: "A3" },
+            { text: "A4", value: "A4" },
+            { text: "B4(JIS)", value: "B4(JIS)" },
+            { text: "B5(JIS)", value: "B5(JIS)" },
+            { text: "Sobre #10", value: "Sobre #10" },
+            { text: "Sobre monarca", value: "Sobre monarca" },
+            { text: "Ejecutivo", value: "Ejecutivo" },
+            { text: "Legal", value: "Legal" },
+            { text: "Carta", value: "Carta" },
+            { text: "Tabloide", value: "Tabloide" },
+            { text: "Personalizado", value: "Personalizado" }
+        ],
         orientation: "Orientación",
-        portrait: "Retrato",
-        landscape: "Paisaje",
-        doneButton: "Hecho",
-        cancelButton: "Cancelar",
-        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4 (JIS)", value: "B4(JIS)" }, { text: "B5 (JIS)", value: "B5(JIS)" }, { text: "Sobre #10", value: "Envelope #10" }, { text: "Sobre monarca", value: "Envelope Monarch" }, { text: "Ejecutivo", value: "Executive" }, { text: "Legal", value: "Legal" }, { text: "Letra", value: "Letter" }, { text: "Tabloide", value: "Tabloid" }, { text: "Personalizado", value: "Custom" }]
+        portrait: "Vertical",
+        landscape: "Horizontal",
+        doneButton: "OK",
+        cancelButton: "Cancelar"
     },
     exportsetupDialog: {
-        close: 'Cerca',
+        close: "Cerrar",
         commonOptions: {
-            header: 'Configuraciones comunes',
-            imageQuality: 'La calidad de imagen',
-            imageQualityTypes:
-                [{ text: "Bajo", value: "2" },
+            header: "Ajustes comunes",
+            imageQuality: "Calidad de imagen",
+            imageQualityTypes: [{ text: "Bajo", value: "2" },
                 { text: "Medio", value: "5" },
-                { text: "Elevado", value: "10" }]
+                { text: "Alto", value: "10" }],
+            usePrintSizes: "Ajustes para el uso de la página de impresión"
         },
         pdfOptions: {
-            header: 'Configuración de PDF',
-            complexScript: 'Escritura compleja',
-            conformance: 'Nivel de conformidad',
-            conformanceTypes: [{ text: "Ninguno", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
-            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }],
+            header: "Ajustes PDF",
+            complexScript: "Guión complejo",
+            conformance: "Nivel de conformidad",
+            conformanceTypes: [
+                { text: "Ninguno", value: 0 },
+                { text: "Pdf/A1B", value: 1 },
+                { text: "Pdf/X1A2001", value: 2 },
+                { text: "Pdf/A2B", value: 3 },
+                { text: "Pdf/A3B", value: 4 },
+                { text: "Pdf/A1A", value: 5 },
+                { text: "Pdf/A2A", value: 6 },
+                { text: "Pdf/A2U", value: 7 },
+                { text: "Pdf/A3A", value: 8 },
+                { text: "Pdf/A3U", value: 9 }
+            ],
         },
-        excel: 'Sobresalir',
+        excel: "Sobresalir",
         securityOptions: {
-            header: "Configuraciones de seguridad",
+            header: "Ajustes de seguridad",
             enableProtection: "Habilitar protección",
             protect: "Contraseña para proteger",
-            edit: "Contraseña para editar",
+            edit: "Contraseña para editar"
         },
         wordOptions: {
-            header: 'Configuración de palabras',
-            protection: 'Tipo de protección',
-            topSpacing: 'Espaciado superior',
-            bottomSpacing: 'Espaciado inferior',
+            header: "Ajustes de word",
+            protection: "Tipo de protección",
+            topSpacing: "Espaciado superior",
+            bottomSpacing: "Espaciado inferior",
             formatList: [
-                { text: "Documento de Word 97-2003 (.doc)", value: 0 },
-                { text: "Plantilla de Word 97-2003 (.dot)", value: 1 },
-                { text: "Documento de Word (.docx)", value: 2 },
-                { text: "Documento XML abierto estricto 2007 (.docx)", value: 3 },
-                { text: "Documento XML abierto estricto 2010 (.docx)", value: 4 },
-                { text: "Documento XML abierto estricto 2013 (.docx)", value: 5 },
-                { text: "Plantilla XML abierta estricta 2007 (.dotx)", value: 6 },
-                { text: "Plantilla XML abierta estricta 2010 (.dotx)", value: 7 },
-                { text: "Plantilla XML abierta estricta 2013 (.dotx)", value: 8 },
-                { text: "Documento habilitado para macros de Word 2007 (.docm)", value: 9 },
-                { text: "Documento habilitado para macros de Word 2010 (.docm)", value: 10 },
-                { text: "Documento habilitado para macros de Word 2013 (.docm)", value: 11 },
-                { text: "Plantilla habilitada para macros de Word 2007 (.dotm)", value: 12 },
-                { text: "Plantilla habilitada para macros de Word 2010 (.dotm)", value: 13 },
-                { text: "Plantilla habilitada para macros de Word 2013 (.dotm)", value: 14 },
-                { text: "Formato de texto enriquecido (.rtf)", value: 15 },
-                { text: "Texto sin formato (.txt)", value: 16 },
-                { text: "Página web (.html)", value: 18 }
+                { text: "Documento Word 97-2003 (.doc)", value: 0 },
+                { text: "Plantilla Word 97-2003 (.dot)", value: 1 },
+                { text: "Documento Word (.docx)", value: 2 },
+                { text: "Documento Strict Open XML 2007 (.docx)", value: 3 },
+                { text: "Documento Strict Open XML 2010 (.docx)", value: 4 },
+                { text: "Documento Strict Open XML 2013 (.docx)", value: 5 },
+                { text: "Plantilla Strict Open XML 2007 (.dotx)", value: 6 },
+                { text: "Plantilla Strict Open XML 2010 (.dotx)", value: 7 },
+                { text: "Plantilla Strict Open XML 2013 (.dotx)", value: 8 },
+                { text: "Documento Word habilitado para macros 2007 (.docm)", value: 9 },
+                { text: "Documento Word habilitado para macros 2010 (.docm)", value: 10 },
+                { text: "Documento Word habilitado para macros 2013 (.docm)", value: 11 },
+                { text: "Plantilla Word habilitada para macros 2007 (.dotm)", value: 12 },
+                { text: "Plantilla Word habilitada para macros 2010 (.dotm)", value: 13 },
+                { text: "Plantilla Word habilitada para macros 2013 (.dotm)", value: 14 },
+                { text: "Rich text format (.rtf)", value: 15 },
+                { text: "Plain text (.txt)", value: 16 },
+                { text: "Web page (.html)", value: 18 }
             ],
-            layoutTypes: [{ text: "Por defecto", value: 0 }, { text: "Nivel superior", value: 1 }],
-            protectionTypes: [{ text: "Sin protección", value: -1 }, { text: "Permitir solo revisiones", value: 0 }, { text: "Permitir solo comentarios", value: 1 }, { text: "Solo permitir campos de formulario", value: 2 }, { text: "Permitir solo lectura", value: 3 }],
+            layoutTypes: [
+                { text: "Predeterminado", value: 0 },
+                { text: "Nivel superior", value: 1 }
+            ],
+            protectionTypes: [
+                { text: "No protection", value: -1 },
+                { text: "Permitir solo revisiones", value: 0 },
+                { text: "Permitir solo comentarios", value: 1 },
+                { text: "Permitir solo campos de forma", value: 2 },
+                { text: "Permitir solo lectura", value: 3 }
+            ],
         },
-        layoutOption: 'Opción de diseño',
-        saveType: 'Guardar tipo',
-        unit: 'pg',
-        exportFormat: 'Formato de exportación',
+        layoutOption: "Opciones de diseño",
+        saveType: "Guardar tipo",
+        unit: "pg",
+        exportFormat: "Formato de exportación",
         pptOptions: {
-            header: "Configuración de PowerPoint",
+            header: "Ajustes de PowerPoint",
             pptTypes: [
-                { text: "PowerPoint 97to2003 Presentation (.ppt)", value: 0 },
-                { text: "PowerPoint 2007 Presentation (.pptx)", value: 1 },
-                { text: "PowerPoint 2010 Presentation (.pptx)", value: 2 },
-                { text: "PowerPoint 2013 Presentation (.pptx)", value: 3 }
+                { text: "Presentación PowerPoint 97 a 2003 (.pptx)", value: 0 },
+                { text: "Presentación PowerPoint 2007 (.pptx)", value: 1 },
+                { text: "Presentación PowerPoint 2010 (.pptx)", value: 2 },
+                { text: "Presentación PowerPoint 2013 (.pptx)", value: 3 }
             ]
         },
-        dpi: 'dpi',
-
-        doneButton: 'DE ACUERDO',
-        cancelButton: 'Cancelar',
+        dpi: "dpi",
+        doneButton: "OK",
+        cancelButton: "Cancelar",
         csvOptions: {
-            delimiter: 'Delimitador de campo',
-            formatter: 'Valores con formato',
-            header: 'Configuración de CSV',
-            qualifier: 'Calificador de texto',
-            customVal: 'Valor personalizado',
-            qualifierList: [{ text: "Doble comillas", value: "\"" }, { text: "Comillas simples", value: "'" }, { text: "Ninguna", value: "" }, { text: "Personalizado", value: "Custom" }],
-            delimiterList: [{ text: "Coma", value: "," }, { text: "Espacio", value: " " }, { text: "Pestaña", value: "   " }, { text: "Punto y coma", value: ";" }, { text: "Personalizado", value: "Custom" }]
+            formatter: "Valores formateados",
+            header: "Ajustes CSV",
+            delimiter: "Delimitador de campo",
+            qualifier: "Calificador de texto",
+            customVal: "Valor personalizado",
+            qualifierList: [
+                { text: "Comillas dobles", value: """ },
+                { text: "Comillas sencillas", value: "\"" },
+                { text: "Ninguno", value: "" },
+                { text: "Personalizado", value: "Personalizado" }
+            ],
+            delimiterList: [
+                { text: "Coma", value: "," },
+                { text: "Espacio", value: " " },
+                { text: "Tabulación", value: "   " },
+                { text: "Punto y coma", value: ";" },
+                { text: "Personalizado", value: "Personalizado" }
+            ]
         },
         htmlOptions: {
-            header: 'Configuración HTML',
-            separator: 'Separador de página'
+            header: "Ajustes HTML",
+            separator: "Separador de página"
         },
-        excelOptions:
-        {
-            header: 'Configuración de Excel',
-            sheetProtection: 'Protección de hojas',
-            disableCellFormat: 'Deshabilitar formato de celda',
-            readonly: 'Solo lectura',
+        excelOptions: {
+            header: "Ajustes de Excel",
+            sheetProtection: "Protección de hoja",
+            disableCellFormat: "Deshabilitar formato de celda",
+            readonly: "Solo lectura",
             saveTypes: [
-                { text: "Libro de Excel97to2003 (.xls)", value: 0 },
+                { text: "Libro de Excel 97 a 2003 (.xls)", value: 0 },
                 { text: "Libro de Excel 2007 (.xlsx)", value: 1 },
-                { text: "Libro de Excel 2010 (.xlsx)", value: 2 },
-                { text: "Libro de Excel 2013 (.xlsx)", value: 3 },
+                { text: "Libro de Excel 2010  (.xlsx)", value: 2 },
+                { text: "Libro de Excel 2013  (.xlsx)", value: 3 },
                 { text: "Libro de Excel 2016 (.xlsx) ", value: 4 }
             ],
             sheetProtectionTypes: [
-                { text: "Ninguna", value: 0 },
+                { text: "Ninguno", value: 0 },
                 { text: "Objetos", value: 1 },
-                { text: "Escenarios", value: 2 },
-                { text: "Formateo de celdas", value: 4 },
-                { text: "Columnas de formato", value: 8 },
-                { text: "Formateo de filas", value: 16 },
+                { text: "Escenario", value: 2 },
+                { text: "Formato de celdas", value: 4 },
+                { text: "Formato de columnas", value: 8 },
+                { text: "Formato de filas", value: 16 },
                 { text: "Insertar columnas", value: 32 },
                 { text: "Insertar filas", value: 64 },
-                { text: "Inserción de hipervínculos", value: 128 },
-                { text: "Eliminación de columnas", value: 256 },
-                { text: "Eliminación de filas", value: 512 },
+                { text: "Insertar hipervínculos", value: 128 },
+                { text: "Eliminar columnas", value: 256 },
+                { text: "Eliminar filas", value: 512 },
                 { text: "Celdas bloqueadas", value: 1024 },
-                { text: "Clasificación", value: 2048 },
-                { text: "Filtración", value: 4096 },
+                { text: "Ordenar", value: 2048 },
+                { text: "Filtros", value: 4096 },
                 { text: "Uso de tablas dinámicas", value: 8192 },
                 { text: "Celdas desbloqueadas", value: 16384 },
                 { text: "Contenido", value: 32768 },
-                { text: "Todos", value: 65535 }
+                { text: "Todo", value: 65535 }
             ],
             disableCellFormatTypes: [
-                { text: "Ninguna", value: 0 },
-                { text: "Todos", value: 1 },
-                { text: "Frontera", value: 2 },
+                { text: "Ninguno", value: 0 },
+                { text: "Todo", value: 1 },
+                { text: "Borde", value: 2 },
                 { text: "Estilo", value: 3 }
             ],
             layoutOptionTypes: [
-                { text: "Por defecto", value: 0 },
-                { text: "Ignorar combinación de celdas", value: 1 }
+                { text: "Predeterminado", value: 0 },
+                { text: "Ignorar combinar celda", value: 2 }
             ],
         }
     },
     findAlertMessage: {
-        resultsEndReached: 'Has llegado al final de los resultados de búsqueda. Si desea continuar, cierre el cuadro de diálogo y busque de nuevo.',
-        noResultsFound: 'El texto especificado no coincide con ninguno de los contenidos del informe. Cambie su palabra clave de búsqueda y vuelva a intentarlo.'
+        resultsEndReached: "Has llegado al final de los resultados de la búsqueda. Para continuar, cierra el cuadro de diálogo y vuelve a buscar.",
+        noResultsFound: "El texto especificado no coincide con ninguno de los contenidos en el informe. Cambia la palabra clave de búsqueda y vuelve a intentarlo."
     },
     credential: {
         userName: "Nombre de usuario",
@@ -260,46 +317,48 @@ ej.ReportViewer.Locale["es-ES"] = {
     },
     waterMark: {
         selectOption: "Seleccionar opción",
-        selectValue: "Seleccione un valor"
+        selectValue: "Seleccionar un valor",
+        noDataFound: "Datos no encontrados"
     },
     errorMessage: {
-        startMessage: 'Visor de informes encontró algunos problemas al cargar este informe. Por favor',
-        middleMessage: 'Haga clic aquí',
-        endMessage: 'para ver los detalles del error',
-        closeMessage: 'Cerrar este mensaje',
-        exportAjaxFailureMsg: 'No se puede exportar el documento debido a una falla en la conexión del servicio de informes.',
-        printAjaxFailureMsg: 'No se puede imprimir el documento debido a una falla en la conexión del servicio de informes.',
-        reportLoadAjaxFailureMsg: 'No se puede avanzar la acción de Informe debido a una falla en la conexión del Servicio de Reportes',
-        cancelReportProcessMsg: 'El procesamiento del informe fue cancelado.',
+        startMessage: "El visualizador de informes ha tenido problemas al cargar este informe. Por favor ",
+        middleMessage: "Haz clic aquí",
+        endMessage: "para ver los detalles del error",
+        closeMessage: "Cerrar este mensaje",
+        exportAjaxFailureMsg: "No se ha podido exportar el documento debido a un fallo en la conexión del servicio de informes.",
+        printAjaxFailureMsg: "No se ha podido imprimir el documento debido a un fallo en la conexión del Servicio de informes.",
+        reportLoadAjaxFailureMsg: "No se ha podido avanzar en la acción del Informe debido a un fallo en la conexión del servicio de informes.",
+        cancelReportProcessMsg: "El procesamiento de informe fue cancelado"
     },
     progressMessage: {
-        exportLoadingMessage: 'Preparando el documento de exportación ... Por favor espere ...',
-        printLoadingMessage: 'Preparando datos de impresión ... Por favor espere ...',
-        printPreparationMessage: 'Preparando datos de impresión ... {0}% completado ... Por favor espere ...',
-        exportPreparationMessage: 'Preparando el documento de exportación ... {0}% completado ... Por favor espere ...',
-        cancelText: 'cancelar',
+        exportLoadingMessage: "Preparando la exportación del documento... Por favor, espera...",
+        printLoadingMessage: "Preparando datos de impresión... Por favor espera...",
+        printPreparationMessage: "Preparando datos de impresión... {0}% completado... Por favor espera...",
+        exportPreparationMessage: "Preparando la exportación del documento... {0}% completado... Por favor espera...",
+        cancelText: "Cancelar",
     },
     alertMessage: {
-        close: "Cerca",
-        title: "ReportViewer",
-        done: "DE ACUERDO",
+        close: "Cerrar",
+        title: "Visualizador de informes",
+        done: "OK",
         showDetails: "Mostrar detalles",
         hideDetails: "Ocultar detalles",
         reportLoad: "Informe cargado:",
-        RVERR0001: "Visor de informes no pudo cargar el Informe",
-        RVERR0002: "Visor de informes no pudo procesar el Informe",
-        RVERR0003: "Se produjo un error en la devolución de datos de ajax",
-        RVERR0004: "Seleccione un valor para el parámetro",
-        RVERR0005: "Al parámetro {nombre de parámetro} le falta un valor",
-        RVERR0006: "Por favor ingrese la entrada del tipo de datos float",
-        RVERR0007: "Ingrese la entrada de tipo de datos enteros",
-        RVERR0008: "Visor de informes no pudo validar las credenciales de Datasource",
-        RVERR0009: "Los márgenes están superpuestos o están fuera del papel. Ingrese un tamaño de margen diferente.",
-        RVERR0010: "Ingrese un valor para el parámetro",
-        RVERR0011: "El parámetro no puede estar en blanco",
+        RVERR0001: "El visualizador de informes no pudo cargar el informe",
+        RVERR0002: "El visualizador de informes no pudo procesar el informe",
+        RVERR0003: "Se ha producido un error en la transmisión de datos ajax",
+        RVERR0004: "Seleccionar un valor para el parámetro",
+        RVERR0005: "Al parámetro {parameter name} le falta un valor",
+        RVERR0006: "Por favor, introducir la entrada del tipo de datos flotantes",
+        RVERR0007: "Ingresar la entrada del tipo de datos entero",
+        RVERR0008: "El visualizador de informes no pudo validar las credenciales de la fuente de datos",
+        RVERR0009: "Los márgenes están superpuestos o fuera del papel. Introduce un tamaño de margen diferente.",
+        RVERR0010: "Indicar un valor para el parámetro",
+        RVERR0011: "El parámetro no puede estar vacío",
         RVERR0012: "El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo."
     },
     selectAll: "Seleccionar todo",
     viewButton: "Vista del informe",
-    parameterProcessingMessage: 'Cargando parámetros dependientes ...'
+    parameterProcessingMessage: 'Cargando parámetros dependientes ...',
+    parameterBlockTitle: 'Parámetros de informe'
 };

@@ -99,7 +99,24 @@ ej.ReportViewer.Locale["it-IT"] = {
 			headerText: "Esporta impostazione",
 			contentText: "Scegli l'opzione di configurazione dell'esportazione per impostare la qualità dell'immagine, salvare il tipo di parola e il documento Excel."
 		},
+		performance: {
+			headerText: 'Indicateurs de performance',
+            contentText: 'Les mesures de performances des rapports sont affichées.',
+		}
 	},
+	PerformanceMetricsDialog: {
+        title: 'Rapporter les mesures de performance',
+        reportProcessing: 'Délai de traitement du rapport',
+        datasetProcessing: 'Temps de traitement de lensemble de données',
+        parse: 'Temps danalyse',
+        evaluate: 'Évaluer le temps',
+        render: 'Temps de rendu',
+		layout: 'Tempo di layout',
+        datasetDetails: {
+            rows: 'Nombre de lignes',
+            dataRetrival: 'Temps de récupération des données'
+        },
+    },
 	pagesetupDialog: {
 		close: 'Vicino',
 		paperSize: 'Misura del foglio',
@@ -130,7 +147,8 @@ ej.ReportViewer.Locale["it-IT"] = {
 			imageQualityTypes:
 				[{ text: "Basso", value: "2" },
 				{ text: "medio", value: "5" },
-				{ text: "Alto", value: "10" }]
+				{ text: "Alto", value: "10" }],
+			usePrintSizes: 'Usa le impostazioni della pagina di stampa'
 		},
 		pdfOptions: {
 			header: 'Impostazioni PDF',
@@ -259,7 +277,8 @@ ej.ReportViewer.Locale["it-IT"] = {
 	},
 	waterMark: {
 		selectOption: "Selezionare l'opzione",
-		selectValue: 'Selezionare un valore'
+		selectValue: 'Selezionare un valore',
+		noDataFound: 'Nessun dato trovato'
 	},
 	errorMessage: {
 		startMessage: 'Report Viewer ha riscontrato alcuni problemi durante il caricamento di questo report. per favore',
@@ -301,4 +320,5 @@ ej.ReportViewer.Locale["it-IT"] = {
 	selectAll: 'Seleziona tutto',
 	viewButton: "Visualizza rapporto",
 	parameterProcessingMessage: 'Caricamento dei parametri dipendenti ...',
+	parameterBlockTitle: 'Parametri del rapporto'
 };

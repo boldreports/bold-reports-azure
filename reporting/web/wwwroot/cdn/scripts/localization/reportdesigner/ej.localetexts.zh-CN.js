@@ -572,7 +572,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         miscellaneous: {
@@ -877,7 +877,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         miscellaneous: {
@@ -1006,7 +1006,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         miscellaneous: {
@@ -1096,7 +1096,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibilityCategory: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         miscellaneousCategory: {
@@ -1509,7 +1509,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         position: {
@@ -1640,7 +1640,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         miscellaneous: {
@@ -1895,6 +1895,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             }
         },
         elasticSearchDatasource: {
+            connectionType: '连接类型',
             authenticationType: '认证类型',
             window: '视窗',
             server: 'ElasticSearch 服务器',
@@ -1903,6 +1904,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             userName: '用户名',
             password: '密码',
             port: '港口',
+            connectionTypes: {
+                elasticSQL: '弹性搜索 SQL',
+                openDistro: '打开发行版'
+            },
             basicOption: {
                 serverName: '服务器名称',
                 database: '数据库'
@@ -1913,6 +1918,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 password: '指定密码',
                 serverName: '指定服务器名称',
                 databaseName: '指定数据库名称'
+            },
+            noteMessage: {
+                note: '笔记: ',
+                message: '要连接到 Amazon Web Service 管理的 Elasticsearch 实例，请使用 Open Distro 连接类型。'
             }
         },
         postgreSQLDatasource: {
@@ -2503,7 +2512,24 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 headerText: '找',
                 contentText: '在报告中查找文本。'
             },
+            performance: {
+                headerText: '性能指标',
+                contentText: '显示报告性能指标。',
+            },
             viewDesign: '关闭预览',
+        },
+        PerformanceMetricsDialog: {
+            title: '报告绩效指标',
+            reportProcessing: '报告处理时间',
+            datasetProcessing: '数据集处理时间',
+            parse: '解析时间',
+            evaluate: '评估时间',
+            render: '渲染时间',
+            layout: '布局时间',
+            datasetDetails: {
+                rows: '行数',
+                dataRetrival: '数据检索时间'
+            },
         },
         pagesetupDialog: {
             close: '关',
@@ -2546,7 +2572,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 imageQuality: '畫面質量',
                 imageQualityTypes: [{ text: '低的', value: '2' },
                     { text: '中等的', value: '5' },
-                    { text: '高的', value: '10' }]
+                    { text: '高的', value: '10' }],
+                usePrintSizes: '使用打印页面设置'
             },
             pdfOptions: {
                 header: 'PDF 設置',
@@ -2699,7 +2726,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         waterMark: {
             selectOption: '选择选项',
-            selectValue: '选择一个值'
+            selectValue: '选择一个值',
+            noDataFound: '没有找到数据'
         },
         errorMessage: {
             startMessage: '报告查看器遇到一些加载此报告的问题。请',
@@ -2754,7 +2782,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         selectAll: '全选',
         viewButton: '查看报告',
         parameterBlock: '参数块',
-        parameterProcessingMessage: '加載參數值 ...'
+        parameterProcessingMessage: '加載參數值 ...',
+        parameterBlockTitle: '报告参数'
     },
     sortData: {
         sorting: '排序',
@@ -3182,7 +3211,11 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         dragOnDrop: '拖放',
         categoryList: ' 类别清单',
         removeDataField: '删除数据字段',
-        dataFieldSettings: '数据字段设置'
+        dataFieldSettings: '数据字段设置',
+        warningMessage: {
+            title: '数据分配',
+            contentMessage: '添加超过 5 {categoryName}将导致渲染延迟。 无论如何要添加吗 ？'
+        }
     },
     reportProperty: {
         header: '头',
@@ -3461,7 +3494,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目',
             intialToggleState: '初始切換狀態'
         },
@@ -3652,7 +3685,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见'
+            hidden: '隐'
         },
         miscellaneous: {
             categoryName: '杂',
@@ -3853,7 +3886,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         staticGroupProp: {
@@ -4164,6 +4197,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 commonContent: '过滤器 ',
                 booleanValidation: ' 没有任何值可以过滤。请提供过滤器的值.',
                 stringValidation: ' 没有适当的值来过滤. '
+            },
+            queryCondition: {
+                and: '和',
+                or: '或者'
             }
         },
         previewArea: {
@@ -4572,7 +4609,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
         }
     },
     mapProperty: {
@@ -4771,7 +4808,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         visibility: {
             categoryName: '能见度',
-            visible: '可见',
+            hidden: '隐',
             toggleItem: '切換項目'
         },
         styleTooltip: '樣式',

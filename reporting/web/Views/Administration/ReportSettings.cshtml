@@ -4,8 +4,11 @@
     ViewBag.Title = "[[[Report Settings]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
     var makepublic = Convert.ToBoolean(ViewBag.ReportSettings);
-    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ReportSiteSettings);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var makePublicHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ReportSiteSettings);
+    var scheduleReportSettingsHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ScheduleReportSettings);
+    var customScheduleTemplateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.CustomScheduleTemplate);
 }
 
 @section styles{
@@ -32,6 +35,9 @@
         var subjectItem = "@Url.Action("GetSubjectItem", "scheduler")";
         var getScheduleContentUrl = "@Url.Action("GetScheduleCustomBody", "scheduler")";
         var validateFTPCredentials = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+        var makePublicHelpSiteUrl = "@makePublicHelpSiteUrl";
+        var scheduleReportSettingsHelpSiteUrl = "@scheduleReportSettingsHelpSiteUrl";
+        var customScheduleTemplateHelpSiteUrl = "@customScheduleTemplateHelpSiteUrl";
     </script>
 }
 

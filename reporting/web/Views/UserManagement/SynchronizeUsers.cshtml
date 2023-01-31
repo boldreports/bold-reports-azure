@@ -2,7 +2,7 @@
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     ViewBag.Title = "[[[Synchronize Users]]] - " + globalAppSettings.SystemSettings.OrganizationName;
-    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncAzureAdUsers);
+    ViewBag.HelpSiteUrl = (ViewBag.AdSync > 0) ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncADUsers) : ((ViewBag.AzureAdSync > 0) ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncAzureAdUsers) : "");
 }
 
 @section scripts{

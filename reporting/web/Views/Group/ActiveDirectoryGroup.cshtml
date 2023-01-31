@@ -2,8 +2,8 @@
     var globalAppSettings = _globalAppSettings;
 
     ViewBag.Title = "[[[Synchronize Active Directory Groups]]] - " + globalAppSettings.SystemSettings.OrganizationName;
-    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncAzureAdGroups);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.HelpSiteUrl = (ViewBag.AdSync > 0) ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncADGroups) : ((ViewBag.AzureAdSync > 0) ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SyncAzureAdGroups) : "");
 }
 
 @section scripts{
