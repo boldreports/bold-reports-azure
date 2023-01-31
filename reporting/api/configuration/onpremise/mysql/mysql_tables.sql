@@ -1613,9 +1613,9 @@ INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,Modified
 ;
 INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SMTPServer','SMTPServer.EmailSettings',Now(),1)
 ;
-INSERT into{database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SMTPPort','SMTPPort.EmailSettings',Now(),1)
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SMTPPort','SMTPPort.EmailSettings',Now(),1)
 ;
-INSERT into{database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SenderName','SenderName.EmailSettings',Now(),1)
+INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SenderName','SenderName.EmailSettings',Now(),1)
 ;
 INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (19,'SenderEmailAddress','SenderEmailAddress.EmailSettings',Now(),1)
 ;
@@ -1676,7 +1676,7 @@ ALTER TABLE {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemId) REFERE
 ;
 ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemTypeId) REFERENCES  {database_name}.BOLDRS_ItemType (Id)
 ;
-ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES  {database_name}.BOLDRS_Item (Id)
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES  {database_name}.BOLDRS_AttributeType (Id)
 ;
 ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(CreatedById) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
@@ -1735,11 +1735,11 @@ ALTER TABLE  {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(ItemId) REF
 ;
 ALTER TABLE  {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(UserId) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
-ALTER TABLE {database_name}.BOLDRS_UserPermission ADD FOREIGN KEY ([SettingsTypeId]) REFERENCES [BOLDRS_SettingsType] (Id) 
+ALTER TABLE {database_name}.BOLDRS_UserPermission ADD FOREIGN KEY (SettingsTypeId) REFERENCES {database_name}.BOLDRS_SettingsType (Id) 
 ;
-ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY([ScopeGroupId]) REFERENCES [BOLDRS_Group] ([Id])
+ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(ScopeGroupId) REFERENCES {database_name}.BOLDRS_Group (Id)
 ;
-ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY([ItemTypeId]) REFERENCES [BOLDRS_ItemType] ([Id])
+ALTER TABLE {database_name}.BOLDRS_UserPermission  ADD  FOREIGN KEY(ItemTypeId) REFERENCES {database_name}.BOLDRS_ItemType (Id)
 ;
 
 ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(PermissionEntityId) REFERENCES  {database_name}.BOLDRS_PermissionEntity (Id)
@@ -1748,11 +1748,11 @@ ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(ItemId) RE
 ;
 ALTER TABLE  {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(GroupId) REFERENCES  {database_name}.BOLDRS_Group (Id)
 ;
-ALTER TABLE {database_name}.BOLDRS_GroupPermission ADD FOREIGN KEY ([SettingsTypeId]) REFERENCES [BOLDRS_SettingsType] (Id)
+ALTER TABLE {database_name}.BOLDRS_GroupPermission ADD FOREIGN KEY (SettingsTypeId) REFERENCES {database_name}.BOLDRS_SettingsType (Id)
 ;
-ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY([ScopeGroupId]) REFERENCES [BOLDRS_Group] ([Id])
+ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(ScopeGroupId) REFERENCES {database_name}.BOLDRS_Group (Id)
 ;
-ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY([ItemTypeId]) REFERENCES [BOLDRS_ItemType] ([Id])
+ALTER TABLE {database_name}.BOLDRS_GroupPermission  ADD  FOREIGN KEY(ItemTypeId) REFERENCES {database_name}.BOLDRS_ItemType (Id)
 ;
 
 ALTER TABLE  {database_name}.BOLDRS_ScheduleDetail  ADD FOREIGN KEY(ScheduleId) REFERENCES  {database_name}.BOLDRS_Item (Id)

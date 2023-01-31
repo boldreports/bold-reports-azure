@@ -56,6 +56,10 @@ ej.QueryDesigner.Locale['tr-TR'] = {
             commonContent: 'Filtre ',
             booleanValidation: ' filtrelenecek herhangi bir değere sahip değil. Lütfen filtre değerlerini sağlayın.',
             stringValidation: ' filtrelemek için uygun değerlere sahip değil. '
+        },
+        queryCondition: {
+            and: 'VE',
+            or: 'VEYA'
         }
     },
     previewArea: {

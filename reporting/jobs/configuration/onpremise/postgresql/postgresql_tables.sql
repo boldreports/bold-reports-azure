@@ -1570,15 +1570,15 @@ INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) V
 ;
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ScheduleExportFileSettings',N'ScheduleExportFileSettings',now(),1)
 ;
-INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OAuth2',N'UserDirectory.OAuth2',GETDATE(),1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OAuth2',N'UserDirectory.OAuth2',now(),1)
 ;
-INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OpenIDConnect',N'UserDirectory.OpenIDConnect',GETDATE(),1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OpenIDConnect',N'UserDirectory.OpenIDConnect',now(),1)
 ;
-INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.AuthControl',N'UserDirectory.AuthControl',GETDATE(),1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.AuthControl',N'UserDirectory.AuthControl',now(),1)
 ;
-INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ReportSettings',N'ReportSettings',GETDATE(),1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ReportSettings',N'ReportSettings',now(),1)
 ;
-INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (2,N'NotificationSettings',N'NotificationSettings',GETDATE(),1)
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (2,N'NotificationSettings',N'NotificationSettings',now(),1)
 ;
 
 ---- PASTE ALTER Queries below this section --------
@@ -1607,7 +1607,7 @@ ALTER TABLE BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item
 ;
 ALTER TABLE BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemTypeId) REFERENCES BOLDRS_ItemType (Id)
 ;
-ALTER TABLE BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES BOLDRS_Item (Id)
+ALTER TABLE BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES BOLDRS_AttributeType (Id)
 ;
 ALTER TABLE BOLDRS_ItemAttribute  ADD FOREIGN KEY(CreatedById) REFERENCES BOLDRS_User (Id)
 ;

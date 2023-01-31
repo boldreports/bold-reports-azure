@@ -56,6 +56,10 @@ ej.QueryDesigner.Locale['de-DE'] = {
             commonContent: 'Der Filter ist eingeschaltet ',
             booleanValidation: ' hat keine Werte zum Filtern. Bitte geben Sie die Werte für den Filter an.',
             stringValidation: ' hat keine richtigen Werte zum Filtern. '
+        },
+        queryCondition: {
+            and: 'UND',
+            or: 'ODER'
         }
     },
     previewArea: {

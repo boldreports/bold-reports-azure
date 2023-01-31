@@ -61,6 +61,8 @@
 
         {{if DirectoryType == @((int)DirectoryType.AzureAD)}}
         <span class="su su-azure-ad grid-directory-icon"> </span>
+        {{else DirectoryType == @((int)DirectoryType.AzureADB2C)}}
+        <span class="su su-azure-b2c grid-directory-icon"> </span>
         {{else DirectoryType == @((int)DirectoryType.ExternalDatabase)}}
         <span class="su su-datasource grid-directory-icon"> </span>
         {{else DirectoryType == @((int)DirectoryType.WindowsAD)}}
@@ -435,6 +437,10 @@
             @if (ViewBag.GoogleUserCount > 0)
             {
                 <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-google"><span class="su su-google path1"></span><span class="su su-google path2"></span><span class="su su-google path3"></span><span class="su su-google path4"></span></span> - [[[Google User]]]</div>
+            }
+            @if (ViewBag.AzureADB2CUserCount > 0)
+            {
+                <div id="ad-indication" class="ad-azure-indication col-lg-12"><span class="su su-azure-b2c"></span> - [[[Azure AD B2C User]]]</div>
             }
         </div>
     </div>

@@ -98,7 +98,24 @@ ej.ReportViewer.Locale["en-US"] = {
         exportsetup: {
             headerText: 'Export Setup',
             contentText: 'Choose export setup option to set the image quality, save type of word, and excel document.'
+        },
+        performance: {
+            headerText: 'Performance Metrics',
+            contentText: 'Report performance metrics are shown.',
         }
+    },
+    PerformanceMetricsDialog: {
+        title: 'Report Performance Metrics',
+        reportProcessing: 'Report Processing Time',
+        datasetProcessing: 'DataSet Processing Time',
+        parse: 'Parsing Time',
+        evaluate: 'Evaluate Time',
+        render: 'Rendering Time',
+        layout: 'Layout Time',
+        datasetDetails: {
+            rows: 'Rows Count',
+            dataRetrival: 'Data Retrieval Time'
+        },
     },
     pagesetupDialog: {
         close: 'Close',
@@ -130,7 +147,8 @@ ej.ReportViewer.Locale["en-US"] = {
             imageQualityTypes:
                 [{ text: "Low", value: "2" },
                 { text: "Medium", value: "5" },
-                { text: "High", value: "10" }]
+                { text: "High", value: "10" }],
+            usePrintSizes: 'Use Print Page Settings'
         },
         pdfOptions: {
             header: 'PDF Settings',
@@ -257,7 +275,8 @@ ej.ReportViewer.Locale["en-US"] = {
     },
     waterMark: {
         selectOption: 'Select option',
-        selectValue: 'Select a value'
+        selectValue: 'Select a value',
+        noDataFound: 'No Data Found'
     },
     errorMessage: {
         startMessage: 'Report Viewer encountered some problems loading this report. Please',
@@ -298,5 +317,6 @@ ej.ReportViewer.Locale["en-US"] = {
     },
     selectAll: 'Select All',
     viewButton: 'View Report',
-    parameterProcessingMessage: 'Loading dependent parameters...'
+    parameterProcessingMessage: 'Loading dependent parameters...',
+    parameterBlockTitle: 'Report Parameters'
 };

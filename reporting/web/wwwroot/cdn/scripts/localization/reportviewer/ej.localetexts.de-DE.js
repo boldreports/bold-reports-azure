@@ -98,6 +98,23 @@ ej.ReportViewer.Locale["de-DE"] = {
         exportsetup: {
             headerText: 'Setup exportieren',
             contentText: 'Wählen Sie die Option "Setup exportieren", um die Bildqualität festzulegen, den Worttyp zu speichern und das Dokument zu übertreffen.'
+        },
+        performance: {
+            headerText: 'Leistungskennzahlen',
+            contentText: 'Berichtsleistungsmetriken werden angezeigt.',
+        }
+    },
+    PerformanceMetricsDialog: {
+        title: 'Leistungskennzahlen melden',
+        reportProcessing: 'Bearbeitungszeit melden',
+        datasetProcessing: 'DataSet-Verarbeitungszeit',
+        parse: 'Parsing-Zeit',
+        evaluate: 'Zeit auswerten',
+        render: 'Renderzeit',
+        layout: 'Layoutzeit',
+        datasetDetails: {
+            rows: 'Zeilen zählen',
+            dataRetrival: 'Datenabrufzeit'
         }
     },
     pagesetupDialog: {
@@ -130,7 +147,8 @@ ej.ReportViewer.Locale["de-DE"] = {
             imageQualityTypes:
                 [{ text: "Niedrig", value: "2" },
                 { text: "Mittel", value: "5" },
-                { text: "Hoch", value: "10" }]
+                { text: "Hoch", value: "10" }],
+            usePrintSizes: 'Verwenden Sie die Druckseiteneinstellungen'
         },
         pdfOptions: {
             header: 'PDF-Einstellungen',
@@ -262,7 +280,8 @@ ej.ReportViewer.Locale["de-DE"] = {
     },
     waterMark: {
         selectOption: 'Wähle eine Option',
-        selectValue: 'Wähle einen Wert'
+        selectValue: 'Wähle einen Wert',
+        noDataFound: 'Keine Daten gefunden'
     },
     errorMessage: {
         startMessage: 'Im Berichts Viewer sind beim Laden dieses Berichts Probleme aufgetreten. Bitte',
@@ -304,4 +323,5 @@ ej.ReportViewer.Locale["de-DE"] = {
     selectAll: 'Wählen Sie Alle',
     viewButton: "Bericht sehen",
     parameterProcessingMessage: 'Abhängige Parameter werden geladen ...',
+    parameterBlockTitle: 'Berichtsparameter'
 };

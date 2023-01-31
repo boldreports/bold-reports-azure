@@ -1,6 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = "[[[Manage License]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.LicenseSettings);
     var PlanDetails = ViewData["licenseSettings"] as Dictionary<string, string>;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     bool isValidLicense = ViewBag.LicenseMessage == null;

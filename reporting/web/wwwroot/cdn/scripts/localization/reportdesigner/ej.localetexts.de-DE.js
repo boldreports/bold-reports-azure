@@ -572,7 +572,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         miscellaneous: {
@@ -877,7 +877,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         miscellaneous: {
@@ -1006,7 +1006,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         miscellaneous: {
@@ -1096,7 +1096,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibilityCategory: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         miscellaneousCategory: {
@@ -1509,7 +1509,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         position: {
@@ -1640,7 +1640,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         miscellaneous: {
@@ -1895,6 +1895,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
             }
         },
         elasticSearchDatasource: {
+            connectionType: 'Verbindungstyp',
             authenticationType: 'Authentifizierungsart',
             window: 'Fenster',
             server: 'ElasticSearch Server',
@@ -1903,6 +1904,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
             userName: 'Nutzername',
             password: 'Passwort',
             port: 'Hafen',
+            connectionTypes: {
+                elasticSQL: 'Elasticsearch SQL',
+                openDistro: 'Distro öffnen'
+            },
             basicOption: {
                 serverName: 'Server Name',
                 database: 'Datenbank'
@@ -1913,6 +1918,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 password: 'Geben Sie das Passwort an',
                 serverName: 'Geben Sie den Servernamen an',
                 databaseName: 'Geben Sie den Datenbanknamen an'
+            },
+            noteMessage: {
+                note: 'Notiz: ',
+                message: 'Um eine Verbindung zu einer von Amazon Web Service gehosteten Elasticsearch-Instanz herzustellen, verwenden Sie bitte den Verbindungstyp Open Distribution.'
             }
         },
         postgreSQLDatasource: {
@@ -2504,7 +2513,24 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 headerText: 'Finden',
                 contentText: 'Suchen Sie nach Text im Bericht.'
             },
+            performance: {
+                headerText: 'Leistungskennzahlen',
+                contentText: 'Berichtsleistungsmetriken werden angezeigt.',
+            },
             viewDesign: 'Vorschau schließen',
+        },
+        PerformanceMetricsDialog: {
+            title: 'Leistungskennzahlen melden',
+            reportProcessing: 'Bearbeitungszeit melden',
+            datasetProcessing: 'DataSet-Verarbeitungszeit',
+            parse: 'Parsing-Zeit',
+            evaluate: 'Zeit auswerten',
+            render: 'Renderzeit',
+            layout: 'Layoutzeit',
+            datasetDetails: {
+                rows: 'Zeilen zählen',
+                dataRetrival: 'Datenabrufzeit'
+            },
         },
         pagesetupDialog: {
             close: 'Schließen',
@@ -2547,7 +2573,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 imageQuality: 'Bildqualität',
                 imageQualityTypes: [{ text: 'Niedrig', value: '2' },
                     { text: 'Mittel', value: '5' },
-                    { text: 'Hoch', value: '10' }]
+                    { text: 'Hoch', value: '10' }],
+                usePrintSizes: 'Verwenden Sie die Druckseiteneinstellungen'
             },
             pdfOptions: {
                 header: 'PDF-Einstellungen',
@@ -2702,7 +2729,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         waterMark: {
             selectOption: 'Wähle eine Option',
-            selectValue: 'Wähle einen Wert'
+            selectValue: 'Wähle einen Wert',
+            noDataFound: 'Keine Daten gefunden'
         },
         errorMessage: {
             startMessage: 'Beim Laden dieses Berichts sind in der Berichtsanzeige einige Probleme aufgetreten. Bitte',
@@ -2757,7 +2785,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         selectAll: 'Wählen Sie Alle',
         viewButton: 'Zeige Bericht',
         parameterBlock: 'Parameterblock',
-        parameterProcessingMessage: 'Parameterwerte laden ...'
+        parameterProcessingMessage: 'Parameterwerte laden ...',
+        parameterBlockTitle: 'Berichtsparameter'
     },
     sortData: {
         sorting: 'Sortierung',
@@ -3187,7 +3216,11 @@ ej.ReportDesigner.Locale['de-DE'] = {
         dragOnDrop: 'Ziehen und loslassen',
         categoryList: ' Kategorieliste',
         removeDataField: 'Datenfeld entfernen',
-        dataFieldSettings: 'Datenfeldeinstellungen'
+        dataFieldSettings: 'Datenfeldeinstellungen',
+        warningMessage: {
+            title: 'Daten zuweisen',
+            contentMessage: 'Das Hinzufügen von mehr als 5 {categoryName} führt zu einer Verzögerung beim Rendern. Möchten Sie trotzdem hinzufügen ?'
+        }
     },
     reportProperty: {
         header: 'Header',
@@ -3466,7 +3499,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten',
             intialToggleState: 'Anfänglicher Umschaltzustand'
         },
@@ -3657,7 +3690,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar'
+            hidden: 'Versteckt'
         },
         miscellaneous: {
             categoryName: 'Sonstiges',
@@ -3858,7 +3891,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         staticGroupProp: {
@@ -4168,6 +4201,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 commonContent: 'Der Filter ist eingeschaltet ',
                 booleanValidation: ' hat keine Werte zum Filtern. Bitte geben Sie die Werte für den Filter an.',
                 stringValidation: ' hat keine richtigen Werte zum Filtern. '
+            },
+            queryCondition: {
+                and: 'UND',
+                or: 'ODER'
             }
         },
         previewArea: {
@@ -4576,7 +4613,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar'
+            hidden: 'Versteckt'
         }
     },
     mapProperty: {
@@ -4775,7 +4812,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         visibility: {
             categoryName: 'Sichtweite',
-            visible: 'Sichtbar',
+            hidden: 'Versteckt',
             toggleItem: 'Element umschalten'
         },
         styleTooltip: 'Stil',

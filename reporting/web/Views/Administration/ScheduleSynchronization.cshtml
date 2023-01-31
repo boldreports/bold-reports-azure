@@ -2,6 +2,7 @@
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = "[[[Schedule Synchronization]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ADSyncSchedule);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 @section styles{

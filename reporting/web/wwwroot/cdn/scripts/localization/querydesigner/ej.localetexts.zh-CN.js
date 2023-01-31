@@ -56,6 +56,10 @@ ej.QueryDesigner.Locale['zh-CN'] = {
             commonContent: '过滤器 ',
             booleanValidation: ' 没有任何值可以过滤。请提供过滤器的值.',
             stringValidation: ' 没有适当的值来过滤. '
+        },
+        queryCondition: {
+            and: '和',
+            or: '或者'
         }
     },
     previewArea: {

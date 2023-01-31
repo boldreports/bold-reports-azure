@@ -242,7 +242,7 @@
         var manageLicenseUrl = "@(ServerAppConfig.IsSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
 		var contactUsUrl = "https://www.@(GlobalAppSettings.BrandingDomain)/contact";
         var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
-        var paymentPageUrl = "@Url.Action("GetCardDetail", "Payment")";
+        var paymentPageUrl = "@(ServerAppConfig.IsSelfHosted ? String.Empty : (ServerAppConfig.AppSettings.EndPoints.TenantAppUrl.TrimEnd('/') + "/sites/" + globalAppSettings.SystemSettings.TenantId + "/subscription"))";
         var getNotificationCountUrl = "@Url.Action("GetNotificationCount", "PartialView")";
         var getTenantStatusUrl = "@Url.Action("GetTenantStatus", "PartialView")";
         var helpSiteBaseUrl = "@helpSiteBaseUrl";

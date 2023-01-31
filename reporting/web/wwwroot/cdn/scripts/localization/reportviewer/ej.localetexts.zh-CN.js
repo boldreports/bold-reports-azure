@@ -99,6 +99,23 @@ ej.ReportViewer.Locale["zh-CN"] = {
             headerText: '导出设置',
             contentText: '选择导出设置选项以设置图像质量、保存字类型和 Excel 文档。'
         },
+        performance: {
+            headerText: '性能指标',
+            contentText: '显示报告性能指标。',
+        }
+    },
+    PerformanceMetricsDialog: {
+        title: '报告绩效指标',
+        reportProcessing: '报告处理时间',
+        datasetProcessing: '数据集处理时间',
+        parse: '解析时间',
+        evaluate: '评估时间',
+        render: '渲染时间',
+        layout: '布局时间',
+        datasetDetails: {
+            rows: '行数',
+            dataRetrival: '数据检索时间'
+        },
     },
     pagesetupDialog: {
         close: '关',
@@ -131,7 +148,8 @@ ej.ReportViewer.Locale["zh-CN"] = {
             imageQualityTypes:
                 [{ text: "低的", value: "2" },
                 { text: "中等的", value: "5" },
-                { text: "高的", value: "10" }]
+                { text: "高的", value: "10" }],
+            usePrintSizes: '使用打印页面设置'
         },
         pdfOptions: {
             header: 'PDF 設置',
@@ -257,7 +275,8 @@ ej.ReportViewer.Locale["zh-CN"] = {
     },
     waterMark: {
         selectOption: '选择选项',
-        selectValue: '选择一个值'
+        selectValue: '选择一个值',
+		noDataFound: '没有找到数据'
     },
     errorMessage: {
         startMessage: '报告查看器遇到一些加载此报告的问题。请',
@@ -299,4 +318,5 @@ ej.ReportViewer.Locale["zh-CN"] = {
     selectAll: '全选',
     viewButton: "查看报告",
     parameterProcessingMessage: '加载相关参数......',
+    parameterBlockTitle: '报告参数'
 };

@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var imageHelper = new ImageHelper();
 }
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@ else
                         <img src="@Url.Content("~/logos?type=login")" onerror="if (this.src != '@Url.Content(CloudAppConfig.FallbackLoginLogoUrl)') this.src = '@Url.Content(CloudAppConfig.FallbackLoginLogoUrl)';" class="error-image-1">
                     </div>
                     <div class="error-image-center-2">
-                        <img src="@GlobalAppSettings.CdnDomain/static/error-pages/v1/access-denied.svg" class="error-image-2">
+                        <img src="@imageHelper.AccessDeniedImage()" class="error-image-2">
                     </div>
                     <div class="error-type">[[[Access Denied]]]</div>
                     <div class="error-text">

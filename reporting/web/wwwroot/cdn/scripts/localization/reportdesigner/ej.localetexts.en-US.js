@@ -572,7 +572,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         miscellaneous: {
@@ -877,7 +877,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         miscellaneous: {
@@ -1006,7 +1006,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         miscellaneous: {
@@ -1096,7 +1096,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibilityCategory: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         miscellaneousCategory: {
@@ -1509,7 +1509,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         position: {
@@ -1640,7 +1640,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         miscellaneous: {
@@ -1895,6 +1895,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             }
         },
         elasticSearchDatasource: {
+            connectionType: 'Connection Type',
             authenticationType: 'Authentication Type',
             window: 'Windows',
             server: 'ElasticSearch Server',
@@ -1903,6 +1904,10 @@ ej.ReportDesigner.Locale['en-US'] = {
             userName: 'Username',
             password: 'Password',
             port: 'Port',
+            connectionTypes: {
+                elasticSQL: 'Elasticsearch SQL',
+                openDistro: 'Open Distro'
+            },
             basicOption: {
                 serverName: 'Server Name',
                 database: 'Database'
@@ -1913,6 +1918,10 @@ ej.ReportDesigner.Locale['en-US'] = {
                 password: 'Specify the Password',
                 serverName: 'Specify the server name',
                 databaseName: 'Specify the database name'
+            },
+            noteMessage: {
+                note: 'Note: ',
+                message: 'To connect to an Amazon Web Service hosted Elasticsearch instance, please use the Open Distro Connection Type.'
             }
         },
         postgreSQLDatasource: {
@@ -2504,7 +2513,24 @@ ej.ReportDesigner.Locale['en-US'] = {
                 headerText: 'Find',
                 contentText: 'Find text in the report.'
             },
+            performance: {
+                headerText: 'Performance Metrics',
+                contentText: 'Report performance metrics are shown.',
+            },
             viewDesign: 'Close Preview',
+        },
+        PerformanceMetricsDialog: {
+            title: 'Report Performance Metrics',
+            reportProcessing: 'Report Processing Time',
+            datasetProcessing: 'DataSet Processing Time',
+            parse: 'Parsing Time',
+            evaluate: 'Evaluate Time',
+            render: 'Rendering Time',
+            layout: 'Layout Time',
+            datasetDetails: {
+                rows: 'Rows Count',
+                dataRetrival: 'Data Retrieval Time'
+            },
         },
         pagesetupDialog: {
             close: 'Close',
@@ -2547,7 +2573,8 @@ ej.ReportDesigner.Locale['en-US'] = {
                 imageQuality: 'Image Quality',
                 imageQualityTypes: [{ text: 'Low', value: '2' },
                     { text: 'Medium', value: '5' },
-                    { text: 'High', value: '10' }]
+                    { text: 'High', value: '10' }],
+                usePrintSizes: 'Use Print Page Settings'
             },
             pdfOptions: {
                 header: 'PDF Settings',
@@ -2702,7 +2729,8 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         waterMark: {
             selectOption: 'Select option',
-            selectValue: 'Select a value'
+            selectValue: 'Select a value',
+            noDataFound: 'No Data Found'
         },
         errorMessage: {
             startMessage: 'Report Viewer encountered some issues loading this report. Please',
@@ -2757,7 +2785,8 @@ ej.ReportDesigner.Locale['en-US'] = {
         selectAll: 'Select All',
         viewButton: 'View Report',
         parameterBlock: 'Parameter Block',
-        parameterProcessingMessage: 'Loading parameter values ...'
+        parameterProcessingMessage: 'Loading parameter values ...',
+        parameterBlockTitle: 'Report Parameters'
     },
     sortData: {
         sorting: 'Sorting',
@@ -3188,7 +3217,11 @@ ej.ReportDesigner.Locale['en-US'] = {
         dragOnDrop: 'Drag & Drop',
         categoryList: ' Category List',
         removeDataField: 'Remove Data Field',
-        dataFieldSettings: 'Data Field Settings'
+        dataFieldSettings: 'Data Field Settings',
+        warningMessage: {
+            title: 'Data Assign',
+            contentMessage: 'Adding more than 5 {categoryName} will cause rendering delay. Would you like to add anyway ?'
+        }
     },
     reportProperty: {
         header: 'Header',
@@ -3467,7 +3500,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item',
             intialToggleState: 'Initial Toggle State'
         },
@@ -3478,7 +3511,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             toolTip: 'Tooltip',
             documentMap: 'Document Map',
             customAttributes: 'Custom Attributes',
-            bookmark: 'Bookmark',
+            bookmark: 'Bookmark'
         },
         paragraphSettings: {
             categoryName: 'Paragraph Settings',
@@ -3658,7 +3691,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible'
+            hidden: 'Hidden'
         },
         miscellaneous: {
             categoryName: 'Miscellaneous',
@@ -3859,7 +3892,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         staticGroupProp: {
@@ -4169,6 +4202,10 @@ ej.ReportDesigner.Locale['en-US'] = {
                 commonContent: 'The filter on ',
                 booleanValidation: ' does not have any values to filter on. Please provide the values for the filter.',
                 stringValidation: ' does not have proper values to filter on. '
+            },
+            queryCondition: {
+                and: 'AND',
+                or: 'OR'
             }
         },
         previewArea: {
@@ -4577,7 +4614,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible'
+            hidden: 'Hidden'
         }
     },
     mapProperty: {
@@ -4666,6 +4703,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         basicSettings: {
             categoryName: 'Basic Settings',
+            polygonLayerName: 'Polygon Layer Name',
             shapeType: 'Shapes',
             datasetName: 'Dataset',
             bindData: 'Binding Data',
@@ -4775,7 +4813,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         },
         visibility: {
             categoryName: 'Visibility',
-            visible: 'Visible',
+            hidden: 'Hidden',
             toggleItem: 'Toggle Item'
         },
         styleTooltip: 'Style',

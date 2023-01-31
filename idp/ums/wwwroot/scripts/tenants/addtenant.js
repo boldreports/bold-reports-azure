@@ -247,7 +247,6 @@ $(document).ready(function () {
                             }
 
                             $(this).removeAttr("disabled").addClass("next-alignment");
-
                         }
                         else {
                             saveDatabaseValuesTemporarly();
@@ -576,6 +575,7 @@ $(document).ready(function () {
                 moveStepper("back", 3);
 
             }
+
             $("#dialog-body-container").removeClass("grid-alignment");
             $("#dialog-body-container").removeClass("grid-height-control");
         }

@@ -3,8 +3,8 @@
 
     ViewBag.Title = "[[[Active Directory Groups import]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = null;
-    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportAzureAdGroups);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.HelpSiteUrl = ViewBag.AdImportGroup ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportADGroups) : GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ImportAzureAdGroups);
 }
 
 
