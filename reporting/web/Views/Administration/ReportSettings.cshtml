@@ -1,7 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
 
-    ViewBag.Title = "[[[ReportSettings]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.Title = "[[[Report Settings]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
     var makepublic = Convert.ToBoolean(ViewBag.ReportSettings);
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ReportSiteSettings);

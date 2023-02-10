@@ -2,45 +2,114 @@
   .app-header #application-list {
     text-align: center !important; } }
 
-.app-button {
-  border: 1px solid;
+.primary-button, .e-control.e-btn.e-flat.e-primary {
+  background: var(--primary-button-bg-normal-color);
+  border: 0;
   border-radius: 4px;
+  color: var(--primary-button-text-normal-color);
   cursor: pointer;
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   height: 28px;
-  line-height: 25px;
+  line-height: 24px;
+  min-width: 90px;
   outline: none;
   text-align: center;
-  min-width: 80px;
-  padding: 0 12px; }
-  .app-button:disabled {
-    background: #f2f2f2 !important;
-    border: #cccccc !important;
-    color: #cccccc !important; }
+  background: var(--primary-button-bg-normal-color);
+  border: 1px solid var(--primary-button-border-normal-color);
+  color: var(--primary-button-text-normal-color) !important; }
+  .primary-button:disabled, .e-control.e-btn.e-flat.e-primary:disabled {
+    background: var(--primary-button-bg-disable-color);
+    border: 1px solid var(--primary-button-border-disable-color);
+    color: var(--primary-button-text-disable-color); }
+  .primary-button:hover, .e-control.e-btn.e-flat.e-primary:hover {
+    background: var(--primary-button-bg-hover-color);
+    border: 1px solid var(--primary-button-border-normal-color);
+    color: var(--primary-button-text-hover-color) !important; }
+  .primary-button:disabled, .e-control.e-btn.e-flat.e-primary:disabled {
+    background: var(--primary-button-bg-disable-color);
+    border: 1px solid var(--primary-button-border-disable-color);
+    color: var(--primary-button-text-disable-color) !important; }
 
-.app-primary-button {
-  background: var(--colorPrimary);
-  border-color: var(--colorPrimary);
-  color: var(--colorOnPrimary) !important; }
-  .app-primary-button:hover {
-    background: #007aff; }
-  .app-primary-button + .app-secondary-button {
-    margin-left: 15px; }
+.secondary-button, .e-control.e-btn.e-flat {
+  background: var(--primary-button-bg-normal-color);
+  border: 0;
+  border-radius: 4px;
+  color: var(--primary-button-text-normal-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 24px;
+  min-width: 90px;
+  outline: none;
+  text-align: center;
+  background: var(--secondary-button-bg-normal-color);
+  border: 1px solid var(--secondary-button-border-normal-color);
+  color: var(--secondary-button-text-normal-color); }
+  .secondary-button:disabled, .e-control.e-btn.e-flat:disabled {
+    background: var(--primary-button-bg-disable-color);
+    border: 1px solid var(--primary-button-border-disable-color);
+    color: var(--primary-button-text-disable-color); }
+  .secondary-button:hover, .e-control.e-btn.e-flat:hover {
+    background: var(--secondary-button-bg-hover-color);
+    border: 1px solid var(--secondary-button-border-normal-color);
+    color: var(--secondary-button-text-hover-color);
+    outline: 0px; }
+  .secondary-button:disabled, .e-control.e-btn.e-flat:disabled {
+    background: var(--secondary-button-bg-disable-color);
+    border: 1px solid var(--secondary-button-border-disable-color);
+    color: var(--secondary-button-text-disable-color); }
 
-.app-secondary-button {
-  background: var(--colorSecondary);
-  border-color: #b3b3b3;
-  color: var(--colorText); }
-  .app-secondary-button:hover {
-    background: #f9f9f9; }
+.link-button {
+  background: var(--primary-button-bg-normal-color);
+  border: 0;
+  border-radius: 4px;
+  color: var(--primary-button-text-normal-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 24px;
+  min-width: 90px;
+  outline: none;
+  text-align: center;
+  background: var(--link-button-bg-normal-color);
+  border: 1px solid var(--link-button-border-normal-color);
+  color: var(--link-button-text-normal-color); }
+  .link-button:disabled {
+    background: var(--primary-button-bg-disable-color);
+    border: 1px solid var(--primary-button-border-disable-color);
+    color: var(--primary-button-text-disable-color); }
+  .link-button:hover, .link-button:focus {
+    background: var(--link-button-bg-hover-color);
+    border: 1px solid var(--link-button-border-hover-color);
+    color: var(--link-button-text-hover-color); }
 
-.app-critical-action-button {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: var(--colorOnPrimary); }
-  .app-critical-action-button:hover {
-    background: #FF4E45; }
-  .app-critical-action-button + .app-secondary-button {
-    margin-left: 15px; }
+.critical-action-button, .e-control.e-btn.e-flat.e-primary.critical-action-button {
+  background: var(--primary-button-bg-normal-color);
+  border: 0;
+  border-radius: 4px;
+  color: var(--primary-button-text-normal-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 24px;
+  min-width: 90px;
+  outline: none;
+  text-align: center;
+  background: var(--danger-button-bg-normal-color);
+  border: 1px solid var(--danger-button-border-normal-color);
+  color: var(--danger-button-text-normal-color) !important; }
+  .critical-action-button:disabled, .e-control.e-btn.e-flat.e-primary.critical-action-button:disabled {
+    background: var(--primary-button-bg-disable-color);
+    border: 1px solid var(--primary-button-border-disable-color);
+    color: var(--primary-button-text-disable-color); }
+  .critical-action-button:hover, .e-control.e-btn.e-flat.e-primary.critical-action-button:hover {
+    background: var(--danger-button-bg-hover-color);
+    color: var(--danger-button-text-hover-color) !important; }

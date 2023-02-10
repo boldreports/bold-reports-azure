@@ -1,7 +1,5 @@
 ﻿@import "../../core/_typography.scss";
-@import "../../core/_variables.scss";
-@import "../../themes/default.scss";
-@import "../../mixins/_border-radius.scss";
+@import "../../default/default.scss";
 
 #embed-settings-container {
     #embed-settings-body {
@@ -98,8 +96,8 @@
             }
 
             .bg-warning {
-                background-color: $embed-warning-bg-normal-color;
-                border: 1px solid $embed-warning-border-normal-color;
+                background-color: $warning-bg-normal-color;
+                border: 1px solid $warning-border-normal-color;
             }
         }
 
@@ -139,7 +137,7 @@
 
     #messageBox_wrapper {
         .message-box-btn-holder {
-            background: $admin-container-bg;
+            background: $background;
         }
 
         .critical-action-button, .primary-button, .secondary-button {
@@ -155,7 +153,7 @@
             opacity: 1;
 
             &:hover {
-                color: $icon-hover-color;
+                color: $icon-text-hover-color;
             }
         }
     }

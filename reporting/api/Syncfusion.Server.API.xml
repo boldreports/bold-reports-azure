@@ -427,7 +427,7 @@
             <param name="apiReportDataSetUpdateV5">Dataset details</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItems(Syncfusion.Server.Base.DataClasses.ItemType,System.String)">
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItems(Syncfusion.Server.Base.DataClasses.ItemType,System.String,System.String)">
             <summary>
             Returns list of items from the server.
             </summary>
@@ -435,7 +435,7 @@
             <param name="serverPath">Category path</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemsV4(Syncfusion.Server.Base.DataClasses.ItemType,System.String)">
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetItemsV4(Syncfusion.Server.Base.DataClasses.ItemType,System.String,System.String)">
             <summary>
             Returns list of items from the server.
             </summary>
@@ -539,7 +539,7 @@
         </member>
         <!-- Badly formed XML comment ignored for member "M:Syncfusion.Server.API.Controllers.ItemsController.ExportReport(Syncfusion.Server.Base.DataClasses.ApiExportReport)" -->
         <!-- Badly formed XML comment ignored for member "M:Syncfusion.Server.API.Controllers.ItemsController.ExportReportWithFilters(System.Guid,System.String,Syncfusion.Server.Base.DataClasses.ExportFilterParameters)" -->
-        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.ExportReportV3(Syncfusion.Server.Base.DataClasses.ApiExportReportV3)">
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.ExportReportV3Json(Syncfusion.Server.Base.DataClasses.ApiExportReportV3)">
             <summary>
             
             </summary>
@@ -949,7 +949,7 @@
             <param name="authenticationType"></param>
             <returns></returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Middlewares.AuthorizeRequestMiddleware.InitializeLicenseValidation(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+        <member name="M:Syncfusion.Server.API.Middlewares.AuthorizeRequestMiddleware.DefaultLicenseInitializationForViewerAndDesigner(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             License validation from Build team
             Note: Whenever license checking needed, Copy - paste the below method in the same assembly where your validation happens. Since, moving this method to base and reusing will result in issues due to build team checking assembly signing.

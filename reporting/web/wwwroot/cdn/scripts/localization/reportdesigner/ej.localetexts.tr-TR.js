@@ -88,6 +88,22 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                             title: 'Yığılmış Çubuk'
                         }
                     },
+                    'rangeColumn': {
+                        displayText: 'Aralık Sütunu',
+                        tooltip: {
+                            requirements: '1 veya daha fazla değer ve 1 veya daha fazla sütun.',
+                            description: 'Veri noktası başına iki Y değeri çizerek bir veri aralığını görüntüler',
+                            title: 'Aralık Sütunu'
+                        }
+                    },
+                    'rangeBar': {
+                        displayText: 'Menzil Çubuğu',
+                        tooltip: {
+                            requirements: '1 veya daha fazla değer ve 1 veya daha fazla sütun.',
+                            description: 'Veri noktası başına iki Y değerini yatay olarak çizerek bir veri aralığını görüntüler',
+                            title: 'Menzil Çubuğu'
+                        }
+                    },
                     'stackedColumnPercent': {
                         displayText: 'Yığılmış Sütun% 100',
                         tooltip: {
@@ -306,6 +322,22 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                             requirements: '1 veya daha fazla değer ve 1 veya daha fazla sütun.',
                             description: 'Bir seriyi dairesel bir çizgi veya alan olarak görüntüler.',
                             title: 'Radar'
+                        }
+                    },
+                    'rangeArea': {
+                        displayText: 'Menzil Alanı',
+                        tooltip: {
+                            requirements: '1 veya daha fazla değer ve 1 veya daha fazla sütun.',
+                            description: 'Alanın eksenden başlamak yerine iki değer arasındaki boşlukla temsil edildiği bir tür alan grafiği.',
+                            title: 'Menzil Alanı'
+                        }
+                    },
+                    'smoothRangeArea': {
+                        displayText: 'Pürüzsüz Menzil Alanı',
+                        tooltip: {
+                            requirements: '1 veya daha fazla değer ve 1 veya daha fazla sütun.',
+                            description: 'Düz noktalar yerine veri noktalarını bağlamak için eğri çizgiler.',
+                            title: 'Pürüzsüz Menzil Alanı'
                         }
                     }
                 }
@@ -693,6 +725,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 bubble: 'Kabarcık',
                 polar: 'Polar',
                 radar: 'Radar',
+                rangeArea: 'Menzil Alanı',
+                rangeColumn: 'Aralık Sütunu',
+                rangeBar: 'Menzil Çubuğu',
+                smoothRangeArea: 'Pürüzsüz Menzil Alanı',
                 alertSwitchChartType: 'Tüm Seri türleri değiştirilecektir. Devam etmek istiyor musun?'
             },
             legendProperties: {
@@ -727,6 +763,23 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 custom: 'Özel'
             },
             customColors: 'Özel renkler'
+        },
+        forecast: {
+            categoryName: 'Tahmin Ayarları',
+            enableSettings: 'Olanak vermek',
+            forecastlength: 'Uzunluk (puan)',
+            confidenceInterval: 'Güven aralığı',
+            seasonality: 'Mevsimsellik (puan)',
+            enableSeries: 'Tahmin etmek',
+            forecastColor: 'Tahmin Rengi',
+            confidenceEnable: 'Kendinden emin',
+            confidenceColor: 'Güven Rengi',
+            bandStyle: 'Güven Bandı Stili',
+            confidenceBandTypes: {
+                fill: 'Doldurmak',
+                linetype: 'Astar',
+                dot: 'Nokta'
+            }
         },
         title: {
             categoryName: 'Başlık',
@@ -784,10 +837,12 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 width: 'İşaret Genişliği'
             },
             labelsAutofitDisabled: 'Etiketleri Otomatik Sığdırma Devre Dışı Bırakıldı',
+            margin: 'Marj',
             maximum: 'Maksimum',
             minimum: 'Asgari',
             horizontalAxis: 'Yatay eksen',
-            verticalAxis: 'Dikey eksen'
+            verticalAxis: 'Dikey eksen',
+            includeZero: 'Sıfırı Dahil Et'
         },
         gridLine: {
             categoryName: 'Izgara hattı',
@@ -1650,6 +1705,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         markaspublic: 'Herkese Açık Olarak İşaretle',
         cancel: 'İptal etmek',
         closeToolTip: 'Kapat',
+        tags: 'etiketler',
+        newTag: 'Yeni gün',
+        tagWaterMark: 'Arama Etiketi',
+        splCharacter: 'Özel karakterler desteklenmez',
         addCategory: {
             title: 'Yeni kategori',
             name: 'İsim',
@@ -1714,8 +1773,8 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             picaText: 'pc'
         },
         setGroups: 'Grupları Ayarla',
-        addDatasource: 'Veri Kaynağı Ekle',
-        dataAlertMsg: 'Veri kaynağı eklenmedi!',
+        addDataset: 'Veri Seti Ekle',
+        dataAlertMsg: 'Veri kümesi eklenmedi!',
         NoDataFound: 'Veri bulunamadı',
         None: 'Orta',
         propertyEdit: 'Düzenle',
@@ -1759,6 +1818,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             csvLabel: 'CSV',
             excelLabel: 'Excel',
             mysqlLabel: 'MySQL',
+            elasticSearchLabel: 'Elastic Search',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
             sharedLabel: 'Paylaşılan',
@@ -1828,6 +1888,27 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             alertMessage: {
                 connectionString: 'Bağlantı dizesini belirtin',
                 promptText: 'İstem Metnini Belirtin',
+                userName: 'Kullanıcı Adını Belirtin',
+                password: 'Parolayı belirtin',
+                serverName: 'Sunucu adını belirtin',
+                databaseName: 'Veritabanı adını belirtin'
+            }
+        },
+        elasticSearchDatasource: {
+            authenticationType: 'Kimlik Doğrulama Türü',
+            window: 'pencereler',
+            server: 'ElasticSearch Server',
+            none: 'Orta',
+            basicHttp: 'Temel HTTP Kimlik Doğrulaması',
+            userName: 'Kullanıcı adı',
+            password: 'Parola',
+            port: 'Liman',
+            basicOption: {
+                serverName: 'Sunucu adı',
+                database: 'Veri tabanı'
+            },
+            alertMessage: {
+                port: 'Bağlantı noktası numarasını belirtin',
                 userName: 'Kullanıcı Adını Belirtin',
                 password: 'Parolayı belirtin',
                 serverName: 'Sunucu adını belirtin',
@@ -1933,11 +2014,21 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             authenticationType: 'Kimlik Doğrulama Türü',
             userName: 'Kullanıcı adı',
             password: 'Parola',
+            separatorTypes: {
+                comma: 'Virgül',
+                space: 'Uzay',
+                tab: 'Sekme',
+                semicolon: 'Noktalı virgül',
+                custom: 'Özel'
+            },
+            separator: 'Ayırıcı',
+            delimiter: 'Sınırlayıcı',
             alertMessage: {
                 urlValidation: 'URL geçersiz',
                 userNameValidation: 'Kullanıcı adını belirtin',
                 passwordValidation: 'Parolayı belirtin',
                 fieldsValidation: 'Alanlarda değeri belirtin',
+                delimiterAlert: 'Sınırlayıcıyı belirtin'
             },
             none: 'Orta',
             basicHttp: 'Temel Http Kimlik Doğrulaması',
@@ -2150,6 +2241,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             microsoftsqlInfo: 'SQL Server, Microsoft\'un ilişkisel veritabanı yönetim sistemidir. Piyasadaki en güvenilir ve güvenilir veritabanı sunucularından biri olarak, çekirdek veritabanı yönetim sisteminin üstünde analiz, raporlama ve daha fazlası gibi bir dizi katma değerli hizmetle birlikte gelir. SQL Server bağlayıcısı, {customBrandName} Designer içindeki Microsoft SQL sunucu veritabanlarından verilere erişmenizi sağlar.',
             ssasInfo: 'SQL Server Analiz Hizmetleri (SSAS), Çevrimiçi Analitik İşleme (OLAP) çözümleri geliştirmek için Microsoft İş Zekası yığınından gelen teknolojidir. Basit bir ifadeyle, daha derin ve daha hızlı veri analizi için veri pazarlarından / veri ambarından gelen verileri kullanarak küpler oluşturmak için SSAS\'ı kullanabilirsiniz.',
             mysqlInfo: 'MySQL, ücretsiz olarak kullanılabilen, açık kaynaklı bir ilişkisel veritabanı yönetim sistemidir ve en çok hızlı işlemesi, kanıtlanmış güvenilirliği, kullanım kolaylığı ve esnekliği ile dikkat çeker. MySQL bağlayıcısı, {customBrandName} Designer içindeki MySQL veritabanlarından verilere erişmenizi sağlar.',
+            elasticSearchInfo: 'Elasticsearch, Lucene kitaplığına dayalı bir arama motorudur. HTTP web arayüzü ve şemasız JSON belgeleri ile dağıtılmış, çok kiracılı tam metin arama motoru sağlar. Elasticsearch, her türlü belgeyi aramak için kullanılabilir. Ayrıca ölçeklenebilir arama sağlar, neredeyse gerçek zamanlı aramaya sahiptir ve çoklu kiralamayı destekler. Elasticsearch bağlayıcısı, içindeki Elasticsearch kümelerinden gelen verilere erişmenizi sağlar {customBrandName} Designer .',
             odataInfo: 'OData, sorgulanabilir ve birlikte çalışabilir RESTful API\'lerinin basit ve standart bir şekilde oluşturulmasına ve tüketilmesine izin veren açık bir protokoldür. {customBrandName} Designer ile bağlantı kurun ve verilerinizde yaşayan hikayeyi görmek için raporlar oluşturun.',
             odbcInfo: 'Bir ODBC sürücüsü, Microsoft\'un Açık Veritabanı Bağlantısı (ODBC) arabirimini kullanır ve bu, uygulamaların verilere erişmek için standart olarak SQL kullanarak veritabanı yönetim sistemlerindeki (DBMS) verilere erişmesine olanak tanır.',
             oledbInfo: 'OLE DB, farklı veri kaynaklarına erişim için Microsoft\'un stratejik düşük seviyeli uygulama programı arabirimidir (API). OLE DB, yalnızca Microsoft sponsorluğundaki standart veri arabirimi Açık Veritabanı Bağlantısı\'nın (ODBC) Yapılandırılmış Sorgu Dili (SQL) yeteneklerini değil, aynı zamanda SQL verileri dışındaki verilere erişimi de içerir.',
@@ -2157,7 +2249,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             psqlInfo: 'PostgreSQL, genişletilebilirliği ve standartlara uygunluğu vurgulayan güçlü ve açık kaynaklı bir nesne ilişkisel veritabanı sistemidir. PostgreSQL bağlayıcısı, {customBrandName} Designer içindeki PostgreSQL veritabanlarından verilere erişmenizi sağlar.',
             snowflakeInfo: 'Snowflake, verileri depolamak ve almak için sınırsız bir platform sağlayan bulut tabanlı bir veri ambarıdır. Geleneksel tek kümeli paylaşılan disk/paylaşılan hiçbir şey mimarilerinden farklı olarak, Snowflake, kurumsal sınıf bulut tabanlı depolama sistemleri sayesinde dinamik ve yüksek düzeyde ölçeklenebilir, çok kümeli, paylaşılan bir veri mimarisine sahiptir.',
             webAPIInfo: 'REST API\'si olan hemen hemen tüm veri kaynaklarını kullanarak {customBrandName} Designer ile bağlantı kurun. Raporlar oluşturun ve verilerinizde yaşayan hikayeyi görün.',
-            xmlInfo: 'XML dosyalarınızı {customBrandName} Designer\'a getirin ve verilerinizde yaşayan hikayeyi görmek için raporlar hazırlayın.'
+            xmlInfo: 'XML dosyalarınızı {customBrandName} Designer\'a getirin ve verilerinizde yaşayan hikayeyi görmek için raporlar hazırlayın.',
+            verticaInfo: 'Vertica, yüksek performanslı, sütunlu depolama, gelişmiş sıkıştırma, optimize edilmiş projeksiyonlar ve büyük ölçüde paralel işleme SQL sorgu motorunun gücünü gelişmiş analitik ve makine öğrenimi ile birleştiren en gelişmiş birleşik analitik ambarıdır. Verileriniz sınırsız ve tavizsiz. Vertica bağlayıcısı, içindeki Vertica veritabanlarından verilere erişmenizi sağlar {customBrandName} Designer.',
+            gcsqlInfo: 'Google Cloud SQL, MySQL ve PostgreSQL\'e dayalı, tümüyle yönetilen bir veritabanı hizmetidir.Google Cloud SQL bağlayıcısı, içindeki Google Cloud SQL veritabanlarından verilere erişmenizi sağlar { customBrandName } Designer.',
+            redshiftInfo: 'Amazon Redshift, veri ambarınızdaki ve veri gölünüzdeki tüm verileri analiz etmeyi basit ve uygun maliyetli hale getiren hızlı, ölçeklenebilir bir veri ambarıdır. PostgreSQL\' in üzerine inşa edilmiştir.Amazon Redshift bağlayıcısı, içindeki Amazon Redshift veritabanlarından verilere erişmenizi sağlar { customBrandName } Designer.',
+            rdsInfo: 'Amazon İlişkisel Veritabanı Hizmeti (Amazon RDS), AWS Cloud\'da ilişkisel bir veritabanı kurmayı, çalıştırmayı ve ölçeklendirmeyi kolaylaştıran bir web hizmetidir.İdari görevin otomasyonunu azaltmak için uygun maliyetli, yeniden boyutlandırılabilir kapasite sağlar.Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database ve Microsoft SQL Server gibi veritabanı motorları sağlar.Amazon RDS bağlayıcısı, içindeki Amazon RDS veritabanlarından verilere erişmenizi sağlar { customBrandName } Designer.'
         }
     },
     imageManager: {
@@ -2260,6 +2356,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         parameterEditAlert: {
             title: 'Parametre',
             contentMessage: 'Parametre düzenlemeyi iptal etmek istiyor musunuz?',
+        },
+        licenseAlert: {
+            ok: 'tamam',
+            close: 'Kapat',
         }
     },
     dataSet: {
@@ -2400,6 +2500,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 contentText: 'Görüntü kalitesini ayarlamak, kelime türünü kaydetmek ve excel belgesini'
                     + 'kaydetmek için dışa aktarma ayarı seçeneğini seçin.'
             },
+            find: {
+                headerText: 'Bul',
+                contentText: 'Rapordaki metni bulun.'
+            },
             viewDesign: 'Önizlemeyi Kapat',
         },
         pagesetupDialog: {
@@ -2412,7 +2516,24 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             bottom: 'Alt',
             right: 'Sağ',
             left: 'Ayrıldı',
-            unit: 'içinde',
+            pageUnits: 'Sayfa Birimleri',
+            unitin: 'inç',
+            unitcm: 'santimetre',
+            inches: 'inç',
+            centimeters: 'santimetre',
+            paperTypes: [
+                { text: 'A3', value: 'A3' },
+                { text: 'A4', value: 'A4' },
+                { text: 'B4(JIS)', value: 'B4(JIS)' },
+                { text: 'B5(JIS)', value: 'B5(JIS)' },
+                { text: 'Zarf #10', value: 'Envelope #10' },
+                { text: 'Zarf Hükümdarı', value: 'Envelope Monarch' },
+                { text: 'Yönetici', value: 'Executive' },
+                { text: 'Yasal', value: 'Legal' },
+                { text: 'Mektup', value: 'Letter' },
+                { text: 'tabloid', value: 'Tabloid' },
+                { text: 'Gelenek', value: 'Custom' }
+            ],
             orientation: 'Oryantasyon',
             portrait: 'Oryantasyon',
             landscape: 'Manzara',
@@ -2421,13 +2542,159 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         },
         exportsetupDialog: {
             close: 'Kapat',
-            excel: 'Excel',
-            word: 'Kelime',
-            imageQuality: 'Görüntü kalitesi',
-            exportFormat: 'Dışa Aktarma Formatı',
-            dpi: 'dpi',
+            commonOptions: {
+                header: 'Genel Ayarlar',
+                imageQuality: 'Görüntü kalitesi',
+                imageQualityTypes: [{ text: 'Düşük', value: '2' },
+                    { text: 'Orta', value: '5' },
+                    { text: 'Yüksek', value: '10' }]
+            },
+            pdfOptions: {
+                header: 'PDF Ayarları',
+                complexScript: 'Karmaşık Komut Dosyası',
+                conformance: 'Uygunluk Seviyesi',
+                conformanceTypes: [
+                    { text: 'Hiçbiri', value: 0 },
+                    { text: 'Pdf/A1B', value: 1 },
+                    { text: 'Pdf/X1A2001', value: 2 },
+                    { text: 'Pdf/A2B', value: 3 },
+                    { text: 'Pdf/A3B', value: 4 },
+                    { text: 'Pdf/A1A', value: 5 },
+                    { text: 'Pdf/A2A', value: 6 },
+                    { text: 'Pdf/A2U', value: 7 },
+                    { text: 'Pdf/A3A', value: 8 },
+                    { text: 'Pdf/A3U', value: 9 }
+                ]
+            },
+            securityOptions: {
+                header: 'Güvenlik ayarları',
+                enableProtection: 'Korumayı Etkinleştir',
+                protect: 'Şifre Korumak için',
+                edit: 'Düzenlemek İçin Şifre',
+            },
+            wordOptions: {
+                header: 'kelime Ayarları',
+                protection: 'Koruma Türü',
+                topSpacing: 'Üst Boşluk',
+                bottomSpacing: 'Alt Boşluk',
+                formatList: [
+                    { text: 'Word 97-2003 Belgesi (.doc)', value: 0 },
+                    { text: 'Word 97-2003 Şablonu (.dot)', value: 1 },
+                    { text: 'Word belgesi (.docx)', value: 2 },
+                    { text: 'Kesin açık XML belgesi 2007 (.docx)', value: 3 },
+                    { text: 'Kesin açık XML belgesi 2010 (.docx)', value: 4 },
+                    { text: 'Kesin açık XML belgesi 2013 (.docx)', value: 5 },
+                    { text: 'Kesin açık XML Şablonu 2007 (.dotx)', value: 6 },
+                    { text: 'Kesin açık XML Şablonu 2010 (.dotx)', value: 7 },
+                    { text: 'Kesin açık XML Şablonu 2013 (.dotx)', value: 8 },
+                    { text: 'Word Makro Etkin Belge 2007 (.docm)', value: 9 },
+                    { text: 'Word Makro Etkin Belge 2010 (.docm)', value: 10 },
+                    { text: 'Word Makro Etkin Belge 2013 (.docm)', value: 11 },
+                    { text: 'Word Makro Etkin Şablon 2007 (.dotm)', value: 12 },
+                    { text: 'Word Makro Etkin Şablon 2010 (.dotm)', value: 13 },
+                    { text: 'Word Makro Etkin Şablon 2013 (.dotm)', value: 14 },
+                    { text: 'Zengin metin formatı (.rtf)', value: 15 },
+                    { text: 'düz metin (.txt)', value: 16 },
+                    { text: 'web sayfası (.html)', value: 18 }
+                ],
+                layoutTypes: [
+                    { text: 'Varsayılan', value: 0 },
+                    { text: 'Üst düzey', value: 1 }
+                ],
+                protectionTypes: [
+                    { text: 'Koruma yok', value: -1 },
+                    { text: 'Yalnızca revizyonlara izin ver', value: 0 },
+                    { text: 'Yalnızca yorumlara izin ver', value: 1 },
+                    { text: 'Yalnızca form alanlarına izin ver', value: 2 },
+                    { text: 'Salt okunura izin ver', value: 3 }
+                ]
+            },
+            layoutOption: 'Düzen Seçeneği',
+            saveType: 'Türü Kaydet',
+            pptOptions: {
+                header: 'PowerPoint Ayarları',
+                pptTypes: [
+                    { text: 'Priz 97to2003 Sunum (.ppt)', value: 0 },
+                    { text: 'Priz 2007 Sunum (.ppt)', value: 1 },
+                    { text: 'Priz 2010 Sunum (.pptx)', value: 2 },
+                    { text: 'Priz 2013 Sunum (.pptx)', value: 3 }
+                ]
+            },
             doneButton: 'tamam',
-            cancelButton: 'İptal etmek'
+            cancelButton: 'İptal etmek',
+            csvOptions: {
+                delimiter: 'Alan Sınırlayıcı',
+                formatter: 'Biçimlendirilmiş Değerler',
+                header: 'CSV Ayarları',
+                qualifier: 'Metin Niteleyici',
+                customVal: 'Özel değer',
+                qualifierList: [
+                    { text: 'İkili alıntı', value: '"' },
+                    { text: 'Tek Alıntılar', value: '\'' },
+                    { text: 'Hiçbiri', value: '' },
+                    { text: 'Gelenek', value: 'Custom' }
+                ],
+                delimiterList: [
+                    { text: 'Virgül', value: ',' },
+                    { text: 'Uzay', value: ' ' },
+                    { text: 'Sekme', value: '   ' },
+                    { text: 'Noktalı virgül', value: ';' },
+                    { text: 'Gelenek', value: 'Custom' }
+                ]
+            },
+            htmlOptions: {
+                header: 'HTML Ayarları',
+                separator: 'Sayfa Ayırıcı'
+            },
+            excelOptions: {
+                header: 'Excel Ayarları',
+                sheetProtection: 'Sac Koruma',
+                disableCellFormat: 'Hücre Formatını Devre Dışı Bırak',
+                readonly: 'Sadece oku',
+                saveTypes: [
+                    { text: 'Excel97to2003 Çalışma Kitabı(.xls)', value: 0 },
+                    { text: 'Excel2007 Çalışma Kitabı(.xlsx)', value: 1 },
+                    { text: 'Excel2010 Çalışma Kitabı (.xlsx)', value: 2 },
+                    { text: 'Excel2013 Çalışma Kitabı (.xlsx)', value: 3 },
+                    { text: 'Excel2016 Çalışma Kitabı(.xlsx)', value: 4 }
+                ],
+                sheetProtectionTypes: [
+                    { text: 'Hiçbiri', value: 0 },
+                    { text: 'nesneler', value: 1 },
+                    { text: 'senaryolar', value: 2 },
+                    { text: 'Hücreleri Biçimlendirme', value: 4 },
+                    { text: 'Sütunları Biçimlendirme', value: 8 },
+                    { text: 'Satırları Biçimlendirme', value: 16 },
+                    { text: 'Sütun Ekleme', value: 32 },
+                    { text: 'Satır Ekleme', value: 64 },
+                    { text: 'Köprü Ekleme', value: 128 },
+                    { text: 'Sütunları Silme', value: 256 },
+                    { text: 'Satırları Silme', value: 512 },
+                    { text: 'Kilitli Hücreler', value: 1024 },
+                    { text: 'sıralama', value: 2048 },
+                    { text: 'filtreleme', value: 4096 },
+                    { text: 'Pivot Tabloları Kullanma', value: 8192 },
+                    { text: 'Kilitlenmemiş Hücreler', value: 16384 },
+                    { text: 'İçerik', value: 32768 },
+                    { text: 'Tüm', value: 65535 }
+                ],
+                disableCellFormatTypes: [
+                    { text: 'Hiçbiri', value: 0 },
+                    { text: 'Tüm', value: 1 },
+                    { text: 'Sınır', value: 2 },
+                    { text: 'stil', value: 3 }
+                ],
+                layoutOptionTypes: [
+                    { text: 'Varsayılan', value: 0 },
+                    { text: 'Hücre Birleştirmeyi Yoksay', value: 1 }
+                ],
+            }
+        },
+        findAlertMessage: {
+            resultsEndReached: 'Arama sonuçlarının sonuna ulaştınız. Devam etmek istiyorsanız, '
+                + 'iletişim kutusunu kapatın ve tekrar arayın.',
+            noResultsFound: 'Belirtilen metin, rapordaki hiçbir içerikle eşleşmiyor. '
+                + 'Arama anahtar kelimenizi değiştirin ve tekrar deneyin.'
         },
         credential: {
             userName: 'Kullanıcı adı',
@@ -2558,11 +2825,16 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             nullValueLable: 'Boş değere izin ver',
             multipleValueLable: 'Birden çok değere izin ver',
             uniqueValueLabel: 'Benzersiz değerler göster',
+            sortValueLabel: 'Sıralamayı Etkinleştir',
             visibilityLable: 'Görünürlük',
             assignValueLable: 'Değer Ata >>',
             save: 'Kayıt etmek',
             cancel: 'İptal etmek',
             editLayout: 'Düzeni Düzenle',
+            sorting: {
+                ascending: 'artan',
+                descending: 'Azalan'
+            },
             visibility: {
                 visible: 'Gözle görülür',
                 hidden: 'Gizli',
@@ -2909,9 +3181,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
     dataAssign: {
         measures: 'Ölçümler',
         dimensions: 'Boyutlar',
-        addDatasource: 'Veri Kaynağı Ekle',
-        errorMessagePrefix: 'Henüz bir veri kaynağı yapılandırmadınız.',
-        errorMessageSuffix: 'Tasarımcınızdaki rapor öğelerine veri bağlamak için bir veri kaynağı ekleyin.',
+        addDataset: 'veri seti Ekle',
+        errorMessagePrefix: 'Henüz bir veri seti yapılandırmadınız.',
+        errorMessageSuffix: 'Tasarımcınızdaki rapor öğelerine veri bağlamak için bir veri seti ekleyin.',
         search: 'Arama',
         dragOnDrop: 'Sürükle bırak',
         categoryList: ' Kategori Listesi',
@@ -3916,7 +4188,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             matchesFound: 'Hiçbir sonuç bulunamadı',
             rename: 'Adını değiştirmek',
             searchInfo: 'Şu anda getirilen şemadan eşleşen bilgileri alır',
-            aggregation: 'Toplama',
+            aggregation: 'Agrega',
             dialogHeader: 'Veri Kümesi',
             alertMessage: {
                 datasourceAlert: 'Rapor Veri Kümesini Yapılandırmak için bir Veri Kaynağı seçin',
@@ -4068,7 +4340,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 part: 'Verilen tarih ifadesinin belirtilen tarih bölümünü temsil eden bir tamsayı değeri döndürür.',
                 sub: 'Belirtilen tarihten çıkarılan tarihi döndürür.',
                 day: 'Belirtilen tarihin gün bölümünü temsil eden sayısal bir değer döndürür.',
-                daydiff: 'Belirtilen iki tarih arasındaki farkı temsil eden sayısal bir değer döndürür.',
+                dateDiff: 'Belirtilen iki tarih arasındaki farkı temsil eden sayısal bir değer döndürür.',
                 hour: 'Verilen tarihin saatini tam sayı olarak döndürür.',
                 minute: 'Belirtilen tarih ifadesinden kaynaklanan tarihin dakika bölümünü temsil eden sayısal bir değer döndürür.',
                 month: 'Belirtilen tarih ifadesinden kaynaklanan tarihin ay bölümünü temsil eden sayısal bir değer döndürür.',
@@ -4099,7 +4371,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             size: 'Boyut (lar)',
             xvalue: 'X Değerleri',
             column: 'Sütun',
-            row: 'Satır (lar)'
+            row: 'Satır (lar)',
+            high: 'Yüksek(s)',
+            low: 'Düşük(s)'
         },
         categoryItemsMenu: {
             filter: 'Filtreler',

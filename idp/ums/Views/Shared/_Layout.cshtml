@@ -14,6 +14,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    @await Html.PartialAsync("_PasswordPolicyRules")
     @RenderSection("meta", false)
     @await Html.PartialAsync("_OGPContent")
     <title>
@@ -36,108 +37,20 @@
     </style>
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
-    @if (!CloudAppConfig.IsSelfHosted)
-    {
-        <link rel="icon" href="@GlobalAppSettings.CdnDomain/static/company/@GlobalAppSettings.Branding/logo/v1/@IconFileNames.Favicon" />
-    }
-    else
-    {
-        <link rel="icon" href="@GlobalAppSettings.SystemSettings.FavIcon" onerror="this.onerror=null;this.src='@GlobalAppSettings.CdnDomain/@(GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? "boldid" : GlobalAppSettings.Branding)/application/@IconFileNames.Favicon';" />
-    }
-    @if (!CloudAppConfig.IsSelfHosted)
-    {
-        <script type="text/javascript">
-            var rootUrl = "";
-            var baseurl = "";
-        </script>
-    }
-    else
-    {
-        <script type="text/javascript">
-           var isLicenseExpiredUrl = "@Url.Action("IsLicenseExpired", "Home")";
-            var manageLicenseUrl = "@Url.Action("LicenseSettings", "Administration")";
-            var validateIsolationCodeUrl = "@Url.Action("IsValidIsolationCode", "TenantsManagement")";
-           var boldContactUrl = "https://www.syncfusion.com/support/directtrac/incidents/newincident";
-           //$.extend(ej, Syncfusion);
-        </script>
-    }
-
+    @await Html.PartialAsync("../Shared/_Favicon")
     @await Html.PartialAsync("../Shared/_FontReference")
     @await Html.PartialAsync("../Shared/_ThemeReference")
-    @await Html.PartialAsync("~/Views/Shared/_MenuTheme.cshtml")
     @await Html.PartialAsync("~/Views/Shared/_Toast.cshtml")
     <link rel="stylesheet" href="~/bundles/css/layout.css" asp-append-version="true" />
 
     @RenderSection("styles", false)
-    @if (CloudAppConfig.IsSelfHosted)
-    {
-        <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
-        <script src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
-    }
-
-    <script src="~/bundles/js/layout.js" asp-append-version="true"></script>
-
-    @RenderSection("scripts", false)
-
-    @if (includeMessageBox)
-    {
-        <script>
-            $(document).ready(function () {
-                var messageBoxDialog = new ej.popups.Dialog({
-                    header: "title",
-                    width: (window.innerWidth > 460) ? "450px" : (window.innerWidth - 10),
-                    visible: false,
-                    allowDragging: true,
-                    height: "auto",
-                    isModal: true,
-                    footerTemplate: "footer",
-                    close: "onMessageDialogClose"
-                });
-                messageBoxDialog.appendTo("#messageBox");
-            });
-        </script>
-    }
-
-    @if (!showMenuBar)
-    {
-        <script>
-            $(document).ready(function () {
-                $("#base-footer-div").css("padding-left", "0px");
-            });
-        </script>
-        <style type="text/css">
-            body #server-app-container #content-area {
-                padding: 80px 30px 30px !important;
-            }
-        </style>
-    }
-
-    <script>
-        $(window).load(function () {
-            $('.lazyload').each(function () {
-                img = document.createElement('img');
-                img.onload = imageOnLoad;
-                img.src = $(this).attr("data-src");
-                img.alt = $(this).attr("data-alt");
-                img.id = $(this).attr("data-id");
-                $(img).attr("onerror", $(this).attr("data-default"));
-                $(img).addClass($(this).attr("data-class"));
-                img.style = "display: none";
-                $(this).parent().append(img);
-            });
-        });
-
-        function imageOnLoad() {
-            $(this).show().parent().find("div.lazyload").remove();
-        }
-
-        $(document).ready(function () {
-            generateProfileAvatar();
-        });
-    </script>
-
 </head>
-<body ng-app="serverApp" class="clearfix col-xs-12 no-padding" id="body" style="background-image: url('@GlobalAppSettings.SystemSettings.CDNLink/images/common/waitingpopup.gif'); background-color: #fff; background-repeat: no-repeat; background-position: center center;">
+<body ng-app="serverApp" class="clearfix col-xs-12 no-padding" id="body">
+    <div class="loader-blue loader-icon" id="layout-body-loader-icon">
+        <svg class="circular">
+            <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
     <div id="server-app-container" style="opacity: 0">
         @if (CloudAppConfig.IsSelfHosted)
         {
@@ -183,25 +96,30 @@
             @RenderSection("MainSection", true)
             <div id="success-alert">
                 <div id="image-container">
-                    <div class="image-holder">
-                        <span class="su su-tick" alt="Success Icon"></span>
-                    </div>
+                    <img src="@Url.Content("~/images/success-toast.svg")" />
                 </div>
                 <div id="message">
                     <h1 id="message-header"></h1>
                     <span id="message-content"></span>
                 </div>
+                <div class="close-div">
+                    <i class="su su-close"></i>
+                </div>
             </div>
             <div id="warning-alert">
                 <div id="image-container">
-                    <span class="su su-warning-alt" alt="Warning Icon"></span>
+                    <img src="@Url.Content("~/images/warning-image.jpg")" />
                 </div>
-                <div id="message" class="div-close">
+                <div id="message">
                     <h1 id="message-header"></h1>
-                    <span id="message-content"></span>
+                    <span id="message-content"></span><span id="view" class="view-more">[[[View more]]]</span>
+                    <div id="container">
+                        <textarea id="text-error-area" class="scroller" name="text" value=""></textarea>
+                        <span id="copy-error-area" class="pull-right app-hyperlink" data-toggle="tooltip" title="[[[Click to copy]]]"><span class="su su-copy"></span></span>
+                    </div>
                 </div>
                 <div class="close-div">
-                    <span id="close-content">Close</span>
+                    <i class="su su-close"></i>
                 </div>
             </div>
             <div id="mobile-alert">
@@ -225,6 +143,71 @@
 
     <div id="alert-notification">
     </div>
+    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
+    <script src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
+    <script src="~/bundles/js/layout.js" asp-append-version="true"></script>
+    @RenderSection("scripts", false)
 
+    @if (includeMessageBox)
+    {
+        <script>
+            $(document).ready(function () {
+                var messageBoxDialog = new ej.popups.Dialog({
+                    header: "title",
+                    width: (window.innerWidth > 460) ? "472px" : (window.innerWidth - 10),
+                    visible: false,
+                    height: "auto",
+                    isModal: true,
+                    footerTemplate: "footer",
+                    animationSettings: { effect: 'Zoom' },
+                    close: "onMessageDialogClose"
+                });
+                messageBoxDialog.appendTo("#messageBox");
+            });
+        </script>
+    }
+
+    @if (!showMenuBar)
+    {
+        <script>
+            $(document).ready(function () {
+                $("#base-footer-div").css("padding-left", "0px");
+            });
+        </script>
+        <style type="text/css">
+            body #server-app-container #content-area {
+                padding: 80px 30px 30px !important;
+            }
+        </style>
+    }
+
+    <script type="text/javascript">
+        var isLicenseExpiredUrl = "@Url.Action("IsLicenseExpired", "Home")";
+        var manageLicenseUrl = "@Url.Action("LicenseSettings", "Administration")";
+        var validateIsolationCodeUrl = "@Url.Action("IsValidIsolationCode", "TenantsManagement")";
+        var boldContactUrl = "https://www.syncfusion.com/support/directtrac/incidents/newincident";
+
+        $(window).on("load", function () {
+            $('.lazyload').each(function () {
+                img = document.createElement('img');
+                img.onload = imageOnLoad;
+                img.src = $(this).attr("data-src");
+                img.alt = $(this).attr("data-alt");
+                img.id = $(this).attr("data-id");
+                $(img).attr("onerror", $(this).attr("data-default"));
+                $(img).addClass($(this).attr("data-class"));
+                img.style = "display: none";
+                $(this).parent().append(img);
+            });
+        });
+
+        function imageOnLoad() {
+            $(this).show().parent().find("div.lazyload").remove();
+        }
+
+        $(document).ready(function () {
+            generateProfileAvatar();
+        });
+    </script>
 </body>
 </html>

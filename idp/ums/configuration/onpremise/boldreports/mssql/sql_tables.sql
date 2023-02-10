@@ -733,6 +733,26 @@ CREATE TABLE [BOLDRS_SiteAttributes](
 	[IsActive] [bit] NOT NULL)
 ;
 
+Create TABLE [BOLDRS_AttributeType](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[Type] [nvarchar](100) NOT NULL UNIQUE,
+	[IsActive] [bit] NOT NULL
+);
+
+Create TABLE [BOLDRS_ItemAttribute](
+	[Id] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[ItemTypeId] [int] NOT NULL,
+	[ItemId] [uniqueidentifier] NULL,
+	[AttributeType] [int] NOT NULL,
+	[Value] [nvarchar](255) NOT NULL,
+	[CreatedById] [int] NOT NULL,
+	[ModifiedById] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL
+)
+;
+
 ---- PASTE INSERT Queries below this section --------
 
 INSERT into [BOLDRS_ItemType] (Name,IsActive) VALUES (N'Category',1)
@@ -1132,6 +1152,9 @@ INSERT into [BOLDRS_GroupLogType] (Name,IsActive) VALUES ( N'Visit',1)
 INSERT into [BOLDRS_GroupLogType] (Name,IsActive) VALUES ( N'UserAdd',1)
 ;
 INSERT into [BOLDRS_GroupLogType] (Name,IsActive) VALUES ( N'UserRemove',1)
+;
+
+INSERT into [BOLDRS_AttributeType] (Type,IsActive) VALUES ( N'Tag',1)
 ;
 
 INSERT into [BOLDRS_LogModule] (Name,ModifiedDate,IsActive) VALUES (N'SystemSettings',GETDATE(),1)
@@ -1569,6 +1592,17 @@ ALTER TABLE [BOLDRS_Item]  ADD FOREIGN KEY([ParentId]) REFERENCES [BOLDRS_Item] 
 ALTER TABLE [BOLDRS_Item]  ADD FOREIGN KEY([CreatedById]) REFERENCES [BOLDRS_User] ([Id])
 ;
 ALTER TABLE [BOLDRS_Item]  ADD FOREIGN KEY([ModifiedById]) REFERENCES [BOLDRS_User] ([Id])
+;
+
+ALTER TABLE [BOLDRS_ItemAttribute]  ADD FOREIGN KEY([ItemId]) REFERENCES [BOLDRS_Item] ([Id])
+;
+ALTER TABLE [BOLDRS_ItemAttribute]  ADD FOREIGN KEY([ItemTypeId]) REFERENCES [BOLDRS_ItemType] ([Id])
+;
+ALTER TABLE [BOLDRS_ItemAttribute]  ADD FOREIGN KEY([AttributeType]) REFERENCES [BOLDRS_Item] ([Id])
+;
+ALTER TABLE [BOLDRS_ItemAttribute]  ADD FOREIGN KEY([CreatedById]) REFERENCES [BOLDRS_User] ([Id])
+;
+ALTER TABLE [BOLDRS_ItemAttribute]  ADD FOREIGN KEY([ModifiedById]) REFERENCES [BOLDRS_User] ([Id])
 ;
 
 ALTER TABLE [BOLDRS_ItemView]  ADD FOREIGN KEY([ItemId]) REFERENCES [BOLDRS_Item] ([Id])

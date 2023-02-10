@@ -1,87 +1,3 @@
-@-ms-viewport {
-  width: auto !important; }
-
-.dashboard-server *, .base-comment-container *, .server-dashboard-view *, #viewShare_popup *, .schedule-dialog *, #get-item-link_wrapper *, #messageBox_wrapper *, #delete-div_wrapper *, #permission_delete_confirmation_wrapper *, #designer-header * {
-  font-family: var(--font-family); }
-
-.e-icon, .e-rte-toolbar-icon, .e-background-color, .e-font, .e-rte-footericon, .e-resize-handle {
-  font-family: 'ej-webfont' !important; }
-
-html, body {
-  height: 100%;
-  width: 100%;
-  font-family: var(--font-family) !important; }
-
-::-ms-clear {
-  display: none; }
-
-input::-ms-clear, input::-ms-reveal {
-  display: none; }
-
-a:hover, a:focus {
-  text-decoration: none !important; }
-
-.suspension-warning, .user-warning {
-  position: absolute;
-  color: #000;
-  text-align: center;
-  font-size: 14px;
-  height: 30px;
-  line-height: 30px;
-  -moz-box-shadow: 0 0 5px #000;
-  top: 0;
-  width: 100%;
-  margin-left: -80px; }
-  .suspension-warning .warning-content, .suspension-warning .user-warning-content, .user-warning .warning-content, .user-warning .user-warning-content {
-    position: relative;
-    padding: 10px;
-    background: #fde073;
-    background-color: #e57768;
-    color: white; }
-    .suspension-warning .warning-content a, .suspension-warning .user-warning-content a, .user-warning .warning-content a, .user-warning .user-warning-content a {
-      color: white;
-      text-decoration: underline; }
-  .suspension-warning .close-warning-icons, .suspension-warning .close-user-warning-icons, .user-warning .close-warning-icons, .user-warning .close-user-warning-icons {
-    cursor: pointer;
-    font-size: 20px;
-    position: absolute;
-    right: 5px;
-    top: 2px;
-    padding: 12px;
-    border-radius: 10px; }
-
-.profile-pic-tag {
-  border-radius: 50%;
-  color: var(--colorText);
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  position: relative;
-  text-align: center; }
-
-#default-profile-image {
-  border-radius: 50%;
-  left: 0;
-  position: absolute; }
-
-.user-warning-space, .suspension-warning-space {
-  padding-top: 45px !important; }
-
-a {
-  cursor: pointer;
-  color: var(--colorPrimary); }
-  a:hover {
-    color: #007aff; }
-  a:hover, a:focus {
-    text-decoration: none !important; }
-
-.dropdown-menu.inner li:hover a {
-  background-color: #b3b3b3; }
-
-.dropdown-menu.inner li.selected a {
-  background-color: #dbe9ff; }
-
 .no-padding {
   padding: 0px !important; }
 
@@ -106,7 +22,7 @@ a {
       font-size: 10px; }
     body .validation-txt-errors {
       font-size: 12px;
-      color: var(--danger); } }
+      color: var(--red); } }
 
 @media screen and (min-width: 1400px) {
   body {
@@ -118,7 +34,7 @@ a {
       font-size: 12px; }
     body .validation-txt-errors {
       font-size: 12px;
-      color: var(--danger); } }
+      color: var(--red); } }
 
 .sf-button {
   border: 0;
@@ -135,16 +51,16 @@ a {
   padding: 0 15px; }
   .sf-button:disabled {
     cursor: default;
-    background-color: #cccccc; }
+    background-color: var(--grey-200); }
 
 .sf-primary-button {
-  background: var(--colorPrimary); }
+  background: var(--primary-branding-bg-color); }
 
 .sf-secondary-button {
-  background: #fff; }
+  background: var(--grey-white); }
 
 .sf-danger-button {
-  background: var(--danger); }
+  background: var(--red); }
 
 .sf-rounded-button {
   -moz-border-radius: 50%;
@@ -153,7 +69,7 @@ a {
   border-radius: 50%; }
 
 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-user-account-container #admin-account-fields-container {
-  background: var(--surface);
+  background: var(--section-backgroud);
   border-radius: 6px;
   box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
   padding: 0px 24px 16px 24px;
@@ -164,11 +80,11 @@ body .system-startUp-settings-bg .startup-page-conatiner #system-settings-genera
   padding: 32px 60px 24px 60px;
   width: 100%; }
   body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .btn-holder .proceed-button, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .btn-holder .proceed-button, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .btn-holder .proceed-button, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-user-account-container #admin-account-fields-container .btn-holder .proceed-button {
-    background-color: var(--colorPrimary);
-    border: 1px solid #cccccc;
+    background-color: var(--primary-branding-bg-color);
+    border: 1px solid var(--grey-400);
     border-radius: 4px;
     box-sizing: border-box;
-    color: var(--colorOnPrimary);
+    color: var(--primary-button-text-normal-color);
     cursor: pointer;
     display: inline-block;
     font-weight: 600;
@@ -178,17 +94,17 @@ body .system-startUp-settings-bg .startup-page-conatiner #system-settings-genera
     text-align: center;
     width: 320px; }
     body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .btn-holder .proceed-button:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .btn-holder .proceed-button:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .btn-holder .proceed-button:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-user-account-container #admin-account-fields-container .btn-holder .proceed-button:hover {
-      background-color: #007aff; }
+      background-color: var(--primary-button-bg-hover-color); }
     body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .btn-holder .proceed-button:disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .btn-holder .proceed-button:disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .btn-holder .proceed-button:disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-user-account-container #admin-account-fields-container .btn-holder .proceed-button:disabled {
-      background-color: #f2f2f2;
-      border: 1px solid #cccccc;
+      background-color: var(--grey-400);
+      border: 1px solid var(--grey-200);
       box-shadow: none;
-      color: #999999;
+      color: var(--grey-400);
       cursor: default; }
 
 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .link-header {
   font-size: 16px;
-  color: var(--colorText);
+  color: var(--primary-text-color);
   letter-spacing: 0.75px;
   line-height: 30px; }
 
@@ -205,7 +121,7 @@ body .system-startUp-settings-bg .startup-page-conatiner #system-settings-genera
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  color: var(--colorText); }
+  color: var(--primary-text-color); }
 
 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #image-parent-container .image-container .startup-content a, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #image-parent-container .image-container .welcome-content a {
   display: block;
@@ -229,7 +145,7 @@ body {
   background-color: var(--background);
   padding-bottom: 70px;
   min-width: 950px;
-  color: var(--colorText);
+  color: var(--primary-text-color);
   height: 100%; }
   body .popover {
     background: var(--surface);
@@ -241,7 +157,7 @@ body {
     font-style: normal;
     font-size: 12px;
     padding-top: 4px;
-    color: #808080;
+    color: var(--info-text-color);
     font-size: 12px; }
   body .radio-label {
     font-weight: 600; }
@@ -277,7 +193,7 @@ body {
         width: 210px; }
         body header.startup-header .startup-header-container .footer-logo-container span {
           margin-right: 8px;
-          color: #4d4d4d; }
+          color: var(--grey-700); }
   body .system-startUp-settings-bg {
     display: table;
     height: 100%;
@@ -321,14 +237,14 @@ body {
               display: block; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #image-parent-container .image-container .welcome-content span.first-content {
                 font-size: 18px;
-                color: var(--colorText);
+                color: var(--primary-text-color);
                 letter-spacing: 0.84px;
                 line-height: 30px;
                 margin-top: 40px; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #image-parent-container .image-container .welcome-content a {
               margin-top: 16px;
               font-size: 13px;
-              color: var(--colorPrimary);
+              color: var(--primary-branding-bg-color);
               letter-spacing: 0.61px; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container {
           width: 100%; }
@@ -351,11 +267,11 @@ body {
               margin-bottom: 20px;
               text-align: center; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .btn-holder .proceed-button {
-                background-color: var(--colorPrimary);
-                border: 1px solid #cccccc;
+                background-color: var(--primary-branding-bg-color);
+                border: 1px solid var(--grey-400);
                 border-radius: 4px;
                 box-sizing: border-box;
-                color: var(--colorOnPrimary);
+                color: var(--primary-button-text-normal-color);
                 cursor: pointer;
                 display: inline-block;
                 font-weight: 600;
@@ -365,12 +281,12 @@ body {
                 text-align: center;
                 width: 222px; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .btn-holder .proceed-button:hover {
-                  background-color: #007aff; }
+                  background-color: var(--primary-button-bg-hover-color); }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .btn-holder .proceed-button:disabled {
-                  background-color: #f2f2f2;
-                  border: 1px solid #cccccc;
+                  background-color: var(--grey-400);
+                  border: 1px solid var(--grey-200);
                   box-shadow: none;
-                  color: #999999;
+                  color: var(--grey-400);
                   cursor: default; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .btn-holder #online-license {
                 margin-right: 15px; }
@@ -385,13 +301,13 @@ body {
                 margin: 0;
                 margin-top: 9px;
                 position: absolute;
-                border-top: 1.5px dashed #999999; }
+                border-top: 1.5px dashed var(--grey-400); }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .divider-container .connect-line-right {
                 width: 40%;
                 float: right;
                 margin: 0;
                 margin-top: -8px;
-                border-top: 1.5px dashed #999999; }
+                border-top: 1.5px dashed var(--grey-400); }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .divider-container .content {
                 font-size: 13px !important;
                 color: #8b8b8b;
@@ -400,8 +316,9 @@ body {
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .align-center {
               text-align: center; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-welcome-container .welcome-content .align-center .link-decoration {
-                color: var(--colorPrimary);
-                text-decoration: underline !important; }
+                color: var(--primary-branding-bg-color);
+                text-decoration: underline !important;
+                cursor: pointer; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container {
           display: none;
           width: 100%; }
@@ -409,7 +326,7 @@ body {
             padding: 24px !important; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-header .popup-title {
               font-size: 20px;
-              color: #333;
+              color: var(--grey-black);
               letter-spacing: 0.3px;
               line-height: 21px;
               font-weight: 900; }
@@ -429,7 +346,7 @@ body {
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #upload-section #upload-lable {
                 padding-top: 25px;
                 font-size: 16px;
-                color: #333;
+                color: var(--grey-black);
                 letter-spacing: 0.3px;
                 line-height: 18px;
                 margin-bottom: 8px; }
@@ -442,8 +359,8 @@ body {
                 padding-bottom: 33px !important; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #upload-section .upload-btn-wrapper #file-name {
                   width: 298px;
-                  background: #fff;
-                  border: 1px solid #808080;
+                  background: var(--grey-white);
+                  border: 1px solid var(--grey-500);
                   border-top-left-radius: 4px;
                   border-bottom-left-radius: 4px;
                   height: 32px;
@@ -456,7 +373,7 @@ body {
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #upload-section .upload-btn-wrapper img {
                   width: 43px;
                   height: 32px;
-                  border: 1px solid #808080;
+                  border: 1px solid var(--grey-500);
                   border-top-right-radius: 4px;
                   border-bottom-right-radius: 4px;
                   margin-left: -1px;
@@ -469,10 +386,10 @@ body {
                   float: right;
                   margin: 0 0 0 10px;
                   color: var(--surface);
-                  border: 1px solid #0851d0;
+                  border: 1px solid var(--primary-branding-bg-color);
                   border-radius: 4px; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #upload-section .upload-btn-wrapper .validation-error-message {
-                  color: var(--danger);
+                  color: var(--red);
                   font-size: 11px;
                   letter-spacing: 0.3px;
                   line-height: 16px;
@@ -482,12 +399,12 @@ body {
                 padding: 0; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details .license-detail-lable {
                   font-size: 14px;
-                  color: #333;
+                  color: var(--grey-black);
                   letter-spacing: 0.3px;
                   line-height: 23px; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details #customer-email, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details #subscription-id, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details #subscription-name, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details #plan-name, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .upload-content #license-details #expiry-date {
                   font-size: 14px;
-                  color: #333;
+                  color: var(--grey-black);
                   letter-spacing: 0.3px;
                   line-height: 23px;
                   overflow: hidden;
@@ -516,17 +433,17 @@ body {
                 float: right;
                 margin-right: 15px;
                 width: 80px !important;
-                background: #fff; }
+                background: var(--grey-white); }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder {
               display: inline-block;
               padding-top: 50px;
               width: 100%; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .proceed-button {
-                background-color: var(--colorPrimary);
-                border: 1px solid #cccccc;
+                background-color: var(--primary-branding-bg-color);
+                border: 1px solid var(--grey-400);
                 border-radius: 4px;
                 box-sizing: border-box;
-                color: var(--colorOnPrimary);
+                color: var(--primary-button-text-normal-color);
                 cursor: pointer;
                 display: inline-block;
                 font-weight: 600;
@@ -536,20 +453,20 @@ body {
                 text-align: center;
                 width: 48%; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .proceed-button:hover {
-                  background-color: #007aff; }
+                  background-color: var(--primary-button-bg-hover-color); }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .proceed-button:disabled {
-                  background-color: #f2f2f2;
-                  border: 1px solid #cccccc;
+                  background-color: var(--grey-400);
+                  border: 1px solid var(--grey-200);
                   box-shadow: none;
-                  color: #999999;
+                  color: var(--grey-400);
                   cursor: default; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .secondary-button {
                 margin-right: 20px;
-                background-color: var(--colorSecondary);
-                border: 1px solid #cccccc;
+                background-color: var(--secondary-button-bg-normal-color);
+                border: 1px solid var(--grey-400);
                 border-radius: 4px;
                 box-sizing: border-box;
-                color: var(--colorOnSecondary);
+                color: var(--secondary-button-text-normal-color);
                 cursor: pointer;
                 display: inline-block;
                 font-weight: 600;
@@ -559,12 +476,12 @@ body {
                 text-align: center;
                 width: 45%; }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .secondary-button:hover {
-                  background-color: #f9f9f9; }
+                  background-color: var(--secondary-button-bg-hover-color); }
                 body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container .btn-holder .secondary-button:disabled {
-                  background-color: #f2f2f2;
-                  border: 1px solid #cccccc;
+                  background-color: var(--grey-400);
+                  border: 1px solid var(--grey-200);
                   box-shadow: none;
-                  color: #999999;
+                  color: var(--grey-400);
                   cursor: default; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-offline-license-container #popup-container button {
               width: 50%; }
@@ -592,13 +509,13 @@ body {
               height: 10px;
               margin: 0 auto; }
               body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #progress-parent-container .progressBar-container .progress .progress-bar {
-                background-color: var(--colorPrimary);
+                background-color: var(--primary-branding-bg-color);
                 border-radius: 5px; }
           body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #progress-parent-container .deployment-status {
             margin-top: 20px;
             display: block;
             letter-spacing: 0.65px;
-            color: var(--colorText); }
+            color: var(--primary-text-color); }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .system-settings-page-container .database-dropdown-margin .btn-group .dropdown-menu li a[aria-disabled="true"] {
           cursor: default !important; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .system-settings-page-container :disabled {
@@ -610,14 +527,14 @@ body {
           padding-right: 0px;
           padding-left: 0px; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .system-settings-page-container .secure-sql input:disabled ~ label {
-          color: #808080;
+          color: var(--grey-500);
           cursor: default; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .field-label {
           letter-spacing: 0.56px;
           margin-bottom: 8px;
-          color: var(--colorText); }
+          color: var(--primary-text-color); }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .secure-sql {
-          color: var(--colorText); }
+          color: var(--primary-text-color); }
           body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general .secure-sql.material-checkbox label::before {
             top: 2px;
             border-width: 2px; }
@@ -664,7 +581,7 @@ body {
                     width: 100%;
                     text-align: center;
                     border: none;
-                    color: var(--colorText);
+                    color: var(--primary-text-color);
                     cursor: pointer;
                     display: inline-block;
                     height: inherit;
@@ -691,13 +608,14 @@ body {
                     body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a:focus, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a:focus, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a:focus, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a:hover, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a:focus {
                       background-color: transparent; }
                       body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a:hover:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a:focus:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a:hover:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a:focus:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a:hover:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a:focus:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a:hover:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a:focus:before {
-                        background: #cccccc;
+                        background: var(--grey-400);
                         left: 0;
                         right: 0; }
                     body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a.active, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a.active, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a.active, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a.active {
-                      color: var(--colorPrimary); }
+                      color: var(--tab-text-active-color); }
                       body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #admin-nav ul li a.active:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #admin-nav ul li a.active:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #admin-nav ul li a.active:before, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #admin-nav ul li a.active:before {
-                        background: var(--colorPrimary);
+                        background: var(--sub-nav-menu-header-bg-color);
+                        border: 1px solid var(--sub-nav-menu-header-border-color);
                         left: 0;
                         right: 0;
                         position: absolute;
@@ -727,7 +645,7 @@ body {
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field .windows-disabled #txt-login, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field .windows-disabled #txt-password-db, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field .windows-disabled #txt-login, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field .windows-disabled #txt-password-db, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field .windows-disabled #txt-login, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field .windows-disabled #txt-password-db, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field .windows-disabled #txt-login, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field .windows-disabled #txt-password-db {
               border: 0px !important; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field .windows-disabled .e-disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field .windows-disabled .e-disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field .windows-disabled .e-disabled, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field .windows-disabled .e-disabled {
-              border: 1px solid #cccccc !important; }
+              border: 1px solid var(--grey-200) !important; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field .additional-parameters, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field .additional-parameters, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field .additional-parameters, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field .additional-parameters {
               padding-top: 32px !important; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field .material-checkbox + input + label, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field .material-checkbox + input + label, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field .material-checkbox + input + label, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field .material-checkbox + input + label {
@@ -744,13 +662,11 @@ body {
               overflow-y: auto; }
             body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-db-selection-field #no-need-datastore, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field #no-need-datastore, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-db-selection-field #no-need-datastore, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field #no-need-datastore {
               display: none; }
-          body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .system-settings-tenant-configuration-field, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .system-settings-tenant-configuration-field {
-            border: 1px solid #eeeeee; }
           body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .sqlce-content, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .sqlce-content {
             padding-top: 50px;
             text-align: center; }
           body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-db-selection-container .database-error a, body .system-startUp-settings-bg .startup-page-conatiner #system-settings-general #system-settings-tenant-container .database-error a {
-            color: var(--colorPrimary);
+            color: var(--primary-branding-bg-color);
             cursor: pointer; }
       body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container {
         display: none; }
@@ -765,7 +681,7 @@ body {
           text-align: left;
           margin-bottom: 10px;
           padding-top: 24px;
-          color: #808080; }
+          color: var(--grey-500); }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .report-content {
           text-align: center;
           margin-bottom: 10px;
@@ -779,14 +695,14 @@ body {
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .storage-block .azure-validation {
           margin-bottom: 10px; }
           body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .storage-block .azure-validation .blob-error-message {
-            color: var(--danger);
+            color: var(--red);
             font-size: 12px; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .storage-block #blob-storage-form .connection-label {
           letter-spacing: 0.56px;
           margin-bottom: 8px; }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .storage-block #blob-storage-form .validation-txt-errors {
           font-size: 12px;
-          color: var(--danger); }
+          color: var(--red); }
         body .system-startUp-settings-bg .startup-page-conatiner #system-settings-filestorage-container .storage-block #blob-storage-form .form-div {
           margin: 0px !important;
           padding-top: 24px; }
@@ -827,19 +743,19 @@ body {
     width: 450px !important; } }
 
 #new-password + .popover {
-  background: #333;
+  background: var(--grey-black);
   opacity: 0.8;
   width: 210px;
   top: -154px !important; }
   #new-password + .popover .arrow {
     top: 80% !important; }
   #new-password + .popover .arrow::after {
-    border-left-color: #333;
+    border-left-color: var(--grey-black);
     opacity: 0.8; }
   #new-password + .popover .popover-title {
-    background: #333;
+    background: var(--grey-black);
     opacity: 0.8;
-    color: #fff;
+    color: var(--grey-white);
     font-size: 12px;
     letter-spacing: 0.3px;
     line-height: 18px;
@@ -859,11 +775,11 @@ body {
           width: 20px;
           margin: 0 auto;
           border-radius: 50%;
-          border: 2px solid #fff;
+          border: 2px solid var(--grey-white);
           display: inline-block;
           float: left; }
         #new-password + .popover .popover-content ul li span.content {
-          color: #fff;
+          color: var(--grey-white);
           display: block;
           margin-left: 40px; }
 
@@ -876,14 +792,12 @@ body {
 
 #messageBox {
   background-color: var(--surface);
-  color: var(--colorText);
+  color: var(--primary-text-color);
   display: block; }
   #messageBox .e-dlg-header .su, #messageBox .e-dlg-header .modal-title {
     font-size: 14px; }
-  #messageBox .e-dlg-header .modal-title {
-    margin-left: 3px; }
   #messageBox .message-box-close {
-    color: #4d4d4d;
+    color: var(--dialog-header-close-icon-normal-color);
     cursor: pointer;
     font-size: 14px;
     position: absolute;
@@ -891,7 +805,7 @@ body {
     top: 16px;
     opacity: 1; }
     #messageBox .message-box-close:hover {
-      color: #1a1a1a; }
+      color: var(--dialog-header-close-icon-hover-color); }
   #messageBox .message-content {
     font-size: 12px;
     margin: 2px;
@@ -905,11 +819,11 @@ body {
   #messageBox .e-footer-content {
     text-align: center; }
     #messageBox .e-footer-content .secondary-button {
-      background-color: var(--colorSecondary);
-      border: 1px solid #cccccc;
+      background-color: var(--secondary-button-bg-normal-color);
+      border: 1px solid var(--grey-400);
       border-radius: 4px;
       box-sizing: border-box;
-      color: var(--colorOnSecondary);
+      color: var(--secondary-button-text-normal-color);
       cursor: pointer;
       display: inline-block;
       font-weight: 600;
@@ -919,22 +833,13 @@ body {
       text-align: center;
       width: 90px; }
       #messageBox .e-footer-content .secondary-button:hover {
-        background-color: #f9f9f9; }
+        background-color: var(--secondary-button-bg-hover-color); }
       #messageBox .e-footer-content .secondary-button:disabled {
-        background-color: #f2f2f2;
-        border: 1px solid #cccccc;
+        background-color: var(--grey-400);
+        border: 1px solid var(--grey-200);
         box-shadow: none;
-        color: #999999;
+        color: var(--grey-400);
         cursor: default; }
-
-#auto-deployment-response .e-dlg-content {
-  padding-top: 22px; }
-
-#auto-deployment-response .e-footer-content {
-  text-align: center; }
-
-#auto-deployment-response-dialog-content {
-  display: none; }
 
 .offline-width {
   width: 568px !important;

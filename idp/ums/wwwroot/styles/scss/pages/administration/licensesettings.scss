@@ -1,6 +1,5 @@
 @import "../mixins.scss";
 
-
 %server-startup-first-content {
     font-size: 24px;
     font-weight: bold;
@@ -15,7 +14,7 @@
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
-    color: $menu-label-color;
+    color: $primary-text-color;
 }
 
 %need-help-content-styles {
@@ -30,7 +29,7 @@
 
 %link-header {
     font-size: 16px;
-    color: $menu-label-color;
+    color: $primary-text-color;
     letter-spacing: 0.75px;
     line-height: 30px;
 }
@@ -38,16 +37,20 @@
 #offline-license-update-dialog {
     width: 424px;
 
+    .e-btn.e-primary {
+        width: 120px;
+    }
+
     #popup-container {
         .upload-header {
             height: 44px;
             padding: 11.5px 0 11.5px 12px;
-            background: $grey-40;
+            /*background: $grey-40;*/
             border-radius: 4px 4px 0 0;
 
             .popup-title {
                 font-size: 15px;
-                color: $menu-label-color;
+                color: $primary-text-color;
                 letter-spacing: 0.3px;
                 line-height: 21px;
             }
@@ -57,7 +60,7 @@
 
                 .popup-close {
                     font-size: 15px;
-                    color: $icon-color;
+                    color: $dialog-header-close-icon-normal-color;
                 }
             }
         }
@@ -65,6 +68,7 @@
         .upload-content {
             padding-left: 16px;
             padding-right: 16px;
+            padding-bottom: 35px;
 
             #upload-section {
                 .popover {
@@ -74,7 +78,7 @@
                 #upload-lable {
                     padding-top: 25px;
                     font-size: 13px;
-                    color: $menu-label-color;
+                    color: $primary-text-color;
                     letter-spacing: 0.3px;
                     line-height: 18px;
                     margin-bottom: 8px;
@@ -89,11 +93,10 @@
                     position: relative;
                     overflow: hidden;
                     display: inline-block;
+                    @include uploadInput();
 
                     #file-name {
                         width: 375px;
-                        background: $secondary-btn-bg;
-                        border: 1px solid $secondary-btn-border;
                         border-top-left-radius: 4px;
                         border-bottom-left-radius: 4px;
                         height: 28px;
@@ -102,7 +105,7 @@
                         cursor: pointer;
 
                         &:focus {
-                            border-color: $secondary-btn-border !important;
+                            border-color: $input-box-border-normal-color !important;
                         }
                     }
 
@@ -115,7 +118,7 @@
                     img {
                         width: 43px;
                         height: 28px;
-                        border: 1px solid $secondary-btn-border;
+                        border: 1px solid $secondary-button-border-normal-color;
                         border-top-right-radius: 4px;
                         border-bottom-right-radius: 4px;
                         margin-left: -1px;
@@ -131,8 +134,6 @@
                         -webkit-appearance: none;
                         float: right;
                         margin: 0 0 0 10px;
-                        color: $primary-btn-bg;
-                        border: 1px solid $dashboard-button-border-color;
                         border-radius: 4px;
                     }
 
@@ -156,14 +157,14 @@
 
                 .license-detail-lable {
                     font-size: 14px;
-                    color: $menu-label-color;
+                    color: $primary-text-color;
                     letter-spacing: 0.3px;
                     line-height: 23px;
                 }
 
                 #customer-email, #subscription-id-offline, #subscription-name, #plan-name, #expiry-date {
                     font-size: 14px;
-                    color: $menu-label-color;
+                    color: $primary-text-color;
                     letter-spacing: 0.3px;
                     line-height: 23px;
                     overflow: hidden;
@@ -190,7 +191,7 @@
                 width: 120px !important;
 
                 &:disabled {
-                    background: $grey-60;
+                    /*background: $grey-60;*/
                 }
             }
 
@@ -198,7 +199,7 @@
                 float: right;
                 margin-right: 15px;
                 width: 80px !important;
-                background: $secondary-btn-bg;
+                background: $secondary-button-bg-normal-color;
             }
         }
     }
@@ -211,6 +212,7 @@
 #license-settings-container {
     #license-settings-form {
         color: $primary-text-color;
+        position: fixed;
 
         .sub-section-heading {
             font-size: 14px;
@@ -220,47 +222,17 @@
             margin: 8px 0 16px 0
         }
 
-        #plan-details-contianer {
-            table {
-                border: 1px solid $grey-100;
-                margin: 0px;
-
-                tbody tr {
-                    font-size: $app-text-size + 1;
-                    font-weight: normal;
-                    letter-spacing: 0.3px;
-                    height: 40px;
-
-                    th {
-                        background: $admin-container-bg;
-                        border-bottom: 1px solid $grey-100;
-                        border-top: 1px solid $grey-100;
-                        font-weight: bold;
-                        line-height: 20px;
-                        padding: 13px 0px 12px 16px;
-                    }
-
-                    td {
-                        border-top: 1px solid $grey-100;
-                        line-height: 20px;
-                        padding: 9.5px 0px 9.5px 16px;
-                    }
-
-                    &:first-child {
-                        height: 45px;
-                    }
-                }
-            }
-        }
-
         .active-subscription-table-section {
             border-collapse: collapse;
-            border: 1px solid $grey-100;
-            width: 605px;
+            border: 1px solid $section-separator-color;
+            width: 610px;
+            height: 190px;
+            left: 45px;
+            border-radius: 4px;
 
             th {
-                background-color: $admin-container-bg;
-                border-bottom: 1px solid $grey-100;
+                background-color: $background;
+                border-bottom: 1px solid $section-separator-color;
             }
 
             td {
@@ -269,16 +241,23 @@
             }
 
             tr td:first-child {
-                background-color: $table-header;
-                text-align: right;
+                background-color: $surface;
+                font-size: 13px;
                 display: table-cell;
-                vertical-align: middle;
-                font-weight: 600;
-                border-right: 1px solid $grey-100;
+                padding: 8px 0px 0px 16px;
+                border-right: 1px solid $section-separator-color;
+                width: 154px;
+                letter-spacing: 0.325px;
             }
 
             td:last-child {
-                border-bottom: 1px solid $grey-100;
+                border-bottom: 1px solid $section-separator-color;
+                font-size: 13px;
+                line-height: 24px;
+                padding: 8px 0px 10px 16px;
+                width: 432px;
+                height: 40px;
+                letter-spacing: 0.325px;
             }
 
             tr td span {
@@ -288,68 +267,28 @@
 
             #subscription-id-bi, #subscription-id-reports {
                 float: left;
-                margin: 10px 0 0 0;
+                margin: 11px 0 0 0;
+                letter-spacing: 0px !important;
 
                 .subscription-link {
                     color: $link-text-color !important;
 
                     &:hover {
-                        color: $blue-secondary !important;
+                        color: $link-text-hover-color !important;
                     }
                 }
             }
 
             #subscription-copy-bi, #subscription-copy-reports {
-                float: right;
-                width: 16px;
                 cursor: pointer;
-                margin-top: 7px;
-                margin-left: 25px;
+                margin-top: 10px;
+                position: absolute;
+               margin-left:12px;
+                min-width: 53px;
             }
 
             .display-none {
                 display: none !important;
-            }
-        }
-
-
-
-        .renewal-body {
-
-            border-bottom:0px;
-
-            #renewal-information {
-                #online-renewal {
-                    h3 {
-                        padding: 0px 0 8px 0;
-                        margin: 0 auto;
-                        font-size: 14px;
-                        font-weight: 700;
-                    }
-
-                    .update-license-btn-holder {
-
-                        #update-license-key-notification-loader-bi, #update-license-key-notification-loader-reports {
-                            padding: 0 40px;
-                            height: 34px;
-                            line-height: 34px;
-                        }
-                    }
-                }
-
-                .offline-renewal {
-                    h3 {
-                        padding: 20px 0 8px 0;
-                        margin: 0 auto;
-                        font-size: 14px;
-                        font-weight: 700;
-                    }
-                }
-
-                button {
-                    width: 100px;
-                    margin-left: 10px;
-                }
             }
         }
     }
@@ -447,8 +386,8 @@
             font-weight: 600;
             font-style: normal;
             font-size: 14px;
-            line-height: 18px;
-            letter-spacing: 0.35px;
+            line-height: 21px;
+            letter-spacing: 0.5px;
         }
 
         p {
@@ -457,17 +396,17 @@
             font-weight: 400;
             font-style: normal;
             font-size: 14px;
-            line-height: 18px;
-            letter-spacing: 0.35px;
+            line-height: 21px;
+            letter-spacing: 0.5px;
         }
     }
 
     .seperator {
         height: 70%;
         width: 1px;
-        border: 1px solid $dialog-seperator;
+        border: 1px solid $section-separator-color;
         position: absolute;
-        left: 50%;
+        left: 267px;
     }
 
     button {
@@ -476,16 +415,8 @@
         line-height: 20px;
         text-align: center !important;
         letter-spacing: 0.3px;
-        color: $blue;
-        border: 1px solid $blue;
         border-radius: 4px;
         height: 28px;
-        background: $white;
-
-        &:hover {
-            background: $blue;
-            color: $white;
-        }
     }
 
     #online-license-bi, #offline-update-bi {
@@ -494,6 +425,16 @@
 
     .help-container {
         padding: 15px 0 0 0;
+        line-height: 21px;
+        letter-spacing: 0.5px;
+    }
+
+    .online-change-subscription-content {
+        padding: 10px 0px 0px 19px;
+    }
+
+    .offline-change-subscription-content{
+        padding:10px 0px 0px 25px;
     }
 }
 
@@ -510,7 +451,7 @@
             padding: 40px 0 16px 0;
             margin: 0;
             font-size: 16px;
-            color: $menu-label-color;
+            color: $primary-text-color;
             letter-spacing: 0.75px;
             line-height: 30px;
         }
@@ -519,7 +460,7 @@
             padding: 0;
             margin: 0;
             font-size: 16px;
-            color: $menu-label-color;
+            color: $primary-text-color;
             letter-spacing: 0.75px;
             line-height: 30px;
         }
@@ -543,17 +484,6 @@
     padding: 0;
 }
 
-.e-control.e-dialog .e-dlg-header {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 21px;
-    letter-spacing: 0.3px;
-}
-
-.e-control.e-dialog .e-dlg-header-content {
-    padding: 12px 12px 6px 12px;
-}
-
 .trial {
     background-color: $trial-bg-color;
     color: $trial-color;
@@ -568,5 +498,82 @@
     background-color: $active-bg-color;
     color: $active-color;
 }
+#license-settings-container {
+    .sub-title {
+        line-height: 30px !important;
+        margin-left: 45px !important;
+        margin-top: 0px !important;
+    }
 
+    .secondary-button {
+        height: 24px;
+        line-height: 2px;
+        position: absolute;
+        top: 30px;
+        font-weight: 400;
+        padding: 0px 8px;
+    }
 
+    .edit-link {
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        position: relative;
+    }
+
+    #subscription-information {
+        margin-left: 45px !important;
+    }
+
+    .renew-container {
+        margin-left: 45px;
+        background: $warning-bg-normal-color;
+        border: 1px solid $warning-border-normal-color;
+        width: 610px;
+        height: auto;
+        padding: 10px;
+    }
+
+    .renew-content {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: $warning-text-color;
+        margin-left: 40px;
+    }
+
+    #change-subscription {
+        top: 39px;
+        margin-left: 74px;
+    }
+
+    .su-warning-alt {
+        font-size: 18px;
+        top: 13px;
+        position: absolute;
+        margin-left: 8px;
+        color: $warning-text-color;
+    }
+
+    #details-information {
+        position: relative;
+        margin-top: auto;
+
+        .plan {
+            padding-top: 8px;
+            line-height: 0px !important;
+        }
+
+        .heading {
+            padding-top: 20px !important;
+        }
+
+        .sub-title {
+            margin-right: 345px;
+        }
+        .display-inline{
+            display:inline-block;
+        }
+    }
+}

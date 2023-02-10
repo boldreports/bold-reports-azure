@@ -24,6 +24,7 @@
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
             var reportDesignerUrl = "@Url.Action("ReportDesigner", "Reports")";
             var canCreateCategory = "@canCreateCategory";
+            var tagList = @Html.Raw(Json.Serialize(ViewBag.Tag));
 
             function load() {
                 window.parent.parent.$("#report_popup_wrapper").ejWaitingPopup("hide");
@@ -83,7 +84,7 @@
                         <td class="col-xs-9">
                             <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
                                 <select id="selected_category" data-live-search="true" title='[[[Select category]]]' name="categoryId" class="selectpicker form-control bottom-margin30" data-none-results-text="[[[No results match]]]" data-size="5" style="width:100%;margin-bottom:15px;">
-                                    <option data-divider="true"></option>
+                                    <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
                                     @for (var item = 0; item < Model.Count; item++)
                                     {
                                         <option value="@Model[item].Id">@Model[item].Name</option>
@@ -156,7 +157,16 @@
                                 </td>
                             </tr>
                         }
-                }
+                    }
+                    <tr>
+                        <td class="col-xs-3 text-right"><div class="bottom-margin40">[[[Tag Name]]]</div></td>
+                        <td class="col-xs-9">
+                            <div id="taginfo" style="border-radius:4px;" onclick="openPopup();">
+                                <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
+                                <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
                 <div class="col-md-12 DisplayNone no-padding" id="datasource_list">
                     <h4>[[[Select Data Source(s)]]]</h4>

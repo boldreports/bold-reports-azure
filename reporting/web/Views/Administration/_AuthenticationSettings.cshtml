@@ -29,6 +29,11 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
     var oAuthCustomMailContent = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.EmailContent : string.Empty;
     var openIdSubject = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.Subject : string.Empty;
     var oAuthSubject = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.Subject : string.Empty;
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var authenticationGeneralHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AuthenticationSettings);
+    var authenticationControlHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AuthenticationSettings);
+    var authenticationOAuthHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.OAuthSettings);
+    var authenticationOpenIdHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.OpenIdSettings);
 }
 @section styles{
     <environment include="Development,CloudDevelopment">
@@ -53,9 +58,9 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
     <script>
         var defaultAuthentication = "";
         var addUserDirectoryLogUrl = "@Url.Action("AddSystemLogForUserDirectory", "Administration")";
-        var userDirectoryAuthControl = helpSiteBaseUrl + "/site-settings/authentication-control";
-        var userDirectoryOauth = helpSiteBaseUrl + "/site-settings/oauth-settings";
-        var userDirectoryOpenid = helpSiteBaseUrl + "/site-settings/openid-settings";
+        var userDirectoryAuthControl = "@authenticationControlHelpSiteUrl";
+        var userDirectoryOauth = "@authenticationOAuthHelpSiteUrl";
+        var userDirectoryOpenid = "@authenticationOpenIdHelpSiteUrl";
         var updateauthsettingsUrl = "@Url.Action("UpdateAuthenticationSettings", "Administration")";
         var updateauthcontrolUrl = "@Url.Action("UpdateAuthControl", "Administration")";
         var updateLoginOptionsUrl = "@Url.Action("UpdateLoginOptions", "Administration")";
@@ -63,7 +68,7 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
         var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
         var isAzureApplication = @Json.Serialize(isAzureApplication);
-        var userDirectoryWindows = helpSiteBaseUrl + "/site-settings/windows-ad-settings";
+        var userDirectoryWindows = "@authenticationGeneralHelpSiteUrl";
         var isOpenIdIdentityProviderOptionEnabled = @Json.Serialize(isOpenIdIdentityProviderOptionEnabled);
         var isOAuthIdIdentityProviderOptionEnabled = @Json.Serialize(isOAuthIdIdentityProviderOptionEnabled);
         var isOpenIdCustomMailOptionEnabled = @Json.Serialize(isOpenIdCustomMailOptionEnabled);

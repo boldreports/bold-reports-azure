@@ -1,6 +1,10 @@
-﻿@import "../../themes/_light_cloud.scss";
+﻿@import "../../default/default.scss";
 
 body {
+    color: $primary-text-color !important;
+    background: var(--surface) !important;
+    font-family: var(--font-family);
+
     .left {
         float: left;
         margin: 15px;
@@ -23,14 +27,21 @@ body {
 
     .status-header {
         border-radius: 8px;
-        color: white;
-        font-family: RobotoRegular;
         margin: 0% 10%;
         padding: 13px;
         text-align: center;
 
+        a {
+            color: $link-text-color;
+        }
+
+        a:hover, a:focus {
+            text-decoration: none !important;
+            color: $link-text-hover-color;
+        }
+
         &.status-success {
-            background-color: $green;
+            background-color: $success;
         }
 
         &.status-warning {
@@ -38,15 +49,13 @@ body {
         }
     }
 
-
     .row {
-        background-color: $grey-200;
-        color: $grey-700;
-        font-family: RobotoRegular;
+        background-color: $grey-100;
+        color: $primary-text-color;
     }
 
     .border {
-        border: 2px solid $grey-400;
+        border: 2px solid $section-separator-color;
         margin: 2% 10%;
         padding: 0px 15px;
         border-radius: 8px;

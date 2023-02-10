@@ -117,7 +117,7 @@ function getEmbedSecret() {
 
 function resetEmbedSecret() {
     onCloseMessageBox();
-    showWaitingPopup($("#body"));
+    showWaitingPopup('body');
     $.ajax({
         type: "POST",
         url: isResetEmbedSecretUrl,
@@ -126,7 +126,10 @@ function resetEmbedSecret() {
                 secretCodeChange(data);
                 SuccessAlert(window.TM.App.LocalizationContent.EmbedSettings, window.TM.App.LocalizationContent.ResetSecretSuccessAlert, 7000);
             }
-            hideWaitingPopup($("#body"));
+            else {
+                WarningAlert(window.TM.App.LocalizationContent.EmbedSettings, window.TM.App.LocalizationContent.ResetSecretfailureAlert, data.Message, 7000)
+            }
+            hideWaitingPopup('body');
         }
     });
 }
@@ -150,12 +153,14 @@ $(document).on("change", "#csfile", function (e) {
     var value = $(this).val();
     if ($(this).val().substring($(this).val().lastIndexOf('.') + 1) != "json") {
         $("#cs-upload").attr("disabled", true);
-        $("#filename").val("Please upload a valid cs file.").css("color", "#c94442");
-        $("#filename,#trigger-file").addClass("error-file-upload");
+        $("#filename").val(window.TM.App.LocalizationContent.JsonFileValidator);
+        $("#filename,#trigger-file").addClass("validation-message");
+        $(".upload-box").addClass("e-error");
     } else {
         $("#cs-upload").attr("disabled", false);
-        $("#filename,#trigger-file").removeClass("error-file-upload");
-        $("#filename").val(value).css("color", "#333");
+        $("#filename,#trigger-file").removeClass("validation-message");
+        $("#filename").val(value);
+        $(".upload-box").removeClass("e-error");
         $('#csfile').attr('title', value);
     }
 });

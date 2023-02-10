@@ -276,16 +276,16 @@
                                         <span>[[[Import from Active Directory]]]</span>
                                     </a>
                                 </li>
-                            }
-                            <li>
-                                @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]))
-                                {
+                            }                            
+                            @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]))
+                            {
+                                <li>
                                     <a href="@Url.Action("AzureADGroupImport", "group")" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Azure AD]]]">
                                         <i class="su su-azure-ad"></i>
                                         <span>[[[Import from Azure AD]]]</span>
                                     </a>
-                                }
-                            </li>
+                                </li>
+                            }                            
                         </ul>
                     </li>
 

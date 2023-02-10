@@ -3,7 +3,7 @@
     ViewBag.MessageBox = false;
     var isSecureConnection = GlobalAppSettings.SystemSettings.IsSecureConnection;
     var protocolTypes = new List<SelectListItem>
-    {  new SelectListItem
+{  new SelectListItem
     {
         Text = "http", Value = "http", Selected = !GlobalAppSettings.SystemSettings.IsSecureConnection
     },
@@ -121,24 +121,13 @@
                 $("#schedule-synchronization").tooltip();
             });
     </script>
-
     <script src="~/bundles/js/site-settings.js" asp-append-version="true"></script>
+
 }
 
 @section MainSection{
-    @if (!CloudAppConfig.IsSelfHosted)
-    {
-        @await Html.PartialAsync("_ActiveDirectorySettings")
-    }
-    else
-    {
-        @await Html.PartialAsync("_AdminMenu")
-        @await Html.PartialAsync("_SiteSettings")
-        @await Html.PartialAsync("_EmailSettings")
 
-        if (!ViewBag.ThirdPartyLogins || !ViewBag.WhiteLabel || !ViewBag.CustomDomain)
-        {
-            @await Html.PartialAsync("~/Views/UnlockFeatures/UnlockFeatures.cshtml")
-        }
-    }
+    @await Html.PartialAsync("_AdminMenu")
+    @await Html.PartialAsync("_SiteSettings")
+    @await Html.PartialAsync("_EmailSettings")
 }

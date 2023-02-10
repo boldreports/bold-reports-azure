@@ -23,7 +23,7 @@ $(document).ready(function () {
         isModal: true,
         visible: false,
         close: "closeAvatarBox",
-        allowDragging: true,
+        animationSettings: { effect: 'Zoom' },
         closeOnEscape: true
     });
     avatarUploadDialog.appendTo("#avatar-upload-box");
@@ -123,8 +123,11 @@ $(document).ready(function () {
         selected: function (e) {
             showWaitingPopup('avatar-upload-box');
             currentDate = $.now();
-            extension = e.filesData[0].type.toLowerCase();
-            if (extension != "png" && extension != "jpg" && extension != "jpeg") {
+            extension = e.filesData[0]?.type.toLowerCase();
+            if (extension === undefined) {
+                hideWaitingPopup('content-area');
+            }
+            else if (extension != "png" && extension != "jpg" && extension != "jpeg") {
                 $(".image-validation-message").text(window.Server.App.LocalizationContent.InvalidFileFormat);
                 $("#file-description").css("margin-top", "10px");
                 hideWaitingPopup('avatar-upload-box');
@@ -310,6 +313,7 @@ $(document).on("click", "#image-path", function () {
 $(document).on("click", "#edit", function (e) {
     var isAdUser = $("#is-aduser").html().toLowerCase();
     $("#user-phonenumber").val(userDetails.Contact);
+    $("#user-lastname").val(userDetails.LastName);
     $("#edit").hide();
     $("#save-button,#cancel-button,#cancel-link-button,.admin-page-footer").show();
     if (isAdUser == "false") {
@@ -326,7 +330,7 @@ $(document).on("click", "#cancel-button", function (e) {
     $("#user-firstname").val(userDetails.FirstName);
     $("#user-username").val(userDetails.Username);
     $("#user-email").val(userDetails.Email);
-    $("#user-lastname").val(userDetails.LastName);
+    $("#user-lastname").val(userDetails.LastName === "" ? "--" : userDetails.LastName);
     $("#user-phonenumber").val(userDetails.Contact === "" ? "--" : userDetails.Contact);
 
     $(".edit-profile-field").removeClass("form-control").addClass("no-edit");
@@ -439,7 +443,7 @@ function SaveProfile() {
                     }
                 } else {
                     hideWaitingPopup('content-area');
-                    WarningAlert(window.Server.App.LocalizationContent.UpdateProfile, result.Data.value, 7000);
+                    WarningAlert(window.Server.App.LocalizationContent.UpdateProfile, result.Data.value, result.Message, 7000);
                     location.reload();
                 }
             }
@@ -502,45 +506,50 @@ function uploadImage() {
                     else {
                         window.location.reload();
                     }
-                    SuccessAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateSuccess, 7000);
-                    parent.$("#user-profile-picture").attr("src", avatarUrl + "?id=" + userId + "&imageSize=110&v=" + $.now());
-                    parent.$(".profile-picture,#profile-picture-menu").find("img").attr("src", avatarUrl + "?id=" + userId + "&imageSize=32&v=" + $.now());
-                    var value = parent.$("#avatar-delete-click").length;
-                    if (value == 0) {
-                        $(".img-view-holder").on("mouseenter", function () {
-                            if ($("#avatar-delete-click").length == 0) {
-                                if ($("#user-profile-picture").attr("src") == "/user/getdefaultavatar") {
-                                    $("#avatar-delete-click").css("display", "none");
+                    if (result.Data != null) {
+                        SuccessAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateSuccess, 7000);
+                        parent.$("#user-profile-picture").attr("src", avatarUrl + "?id=" + userId + "&imageSize=110&v=" + $.now());
+                        parent.$(".profile-picture,#profile-picture-menu").find("img").attr("src", avatarUrl + "?id=" + userId + "&imageSize=32&v=" + $.now());
+                        var value = parent.$("#avatar-delete-click").length;
+                        if (value == 0) {
+                            $(".img-view-holder").on("mouseenter", function () {
+                                if ($("#avatar-delete-click").length == 0) {
+                                    if ($("#user-profile-picture").attr("src") == "/user/getdefaultavatar") {
+                                        $("#avatar-delete-click").css("display", "none");
+                                    }
+                                    else {
+                                        $("<span>", { class: "su su-delete", id: "avatar-delete-click", title: window.Server.App.LocalizationContent.DeleteAvatar }).insertAfter("#avatar-button-click").addClass("profile-picture-edit-button").css("left", "86px");
+                                    }
                                 }
-                                else {
-                                    $("<span>", { class: "su su-delete", id: "avatar-delete-click", title: window.Server.App.LocalizationContent.DeleteAvatar }).insertAfter("#avatar-button-click").addClass("profile-picture-edit-button").css("left", "86px");
-                                }
-                            }
 
-                        });
-                        $(".img-view-holder").on("mouseleave", function () {
-                            $("#avatar-delete-click").css("display", "none");
-                        });
+                            });
+                            $(".img-view-holder").on("mouseleave", function () {
+                                $("#avatar-delete-click").css("display", "none");
+                            });
 
 
+                        }
+                        $("#image-path").val(window.Server.App.LocalizationContent.BrowseProfileImagePath);
+                        $("#image-preview-text").show();
+                        $("#profile-picture").hide();
+                        $('#upload-image').attr("disabled", "disabled");
+                        if ($(".img-container").children().hasClass("jcrop-active")) {
+                            $('#profile-picture').data('Jcrop').destroy();
+                        }
+                        closeAvatarBox();
+                        hideWaitingPopup('avatar-upload-box');
                     }
-                    $("#image-path").val(window.Server.App.LocalizationContent.BrowseProfileImagePath);
-                    $("#image-preview-text").show();
-                    $("#profile-picture").hide();
-                    $('#upload-image').attr("disabled", "disabled");
-                    if ($(".img-container").children().hasClass("jcrop-active")) {
-                        $('#profile-picture').data('Jcrop').destroy();
+                    else {
+                        WarningAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateError, result.Message, 7000);
                     }
-                    closeAvatarBox();
-                    hideWaitingPopup('avatar-upload-box');
                 },
                 error: function (result) {
-                    WarningAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateError, 7000);
+                    WarningAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateError, result.Message, 7000);
                 }
             });
         }
         else {
-            WarningAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateError, 7000);
+            WarningAlert(window.Server.App.LocalizationContent.ChangeAvatar, window.Server.App.LocalizationContent.AvatarUpdateError, result.Message, 7000);
         }
     }
 };
@@ -562,7 +571,7 @@ function deleteUserAvatar() {
 
             }
             else {
-                WarningAlert(window.Server.App.LocalizationContent.DeleteAvatarTitle, window.Server.App.LocalizationContent.DeleteAvatarError, 7000);
+                WarningAlert(window.Server.App.LocalizationContent.DeleteAvatarTitle, window.Server.App.LocalizationContent.DeleteAvatarError, result.Message, 7000);
             }
             hideWaitingPopup('content-area');
 

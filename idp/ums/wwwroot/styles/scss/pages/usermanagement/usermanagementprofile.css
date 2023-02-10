@@ -2,6 +2,37 @@
   .app-header #application-list {
     text-align: center !important; } }
 
+#view-user-profile .admin-page-header .admin-page-header-description {
+  display: inline-block !important; }
+
+#view-user-profile .admin-page-header #unlock-user {
+  border: 1px solid #0162FF;
+  border-radius: 4px;
+  width: 117px;
+  height: 28px;
+  color: #0565FF;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  margin-right: 20px;
+  letter-spacing: 0.3px;
+  float: right;
+  display: inline-block !important; }
+
+#view-user-profile .admin-page-header .dropdown {
+  display: inline-block !important;
+  float: right; }
+  #view-user-profile .admin-page-header .dropdown .dropdown-menu {
+    width: 190px;
+    left: -172px; }
+  #view-user-profile .admin-page-header .dropdown .option-icon {
+    cursor: pointer;
+    display: inline-block !important;
+    transform: rotate(90deg) !important; }
+  #view-user-profile .admin-page-header .dropdown li {
+    cursor: pointer !important; }
+
 #view-user-profile .admin-page-body .display-name {
   font-size: 18px;
   font-weight: bold;
@@ -11,10 +42,10 @@
   margin-top: 23px; }
 
 #view-user-profile .admin-page-body .profile-img-name {
-  border-bottom: 1px solid #e6e6e6; }
+  border-bottom: 1px solid var(--grey-300); }
 
 #view-user-profile .admin-page-body .img-view-holder {
-  border: 0.5px solid #e6e6e6;
+  border: 0.5px solid var(--grey-300);
   border-radius: 2px;
   float: left;
   height: 64px;
@@ -33,10 +64,38 @@
   margin-left: 10px;
   width: 750px; }
   #view-user-profile .admin-page-body #profile-details form {
-    display: table; }
+    display: table;
+    width: 60%; }
     #view-user-profile .admin-page-body #profile-details form div.form-element-label {
       display: table-row;
       width: 100%; }
+      #view-user-profile .admin-page-body #profile-details form div.form-element-label #user-id {
+        background-color: var(--surface);
+        overflow: hidden;
+        border-radius: 4px 0 0 4px;
+        resize: none;
+        height: 28px;
+        box-shadow: none;
+        border: 1px solid var(--grey-300);
+        padding: 5px;
+        margin-left: 30px !important; }
+      #view-user-profile .admin-page-body #profile-details form div.form-element-label #user-id-copy {
+        padding: 6px;
+        float: right;
+        position: absolute;
+        right: 250px;
+        top: 0;
+        cursor: pointer;
+        border-radius: 0 4px 4px 0;
+        float: left;
+        font-size: 14px;
+        cursor: pointer;
+        height: 28px;
+        width: 29px;
+        background-color: var(--surface);
+        box-shadow: none;
+        border-left: none;
+        border: 1px solid var(--grey-300); }
       #view-user-profile .admin-page-body #profile-details form div.form-element-label .tooltip .tooltip-inner {
         max-width: unset; }
       #view-user-profile .admin-page-body #profile-details form div.form-element-label label, #view-user-profile .admin-page-body #profile-details form div.form-element-label input, #view-user-profile .admin-page-body #profile-details form div.form-element-label .user-status {
@@ -47,7 +106,7 @@
         line-height: 20px;
         padding-bottom: 20px; }
       #view-user-profile .admin-page-body #profile-details form div.form-element-label label {
-        color: #808080;
+        color: var(--grey-500);
         width: 70px; }
       #view-user-profile .admin-page-body #profile-details form div.form-element-label input, #view-user-profile .admin-page-body #profile-details form div.form-element-label .user-status {
         padding-left: 39px;
@@ -59,89 +118,13 @@
         text-overflow: ellipsis; }
       #view-user-profile .admin-page-body #profile-details form div.form-element-label .email-status {
         padding-left: 39px;
-        color: #808080; }
+        color: var(--grey-500); }
 
 #view-user-profile #is-aduser, #view-user-profile #logged-user {
   display: none; }
 
 #view-user-profile #avatar-upload-box {
   padding: 0px !important; }
-  #view-user-profile #avatar-upload-box .modal-content {
-    border-radius: 0;
-    border: 0;
-    padding: 0; }
-    #view-user-profile #avatar-upload-box .modal-content .ellipsis {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis; }
-    #view-user-profile #avatar-upload-box .modal-content .modal-header {
-      border: none;
-      height: 50px;
-      padding: 10px !important; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-header .modal-title {
-        font-size: 14px;
-        font-weight: 500; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-header .header-icon {
-        padding: 3px 3px 3px 0;
-        width: 20px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-header .header-content {
-        font-size: 10px;
-        font-weight: 400; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-header .popup-close {
-        color: var(--colorText);
-        font-size: 10px; }
-        #view-user-profile #avatar-upload-box .modal-content .modal-header .popup-close:hover {
-          color: var(--colorPrimary);
-          text-decoration: none; }
-    #view-user-profile #avatar-upload-box .modal-content .modal-body {
-      font-size: 12px;
-      padding: 10px;
-      overflow-y: auto; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body #file-name {
-        cursor: pointer; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .highlight-name {
-        font-style: italic;
-        color: var(--colorPrimary); }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .selectpicker, #view-user-profile #avatar-upload-box .modal-content .modal-body .form-control {
-        font-size: 12px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .btn-default {
-        height: 28px; }
-        #view-user-profile #avatar-upload-box .modal-content .modal-body .btn-default .filter-option {
-          margin-top: -1px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .delete-msg {
-        margin-top: 4px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .validation-message {
-        color: var(--danger);
-        font-size: 10px;
-        float: left; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .app-textbox-label {
-        font-weight: 400;
-        font-size: 12px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-body .info-text {
-        font-size: 10px; }
-    #view-user-profile #avatar-upload-box .modal-content .modal-footer {
-      background-color: #eeeeee;
-      height: 50px;
-      padding: 10px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-footer .message-area {
-        height: 35px;
-        margin-top: -8px; }
-        #view-user-profile #avatar-upload-box .modal-content .modal-footer .message-area .error-message, #view-user-profile #avatar-upload-box .modal-content .modal-footer .message-area .success-message {
-          padding: 0px;
-          float: left;
-          text-align: left;
-          height: 44px;
-          width: 100%;
-          display: none;
-          word-wrap: break-word; }
-        #view-user-profile #avatar-upload-box .modal-content .modal-footer .message-area .success-message {
-          overflow: hidden;
-          position: relative;
-          text-overflow: ellipsis; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-footer .margin-right {
-        margin-right: 10px; }
-      #view-user-profile #avatar-upload-box .modal-content .modal-footer .margin-top {
-        margin-top: 2px; }
   #view-user-profile #avatar-upload-box .modal-dialog {
     margin-top: 0px;
     width: 598px;
@@ -162,7 +145,7 @@
             font-size: 12px;
             cursor: default; }
           #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #upload-picture {
-            border: 1px solid #cccccc;
+            border: 1px solid var(--section-separator-color);
             padding: 0 !important;
             width: 60px !important;
             height: 0 !important; }
@@ -173,9 +156,9 @@
               position: absolute;
               width: 60px; }
               #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #upload-picture .e-selectpart:hover {
-                background-color: #eeeeee; }
+                background-color: var(--background); }
                 #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #upload-picture .e-selectpart:hover #upload-picture_SelectButton {
-                  color: #333;
+                  color: var(--grey-black);
                   margin-top: -3px; }
               #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #upload-picture .e-selectpart #upload-picture_SelectButton {
                 border: none;
@@ -183,11 +166,11 @@
             #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #upload-picture .upload-box {
               margin: -13px 0 0 0; }
           #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path .ValidationErrorImage {
-            color: var(--danger); }
+            color: var(--red); }
         #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .has-error #upload-picture {
-          border: 1px solid var(--danger); }
+          border: 1px solid var(--red); }
         #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body .image-selection-holder {
-          border: 1px solid #cccccc;
+          border: 1px solid var(--section-separator-color);
           float: left;
           margin-left: 60px;
           overflow: hidden;
@@ -216,7 +199,7 @@
               background-image: none !important;
               border: 1px solid rgba(255, 255, 255, 0.4);
               border-radius: 50%;
-              box-shadow: 1px 1px 26px #333;
+              box-shadow: 1px 1px 26px var(--grey-black);
               height: 100%;
               left: 0;
               opacity: 0.5 !important;
@@ -227,7 +210,7 @@
         #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body #file-description {
           margin-top: -24%; }
           #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-body #file-description #file-description-content {
-            color: var(--colorText);
+            color: var(--primary-text-color);
             font-size: 12px; }
       #view-user-profile #avatar-upload-box .modal-dialog .modal-content .modal-footer #upload-image {
         margin-right: 10px;
@@ -235,10 +218,10 @@
 
 #view-user-profile #messageBox .message-box-close {
   right: 10px;
-  color: #4d4d4d;
+  color: var(--dialog-header-close-icon-normal-color);
   opacity: 1; }
   #view-user-profile #messageBox .message-box-close:hover {
-    color: #1a1a1a; }
+    color: var(--dialog-header-close-icon-hover-color); }
 
 #view-user-profile #messageBox .message-content {
   height: 50px;
@@ -257,14 +240,6 @@
 #change-password .confirm-password {
   margin-bottom: 32px; }
 
-#change-password ul#password_policy_rules {
-  margin-left: 40%;
-  margin-top: -2%;
-  margin-bottom: 0px;
-  height: 35px; }
-  #change-password ul#password_policy_rules #p_policy_heading {
-    margin-top: 25px; }
-
 #profile-navigation {
   margin-top: -20px;
   padding-bottom: 30px; }
@@ -276,7 +251,7 @@
       display: inline-block;
       height: inherit; }
       #profile-navigation ul li a {
-        color: var(--colorText);
+        color: var(--primary-text-color);
         cursor: pointer;
         display: inline-block;
         font-size: 12px;
@@ -303,15 +278,15 @@
           -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out; }
         #profile-navigation ul li a:hover:before, #profile-navigation ul li a:focus:before {
-          background: #cccccc;
+          background: var(--grey-400);
           left: 0;
           right: 0; }
         #profile-navigation ul li a.active {
-          color: var(--colorPrimary); }
+          color: var(--primary-branding-bg-color); }
           #profile-navigation ul li a.active i {
-            color: var(--colorPrimary) !important; }
+            color: var(--primary-branding-bg-color) !important; }
           #profile-navigation ul li a.active:before {
-            background: var(--colorPrimary);
+            background: var(--primary-branding-bg-color);
             left: 0;
             right: 0; }
 
@@ -326,82 +301,6 @@
   #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation {
     height: 150px !important;
     width: 400px !important; }
-    #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content {
-      border-radius: 0;
-      border: 0;
-      padding: 0; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .ellipsis {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header {
-        border: none;
-        height: 50px;
-        padding: 10px !important; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .modal-title {
-          font-size: 14px;
-          font-weight: 500; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .header-icon {
-          padding: 3px 3px 3px 0;
-          width: 20px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .header-content {
-          font-size: 10px;
-          font-weight: 400; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .popup-close {
-          color: var(--colorText);
-          font-size: 10px; }
-          #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .popup-close:hover {
-            color: var(--colorPrimary);
-            text-decoration: none; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body {
-        font-size: 12px;
-        padding: 10px;
-        overflow-y: auto; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body #file-name {
-          cursor: pointer; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .highlight-name {
-          font-style: italic;
-          color: var(--colorPrimary); }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .selectpicker, #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .form-control {
-          font-size: 12px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .btn-default {
-          height: 28px; }
-          #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .btn-default .filter-option {
-            margin-top: -1px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .delete-msg {
-          margin-top: 4px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .validation-message {
-          color: var(--danger);
-          font-size: 10px;
-          float: left; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .app-textbox-label {
-          font-weight: 400;
-          font-size: 12px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .info-text {
-          font-size: 10px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer {
-        background-color: #eeeeee;
-        height: 50px;
-        padding: 10px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area {
-          height: 35px;
-          margin-top: -8px; }
-          #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .error-message, #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .success-message {
-            padding: 0px;
-            float: left;
-            text-align: left;
-            height: 44px;
-            width: 100%;
-            display: none;
-            word-wrap: break-word; }
-          #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .success-message {
-            overflow: hidden;
-            position: relative;
-            text-overflow: ellipsis; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .margin-right {
-          margin-right: 10px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .margin-top {
-          margin-top: 2px; }
     #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content {
       height: 150px; }
       #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body {
@@ -487,21 +386,11 @@
 @media screen and (max-width: 1024px) {
   body .alert-danger {
     top: 205px !important;
-    width: 350px !important; }
-  body #view-profile-info #change-password #change-password-content .change-password-form ul#password_policy_rules {
-    float: left;
-    margin-left: 250px !important;
-    position: relative;
-    top: -30px; } }
+    width: 350px !important; } }
 
 @media screen and (min-width: 1025px) and (max-width: 1399px) {
   body .alert-danger {
-    top: 225px !important; }
-  body #change-password #change-password-content .change-password-form ul#password_policy_rules {
-    float: left;
-    margin-left: 550px !important;
-    position: relative;
-    top: -30px; } }
+    top: 225px !important; } }
 
 @media screen and (min-width: 1400px) {
   #view-profile-info #edit-user-profile-master .user-profile-section #edit-user-profile-form-div .label-panel {
@@ -538,88 +427,6 @@
     height: 32px !important; }
   #change-password #change-password-content .change-password-form #new-password-validate, #change-password #change-password-content .change-password-form #confirm-password-validate {
     font-size: 12px !important; }
-  #change-password #change-password-content .change-password-form ul#password_policy_rules {
-    float: left;
-    font-size: 12px !important;
-    margin-left: 495px !important;
-    position: relative;
-    top: -30px; }
-  #avatar-upload-box .modal-content {
-    border-radius: 0;
-    border: 0;
-    padding: 0; }
-    #avatar-upload-box .modal-content .ellipsis {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis; }
-    #avatar-upload-box .modal-content .modal-header {
-      border: none;
-      height: 50px;
-      padding: 10px !important; }
-      #avatar-upload-box .modal-content .modal-header .modal-title {
-        font-size: 16px;
-        font-weight: 500; }
-      #avatar-upload-box .modal-content .modal-header .header-icon {
-        padding: 3px 3px 3px 0;
-        width: 20px; }
-      #avatar-upload-box .modal-content .modal-header .header-content {
-        font-size: 12px;
-        font-weight: 400; }
-      #avatar-upload-box .modal-content .modal-header .popup-close {
-        color: var(--colorText);
-        font-size: 12px; }
-        #avatar-upload-box .modal-content .modal-header .popup-close:hover {
-          color: var(--colorPrimary);
-          text-decoration: none; }
-    #avatar-upload-box .modal-content .modal-body {
-      font-size: 14px;
-      padding: 10px;
-      overflow-y: auto; }
-      #avatar-upload-box .modal-content .modal-body #file-name {
-        cursor: pointer; }
-      #avatar-upload-box .modal-content .modal-body .highlight-name {
-        font-style: italic;
-        color: var(--colorPrimary); }
-      #avatar-upload-box .modal-content .modal-body .selectpicker, #avatar-upload-box .modal-content .modal-body .form-control {
-        font-size: 14px; }
-      #avatar-upload-box .modal-content .modal-body .btn-default {
-        height: 32px; }
-        #avatar-upload-box .modal-content .modal-body .btn-default .filter-option {
-          margin-top: -1px; }
-      #avatar-upload-box .modal-content .modal-body .delete-msg {
-        margin-top: 4px; }
-      #avatar-upload-box .modal-content .modal-body .validation-message {
-        color: var(--danger);
-        font-size: 12px;
-        float: left; }
-      #avatar-upload-box .modal-content .modal-body .app-textbox-label {
-        font-weight: 400;
-        font-size: 14px; }
-      #avatar-upload-box .modal-content .modal-body .info-text {
-        font-size: 12px; }
-    #avatar-upload-box .modal-content .modal-footer {
-      background-color: #eeeeee;
-      height: 50px;
-      padding: 10px; }
-      #avatar-upload-box .modal-content .modal-footer .message-area {
-        height: 35px;
-        margin-top: -8px; }
-        #avatar-upload-box .modal-content .modal-footer .message-area .error-message, #avatar-upload-box .modal-content .modal-footer .message-area .success-message {
-          padding: 0px;
-          float: left;
-          text-align: left;
-          height: 44px;
-          width: 100%;
-          display: none;
-          word-wrap: break-word; }
-        #avatar-upload-box .modal-content .modal-footer .message-area .success-message {
-          overflow: hidden;
-          position: relative;
-          text-overflow: ellipsis; }
-      #avatar-upload-box .modal-content .modal-footer .margin-right {
-        margin-right: 10px; }
-      #avatar-upload-box .modal-content .modal-footer .margin-top {
-        margin-top: 2px; }
   #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path #image-path {
     font-size: 14px !important; }
   #avatar-upload-box .modal-dialog .modal-content .modal-body .image-path .form-control {
@@ -633,84 +440,11 @@
     margin-top: -3px; } }
 
 @media screen and (min-width: 1400px) {
-  #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content {
-    border-radius: 0;
-    border: 0;
-    padding: 0; }
-    #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .ellipsis {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis; }
-    #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header {
-      border: none;
-      height: 50px;
-      padding: 10px !important; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .modal-title {
-        font-size: 16px;
-        font-weight: 500; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .header-icon {
-        padding: 3px 3px 3px 0;
-        width: 20px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .header-content {
-        font-size: 12px;
-        font-weight: 400; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .popup-close {
-        color: var(--colorText);
-        font-size: 12px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-header .popup-close:hover {
-          color: var(--colorPrimary);
-          text-decoration: none; }
-    #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body {
-      font-size: 14px;
-      padding: 10px;
-      overflow-y: auto; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body #file-name {
-        cursor: pointer; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .highlight-name {
-        font-style: italic;
-        color: var(--colorPrimary); }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .selectpicker, #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .form-control {
-        font-size: 14px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .btn-default {
-        height: 28px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .btn-default .filter-option {
-          margin-top: -1px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .delete-msg {
-        margin-top: 4px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .validation-message {
-        color: var(--danger);
-        font-size: 12px;
-        float: left; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .app-textbox-label {
-        font-weight: 400;
-        font-size: 14px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-body .info-text {
-        font-size: 12px; }
-    #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer {
-      background-color: #eeeeee;
-      height: 50px;
-      padding: 10px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area {
-        height: 35px;
-        margin-top: -8px; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .error-message, #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .success-message {
-          padding: 0px;
-          float: left;
-          text-align: left;
-          height: 44px;
-          width: 100%;
-          display: none;
-          word-wrap: break-word; }
-        #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .message-area .success-message {
-          overflow: hidden;
-          position: relative;
-          text-overflow: ellipsis; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .margin-right {
-        margin-right: 10px; }
-      #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .margin-top {
-        margin-top: 2px; }
   #userprofile-delete-confirmation_wrapper #userprofile-delete-confirmation .modal-content .modal-footer .margin-top {
     margin-top: -2px !important; } }
 
 .change-password-div {
   padding: 20px 20px 20px 30px; }
+
+#singleuser-delete-confirmation .e-footer-content .e-btn, #make-admin-confirmation .e-footer-content .e-btn, #remove-admin-confirmation .e-footer-content .e-btn, #unlock-user-confirmation .e-footer-content .e-btn {
+  margin-right: 16px; }

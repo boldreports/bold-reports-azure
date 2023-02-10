@@ -12,10 +12,18 @@
     var isEmbedExpired = ViewBag.IsEmbedExpired == null ? false : ViewBag.IsEmbedExpired;
     var nonce = ViewBag.Nonce == null ? false : ViewBag.Nonce;
     var isEmbedEnabled = ViewBag.IsEmbedEnabled == null ? false : ViewBag.IsEmbedEnabled;
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
     var accessPermission = ViewBag.NoAccess == null ? false : ViewBag.NoAccess;
     var publishedItemIsLocked = ViewBag.IsPublishedItemLocked == null ? false : ViewBag.IsPublishedItemLocked;
     var publishedDatasetIsLocked = ViewBag.IsDatasetLocked == null ? false : ViewBag.IsDatasetLocked;
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 <!DOCTYPE html>
 <html class="report-server">

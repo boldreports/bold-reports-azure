@@ -75,7 +75,7 @@ ej.QueryDesigner.Locale['en-US'] = {
         matchesFound: 'No matches found',
         rename: 'Rename',
         searchInfo: 'Retrieves the matching information from currently fetched schema',
-        aggregation: 'Aggregation',
+        aggregation: 'Aggregate',
         dialogHeader: 'Dataset',
         alertMessage: {
             datasourceAlert: 'Select a DataSource to Configure Report Dataset',
@@ -227,7 +227,7 @@ ej.QueryDesigner.Locale['en-US'] = {
             part: 'Returns an integer value representing the specified date part of the given date expression.',
             sub: 'Returns the date subtracted from the specified date.',
             day: 'Returns a numeric value representing the day part of the specified date.',
-            daydiff: 'Returns a numeric value representing the difference between two specified dates.',
+            dateDiff: 'Returns a numeric value representing the difference between two specified dates.',
             hour: 'Returns the hour of the given date as an integer.',
             minute: 'Returns a numeric value representing the minute part of the date resulting from specified date expression.',
             month: 'Returns a numeric value representing the month part of the date resulting from specified date expression.',

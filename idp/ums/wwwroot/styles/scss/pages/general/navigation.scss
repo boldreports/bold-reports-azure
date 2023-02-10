@@ -1,11 +1,10 @@
 ﻿@import"../../core/_typography.scss";
 @import "../../core/_variables.scss";
-@import "../../themes/_light_cloud.scss";
 @import "../../mixins/_border-radius.scss";
-@import "../../themes/default.scss";
+@import "../../default/default.scss";
 
 #menu-area {
-    background-color: $nav-menu-bg-color;
+    background-color: $nav-menu-content-bg-normal-color;
     box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.12);
     height: 100%;
     position: fixed;
@@ -35,7 +34,7 @@
                         width: inherit;
 
                         .menu-icon-container {
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             display: inline-block;
                             height: $nav-menu-icon-container-height;
                             padding: 8px (($nav-menu-element-width - $nav-menu-icon-container-width) / 2);
@@ -45,13 +44,13 @@
                                 font-size: $nav-menu-icon-size;
 
                                 .path1::before {
-                                    color: $nav-icon-normal-color;
+                                    color: $nav-menu-content-text-normal-color;
                                 }
                             }
                         }
 
                         .menu-label {
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             float: left;
                             font-size: $nav-menu-text-size;
                             letter-spacing: $letter-spacing-normal;
@@ -61,24 +60,24 @@
                     }
 
                     &:hover {
-                        background-color: $nav-menu-hover-color;
+                        background-color: $nav-menu-content-bg-hover-color;
 
                         .menu-icon-container:not(.create-menu-icon) {
                             .su, .menu-label {
-                                color: $nav-menu-hover-text-color;
+                                color: $nav-menu-content-text-hover-color;
                             }
                         }
 
                         .menu-label {
-                            color: $nav-menu-hover-text-color;
+                            color: $nav-menu-content-text-hover-color;
                         }
                     }
 
                     &.active {
-                        background-color: $nav-menu-active-color;
+                        background-color: $nav-menu-content-bg-active-color;
 
                         .su, .menu-label {
-                            color: $nav-menu-active-text-color !important;
+                            color: $nav-menu-content-text-active-color !important;
                         }
                     }
                 }
@@ -86,7 +85,7 @@
                     display: none !important;
                 }*/
                 .sf-nav-separator {
-                    background: $nav-menu-separtor-icon-color;
+                    background: $nav-menu-separator-normal-color;
                     height: 1px;
                     margin: 12px auto;
                     width: 50%;
@@ -144,7 +143,7 @@
 
                         .menu-icon-container {
                             @include border-radius(4px);
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             display: inline-block;
                             height: 42px;
                             padding: 12px;
@@ -161,29 +160,15 @@
                         }
 
                         &:hover {
-                            background-color: $app-background-hover;
+                            background-color: $nav-menu-content-bg-hover-color;
                             border-radius: 4px;
                         }
 
                         &.active {
-                            background-color: $primary-selected-color;
+                            background-color: $nav-menu-content-bg-active-color;
 
                             .su, .menu-label {
-                                color: $primary;
-                            }
-                        }
-
-                        #user-system-notification {
-                            #notification-indicator {
-                                background: $red;
-                                border: solid 1px $white;
-                                border-radius: 10px;
-                                display: block;
-                                left: 21px;
-                                line-height: 5px;
-                                padding: 3px;
-                                position: absolute;
-                                top: 9px;
+                                color: $primary-color;
                             }
                         }
                     }
@@ -199,10 +184,10 @@
                                 @include border-radius(50%);
                                 height: 40px;
                                 width: 40px;
-                                border: 1px solid $text-white;
+                                border: 1px solid $white;
 
                                 &:hover {
-                                    border: 1px solid $btn-hover-border-color;
+                                    border: 1px solid $sub-nav-menu-border-color;
                                 }
                             }
                         }
@@ -216,7 +201,7 @@
                     &.profile-section.open {
                         a {
                             .profile-picture {
-                                border: 1px solid $btn-hover-border-color;
+                                border: 1px solid $nav-menu-content-bg-hover-color;
                             }
                         }
                     }
@@ -232,7 +217,7 @@
                                 height: 34px;
                                 text-align: left;
                                 font-size: map-get($app-text-size, sm);
-                                color: $nav-menu-text-color;
+                                color: $nav-menu-content-text-normal-color;
 
                                 div {
                                     padding: 8px 8px 12px 8px;
@@ -264,7 +249,7 @@
                                     font-weight: 600;
                                     line-height: 1.6;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color;
+                                    color: $nav-menu-content-text-normal-color;
                                     padding: 0 0 0 8px;
                                     margin-bottom: 11px;
                                 }
@@ -275,7 +260,7 @@
                                     font-weight: normal;
                                     line-height: 1.5;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color !important;
+                                    color: $nav-menu-content-text-normal-color !important;
 
                                     .sub-menu-bar-profile-image {
                                         float: left;
@@ -290,13 +275,13 @@
                                         padding-left: 6px;
                                         width: 135px;
                                         font-weight: normal;
-                                        font-family: $nav-menu-text-color;
+                                        font-family: $nav-menu-content-text-normal-color;
                                         margin-top: 3px;
 
                                         .sub-menu-user-name-style {
                                             font-size: 12px;
                                             letter-spacing: 0.3px;
-                                            color: $primary-black;
+                                            color: $black;
                                             overflow: hidden;
                                             text-overflow: ellipsis;
                                         }
@@ -304,7 +289,7 @@
                                         .sub-menu-user-email-style, .sub-menu-user-username-style {
                                             font-size: 10px;
                                             letter-spacing: 0.25px;
-                                            color: $nav-menu-text-color;
+                                            color: $nav-menu-content-text-normal-color;
                                             line-height: 12px;
                                             margin-top: 2px;
                                             overflow: hidden;
@@ -316,12 +301,12 @@
                         }
 
                         &:hover:not(.profile-section dropup) {
-                            background-color: $app-background-hover;
+                            background-color: $nav-menu-content-bg-normal-color;
                         }
                     }
 
                     .sf-sub-menu-separator {
-                        background: $separator-color;
+                        background: $nav-menu-separator-normal-color;
                         height: 1px;
                         margin: 6px 0px;
                     }
@@ -368,8 +353,7 @@
         overflow: hidden;
 
         .mobile-display-name {
-            background: $mobile-display-name-bg-color;
-            color: $text-white;
+            color: $white;
             position: relative;
             padding: 5px 20px;
             opacity: 0.8;
@@ -387,7 +371,7 @@
 
     #server-app-container {
         #menu-area {
-            background-color: $mobile-menu-bg-color;
+            background-color: $nav-menu-content-bg-normal-color;
             padding-top: $nav-mobile-menu-header-height !important;
             width: 175px;
             z-index: 1000;
@@ -430,10 +414,10 @@
 
                             &.active {
                                 background: transparent;
-                                border-left: 5px solid $primary;
+                                border-left: 5px solid $sub-nav-menu-border-color;
 
                                 a, .sf-menu-option-link {
-                                    background-color: darken($mobile-menu-active-bg-color, 5%);
+                                    background-color: $nav-menu-content-bg-active-color;
 
                                     i {
                                         padding-left: 5px !important;
@@ -452,7 +436,7 @@
 
                                 .menu-icon-container {
                                     padding: 0;
-                                    color: $nav-icon-normal-color;
+                                    color: $nav-menu-content-text-normal-color;
                                     display: block;
                                     height: auto;
                                     width: auto;
@@ -592,7 +576,6 @@
         div{
         a {
             .sub-menu-profile-hover:hover {
-                background: $app-background-hover;
                 cursor: pointer;
             }
         }

@@ -20,6 +20,7 @@
             var deletetemporaryrdlreportUrl = "@Url.Action("deletetemporaryrdlreport", "reports")";
             var reportselectdatasourceUrl = "@Url.Action("reportselectdatasource", "reports")";
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
+            var tagList = @Html.Raw(Json.Serialize(ViewBag.Tag));
     </script>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
@@ -51,7 +52,8 @@
                 if (($(parent.window).width()) < 1400) {
                     $(".dialog").removeClass("iframe");
                 }
-            }
+        }
+        window.data = @Html.Raw(Json.Serialize(ViewData["reportInfo"]));
     </script>
 </head>
 <body style="background-color: white" onload="load();">
@@ -116,6 +118,15 @@
                                 <span class="notification help-text">
                                     <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                                 </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3 text-right"><div class="bottom-margin40">[[[Tag Name]]]</div></td>
+                            <td class="col-xs-9">
+                                <div id="taginfo" style="border-radius:4px;" onclick="openPopup();">
+                                    <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
+                                    <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
+                                </div>
                             </td>
                         </tr>
                     </table>

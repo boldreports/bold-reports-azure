@@ -17,6 +17,7 @@
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
+    ViewBag.Title = "[[[Create Data Source]]] - " + globalAppSettings.SystemSettings.OrganizationName;
 }
 
 
@@ -25,7 +26,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
-    <title>Create Data Source - @globalAppSettings.SystemSettings.OrganizationName</title>
+    <title>@ViewBag.Title</title>
     @if (ServerAppConfig.IsSelfHosted)
     {
 <environment include="Development,CloudDevelopment">

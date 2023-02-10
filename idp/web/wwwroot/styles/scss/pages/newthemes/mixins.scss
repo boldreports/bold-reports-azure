@@ -1,5 +1,5 @@
 @import "elementsize.scss";
-@import "../../themes/default.scss";
+@import "../../default/default.scss";
 
 /* don't show the eye for password inputs */
 ::-ms-reveal {
@@ -105,7 +105,7 @@ input[type="password"] {
         &:checked {
             + label:before {
                 background: $primary-color;
-                border: 1.5px solid $primary-border;
+                border: 1.5px solid $checkbox-border-active-color;
             }
 
             + label:after {
@@ -124,54 +124,9 @@ input[type="password"] {
 
         &:focus + input {
             + label:before {
-                border: 1.5px solid $primary-border;
+                border: 1.5px solid $checkbox-border-normal-color;
             }
         }
-    }
-}
-
-@mixin proceed-button($height: $button-32, $fontsize: 14px) {
-    background: $primary-color;
-    border: 1px solid $primary-border;
-    border-radius: 5px;
-    color: $white;
-    height: $height;
-    outline: none;
-    font-size: $fontsize;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
-
-    &:hover, &:focus {
-        background: $hover-blue;
-    }
-
-    &:disabled {
-        background: $grey-200;
-        cursor: default;
-        border: none;
-    }
-}
-
-@mixin back-button($height: $button-32, $fontsize: 14px) {
-    background: $white;
-    border: 1px solid #DCE1E5;
-    border-radius: 5px;
-    color: $grey-800;
-    height: $height;
-    outline: none;
-    font-size: $fontsize;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
-
-    &:hover, &:focus {
-        background: $grey-40;
-    }
-
-    &:disabled {
-        background: $grey-200;
-        cursor: default;
     }
 }
 
@@ -194,7 +149,7 @@ span.su-password-tick {
     font-size: $header-font-size;
     letter-spacing: 0.3px;
     line-height: $header-line-height;
-    color: $grey-800;
+    color: $primary-text-color;
 }
 
 @mixin text-bitter($text-font-size) {

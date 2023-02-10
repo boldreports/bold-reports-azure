@@ -2,7 +2,15 @@
     ViewBag.Title = "[[[Access Denied]]]";
     Layout = "~/Views/Shared/WolfPackMaster.cshtml";
     var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 
 @section scripts{

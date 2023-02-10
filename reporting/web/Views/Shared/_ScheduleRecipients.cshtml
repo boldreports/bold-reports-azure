@@ -62,8 +62,7 @@
                 </div>
             </div>
         </div>
-
-        @if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
+        @if (ServerAppConfig.IsSelfHosted)
         {
             <div class="col-sm-12 col-xs-12 send-mail-align">
                 <div id="enable-mail-attachment" class="col-sm-6 col-xs-6 no-padding no-margin">
@@ -71,6 +70,9 @@
                     @Html.Label("enable-send-mail", "[[[Email attachment]]]", new { @class = "clspadleft app-checkbox-label normal-font sendmail-label" })
                 </div>
             </div>
+        }
+        @if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
+        {
             <div class="col-sm-12 col-xs-12 enable-save-block">
                 <div id="enable-save-as-file" class="col-sm-2 col-xs-2 no-padding no-margin">
                     @Html.CheckBox("save-as-file", false, new { @class = "material-checkbox  enable-savefile-checkbox" })
@@ -115,7 +117,9 @@
                     <div class="col-sm-3 col-xs-3 no-padding label-align-center" id="report-count-validation" style="visibility: hidden;margin-left: -110px;margin-top:15px">[[[Please enter a valid report count]]]</div>
                 </div>
             </div>
-
+        }
+        @if (ServerAppConfig.IsSelfHosted)
+        {
             <div id="location-export-checkbox" class="col-sm-12 col-xs-12">
                 @Html.CheckBox("ftp-location-export", false, new { @class = "material-checkbox overwrite-checkbox" })
                 @Html.Label("ftp-location-export", "[[[FTP Location Export]]]")

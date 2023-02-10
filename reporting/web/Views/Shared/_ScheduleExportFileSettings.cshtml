@@ -101,36 +101,39 @@
         </div>
     </div>
     </div>
+}
 
-    <div class="branding-sub-section admin-page-body">
-        <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP Settings]]]</h3>
-        <div id="location-export-options" class="col-sm-8 col-xs-8 no-margin">
-            <div id="enable-checkbox">
-                <input type="checkbox" id="location-export" />
-                <label class="app-checkbox-label normal-font notransition" for="location-export">FTP Location Export</label>
-            </div>
-            <form class="col-sm-12 col-xs-12 no-padding" id="ftp-form">
-                <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
-                    <div class="col-sm-4 col-xs-4">
-                        <label class="path-label">[[[Host]]]</label>
-                        <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
-                        <div id="hostname-validation" style="display: none"></div>
-                    </div>
-                    <div class="col-sm-4 col-xs-4">
-                        <label class="path-label">[[[Username]]]</label>
-                        <input type="text" class="form-control ftp-user-name" id="ftp-settings-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
-                        <div id="username-validation" style="display: none"></div>
-                    </div>
-                    <div class="col-sm-4 col-xs-4">
-                        <label class="path-label">[[[Password]]]</label>
-                        <input type="password" class="form-control password-field ftp-password" id="ftp-settings-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
-                        <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
-                        <div id="password-validation" style="display: none"></div>
-                    </div>
-                    <div id="ftp-validation-message"></div>
-                </div>
-            </form>
+@if (ServerAppConfig.IsSelfHosted)
+   {
+   <div class="branding-sub-section admin-page-body">
+    <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP Settings]]]</h3>
+    <div id="location-export-options" class="col-sm-8 col-xs-8 no-margin">
+        <div id="enable-checkbox">
+            <input type="checkbox" id="location-export" />
+            <label class="app-checkbox-label normal-font notransition" for="location-export">FTP Location Export</label>
         </div>
+        <form class="col-sm-12 col-xs-12 no-padding" id="ftp-form">
+            <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
+                <div class="col-sm-4 col-xs-4">
+                    <label class="path-label">[[[Host]]]</label>
+                    <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
+                    <div id="hostname-validation" style="display: none"></div>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <label class="path-label">[[[Username]]]</label>
+                    <input type="text" class="form-control ftp-user-name" id="ftp-settings-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
+                    <div id="username-validation" style="display: none"></div>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <label class="path-label">[[[Password]]]</label>
+                    <input type="password" class="form-control password-field ftp-password" id="ftp-settings-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
+                    <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
+                    <div id="password-validation" style="display: none"></div>
+                </div>
+                <div id="ftp-validation-message"></div>
+            </div>
+        </form>
     </div>
+   </div>
 }
 </form>

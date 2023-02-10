@@ -241,6 +241,7 @@ CREATE TABLE [BOLDTC_User] (
 	IsActivated bit NOT NULL,
 	IsActive bit NOT NULL,
 	IsDeleted bit NOT NULL,
+	Status int NULL,
   CONSTRAINT [PK_BOLDTC_USER] PRIMARY KEY CLUSTERED
   (
   [Id] ASC
@@ -391,6 +392,7 @@ CREATE TABLE [BOLDTC_SAMLSettings] (
 	ApplicationIdURI nvarchar(4000),
 	TenantName nvarchar(100),
 	MobileApplicationId nvarchar(100),
+	IsSloEnabled bit NOT NULL,
 	IsEnabled bit NOT NULL,
   CONSTRAINT [PK_BOLDTC_SAMLSETTINGS] PRIMARY KEY CLUSTERED
   (
@@ -980,6 +982,22 @@ CREATE TABLE [BOLDTC_AzureBlob] (
 )
 ;
 
+CREATE TABLE [BOLDTC_UserStatus] (
+	Id int IDENTITY(1,1) NOT NULL,
+	Status nvarchar(100) NOT NULL,
+	Value int NOT NULL UNIQUE,
+	CreatedDate datetime NOT NULL,
+	ModifiedDate datetime NOT NULL,
+	IsActive bit NOT NULL,
+  CONSTRAINT [PK_BOLDTC_USERSTATUS] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+;
+
+
 INSERT [dbo].[BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'Registration', 1)
 INSERT [dbo].[BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'StatusUpdated', 1)
 INSERT [dbo].[BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'PaymentUpdated', 1)
@@ -1118,6 +1136,16 @@ INSERT [BOLDTC_AuthProvider] ([Name], [AuthTypeId], [ModifiedDate], [IsActive]) 
 INSERT [BOLDTC_AuthProvider] ([Name], [AuthTypeId], [ModifiedDate], [IsActive]) VALUES ( N'JWTSSO', 5, GETUTCDATE(), 1);
 INSERT [BOLDTC_AuthProvider] ([Name], [AuthTypeId], [ModifiedDate], [IsActive]) VALUES ( N'WindowsAD', 6, GETUTCDATE(), 1);
 
+INSERT into [BOLDTC_UserStatus] ([Status],[Value],[CreatedDate],[ModifiedDate],[IsActive]) VALUES (N'NotActivated', 0, GETUTCDATE(), GETUTCDATE(), 1)
+;
+INSERT into [BOLDTC_UserStatus] ([Status],[Value],[CreatedDate],[ModifiedDate],[IsActive]) VALUES (N'Activated', 1, GETUTCDATE(), GETUTCDATE(), 1)
+;
+INSERT into [BOLDTC_UserStatus] ([Status],[Value],[CreatedDate],[ModifiedDate],[IsActive]) VALUES (N'Locked', 2, GETUTCDATE(), GETUTCDATE(), 1)
+;
+
+INSERT [BOLDTC_AuthType]([Name],[ModifiedDate],[IsActive])VALUES( N'AzureADB2C', GETUTCDATE(), 1);
+INSERT [BOLDTC_AuthProvider] ([Name], [AuthTypeId], [ModifiedDate], [IsActive]) VALUES (N'AzureADB2C', 7, GETUTCDATE(), 1);
+INSERT into [BOLDTC_DirectoryType] (DirectoryName,IsActive) VALUES (N'AzureADB2C',1);
 
 ALTER TABLE [BOLDTC_CouponLog] WITH CHECK ADD CONSTRAINT [BOLDTC_CouponLog_fk0] FOREIGN KEY ([CouponLogTypeId]) REFERENCES [BOLDTC_CouponLogType]([Id])
 
@@ -1407,4 +1435,9 @@ ALTER TABLE [BOLDTC_UserLog] CHECK CONSTRAINT [BOLDTC_UserLog_fk2]
 ;
 
 ALTER TABLE [BOLDTC_AzureBlob] WITH CHECK ADD CONSTRAINT [BOLDTC_AzureBlob_fk0] FOREIGN KEY ([TenantInfoId]) REFERENCES [BOLDTC_TenantInfo]([Id])
+;
+
+ALTER TABLE [BOLDTC_User] WITH CHECK ADD CONSTRAINT [BOLDTC_User_fk1] FOREIGN KEY ([Status]) REFERENCES [BOLDTC_UserStatus]([Value])
+;
+ALTER TABLE [BOLDTC_User] CHECK CONSTRAINT [BOLDTC_User_fk1]
 ;

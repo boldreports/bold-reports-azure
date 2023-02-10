@@ -1,7 +1,7 @@
 ﻿@import "../newthemes/elementsize.scss";
-@import "../newthemes/mixins.scss";
-@import "../../themes/default.scss";
-
+@import "../../default/default.scss";
+.account-bg {
+    background: $section-backgroud;
 .login-wrapper {
     height: auto;
     width: 348px;
@@ -43,14 +43,6 @@
 
                     label {
                         margin-bottom: 8px;
-                    }
-
-                    .e-outline {
-                        &:hover {
-                            #label_login-email {
-                                color: $primary-color !important;
-                            }
-                        }
                     }
 
                     .mail-loader-div.email-loader {
@@ -106,23 +98,18 @@
                 #login-email {
                     height: 40px;
                     width: 320px;
-                    border-color: $grey-300;
                     border-radius: 4px;
                 }
 
-                #current-password{
+                #current-password {
                     height: 40px !important;
                 }
             }
 
             .proceed-button {
-                @include proceed-button();
+                display: block;
                 width: 45%;
                 margin: 0 auto $space-xl auto;
-
-                &:hover {
-                    background: $primary-btn-hover;
-                }
             }
 
             .validation-holder, #error-email, #error-password {
@@ -130,7 +117,7 @@
                 font-size: $textsize-12;
                 display: none;
                 margin: 3px;
-                position: absolute;
+                position: relative;
             }
         }
 
@@ -182,14 +169,8 @@
                     }
 
                     .link-button {
-                        border: 1px solid $primary-border;
+                        border: 1px solid $link-button-border-normal-color;
                         border-radius: 4px;
-
-                        &:hover {
-                            background-color: $submit-button-disabled;
-                            border-color: $external-button-border;
-                            color: $primary-text-color;
-                        }
                     }
 
                     .no-padding {
@@ -216,7 +197,7 @@
                         vertical-align: top;
                         line-height: 30px;
                         font-weight: bold;
-                        border: 1px solid $external-button-border;
+                        border: 1px solid $logo-section-border-color;
 
                         .login-provider-name, .windows-ad-login-text {
                             cursor: pointer;
@@ -316,7 +297,7 @@
             left: -5px;
         }
 
-        #access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user {
+        #access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user , #azure-b2c-password-reset{
             text-align: center;
             display: none;
             white-space: nowrap;
@@ -333,19 +314,16 @@
             }
         }
 
-        .forget-password-align, #validate-auth-user {
+        .forget-password-align, #validate-auth-user, #azure-b2c-password-reset {
             margin-left: 63px;
             margin-top: 18px;
-        }
-
-        .forgot-pwd-link {
-            color: $blue-secondary;
         }
 
         .auth-error-text {
             white-space: normal;
         }
     }
+}
 }
 
 .login-options {
@@ -412,7 +390,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: -5px !important;
                 margin-top: 20px !important;
@@ -437,7 +415,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: -5px !important;
                 margin-top: 20px !important;
@@ -458,7 +436,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: 18px !important;
             }
@@ -508,7 +486,7 @@
         footer {
 
             #copyrightinfo {
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: 18px !important;
             }

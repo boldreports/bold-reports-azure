@@ -1,6 +1,7 @@
 ﻿﻿@{
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.Title = "[[[Personal Access Token]]] - " + _globalAppSettings.SystemSettings.OrganizationName;
 }
 
 @section styles{

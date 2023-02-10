@@ -74,7 +74,7 @@ ej.QueryDesigner.Locale['fr-FR'] = {
         search: 'Chercher',
         rename: 'Renommer',
         searchInfo: 'Récupère les informations correspondantes du schéma actuellement récupéré',
-        aggregation: 'Agrégation',
+        aggregation: 'Agrégat',
         dialogHeader: 'Ensemble de données',
         matchesFound: 'Aucun résultat',
         alertMessage: {
@@ -227,7 +227,7 @@ ej.QueryDesigner.Locale['fr-FR'] = {
             part: 'Renvoie une valeur entière représentant la partie de date spécifiée de l\'expression de date donnée.',
             sub: 'Renvoie la date soustraite de la date spécifiée.',
             day: 'Retourne une valeur numérique représentant la partie jour de la date spécifiée.',
-            daydiff: 'Renvoie une valeur numérique représentant la différence entre deux dates spécifiées.',
+            dateDiff: 'Renvoie une valeur numérique représentant la différence entre deux dates spécifiées.',
             hour: 'Renvoie l\'heure de la date donnée en entier.',
             maximum: 'Renvoie la valeur maximale dans l\'expression donnée.',
             minimum: 'Renvoie la valeur minimale dans l\'expression donnée.',

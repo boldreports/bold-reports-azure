@@ -18,7 +18,7 @@ ej.ReportViewer.Locale["fr-FR"] = {
             headerText: "Exportation",
             contentText: "Sélectionnez le format de fichier exporté.",
             Pdf: "PDF",
-            Excel: "Exceller",
+            Excel: "Excel",
             Word: "Mot",
             Html: "Html",
             PPT: 'PowerPoint',
@@ -60,6 +60,10 @@ ej.ReportViewer.Locale["fr-FR"] = {
         refresh: {
             headerText: "Rafraîchir",
             contentText: "Actualiser le rapport."
+        },
+        find: {
+            headerText: 'Trouve',
+            contentText: 'Rechercher du texte dans le rapport.'
         },
         stop: {
             headerText: 'Arrêtez',
@@ -106,22 +110,144 @@ ej.ReportViewer.Locale["fr-FR"] = {
         bottom: "Bas",
         right: "Droite",
         left: "La gauche",
-        unit: "po",
+        pageUnits: 'Unités de page',
+        unitin: 'po',
+        unitcm: 'cm',
+        inches: 'pouces',
+        centimeters: 'Centimètres',
         orientation: "Orientation",
         portrait: "Portrait",
         landscape: "Paysage",
         doneButton: "Terminé",
-        cancelButton: "Annuler"
+        cancelButton: "Annuler",
+        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4(JIS)", value: "B4(JIS)" }, { text: "B5(JIS)", value: "B5(JIS)" }, { text: "Enveloppe #10", value: "Envelope #10" }, { text: "Enveloppe monarque", value: "Envelope Monarch" }, { text: "Exécutif", value: "Executive" }, { text: "Légal", value: "Legal" }, { text: "Lettre", value: "Letter" }, { text: "Tabloïde", value: "Tabloid" }, { text: "Personnalisé", value: "Custom" }]
     },
     exportsetupDialog: {
         close: 'Fermer',
-        excel: 'Exceller',
-        word: 'Mot',
-        imageQuality: 'Qualité de l’image',
-        exportFormat: 'Format d’exportation',
-        dpi: 'dpi',
+        commonOptions: {
+            header: 'Paramètres communs',
+            imageQuality: 'Qualité d\'image',
+            imageQualityTypes:
+                [{ text: "Meugler", value: "2" },
+                { text: "Moyen", value: "5" },
+                { text: "Haut", value: "10" }]
+        },
+        pdfOptions: {
+            header: 'Paramètres PDF',
+            complexScript: 'Complex Script',
+            conformance: 'Niveau de conformité',
+            conformanceTypes: [{ text: "Aucun", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
+            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }],
+        },
+        excel: 'Excel',
+        securityOptions: {
+            header: "Les paramètres de sécurité",
+            enableProtection: "Activer la protection",
+            protect: "Mot de passe Pour protéger",
+            edit: "Mot de passe à modifier",
+        },
+        wordOptions: {
+            header: 'Paramètres de mots',
+            protection: 'Type de protection',
+            topSpacing: 'espacement supérieur',
+            bottomSpacing: 'espacement inférieur',
+            formatList: [
+                { text: "Document Word 97-2003 (.doc)", value: 0 },
+                { text: "Modèle Word 97-2003 (.dot)", value: 1 },
+                { text: "Document Word (.docx)", value: 2 },
+                { text: "Document XML ouvert strict 2007 (.docx)", value: 3 },
+                { text: "Document XML ouvert strict 2010 (.docx)", value: 4 },
+                { text: "Document XML ouvert strict 2013 (.docx)", value: 5 },
+                { text: "Modèle XML ouvert strict 2007 (.dotx)", value: 6 },
+                { text: "Modèle XML ouvert strict 2010 (.dotx)", value: 7 },
+                { text: "Modèle XML ouvert strict 2013 (.dotx)", value: 8 },
+                { text: "Document activé par macro WORD 2007 (.docm)", value: 9 },
+                { text: "Document activé par macro WORD 2010 (.docm)", value: 10 },
+                { text: "Document activé par macro WORD 2013 (.docm)", value: 11 },
+                { text: "Modèle compatible avec les macros WORD 2007 (.dotm)", value: 12 },
+                { text: "Modèle compatible avec les macros WORD 2010 (.dotm)", value: 13 },
+                { text: "Modèle compatible avec les macros WORD 2013 (.dotm)", value: 14 },
+                { text: "Format texte enrichi (.rtf)", value: 15 },
+                { text: "Texte brut (.txt)", value: 16 },
+                { text: "page Web (.html)", value: 18 }
+            ],
+            layoutTypes: [{ text: "Défaut", value: 0 }, { text: "Haut niveau", value: 1 }],
+            protectionTypes: [{ text: "Pas de protection", value: -1 }, { text: "Autoriser les révisions uniquement", value: 0 }, { text: "Autoriser les commentaires uniquement", value: 1 }, { text: "Autoriser uniquement les champs de formulaire", value: 2 }, { text: "Autoriser la lecture seule", value: 3 }],
+        },
+        layoutOption: 'Option de mise en page',
+        saveType: 'enregistrer le type',
+        unit: 'po',
+        pptOptions: {
+            header: " Paramètres PowerPoint",
+            pptTypes: [
+                { text: "PowerPoint 97to2003 Présentation (.ppt)", value: 0 },
+                { text: "PowerPoint 2007 Présentation (.pptx)", value: 1 },
+                { text: "PowerPoint2010 Présentation (.pptx)", value: 2 },
+                { text: "PowerPoint 2013 Présentation (.pptx)", value: 3 }
+            ]
+        },
         doneButton: 'D\'accord',
-        cancelButton: 'Annuler'
+        cancelButton: 'Annuler',
+        csvOptions: {
+            delimiter: 'Délimiteur de champ',
+            formatter: 'Valeurs formatées',
+            header: 'Paramètres CSV',
+            qualifier: 'Qualificateur de texte',
+            customVal: 'Valeur personnalisée',
+            qualifierList: [{ text: "Double citation", value: "\"" }, { text: "Guillemets simples", value: "'" }, { text: "Rien", value: "" }, { text: "Personnalisé", value: "Custom" }],
+            delimiterList: [{ text: "Virgule", value: "," }, { text: "Espacer", value: " " }, { text: "Languette", value: "   " }, { text: "Point-virgule", value: ";" }, { text: "Personnalisé", value: "Custom" }]
+        },
+        htmlOptions: {
+            header: 'Paramètres HTML',
+            separator: 'Séparateur de pages'
+        },
+        excelOptions:
+        {
+            header: 'Paramètres Excel',
+            sheetProtection: 'Feuille de protection',
+            disableCellFormat: 'Désactiver le format de cellule',
+            readonly: 'Lecture seulement',
+            saveTypes: [
+                { text: "Classeur Excel97to2003 (.xls)", value: 0 },
+                { text: "Classeur Excel2007 (.xlsx)", value: 1 },
+                { text: "Classeur Excel2010 (.xlsx)", value: 2 },
+                { text: "Classeur Excel2013 (.xlsx)", value: 3 },
+                { text: "Classeur Excel2016 (.xlsx) ", value: 4 }],
+            sheetProtectionTypes: [
+                { text: "Aucune", value: 0 },
+                { text: "Objets", value: 1 },
+                { text: "Scénarios", value: 2 },
+                { text: "Formatage des cellules", value: 4 },
+                { text: "Formatage des colonnes", value: 8 },
+                { text: "Mise en forme des lignes", value: 16 },
+                { text: "Insertion de colonnes", value: 32 },
+                { text: "Insertion de lignes", value: 64 },
+                { text: "Insertion d'hyperliens", value: 128 },
+                { text: "Suppression de colonnes", value: 256 },
+                { text: "Suppression de lignes", value: 512 },
+                { text: "Cellules verrouillées", value: 1024 },
+                { text: "Tri", value: 2048 },
+                { text: "Filtration", value: 4096 },
+                { text: "Utilisation des tableaux croisés dynamiques", value: 8192 },
+                { text: "Cellules déverrouillées", value: 16384 },
+                { text: "Contenu", value: 32768 },
+                { text: "Toute", value: 65535 }
+            ],
+            disableCellFormatTypes: [
+                { text: "Aucune", value: 0 },
+                { text: "Toute", value: 1 },
+                { text: "Frontière", value: 2 },
+                { text: "Style", value: 3 }
+            ],
+            layoutOptionTypes: [
+                { text: "Défaut", value: 0 },
+                { text: "Ignorer la fusion de cellules", value: 1 }
+            ],
+        }
+    },
+    findAlertMessage: {
+        resultsEndReached: "Vous avez atteint la fin des résultats de recherche. Si vous souhaitez continuer, fermez la boîte de dialogue et relancez la recherche.",
+        noResultsFound: "Vous avez atteint la fin des résultats de recherche. Si vous souhaitez continuer, fermez la boîte de dialogue et relancez la recherche."
     },
     credential: {
         userName: "Nom d'utilisateur",

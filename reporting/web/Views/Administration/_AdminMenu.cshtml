@@ -35,6 +35,12 @@
     var updateCardUrl = Url.Action("GetCardDetail", "Payment") ?? string.Empty;
     var conciergeSupportUrl = Url.Action("ConciergeSupport", "Support");
     var dataConnectorUrl = Url.Action("DataConnector", "Administration");
+    var isValidLicense = false;
+    if(ServerAppConfig.IsSelfHosted && !bool.TryParse(ViewBag.IsValidLicense, out isValidLicense))
+    {
+        var licenseMessage = GlobalAppSettings.ValidateAndGetLicenseMessage();
+        isValidLicense = licenseMessage == null;
+    }
 }
 
 @if (canShowAdminMenu)
@@ -165,6 +171,10 @@
                     <a id="license-settings-link" class="admin-menu-item @(currentUrl.IndexOf(manageLicenseSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@manageLicenseSettingsUrl" role="tab">
                         <i class="su su-license-settings"></i>
                         <span>[[[Manage License]]]</span>
+                        @if (!isValidLicense)
+                        {
+                            <span id="license-notification-indicator"></span>
+                        }
                     </a>
                 </li>
             }

@@ -490,10 +490,10 @@
                         notesTabText: "Notes"
                     },
                     predecessorCollectionText: [
-                            { id: "SS", text: "Start-Start", value: "Start-Start" },
-                            { id: "SF", text: "Start-Finish", value: "Start-Finish" },
-                            { id: "FS", text: "Finish-Start", value: "Finish-Start" },
-                            { id: "FF", text: "Finish-Finish", value: "Finish-Finish" }
+                        { id: "SS", text: "Start-Start", value: "Start-Start" },
+                        { id: "SF", text: "Start-Finish", value: "Start-Finish" },
+                        { id: "FS", text: "Finish-Start", value: "Finish-Start" },
+                        { id: "FF", text: "Finish-Finish", value: "Finish-Finish" }
                     ],
 
                     linkValidationRuleText: {
@@ -1321,28 +1321,28 @@
                     AddToRow: "Add to Row",
                     AddToColumn: "Add to Column",
                     AddToValues: "Add to Value",
-        SummarizeValueBy: "Summarize value by",
-        Sum: "Sum",
-        Average: "Average",
-        Count: "Count",
-        Min: "Min",
-        Max: "Max",
-        DoubleSum: "DoubleSum",
-        DoubleAverage: "DoubleAverage",
-        DoubleMin: "DoubleMin",
-        DoubleMax: "DoubleMax",
-        DoubleStandardDeviation: "DoubleStandardDeviation",
-        DoubleVariance: "DoubleVariance",
-        DecimalSum: "DecimalSum",
-        IntSum: "IntSum",
-        Custom: "Custom",
-        Discrete: "Discrete",
-        CountNumbers: "Count Numbers",
-        StdDev: "StdDev",
-        StdDevP: "StdDevP",
-        Variance: "Var",
-        VarP: "VarP",
-        SummaryOf: "of",
+                    SummarizeValueBy: "Summarize value by",
+                    Sum: "Sum",
+                    Average: "Average",
+                    Count: "Count",
+                    Min: "Min",
+                    Max: "Max",
+                    DoubleSum: "DoubleSum",
+                    DoubleAverage: "DoubleAverage",
+                    DoubleMin: "DoubleMin",
+                    DoubleMax: "DoubleMax",
+                    DoubleStandardDeviation: "DoubleStandardDeviation",
+                    DoubleVariance: "DoubleVariance",
+                    DecimalSum: "DecimalSum",
+                    IntSum: "IntSum",
+                    Custom: "Custom",
+                    Discrete: "Discrete",
+                    CountNumbers: "Count Numbers",
+                    StdDev: "StdDev",
+                    StdDevP: "StdDevP",
+                    Variance: "Var",
+                    VarP: "VarP",
+                    SummaryOf: "of",
                     PivotTableFieldList: "PivotTable Field List",
                     ChooseFieldsToAddToReport: "Choose fields to add to the report:",
                     DragFieldBetweenAreasBelow: "Drag fields between areas below:",
@@ -1474,6 +1474,10 @@
                             headerText: 'Refresh',
                             contentText: 'Refresh the report.'
                         },
+                        find: {
+                            headerText: 'Find',
+                            contentText: 'Find text in the report.'
+                        },
                         stop: {
                             headerText: 'Stop',
                             contentText: 'Stop processing the report.'
@@ -1519,22 +1523,146 @@
                         bottom: 'Bottom',
                         right: 'Right',
                         left: 'Left',
-                        unit: 'in',
+                        pageUnits: 'Page Units',
+                        unitin: 'in',
+                        unitcm: 'cm',
+                        inches: 'Inches',
+                        centimeters: 'Centimeters',
                         orientation: 'Orientation',
                         portrait: 'Portrait',
                         landscape: 'Landscape',
                         doneButton: 'Done',
-                        cancelButton: 'Cancel'
+                        cancelButton: 'Cancel',
+                        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4(JIS)", value: "B4(JIS)" }, { text: "B5(JIS)", value: "B5(JIS)" }, { text: "Envelope #10", value: "Envelope #10" }, { text: "Envelope Monarch", value: "Envelope Monarch" }, { text: "Executive", value: "Executive" }, { text: "Legal", value: "Legal" }, { text: "Letter", value: "Letter" }, { text: "Tabloid", value: "Tabloid" }, { text: "Custom", value: "Custom" }]
                     },
                     exportsetupDialog: {
                         close: 'Close',
+                        commonOptions: {
+                            header: 'Common Settings',
+                            imageQuality: 'Image Quality',
+                            imageQualityTypes:
+                                [{ text: "Low", value: "2" },
+                                { text: "Medium", value: "5" },
+                                { text: "High", value: "10" }]
+                        },
+                        pdfOptions: {
+                            header: 'PDF Settings',
+                            complexScript: 'Complex Script',
+                            conformance: 'Conformance Level',
+                            conformanceTypes: [{ text: "None", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
+                            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }]
+                        },
                         excel: 'Excel',
-                        word: 'Word',
-                        imageQuality: 'Image Quality',
+                        securityOptions: {
+                            header: "Security Settings",
+                            enableProtection: "Enable Protection",
+                            protect: "Password To Protect",
+                            edit: "Password To Edit"
+                        },
+                        wordOptions: {
+                            header: 'Word Settings',
+                            protection: 'Protection Type',
+                            topSpacing: 'Top Spacing',
+                            bottomSpacing: 'Bottom Spacing',
+                            formatList: [
+                                { text: "Word 97-2003 Document (.doc)", value: 0 },
+                                { text: "Word 97-2003 template (.dot)", value: 1 },
+                                { text: "Word Document (.docx)", value: 2 },
+                                { text: "Strict Open XML Document 2007 (.docx)", value: 3 },
+                                { text: "Strict Open XML Document 2010 (.docx)", value: 4 },
+                                { text: "Strict Open XML Document 2013 (.docx)", value: 5 },
+                                { text: "Strict Open XML Template 2007 (.dotx)", value: 6 },
+                                { text: "Strict Open XML Template 2010 (.dotx)", value: 7 },
+                                { text: "Strict Open XML Template 2013 (.dotx)", value: 8 },
+                                { text: "Word Macro Enabled Document 2007 (.docm)", value: 9 },
+                                { text: "Word Macro Enabled Document 2010 (.docm)", value: 10 },
+                                { text: "Word Macro Enabled Document 2013 (.docm)", value: 11 },
+                                { text: "Word Macro Enabled Template 2007 (.dotm)", value: 12 },
+                                { text: "Word Macro Enabled Template 2010 (.dotm)", value: 13 },
+                                { text: "Word Macro Enabled Template 2013 (.dotm)", value: 14 },
+                                { text: "Rich text format (.rtf)", value: 15 },
+                                { text: "Plain text (.txt)", value: 16 },
+                                { text: "Web page (.html)", value: 18 }
+                            ],
+                            layoutTypes: [{ text: "Default", value: 0 }, { text: "Top Level", value: 1 }],
+                            protectionTypes: [{ text: "No Protection", value: -1 }, { text: "Allow Only Revisions", value: 0 }, { text: "Allow Only Comments", value: 1 }, { text: "Allow Only Form Fields", value: 2 }, { text: "Allow Only Reading", value: 3 }],
+                        },
+                        layoutOption: 'Layout Option',
+                        saveType: 'Save Type',
+                        unit: 'in',
                         exportFormat: 'Export Format',
-                        dpi: 'dpi',
+                        pptOptions: {
+                            header: "PowerPoint Settings",
+                            pptTypes: [
+                                { text: "PowerPoint 97to2003 Presentation (.pptx)", value: 0 },
+                                { text: "PowerPoint 2007 Presentation (.pptx)", value: 1 },
+                                { text: "PowerPoint 2010 Presentation (.pptx)", value: 2 },
+                                { text: "PowerPoint 2013 Presentation (.pptx)", value: 3 }
+                            ]
+                        },
                         doneButton: 'OK',
-                        cancelButton: 'Cancel'
+                        cancelButton: 'Cancel',
+                        csvOptions: {
+                            formatter: 'Formatted Values',
+                            header: 'CSV Settings',
+                            delimiter: 'Field Delimiter',
+                            qualifier: 'Text Qualifier',
+                            customVal: 'Custom Value',
+                            qualifierList: [{ text: "Double Quotes", value: "\"" }, { text: "Single Quotes", value: "'" }, { text: "None", value: "" }, { text: "Custom", value: "Custom" }],
+                            delimiterList: [{ text: "Comma", value: "," }, { text: "Space", value: " " }, { text: "Tab", value: "   " }, { text: "Semicolon", value: ";" }, { text: "Custom", value: "Custom" }]
+                        },
+                        htmlOptions: {
+                            header: 'HTML Settings',
+                            separator: 'Page Separator'
+                        },
+                        excelOptions:
+                        {
+                            header: 'Excel settings',
+                            sheetProtection: 'Sheet Protection',
+                            disableCellFormat: 'Disable Cell Format',
+                            readonly: 'Read Only',
+                            saveTypes: [
+                                { text: "Excel97to2003 Workbook(.xls)", value: 0 },
+                                { text: "Excel2007 Workbook(.xlsx)", value: 1 },
+                                { text: "Excel2010 Workbook (.xlsx)", value: 2 },
+                                { text: "Excel2013 Workbook (.xlsx)", value: 3 },
+                                { text: "Excel2016 Workbook(.xlsx) ", value: 4 }
+                            ],
+                            sheetProtectionTypes: [
+                                { text: "None", value: 0 },
+                                { text: "Objects", value: 1 },
+                                { text: "Scenarios", value: 2 },
+                                { text: "Formatting Cells", value: 4 },
+                                { text: "Formatting Columns", value: 8 },
+                                { text: "Formatting Rows", value: 16 },
+                                { text: "Inserting Columns", value: 32 },
+                                { text: "Inserting Rows", value: 64 },
+                                { text: "Inserting Hyperlinks", value: 128 },
+                                { text: "DeletingColumns", value: 256 },
+                                { text: "Deleting Rows", value: 512 },
+                                { text: "Locked Cells", value: 1024 },
+                                { text: "Sorting", value: 2048 },
+                                { text: "Filtering", value: 4096 },
+                                { text: "Using Pivot Tables", value: 8192 },
+                                { text: "UnLockedCells", value: 16384 },
+                                { text: "Content", value: 32768 },
+                                { text: "All", value: 65535 }
+                            ],
+                            disableCellFormatTypes: [
+                                { text: "None", value: 0 },
+                                { text: "All", value: 1 },
+                                { text: "Border", value: 2 },
+                                { text: "Style", value: 3 }
+                            ],
+                            layoutOptionTypes: [
+                                { text: "Default", value: 0 },
+                                { text: "Ignore Cell Merge", value: 1 }
+                            ],
+                        }
+                    },
+                    findAlertMessage: {
+                        resultsEndReached: 'You have reached the end of the search results. If you wish to continue, then close the dialog box and search again.',
+                        noResultsFound: 'The specified text does not match any of the contents in the report. Change your search keyword and try again.'
                     },
                     credential: {
                         userName: 'Username',
@@ -1581,18 +1709,18 @@
                         RVERR0011: 'The parameter cannot be blank',
                         RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.'
                     },
-                    reportItemLabel:{
-                        Tablix:'Tablix report item',
-                        Textbox:'Textbox report item',
-                        Chart:'Chart report item',
-                        Image:'Image report item',
-                        Custom:'Custom report item',
-                        Rectangle:'Rectangle report item',
-                        Map:'Map report item',
-                        Gauge:'Gauge report item',
-                        Indicator:'Indicator report item',
-                        Line:'Line report item',
-                        Subreport:'Sub report item'
+                    reportItemLabel: {
+                        Tablix: 'Tablix report item',
+                        Textbox: 'Textbox report item',
+                        Chart: 'Chart report item',
+                        Image: 'Image report item',
+                        Custom: 'Custom report item',
+                        Rectangle: 'Rectangle report item',
+                        Map: 'Map report item',
+                        Gauge: 'Gauge report item',
+                        Indicator: 'Indicator report item',
+                        Line: 'Line report item',
+                        Subreport: 'Sub report item'
                     },
                     selectAll: 'Select All',
                     viewButton: 'View Report',
@@ -2818,16 +2946,16 @@
                     //string to be displayed in menu filter
                     filterMenuTexts: {
                         stringMenuOptions: [{ text: "Starts With", value: "startswith" },
-                                { text: "Ends With", value: "endswith" },
-                                { text: "Contains", value: "contains" },
-                                { text: "Equals", value: "equal" },
-                                { text: "Does Not Equal", value: "notequal" }],
+                        { text: "Ends With", value: "endswith" },
+                        { text: "Contains", value: "contains" },
+                        { text: "Equals", value: "equal" },
+                        { text: "Does Not Equal", value: "notequal" }],
                         numberMenuOptions: [{ text: "Less Than", value: "lessthan" },
-                                    { text: "Greater Than", value: "greaterthan" },
-                                    { text: "Less Than Or Equal To", value: "lessthanorequal" },
-                                    { text: "Greater Than Or Equal To", value: "greaterthanorequal" },
-                                    { text: "Equals", value: "equal" },
-                                    { text: "Does Not Equal", value: "notequal" }],
+                        { text: "Greater Than", value: "greaterthan" },
+                        { text: "Less Than Or Equal To", value: "lessthanorequal" },
+                        { text: "Greater Than Or Equal To", value: "greaterthanorequal" },
+                        { text: "Equals", value: "equal" },
+                        { text: "Does Not Equal", value: "notequal" }],
                         filterValue: "Filter Value",
                         filterButton: "Filter",
                         clearButton: "Clear",

@@ -4,7 +4,7 @@ var regexIe8 = new RegExp("Trident(\/4.0)|(Trident\/5.0)");
 $(document).ready(function () {
 
     var changePassword = new ejs.inputs.TextBox({
-        cssClass: 'e-outline',
+        cssClass: 'e-outline e-custom e-account',
         floatLabelType: 'Auto',
     });
     changePassword.appendTo('#firstname');
@@ -15,7 +15,7 @@ $(document).ready(function () {
     changePassword.appendTo('#confirm-password');
 
     var recoverEmail = new ejs.inputs.TextBox({
-        cssClass: 'e-outline',
+        cssClass: 'e-outline e-custom e-account',
         floatLabelType: 'Always',
         created: function () {
             outlineEmail.focusIn();
@@ -37,24 +37,33 @@ $(document).ready(function () {
         return IsValidPassword(value);
     }, "");
 
+    $.validator.addMethod("isValidPassword", function (value, element) {
+        var validateMethods = new Array();
+        validateMethods.push(validateUserpassword.p_policy_uppercase);
+        validateMethods.push(validateUserpassword.p_policy_lowercase);
+        validateMethods.push(validateUserpassword.p_policy_number);
+        validateMethods.push(validateUserpassword.p_policy_specialcharacter);
+        validateMethods.push(validateUserpassword.p_policy_length);
+        passwordPolicyPopover("#new-password", value);
+        if ($('#password_policy_rules li>span.su-password-tick').length == $('#password_policy_rules li>span:not(.content)').length) {
+            return true;
+        }
+    }, "");
+
     $("#update-password-form").validate({
         onkeyup: function (element, event) {
-            if (event.target.id.toLowerCase() === "new-password") {
-                showPasswordPolicy();
-            }
             if (event.keyCode != 9) {
+                isKeyUp = true;
                 $(element).valid();
-
-                if ($("#confirm-password").val() != "") {
-                    $("#confirm-password").valid();
-                }
+                isKeyUp = false;
             }
-            else true;
+            else
+                true;
         },
         onfocusout: function (element) { $(element).valid(); },
         onfocusin: function (element, event) {
             if (event.target.id.toLowerCase() === "new-password") {
-                showPasswordPolicy();
+                passwordPolicyPopover("#new-password", $("#new-password").val());
             }
         },
         rules: {
@@ -97,8 +106,10 @@ $(document).ready(function () {
         },
         highlight: function (element) {
             $(element).closest('div').addClass('e-error');
+            passwordBoxHightlight(element);
         },
         unhighlight: function (element) {
+            passwordBoxUnhightlight(element);
             $(element).closest('div').removeClass('e-error');
             $(element).parents(".update-form-input-field").find('div.validation-holder').find('span').html("");
         },
@@ -108,14 +119,6 @@ $(document).ready(function () {
             hideWaitingPopup('body');
         }
     });
-});
-
-$(document).on("change", "#agreement", function () {
-    if ($("#agreement").is(":checked")) {
-        $(".proceed-button").removeAttr("disabled");
-    } else {
-        $(".proceed-button").attr("disabled", "disabled");
-    }
 });
 
 function IsValidName(validationType, inputString) {
@@ -170,4 +173,3 @@ function changePasswordValidation() {
     showWaitingPopup('body');
     return $("#update-password-form").valid();
 }
-

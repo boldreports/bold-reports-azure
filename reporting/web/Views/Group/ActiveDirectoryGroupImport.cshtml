@@ -191,7 +191,7 @@
                                 [[[Tenant Name]]] :<input type="hidden" name="url" value="@ViewBag.ActiveDirectory.TenantName">
                             </span>
                             <span class="no-padding">
-                                @ViewBag.ActiveDirectory.TenantName &nbsp;&nbsp;<a href="@Url.Action("user-directory-settings", "Administration")?tab=azure-ad" title="[[[Update Active Directory Configuration settings]]]" class="link-button app-btn-link">[[[Modify]]]</a>
+                                @ViewBag.ActiveDirectory.TenantName &nbsp;&nbsp;<a href="@Url.Action("Administration", "Administration")/user-directory-settings?tab=azure-ad" title="[[[Update Active Directory Configuration settings]]]" class="link-button app-btn-link">[[[Modify]]]</a>
                             </span>
 
                         }

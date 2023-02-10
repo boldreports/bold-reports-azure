@@ -16,34 +16,30 @@
 label {
   font-weight: normal; }
 
-a, a:hover, a:focus {
-  text-decoration: none !important;
-  color: var(--colorPrimary); }
-
 input[type=button], input[type=submit], button[type=submit] {
   padding: 0px !important; }
 
 input.form-control:not(.input-block-level), .btn-group.form-control .btn.dropdown-toggle, .form-control.StripeElement {
   box-shadow: none !important;
-  border: 1px solid #CCCCCC; }
+  border: 1px solid var(--input-box-border-normal-color); }
 
 .bs-searchbox .input-block-level.form-control {
   box-shadow: none !important;
-  border: 1.5px solid #CCCCCC; }
+  border: 1.5px solid var(--input-box-border-normal-color); }
 
 input.form-control:focus:not(.input-block-level), .StripeElement--focus {
   outline: none !important;
-  border: 1.5px solid #0565FF !important;
+  border: 1.5px solid var(--primary-branding-bg-color) !important;
   box-shadow: none !important; }
 
 input.ng-invalid.ng-touched.remove-border {
   outline: none !important;
-  border: 1.5px solid #0565FF !important;
+  border: 1.5px solid var(--primary-branding-bg-color) !important;
   box-shadow: none !important; }
 
 input.ng-invalid.ng-touched:not(.ng-exclude):not(.e-control), input.ng-invalid.ng-empty.ng-dirty:not(.ng-exclude):not(.e-control), input.ng-invalid.ng-touched:focus:not(.ng-exclude):not(.e-control), .has-error input.form-control:not(.input-block-level), .has-error input.form-control:focus:not(.input-block-level), .has-error .btn-group.form-control .btn.dropdown-toggle, .StripeElement--invalid, input.ng-invalid.ng-invalid-pattern:focus, input.ng-invalid.ng-invalid-maxlength:focus, input.ng-invalid.ng-invalid-uniquednsnotactivated:focus, input.error-focus.ng-invalid.ng-untouched {
   outline: none !important;
-  border: 1px solid var(--danger) !important;
+  border: 1px solid var(--red) !important;
   box-shadow: none !important; }
 
 input[type="password"] {
@@ -51,7 +47,7 @@ input[type="password"] {
 
 .form-control[disabled] {
   cursor: default;
-  background-color: #eeeeee !important; }
+  background-color: var(--input-box-bg-disable-color) !important; }
 
 .su-eye {
   cursor: pointer;
@@ -69,8 +65,8 @@ input[type="password"] {
       position: absolute;
       top: 0; }
     .material-checkbox label:before {
-      background: #FFFFFF;
-      border: 1.5px solid #CCCCCC;
+      background: var(--grey-white);
+      border: 1.5px solid var(--checkbox-border-normal-color);
       border-radius: 2px;
       cursor: pointer;
       height: 15px;
@@ -81,10 +77,10 @@ input[type="password"] {
     margin: 0px;
     opacity: 0; }
     .material-checkbox input[type="checkbox"]:checked + input + label:before {
-      background: #0565FF;
-      border: 1.5px solid #0565FF; }
+      background: var(--primary-branding-bg-color);
+      border: 1.5px solid var(--primary-branding-bg-color); }
     .material-checkbox input[type="checkbox"]:checked + input + label:after {
-      border: 2px solid #FFFFFF;
+      border: 2px solid var(--grey-white);
       border-right-style: none;
       border-top-style: none;
       height: 6px;
@@ -95,7 +91,7 @@ input[type="password"] {
       -webkit-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg); }
     .material-checkbox input[type="checkbox"]:focus + input + label:before {
-      border: 1.5px solid #ff4800; }
+      border: 1.5px solid var(--primary-branding-bg-color); }
 
 .material-checkbox.selfhosted {
   position: relative; }
@@ -109,8 +105,8 @@ input[type="password"] {
       position: absolute;
       top: 0; }
     .material-checkbox.selfhosted label:before {
-      background: #FFFFFF;
-      border: 1.5px solid #CCCCCC;
+      background: var(--grey-white);
+      border: 1.5px solid var(--checkbox-border-normal-color);
       border-radius: 2px;
       cursor: pointer;
       height: 15px;
@@ -121,10 +117,10 @@ input[type="password"] {
     margin: 0px;
     opacity: 0; }
     .material-checkbox.selfhosted input[type="checkbox"]:checked + label:before {
-      background: #0565FF;
-      border: 1.5px solid #0565FF; }
+      background: var(--primary-branding-bg-color);
+      border: 1.5px solid var(--primary-branding-bg-color); }
     .material-checkbox.selfhosted input[type="checkbox"]:checked + label:after {
-      border: 2px solid #FFFFFF;
+      border: 2px solid var(--grey-white);
       border-right-style: none;
       border-top-style: none;
       height: 6px;
@@ -135,7 +131,7 @@ input[type="password"] {
       -webkit-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg); }
     .material-checkbox.selfhosted input[type="checkbox"]:focus + input + label:before {
-      border: 1.5px solid #007aff; }
+      border: 1.5px solid var(--primary-button-bg-hover-color); }
 
 span.su-password-tick {
   background: linear-gradient(135deg, #BAE04B 0%, #A2DA55 26%, #78D967 52%, #6AD46B 76%, #4FD478 100%);
@@ -154,38 +150,32 @@ span.su-password-tick {
 .text-h1 {
   font-size: 20px;
   letter-spacing: 0.3px;
-  line-height: 30px;
-  color: #333333; }
+  line-height: 30px; }
 
 .text-h2 {
   font-size: 16px;
   letter-spacing: 0.3px;
-  line-height: 24px;
-  color: #333333; }
+  line-height: 24px; }
 
 .text-h4 {
   font-size: 13px;
   letter-spacing: 0.3px;
-  line-height: 20px;
-  color: #333333; }
+  line-height: 20px; }
 
 .text-body {
   font-size: 12px;
   letter-spacing: 0.3px;
-  line-height: 18px;
-  color: #333333; }
+  line-height: 18px; }
 
 .text-bitter-h2 {
   font-size: 16px;
   letter-spacing: 0.6px;
-  line-height: 24px;
-  color: #333333; }
+  line-height: 24px; }
 
 .text-bitter-h1 {
   font-size: 20px;
   letter-spacing: 0.6px;
-  line-height: 24px;
-  color: #333333; }
+  line-height: 24px; }
 
 .text-primary {
-  color: #0565FF; }
+  color: var(--primary-branding-bg-color); }

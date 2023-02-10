@@ -43,7 +43,6 @@
         #tenant-email {
             font-weight: $text-semibold;
             text-decoration: none;
-            color: $grey-800;
         }
 
         span {
@@ -61,7 +60,7 @@
     }
 
     .divider-light {
-        border-bottom: 1px solid $grey-200;
+        border-bottom: 1px solid $section-separator-color;
         height: 2px;
         margin-top: $space-l;
         margin-bottom: $space-m;
@@ -72,7 +71,7 @@
             height: 18px;
             width: 18px;
             display: inline-block;
-            border: 1px solid $grey-200;
+            border: 1px solid $grey-400;
             box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
             border-radius: 50%;
             margin-right: 7px;
@@ -109,16 +108,6 @@
         }
     }
 
-    .link-button {
-        @include button($secondary-btn-bg, $primary-color, $secondary-btn-hover, $btn-height-normal, false);
-        border: 1px solid $primary-color;
-
-        &:hover {
-            border: 1px solid $primary-btn-hover;
-            color: $primary-btn-hover;
-        }
-    }
-
     #mail-resend {
         line-height: 18px;
         padding: 0 15px !important;
@@ -131,7 +120,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: 80px !important;
             }
@@ -151,7 +140,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: 18px !important;
                 margin-top: -50px;
@@ -172,7 +161,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: 18px !important;
             }
@@ -191,7 +180,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: -5px !important;
                 margin-top: -10px !important;
@@ -216,7 +205,7 @@
 
             #copyrightinfo {
                 height: 24px !important;
-                color: $delete-icon-color !important;
+                color: $primary-text-color !important;
                 position: relative !important;
                 margin-left: -5px !important;
                 margin-top: -10px !important;

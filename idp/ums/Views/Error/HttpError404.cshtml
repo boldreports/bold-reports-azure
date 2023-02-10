@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var imageHelper = new ImageHelper();
 }
 
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>[[[Page Not Found]]] - @GlobalAppSettings.SystemSettings.OrganizationName</title>
-    <link rel="icon" href="@GlobalAppSettings.SystemSettings.FavIcon" />
+    @await Html.PartialAsync("../Shared/_Favicon")
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
         body {
@@ -44,12 +45,12 @@
     <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
         <div class="container">
             <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Syncfusion">
-                <img class="page-not-found-logo" alt="syncfusion" src="@GlobalAppSettings.SystemSettings.LoginLogo" />
+                <img class="page-not-found-logo" alt="syncfusion" src="@Url.Content("~/logos?type=login")" />
             </a>
         </div>
     </header>
     <main class="container text-center">
-        <img src="@GlobalAppSettings.SystemSettings.CDNLink/images/common/404.png" alt="404" class="image-404" />
+        <img src="@imageHelper.PageNotFoundImage()" alt="404" class="image-404" />
         <h2>Page Not Found</h2>
     </main>
     <footer>

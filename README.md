@@ -2,7 +2,7 @@ This v4.2.53 version contains below custom feature requirement
 
 # Bold Reports custom feature 
 
-### 1. Authentication integration with Azure AD B2C
+### 1. Authentication integration with Azure AD B2C application.
 
 we provided the Azure AD B2C Authentication integration support to import the user from Azure AD B2C application.
 

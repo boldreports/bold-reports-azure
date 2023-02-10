@@ -792,6 +792,27 @@ CREATE TABLE {database_name}.BOLDRS_SiteAttributes(
 	PRIMARY KEY (Id))
 ;
 
+CREATE TABLE  {database_name}.BOLDRS_AttributeType(
+	Id int NOT NULL AUTO_INCREMENT,
+	Type varchar(100) NOT NULL UNIQUE,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
+;
+
+Create TABLE {database_name}.BOLDRS_ItemAttribute(
+	Id int NOT NULL AUTO_INCREMENT,
+	ItemTypeId int NOT NULL,
+	ItemId char(38) NOT NULL,
+	AttributeType int NOT NULL,
+	Value varchar(255) NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+	CreatedDate datetime NOT NULL,
+	ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
+;	
+
 CREATE TABLE {database_name}.BOLDRS_SettingsType(
 	Id int NOT NULL AUTO_INCREMENT,
 	Name varchar(100) NOT NULL UNIQUE,
@@ -1196,6 +1217,9 @@ INSERT into  {database_name}.BOLDRS_GroupLogType (Name,IsActive) VALUES ( 'Visit
 INSERT into  {database_name}.BOLDRS_GroupLogType (Name,IsActive) VALUES ( 'UserAdd',1)
 ;
 INSERT into  {database_name}.BOLDRS_GroupLogType (Name,IsActive) VALUES ( 'UserRemove',1)
+;
+
+INSERT into  {database_name}.BOLDRS_AttributeType (Type,IsActive) VALUES ( 'Tag',1)
 ;
 
 INSERT into  {database_name}.BOLDRS_LogModule (Name,ModifiedDate,IsActive) VALUES ('SystemSettings',Now(),1)
@@ -1646,6 +1670,17 @@ ALTER TABLE  {database_name}.BOLDRS_Item  ADD FOREIGN KEY(ParentId) REFERENCES  
 ALTER TABLE  {database_name}.BOLDRS_Item  ADD FOREIGN KEY(CreatedById) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
 ALTER TABLE  {database_name}.BOLDRS_Item  ADD FOREIGN KEY(ModifiedById) REFERENCES  {database_name}.BOLDRS_User (Id)
+;
+
+ALTER TABLE {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemId) REFERENCES {database_name}.BOLDRS_Item (Id)
+;
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemTypeId) REFERENCES  {database_name}.BOLDRS_ItemType (Id)
+;
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES  {database_name}.BOLDRS_Item (Id)
+;
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(CreatedById) REFERENCES  {database_name}.BOLDRS_User (Id)
+;
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ModifiedById) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
 
 ALTER TABLE  {database_name}.BOLDRS_ItemView  ADD FOREIGN KEY(ItemId) REFERENCES  {database_name}.BOLDRS_Item (Id)

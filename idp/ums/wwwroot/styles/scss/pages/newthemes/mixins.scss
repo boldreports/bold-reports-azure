@@ -1,6 +1,5 @@
 @import "elementsize.scss";
-@import "elementcolor.scss";
-@import "../../themes/default.scss";
+@import "../../default/default.scss";
 
 /* don't show the eye for password inputs */
 ::-ms-reveal {
@@ -25,34 +24,29 @@ label {
     font-weight: normal;
 }
 
-a, a:hover, a:focus {
-    text-decoration: none !important;
-    color: $primary-color;
-}
-
 input[type=button], input[type=submit], button[type=submit] {
     padding: 0px !important;
 }
 
 input.form-control:not(.input-block-level), .btn-group.form-control .btn.dropdown-toggle, .form-control.StripeElement {
     box-shadow: none !important;
-    border: 1px solid $registration-form-border-color;
+    border: 1px solid $input-box-border-normal-color;
 }
 
 .bs-searchbox .input-block-level.form-control {
     box-shadow: none !important;
-    border: 1.5px solid $color-grey-200;
+    border: 1.5px solid $input-box-border-normal-color;
 }
 
 input.form-control:focus:not(.input-block-level), .StripeElement--focus {
     outline: none !important;
-    border: 1.5px solid $color-primary !important;
+    border: 1.5px solid $primary-color !important;
     box-shadow: none !important;
 }
 
 input.ng-invalid.ng-touched.remove-border {
     outline: none !important;
-    border: 1.5px solid $color-primary !important;
+    border: 1.5px solid $primary-color !important;
     box-shadow: none !important;
 }
 
@@ -68,7 +62,7 @@ input[type="password"] {
 
 .form-control[disabled] {
     cursor: default;
-    background-color: $input-box-disabled !important;
+    background-color: $input-box-bg-disable-color !important;
 }
 
 .su-eye {
@@ -92,8 +86,8 @@ input[type="password"] {
         }
 
         &:before {
-            background: $color-white;
-            border: 1.5px solid $color-grey-200;
+            background: $white;
+            border: 1.5px solid $checkbox-border-normal-color;
             border-radius: 2px;
             cursor: pointer;
             height: 15px;
@@ -109,12 +103,12 @@ input[type="password"] {
 
         &:checked + input {
             + label:before {
-                background: $color-primary;
-                border: 1.5px solid $color-primary;
+                background: $primary-color;
+                border: 1.5px solid $primary-color;
             }
 
             + label:after {
-                border: 2px solid $color-white;
+                border: 2px solid $white;
                 border-right-style: none;
                 border-top-style: none;
                 height: 6px;
@@ -129,7 +123,7 @@ input[type="password"] {
 
         &:focus + input {
             + label:before {
-                border: 1.5px solid $boldbi-primary-color;
+                border: 1.5px solid $primary-color;
             }
         }
     }
@@ -151,8 +145,8 @@ input[type="password"] {
         }
 
         &:before {
-            background: $color-white;
-            border: 1.5px solid $color-grey-200;
+            background: $white;
+            border: 1.5px solid $checkbox-border-normal-color;
             border-radius: 2px;
             cursor: pointer;
             height: 15px;
@@ -168,12 +162,12 @@ input[type="password"] {
 
         &:checked {
             + label:before {
-                background: $color-primary;
-                border: 1.5px solid $color-primary;
+                background: $primary-color;
+                border: 1.5px solid $primary-color;
             }
 
             + label:after {
-                border: 2px solid $color-white;
+                border: 2px solid $white;
                 border-right-style: none;
                 border-top-style: none;
                 height: 6px;
@@ -188,60 +182,12 @@ input[type="password"] {
 
         &:focus + input {
             + label:before {
-                border: 1.5px solid $primary-btn-hover;
+                border: 1.5px solid $primary-button-bg-hover-color;
             }
         }
     }
 }
 
-
-@mixin proceed-button($height: $button-32, $fontsize: 14px) {
-    background: $boldbi-primary-color;
-    border: 1px solid $boldbi-primary-color;
-    border-radius: 5px;
-    color: $color-white;
-    height: $height;
-    outline: none;
-    font-size: $fontsize;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
-
-    &:hover, &:focus {
-        background-color: $choose-plan-light;
-        border: none;
-        color: $boldbi-primary-color;
-    }
-
-    &:disabled {
-        background: $color-grey-200;
-        cursor: default;
-        border: none;
-        color: $color-white;
-    }
-}
-
-@mixin back-button($height: $button-32, $fontsize: 14px) {
-    background: $color-white;
-    border: 1px solid $secondary-btn-border;
-    border-radius: 5px;
-    color: $color-grey-800;
-    height: $height;
-    outline: none;
-    font-size: $fontsize;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
-
-    &:hover, &:focus {
-        background: $back-button-hover;
-    }
-
-    &:disabled {
-        background: $border-color;
-        cursor: default;
-    }
-}
 
 span.su-password-tick {
     background: linear-gradient(135deg, #BAE04B 0%, #A2DA55 26%, #78D967 52%, #6AD46B 76%, #4FD478 100%);
@@ -262,14 +208,12 @@ span.su-password-tick {
     font-size: $header-font-size;
     letter-spacing: 0.3px;
     line-height: $header-line-height;
-    color: $color-grey-800;
 }
 
 @mixin text-bitter($text-font-size) {
     font-size: $text-font-size;
     letter-spacing: 0.6px;
     line-height: 24px;
-    color: $color-grey-800;
 }
 
 .text-h1 {
@@ -297,52 +241,5 @@ span.su-password-tick {
 }
 
 .text-primary {
-    color: $color-primary;
-}
-
-@mixin button($background: $primary-btn-bg, $color: $primary-btn-text-color, $hover: $primary-btn-hover, $height: $btn-height-normal, $icon: false) {
-    background: $background;
-    border: 0;
-    border-radius: 2px;
-    color: $color;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    height: $height;
-    line-height: $height;
-    min-width: $btn-min-width;
-    outline: none;
-    text-align: center;
-
-    @if($icon) {
-        & {
-            padding: 0 0 0 15px;
-        }
-
-        span {
-            padding-right: 15px;
-        }
-
-        i {
-            display: inline-block;
-            width: 15px;
-        }
-    }
-    @else {
-        & {
-            padding: 0 15px;
-        }
-    }
-
-    &:hover, &:focus {
-        background: $hover;
-        color: $color;
-    }
-
-    &:disabled {
-        background: $primary-btn-disabled-bg;
-        color: $sub-text-color;
-        cursor: default;
-    }
+    color: $primary-color;
 }

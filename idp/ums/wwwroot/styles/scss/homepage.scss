@@ -1,4 +1,4 @@
-﻿@import "global.scss", "core/_resolution.scss", "extender.scss", "mixins/_button.scss";
+﻿@import "core/_resolution.scss", "extender.scss", "mixins/_button.scss";
 
 $header-height: 60px;
 $footer-height: 40px;
@@ -7,35 +7,30 @@ $box-hover-shadow: rgba(0, 0, 0, 0.1);
 
 body {
     margin: auto;
-    background-color: $grey-40;
+    color: $primary-text-color !important;
+    background: var(--background);
+    font-family: var(--font-family);
 }
 
 #site-down-alert {
-    .e-dlg-header-content
-        {
-        background-color: $admin-page-bg;
-        border:0px;
-        }
+    .e-dlg-header-content {
+        background-color: $dialog-content-bg-normal-color;
+        border: 0px;
 
-        .e-dlg-content {
+        .e-btn-icon {
+            font-size: 8px;
+        }
+    }
+
+    .e-dlg-content {
         text-align: center;
 
         .body-content {
             padding-top: 30px;
-        }
-    }
 
-    .e-footer-content {
-        background: $admin-container-bg;
-        text-align: center;
-
-        .e-btn {
-            font-family: var(--font-family);
-            font-size: map-get($app-text-size, sm);
-            font-weight: bold;
-            height: 28px;
-            margin-left: 16px;
-            min-width: 80px;
+            a {
+                color: $primary-color;
+            }
         }
     }
 }
@@ -72,33 +67,19 @@ body {
     }
 
     .create-site {
-        @include button(map-get($input-height, md), auto);
         float: right;
         margin: 15px 0px;
-        padding: 6px 8px;
-        line-height: normal;
         text-decoration: none;
         font-size: map-get($app-text-size, sm);
         outline: 0;
-
-        &:focus {
-            outline: 0;
-        }
     }
 
     .manage-sites {
-        @include button(map-get($input-height, md), auto, "secondary");
         float: right;
         margin: 15px 24px 15px 0px;
-        padding: 6px 8px;
-        line-height: normal;
         text-decoration: none;
         font-size: map-get($app-text-size, sm);
         outline: 0;
-
-        &:focus {
-            outline: 0;
-        }
     }
 }
 
@@ -119,6 +100,23 @@ body {
             height: 100px;
             border-radius: 50%;
         }
+
+        .profile-pic-tag {
+            border-radius: 50%;
+            color: $primary-text-color;
+            display: inline-block;
+            font-size: map-get($app-text-size, sm);
+            font-weight: 900;
+            letter-spacing: 2px;
+            position: relative;
+            text-align: center;
+        }
+
+        #default-profile-image {
+            border-radius: 50%;
+            left: 0;
+            position: absolute;
+        }
     }
 
     .user-name {
@@ -128,7 +126,6 @@ body {
         font-size: map-get($app-text-size, xl);
         letter-spacing: 0.84px;
         text-align: center;
-        color: $primary-black;
     }
 
 
@@ -140,7 +137,6 @@ body {
         line-height: 30px;
         letter-spacing: 0.65px;
         text-align: center;
-        color: $grey-700;
     }
 
     .loader {
@@ -164,7 +160,6 @@ body {
         line-height: 30px;
         letter-spacing: 0.61px;
         text-align: center;
-        color: $grey-900;
     }
 
     #site-container {
@@ -208,7 +203,7 @@ body {
                     left: 50%;
                     margin-left: -5px;
                     border-width: 5px 5px 0;
-                    border-top-color: $primary-black;
+                    border-top-color: $black;
                     position: absolute;
                     width: 0;
                     height: 0;
@@ -221,7 +216,7 @@ body {
                     padding: 3px 8px;
                     color: $white;
                     text-align: center;
-                    background-color: $primary-black;
+                    background-color: $black;
                     border-radius: 4px;
                 }
             }
@@ -245,7 +240,7 @@ body {
                 height: 134px;
                 border-radius: 4px;
                 box-shadow: 0 2px 4px 0 $box-shadow;
-                background-color: $white;
+                border: 1px solid $logo-section-border-color;
                 margin: 0px 12px 24px 12px;
                 display: inline-block;
                 text-decoration: none;
@@ -291,7 +286,7 @@ body {
                     font-weight: bold;
                     letter-spacing: 0.56px;
                     text-align: center;
-                    color: $primary-black;
+                    color: $primary-text-color;
                     @extend %text-overflow-ellipsis;
                 }
 
@@ -299,7 +294,6 @@ body {
                     width: 200px;
                     height: 24px;
                     margin: 8px 0px;
-                    color: $grey-700;
                     text-decoration: none;
 
                     .site-url {
@@ -309,7 +303,7 @@ body {
                         font-size: map-get($app-text-size, sm);
                         letter-spacing: 0.56px;
                         text-align: center;
-                        color: $grey-700;
+                        color: $primary-text-color;
                         @extend %text-overflow-ellipsis;
                     }
                 }
@@ -333,7 +327,6 @@ body {
             font-size: map-get($app-text-size, sm);
             line-height: 21px;
             letter-spacing: 0.36px;
-            color: $primary-black;
         }
     }
 
@@ -351,7 +344,6 @@ body {
             vertical-align: top;
             display: inline-block;
             font-size: map-get($app-text-size, xs);
-            color: $grey-700;
             margin-top: -9px;
         }
 

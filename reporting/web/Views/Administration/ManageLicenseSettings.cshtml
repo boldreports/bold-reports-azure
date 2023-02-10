@@ -3,6 +3,7 @@
     ViewBag.Title = "[[[Manage License]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     var PlanDetails = ViewData["licenseSettings"] as Dictionary<string, string>;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    bool isValidLicense = ViewBag.LicenseMessage == null;
 }
 @section scripts{
     <environment include="Development,CloudDevelopment">
@@ -16,7 +17,7 @@
 }
 
 @section MainSection{
-    @await Html.PartialAsync("_AdminMenu")
+    @await Html.PartialAsync("_AdminMenu", new ViewDataDictionary(ViewData) { {"IsValidLicense", isValidLicense.ToString() } })
 
     <div id="license-settings-container">
         <div id="subscription-plan-dialog">
@@ -30,6 +31,13 @@
                     </div>
                     <form id="subscription-plan-form" class="col-md-12 form-horizontal no-padding" autocomplete="off">
                         <div class="admin-page-body">
+                            @if (!isValidLicense)
+                            {
+                                <div class="license-message-section">
+                                    <span class="su su-license-warning"></span>
+                                    <p class="license-message"></p>
+                                </div>
+                            }
                             <h3 class="title col-xs-12 sub-section-heading">[[[Plan Details]]]</h3>
                             <div class="col-xs-6 no-margin no-padding" id="plan-details-contianer">
                                 <table class="table table-section">
@@ -65,4 +73,14 @@
             </div>
         </div>
     </div>
+
+    @if (!isValidLicense)
+    {
+        <script>
+            var licenseMessage = "@ViewBag.LicenseMessage";
+            var urlRegularExpression = /(\b(http|ftp|https):\/\/([\w-]+\.[\w-]+)+([\w.,@@?^=%&amp;:\/~+#-]*[\w@@?^=%&amp;\/~+#-])?)/ig;
+            var licenseMessageWithLink = licenseMessage.replace(urlRegularExpression, "<a target='_blank' href='$1'>$1</a>");
+            $("#subscription-plan-form .license-message").html(licenseMessageWithLink);
+        </script>
+    }
 }

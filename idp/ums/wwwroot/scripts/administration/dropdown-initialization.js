@@ -1,13 +1,26 @@
-﻿function dropDownListInitialization(id, placeHolder) {
+﻿function dropDownListInitialization(id, placeHolder, allowFilter) {
     var dropDownList = new ejs.dropdowns.DropDownList({
         index: 0,
         floatLabelType: "Never",
         placeholder: placeHolder,
         cssClass: 'e-outline e-custom e-non-float',
-        enablePersistence: true
+        enablePersistence: true,
+        change: onDropDownListChange,
+        query: new ej.data.Query(),
+        allowFiltering: allowFilter,
+        filterType: "Contains"
     });
 
     dropDownList.appendTo(id);
+}
+
+function onDropDownListChange(args) {
+    if (args.element.id == 'enable-ssl')
+        onBaseUrlChange(args);
+    if (args.element.id == 'fontfamily')
+        onFontChange();
+    if (args.element.id == 'application-theme')
+        onApplicationThemeChange();
 }
 
 function groupImportDropDownListInitialization(id, placeHolder) {
@@ -23,14 +36,17 @@ function groupImportDropDownListInitialization(id, placeHolder) {
     dropDownList.appendTo(id);
 }
 
-function fontDropDownListInitialization(id, placeHolder, authType) {
+function fontDropDownListInitialization(id, placeHolder, allowFilter, authType) {
     var dropDownList = new ejs.dropdowns.DropDownList({
         index: 0,
         floatLabelType: "Never",
         placeholder: placeHolder,
         change: onFontChange,
         cssClass: 'e-outline e-custom e-non-float',
-        enablePersistence: true
+        enablePersistence: true,
+        query: new ej.data.Query(),
+        allowFiltering: allowFilter,
+        filterType: "Contains"
     });
 
     dropDownList.appendTo(id);

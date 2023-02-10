@@ -22,6 +22,10 @@
         {
             return "Window AD";
         }
+        else if (provider == AuthProvider.AzureADB2C)
+        {
+            return "Azure AD B2C";
+        }
         else
         {
             return "No Authentication Configured";
@@ -48,6 +52,13 @@
                         <div class="default-auth-option">
                             <div class="auth-icon su su-azure-ad"></div>
                             <div class="auth-text">Azure AD</div>
+                        </div>
+                    </a>
+
+                    <a href="@Url.Action("AuthenticationSettings", "Administration")?view=azure-ad-b2c-settings">
+                        <div class="default-auth-option">
+                            <div class="auth-icon su su-azure-b2c"></div>
+                            <div class="auth-text">Azure AD B2C</div>
                         </div>
                     </a>
 

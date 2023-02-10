@@ -3,20 +3,14 @@
 @{
     Layout = "~/Views/Shared/_Layout.Accounts.cshtml";
     var organizationName = (ViewBag.OrganizationName != null) ? ViewBag.OrganizationName : GlobalAppSettings.SystemSettings.OrganizationName;
-    if (CloudAppConfig.IsSelfHosted)
-    {
-        ViewBag.Title = "[[[Login]]] - " + organizationName;
-    }
-    else
-    {
-        ViewBag.Title = "Login | " + CloudAppConfig.AccountTitle;
-    }
+    ViewBag.Title = "[[[Login]]] - " + organizationName;
     var isAdfsUserNotFound = TempData["IsAdfsUserNotFound"] as string;
     var authMessage = TempData["AuthMessage"] as string;
     var isAuthError = TempData["AuthError"];
     var IsAdfsUserStatus = (TempData["AdfsUserStatus"] as string) ?? string.Empty;
     var callBackUri = ViewBag.CallBackUri;
     var showBoldSignUp = ViewBag.IsBoldSign ?? false;
+    var isAzureResetPassword = TempData["AzureResetPassword"];
 }
 
 @section styles{
@@ -39,6 +33,7 @@
         var showBoldSignUp = "@showBoldSignUp";
         var isAuthError = "@isAuthError";
         var authMessage = "@authMessage";
+        var isAzureResetPassword = "@isAzureResetPassword";
         var IsAdfsUserNotFound = '@isAdfsUserNotFound';
         var isWindowADDefaultAuth = "@ViewBag.IsWindowADDefaultAuth";
 		var IsWindowADEmbedSSOAuth = "@ViewBag.IsWindowADEmbedSSOAuth";
@@ -50,6 +45,7 @@
 
     </script>
 
+    <script src="~/bundles/js/accounts-login.js" asp-append-version="true"></script>
 }
 
 @section MainSection{
@@ -58,6 +54,9 @@
             @await Html.PartialAsync("~/Views/Shared/_LoginForm.cshtml")
             @await Html.PartialAsync("~/Views/Shared/_ExternalAuthentication.cshtml")
 
+            <div id="azure-b2c-password-reset" class="error-message validation-holder bg-danger">
+                <span class="auth-error-text">[[[We are unable to process password reset request. Please refer to]]] <a target="_blank" href="@(await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.Azure_B2C_Self_Reset_password))">[[[this documentation]]]</a> [[[and enable self-service password reset.]]]</span>
+            </div>
             <div id="access-denied" class="error-message validation-holder bg-danger">
                 <span class="su su-login-error text-danger"></span><span id="login-input-error">[[[Access denied]]]</span>
             </div>
@@ -76,5 +75,4 @@
 
         </div>
     </div>
-    <script src="~/bundles/js/accounts-login.js" asp-append-version="true"></script>
 }

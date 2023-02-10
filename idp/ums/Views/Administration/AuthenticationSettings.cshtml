@@ -3,6 +3,8 @@
     var defaultSettingsCount = ViewBag.DefaultAuthenticationSettings != null ? ViewBag.DefaultAuthenticationSettings.ProviderName.Count : "0";
     var selectedDefaultAuthenticationText = "";
     var selectedDefaultAuthenticationValue = 0;
+    var isAzureAdSloEnabled = ViewBag.AzureAdSettings != null && ViewBag.AzureAdSettings.SAMLSettings != null ? ViewBag.AzureAdSettings.SAMLSettings.IsSloEnabled : false;
+    var isAzureAdB2CSloEnabled = ViewBag.AzureADB2CSettings != null && ViewBag.AzureADB2CSettings.AzureADB2CSettings != null ? ViewBag.AzureADB2CSettings.AzureADB2CSettings.IsSloEnabled : false;
     if (defaultSettingsCount != 0)
     {
         selectedDefaultAuthenticationText = ViewBag.DefaultAuthenticationSettings.EnabledProviderName != 0 ? GlobalAppSettings.GetProviderName(ViewBag.DefaultAuthenticationSettings.EnabledProviderName) : GlobalAppSettings.GetProviderName(ViewBag.DefaultAuthenticationSettings.ProviderName[0]);
@@ -15,10 +17,7 @@
 }
 @section scripts{
     <script src="~/bundles/js/auth-settings-page.js" asp-append-version="true"></script>
-    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
-    <script>
-        $.extend(ej, Syncfusion);
-    </script>
+    
     <script type="text/javascript">
         var authSettingsUrl = "@Url.Action("AuthenticationSettings", "Administration")";
         var updatesamlsettingsUrl = "@Url.Action("UpdateSAMLSettings", "Administration")";
@@ -32,6 +31,9 @@
             baseRootUrl = "";
 
         var isEnabled = @Html.Raw(Json.Serialize(ViewBag.AzureAdSettings.IsEnabled));
+        var isB2CEnabled = @Html.Raw(Json.Serialize(ViewBag.AzureADB2CSettings.IsEnabled));
+        var isSloEnabled = @Html.Raw(Json.Serialize(isAzureAdSloEnabled));
+        var isB2CSloEnabled = @Html.Raw(Json.Serialize(isAzureAdB2CSloEnabled));
         var oAuthEnabled = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings.IsEnabled));
         var openIdEnabled = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings.IsEnabled));
         var jwtIsEnabled = @Html.Raw(Json.Serialize(ViewBag.JwtSettings.IsEnabled));
@@ -43,6 +45,9 @@
         var defaultAuthEnabled = @Html.Raw(Json.Serialize(ViewBag.DefaultAuthenticationSettings.IsDefaultAuthenticationEnabled));
         serverApp.controller("adSettingsController", ["$scope", function ($scope) {
             $scope.IsEnabled = isEnabled;
+            $scope.isB2CEnabled = isB2CEnabled;
+            $scope.IsSloEnabled = isSloEnabled;
+            $scope.IsB2CSloEnabled = isB2CSloEnabled;
             $scope.oauthIsEnabled = oAuthEnabled;
             $scope.openidIsEnabled = openIdEnabled;
             $scope.jwtIsEnabled = jwtIsEnabled;
@@ -51,17 +56,12 @@
 
         }]);
     </script>
-    <script>
-
-      
-
-    </script>
 }
 
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
     @await Html.PartialAsync("_DiologBox")
-<div id="auth-settings-container" role="tabpanel" class="col-xs-12 admin-page-content-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
+<div id="auth-settings-container" role="tabpanel" class="col-xs-12 admin-page-content-container" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
     <div id="authentication-block" class="admin-page-content col-xs-12 no-padding">
         <div class="col-md-12 admin-page-header auth-header">
             <hgroup class="admin-page-header-description">
@@ -81,6 +81,9 @@
                     <a href="#azure-ad-settings-tab" id="azure-ad-settings" aria-controls="azure-ad-settings-tab" role="tab" data-toggle="tab">Azure AD</a>
                 </li>
                 <li role="presentation">
+                    <a href="#azure-ad-b2c-settings-tab" id="azure-ad-b2c-settings" aria-controls="azure-ad-b2c-settings-tab" role="tab" data-toggle="tab">Azure AD B2C</a>
+                </li>
+                <li role="presentation">
                     <a href="#oauth-settings-tab" id="oauth-settings" aria-controls="oauth-settings-tab" role="tab" data-toggle="tab">OAuth 2.0</a>
                 </li>
                 <li role="presentation">
@@ -95,6 +98,7 @@
             @await Html.PartialAsync("_DefaultAuthentication")
             @await Html.PartialAsync("_WindowsADSettings")
             @await Html.PartialAsync("_AzureADSettings")
+            @await Html.PartialAsync("_AzureADB2CSettings")
             @await Html.PartialAsync("_OAuthSettings")
             @await Html.PartialAsync("_OpenIdConnectSettings")
             @await Html.PartialAsync("_JWTSettings")
@@ -102,8 +106,9 @@
 
         <div class="admin-page-footer col-xs-12">
             <div class="admin-page-actions col-lg-12 col-md-12">
-                <a href="@Url.Content("~/")" class="secondary-button pull-right" id="cancel-active-dir-settings" title="">[[[Cancel]]]</a>
+                <button class="secondary-button pull-right" id="cancel-settings" title="">[[[Cancel]]]</button>
                 <button type="submit" id="update-saml-settings" class="primary-button pull-right update-auth-settings" ng-disabled="ssoSettingsForm.$invalid">[[[Save]]]</button>
+                <button type="submit" id="update-azure-b2c-settings" class="primary-button pull-right update-auth-settings" ng-disabled="ssoSettingsb2cForm.$invalid">[[[Save]]]</button>
                 <button type="submit" id="update-jwt-settings" class="primary-button pull-right update-auth-settings" ng-disabled="jwtSettingsForm.$invalid">[[[Save]]]</button>
                 <button type="submit" id="update-defaultauthlogin-settings" class="primary-button pull-right update-defaultauth-settings @(ViewBag.DefaultAuthenticationSettings.ProviderName.Count == 0 ? "display-none" : string.Empty)" ng-disabled>[[[Save]]]</button>
                 <button type="submit" id="update-oauth-settings" class="primary-button pull-right update-auth-settings" ng-disabled="oauthSettingsForm.$invalid">[[[Save]]]</button>
@@ -121,8 +126,4 @@
             <span class="dialog-text-text">[[[Beware Any script or application using this signing key need to be updated.]]]</span>
         </span>
     </div>
-    @if ((!ViewBag.ThirdPartyLogins || !ViewBag.WhiteLabel))
-    {
-        @await Html.PartialAsync("~/Views/UnlockFeatures/UnlockFeatures.cshtml")
-    }
 }

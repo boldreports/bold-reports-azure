@@ -3,33 +3,24 @@
 
 @{
     Layout = null;
+    var imageHelper = new ImageHelper();
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    @if (!CloudAppConfig.IsSelfHosted)
-    {
-        <title>[[[Login - ]]]@GlobalAppSettings.BrandingDisplayName</title>
-        <link rel="icon" href="@GlobalAppSettings.CdnDomain/static/company/@GlobalAppSettings.Branding/logo/v1/@IconFileNames.Favicon" />
-    }
-    else
-    {
-        <title>@GlobalAppSettings.BrandingDisplayName - Login</title>
-        <link rel="icon" href="@GlobalAppSettings.CdnDomain/static/company/@(GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? "boldid" : GlobalAppSettings.Branding)/logo/v1/@IconFileNames.Favicon" />
-    }
+    <title>@GlobalAppSettings.BrandingDisplayName - [[[Login]]]</title>
+    <link rel="icon" href="@GlobalAppSettings.CdnDomain/static/company/@(GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? "boldid" : GlobalAppSettings.Branding)/logo/v1/@IconFileNames.Favicon" />
     @await Html.PartialAsync("../Shared/_FontReference")
-    <link rel="stylesheet" href="~/bundles/css/layout.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/bundles/css/oauth-authorization-error.css" asp-append-version="true" />
-    <style>
-    </style>
+    @await Html.PartialAsync("../Shared/_ThemeReference")
+    <link rel="stylesheet" href="~/bundles/css/error-page.css" asp-append-version="true" />
 </head>
 <body>
     <div class="login-container-bg">
         <div class="login-conatiner">
             <div class="login-main-div">
                 <div class="login-logo">
-                    <img src="@GlobalAppSettings.SystemSettings.CDNLink/images/common/application/login_failed.svg" alt="[[[Login Failed]]]" />
+                    <img src="@imageHelper.LoginFailedImage()" alt="[[[Login Failed]]]" />
                 </div>
                 <div class="login-secondary-div">
                     <div class="login-page-title">

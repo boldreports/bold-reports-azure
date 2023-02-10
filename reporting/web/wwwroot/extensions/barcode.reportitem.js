@@ -105,6 +105,7 @@ var EJBarcode = (function () {
         }
     };
     EJBarcode.prototype.getPropertyGridItems = function () {
+        var barCodeType = this.getPropertyVal('BarcodeType');
         var propertyItems = {
             'HeaderText': this.customJSON.Name,
             'PropertyType': 'barcode',
@@ -119,11 +120,11 @@ var EJBarcode = (function () {
                             'ItemId': 'barcodetype',
                             'Name': 'BarcodeType',
                             'DisplayName': this.getLocale('BarcodeType'),
-                            'Value': this.getPropertyVal('BarcodeType'),
+                            'Value': barCodeType,
                             'ItemType': 'DropDown',
                             'EnableExpression': false,
                             'ValueList': ['Code39', 'Code39Extended', 'Code11', 'Codabar', 'Code93', 'Code128A', 'Code128B',
-                                'Code128C', 'UpcBarcode', 'EAN-13', 'EAN-8', 'Code39 Mod 43', 'Interleaved 2 of 5',
+                                'Code128C', 'GS1-128', 'UpcBarcode', 'EAN-13', 'EAN-8', 'Code39 Mod 43', 'Interleaved 2 of 5',
                                 'Standard 2 of 5', 'Pharmacode']
                         },
                         {

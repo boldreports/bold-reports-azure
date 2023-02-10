@@ -1,6 +1,6 @@
 ﻿@import "../newthemes/elementsize.scss";
 @import "../newthemes/mixins.scss";
-@import "../../themes/default.scss";
+@import "../../default/default.scss";
 
 .activation-wrapper {
     font-family: var(--font-family);
@@ -61,7 +61,6 @@
         #tenant-email {
             font-weight: $text-semibold;
             text-decoration: none;
-            color: $grey-800;
         }
 
         span {
@@ -71,18 +70,6 @@
 
     .account-activated {
         margin-bottom: 20px;
-    }
-
-    .proceed-button {
-        @include proceed-button();
-        min-width: 120px;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 10px;
-        padding: 0 10px !important;
-        &:hover {
-            background: $primary-btn-hover;
-        }
     }
 
     .resend-verification {
@@ -95,7 +82,7 @@
     }
 
     .divider-light {
-        border-bottom: 1px solid $grey-200;
+        border-bottom: 1px solid $section-separator-color;
         height: 2px;
         margin-top: $space-l;
         margin-bottom: $space-m;
@@ -106,7 +93,7 @@
             height: 18px;
             width: 18px;
             display: inline-block;
-            border: 1px solid $grey-200;
+            border: 1px solid $grey-400;
             box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
             border-radius: 50%;
             margin-right: 7px;

@@ -37,7 +37,7 @@
             #menu-area #app-navigation #main-nav ul .sf-nav-item .sf-nav-link .menu-icon-container i {
               font-size: 18px; }
               #menu-area #app-navigation #main-nav ul .sf-nav-item .sf-nav-link .menu-icon-container i .path1::before {
-                color: #808080; }
+                color: var(--nav-menu-text-color); }
           #menu-area #app-navigation #main-nav ul .sf-nav-item .sf-nav-link .menu-label {
             color: var(--nav-menu-text-color);
             float: left;
@@ -108,22 +108,12 @@
               left: 50px;
               bottom: -3px; }
             #menu-area #app-navigation #sub-nav ul li.sub-menu-action:hover {
-              background-color: #eeeeee;
+              background-color: var(--nav-menu-hover-color);
               border-radius: 4px; }
             #menu-area #app-navigation #sub-nav ul li.sub-menu-action.active {
-              background-color: #dbe9ff; }
+              background-color: var(--nav-menu-active-color); }
               #menu-area #app-navigation #sub-nav ul li.sub-menu-action.active .su, #menu-area #app-navigation #sub-nav ul li.sub-menu-action.active .menu-label {
-                color: #0565ff; }
-            #menu-area #app-navigation #sub-nav ul li.sub-menu-action #user-system-notification #notification-indicator {
-              background: #ff3b30;
-              border: solid 1px #fff;
-              border-radius: 10px;
-              display: block;
-              left: 21px;
-              line-height: 5px;
-              padding: 3px;
-              position: absolute;
-              top: 9px; }
+                color: var(--primary-branding-bg-color); }
           #menu-area #app-navigation #sub-nav ul li.profile-section {
             cursor: pointer;
             margin-top: 2px;
@@ -136,14 +126,14 @@
               border-radius: 50%;
               height: 40px;
               width: 40px;
-              border: 1px solid #fff; }
+              border: 1px solid var(--grey-white); }
               #menu-area #app-navigation #sub-nav ul li.profile-section a .profile-picture:hover {
-                border: 1px solid #0565ff; }
+                border: 1px solid var(--sub-nav-menu-border-color); }
             #menu-area #app-navigation #sub-nav ul li.profile-section .sub-menu {
               left: 63px;
               bottom: 0px; }
           #menu-area #app-navigation #sub-nav ul li.profile-section.open a .profile-picture {
-            border: 1px solid #0565ff; }
+            border: 1px solid var(--nav-menu-hover-color); }
           #menu-area #app-navigation #sub-nav ul li.sub-menu-action .sub-menu, #menu-area #app-navigation #sub-nav ul li.profile-section .sub-menu {
             width: 180px;
             border: 0;
@@ -204,7 +194,7 @@
                   #menu-area #app-navigation #sub-nav ul li.sub-menu-action .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-name-style, #menu-area #app-navigation #sub-nav ul li.profile-section .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-name-style {
                     font-size: 12px;
                     letter-spacing: 0.3px;
-                    color: #333;
+                    color: var(--grey-black);
                     overflow: hidden;
                     text-overflow: ellipsis; }
                   #menu-area #app-navigation #sub-nav ul li.sub-menu-action .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-email-style, #menu-area #app-navigation #sub-nav ul li.sub-menu-action .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-username-style, #menu-area #app-navigation #sub-nav ul li.profile-section .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-email-style, #menu-area #app-navigation #sub-nav ul li.profile-section .sub-menu .sub-menu-item a .sub-menu-user-name .sub-menu-user-username-style {
@@ -216,9 +206,9 @@
                     overflow: hidden;
                     text-overflow: ellipsis; }
           #menu-area #app-navigation #sub-nav ul li.sub-menu-action:hover, #menu-area #app-navigation #sub-nav ul li.profile-section:hover {
-            background-color: #eeeeee; }
+            background-color: var(--nav-menu-bg-color); }
           #menu-area #app-navigation #sub-nav ul li .sf-sub-menu-separator {
-            background: #cccccc;
+            background: var(--nav-menu-separtor-icon-color);
             height: 1px;
             margin: 6px 0px; }
         #menu-area #app-navigation #sub-nav ul .dropdown-backdrop {
@@ -246,8 +236,7 @@
     height: 125px;
     overflow: hidden; }
     #mobile-profile-picture .mobile-display-name {
-      background: #333;
-      color: #fff;
+      color: var(--grey-white);
       position: relative;
       padding: 5px 20px;
       opacity: 0.8;
@@ -259,7 +248,7 @@
       margin-top: -30px;
       width: 175px; }
   #server-app-container #menu-area {
-    background-color: #f2f2f2;
+    background-color: var(--nav-menu-bg-color);
     padding-top: 40px !important;
     width: 175px;
     z-index: 1000; }
@@ -293,9 +282,9 @@
             line-height: 16px; }
             #server-app-container #menu-area aside #main-nav #items-menu li.active {
               background: transparent;
-              border-left: 5px solid #0565ff; }
+              border-left: 5px solid var(--sub-nav-menu-border-color); }
               #server-app-container #menu-area aside #main-nav #items-menu li.active a, #server-app-container #menu-area aside #main-nav #items-menu li.active .sf-menu-option-link {
-                background-color: #e1e1e1; }
+                background-color: var(--nav-menu-active-color); }
                 #server-app-container #menu-area aside #main-nav #items-menu li.active a i, #server-app-container #menu-area aside #main-nav #items-menu li.active .sf-menu-option-link i {
                   padding-left: 5px !important; }
             #server-app-container #menu-area aside #main-nav #items-menu li a, #server-app-container #menu-area aside #main-nav #items-menu li .sf-menu-option-link {
@@ -308,7 +297,7 @@
               vertical-align: middle; }
               #server-app-container #menu-area aside #main-nav #items-menu li a .menu-icon-container, #server-app-container #menu-area aside #main-nav #items-menu li .sf-menu-option-link .menu-icon-container {
                 padding: 0;
-                color: #808080;
+                color: var(--nav-menu-text-color);
                 display: block;
                 height: auto;
                 width: auto; }
@@ -324,7 +313,7 @@
                 letter-spacing: 0;
                 margin-bottom: 0px;
                 width: auto;
-                color: var(--colorText);
+                color: var(--primary-text-color);
                 text-align: center; }
             #server-app-container #menu-area aside #main-nav #items-menu li.sf-nav-separator {
               height: 1px;
@@ -411,5 +400,4 @@
   cursor: default; }
 
 .dropdown-menu li div a .sub-menu-profile-hover:hover {
-  background: #eeeeee;
   cursor: pointer; }

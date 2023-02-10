@@ -418,6 +418,8 @@
         var description = "@Html.Raw(ViewBag.description)";
         var isPublic = "@ViewBag.isPublic";
         isPublic = isPublic.toLowerCase();
+        var tags = @Html.Raw(Json.Serialize(ViewBag.tags));
+        var selectedTags = @Html.Raw(Json.Serialize(ViewBag.selectedTags));
         var isDraft = "@ViewBag.isDraft";
         var version = "@ViewBag.Version";
         isDraft = isDraft.toLowerCase();
@@ -537,7 +539,8 @@
                     hideHelpLink: isHideHelpLink,
                     customDomain: customDomain,
                     customBrandName: custombrandName,
-                    customLinks: window.customLinks
+                    customLinks: window.customLinks,
+                    contactMail: 'support@boldreports.com'
                 },
                 enableImageBlobing: true
             };
@@ -635,7 +638,8 @@
                     'description': description,
                     'isPublic': isPublic,
                     'isDraft': isDraft === 'true',
-                    'isEdit': isEditReport
+                    'isEdit': isEditReport,
+                    'tags': selectedTags
                 };
 
                 args.data = reportServerData;
@@ -742,13 +746,14 @@
             designer.newReport(reportName);
         }
 
-        function saveAsServer(name, category, catId, reportDescription, isMarkPublic) {
+        function saveAsServer(name, category, catId, reportDescription, isMarkPublic, tags) {
             var designer = $('#' + controlId).data('boldReportDesigner');
             categoryName = category;
             categoryId = catId;
             reportName = name;
             description = reportDescription;
             isPublic = isMarkPublic;
+            selectedTags = tags;
             designer.reportFileName = reportName;
             designer.saveReport(categoryName + '/' + reportName);
             $('#' + controlId + '_designer_header_reportName').val(reportName);
@@ -760,13 +765,14 @@
 
         function browseReport(isPublish) {
             var designer = $('#' + controlId).data('boldReportDesigner');
+            var tagInfo = { tags: tags, selectedTags: selectedTags };
             var proxy = this;
             if (designer.isNewServerReport() || isDraft === 'true' || !isPublish || reportName !== designer.reportFileName) {
                 designer.openPublishDialog(description, isPublic, function (args) {
                     if (args['type'] === 'Save') {
-                        proxy.saveAsServer(args.name, args.category, args.categoryId, args.description, args.isPublic);
+                        proxy.saveAsServer(args.name, args.category, args.categoryId, args.description, args.isPublic, args.tags);
                     }
-                }, canMarkReportAsPublic, enableCreateCategory, warningMessage);
+                }, canMarkReportAsPublic, enableCreateCategory, warningMessage, tagInfo );
             } else {
                 designer.saveReport();
                 $('#' + controlId + '_designer_header_reportName').val(reportName);

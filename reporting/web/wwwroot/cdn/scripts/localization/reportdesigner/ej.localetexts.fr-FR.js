@@ -88,6 +88,22 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                             title: 'Barre empilée'
                         }
                     },
+                    'rangeColumn': {
+                        displayText: 'Colonne de plage',
+                        tooltip: {
+                            requirements: '1 ou plusieurs valeurs et 1 ou plusieurs colonnes.',
+                            description: 'Affiche une plage de données en traçant deux valeurs Y par point de données',
+                            title: 'Colonne de plage'
+                        }
+                    },
+                    'rangeBar': {
+                        displayText: 'Barre de portée',
+                        tooltip: {
+                            requirements: '1 ou plusieurs valeurs et 1 ou plusieurs colonnes.',
+                            description: 'Affiche une plage de données en traçant horizontalement deux valeurs Y par point de données',
+                            title: 'Barre de portée'
+                        }
+                    },
                     'stackedColumnPercent': {
                         displayText: 'Colonne empilée100%',
                         tooltip: {
@@ -306,6 +322,22 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                             requirements: '1 ou plusieurs valeurs et 1 ou plusieurs colonnes.',
                             description: 'Affiche une série sous forme de ligne ou de zone circulaire.',
                             title: 'Radar'
+                        }
+                    },
+                    'rangeArea': {
+                        displayText: 'Zone de portée',
+                        tooltip: {
+                            requirements: '1 ou plusieurs valeurs et 1 ou plusieurs colonnes.',
+                            description: 'Un type de graphique en aires où plutôt que de commencer sur l\'axe, l\'aire est représentée par l\'espace entre deux valeurs.',
+                            title: 'Zone de portée'
+                        }
+                    },
+                    'smoothRangeArea': {
+                        displayText: 'Zone de plage lisse',
+                        tooltip: {
+                            requirements: '1 ou plusieurs valeurs et 1 ou plusieurs colonnes.',
+                            description: 'Lignes courbes pour connecter des points de données plutôt que des lignes droites.',
+                            title: 'Zone de plage lisse'
                         }
                     }
                 }
@@ -693,6 +725,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 bubble: 'Bulle',
                 polar: 'Polaire',
                 radar: 'Radar',
+                rangeArea: 'Zone de portée',
+                rangeColumn: 'Colonne de plage',
+                rangeBar: 'Barre de portée',
+                smoothRangeArea: 'Zone de plage lisse',
                 alertSwitchChartType: 'Tous les types de séries seront modifiés. Voulez-vous continuer?'
             },
             legendProperties: {
@@ -712,7 +748,7 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             colorPalette: 'Palette de couleurs',
             colorPaletteTypes: {
                 earthTones: 'Tons de terre',
-                excel: 'Exceller',
+                excel: 'Excel',
                 grayScale: 'Échelle de gris',
                 pastel: 'Pastel',
                 semiTransparent: 'Semi-transparent',
@@ -727,6 +763,23 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 custom: 'Douane'
             },
             customColors: 'Couleurs personnalisées'
+        },
+        forecast: {
+            categoryName: 'Paramètres de prévision',
+            enableSettings: 'Permettre',
+            forecastlength: 'Longueur (points)',
+            confidenceInterval: 'Intervalle de confiance',
+            seasonality: 'Saisonnalité (points)',
+            enableSeries: 'Prévoir',
+            forecastColor: 'Couleur des prévisions',
+            confidenceEnable: 'Confiance',
+            confidenceColor: 'Couleur de confiance',
+            bandStyle: 'Style de bande de confiance',
+            confidenceBandTypes: {
+                fill: 'Remplir',
+                linetype: 'Ligne',
+                dot: 'Point'
+            }
         },
         title: {
             categoryName: 'Titre',
@@ -784,10 +837,12 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 width: 'Largeur Tick'
             },
             labelsAutofitDisabled: 'Ajustement automatique des étiquettes désactivé',
+            margin: 'Marge',
             maximum: 'Maximum',
             minimum: 'Le minimum',
             horizontalAxis: 'Axe horizontal',
-            verticalAxis: 'Axe vertical'
+            verticalAxis: 'Axe vertical',
+            includeZero: 'Inclure zéro'
         },
         gridLine: {
             categoryName: 'Ligne de la grille',
@@ -1650,6 +1705,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
         markaspublic: 'Marquer comme public',
         cancel: 'Annuler',
         closeToolTip: 'proche',
+        tags: 'Mots clés',
+        newTag: 'Nouveau jour',
+        tagWaterMark: 'Balise de recherche',
+        splCharacter: 'Les caractères spéciaux ne sont pas pris en charge',
         addCategory: {
             title: 'Nouvelle catégorie',
             name: 'prénom',
@@ -1714,8 +1773,8 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             picaText: 'pc'
         },
         setGroups: 'Définir des groupes',
-        addDatasource: 'Ajouter une source de données',
-        dataAlertMsg: 'Aucune source de données ajoutée !',
+        addDataset: 'Ajouter base de données',
+        dataAlertMsg: 'Aucune base de données ajoutée !',
         NoDataFound: 'Données non trouvées',
         None: 'Aucun',
         propertyEdit: 'Éditer',
@@ -1757,8 +1816,9 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             xmlLabel: 'XML',
             jsonLabel: 'JSON',
             csvLabel: 'CSV',
-            excelLabel: 'Exceller',
+            excelLabel: 'Excel',
             mysqlLabel: 'MySQL',
+            elasticSearchLabel: 'Elastic Search',
             mariadbLabel: 'MariaDB',
             memsqlLabel: 'MemSQL',
             sharedLabel: 'partagé',
@@ -1828,6 +1888,27 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             alertMessage: {
                 connectionString: 'Spécifiez la chaîne de connexion',
                 promptText: 'Spécifiez le texte d\'invite',
+                userName: 'Précisez le nom d\'utilisateur',
+                password: 'Spécifiez le mot de passe',
+                serverName: 'Indiquez le nom du serveur',
+                databaseName: 'Indiquez le nom de la base de données'
+            }
+        },
+        elasticSearchDatasource: {
+            authenticationType: 'type d\'identification',
+            window: 'les fenêtres',
+            server: 'serveur ElasticSearch',
+            none: 'Aucun',
+            basicHttp: 'Authentification HTTP de base',
+            userName: 'Nom d\'utilisateur',
+            password: 'Mot de passe',
+            port: 'Port',
+            basicOption: {
+                serverName: 'Nom du serveur',
+                database: 'Base de données'
+            },
+            alertMessage: {
+                port: 'Spécifiez le numéro de port',
                 userName: 'Précisez le nom d\'utilisateur',
                 password: 'Spécifiez le mot de passe',
                 serverName: 'Indiquez le nom du serveur',
@@ -1933,11 +2014,21 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             authenticationType: 'type d\'identification',
             userName: 'Nom d\'utilisateur',
             password: 'Mot de passe',
+            separatorTypes: {
+                comma: 'Virgule',
+                space: 'Espace',
+                tab: 'Languette',
+                semicolon: 'point-virgule',
+                custom: 'Douane'
+            },
+            separator: 'Séparateur',
+            delimiter: 'Délimiteur',
             alertMessage: {
                 urlValidation: 'L\'URL n\'est pas valide',
                 userNameValidation: 'Spécifiez le nom d\'utilisateur',
                 passwordValidation: 'Spécifiez le mot de passe',
                 fieldsValidation: 'Spécifiez la valeur dans les champs',
+                delimiterAlert: 'Spécifiez le délimiteur'
             },
             none: 'Aucun',
             basicHttp: 'Authentification HTTP de base',
@@ -2150,6 +2241,7 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             microsoftsqlInfo: 'SQL Server est le système de gestion de base de données relationnelle de Microsoft. En tant que l\'un des serveurs de base de données les plus fiables et les plus fiables du marché, il est livré avec un assortiment de services à valeur ajoutée tels que l\'analyse, la création de rapports et plus encore, en plus du système de gestion de base de données de base. Le connecteur SQL Server vous permet d\'accéder aux données des bases de données Microsoft SQL Server dans {customBrandName} Designer.',
             ssasInfo: 'SQL Server Analysis Services (SSAS) est la technologie de la pile Microsoft Business Intelligence, pour développer des solutions de traitement analytique en ligne (OLAP). En termes simples, vous pouvez utiliser SSAS pour créer des cubes à l\'aide de données provenant de magasins de données/entrepôt de données pour une analyse de données plus approfondie et plus rapide.',
             mysqlInfo: 'MySQL est un système de gestion de base de données relationnelle open source disponible gratuitement, le plus connu pour son traitement rapide, sa fiabilité éprouvée, sa facilité et sa flexibilité d\'utilisation. Le connecteur MySQL vous permet d\'accéder aux données des bases de données MySQL dans {customBrandName} Designer.',
+            elasticSearchInfo: 'Elasticsearch est un moteur de recherche basé sur la bibliothèque Lucene. Il fournit un moteur de recherche en texte intégral distribué et mutualisé avec une interface Web HTTP et des documents JSON sans schéma. Elasticsearch peut être utilisé pour rechercher tous types de documents. Il fournit également une recherche évolutive, une recherche en temps quasi réel et prend en charge la multilocation. Le connecteur Elasticsearch vous permet d\'accéder aux données des clusters Elasticsearch au sein du {customBrandName} Designer.',
             odataInfo: 'OData est un protocole ouvert permettant la création et la consommation d\'API RESTful interrogeables et interopérables de manière simple et standard. Connectez-vous avec {customBrandName} Designer et créez des rapports pour voir l\'histoire qui vit dans vos données.',
             odbcInfo: 'Un pilote ODBC utilise l\'interface Open Database Connectivity (ODBC) de Microsoft qui permet aux applications d\'accéder aux données dans les systèmes de gestion de base de données (SGBD) en utilisant SQL comme standard pour accéder aux données.',
             oledbInfo: 'OLE DB est l\'interface de programme d\'application (API) stratégique de bas niveau de Microsoft pour accéder à différentes sources de données. OLE DB inclut non seulement les capacités SQL (Structured Query Language) de l\'interface de données standard Open Database Connectivity (ODBC) sponsorisée par Microsoft, mais inclut également l\'accès à des données autres que les données SQL.',
@@ -2157,7 +2249,11 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             psqlInfo: 'PostgreSQL est un système de base de données relationnelle objet puissant et open source mettant l\'accent sur l\'extensibilité et la conformité aux normes. Le connecteur PostgreSQL vous permet d\'accéder aux données des bases de données PostgreSQL dans {customBrandName} Designer.',
             snowflakeInfo: 'Snowflake est un entrepôt de données basé sur le cloud qui fournit une plate-forme illimitée pour le stockage et la récupération de données. Contrairement aux architectures traditionnelles à disque partagé/sans partage à un seul cluster, Snowflake a une architecture de données partagée multi-cluster qui est dynamique et hautement évolutive grâce aux systèmes de stockage basés sur le cloud de classe entreprise.',
             webAPIInfo: 'Connectez-vous avec {customBrandName} Designer en utilisant presque toutes les sources de données qui ont une API REST. Créez des rapports et voyez l\'histoire qui vit dans vos données.',
-            xmlInfo: 'Apportez vos fichiers XML dans {customBrandName} Designer et préparez des rapports pour voir l\'histoire qui vit dans vos données.'
+            xmlInfo: 'Apportez vos fichiers XML dans {customBrandName} Designer et préparez des rapports pour voir l\'histoire qui vit dans vos données.',
+            verticaInfo: 'Vertica est l\'entrepôt d\'analyse unifié le plus avancé, qui combine la puissance d\'un stockage en colonnes hautes performances, d\'une compression avancée, de projections optimisées et d\'un moteur de requête SQL à traitement massivement parallèle avec des analyses avancées et l\'apprentissage automatique, afin que vous puissiez libérer le véritable potentiel de vos données sans limites ni compromis. Le connecteur Vertica vous permet d\'accéder aux données des bases de données Vertica au sein du {customBrandName} Designer.',
+            gcsqlInfo: 'Google Cloud SQL est un service de base de données entièrement géré basé sur MySQL et PostgreSQL. Le connecteur Google Cloud SQL vous permet d\'accéder aux données des bases de données Google Cloud SQL dans le {customBrandName} Designer.',
+            redshiftInfo: 'Amazon Redshift est un entrepôt de données rapide et évolutif qui permet d\'analyser simplement et à moindre coût toutes les données de votre entrepôt de données et de votre lac de données.Il est construit sur PostgreSQL.Le connecteur Amazon Redshift vous permet d\'accéder aux données des bases de données Amazon Redshift dans le {customBrandName} Designer.',
+            rdsInfo: 'Amazon Relational Database Service (Amazon RDS) est un service Web qui facilite la configuration, l\'exploitation et la mise à l\'échelle d\'une base de données relationnelle dans le cloud AWS.Il offre une capacité redimensionnable et économique pour réduire l\'automatisation des tâches administratives. Il fournit des moteurs de base de données tels qu\'Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database et Microsoft SQL Server.Le connecteur Amazon RDS vous permet d\'accéder aux données des bases de données Amazon RDS dans le {customBrandName} Designer.'
         }
     },
     imageManager: {
@@ -2260,6 +2356,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
         parameterEditAlert: {
             title: 'Paramètre',
             contentMessage: 'Voulez-vous annuler l\'édition du paramètre ?',
+        },
+        licenseAlert: {
+            ok: 'D\'accord',
+            close: 'Fermer',
         }
     },
     dataSet: {
@@ -2322,10 +2422,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 headerText: 'Exportation',
                 contentText: 'Sélectionnez le format de fichier exporté.',
                 Pdf: 'PDF',
-                Excel: 'Exceller',
+                Excel: 'Excel',
                 Word: 'Mot',
                 Html: 'HTML',
-                PPT: 'Power Point',
+                PPT: 'PowerPoint',
                 CSV: 'CSV',
                 XML: 'XML'
             },
@@ -2400,6 +2500,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 contentText: 'Choisissez l’option d’installation d’exportation pour définir la qualité de l’image,'
                     + 'enregistrer le type de mot et excel document.'
             },
+            find: {
+                headerText: 'Trouve',
+                contentText: 'Rechercher du texte dans le rapport.'
+            },
             viewDesign: 'fermer l aperçu',
         },
         pagesetupDialog: {
@@ -2412,7 +2516,24 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             bottom: 'Bas',
             right: 'Droite',
             left: 'La gauche',
-            unit: 'po',
+            pageUnits: 'Unités de page',
+            unitin: 'po',
+            unitcm: 'cm',
+            inches: 'pouces',
+            centimeters: 'Centimètres',
+            paperTypes: [
+                { text: 'A3', value: 'A3' },
+                { text: 'A4', value: 'A4' },
+                { text: 'B4(JIS)', value: 'B4(JIS)' },
+                { text: 'B5(JIS)', value: 'B5(JIS)' },
+                { text: 'Enveloppe #10', value: 'Envelope #10' },
+                { text: 'Enveloppe monarque', value: 'Envelope Monarch' },
+                { text: 'Exécutif', value: 'Executive' },
+                { text: 'Légal', value: 'Legal' },
+                { text: 'Lettre', value: 'Letter' },
+                { text: 'Tabloïde', value: 'Tabloid' },
+                { text: 'Personnalisé', value: 'Custom' }
+            ],
             orientation: 'Orientation',
             portrait: 'Portrait',
             landscape: 'Paysage',
@@ -2421,13 +2542,159 @@ ej.ReportDesigner.Locale['fr-FR'] = {
         },
         exportsetupDialog: {
             close: 'Fermer',
-            excel: 'Exceller',
-            word: 'Mot',
-            imageQuality: 'Qualité de l’image',
-            exportFormat: 'Format d’exportation',
-            dpi: 'dpi',
+            commonOptions: {
+                header: 'Paramètres communs',
+                imageQuality: 'Qualité d\'image',
+                imageQualityTypes: [{ text: 'Meugler', value: '2' },
+                    { text: 'Moyen', value: '5' },
+                    { text: 'Haut', value: '10' }]
+            },
+            pdfOptions: {
+                header: 'Paramètres PDF',
+                complexScript: 'Complex Script',
+                conformance: 'Niveau de conformité',
+                conformanceTypes: [
+                    { text: 'Aucun', value: 0 },
+                    { text: 'Pdf/A1B', value: 1 },
+                    { text: 'Pdf/X1A2001', value: 2 },
+                    { text: 'Pdf/A2B', value: 3 },
+                    { text: 'Pdf/A3B', value: 4 },
+                    { text: 'Pdf/A1A', value: 5 },
+                    { text: 'Pdf/A2A', value: 6 },
+                    { text: 'Pdf/A2U', value: 7 },
+                    { text: 'Pdf/A3A', value: 8 },
+                    { text: 'Pdf/A3U', value: 9 }
+                ],
+            },
+            securityOptions: {
+                header: 'Les paramètres de sécurité',
+                enableProtection: 'Activer la protection',
+                protect: 'Mot de passe Pour protéger',
+                edit: 'Mot de passe à modifier',
+            },
+            wordOptions: {
+                header: 'Paramètres de mots',
+                protection: 'Type de protection',
+                topSpacing: 'espacement supérieur',
+                bottomSpacing: 'espacement inférieur',
+                formatList: [
+                    { text: 'Document Word 97-2003 (.doc)', value: 0 },
+                    { text: 'Modèle Word 97-2003 (.dot)', value: 1 },
+                    { text: 'Document Word (.docx)', value: 2 },
+                    { text: 'Document XML ouvert strict 2007 (.docx)', value: 3 },
+                    { text: 'Document XML ouvert strict 2010 (.docx)', value: 4 },
+                    { text: 'Document XML ouvert strict 2013 (.docx)', value: 5 },
+                    { text: 'Modèle XML ouvert strict 2007 (.dotx)', value: 6 },
+                    { text: 'Modèle XML ouvert strict 2010 (.dotx)', value: 7 },
+                    { text: 'Modèle XML ouvert strict 2013 (.dotx)', value: 8 },
+                    { text: 'Document activé par macro WORD 2007 (.docm)', value: 9 },
+                    { text: 'Document activé par macro WORD 2010 (.docm)', value: 10 },
+                    { text: 'Document activé par macro WORD 2013 (.docm)', value: 11 },
+                    { text: 'Modèle compatible avec les macros WORD 2007 (.dotm)', value: 12 },
+                    { text: 'Modèle compatible avec les macros WORD 2010 (.dotm)', value: 13 },
+                    { text: 'Modèle compatible avec les macros WORD 2013 (.dotm)', value: 14 },
+                    { text: 'Format texte enrichi (.rtf)', value: 15 },
+                    { text: 'Texte brut (.txt)', value: 16 },
+                    { text: 'page Web (.html)', value: 18 }
+                ],
+                layoutTypes: [
+                    { text: 'Défaut', value: 0 },
+                    { text: 'Haut niveau', value: 1 }
+                ],
+                protectionTypes: [
+                    { text: 'Pas de protection', value: -1 },
+                    { text: 'Autoriser les révisions uniquement', value: 0 },
+                    { text: 'Autoriser les commentaires uniquement', value: 1 },
+                    { text: 'Autoriser uniquement les champs de formulaire', value: 2 },
+                    { text: 'Autoriser la lecture seule', value: 3 }
+                ],
+            },
+            layoutOption: 'Option de mise en page',
+            saveType: 'enregistrer le type',
+            pptOptions: {
+                header: ' Paramètres PowerPoint',
+                pptTypes: [
+                    { text: 'PowerPoint 97to2003 Présentation (.ppt)', value: 0 },
+                    { text: 'PowerPoint 2007 Présentation (.pptx)', value: 1 },
+                    { text: 'PowerPoint2010 Présentation (.pptx)', value: 2 },
+                    { text: 'PowerPoint 2013 Présentation (.pptx)', value: 3 }
+                ]
+            },
             doneButton: 'D\'accord',
-            cancelButton: 'Annuler'
+            cancelButton: 'Annuler',
+            csvOptions: {
+                delimiter: 'Délimiteur de champ',
+                formatter: 'Valeurs formatées',
+                header: 'Paramètres CSV',
+                qualifier: 'Qualificateur de texte',
+                customVal: 'Valeur personnalisée',
+                qualifierList: [
+                    { text: 'Double citation', value: '"' },
+                    { text: 'Guillemets simples', value: '\'' },
+                    { text: 'Rien', value: '' },
+                    { text: 'Personnalisé', value: 'Custom' }
+                ],
+                delimiterList: [
+                    { text: 'Virgule', value: ',' },
+                    { text: 'Espacer', value: ' ' },
+                    { text: 'Languette', value: '   ' },
+                    { text: 'Point-virgule', value: ';' },
+                    { text: 'Personnalisé', value: 'Custom' }
+                ]
+            },
+            htmlOptions: {
+                header: 'Paramètres HTML',
+                separator: 'Séparateur de pages'
+            },
+            excelOptions: {
+                header: 'Paramètres Excel',
+                sheetProtection: 'Feuille de protection',
+                disableCellFormat: 'Désactiver le format de cellule',
+                readonly: 'Lecture seulement',
+                saveTypes: [
+                    { text: 'Classeur Excel97to2003 (.xls)', value: 0 },
+                    { text: 'Classeur Excel2007 (.xlsx)', value: 1 },
+                    { text: 'Classeur Excel2010 (.xlsx)', value: 2 },
+                    { text: 'Classeur Excel2013 (.xlsx)', value: 3 },
+                    { text: 'Classeur Excel2016 (.xlsx) ', value: 4 }
+                ],
+                sheetProtectionTypes: [
+                    { text: 'Aucune', value: 0 },
+                    { text: 'Objets', value: 1 },
+                    { text: 'Scénarios', value: 2 },
+                    { text: 'Formatage des cellules', value: 4 },
+                    { text: 'Formatage des colonnes', value: 8 },
+                    { text: 'Mise en forme des lignes', value: 16 },
+                    { text: 'Insertion de colonnes', value: 32 },
+                    { text: 'Insertion de lignes', value: 64 },
+                    { text: 'Insertion d\'hyperliens', value: 128 },
+                    { text: 'Suppression de colonnes', value: 256 },
+                    { text: 'Suppression de lignes', value: 512 },
+                    { text: 'Cellules verrouillées', value: 1024 },
+                    { text: 'Tri', value: 2048 },
+                    { text: 'Filtration', value: 4096 },
+                    { text: 'Utilisation des tableaux croisés dynamiques', value: 8192 },
+                    { text: 'Cellules déverrouillées', value: 16384 },
+                    { text: 'Contenu', value: 32768 },
+                    { text: 'Toute', value: 65535 }
+                ],
+                disableCellFormatTypes: [
+                    { text: 'Aucune', value: 0 },
+                    { text: 'Toute', value: 1 },
+                    { text: 'Frontière', value: 2 },
+                    { text: 'Style', value: 3 }
+                ],
+                layoutOptionTypes: [
+                    { text: 'Défaut', value: 0 },
+                    { text: 'Ignorer la fusion de cellules', value: 1 }
+                ],
+            }
+        },
+        findAlertMessage: {
+            resultsEndReached: 'Vous avez atteint la fin des résultats de recherche. Si vous souhaitez continuer, '
+                + 'fermez la boîte de dialogue et relancez la recherche.',
+            noResultsFound: 'Le texte spécifié ne correspond à aucun des contenus du rapport. '
+                + 'Modifiez votre mot-clé de recherche et réessayez.'
         },
         credential: {
             userName: 'Nom d\'utilisateur',
@@ -2558,11 +2825,16 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             nullValueLable: 'Autoriser la valeur null',
             multipleValueLable: 'Autoriser plusieurs valeurs',
             uniqueValueLabel: 'Afficher des valeurs uniques',
+            sortValueLabel: 'Activer le tri',
             visibilityLable: 'Visibilité',
             assignValueLable: 'Attribuer des valeurs >>',
             save: 'sauvegarder',
             cancel: 'Annuler',
             editLayout: 'Modifier la mise en page',
+            sorting: {
+                ascending: 'Ascendant',
+                descending: 'Descendant'
+            },
             visibility: {
                 visible: 'Visible',
                 hidden: 'Caché',
@@ -2909,9 +3181,9 @@ ej.ReportDesigner.Locale['fr-FR'] = {
     dataAssign: {
         measures: 'Les mesures',
         dimensions: 'Dimensions',
-        addDatasource: 'Ajouter une source de données',
-        errorMessagePrefix: 'Vous n\'avez pas encore configuré de source de données.',
-        errorMessageSuffix: 'Ajoutez une source de données pour lier des données à des éléments de rapport dans votre concepteur.',
+        addDataset: 'Ajouter une base de données',
+        errorMessagePrefix: 'Vous n\'avez pas encore configuré de base de données.',
+        errorMessageSuffix: 'Ajoutez une base de données pour lier des données à des éléments de rapport dans votre concepteur.',
         search: 'Chercher',
         dragOnDrop: 'Traîne & Laissez tomber',
         categoryList: ' Liste de catégories',
@@ -3915,7 +4187,7 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             search: 'Chercher',
             rename: 'Renommer',
             searchInfo: 'Récupère les informations correspondantes du schéma actuellement récupéré',
-            aggregation: 'Agrégation',
+            aggregation: 'Agrégat',
             dialogHeader: 'Ensemble de données',
             matchesFound: 'Aucun résultat',
             alertMessage: {
@@ -4068,7 +4340,7 @@ ej.ReportDesigner.Locale['fr-FR'] = {
                 part: 'Renvoie une valeur entière représentant la partie de date spécifiée de l\'expression de date donnée.',
                 sub: 'Renvoie la date soustraite de la date spécifiée.',
                 day: 'Retourne une valeur numérique représentant la partie jour de la date spécifiée.',
-                daydiff: 'Renvoie une valeur numérique représentant la différence entre deux dates spécifiées.',
+                dateDiff: 'Renvoie une valeur numérique représentant la différence entre deux dates spécifiées.',
                 hour: 'Renvoie l\'heure de la date donnée en entier.',
                 maximum: 'Renvoie la valeur maximale dans l\'expression donnée.',
                 minimum: 'Renvoie la valeur minimale dans l\'expression donnée.',
@@ -4099,7 +4371,9 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             size: 'Taille(s)',
             xvalue: 'X Valeur(s)',
             column: 'Colonne',
-            row: 'Rangée(s)'
+            row: 'Rangée(s)',
+            high: 'Haute(s)',
+            low: 'Bas(s)'
         },
         categoryItemsMenu: {
             filter: 'Filtres',

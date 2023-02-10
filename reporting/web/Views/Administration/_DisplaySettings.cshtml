@@ -1,4 +1,8 @@
-﻿<div class="col-lg-12 admin-page-body">
+﻿@{ 
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var localizationHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.Localization);
+}
+<div class="col-lg-12 admin-page-body">
     <h3 class="title col-lg-12 sub-section-heading">[[[Display]]]</h3>
     <div class="form-group">
         @Html.Label("time-zone", "[[[Time Zone]]]", new { @class = "app-textbox-label col-lg-2" })
@@ -79,7 +83,7 @@
                         @if (!@ServerAppConfig.IsHideHelpLink)
                         {
                             <br><br>
-                                <span>[[[Click ]]] <a href="https://redirect.boldbi.com?id=4025">[[[here]]]</a>[[[ to learn how to add new localizations in Reports.]]]</span>
+                                <span>[[[Click ]]] <a href="@localizationHelpSiteUrl">[[[here]]]</a>[[[ to learn how to add new localizations in Reports.]]]</span>
                         }
                     </div>
                 </div>

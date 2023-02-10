@@ -371,7 +371,7 @@
             if (isMobile)
             {
                 <section id="menu-area" class="collapse width">
-                    @await Html.PartialAsync("../Shared/_Menu", globalAppSettings.SystemSettings.CDNLink, new ViewDataDictionary(ViewData) { { "helpSiteBaseUrl", helpSiteBaseUrl }, { "helpSiteUrl", ViewBag.HelpSiteUrl }, { "GlobalAppSettings", globalAppSettings }, { "ItemPermission", ViewBag.ItemAddOptions != null ? ViewBag.ItemAddOptions as Dictionary<ItemType, bool> : new Dictionary<ItemType, bool>() } })
+                    @await Html.PartialAsync("../Shared/_Menu", globalAppSettings.SystemSettings.CDNLink, new ViewDataDictionary(ViewData) { { "helpSiteBaseUrl", helpSiteBaseUrl }, { "GlobalAppSettings", globalAppSettings }, { "ItemPermission", ViewBag.ItemAddOptions != null ? ViewBag.ItemAddOptions as Dictionary<ItemType, bool> : new Dictionary<ItemType, bool>() } })
                 </section>
             }
             else

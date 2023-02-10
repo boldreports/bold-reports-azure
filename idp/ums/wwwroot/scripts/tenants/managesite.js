@@ -41,11 +41,11 @@ function fnRegenerateClientSecret() {
                 SuccessAlert("Regenerate Client Secret", "Client secret generated successfully.", 7000);
                 $("#mySecret").val(data);
             } else {
-                WarningAlert("Regenerate Client Secret", "Error while generating client secret.", 7000);
+                WarningAlert("Regenerate Client Secret", "Error while generating client secret.", data.Message, 7000);
             }
         },
         error: function () {
-            WarningAlert("Regenerate Client Secret", "Error while generating client secret.", 7000);
+            WarningAlert("Regenerate Client Secret", "Error while generating client secret.", data.Message, 7000);
         }
     });
 }

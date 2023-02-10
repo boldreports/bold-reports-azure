@@ -64,7 +64,7 @@
 
         height: 120px;
         width: 160px;
-        background: $admin-page-bg;
+        background: $surface;
         border: 1px solid $grey-200;
         border-radius: 4px;
         display: inline-block;
@@ -84,7 +84,7 @@
     padding: 32px 24px 20px 24px !important;
 }
 
-#oauth-settings-tab, #openid-settings-tab, #azure-ad-settings-tab, #jwt-settings-tab {
+#oauth-settings-tab, #openid-settings-tab, #azure-ad-settings-tab, #jwt-settings-tab, #azure-ad-b2c-settings-tab {
     .admin-page-body {
         .auth-settings-form {
             .auth-sub-title {
@@ -100,7 +100,7 @@
             #jwt-signing-key.signing-key-width {
                 width: 450px !important;
                 border-radius: 4px;
-                border-right: 1px solid $grey-200;
+                border-right: 1px solid $input-box-border-normal-color;
             }
 
             #oauth-userinfo-endpoint, #oauth-token-endpoint {
@@ -123,7 +123,7 @@
                 resize: none;
                 width: 421px;
                 float: left;
-                background-color: $dialog-body-bgcolor;
+                background-color: $dialog-content-bg-normal-color;
                 box-shadow: none;
 
                 &:focus {
@@ -143,7 +143,7 @@
                     height: 80px;
                     width: 150px;
                     border-radius: 4px;
-                    border: 1px solid $footer-bg-color;
+                    border: 1px solid $logo-section-border-color;
                     margin-bottom: 4px;
 
                     .js-image-preview {
@@ -157,8 +157,8 @@
                     }
 
                     .upload-options {
-                        height: 27px;
-                        background-color: $grey-60;
+                        height: 26px;
+                        background-color: $grey-100;
                         cursor: pointer;
 
                         input {
@@ -190,7 +190,6 @@
             }
 
             #show-signing-key {
-                border: 1px solid $grey-200;
                 border-left: none;
                 padding: 4px;
                 border-radius: 0px;
@@ -208,7 +207,7 @@
             }
 
             .copy-signing-key-values {
-                background-color: $admin-page-bg !important;
+                background-color: $surface !important;
                 overflow: hidden;
                 resize: none;
                 width: 28px;
@@ -235,27 +234,16 @@
     word-wrap: break-word;
     border-radius: 2px;
     text-align: justify;
-    color: $dialog-text-1;
     font-style: initial;
     display: block;
-    background-color: $bg-dialog-1;
-}
-
-.custom-template.e-dialog .e-dlg-header-content {
-    border-bottom: none;
-    background-color: $white;
-}
-
-.e-control.e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
-    height: 25px;
-    width: 30px;
+    background-color: $warning-bg-normal-color;
+    border: 1px solid $warning-border-normal-color;
 }
 
 .e-control.e-dialog .e-btn .e-btn-icon.e-icon-dlg-close {
     font-size: 20px;
     height: 100%;
-    width: 100%;
-    color: $grey-800;
+    width: auto;
 }
 
 .su.su-warning-alt {
@@ -269,10 +257,8 @@
     position: relative;
     right: 38%;
     width: 20%;
-    background: $white;
     border: 0;
     border-radius: 4px;
-    color: $grey-800;
     cursor: pointer;
     display: inline-block;
     font-size: 12px;
@@ -282,12 +268,10 @@
     min-width: 90px;
     outline: none;
     text-align: center;
-    border: 1px solid $grey-300;
-
-
-    &:hover {
-        background-color: $grey-200;
-    }
+    padding: 0 15px;
+    background: $secondary-button-bg-normal-color !important;
+    color: $secondary-button-text-normal-color !important;
+    border: $secondary-button-border-normal-color !important;
 }
 
 .material-checkbox {

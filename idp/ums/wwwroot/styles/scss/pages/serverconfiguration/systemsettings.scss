@@ -1,14 +1,12 @@
-﻿@import "../../global.scss";
-@import "../../core/_predefinedclasses.scss";
+﻿@import "../../core/_predefinedclasses.scss";
 @import "../../core/_resolution.scss";
 @import "../../components/_buttons.scss";
-@import "../../mixins/_checkbox.scss";
 
 $startup-header-height: 70px;
 $startup-element-border-radius: 6px;
 
 %form-field-container {
-    background: $admin-page-bg;
+    background: $section-backgroud;
     border-radius: $startup-element-border-radius;
     box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
     padding: 0px 24px 16px 24px;
@@ -76,19 +74,19 @@ html {
 }
 
 body {
-    background-color: $admin-container-bg;
+    background-color: $background;
     padding-bottom: $startup-header-height;
     min-width: 950px;
     color: $primary-text-color;
     height: 100%;
 
     .popover {
-        background: $admin-page-bg;
+        background: $surface;
         word-wrap: break-word;
         max-width: 450px;
 
         .arrow::after {
-            border-top-color: $admin-page-bg !important;
+            border-top-color: $surface !important;
         }
     }
 
@@ -96,7 +94,7 @@ body {
         font-style: normal;
         font-size: 12px;
         padding-top: 4px;
-        color: $grey-500;
+        color: $info-text-color;
         font-size: 12px;
     }
 
@@ -335,6 +333,7 @@ body {
                             .link-decoration {
                                 color: $blue;
                                 text-decoration: underline !important;
+                                cursor: pointer;
                             }
                         }
                     }
@@ -351,7 +350,7 @@ body {
                         .upload-header {
                             .popup-title {
                                 font-size: 20px;
-                                color: $primary-black;
+                                color: $black;
                                 letter-spacing: 0.3px;
                                 line-height: 21px;
                                 font-weight: 900;
@@ -384,7 +383,7 @@ body {
                                 #upload-lable {
                                     padding-top: 25px;
                                     font-size: 16px;
-                                    color: $primary-black;
+                                    color: $black;
                                     letter-spacing: 0.3px;
                                     line-height: 18px;
                                     margin-bottom: 8px;
@@ -436,8 +435,8 @@ body {
                                         -webkit-appearance: none;
                                         float: right;
                                         margin: 0 0 0 10px;
-                                        color: $admin-page-bg;
-                                        border: 1px solid $primary-border;
+                                        color: $surface;
+                                        border: 1px solid $primary-color;
                                         border-radius: 4px;
                                     }
 
@@ -457,14 +456,14 @@ body {
 
                                 .license-detail-lable {
                                     font-size: 14px;
-                                    color: $primary-black;
+                                    color: $black;
                                     letter-spacing: 0.3px;
                                     line-height: 23px;
                                 }
 
                                 #customer-email, #subscription-id, #subscription-name, #plan-name, #expiry-date {
                                     font-size: 14px;
-                                    color: $primary-black;
+                                    color: $black;
                                     letter-spacing: 0.3px;
                                     line-height: 23px;
                                     overflow: hidden;
@@ -750,7 +749,7 @@ body {
 
                                         &:hover, &:focus {
                                             &:before {
-                                                background: $border-color;
+                                                background: $grey-400;
                                                 left: 0;
                                                 right: 0;
                                             }
@@ -759,10 +758,11 @@ body {
                                         }
 
                                         &.active {
-                                            color: $primary-color;
+                                            color: $tab-text-active-color;
 
                                             &:before {
-                                                background: $primary-color;
+                                                background: $sub-nav-menu-header-bg-color;
+                                                border:1px solid $sub-nav-menu-header-border-color;
                                                 left: 0;
                                                 right: 0;
                                                 position: absolute;
@@ -851,10 +851,6 @@ body {
                         #no-need-datastore {
                             display: none;
                         }
-                    }
-
-                    .system-settings-tenant-configuration-field {
-                        border: 1px solid $startup-container-border-color;
                     }
 
                     @extend %button-holder-style;
@@ -1033,7 +1029,7 @@ body {
 }
 
 #new-password + .popover {
-    background: $primary-black;
+    background: $black;
     opacity: 0.8;
     width: 210px;
     top: -154px !important;
@@ -1043,12 +1039,12 @@ body {
     }
 
     .arrow::after {
-        border-left-color: $primary-black;
+        border-left-color: $black;
         opacity: 0.8;
     }
 
     .popover-title {
-        background: $primary-black;
+        background: $black;
         opacity: 0.8;
         color: $white;
         font-size: map-get($app-text-size, "md");
@@ -1103,7 +1099,7 @@ body {
 }
 
 #messageBox {
-    background-color: $admin-page-bg;
+    background-color: $surface;
     color: $primary-text-color;
     display: block;
 
@@ -1111,14 +1107,10 @@ body {
         .su, .modal-title {
             font-size: 14px;
         }
-
-        .modal-title {
-            margin-left: 3px;
-        }
     }
 
     .message-box-close {
-        color: $icon-color;
+        color: $dialog-header-close-icon-normal-color;
         cursor: pointer;
         font-size: 14px;
         position: absolute;
@@ -1127,7 +1119,7 @@ body {
         opacity: 1;
 
         &:hover {
-            color: $icon-hover-color,
+            color: $dialog-header-close-icon-hover-color,
         }
     }
 
@@ -1153,21 +1145,6 @@ body {
         }
     }
 }
-
-#auto-deployment-response {
-    .e-dlg-content{
-        padding-top: 22px;
-    }
-    .e-footer-content {
-        text-align: center;
-    }
-}
-
-#auto-deployment-response-dialog-content
-{
-    display:none;
-}
-
 
 .offline-width {
     width: 568px !important;

@@ -75,7 +75,7 @@ ej.QueryDesigner.Locale['de-DE'] = {
         matchesFound: 'Keine Treffer gefunden',
         rename: 'Umbenennen',
         searchInfo: 'Ruft die übereinstimmenden Informationen aus dem aktuell abgerufenen Schema ab',
-        aggregation: 'Anhäufung',
+        aggregation: 'Aggregat',
         dialogHeader: 'Datensatz',
         alertMessage: {
             datasourceAlert: 'Wählen Sie eine Datenquelle zum Konfigurieren des Berichtsdatensatzes aus',
@@ -227,7 +227,7 @@ ej.QueryDesigner.Locale['de-DE'] = {
             part: 'Gibt einen ganzzahligen Wert zurück, der den angegebenen Datumsteil des angegebenen Datumsausdrucks darstellt.',
             sub: 'Gibt das vom angegebenen Datum abgezogene Datum zurück.',
             day: 'Gibt einen numerischen Wert zurück, der den Tagteil des angegebenen Datums darstellt.',
-            daydiff: 'Gibt einen numerischen Wert zurück, der die Differenz zwischen zwei angegebenen Datumsangaben darstellt.',
+            dateDiff: 'Gibt einen numerischen Wert zurück, der die Differenz zwischen zwei angegebenen Datumsangaben darstellt.',
             hour: 'Gibt die Stunde des angegebenen Datums als Ganzzahl zurück.',
             minute: 'Gibt einen numerischen Wert zurück, der den Minutenabschnitt des Datums darstellt, der sich aus dem angegebenen Datumsausdruck ergibt.',
             month: 'Gibt einen numerischen Wert zurück, der den Monatsteil des Datums darstellt, der sich aus dem angegebenen Datumsausdruck ergibt.',

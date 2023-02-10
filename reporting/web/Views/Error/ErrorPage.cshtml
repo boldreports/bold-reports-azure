@@ -3,7 +3,15 @@
     var globalAppSettings = _globalAppSettings;
     var email = ViewBag.Email;
     var cdnLink = @GlobalAppSettings.CdnDomain;
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
     var designerToken = ViewBag.AccessToken;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/'); 
 }
 <script>
     let saveURL = "@Url.Action("Save", "DataSources")";
@@ -39,7 +40,7 @@
             <div class="data-designer-modal-header-close-btn" ng-click="onAlertNoBtnClick()"></div>
         </div>
         <div class="data-designer-modal-body">
-            @*<img class="data-designer-modal-body-img" alt="warning" src="@(ServerAppConfig.CdnLink + "/images/warning.svg")" />*@
+            <img class="data-designer-modal-body-img" alt="warning" src="@reportServerResourceUrl/cdn/images/warning.svg"/> 
             <div class="data-designer-modal-body-content">Do you want to cancel establishing data connection?</div>
         </div>
         <div class="data-designer-modal-footer">

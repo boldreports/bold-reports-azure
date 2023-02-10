@@ -61,6 +61,10 @@ ej.ReportViewer.Locale["de-DE"] = {
             headerText: "auffrischen",
             contentText: "Bericht aktualisieren."
         },
+        find: {
+            headerText: 'Finden',
+            contentText: 'Suchen Sie nach Text im Bericht.'
+        },
         stop: {
             headerText: 'Halt',
             contentText: 'Beenden Sie die Verarbeitung des Berichts.'
@@ -91,7 +95,7 @@ ej.ReportViewer.Locale["de-DE"] = {
             headerText: "Seiten Setup",
             contentText: "Wähle eine Seiten-Setup-Option aus um die Papierformatausrichtung und die Seitenspanne zu verändern."
         },
-        exportsetup:{
+        exportsetup: {
             headerText: 'Setup exportieren',
             contentText: 'Wählen Sie die Option "Setup exportieren", um die Bildqualität festzulegen, den Worttyp zu speichern und das Dokument zu übertreffen.'
         }
@@ -106,22 +110,151 @@ ej.ReportViewer.Locale["de-DE"] = {
         bottom: "Boden",
         right: "Recht",
         left: "Links",
-        unit: "inch",
+        pageUnits: 'Seiteneinheiten',
+        unitin: 'Zoll',
+        unitcm: 'cm',
+        inches: 'Zoll',
+        centimeters: 'Zentimeter',
         orientation: "Ausrichtung",
         portrait: "Hochformat",
         landscape: "Querformat",
         doneButton: "Erledigt",
-        cancelButton: "Stornieren"
+        cancelButton: "Stornieren",
+        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4 (JIS)", value: "B4(JIS)" }, { text: "B5 (JIS)", value: "B5(JIS)" }, { text: "Umschlag Nr. 10", value: "Envelope #10" }, { text: "Umschlag Monarch", value: "Envelope Monarch" }, { text: "Exekutive", value: "Executive" }, { text: "Gesetzlich", value: "Legal" }, { text: "Brief", value: "Letter" }, { text: "Boulevardzeitung", value: "Tabloid" }, { text: "Brauch", value: "Custom" }]
     },
     exportsetupDialog: {
         close: 'Schließen',
-        excel: 'übertreffen',
-        word: 'Wort',
-        imageQuality: 'Bildqualität',
+        commonOptions: {
+            header: 'Allgemeine Einstellungen',
+            imageQuality: 'Bildqualität',
+            imageQualityTypes:
+                [{ text: "Niedrig", value: "2" },
+                { text: "Mittel", value: "5" },
+                { text: "Hoch", value: "10" }]
+        },
+        pdfOptions: {
+            header: 'PDF-Einstellungen',
+            complexScript: 'Komplexes Skript',
+            conformance: 'Konformitätsstufe',
+            conformanceTypes: [{ text: "Keiner", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
+            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }]
+        },
+        wordOptions: {
+            header: 'Worteinstellungen',
+            protection: 'Schutzart',
+            topSpacing: 'Oberer Abstand',
+            bottomSpacing: 'Unterer Abstand',
+            formatList: [
+                { text: "Word 97-2003-Dokument (.doc)", value: 0 },
+                { text: "Word 97-2003-Vorlage (.dot)", value: 1 },
+                { text: "Word-Datei (.docx)", value: 2 },
+                { text: "Striktes offenes XML-Dokument 2007 (.docx)", value: 3 },
+                { text: "Striktes offenes XML-Dokument 2010 (.docx)", value: 4 },
+                { text: "Striktes offenes XML-Dokument 2013 (.docx)", value: 5 },
+                { text: "Strikte offene XML-Vorlage 2007 (.dotx)", value: 6 },
+                { text: "Strikte offene XML-Vorlage 2010 (.dotx)", value: 7 },
+                { text: "Strikte offene XML-Vorlage 2013 (.dotx)", value: 8 },
+                { text: "Dokument mit aktiviertem Word-Makro 2007 (.docm)", value: 9 },
+                { text: "Dokument mit aktiviertem Word-Makro 2010 (.docm)", value: 10 },
+                { text: "Dokument mit aktiviertem Word-Makro 2013 (.docm)", value: 11 },
+                { text: "Vorlage für Word-Makros 2007 (.dotm)", value: 12 },
+                { text: "Vorlage für Word-Makros 2010 (.dotm)", value: 13 },
+                { text: "Vorlage für Word-Makros 2013 (.dotm)", value: 14 },
+                { text: "rich-Text-Format (.rtf)", value: 15 },
+                { text: "Klartext (.txt)", value: 16 },
+                { text: "Website (.html)", value: 18 }
+            ],
+            layoutTypes: [{ text: "Standard", value: 0 }, { text: "Höchststufe", value: 1 }],
+            protectionTypes: [{ text: "Kein Schutz", value: -1 }, { text: "Nur Überarbeitungen zulassen", value: 0 }, { text: "Nur Kommentare zulassen", value: 1 }, { text: "Nur Formularfelder zulassen", value: 2 }, { text: "Nur lesen zulassen", value: 3 }],
+        },
+        layoutOption: 'Layoutoption',
+        saveType: 'Typ speichern',
+        unit: 'inch',
         exportFormat: 'Format exportieren',
+        pptOptions: {
+            header: "PowerPoint-Einstellungen",
+            pptTypes: [
+                { text: "PowerPoint 97to2003 Präsentation (.ppt)", value: 0 },
+                { text: "PowerPoint 2007 Präsentation (.pptx)", value: 1 },
+                { text: "PowerPoint 2010 Präsentation (.pptx)", value: 2 },
+                { text: "PowerPoint 2013 Präsentation (.pptx)", value: 3 }
+            ]
+        },
+        securityOptions: {
+            header: "Sicherheitseinstellungen",
+            enableProtection: "Passwortschutz",
+            protect: "Passwort zum Schutz",
+            edit: "Kennwort zum Bearbeiten",
+        },
         dpi: 'dpi',
         doneButton: 'OK',
-        cancelButton: 'Stornieren'
+        csvOptions: {
+            delimiter: 'Feldbegrenzer',
+            formatter: 'Formatierte Werte',
+            header: 'CSV-Einstellungen',
+            qualifier: 'Textqualifizierer',
+            customVal: 'Benutzerdefinierten Wert',
+            qualifierList: [{ text: "Anführungszeichen", value: "\"" }, { text: "Einzelzitate", value: "'" }, { text: "Keiner", value: "" }, { text: "Brauch", value: "Custom" }],
+            delimiterList: [{ text: "Komma", value: "," }, { text: "Raum", value: " " }, { text: "Tab", value: "   " }, { text: "Semikolon", value: ";" }, { text: "Brauch", value: "Custom" }]
+        },
+        htmlOptions: {
+            header: 'HTML-Einstellungen',
+            separator: 'Seitentrenner'
+        },
+        excelOptions:
+        {
+            header: 'Excel-Einstellungen',
+            sheetProtection: 'Blattschutz',
+            disableCellFormat: 'Zellenformat deaktivieren',
+            readonly: 'Schreibgeschützt',
+            saveTypes: [
+                { text: "Excel97to2003-Arbeitsmappe (.xls)", value: 0 },
+                { text: "Excel2007-Arbeitsmappe (.xlsx)", value: 1 },
+                { text: "Excel2010-Arbeitsmappe (.xlsx)", value: 2 },
+                { text: "Excel2013-Arbeitsmappe (.xlsx)", value: 3 },
+                { text: "Excel2016-Arbeitsmappe (.xlsx) ", value: 4 }
+            ],
+            sheetProtectionTypes: [
+                { text: "Keiner", value: 0 },
+                { text: "Objekte", value: 1 },
+                { text: "Szenarien", value: 2 },
+                { text: "Zellen formatieren", value: 4 },
+                { text: "Spalten formatieren", value: 8 },
+                { text: "Zeilen formatieren", value: 16 },
+                { text: "Spalten einfügen", value: 32 },
+                { text: "Zeilen einfügen", value: 64 },
+                { text: "Einfügen von Hyperlinks", value: 128 },
+                { text: "Spalten löschen", value: 256 },
+                { text: "Zeilen löschen", value: 512 },
+                { text: "Verschlossene Zellen", value: 1024 },
+                { text: "Sortierung", value: 2048 },
+                { text: "Filtern", value: 4096 },
+                { text: "Verwenden von Pivot-Tabellen", value 8192 },
+                { text: "Entsperrte Zellen", value: 16384 },
+                { text: "Inhalt", value: 32768 },
+                { text: "Alle", value: 65535 }
+            ],
+            disableCellFormatTypes: [
+                { text: "Keiner", value: 0 },
+                { text: "Alle", value: 1 },
+                { text: "Rand", value: 2 },
+                { text: "Stil", value: 3 }
+            ],
+            layoutOptionTypes: [
+                { text: "Standard", value: 0 },
+                { text: "Zellenzusammenführung ignorieren", value: 1 }
+            ],
+        },
+        layoutOption: 'Layoutoption',
+        saveType: 'Typ speichern',
+        unit: 'inch',
+        exportFormat: 'Format exportieren',
+        doneButton: 'OK',
+        cancelButton: 'Stornieren',
+    },
+    findAlertMessage: {
+        resultsEndReached: 'Sie haben das Ende der Suchergebnisse erreicht. Wenn Sie fortfahren möchten, schließen Sie das Dialogfeld und suchen Sie erneut.',
+        noResultsFound: 'Der angegebene Text stimmt mit keinem Inhalt des Berichts überein. Ändern Sie Ihr Suchwort und versuchen Sie es erneut.'
     },
     credential: {
         userName: 'Nutzername',
@@ -140,7 +273,7 @@ ej.ReportViewer.Locale["de-DE"] = {
         printAjaxFailureMsg: 'Das Dokument kann nicht gedruckt werden, weil der Report Service nicht verbunden wurde.',
         reportLoadAjaxFailureMsg: 'Die Berichtsaktion kann nicht ausgeführt werden, weil der Berichtsdienst nicht verbunden werden konnte.',
         cancelReportProcessMsg: 'Die Berichtsverarbeitung wurde abgebrochen.',
-     },
+    },
     progressMessage: {
         exportLoadingMessage: 'Exportdokument wird vorbereitet ... Bitte warten Sie ...',
         printLoadingMessage: 'Druckdaten vorbereiten ... Bitte warten Sie ...',

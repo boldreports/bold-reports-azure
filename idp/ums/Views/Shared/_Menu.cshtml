@@ -1,23 +1,12 @@
 ﻿@{
-
-    var idPUrl = string.Empty;
     var isAdmin = Context.Session.GetString("IsAdmin") != null ? Convert.ToBoolean(Context.Session.GetString("IsAdmin").ToString()) : false;
 
-    if (!CloudAppConfig.IsSelfHosted)
-    {
-        var tenantsListingUrl = Url.Action("Tenants", "TenantsManagement");
-        idPUrl = GlobalAppSettings.SystemSettings.BaseUrl.TrimEnd('/');
-        var homeUrl = isAdmin ? tenantsListingUrl : idPUrl;
-    }
-    else
-    {
-        idPUrl = GlobalAppSettings.SystemSettings.InternalAppUrls.Idp;
-    }
+    var idPUrl = GlobalAppSettings.SystemSettings.InternalAppUrls.Idp;
 
     var userId = Guid.Parse(Context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
     var requestUrl = new Uri(this.Context.Request.GetDisplayUrl());
-    var currentUrlLocalPath = requestUrl.LocalPath.ToLower();
+    var currentUrlLocalPath = requestUrl.PathAndQuery.ToLower();
 
     var currentUrl = requestUrl.ToString().TrimEnd('/');
 
@@ -44,9 +33,8 @@
     var defaultAppLogo = GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? GlobalAppSettings.CdnDomain + "/static/company/boldid/logo/v1/" + IconFileNames.MainLogo : GlobalAppSettings.SystemSettings.CDNLink + "/images/" + CloudAppConfig.AppBranding + "/application/" + IconFileNames.MainLogo;
     var appLogo = (GlobalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo) || GlobalAppSettings.SystemSettings.MainScreenLogo.EndsWith("main_logo.png")) ? defaultAppLogo : GlobalAppSettings.SystemSettings.MainScreenLogo;
     var profilePictureUrl = idPUrl + Url.Content("/User/Avatar?id=" + idpreferenceId).TrimEnd('/');
-    var imageUrl = GlobalAppSettings.SystemSettings.BaseUrl;
+    var imageUrl = idPUrl;
 }
-
 <aside class="menu-bar" id="app-navigation">
     <nav id="main-nav">
         <a id="mobile-profile-picture" rel="alternate" hreflang="en" href="@profilePicture" class="mobile-visible">
@@ -56,43 +44,12 @@
         <ul id="items-menu">
             <li class="mobile-hidden">
                 <a href="@idPUrl" class="home-link " style="background-color:transparent;" title=@GlobalAppSettings.SystemSettings.OrganizationName>
-                    @if (!CloudAppConfig.IsSelfHosted)
-                    {
-                        <img alt="[[[Application Logo]]]" id="application-logo" src="@GlobalAppSettings.CdnDomain/images/static/company/@GlobalAppSettings.Branding/logo/v1/@IconFileNames.MainLogo" />
-                    }
-                    else
-                    {
-                        <img alt="[[[Application Logo]]]" id="application-logo" src="@GlobalAppSettings.SystemSettings.MainScreenLogo" onerror="this.onerror=null;this.src='@GlobalAppSettings.CdnDomain/boldid/application/@IconFileNames.MainLogo';" />
-                    }
+                    <img alt="[[[Application Logo]]]" id="application-logo" src="@Url.Content("~/logos?type=header")" onerror="this.onerror=null;this.src='@Url.Content("~/images/" + GlobalAppSettings.Branding + "/application/" + IconFileNames.DefaultErrorSquareImage)';" />
                 </a>
             </li>
             <li class="sf-nav-separator logo-separator mobile-hidden"></li>
 
-            @if (!CloudAppConfig.IsSelfHosted)
-            {
-                if (adminType == AdminType.SuperAdmin)
-                {
-                    <li>
-                        <a class="@(currentUrl.IndexOf(Url.Action("Tenants", "TenantsManagement"), StringComparison.CurrentCultureIgnoreCase) > 0 ? "active" : string.Empty)" href="@Url.Action("Tenants", "TenantsManagement")">
-                            <span class="menu-icon-container">
-                                <i class="su su-applications"></i>
-                            </span>
-                            <span class="menu-label">[[[Tenants]]]</span>
-                        </a>
-                    </li>
-                    <li class="sf-nav-separator logo-separator mobile-hidden"></li>
-                    <li>
-                        <a class="@(currentUrl.IndexOf(Url.Action("Administration", "Administration"), StringComparison.CurrentCultureIgnoreCase) > 0 ? "active" : string.Empty)" href="@Url.Action("Administration", "Administration")">
-                            <span class="menu-icon-container">
-                                <i class="su su-nav-settings"></i>
-                            </span>
-                            <span class="menu-label">[[[Settings]]]</span>
-                        </a>
-                    </li>
-                }
-            }
-
-            @if (CloudAppConfig.IsSelfHosted && (adminType == AdminType.SuperAdmin || adminType == AdminType.AppAdmin))
+            @if (adminType == AdminType.SuperAdmin || adminType == AdminType.AppAdmin)
             {
                 <li>
                     <a class="@(currentUrl.IndexOf(Url.Action("Sites", "TenantsManagement"), StringComparison.CurrentCultureIgnoreCase) > 0 ? "active" : string.Empty)" href="@Url.Action("Sites", "TenantsManagement")">
@@ -193,5 +150,5 @@
                 </li>
             </ul>
         </nav>
-    }
-</aside>
+     }
+    </aside>

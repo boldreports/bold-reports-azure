@@ -2,6 +2,7 @@
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = "[[[Email Settings]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.EmailSettings);
     var mailAuthenticationTypes = new List<SelectListItem>
 {
         new SelectListItem { Value = "0", Text = "[[[Anonymous authentication]]]", Selected = globalAppSettings.SystemSettings.MailSettingsAuthType == MailSettingsAuthType.Anonymous },

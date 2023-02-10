@@ -75,7 +75,7 @@ ej.QueryDesigner.Locale['es-ES'] = {
         matchesFound: 'No se encontraron coincidencias',
         rename: 'Rebautizar',
         searchInfo: 'Recupera la información coincidente del esquema recuperado actualmente',
-        aggregation: 'Agregación',
+        aggregation: 'Agregar',
         dialogHeader: 'Conjunto de datos',
         alertMessage: {
             datasourceAlert: 'Seleccione una fuente de datos para configurar el conjunto de datos de informe',
@@ -227,7 +227,7 @@ ej.QueryDesigner.Locale['es-ES'] = {
             part: 'Devuelve un valor entero que representa la parte de fecha especificada de la expresión de fecha dada.',
             sub: 'Devuelve la fecha restada de la fecha especificada.',
             day: 'Devuelve un valor numérico que representa la parte del día de la fecha especificada.',
-            daydiff: 'Devuelve un valor numérico que representa la diferencia entre dos fechas especificadas.',
+            dateDiff: 'Devuelve un valor numérico que representa la diferencia entre dos fechas especificadas.',
             hour: 'Devuelve la hora de la fecha dada como un entero.',
             minute: 'Devuelve un valor numérico que representa la parte de los minutos de la fecha resultante de la expresión de fecha especificada.',
             month: 'Devuelve un valor numérico que representa la parte del mes de la fecha resultante de la expresión de fecha especificada.',

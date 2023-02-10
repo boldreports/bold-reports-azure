@@ -11,8 +11,7 @@ $(document).ready(function () {
 });
 
 $(document).on("click", "#language-cancel-button", function (e) {
-    $("#language-save-button,#language-cancel-button,#language-cancel-link-button").hide();
-    $("#edit-language").show();
+    window.location.href = "profile";
 });
 
 function SaveUserPreference() {
@@ -39,7 +38,7 @@ function SaveUserPreference() {
                     }
                 } else {
                     hideWaitingPopup('content-area');
-                    WarningAlert(window.Server.App.LocalizationContent.UpdateAccountPreference, result.Data.value, 7000);
+                    WarningAlert(window.Server.App.LocalizationContent.UpdateAccountPreference, result.Data.value, result.Message, 7000);
                     location.reload();
                 }
             }

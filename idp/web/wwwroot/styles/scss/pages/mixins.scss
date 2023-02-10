@@ -1,9 +1,9 @@
-﻿@import "../themes/default.scss";
+﻿@import "../default/default.scss";
 @import "variables/fontsize.scss";
 @import "variables/elementsize.scss";
 @import "../../fonts/variables.scss";
 
-@mixin button($background: $primary-btn-bg, $color: $primary-btn-text-color, $hover: $primary-btn-hover, $height: $btn-height-normal, $icon: false) {
+@mixin button($background: $primary-color, $color: $primary-button-text-normal-color, $hover: $primary-button-bg-hover-color, $height: $btn-height-normal, $icon: false) {
     background: $background;
     border: 0;
     border-radius: 4px;
@@ -42,12 +42,6 @@
         background: $hover;
         color: $color;
     }
-
-    &:disabled {
-        background: $primary-btn-disabled-bg;
-        color: $sub-text-color;
-        cursor: not-allowed;
-    }
 }
 
 @mixin dialogbox() {
@@ -60,7 +54,7 @@
             border: none;
 
             .modal-header {
-                background: $dialog-header-bgcolor;
+                background: $dialog-header-bg-normal-color;
                 padding: 10px;
                 width: 100%;
                 z-index: 9;
@@ -88,14 +82,14 @@
             }
 
             .modal-body {
-                background: $dialog-body-bgcolor;
+                background: $dialog-content-bg-normal-color;
                 font-size: $app-text-size;
                 padding: 10px;
             }
 
             .modal-footer {
-                background: $dialog-footer-bgcolor;
-                border-top: 1px solid $footer-border-color;
+                background: $dialog-footer-bg-normal-color;
+                border-top: 1px solid $dialog-footer-border-normal-color;
                 padding: 10px;
 
                 .primary-button, .critical-action-button {
@@ -110,7 +104,7 @@
     }
 }
 
-@mixin submenu-item($default: $primary-text-color, $hover: $menu-hover-text-color, $active: $menu-active-text-color) {
+@mixin submenu-item($default: $primary-text-color, $hover: $grey-200, $active: $primary-color) {
     a {
         color: $default;
         cursor: pointer;
@@ -163,7 +157,7 @@
     }
 }
 
-@mixin app-header($height: $header-height) {
+/*@mixin app-header($height: $header-height) {
     background-color: $header-bg;
     color: $header-text-color;
     height: $height;
@@ -186,60 +180,6 @@
             margin-top: -6.5px;
             padding: 0;
             min-width: 100px !important;
-
-            #application-list {
-                margin: 0;
-                padding: 4px;
-                max-width: 320px;
-                overflow-y: auto;
-                overflow-x: hidden;
-
-                li {
-                    display: inline-block;
-                    float: left;
-                    width: 96px !important;
-                    height: 96px !important;
-                    margin: 4px;
-                    overflow: hidden;
-                    background-color: $search-bg-color;
-
-                    a {
-                        display: block;
-                        vertical-align: middle;
-                        width: 100%;
-                        height: 100%;
-                        padding: 12px !important;
-                        text-align: center;
-
-                        .app-icon {
-                            width: 36px !important;
-                            height: 36px !important;
-                            margin-bottom: 10px;
-                        }
-
-                        .tooltip {
-                            white-space: nowrap;
-                        }
-
-                        .app-name {
-                            width: 100%;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            display: block;
-                            white-space: nowrap;
-                        }
-                    }
-                }
-
-                &:hover {
-                    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
-
-                    a:active {
-                        background: none !important;
-                        background-color: $submit-button-disabled !important;
-                    }
-                }
-            }
 
             .app-loading-text {
                 color: $primary-text-color;
@@ -265,18 +205,18 @@
                 display: table-cell;
                 height: $height;
                 margin: 0;
-                vertical-align: middle;
-                color: $primary-btn-text-color !important;
-            }
+                vertical-align: middle;*/
+                /*color: $primary-btn-text-color !important;*/
+            /*}
         }
 
         #upload-item-section {
             #btn-item-upload {
-                background: $primary-btn-bg;
+                background: $primary-color;
                 border: none;
-                border-radius: 0;
-                color: $primary-btn-text-color;
-                height: $height;
+                border-radius: 0;*/
+                /*color: $primary-btn-text-color;*/
+                /*height: $height;
                 width: 120px;
             }
         }
@@ -328,7 +268,6 @@
                             }
 
                             #profile-email {
-                                color: $grid-link-color;
                                 font-size: $app-text-size;
                                 font-weight: 400;
                             }
@@ -349,101 +288,12 @@
                 }
             }
         }
-
-        #notification-section {
-            cursor: pointer;
-            display: table;
-            height: $header-height;
-            width: $header-height;
-
-            &:hover {
-                background-color: $grey-500;
-
-                #notification-link {
-                    #notification-indicator {
-                        border-color: $grey-500;
-                    }
-                }
-            }
-
-            #notification-link {
-                display: table-cell;
-                height: inherit;
-                margin: 0 auto;
-                position: relative;
-                text-align: center;
-                vertical-align: middle;
-                width: inherit;
-
-                #notification-icon {
-                    color: $primary-btn-text-color;
-                    display: inline-block;
-                    height: $header-height;
-                    width: $header-height;
-                    line-height: $header-height;
-                }
-
-                #notification-indicator {
-                    background: $unread-notification-color;
-                    border: 1px solid $header-bg;
-                    border-radius: 10px;
-                    display: block;
-                    left: 21px;
-                    height: 8px;
-                    position: absolute;
-                    top: 9px;
-                    width: 8px;
-                }
-
-                #notification-content-area {
-                    border-radius: 10px;
-                    height: 400px;
-                    left: auto;
-                    padding: 0 !important;
-                    right: 0;
-                    width: 375px;
-
-                    #notification-header {
-                        background-color: $header-bg-color;
-                        color: $header-bg;
-                        cursor: default;
-                        float: left;
-                        font-size: 18px;
-                        height: 40px;
-                        padding: 8px;
-                        width: 100%;
-
-                        span, a {
-                            margin-top: 4px;
-                        }
-
-                        span {
-                            float: left;
-                            font-size: $app-large-text-size;
-                        }
-
-                        a {
-                            float: right;
-                            color: $primary-btn-bg;
-                            font-size: $app-large-text-size;
-                        }
-                    }
-
-                    #notification-list {
-                        border: 0 none;
-                        height: 360px;
-                        width: 100%;
-                    }
-                }
-            }
-        }
     }
-}
+}*/
 
 @mixin app-menu($height: $menu-height, $width: $menu-width, $icon-size: $icon-size) {
-    background-color: $nav-menu-bg-color;
+    background-color: $nav-menu-content-bg-normal-color;
     box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.12);
-    color: $menu-icon-color;
     height: 100%;
     position: fixed;
     width: $width;
@@ -457,7 +307,7 @@
             width: $menu-width;
 
             .sf-nav-separator {
-                background: $nav-menu-separtor-icon-color;
+                background: $nav-menu-separator-normal-color;
                 height: 1px;
                 margin: 12px auto;
                 width: 50%;
@@ -473,7 +323,7 @@
                 margin: 4px 0;
 
                 a {
-                    color: $menu-icon-color;
+                    color: $primary-text-color;
                     display: table-cell;
                     height: $height;
                     text-align: center;
@@ -482,7 +332,7 @@
                     border-radius: 4px;
 
                     .menu-icon-container {
-                        color: $nav-menu-text-color;
+                        color: $nav-menu-content-text-normal-color;
                         display: inline-block;
                         height: 36px;
                         padding: 8px 13px;
@@ -499,7 +349,7 @@
                     }
 
                     .menu-label {
-                        color: $nav-menu-text-color;
+                        color: $nav-menu-content-text-normal-color;
                         float: left;
                         font-size: 10px;
                         letter-spacing: 0.3px;
@@ -508,24 +358,24 @@
                     }
 
                     &:hover {
-                        background-color: $nav-menu-hover-color;
+                        background-color: $nav-menu-content-bg-hover-color;
 
                         .menu-icon-container {
                             .su, .menu-label {
-                                color: $nav-menu-hover-text-color;
+                                color: $nav-menu-content-text-hover-color;
                             }
                         }
 
                         .menu-label {
-                            color: $nav-menu-hover-text-color;
+                            color: $nav-menu-content-text-hover-color;
                         }
                     }
 
                     &.active {
-                        background-color: $nav-menu-active-color;
+                        background-color: $nav-menu-content-bg-active-color;
 
                         .su, .menu-label {
-                            color: $nav-menu-active-text-color !important;
+                            color: $nav-menu-content-text-active-color !important;
                         }
                     }
                 }
@@ -555,7 +405,7 @@
                         width: 200px !important;
 
                         .menu-icon-container {
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             display: inline-block;
                             height: 36px;
                             padding: 8px 13px;
@@ -570,8 +420,7 @@
                             left: 50px;
                             bottom: -3px;
                         }
-
-                        &:hover {
+                        /*  &:hover {
                             background-color: #EEEEEE;
                             border-radius: 4px;
                         }
@@ -582,7 +431,7 @@
                             .su {
                                 color: $primary-color;
                             }
-                        }
+                        }*/
                     }
 
                     &.profile-section {
@@ -609,10 +458,9 @@
                             left: 63px;
                             bottom: 0px;
                         }
-
-                        &:hover {
+                        /*&:hover {
                             background-color: $nav-menu-hover-color;
-                        }
+                        }*/
                     }
 
                     &.profile-section.open {
@@ -634,7 +482,7 @@
                                 height: 34px;
                                 text-align: left;
                                 font-size: 12px;
-                                color: $nav-menu-text-color;
+                                color: $nav-menu-content-text-normal-color;
 
                                 div {
                                     padding: 8px 8px 12px 8px;
@@ -679,7 +527,7 @@
                                     font-weight: 600;
                                     line-height: 1.6;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color;
+                                    color: $nav-menu-content-text-normal-color;
                                     padding: 0 0 0 8px;
                                     margin-bottom: 4px;
                                 }
@@ -690,10 +538,10 @@
                                     font-weight: normal;
                                     line-height: 1.5;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color !important;
+                                    color: $nav-menu-content-text-normal-color !important;
 
                                     &:hover {
-                                        color: $nav-menu-hover-text-color !important;
+                                        color: $nav-menu-content-text-hover-color !important;
                                     }
 
 
@@ -714,7 +562,7 @@
                                         .sub-menu-user-name-style {
                                             font-size: 12px;
                                             letter-spacing: 0.3px;
-                                            color: $nav-menu-text-color;
+                                            color: $nav-menu-content-text-normal-color;
                                             overflow: hidden;
                                             text-overflow: ellipsis;
                                         }
@@ -722,7 +570,7 @@
                                         .sub-menu-user-username-style, .sub-menu-user-email-style {
                                             font-size: 10px;
                                             letter-spacing: 0.25px;
-                                            color: $nav-menu-text-color;
+                                            color: $nav-menu-content-text-normal-color;
                                             line-height: 12px;
                                             margin-top: 2px;
                                             overflow: hidden;
@@ -734,19 +582,19 @@
                         }
 
                         &:hover {
-                            background-color: $nav-menu-hover-color;
+                            background-color: $nav-menu-content-bg-hover-color;
                         }
 
                         .dropdown-menu {
-                            background: $nav-menu-bg-color !important;
+                            background: $nav-menu-content-bg-normal-color !important;
 
                             li.sub-menu-item {
                                 a {
                                     &:hover {
-                                        background: $nav-menu-hover-color !important;
+                                        background: $nav-menu-content-bg-hover-color !important;
 
                                         div, .site-name {
-                                            color: $nav-menu-hover-text-color !important;
+                                            color: $nav-menu-content-text-hover-color !important;
                                         }
                                     }
                                 }
@@ -755,7 +603,7 @@
                     }
 
                     .sf-sub-menu-separator {
-                        background: $nav-menu-separtor-icon-color;
+                        background: $nav-menu-separator-normal-color;
                         height: 1px;
                         margin: 6px 0px;
                     }
@@ -784,145 +632,25 @@
     }
 }
 
-
-@mixin admin-page-template() {
-    margin: 0;
-    padding: 0;
-
-    .admin-page-header {
-        border-bottom: 1px solid #e2e2e2;
-        margin: 0 0 20px 0;
-        padding: 0 0 20px 0;
-
-        .back-button {
-            color: $sub-text-color;
-            font-size: $app-large-text-size + 6;
-            line-height: 1;
-            margin-top: -3px;
-            padding: 0px 10px 0px 0px;
-        }
-
-        .page-title {
-            font-size: $app-large-text-size;
-            color: $primary-text-color;
-            font-weight: 700;
-            padding-left: 0px;
-            margin-bottom: 5px;
-            margin-top: 0;
-        }
-
-        .page-description {
-            margin: 0;
-            padding: 0;
-            font-size: $app-text-size;
-        }
-    }
-
-    .admin-page-body {
-        background-color: $admin-page-bg;
-        border: 1px solid $admin-body-border-color;
-        border-radius: 4px;
-        font-size: $app-text-size;
-        float: left;
-        margin-bottom: 80px;
-        margin-top: 0px;
-        padding: 20px;
-        position: relative;
-        width: 100%;
-        color: $primary-text-color;
-
-        .input-field-wrapper {
-            margin-bottom: 15px;
-        }
-
-        .app-textbox-label {
-            font-size: $app-text-size;
-            font-weight: normal;
-            line-height: $textbox-height;
-            margin: 0;
-            text-align: right;
-        }
-
-        #txt_welcome_note {
-            resize: vertical;
-        }
-
-        .info-text {
-            color: $sub-text-color;
-            font-size: $app-text-size - 1;
-        }
-
-        .field-container {
-            margin-bottom: 8px;
-            margin-top: 0px;
-            padding-left: 10px;
-        }
-
-        .bootstrap-select {
-            padding-left: 0;
-        }
-
-        .form-control {
-            font-size: $app-text-size;
-            height: $textbox-height;
-        }
-
-        .validation-errors, .validation-message {
-            color: $validation-text-color;
-            font-size: $validation-text-size;
-        }
-
-        .show-hide-password {
-            @include show-or-hide-password();
-        }
-
-        .form-input-field {
-            button[data-toggle="dropdown"] {
-                font-size: $app-text-size - 1;
-            }
-        }
-
-        .dropdown-menu a span {
-            font-size: $list-content-size;
-        }
-        // To vertically center the switch for the label
-        .switch-align {
-            margin-top: 8px;
-        }
-    }
-
-    .admin-page-actions {
-        margin-top: -50px;
-        padding: 0 0 30px 0;
-
-        .primary-button,
-        .secondary-button {
-            margin-left: 15px;
-        }
-    }
-
-    @media screen and (max-width: 1040px) {
-        .admin-page-header {
-            margin: 0 0 15px 0;
-            padding: 0 0 10px 0;
-        }
-    }
-}
 //Checkbox material design class
-@mixin material-checkbox-controls($active: $primary-btn-bg, $default: $admin-pages-border-color, $checkbox-tick: $primary-btn-text-color) {
+@mixin material-checkbox-controls($active: $primary-color, $default: $checkbox-border-normal-color, $checkbox-tick: $primary-button-text-normal-color) {
     & + input + label {
-        position: relative;
-        padding: 5px 0 0 25px !important;
         cursor: pointer;
         display: inline-block;
         height: 25px;
+        font-family: var(--font-family);
+        font-weight: 400;
+        line-height: 18px;
+        letter-spacing: 0.26px;
         margin: 0;
+        padding: 6px 7px 0 24px !important;
+        position: relative;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
 
         &::after {
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         &::before, &::after {
@@ -932,6 +660,8 @@
             -webkit-transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
             transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
             z-index: 1;
+            width: 11px;
+            height: 8px;
         }
     }
 
@@ -947,7 +677,7 @@
         height: 16px;
         width: 16px;
         background-color: transparent;
-        border: 2px solid $default;
+        border: 1px solid $default;
         top: 0px;
         z-index: 1;
         margin-top: 7px;
@@ -955,19 +685,20 @@
     }
 
     &:checked + input + label::before {
-        bottom: 14px;
+        bottom: 11.2px;
         color: $checkbox-tick;
         content: $su-tick;
         font-family: "Server";
-        height: 10px;
-        width: 5px;
+        left: 1px;
+        font-size: 14px;
+        font-weight: bold;
     }
 
     &:checked + input + label::after {
         top: 0;
         width: 16px;
         height: 16px;
-        border: 1.5px solid $active;
+        border: 1px solid $checkbox-border-active-color;
         background-color: $active;
         z-index: 0;
         margin-top: 7px;
@@ -975,13 +706,17 @@
     }
 
     &:disabled + input + label::after {
-        background-color: $default;
-        border: 1px solid $default;
+        background-color: $checkbox-bg-disable-color;
+        border: 1px solid $checkbox-border-disable-color;
+    }
+
+    &:disabled + input + label::before {
+        color: $checkbox-text-disable-color;
     }
 
     &:not(:checked):disabled + input + label::after {
-        background-color: white;
-        border: 1px solid $default;
+        background-color: $checkbox-bg-disable-color;
+        border: 1px solid $checkbox-border-disable-color;
     }
 
     &:not(:checked), &:checked {
@@ -991,7 +726,7 @@
     }
 }
 //Radio button material design class
-@mixin material-radiobutton-controls($active: $primary-btn-bg, $default: $admin-pages-border-color, $button-bg: $primary-btn-text-color) {
+@mixin material-radiobutton-controls($active: $primary-color, $default: $checkbox-border-normal-color, $button-bg: $primary-button-text-normal-color) {
     display: none;
 
     & + label {
@@ -1040,100 +775,7 @@
     }
 }
 
-@mixin grid($border-color: $grid-border-color, $header-bg: $grid-header-bg, $header-text-color: $grid-header-color, $text-color: $grid-text-color, $link-color: $grid-link-color, $header-font-size: 14px, $content-font-size: 12px) {
-    .e-gridheader {
-        border-bottom: 2px solid $grid-border-color;
-
-        .e-table {
-            .e-columnheader {
-                .e-headercell {
-                    background-color: $grid-header-bg;
-                    height: 50px;
-
-                    .e-headercelldiv {
-                        font-family: inherit;
-                        font-size: $header-font-size;
-                        font-weight: 600;
-                        color: $header-text-color;
-                    }
-                }
-            }
-        }
-    }
-
-    .e-gridcontent {
-        e-table {
-            .e-rowcell {
-                border-color: $grid-border-color;
-                font-size: $content-font-size;
-                font-weight: 400;
-                font-family: inherit;
-                white-space: normal;
-                word-break: break-all;
-
-                .dropdown-menu {
-                    a {
-                        color: #1b1c1c;
-                    }
-                }
-
-                a {
-                    color: $grid-link-color;
-                    white-space: normal;
-                    word-break: break-all;
-                }
-            }
-
-            .e-active {
-                a {
-                    color: #fff;
-                }
-
-                .dropdown-menu {
-                    a {
-                        color: #1b1c1c;
-                    }
-                }
-            }
-
-            .e-alt_row {
-                background-color: #fff;
-
-                .dropdown-menu {
-                    a {
-                        color: #1b1c1c;
-                    }
-                }
-
-                &:hover {
-                    background-color: #f7f7f7;
-                }
-            }
-
-            .dropdown {
-                hr {
-                    margin-top: 5px;
-                    margin-bottom: 5px;
-                    margin-left: -5px;
-                    margin-right: -5px;
-                }
-            }
-
-            .emptyrecord {
-                padding: 10px 10px 10px 38px;
-            }
-        }
-    }
-
-    .e-pager {
-        font-family: inherit;
-        height: 25px;
-        padding-bottom: 15px;
-        padding-top: 15px;
-    }
-}
-
-@mixin dialog($dialog-font-size, $dialog-validation-size, $dialog-text-box) {
+/*@mixin dialog($dialog-font-size, $dialog-validation-size, $dialog-text-box) {
     .form-control, .btn {
         border-radius: 0;
     }
@@ -1151,12 +793,11 @@
         }
 
         .PopupClose {
-            color: $dialog-close-icon-color;
             float: right;
             font-size: $dialog-validation-size;
 
             &:hover {
-                color: $primary-btn-bg;
+                color: $primary-color;
                 text-decoration: none;
             }
         }
@@ -1256,7 +897,7 @@
 
         .highlight-name {
             font-style: italic;
-            color: $primary-btn-bg;
+            color: $primary-color;
         }
 
         .mandatory {
@@ -1307,204 +948,13 @@
             margin-right: 10px;
         }
     }
-}
+}*/
 
 @mixin show-or-hide-password() {
     cursor: pointer;
     position: absolute;
     right: 20px;
     top: 9px;
-}
-//style for dialogpopup
-@mixin modal($modal-font-size: $app-text-size, $modal-height: $textbox-height) {
-    .modal-content {
-        border-radius: 0;
-        border: 0;
-        padding: 0;
-
-        .ellipsis {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .modal-header {
-            border: none;
-            height: 50px;
-            padding: 10px !important;
-
-            .modal-title {
-                font-size: $modal-font-size + 2;
-                font-weight: 500;
-            }
-            /*.header-icon {
-                padding: 3px 3px 3px 0;
-                width: 20px;
-            }*/
-            .header-content {
-                font-size: $modal-font-size - 2;
-                font-weight: 400;
-            }
-
-            .popup-close {
-                color: $grey-700;
-                font-size: $modal-font-size + 2;
-
-                &:hover {
-                    color: $grey-900;
-                    text-decoration: none;
-                }
-            }
-        }
-
-        .modal-body {
-            font-size: $modal-font-size;
-            padding: 10px;
-            overflow-y: auto;
-
-            #file-name {
-                cursor: pointer;
-            }
-
-            .highlight-name {
-                font-style: italic;
-                color: $primary-btn-bg;
-            }
-
-            .selectpicker, .form-control {
-                font-size: $modal-font-size;
-            }
-
-            .btn-default {
-                height: $modal-height;
-
-                .filter-option {
-                    margin-top: -1px;
-                }
-            }
-
-            .delete-msg {
-                margin-top: 15px;
-            }
-
-            .validation-message {
-                color: $validation-text-color;
-                font-size: $modal-font-size - 2;
-                float: left;
-            }
-
-            .app-textbox-label {
-                font-weight: 400;
-                font-size: $modal-font-size;
-            }
-
-            .info-text {
-                font-size: $modal-font-size - 2;
-            }
-        }
-
-        .modal-footer {
-            background-color: $admin-pages-border-color;
-            height: 50px;
-            padding: 10px;
-
-            .message-area {
-                height: 35px;
-                margin-top: -8px;
-
-                .error-message, .success-message {
-                    padding: 0px;
-                    float: left;
-                    text-align: left;
-                    height: 44px;
-                    width: 100%;
-                    display: none;
-                    word-wrap: break-word;
-                }
-
-                .success-message {
-                    overflow: hidden;
-                    position: relative;
-                    text-overflow: ellipsis;
-                }
-            }
-
-            .margin-right {
-                margin-right: 10px;
-            }
-
-            .margin-top {
-                margin-top: 2px;
-            }
-        }
-    }
-}
-
-@mixin fluent-popup($popup-header-bg: $popup-header-bg, $popup-footer-bg: $popup-footer-bg, $popup-header-border: $popup-header-border, $popip-footer-border: $popup-header-border) {
-    padding: 0 !important;
-
-    .fluent-popup-header {
-        background-color: $popup-header-bg;
-        border-bottom: 1px solid $popup-header-border;
-        margin: 0;
-        height: 44px;
-        padding-top: 2px;
-        border-top: none;
-
-        .popup-title {
-            font-size: 14px;
-            color: $primary-text-color;
-            letter-spacing: 0.3px;
-            line-height: 21px;
-            font-weight: 600;
-            margin-left: 12px;
-
-            .popup-close {
-                font-size: 16px;
-                margin-right: 7px;
-                opacity: 0.7;
-                color: $icon-color;
-                padding: 2px;
-
-                &:focus {
-                    outline: none !important;
-                    outline-color: $popup-header-bg !important;
-                    box-shadow: none !important;
-                }
-
-                &:hover {
-                    color: $icon-hover-color !important;
-                }
-            }
-        }
-    }
-
-    .fluent-popup-body {
-        padding: 15px;
-        background-color: #FFFFFF;
-
-        .popup-label {
-            font-size: 12px;
-            color: #363636;
-            margin: 0;
-            font-weight: 200;
-        }
-
-        .popup-info {
-            font-size: 10px;
-            color: #31708f;
-            letter-spacing: 0.3px;
-            margin: 0;
-            font-weight: 200;
-        }
-    }
-
-    .fluent-popup-footer {
-        background-color: $dialog-footer-bg-color;
-        border-top: 1px solid $dialog-border-color;
-        height: 48px;
-        border-bottom: none;
-    }
 }
 
 @mixin navmenu() {
@@ -1613,7 +1063,7 @@
 }
 
 @mixin admin-page-template_new() {
-    background: $admin-page-bg;
+    background: $surface;
     height: 100%;
     overflow: auto;
     padding: 0;
@@ -1626,14 +1076,14 @@
         .info-message {
             margin-top: 6px;
             line-height: 18px;
-            color: $grey-500;
+            color: $info-text-color;
             letter-spacing: 0.26px;
             font-size: 12px;
             width: 450px;
         }
 
         .admin-page-header {
-            background: $admin-container-bg;
+            background: $background;
             padding: 32px 24px;
 
             .page-title {
@@ -1647,7 +1097,7 @@
         .admin-page-body {
             padding: 24px 24px 0px 24px;
             font-size: $app-text-size;
-            border-top: 1px solid $grey-100;
+            border-top: 1px solid $header-separator-color;
 
             .input-field-margin {
                 margin-top: 16px;
@@ -1709,7 +1159,7 @@
             padding: 0px 24px;
 
             .admin-page-actions {
-                border-top: 1px solid $grey-100;
+                border-top: 1px solid $section-separator-color;
                 padding: 32px 0 0 0;
 
                 .secondary-button, .primary-button {
@@ -1729,23 +1179,28 @@
     .e-custom.e-non-float {
         input {
             min-height: 36px !important;
+            /*-webkit-text-fill-color: $input-box-placeholder-text-normal-color !important;*/
         }
 
-        &:hover:not(.e-input-focus):not(.e-success):not(.e-error) {
-            border-color: $primary-color !important;
+        &.e-valid-input {
+            border-color: $input-box-border-normal-color !important;
+        }
+
+        &:hover:not(.e-input-focus):not(.e-success):not(.e-error):not(.e-disabled) {
+            border-color: $input-box-border-active-color !important;
         }
 
         &.e-valid-input:hover:not(.e-success):not(.e-error):not(.e-disabled) {
-            border-color: $primary-color !important;
+            border-color: $input-box-border-active-color !important;
         }
 
         &.e-input-focus:not(.e-error):not(.e-success):not(.e-disabled) {
-            border-color: $primary-color !important;
-            box-shadow: inset 0.1px 0 $primary-color, inset -0.1px 0 $primary-color, inset 0 -0.1px $primary-color !important;
+            border-color: $input-box-border-active-color !important;
+            box-shadow: inset 0.1px 0 $input-box-border-active-color, inset -0.1px 0 $input-box-border-active-color, inset 0 -0.1px $input-box-border-active-color !important;
         }
 
         &.e-error {
-            border-color: $validation-text-color;
+            border-color: $validation-text-color !important;
             box-shadow: inset 0.1px 0 $validation-text-color, inset -0.1px 0 $validation-text-color, inset 0 -0.1px $validation-text-color !important;
         }
     }
@@ -1758,10 +1213,10 @@
     height: 28px;
 }
 
-    @media (min-width:1040px) and (max-width: 1200px) {
+    /*@media (min-width:1040px) and (max-width: 1200px) {
         .app-header {
             #application-list {
                 text-align: center !important;
             }
         }
-    }
+    }*/

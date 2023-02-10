@@ -74,7 +74,7 @@ ej.QueryDesigner.Locale['zh-CN'] = {
         search: '搜索',
         rename: '改名',
         searchInfo: '从当前获取的架构中检索匹配信息',
-        aggregation: '聚合',
+        aggregation: '骨料',
         dialogHeader: '数据集',
         matchesFound: '找不到匹配项',
         alertMessage: {
@@ -227,7 +227,7 @@ ej.QueryDesigner.Locale['zh-CN'] = {
             part: '返回表示给定日期表达式的指定日期部分的整数值.',
             sub: '返回从指定日期减去的日期.',
             day: '返回表示指定日期的日期部分的数值.',
-            daydiff: '返回表示两个指定日期之间差异的数字值.',
+            dateDiff: '返回表示两个指定日期之间差异的数字值.',
             hour: '以整数形式返回给定日期的小时.',
             minute: '返回一个数字值，表示由指定的日期表达式产生的日期的分钟部分.',
             month: '返回表示指定日期表达式的日期的月份部分的数值.',

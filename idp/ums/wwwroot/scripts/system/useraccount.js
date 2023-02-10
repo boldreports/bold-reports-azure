@@ -25,7 +25,7 @@
         },
         onfocusin: function (element) {
             if (element.id === "new-password" && $("#new-password").data("toggle") === "popover" && $("#new-password").val() != undefined && $("#new-password").val() != "") {
-                createPasswordPolicyRules();
+                passwordPolicyPopover("#new-password", $("#new-password").val());
             }
         },
         rules: {
@@ -104,11 +104,11 @@
             $("#txt-confirm-password").closest(".form-group").removeClass("has-error");
             $("#txt-confirm-password").parent().find(">.startup-validation").hide();
         }
-        createPasswordPolicyRules();
+        passwordPolicyPopover("#new-password", $("#new-password").val());
     });
 
     $("#new-password").on("change", function () {
-        createPasswordPolicyRules();
+        passwordPolicyPopover("#new-password", $("#new-password").val());
         $("#new-password").valid();
     });
 

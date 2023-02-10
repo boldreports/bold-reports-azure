@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
     
     var outlineEmail = new ejs.inputs.TextBox({
-        cssClass: 'e-outline e-input-focus',
+        cssClass: 'e-outline e-custom e-account',
         floatLabelType: 'Auto',
     });
     outlineEmail.appendTo('#key-input');
-
-    $("#key-input").val(localStorage.getItem(window.location.hostname + "_email"));
+    outlineEmail.focusIn();
+    document.getElementById("key-input").ej2_instances[0].value = localStorage.getItem(window.location.hostname + "_email");
     localStorage.removeItem(window.location.hostname + "_email");
     $("#forgot-password-form").validate({
         errorElement: "span",

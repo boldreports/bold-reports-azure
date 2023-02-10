@@ -1,8 +1,6 @@
-﻿@import "../themes/_light_cloud.scss";
+﻿@import "../default/default.scss";
 
 .account-parent {
-    background: linear-gradient(-215deg,#fbfeff 0%,#eef2f3 100%);
-
     .account-child {
         .account-bg {
             .account-header {
@@ -43,8 +41,9 @@
                         margin: 0 0 24px 0;
                         height: 2px;
                         width: 70px;
-                        background-color: $blue;
+                        background-color: $primary-color;
                         float: left;
+                        border:0px
                     }
 
                     #login-email {
@@ -99,8 +98,7 @@
         width: 492px;
         height: 655px;
         border-radius: 8px;
-        border: solid 1px $login-border-color;
-        background-color: rgba(255, 255, 255, 0.4);
+        border: solid 1px $logo-section-border-color;
         padding-top: 80px;
 
         .login-wrapper {

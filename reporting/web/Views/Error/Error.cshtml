@@ -2,7 +2,15 @@
     Layout = null;
     var cdnLink = @GlobalAppSettings.CdnDomain;
     var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
 }
 <!DOCTYPE html>
 <html class="dashboard-server">
@@ -11,7 +19,7 @@
     <title>[[[Internal Server Error]]] - @GlobalAppSettings.BrandingDisplayName</title>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/css/error-page/error-page..css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/error-page/error-page.css" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/Scripts/jQuery/jquery-1.10.2.min.js"></script>
     </environment>

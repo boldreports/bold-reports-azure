@@ -1,6 +1,5 @@
 ﻿var windowRef;
 var changeSubscriptionDialog;
-
 $(document).ready(function () {
     if (location.href.match(/boldbi/) != null) {
         history.pushState(null, '', '?product=embedded-bi');
@@ -59,22 +58,31 @@ $(document).ready(function () {
     });
 
     changeSubscriptionDialog = new ej.popups.Dialog({
-        header: window.TM.App.LocalizationContent.ChangeSubscriptionDialogHeader,
+        header: window.TM.App.LocalizationContent.EditSubscriptionDialogHeader,
         content: document.getElementById("change-subscription-dialog"),
         showCloseIcon: true,
-        width: '599px',
-        height: '275px',
+        width: '546px',
+        height: '279px',
         isModal: true,
         visible: false,
         beforeOpen: fnBeforeOpen,
+        animationSettings: { effect: 'Zoom' },
         close: fnOnClose
     });
 
     changeSubscriptionDialog.appendTo('#change-subscription-content');
 
     $('[data-toggle="tooltip"]').tooltip();
-});
 
+    if (isBoldBILicenseExpired) {
+        $("#bold-bi-tab #details-information").css('padding-top', '20px');
+        $("#change-subscription-content_title").html(window.TM.App.LocalizationContent.RenewSubscriptionDialogHeader);
+    }
+    if (isBoldReportsLicenseExpired) {
+        $("#bold-reports-tab #details-information").css('padding-top', '20px');
+        $("#change-subscription-content_title").html(window.TM.App.LocalizationContent.RenewSubscriptionDialogHeader);
+    }
+});
 
 function fnBeforeOpen() {
     document.getElementById('change-subscription-dialog').style.visibility = 'visible';
@@ -86,6 +94,14 @@ function fnOnClose() {
 }
 
 $(document).on("click", "#change-subscription", function () {
+    $(".online-change-subscription").attr("license-service-url", $(this).attr("license-service-url") + "&change_subscription=true");
+    $(".offline-change-subscription").attr("data-offlinelicense-url", $(this).attr("data-offlinelicense-url")).attr("data-tenant-type", $(this).attr("data-tenant-type"));
+    $("#change-subscription-help").attr("href", $(this).attr("data-offlinelicense-url"));
+
+    changeSubscriptionDialog.show();
+});
+
+$(document).on("click", ".edit-link", function () {
     $(".online-change-subscription").attr("license-service-url", $(this).attr("license-service-url") + "&change_subscription=true");
     $(".offline-change-subscription").attr("data-offlinelicense-url", $(this).attr("data-offlinelicense-url")).attr("data-tenant-type", $(this).attr("data-tenant-type"));
     $("#change-subscription-help").attr("href", $(this).attr("data-offlinelicense-url"));
@@ -114,16 +130,16 @@ function handleApplyLicense(addButtonObj, evt) {
                 type: "POST",
                 url: updateLicenseKeyUrl,
                 data: { licenseKey: evt.originalEvent.data.licenseKey, refreshToken: refreshToken, licenseType: "1", boldLicenseToken: boldLicenseToken, currentUrl: window.location.origin },
-                beforeSend: showWaitingPopup($("#server-app-container")),
+                beforeSend: showWaitingPopup('server-app-container'),
                 success: function (result) {
                     if (result.Status) {
-                        hideWaitingPopup($("#server-app-container"));
+                        hideWaitingPopup('server-app-container');
                         SuccessAlert(window.TM.App.LocalizationContent.ManageLicense, window.TM.App.LocalizationContent.LicenseUpdated, 7000);
                         window.location.reload();
                     }
                     else {
-                        hideWaitingPopup($("#server-app-container"));
-                        WarningAlert(window.TM.App.LocalizationContent.ManageLicense, window.TM.App.LocalizationContent.LicenseUpdateFailed, 0);
+                        hideWaitingPopup('server-app-container');
+                        WarningAlert(window.TM.App.LocalizationContent.ManageLicense, window.TM.App.LocalizationContent.LicenseUpdateFailed, result.Message, 0);
                     }
                 }
             });
@@ -140,7 +156,7 @@ function checkWindowRef(addButtonObj) {
         $("#update-license-key-notification-loader-bi").hide();
         $("#update-onpremise-plan-reports").show();
         $("#update-license-key-notification-loader-reports").hide();
-        hideWaitingPopup($("#server-app-container"));
+        hideWaitingPopup('server-app-container');
         clearInterval(timer);
     }
 }
@@ -154,7 +170,7 @@ function licenseWindow(element, windowHeight, windowWidth) {
     addButtonObj = element;
     $(window).off('message', $.proxy(handleApplyLicense, window, addButtonObj));
     $(window).on('message', $.proxy(handleApplyLicense, window, addButtonObj));
-    showWaitingPopup($("#server-app-container"));
+    showWaitingPopup('server-app-container');
     windowRef = window.open(element.attr("license-service-url") + "&origin=" + window.location.origin, "", "height=" + windowHeight, "width=" + windowWidth);
     timer = setInterval($.proxy(checkWindowRef, 500, addButtonObj));
 }

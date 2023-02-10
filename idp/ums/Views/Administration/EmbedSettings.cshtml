@@ -14,10 +14,6 @@
 }
 @section scripts{
     <script src="~/bundles/js/embed-settings.js" asp-append-version="true"></script>
-    <script src="~/bundles/js/ej2.js" asp-append-version="true"></script>
-    <script>
-        $.extend(ej, Syncfusion);
-    </script>
     <script>
         var embedEnabled = @Html.Raw(Json.Serialize(embedEnabled));
         var embedSecretCode = "@embedSecretCode";
@@ -30,7 +26,7 @@
 
     @await Html.PartialAsync("_AdminMenu")
 
-    <div id="embed-settings-container" class="col-xs-12 admin-page-content-container @(ViewBag.Embed ? string.Empty : "unlock-enterprise-features blur-content")">
+    <div id="embed-settings-container" class="col-xs-12 admin-page-content-container">
         <div class="admin-page-content col-xs-12 no-padding">
             <div id="embed-settings-header" class="col-xs-12 admin-page-header">
                 <hgroup class="admin-page-header-description">
@@ -63,7 +59,7 @@
                         </label>
                         <div class="no-padding">
                             <div class="upload-box">
-                                <input type="text" class="form-control col-md-6 no-margin @(embedEnabled ? string.Empty : "disabled")" onfocus="this.blur()" id="filename" value="@fileName" readonly>
+                                <input type="text" class="form-control col-md-6 no-margin @(embedEnabled ? string.Empty : "disabled")" onfocus="this.blur()" id="filename" value="@fileName">
                                 <span id="trigger-file" class="input-group-addon btn popup no-left-border @(embedEnabled ? string.Empty : "disabled")">
                                     ...
                                 </span>
@@ -96,7 +92,7 @@
                     </label>
                     <div class="secret-code-container">
                         <div id="secret-code-link">
-                            <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Embed secret]]]" autocomplete="off" disabled="disabled" onClick="this.setSelectionRange(0, this.value.length)">
+                            <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Embed secret]]]" autocomplete="off" disabled="disabled" onClick="this.setSelectionRange(0, this.value.length)" readonly>
                             <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
                         </div>
                         <button type="button" title="" id="get-embed-code" onclick="getEmbedSecret();" class="primary-button" @(embedEnabled ? string.Empty : "disabled")>
@@ -119,9 +115,4 @@
         </div>
         @await Html.PartialAsync("../Shared/_FooterOnPremise")
     </div>
-
-    @if (!ViewBag.Embed)
-    {
-        @await Html.PartialAsync("~/Views/UnlockFeatures/UnlockFeatures.cshtml")
-    }
 }

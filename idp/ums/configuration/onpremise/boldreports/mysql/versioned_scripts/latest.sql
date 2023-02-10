@@ -1,16 +1,35 @@
-ALTER TABLE {database_name}.BOLDRS_ScheduleDetail ADD COLUMN ScheduleExportInfo text(500) NULL
+CREATE TABLE  {database_name}.BOLDRS_AttributeType(
+	Id int NOT NULL AUTO_INCREMENT,
+	Type varchar(100) NOT NULL UNIQUE,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
 ;
-ALTER TABLE {database_name}.BOLDRS_AzureADCredential ADD DeleteGroupUsers tinyint NOT NULL DEFAULT 0
+
+Create TABLE {database_name}.BOLDRS_ItemAttribute(
+	Id int NOT NULL AUTO_INCREMENT,
+	ItemTypeId int NOT NULL,
+	ItemId char(38) NOT NULL,
+	AttributeType int NOT NULL,
+	Value varchar(255) NOT NULL,
+	CreatedById int NOT NULL,
+	ModifiedById int NOT NULL,
+	CreatedDate datetime NOT NULL,
+	ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	PRIMARY KEY (Id))
 ;
-ALTER TABLE {database_name}.BOLDRS_ItemLog Modify AdditionalLogInfo varchar(4000)
+
+INSERT into  {database_name}.BOLDRS_AttributeType (Type,IsActive) VALUES ( 'Tag',1)
 ;
-INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OAuth2',N'UserDirectory.OAuth2',Now(),1)
+
+
+ALTER TABLE {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemId) REFERENCES {database_name}.BOLDRS_Item (Id)
 ;
-INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.OpenIDConnect',N'UserDirectory.OpenIDConnect',Now(),1)
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ItemTypeId) REFERENCES  {database_name}.BOLDRS_ItemType (Id)
 ;
-INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'UserDirectory.AuthControl',N'UserDirectory.AuthControl',Now(),1)
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(AttributeType) REFERENCES  {database_name}.BOLDRS_Item (Id)
 ;
-INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'ReportSettings',N'ReportSettings',Now(),1)
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(CreatedById) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;
-INSERT into {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (1,N'NotificationSettings',N'NotificationSettings',Now(),1)
+ALTER TABLE  {database_name}.BOLDRS_ItemAttribute  ADD FOREIGN KEY(ModifiedById) REFERENCES  {database_name}.BOLDRS_User (Id)
 ;

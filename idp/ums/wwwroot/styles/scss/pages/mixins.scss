@@ -1,9 +1,9 @@
-@import "../themes/default.scss";
+@import "../default/default.scss";
 @import "variables/fontsize.scss";
 @import "variables/elementsize.scss";
 @import "../../fonts/variables.scss";
 
-@mixin button($background: $primary-btn-bg, $color: $primary-btn-text-color, $hover: $primary-btn-hover, $height: $btn-height-normal, $icon: false) {
+@mixin button($background: $primary-button-bg-normal-color, $color: $primary-button-text-normal-color, $hover: $primary-button-bg-hover-color, $height: $btn-height-normal, $icon: false) {
     background: $background;
     border: 0;
     border-radius: 4px;
@@ -13,7 +13,7 @@
     font-size: 12px;
     font-weight: 600;
     height: $height;
-    line-height: $height;
+    line-height: 24px;
     min-width: $btn-min-width;
     outline: none;
     text-align: center;
@@ -32,16 +32,6 @@
             width: 15px;
         }
     }
-    @else {
-        & {
-            padding: 0 15px;
-        }
-    }
-
-    &:hover, &:focus {
-        background: $hover;
-        color: $color;
-    }
 
     &:disabled {
         background: $primary-button-bg-disable-color;
@@ -55,13 +45,13 @@
         margin: 0 auto;
         padding: 0;
         border-radius: 2px;
-        color: $primary-text-color;
+        color: $dialog-content-text-normal-color;
 
         .modal-content {
             border: none;
 
             .modal-header {
-                background: $dialog-header-bgcolor;
+                background: $dialog-header-bg-normal-color;
                 padding: 10px;
                 width: 100%;
                 z-index: 9;
@@ -90,14 +80,14 @@
             }
 
             .modal-body {
-                background: $dialog-body-bgcolor;
+                background: $dialog-content-bg-normal-color;
                 font-size: $app-text-size;
                 padding: 10px;
             }
 
             .modal-footer {
-                background: $dialog-footer-bgcolor;
-                border-top: 1px solid $footer-border-color;
+                background: $dialog-footer-bg-normal-color;
+                border-top: 1px solid $dialog-footer-border-normal-color;
                 padding: 10px;
 
                 .primary-button, .critical-action-button {
@@ -112,7 +102,7 @@
     }
 }
 
-@mixin submenu-item($default: $primary-text-color, $hover: $menu-hover-text-color, $active: $menu-active-text-color) {
+@mixin submenu-item($default: $primary-text-color, $hover: $grey-200, $active: $primary-color) {
     a {
         color: $default;
         cursor: pointer;
@@ -147,7 +137,7 @@
 
         &:hover, &:focus {
             &:before {
-                background: $border-color;
+                background: $grey-400;
                 left: 0;
                 right: 0;
             }
@@ -169,209 +159,9 @@
     }
 }
 
-@mixin app-header($height: $header-height) {
-    background-color: $header-bg;
-    color: $header-text-color;
-    height: $height;
-    position: fixed;
-    width: 100%;
-    z-index: 1050;
-
-    .header-bar {
-        margin: 0;
-        padding: 0;
-
-        .application-navigation {
-            font-size: 25px;
-            color: $primary-btn-text-color;
-            vertical-align: middle;
-            cursor: pointer;
-        }
-
-        .dropdown-menu {
-            margin-top: -6.5px;
-            padding: 0;
-            min-width: 100px !important;
-
-            #application-list {
-                margin: 0;
-                padding: 4px;
-                max-width: 320px;
-                overflow-y: auto;
-                overflow-x: hidden;
-
-                li {
-                    display: inline-block;
-                    float: left;
-                    width: 96px !important;
-                    height: 96px !important;
-                    margin: 4px;
-                    overflow: hidden;
-                    background-color: $search-bg-color;
-
-                    a {
-                        display: block;
-                        vertical-align: middle;
-                        width: 100%;
-                        height: 100%;
-                        padding: 12px !important;
-                        text-align: center;
-
-                        .app-icon {
-                            width: 36px !important;
-                            height: 36px !important;
-                            margin-bottom: 10px;
-                        }
-
-                        .tooltip {
-                            white-space: nowrap;
-                        }
-
-                        .app-name {
-                            width: 100%;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            display: block;
-                            white-space: nowrap;
-                        }
-                    }
-                }
-
-                &:hover {
-                    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
-
-                    a:active {
-                        background: none !important;
-                        background-color: $submit-button-disabled !important;
-                    }
-                }
-            }
-
-            .app-loading-text {
-                color: $primary-text-color;
-                padding-left: 5px;
-            }
-        }
-
-        .main-screen-logo {
-            float: left;
-            padding: 5px;
-
-            #application-logo {
-                height: $height - 20;
-                margin: 4px 0 0 4px;
-            }
-        }
-
-        .org-name-wrapper {
-            display: inline-block;
-            padding-left: 10px;
-
-            .header-org-name {
-                display: table-cell;
-                height: $height;
-                margin: 0;
-                vertical-align: middle;
-                color: $primary-btn-text-color !important;
-            }
-        }
-
-        #upload-item-section {
-            #btn-item-upload {
-                background: $primary-btn-bg;
-                border: none;
-                border-radius: 0;
-                color: $primary-btn-text-color;
-                height: $height;
-                width: 120px;
-            }
-        }
-
-        .user-account {
-            float: right;
-
-            .profile-picture {
-                img {
-                    cursor: pointer;
-                    height: $header-height;
-                    width: $header-height;
-                }
-            }
-
-            #profile-info-section {
-                left: auto;
-                right: 0;
-                padding: 0;
-                white-space: nowrap;
-
-                .profile-info {
-                    border-bottom: 1px solid $profile-border-color;
-                    padding: 0;
-
-                    .profile-picture-area {
-                        padding: 10px;
-
-                        img {
-                            border-radius: 50%;
-                            height: 48px;
-                            width: 48px;
-                        }
-                    }
-
-                    .profile-info-area {
-                        overflow: auto;
-                        padding-right: 10px;
-
-                        ul {
-                            list-style: none;
-
-                            #profile-name {
-                                color: $primary-text-color;
-                                font-size: $app-large-text-size;
-                                font-weight: 500;
-                                height: auto;
-                                margin-top: 10px;
-                            }
-
-                            #profile-email {
-                                color: $grid-link-color;
-                                font-size: $app-text-size;
-                                font-weight: 400;
-                            }
-                        }
-                    }
-                }
-
-                .profile-buttons {
-                    a {
-                        color: $profile-btn-text-color;
-                        padding: 10px 0;
-                        text-align: center;
-
-                        &:first-child {
-                            border-right: 1px solid $profile-border-color;
-                        }
-                    }
-                }
-            }
-        }
-        .login-account {
-            float: right;
-            padding: 10px;
-            font-weight: 500;
-
-            a {
-                color: $primary-btn-text-color;
-                font-size: 12px;
-            }
-        }
-    }
-}
-
 @mixin app-menu($height: $menu-height, $width: $menu-width, $icon-size: $icon-size) {
-    background-color: $nav-menu-bg-color;
+    background-color: $nav-menu-content-bg-normal-color;
     box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.12);
-    color: $nav-icon-normal-color;
     height: 100%;
     position: fixed;
     width: $width;
@@ -386,7 +176,7 @@
                 width: $width;
 
                 .sf-nav-separator {
-                    background: $nav-menu-separtor-icon-color;
+                    background: $nav-menu-separator-normal-color;
                     height: 1px;
                     margin: 12px auto;
                     width: 50%;
@@ -402,7 +192,7 @@
                     margin: 4px 0;
 
                     a {
-                        color: $menu-icon-color;
+                        color: $grey-200;
                         display: table-cell;
                         height: $height;
                         text-align: center;
@@ -411,7 +201,7 @@
                         border-radius: 4px;
 
                         .menu-icon-container {
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             display: inline-block;
                             height: 36px;
                             padding: 8px 13px;
@@ -428,7 +218,7 @@
                         }
 
                         .menu-label {
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             float: left;
                             font-size: 10px;
                             letter-spacing: 0.3px;
@@ -437,24 +227,24 @@
                         }
 
                         &:hover {
-                            background-color: $nav-menu-hover-color;
+                            background-color: $nav-menu-content-bg-hover-color;
 
                             .menu-icon-container {
                                 .su, .menu-label {
-                                    color: $nav-menu-hover-text-color;
+                                    color: $nav-menu-content-text-hover-color;
                                 }
                             }
 
                             .menu-label {
-                                color: $nav-menu-hover-text-color;
+                                color: $nav-menu-content-text-hover-color;
                             }
                         }
 
                         &.active {
-                            background-color: $nav-menu-active-color;
+                            background-color: $nav-menu-content-bg-active-color;
 
                             .su, .menu-label {
-                                color: $nav-menu-active-text-color !important;
+                                color: $nav-menu-content-text-active-color !important;
                             }
                         }
                     }
@@ -485,7 +275,7 @@
 
                         .menu-icon-container {
                             border-radius: 4px;
-                            color: $nav-menu-text-color;
+                            color: $nav-menu-content-text-normal-color;
                             display: inline-block;
                             height: 42px;
                             padding: 12px;
@@ -510,6 +300,8 @@
                                 font-size: 13px;
                             }
 
+                            @include popOver();
+
                             .popover {
                                 width: 1500px !important;
                             }
@@ -527,7 +319,7 @@
                                 border-radius: 50%;
                                 height: 100%;
                                 width: 100%;
-                                border: 1px solid $text-white;
+                                border: 1px solid $white;
 
                                 &:hover {
                                     border: 1px solid $primary-color;
@@ -539,10 +331,6 @@
                             left: 63px;
                             bottom: 0px;
                             width: 200px !important;
-                        }
-
-                        &:hover {
-                            background-color: $nav-menu-hover-color;
                         }
                     }
 
@@ -565,7 +353,7 @@
                                 height: 34px;
                                 text-align: left;
                                 font-size: 12px;
-                                color: $nav-menu-text-color;
+                                color: $nav-menu-content-text-normal-color;
 
                                 div {
                                     padding: 8px 8px 12px 8px;
@@ -600,7 +388,7 @@
                                     font-weight: 600;
                                     line-height: 1.6;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color;
+                                    color: $nav-menu-content-text-normal-color;
                                     padding: 0 0 0 8px;
                                     margin-bottom: 4px;
                                 }
@@ -611,13 +399,13 @@
                                     font-weight: normal;
                                     line-height: 1.5;
                                     letter-spacing: 0.3px;
-                                    color: $nav-menu-text-color !important;
+                                    color: $nav-menu-content-text-normal-color !important;
                                     height: 30px;
                                     width: 200px;
                                     text-align: left;
 
                                     &:hover {
-                                        color: $nav-menu-hover-text-color !important;
+                                        color: $nav-menu-content-text-hover-color !important;
                                     }
 
                                     .sub-menu-bar-profile-image {
@@ -638,7 +426,7 @@
                                         .sub-menu-user-name-style {
                                             font-size: 12px;
                                             letter-spacing: 0.3px;
-                                            color: $nav-menu-text-color;
+                                            color: $nav-menu-content-text-normal-color;
                                             overflow: hidden;
                                             text-overflow: ellipsis;
                                         }
@@ -646,7 +434,7 @@
                                         .sub-menu-user-email-style, .sub-menu-user-username-style {
                                             font-size: 10px;
                                             letter-spacing: 0.25px;
-                                            color: $nav-menu-text-color;
+                                            color: $nav-menu-content-text-normal-color;
                                             line-height: 12px;
                                             margin-top: 2px;
                                             overflow: hidden;
@@ -658,19 +446,19 @@
                         }
 
                         &:hover {
-                            background-color: $nav-menu-hover-color;
+                            background-color: $nav-menu-content-bg-hover-color;
                         }
 
                         .dropdown-menu {
-                            background: $nav-menu-bg-color !important;
+                            background: $nav-menu-content-bg-normal-color !important;
 
                             li.sub-menu-item {
                                 a {
                                     &:hover {
-                                        background: $nav-menu-hover-color !important;
+                                        background: $nav-menu-content-bg-hover-color !important;
 
                                         div, .site-name {
-                                            color: $nav-menu-hover-text-color !important;
+                                            color: $nav-menu-content-text-hover-color !important;
                                         }
                                     }
                                 }
@@ -679,7 +467,7 @@
                     }
 
                     .sf-sub-menu-separator {
-                        background: $nav-menu-separtor-icon-color;
+                        background: $nav-menu-separator-normal-color;
                         height: 1px;
                         margin: 6px 0px;
                     }
@@ -701,8 +489,8 @@
 
                 a {
                     &.active {
-                        background-color: $menu-active-bg;
-                        color: $menu-active-icon-color;
+                        background-color: $primary-color;
+                        color: $white;
                     }
 
                     .su {
@@ -725,7 +513,6 @@
     padding: 0;
 
     .admin-page-header {
-        border-bottom: 1px solid $grey-80;
         margin: 0 0 20px 0;
         padding: 0 0 20px 0;
 
@@ -755,8 +542,8 @@
     }
 
     .admin-page-body {
-        background-color: $admin-page-bg;
-        border: 1px solid $admin-body-border-color;
+        background-color: $surface;
+        border: 1px solid $section-separator-color;
         border-radius: 4px;
         font-size: $app-text-size;
         float: left;
@@ -944,7 +731,7 @@
     }
 }
 //Radio button material design class
-@mixin material-radiobutton-controls($active: $primary-btn-bg, $default: $admin-pages-border-color, $button-bg: $primary-btn-text-color) {
+@mixin material-radiobutton-controls($active: $primary-button-bg-normal-color, $default: $section-separator-color, $button-bg: $primary-button-text-normal-color) {
     display: none;
 
     & + label {
@@ -993,14 +780,14 @@
     }
 }
 
-@mixin grid($border-color: $grid-border-color, $header-bg: $grid-header-bg, $header-text-color: $grid-header-color, $text-color: $grid-text-color, $link-color: $grid-link-color, $header-font-size: 14px, $content-font-size: 12px) {
+@mixin grid($border-color: $grid-content-border-normal-color, $header-bg: $grid-header-bg-normal-color, $header-text-color: $grid-header-text-normal-color, $text-color: $grid-content-text-normal-color, $link-color: $grid-link-text-normal-color, $header-font-size: 14px, $content-font-size: 12px) {
     .e-gridheader {
-        border-bottom: 2px solid $grid-border-color;
+        border-bottom: 2px solid $grid-content-border-normal-color;
 
         .e-table {
             .e-columnheader {
                 .e-headercell {
-                    background-color: $grid-header-bg;
+                    background-color: $grid-header-bg-normal-color;
                     height: 50px;
 
                     .e-headercelldiv {
@@ -1017,7 +804,7 @@
     .e-gridcontent {
         e-table {
             .e-rowcell {
-                border-color: $grid-border-color;
+                border-color: $grid-content-border-normal-color;
                 font-size: $content-font-size;
                 font-weight: 400;
                 font-family: inherit;
@@ -1031,7 +818,7 @@
                 }
 
                 a {
-                    color: $grid-link-color;
+                    color: $grid-link-text-normal-color;
                     white-space: normal;
                     word-break: break-all;
                 }
@@ -1086,391 +873,11 @@
     }
 }
 
-@mixin dialog($dialog-font-size, $dialog-validation-size, $dialog-text-box) {
-    .form-control, .btn {
-        border-radius: 0;
-    }
-
-    .dialog-header {
-        font-size: $dialog-font-size + 2;
-        padding: 10px 15px;
-
-        .su-nav-settings {
-            &:before {
-                color: $su-nav-settings-color;
-            }
-        }
-
-        .su-close:before {
-            color: $su-nav-settings-color;
-            font-size: 12px;
-        }
-
-        .PopupTitle {
-            vertical-align: top;
-        }
-
-        .report-name {
-            font-size: $dialog-validation-size;
-        }
-
-        .PopupClose {
-            color: $dialog-close-icon-color;
-            float: right;
-            font-size: $dialog-validation-size;
-
-            &:hover {
-                color: $primary-btn-bg;
-                text-decoration: none;
-            }
-        }
-    }
-
-    input[type="text"], button[type="button"] {
-        height: $dialog-text-box;
-    }
-
-    .fileUpload {
-        height: $dialog-text-box;
-        padding: 0 18px;
-    }
-
-    .ellipsis {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    .padding20 {
-        padding: 20px;
-    }
-
-    .padding-bottom20 {
-        padding-bottom: 20px;
-    }
-
-    .no-bottom-padding {
-        padding-bottom: 0 !important;
-    }
-
-    .no-top-padding {
-        padding-top: 0 !important;
-    }
-
-    .no-left-padding {
-        padding-left: 0 !important;
-    }
-
-    .no-right-padding {
-        padding-right: 0 !important;
-    }
-
-    .rightAlign {
-        text-align: right;
-    }
-
-    .bottom-margin30 {
-        margin-bottom: 30px;
-    }
-
-    .padding10 {
-        padding: 10px;
-    }
-
-    .bootstrap-select {
-        width: 100% !important;
-    }
-
-    .bottom-margin35 {
-        margin-bottom: 35px;
-    }
-
-    .dialog-body {
-        font-size: $dialog-font-size;
-        padding: 10px 15px;
-
-        .bootstrap-select.btn-group .no-results {
-            padding: 6px;
-            margin: 0;
-        }
-
-        .validation-error {
-            color: $validation-text-color;
-            font-size: $validation-text-size;
-            float: left;
-            margin-top: -24px;
-        }
-
-        .filter-option {
-            margin-top: -2px;
-        }
-
-        .text-label {
-            margin: 5px 0 5px;
-        }
-
-        #filename, #name {
-            cursor: pointer;
-        }
-
-        .permission-denied {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .highlight-name {
-            font-style: italic;
-            color: $primary-btn-bg;
-        }
-
-        .mandatory {
-            padding-left: 2px;
-        }
-
-        .text, .note {
-            font-size: $dialog-font-size;
-        }
-
-        .bootstrap-select {
-            padding: 0;
-        }
-
-        .help-text {
-            font-size: $dialog-validation-size;
-        }
-
-        .help-text-mandatory {
-            padding-right: 2px;
-        }
-
-        .padding-right-15 {
-            padding-right: 15px;
-        }
-    }
-
-    .dialog-footer {
-        padding: 10px;
-        background: $popup-header-border none repeat scroll 0 0;
-        border-top: 1px solid $grey-300;
-        bottom: 0;
-        padding: 10px 15px;
-        position: fixed;
-        right: 0;
-        width: 100%;
-
-        .centerAlign {
-            width: 100%;
-            text-align: center;
-
-            .PopupClose, .ItemPermissionPopupClose {
-                float: none;
-            }
-        }
-
-        .primary-button {
-            margin-right: 10px;
-        }
-    }
-}
-
 @mixin show-or-hide-password() {
     cursor: pointer;
     position: absolute;
     right: 20px;
     top: 9px;
-}
-//style for dialogpopup
-@mixin modal($modal-font-size: $app-text-size, $modal-height: $textbox-height) {
-    .modal-content {
-        border-radius: 0;
-        border: 0;
-        padding: 0;
-
-        .ellipsis {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .modal-header {
-            border: none;
-            height: 50px;
-            padding: 10px !important;
-
-            .modal-title {
-                font-size: $modal-font-size + 2;
-                font-weight: 500;
-            }
-
-            .header-icon {
-                padding: 3px 3px 3px 0;
-                width: 20px;
-            }
-
-            .header-content {
-                font-size: $modal-font-size - 2;
-                font-weight: 400;
-            }
-
-            .popup-close {
-                color: $primary-text-color;
-                font-size: $modal-font-size - 2;
-
-                &:hover {
-                    color: $primary-btn-bg;
-                    text-decoration: none;
-                }
-            }
-        }
-
-        .modal-body {
-            font-size: $modal-font-size;
-            padding: 10px;
-            overflow-y: auto;
-
-            #file-name {
-                cursor: pointer;
-            }
-
-            .highlight-name {
-                font-style: italic;
-                color: $primary-btn-bg;
-            }
-
-            .selectpicker, .form-control {
-                font-size: $modal-font-size;
-            }
-
-            .btn-default {
-                height: $modal-height;
-
-                .filter-option {
-                    margin-top: -1px;
-                }
-            }
-
-            .delete-msg {
-                margin-top: 4px;
-            }
-
-            .validation-message {
-                color: $validation-text-color;
-                font-size: $modal-font-size - 2;
-                float: left;
-            }
-
-            .app-textbox-label {
-                font-weight: 400;
-                font-size: $modal-font-size;
-            }
-
-            .info-text {
-                font-size: $modal-font-size - 2;
-            }
-        }
-
-        .modal-footer {
-            background-color: $admin-pages-border-color;
-            height: 50px;
-            padding: 10px;
-
-            .message-area {
-                height: 35px;
-                margin-top: -8px;
-
-                .error-message, .success-message {
-                    padding: 0px;
-                    float: left;
-                    text-align: left;
-                    height: 44px;
-                    width: 100%;
-                    display: none;
-                    word-wrap: break-word;
-                }
-
-                .success-message {
-                    overflow: hidden;
-                    position: relative;
-                    text-overflow: ellipsis;
-                }
-            }
-
-            .margin-right {
-                margin-right: 10px;
-            }
-
-            .margin-top {
-                margin-top: 2px;
-            }
-        }
-    }
-}
-
-@mixin fluent-popup($popup-header-bg: $popup-header-bg, $popup-footer-bg: $popup-footer-bg, $popup-header-border: $popup-header-border, $popip-footer-border: $popup-header-border) {
-    padding: 0 !important;
-
-    .fluent-popup-header {
-        background-color: $popup-header-bg;
-        border-bottom: 1px solid $popup-header-border;
-        margin: 0;
-        height: 44px;
-        padding-top: 2px;
-        border-top: none;
-
-        .popup-title {
-            font-size: 14px;
-            color: $primary-text-color;
-            letter-spacing: 0.3px;
-            line-height: 21px;
-            font-weight: 600;
-            margin-left: 12px;
-
-            .popup-close {
-                font-size: 16px;
-                margin-right: 7px;
-                opacity: 0.7;
-                color: $icon-color;
-                padding: 2px;
-
-                &:focus {
-                    outline: none !important;
-                    outline-color: $popup-header-bg !important;
-                    box-shadow: none !important;
-                }
-
-                &:hover {
-                    color: $icon-hover-color !important;
-                }
-            }
-        }
-    }
-
-    .fluent-popup-body {
-        padding: 15px;
-        background-color: $white;
-
-        .popup-label {
-            font-size: 12px;
-            color: $grey-800;
-            margin: 0;
-            font-weight: 200;
-        }
-
-        .popup-info {
-            font-size: 10px;
-            color: $info;
-            letter-spacing: 0.3px;
-            margin: 0;
-            font-weight: 200;
-        }
-    }
-
-    .fluent-popup-footer {
-        background-color: $dialog-footer-bg-color;
-        border-top: 1px solid $dialog-border-color;
-        height: 48px;
-        border-bottom: none;
-    }
 }
 
 @media (min-width:1040px) and (max-width: 1200px) {
@@ -1519,6 +926,7 @@
         height: auto;
         list-style: none;
         padding: 0;
+        margin-top: 18px;
 
         li {
             cursor: pointer;
@@ -1611,7 +1019,7 @@
 }
 
 @mixin admin-page-template_new() {
-    background: $admin-page-bg;
+    background: $surface;
     height: 100%;
     overflow: auto;
     padding: 0;
@@ -1622,7 +1030,7 @@
         min-height: calc(100% - 95px);
 
         .separator-margin {
-            border-bottom: 1px solid $grey-100;
+            border-bottom: 1px solid $header-separator-color;
             padding: 0 0 32px 0;
         }
 
@@ -1638,14 +1046,14 @@
         .info-message {
             margin-top: 6px;
             line-height: 18px;
-            color: $checkbox-description-color;
+            color: $info-text-color;
             letter-spacing: 0.26px;
             font-size: 12px;
             width: 450px;
         }
 
         .admin-page-header {
-            background: $admin-container-bg;
+            background: $background;
             padding: 32px 24px;
 
             .page-title {
@@ -1678,11 +1086,20 @@
         .admin-page-body {
             padding: 24px 24px 0px 24px;
             font-size: $app-text-size;
-            border-top: 1px solid $tab-border-normal-color;
+            border-top: 1px solid $header-separator-color;
 
             .validation-errors, .validation-message {
                 color: $validation-text-color;
                 font-size: $app-text-size;
+            }
+
+            .sub-section {
+                border-bottom: 1px solid $section-separator-color;
+                margin-bottom: 28px;
+            }
+
+            .last-sub-section {
+                border: none;
             }
 
             .sub-title {
@@ -1697,7 +1114,7 @@
                 font-size: $app-text-size + 2;
                 font-weight: bold;
                 line-height: 21px;
-                margin: 0 0 12px 0;
+                margin: 0 0 2px 0;
                 padding: 0;
             }
 
@@ -1705,9 +1122,12 @@
                 font-size: $app-text-size;
                 width: 75%;
                 line-height: 18px;
-                color: $checkbox-description-color;
+                color: $info-text-color;
                 letter-spacing: .26px;
-                margin-bottom: 10px
+            }
+
+            .section-content-first {
+                margin-top: 16px;
             }
 
             .app-textbox-label {
@@ -1719,6 +1139,19 @@
                 margin-bottom: 8px;
                 letter-spacing: 0.3px;
                 padding: 0;
+            }
+
+            .radio-button-section {
+                display: inline-block;
+
+                .radio-btn-label {
+                    margin-bottom: 0px !important;
+                    font-size: $app-text-size;
+                    font-weight: normal;
+                    letter-spacing: 0.3px;
+                    line-height: 18px;
+                    padding-left: 26px !important;
+                }
             }
 
             #oauth-client-secret, #mail-password, #openid-client-secret {
@@ -1733,7 +1166,6 @@
                 padding-left: 8px;
                 height: 28px;
                 width: 29px;
-                background-color: $dialog-body-bgcolor;
                 box-shadow: none;
                 border-left: none;
             }
@@ -1783,7 +1215,7 @@
             padding: 0px 24px;
 
             .admin-page-actions {
-                border-top: 1px solid $grey-100;
+                border-top: 1px solid $section-separator-color;
                 padding: 32px 0 0 0;
 
                 .secondary-button, .primary-button {
@@ -1793,7 +1225,7 @@
         }
 
         .auth-page-nav-bar, .lic-page-nav-bar, .site-nav-bar {
-            background: $admin-container-bg;
+            background: $background;
 
             .nav {
                 padding-left: 24px;
@@ -1826,10 +1258,6 @@
 
         .admin-page-content {
             min-height: calc(100% - 72px);
-
-            .admin-page-header {
-                border-bottom: 1px solid $hr-separator-normal-color;
-            }
         }
 
         #base-footer-div {
@@ -1841,7 +1269,7 @@
 
 @mixin copyshowClient() {
     .client-values {
-        background-color: $admin-page-bg;
+        background-color: $surface;
         overflow: hidden;
         border-radius: 4px 0 0 4px;
         resize: none;
@@ -1874,7 +1302,6 @@
         overflow: hidden;
         resize: none;
         width: 393px;
-        border: 1px solid $grey-200;
         cursor: default;
         border-right: 0px !important;
     }
@@ -1889,10 +1316,16 @@
         font-size: 16px;
         height: 28px;
         width: 38px;
-        background-color: $admin-page-bg;
-        border: 1px solid $grey-200;
+        color: $input-box-text-normal-color;
+        background-color: $input-box-bg-normal-color;
+        border: 1px solid $input-box-border-normal-color;
         line-height: 1;
         padding: 1px 1px 7px 1px;
+
+        &.validation-message {
+            border-color: $validation-text-color !important;
+            color: $validation-text-color !important;
+        }
     }
 
     input.upload-btn {
@@ -1923,7 +1356,7 @@
     }
 
     .download-template {
-        color: $primary-color;
+        color: $link-text-color;
         position: absolute;
     }
 }
@@ -1934,29 +1367,104 @@
             min-height: 30px !important;
         }
 
+        &.e-valid-input {
+            border-color: $input-box-border-normal-color !important;
+        }
+
         &:hover:not(.e-input-focus):not(.e-success):not(.e-error):not(.e-disabled) {
-            border-color: $primary-color !important;
+            border-color: $input-box-border-active-color !important;
         }
 
         &.e-valid-input:hover:not(.e-success):not(.e-error):not(.e-disabled) {
-            border-color: $primary-color !important;
+            border-color: $input-box-border-active-color !important;
         }
 
         &.e-input-focus:not(.e-error):not(.e-success):not(.e-disabled) {
-            border-color: $primary-color !important;
-            box-shadow: inset 0.1px 0 $primary-color, inset -0.1px 0 $primary-color, inset 0 -0.1px $primary-color !important;
+            border-color: $input-box-border-active-color !important;
+            box-shadow: inset 0.1px 0 $input-box-border-active-color, inset -0.1px 0 $input-box-border-active-color, inset 0 -0.1px $input-box-border-active-color !important;
         }
 
         &.e-error {
-            border-color: $validation-text-color;
+            border-color: $validation-text-color !important;
             box-shadow: inset 0.1px 0 $validation-text-color, inset -0.1px 0 $validation-text-color, inset 0 -0.1px $validation-text-color !important;
         }
 
         &.e-disabled {
-            background-color: $input-box-disabled !important;
+            background-color: $input-box-bg-disable-color !important;
             border: 1px solid $input-box-border-disable-color !important;
             color: $input-box-text-disable-color !important;
         }
     }
 }
 
+@mixin dialogButton() {
+    font-size: 13px;
+    line-height: 0px;
+    width: 80px;
+    height: 28px;
+}
+
+@mixin popOver() {
+    .popover {
+        background: $surface;
+        word-wrap: break-word;
+        color: $primary-text-color;
+
+        .arrow::after {
+            color: $primary-text-color;
+        }
+    }
+}
+
+@mixin passwordPolicyPopOver() {
+    background: $black;
+    opacity: 0.8;
+    width: 180px;
+
+    .arrow::after {
+        border-left-color: $black;
+        border-right-color: $black;
+    }
+
+    .popover-title {
+        background: $black;
+        opacity: 0.8;
+        color: $white;
+        font-size: $app-text-size;
+        letter-spacing: 0.3px;
+        line-height: 18px;
+        padding-bottom: 0px;
+        border: none;
+    }
+
+    .popover-content {
+        padding-top: 0px;
+        height: auto;
+
+        ul {
+            list-style: none;
+            padding: 0px;
+
+            li {
+                height: 20px;
+                margin: 15px 5px 15px 10px;
+
+                span.icon {
+                    height: 15px;
+                    width: 15px;
+                    margin: 0 auto;
+                    border-radius: 50%;
+                    border: 2px solid $white;
+                    display: inline-block;
+                    float: left;
+                }
+
+                span.content {
+                    color: $white;
+                    display: inline;
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}

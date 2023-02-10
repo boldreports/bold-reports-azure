@@ -88,6 +88,22 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                             title: '堆積吧'
                         }
                     },
+                    'rangeColumn': {
+                        displayText: '範圍列',
+                        tooltip: {
+                            requirements: '1個或更多個值和1個或更多列。',
+                            description: '通過為每個數據點繪製兩個 Y 值來顯示數據范圍',
+                            title: '範圍列'
+                        }
+                    },
+                    'rangeBar': {
+                        displayText: '範圍欄',
+                        tooltip: {
+                            requirements: '1個或更多個值和1個或更多列。',
+                            description: '通過水平繪製每個數據點的兩個 Y 值來顯示數據范圍',
+                            title: '範圍欄'
+                        }
+                    },
                     'stackedColumnPercent': {
                         displayText: '堆積柱100％',
                         tooltip: {
@@ -306,6 +322,22 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                             requirements: '1個或更多個值和1個或更多列。',
                             description: '將系列顯示為圓形線或區域。',
                             title: '雷達'
+                        }
+                    },
+                    'rangeArea': {
+                        displayText: '範圍區域',
+                        tooltip: {
+                            requirements: '1個或更多個值和1個或更多列。',
+                            description: '一種面積圖，其面積不是從軸開始，而是由兩個值之間的空間表示。',
+                            title: '範圍區域'
+                        }
+                    },
+                    'smoothRangeArea': {
+                        displayText: '平滑範圍區域',
+                        tooltip: {
+                            requirements: '1個或更多個值和1個或更多列。',
+                            description: '連接數據點的曲線而不是直線。',
+                            title: '平滑範圍區域'
                         }
                     }
                 }
@@ -693,6 +725,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 bubble: '气泡',
                 polar: '极性',
                 radar: '雷达',
+                rangeArea: '範圍區域',
+                rangeColumn: '範圍列',
+                rangeBar: '範圍欄',
+                smoothRangeArea: '平滑範圍區域',
                 alertSwitchChartType: '所有系列类型都将被更改。 你要继续吗？'
             },
             legendProperties: {
@@ -727,6 +763,23 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 custom: '自訂'
             },
             customColors: '自定義顏色'
+        },
+        forecast: {
+            categoryName: '預測設置',
+            enableSettings: '使能夠',
+            forecastlength: '長度（點）',
+            confidenceInterval: '置信區間',
+            seasonality: '季節性（點）',
+            enableSeries: '預報',
+            forecastColor: '預測顏色',
+            confidenceEnable: '信心',
+            confidenceColor: '信心顏色',
+            bandStyle: '信心帶風格',
+            confidenceBandTypes: {
+                fill: '充滿',
+                linetype: '線',
+                dot: '點'
+            }
         },
         title: {
             categoryName: '标题',
@@ -784,10 +837,12 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 width: '刻度線寬度'
             },
             labelsAutofitDisabled: '标签自动调整已禁用',
+            margin: '余量',
             maximum: '最大限度',
             minimum: '最低限度',
             horizontalAxis: '横轴',
-            verticalAxis: '纵轴'
+            verticalAxis: '纵轴',
+            includeZero: '包括零'
         },
         gridLine: {
             categoryName: '网格线',
@@ -1650,6 +1705,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         markaspublic: '标记为公开',
         cancel: '取消',
         closeToolTip: '关',
+        tags: '标签',
+        newTag: '新的一天',
+        tagWaterMark: '搜索标签',
+        splCharacter: '不支持特殊字符',
         addCategory: {
             title: '新类别',
             name: '名称',
@@ -1714,8 +1773,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             picaText: '異食癖'
         },
         setGroups: '设置组',
-        addDatasource: '添加数据源',
-        dataAlertMsg: '没有添加数据源 ！',
+        addDataset: '添加數據集',
+        dataAlertMsg: '未添加數據集 ！',
         NoDataFound: '找不到數據',
         None: '没有',
         propertyEdit: '编辑',
@@ -1759,6 +1818,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             csvLabel: 'CSV',
             excelLabel: '电子表格',
             mysqlLabel: '的MySQL',
+            elasticSearchLabel: 'Elastic Search',
             mariadbLabel: '玛丽亚数据库',
             memsqlLabel: '内存SQL',
             sharedLabel: '共享',
@@ -1828,6 +1888,27 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             alertMessage: {
                 connectionString: '指定连接字符串',
                 promptText: '指定提示文本',
+                userName: '指定用户名',
+                password: '指定密码',
+                serverName: '指定服务器名称',
+                databaseName: '指定数据库名称'
+            }
+        },
+        elasticSearchDatasource: {
+            authenticationType: '认证类型',
+            window: '视窗',
+            server: 'ElasticSearch 服务器',
+            none: '没有',
+            basicHttp: '基本 HTTP 身份验证',
+            userName: '用户名',
+            password: '密码',
+            port: '港口',
+            basicOption: {
+                serverName: '服务器名称',
+                database: '数据库'
+            },
+            alertMessage: {
+                port: '指定端口号',
                 userName: '指定用户名',
                 password: '指定密码',
                 serverName: '指定服务器名称',
@@ -1933,11 +2014,21 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             authenticationType: '认证类型',
             userName: '用户名',
             password: '密码',
+            separatorTypes: {
+                comma: '逗号',
+                space: '空间',
+                tab: '标签',
+                semicolon: '分号',
+                custom: '自订'
+            },
+            separator: '分隔器',
+            delimiter: '定界符',
             alertMessage: {
                 urlValidation: '网址无效',
                 userNameValidation: '指定用户名',
                 passwordValidation: '指定密码',
                 fieldsValidation: '在字段中指定值',
+                delimiterAlert: '指定定界符'
             },
             none: '没有',
             basicHttp: '基本的Http身份验证',
@@ -2150,6 +2241,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             microsoftsqlInfo: 'SQL Server 是 Microsoft\ 的关系数据库管理系统。作为市场上最可靠和最值得信赖的数据库服务器之一，它在核心数据库管理之上提供各种增值服务，如分析、报告等 系统。SQL Server 连接器允许您在 {customBrandName} 设计器中访问来自 Microsoft SQL Server 数据库的数据。',
             ssasInfo: 'SQL Server 分析服务 (SSAS) 是来自 Microsoft 商业智能堆栈的技术，用于开发在线分析处理 (OLAP) 解决方案。简单来说，您可以使用 SSAS 使用来自数据集市/数据仓库的数据创建多维数据集，以进行更深入、更快速的数据分析。',
             mysqlInfo: 'MySQL 是一个免费提供的开源关系数据库管理系统，以其快速处理、久经考验的可靠性以及易用性和灵活性而著称。 MySQL 连接器允许您在 {customBrandName} 设计器中访问 MySQL 数据库中的数据。',
+            elasticSearchInfo: 'Elasticsearch 是一个基于 Lucene 库的搜索引擎。它提供了一个分布式的、支持多租户的全文搜索引擎，具有 HTTP Web 界面和无模式 JSON 文档。 Elasticsearch 可用于搜索所有类型的文档。它还提供可扩展的搜索，具有近乎实时的搜索，并支持多租户。 Elasticsearch 连接器允许您访问来自 Elasticsearch 集群的数据 {customBrandName} Designer.',
             odataInfo: 'OData 是一种开放协议，允许以简单和标准的方式创建和使用可查询和可互操作的 RESTful API。 与 {customBrandName} Designer 连接并构建报告以查看数据中的故事。',
             odbcInfo: 'ODBC 驱动程序使用 Microsoft 的开放式数据库连接 (ODBC) 接口，该接口允许应用程序使用 SQL 作为访问数据的标准来访问数据库管理系统 (DBMS) 中的数据。',
             oledbInfo: 'OLE DB 是 Microsoft 用于访问不同数据源的战略性低级应用程序接口 (API)。 OLE DB 不仅包括 Microsoft 赞助的标准数据接口开放式数据库连接 (ODBC) 的结构化查询语言 (SQL) 功能，还包括对 SQL 数据以外的数据的访问。',
@@ -2157,7 +2249,11 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             psqlInfo: 'PostgreSQL 是一个强大的开源对象关系数据库系统，强调可扩展性和标准合规性。 PostgreSQL 连接器允许您在 {customBrandName} 设计器中访问来自 PostgreSQL 数据库的数据。',
             snowflakeInfo: 'Snowflake 是一个基于云的数据仓库，它为存储和检索数据提供了一个无限的平台。与传统的单集群共享磁盘/无共享架构不同，Snowflake 具有多集群、共享数据架构，由于企业级基于云的存储系统，该架构具有动态性和高度可扩展性。',
             webAPIInfo: '使用几乎所有具有 REST API 的数据源与 {customBrandName} Designer 连接。创建报告并查看数据中的故事。',
-            xmlInfo: '将您的 XML 文件放入 {customBrandName} 设计器并准备报告以查看数据中的故事。'
+            xmlInfo: '将您的 XML 文件放入 {customBrandName} 设计器并准备报告以查看数据中的故事。',
+            verticaInfo: 'Vertica 是最先进的统一分析仓库，它将高性能、列式存储、高级压缩、优化投影和大规模并行处理 SQL 查询引擎的强大功能与高级分析和机器学习相结合，因此您可以释放真正的潜力您的数据没有限制和妥协。 Vertica 连接器允许您访问 Vertica 数据库中的数据 {customBrandName} Designer.',
+            gcsqlInfo: 'Google Cloud SQL 是基于 MySQL 和 PostgreSQL 的完全托管的数据库服务。 Google Cloud SQL 连接器允许您访问来自 Google Cloud SQL 数据库的数据 {customBrandName} Designer.',
+            redshiftInfo: 'Amazon Redshift 是一个快速、可扩展的数据仓库，可让您轻松且经济高效地分析数据仓库和数据湖中的所有数据。它建立在 PostgreSQL 之上。 Amazon Redshift 连接器允许您访问 Amazon Redshift 数据库中的数据 {customBrandName} Designer.',
+            rdsInfo: 'Amazon Relational Database Service (Amazon RDS) 是一种 Web 服务，可让您轻松地在 AWS 云中设置、操作和扩展关系数据库。它提供了具有成本效益、可调整大小的容量，以减少管理任务的自动化。它提供数据库引擎，例如 Amazon Aurora、PostgreSQL、MySQL、MariaDB、Oracle 数据库和 Microsoft SQL Server。 Amazon RDS 连接器允许您访问 Amazon RDS 数据库中的数据 {customBrandName} Designer.'
         }
     },
     imageManager: {
@@ -2260,6 +2356,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         parameterEditAlert: {
             title: '参数',
             contentMessage: '你想取消参数编辑?',
+        },
+        licenseAlert: {
+            ok: '好',
+            close: '关',
         }
     },
     dataSet: {
@@ -2399,6 +2499,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 headerText: '导出设置',
                 contentText: '选择导出设置选项以设置图像质量、保存字类型和 Excel 文档。'
             },
+            find: {
+                headerText: '找',
+                contentText: '在报告中查找文本。'
+            },
             viewDesign: '关闭预览',
         },
         pagesetupDialog: {
@@ -2411,7 +2515,24 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             bottom: '底部',
             right: '对',
             left: '剩下',
-            unit: '在',
+            pageUnits: '页面单位',
+            unitin: '英寸',
+            unitcm: '厘米',
+            inches: '英寸',
+            centimeters: '厘米',
+            paperTypes: [
+                { text: 'A3', value: 'A3' },
+                { text: 'A4', value: 'A4' },
+                { text: 'B4(JIS)', value: 'B4(JIS)' },
+                { text: 'B5(JIS)', value: 'B5(JIS)' },
+                { text: '信封 #10', value: 'Envelope #10' },
+                { text: '信封君主', value: 'Envelope Monarch' },
+                { text: '管理人员', value: 'Executive' },
+                { text: '合法的', value: 'Legal' },
+                { text: '信件', value: 'Letter' },
+                { text: '小报', value: 'Tabloid' },
+                { text: '风俗', value: 'Custom' }
+            ],
             orientation: '方向',
             portrait: '肖像',
             landscape: '景观',
@@ -2420,13 +2541,157 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         exportsetupDialog: {
             close: '关',
-            excel: '高强',
-            word: '字',
-            imageQuality: '画面质量',
-            exportFormat: '汇出格式',
-            dpi: 'dpi',
+            commonOptions: {
+                header: '常用設置',
+                imageQuality: '畫面質量',
+                imageQualityTypes: [{ text: '低的', value: '2' },
+                    { text: '中等的', value: '5' },
+                    { text: '高的', value: '10' }]
+            },
+            pdfOptions: {
+                header: 'PDF 設置',
+                complexScript: '複雜腳本',
+                conformance: '一致性等級',
+                conformanceTypes: [
+                    { text: '沒有', value: 0 },
+                    { text: 'Pdf/A1B', value: 1 },
+                    { text: 'Pdf/X1A2001', value: 2 },
+                    { text: 'Pdf/A2B', value: 3 },
+                    { text: 'Pdf/A3B', value: 4 },
+                    { text: 'Pdf/A1A', value: 5 },
+                    { text: 'Pdf/A2A', value: 6 },
+                    { text: 'Pdf/A2U', value: 7 },
+                    { text: 'Pdf/A3A', value: 8 },
+                    { text: 'Pdf/A3U', value: 9 }
+                ]
+            },
+            securityOptions: {
+                header: '安全设定',
+                enableProtection: '啟用保護',
+                protect: '密码保护',
+                edit: '编辑密码',
+            },
+            wordOptions: {
+                header: '字设置',
+                protection: '保护类型',
+                topSpacing: '顶部间距',
+                bottomSpacing: '底部间距',
+                formatList: [
+                    { text: 'Word 97-2003 文档 (.doc)', value: 0 },
+                    { text: 'Word 97-2003 模板 (.dot)', value: 1 },
+                    { text: 'Word 文档 (.docx)', value: 2 },
+                    { text: '严格打开 XML 文档 2007 (.docx)', value: 3 },
+                    { text: '严格打开 XML 文档 2010 (.docx)', value: 4 },
+                    { text: '严格打开 XML 文档 2013 (.docx)', value: 5 },
+                    { text: '严格开放的 XML 模板 2007 (.dotx)', value: 6 },
+                    { text: '严格开放的 XML 模板 2010 (.dotx)', value: 7 },
+                    { text: '严格开放的 XML 模板 2013 (.dotx)', value: 8 },
+                    { text: '启用 Word 宏的文档 2007 (.docm)', value: 9 },
+                    { text: '启用 Word 宏的文档 2010 (.docm)', value: 10 },
+                    { text: '启用 Word 宏的文档 2013 (.docm)', value: 11 },
+                    { text: 'Word 宏启用模板 2007 (.dotm)', value: 12 },
+                    { text: 'Word 宏启用模板 2010 (.dotm)', value: 13 },
+                    { text: 'Word 宏启用模板 2013 (.dotm)', value: 14 },
+                    { text: '富文本格式 (.rtf)', value: 15 },
+                    { text: '纯文本 (.txt)', value: 16 },
+                    { text: '网页 (.html)', value: 18 }
+                ],
+                layoutTypes: [
+                    { text: '默认', value: 0 },
+                    { text: '顶层', value: 1 }
+                ],
+                protectionTypes: [
+                    { text: '没有保护', value: -1 },
+                    { text: '仅允许修订', value: 0 },
+                    { text: '只允许评论', value: 1 },
+                    { text: '只允许表单域', value: 2 },
+                    { text: '允许只读', value: 3 }
+                ]
+            },
+            layoutOption: '布局选项',
+            saveType: '保存类型',
+            pptOptions: {
+                header: '微软幻灯片软件 环境',
+                pptTypes: [
+                    { text: '微软幻灯片软件 97to2003 介绍 (.pptx)', value: 0 },
+                    { text: '微软幻灯片软件 2007 介绍 (.pptx)', value: 1 },
+                    { text: '微软幻灯片软件 2010 介绍 (.pptx)', value: 2 },
+                    { text: '微软幻灯片软件 2013 介绍 (.pptx)', value: 3 }
+                ]
+            },
             doneButton: '好',
-            cancelButton: '取消'
+            cancelButton: '取消',
+            csvOptions: {
+                delimiter: '字段分隔符',
+                formatter: '格式化的值',
+                header: 'CSV 设置',
+                qualifier: '文本限定符',
+                customVal: '自定义值',
+                qualifierList: [
+                    { text: '双引号', value: '"' },
+                    { text: '单引号', value: '\'' },
+                    { text: '没有', value: '' },
+                    { text: '风俗', value: 'Custom' }
+                ],
+                delimiterList: [
+                    { text: '逗号', value: ',' },
+                    { text: '空间', value: ' ' },
+                    { text: '标签', value: '   ' },
+                    { text: '分号', value: ';' },
+                    { text: '风俗', value: 'Custom' }
+                ]
+            },
+            htmlOptions: {
+                header: 'HTML 设置',
+                separator: '页面分隔符'
+            },
+            excelOptions: {
+                header: 'Excel 设置',
+                sheetProtection: '片材保護',
+                disableCellFormat: '禁用單元格格式',
+                readonly: '只讀',
+                saveTypes: [
+                    { text: 'Excel97to2003 工作簿(.xls)', value: 0 },
+                    { text: 'Excel2007 工作簿(.xlsx)', value: 1 },
+                    { text: 'Excel2010 工作簿 (.xlsx)', value: 2 },
+                    { text: 'Excel2013 工作簿 (.xlsx)', value: 3 },
+                    { text: 'Excel2016 工作簿(.xlsx)', value: 4 }
+                ],
+                sheetProtectionTypes: [
+                    { text: '没有', value: 0 },
+                    { text: '对象', value: 1 },
+                    { text: '场景', value: 2 },
+                    { text: '格式化单元格', value: 4 },
+                    { text: '格式化列', value: 8 },
+                    { text: '格式化行', value: 16 },
+                    { text: '插入列', value: 32 },
+                    { text: '插入行', value: 64 },
+                    { text: '插入超链接', value: 128 },
+                    { text: '删除列', value: 256 },
+                    { text: '删除行', value: 512 },
+                    { text: '锁定单元格', value: 1024 },
+                    { text: '排序', value: 2048 },
+                    { text: '过滤', value: 4096 },
+                    { text: '使用数据透视表', value: 8192 },
+                    { text: '解锁单元格', value: 16384 },
+                    { text: '内容', value: 32768 },
+                    { text: '全部', value: 65535 }
+                ],
+                disableCellFormatTypes: [
+                    { text: '没有', value: 0 },
+                    { text: '全部', value: 1 },
+                    { text: '边境', value: 2 },
+                    { text: '风格', value: 3 }
+                ],
+                layoutOptionTypes: [
+                    { text: '默认', value: 0 },
+                    { text: '忽略单元格合并', value: 1 }
+                ],
+            }
+        },
+        findAlertMessage: {
+            resultsEndReached: '您已到達搜索結果的末尾。 如果您想繼續，請關閉對話框並再次搜索。',
+            noResultsFound: '指定的文本與報告中的任何內容都不匹配。 更改您的搜索關鍵字，然後重試。'
         },
         credential: {
             userName: '用户名',
@@ -2556,11 +2821,16 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             nullValueLable: '允许空值',
             multipleValueLable: '允许多个值',
             uniqueValueLabel: '显示唯一值',
+            sortValueLabel: '启用排序',
             visibilityLable: '能见度',
             assignValueLable: '赋值 >>',
             save: '保存',
             cancel: '取消',
             editLayout: '编辑版面',
+            sorting: {
+                ascending: '上升',
+                descending: '降序'
+            },
             visibility: {
                 visible: '可见',
                 hidden: '隐',
@@ -2905,9 +3175,9 @@ ej.ReportDesigner.Locale['zh-CN'] = {
     dataAssign: {
         measures: '措施',
         dimensions: '外形尺寸',
-        addDatasource: '添加數據源',
-        errorMessagePrefix: '您尚未配置數據源.',
-        errorMessageSuffix: '添加數據源以將數據綁定到設計器中的報表項.',
+        addDataset: '添加数据集',
+        errorMessagePrefix: '您尚未配置数据集.',
+        errorMessageSuffix: '添加数据集以将数据绑定到设计器中的报表项.',
         search: '搜索',
         dragOnDrop: '拖放',
         categoryList: ' 类别清单',
@@ -3912,7 +4182,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             search: '搜索',
             rename: '改名',
             searchInfo: '从当前获取的架构中检索匹配信息',
-            aggregation: '聚合',
+            aggregation: '骨料',
             dialogHeader: '数据集',
             matchesFound: '找不到匹配项',
             alertMessage: {
@@ -4065,7 +4335,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 part: '返回表示给定日期表达式的指定日期部分的整数值.',
                 sub: '返回从指定日期减去的日期.',
                 day: '返回表示指定日期的日期部分的数值.',
-                daydiff: '返回表示两个指定日期之间差异的数字值.',
+                dateDiff: '返回表示两个指定日期之间差异的数字值.',
                 hour: '以整数形式返回给定日期的小时.',
                 minute: '返回一个数字值，表示由指定的日期表达式产生的日期的分钟部分.',
                 month: '返回表示指定日期表达式的日期的月份部分的数值.',
@@ -4096,7 +4366,9 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             size: '尺寸(s)',
             xvalue: 'X值(s)',
             column: '柱',
-            row: '行(s)'
+            row: '行(s)',
+            high: '高的(s)',
+            low: '低的(s)'
         },
         categoryItemsMenu: {
             filter: '过滤器',

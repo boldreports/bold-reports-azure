@@ -86,7 +86,7 @@
                 </div>
                 <div class="existing-db col-xs-6 radio-padding">
                     <input type="radio" id="existing-db" class="radio-button" name="databaseType" />
-                    <div class="info-content radio-info">[[[Use existing database to deploy the site.]]]</div>
+                    <div class="info-content radio-info">[[[Use the existing database to deploy the site and make sure it was created using the ]]]@helpLinkData <a target='_blank' href='@await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.DefaultCollation, ViewBag.TenantType)'>[[[supported collation.]]]</a> </div>
                 </div>
             </div>
             @await Html.PartialAsync("~/Views/ServerConfiguration/_DatabaseName.cshtml")

@@ -61,6 +61,10 @@ ej.ReportViewer.Locale["zh-CN"] = {
             headerText: "刷新",
             contentText: "刷新报表。"
         },
+        find: {
+            headerText: '找',
+            contentText: '在报告中查找文本。'
+        },
         stop: {
             headerText: "停止",
             contentText: "停止处理报告。"
@@ -106,22 +110,146 @@ ej.ReportViewer.Locale["zh-CN"] = {
         bottom: '底部',
         right: '对',
         left: '剩下',
-        unit: '在',
+        pageUnits: '页面单位',
+        unitin: '英寸',
+        unitcm: '厘米',
+        inches: '英寸',
+        centimeters: '厘米',
         orientation: '方向',
         portrait: '肖像',
         landscape: '景观',
         doneButton: '做',
-        cancelButton: '取消'
+        cancelButton: '取消',
+        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4(JIS)", value: "B4(JIS)" }, { text: "B5(JIS)", value: "B5(JIS)" }, { text: "信封 #10", value: "Envelope #10" }, { text: "信封君主", value: "Envelope Monarch" }, { text: "管理人员", value: "Executive" }, { text: "合法的", value: "Legal" }, { text: "信件", value: "Letter" }, { text: "小报", value: "Tabloid" }, { text: "风俗", value: "Custom" }]
     },
     exportsetupDialog: {
         close: '关',
+        commonOptions: {
+            imageQuality: '一致性等級',
+            header: '常用設置',
+            imageQuality: '畫面質量',
+            imageQualityTypes:
+                [{ text: "低的", value: "2" },
+                { text: "中等的", value: "5" },
+                { text: "高的", value: "10" }]
+        },
+        pdfOptions: {
+            header: 'PDF 設置',
+            complexScript: '複雜腳本',
+            conformance: '一致性等級',
+            conformanceTypes: [{ text: "沒有", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
+            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }],
+        },
         excel: '高强',
-        word: '字',
-        imageQuality: '画面质量',
+        securityOptions: {
+            header: "安全设定",
+            enableProtection: "啟用保護",
+            protect: "密码保护",
+            edit: "编辑密码",
+        },
+        wordOptions: {
+            header: '字设置',
+            protection: '保护类型',
+            topSpacing: '顶部间距',
+            bottomSpacing: '底部间距',
+            formatList: [
+                { text: "Word 97-2003 文档 (.doc)", value: 0 },
+                { text: "Word 97-2003 模板 (.dot)", value: 1 },
+                { text: "Word 文档 (.docx)", value: 2 },
+                { text: "严格打开 XML 文档 2007 (.docx)", value: 3 },
+                { text: "严格打开 XML 文档 2010 (.docx)", value: 4 },
+                { text: "严格打开 XML 文档 2013 (.docx)", value: 5 },
+                { text: "严格开放的 XML 模板 2007 (.dotx)", value: 6 },
+                { text: "严格开放的 XML 模板 2010 (.dotx)", value: 7 },
+                { text: "严格开放的 XML 模板 2013 (.dotx)", value: 8 },
+                { text: "启用 Word 宏的文档 2007 (.docm)", value: 9 },
+                { text: "启用 Word 宏的文档 2010 (.docm)", value: 10 },
+                { text: "启用 Word 宏的文档 2013 (.docm)", value: 11 },
+                { text: "Word 宏启用模板 2007 (.dotm)", value: 12 },
+                { text: "Word 宏启用模板 2010 (.dotm)", value: 13 },
+                { text: "Word 宏启用模板 2013 (.dotm)", value: 14 },
+                { text: "富文本格式 (.rtf)", value: 15 },
+                { text: "纯文本 (.txt)", value: 16 },
+                { text: "网页 (.html)", value: 18 }
+            ],
+            layoutTypes: [{ text: "默认", value: 0 }, { text: "顶层", value: 1 }],
+            protectionTypes: [{ text: "没有保护", value: -1 }, { text: "仅允许修订", value: 0 }, { text: "只允许评论", value: 1 }, { text: "只允许表单域", value: 2 }, { text: "允许只读", value: 3 }],
+        },
+        layoutOption: '布局选项',
+        saveType: '保存类型',
+        unit: '在',
         exportFormat: '汇出格式',
-        dpi: 'dpi',
+        pptOptions: {
+            header: "微软幻灯片软件 环境",
+            pptTypes: [
+                { text: "微软幻灯片软件 97to2003 介绍 (.pptx)", value: 0 },
+                { text: "微软幻灯片软件 2007 介绍 (.pptx)", value: 1 },
+                { text: "微软幻灯片软件 2010 介绍 (.pptx)", value: 2 },
+                { text: "微软幻灯片软件 2013 介绍 (.pptx)", value: 3 }
+            ]
+        },
         doneButton: '好',
-        cancelButton: '取消'
+        cancelButton: '取消',
+        csvOptions: {
+            delimiter: '字段分隔符',
+            formatter: '格式化的值',
+            header: 'CSV 设置',
+            qualifier: '文本限定符',
+            customVal: '自定义值',
+            qualifierList: [{ text: "双引号", value: "\"" }, { text: "单引号", value: "'" }, { text: "没有", value: "" }, { text: "风俗", value: "Custom" }],
+            delimiterList: [{ text: "逗号", value: "," }, { text: "空间", value: " " }, { text: "标签", value: "   " }, { text: "分号", value: ";" }, { text: "风俗", value: "Custom" }]
+        },
+        htmlOptions: {
+            header: 'HTML 设置',
+            separator: '页面分隔符'
+        },
+        excelOptions:
+        {
+            header: "Excel 设置",
+            sheetProtection: '片材保護',
+            disableCellFormat: '禁用單元格格式',
+            readonly: '只讀',
+            saveTypes: [
+                { text: "Excel97to2003 工作簿(.xls)", value: 0 },
+                { text: "Excel2007 工作簿(.xlsx)", value: 1 },
+                { text: "Excel2010 工作簿 (.xlsx)", value: 2 },
+                { text: "Excel2013 工作簿 (.xlsx)", value: 3 },
+                { text: "Excel2016 工作簿(.xlsx)", value: 4 }],
+            sheetProtectionTypes: [
+                { text: "没有", value: 0 },
+                { text: "对象", value: 1 },
+                { text: "场景", value: 2 },
+                { text: "格式化单元格", value: 4 },
+                { text: "格式化列", value: 8 },
+                { text: "格式化行", value: 16 },
+                { text: "插入列", value: 32 },
+                { text: "插入行", value: 64 },
+                { text: "插入超链接", value: 128 },
+                { text: "删除列", value: 256 },
+                { text: "删除行", value: 512 },
+                { text: "锁定单元格", value: 1024 },
+                { text: "排序", value: 2048 },
+                { text: "过滤", value: 4096 },
+                { text: "使用数据透视表", value: 8192 },
+                { text: "解锁单元格", value: 16384 },
+                { text: "内容", value: 32768 },
+                { text: "全部", value: 65535 }
+            ],
+            disableCellFormatTypes: [
+                { text: "没有", value: 0 },
+                { text: "全部", value: 1 },
+                { text: "边境", value: 2 },
+                { text: "风格", value: 3 }
+            ],
+            layoutOptionTypes: [
+                { text: "默认", value: 0 },
+                { text: "忽略单元格合并", value: 1 }
+            ],
+        }
+    },
+    findAlertMessage: {
+        resultsEndReached: '您已到達搜索結果的末尾。 如果您想繼續，請關閉對話框並再次搜索。',
+        noResultsFound: '指定的文本與報告中的任何內容都不匹配。 更改您的搜索關鍵字，然後重試。'
     },
     credential: {
         userName: '用户名',

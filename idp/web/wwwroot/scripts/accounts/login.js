@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     var loginEmail = new ejs.inputs.TextBox({
-        cssClass: 'e-outline e-input-focus',
+        cssClass: 'e-outline e-custom e-account',
         floatLabelType: 'Always',
         created: function () {
             loginEmail.focusIn();
@@ -10,7 +10,7 @@ $(document).ready(function () {
     loginEmail.appendTo('#login-email');
 
     var loginPassword = new ejs.inputs.TextBox({
-        cssClass: 'e-outline',
+        cssClass: 'e-outline e-custom e-account',
         floatLabelType: 'Always'
     });
     loginPassword.appendTo('#current-password');
@@ -29,6 +29,10 @@ $(document).ready(function () {
 
     if (isAuthError.toLowerCase() === "true") {
         $("#validate-auth-user").css("display", "block").find(".auth-error-text").html(authMessage);
+    }
+
+    if (isAzureResetPassword.toLowerCase() === "true") {
+        $("#azure-b2c-password-reset").css("display", "block");
     }
 
 
@@ -84,7 +88,7 @@ $(document).ready(function () {
 $(document).on("click", "#login-button-windows", function () {
     showWaitingPopup('body');
     $("#access-denied").html("<span class='su su-login-error'></span> " + window.Server.App.LocalizationContent.AccessDenied);
-    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
+    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user, #azure-b2c-password-reset").css("display", "none");
     var redirectUrl = rootUrl + (window.location.href.search("authorization") === -1
         ? "/windowsauthentication/account/login"
         : "/windowsauthentication/account/oauthlogin?client_id=" + $("#external-authentication-client-id").val());
@@ -154,7 +158,7 @@ $(document).on("click", "#login-button-windows", function () {
 });
 
 $(document).on("click", ".auth-login-button", function () {
-    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user").css("display", "none");
+    $("#access-denied, #validate-azure-user, #validate-ad-user, #validate-auth-user, #azure-b2c-password-reset").css("display", "none");
 });
 
 $(document).on("click change", "#login-email", function () {

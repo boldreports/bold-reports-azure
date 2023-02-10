@@ -11,13 +11,12 @@
     var ssoSettingsUrl = Url.Action("SAMLSettings", "Administration");
     var authSettingsUrl = Url.Action("AuthenticationSettings", "Administration");
     var isSelfHosted = CloudAppConfig.IsSelfHosted;
-    var products = new LicenseManagement().GetAllProducts();
-    var isBoldBIOnPremise = products.Any(x => x.TenantType == TenantType.BoldBIOnPremise);
-    var isBoldReportsOnPremise = products.Any(x => x.TenantType == TenantType.BoldReportsOnPremise);
     var embedSettingsUrl = Url.Action("EmbedSettings", "Administration");
     var apiKeysUrl = Url.Action("ApiKeys", "Administration");
     var lookandfeelUrl = Url.Action("LookandFeel", "Administration");
     var additionalSettingsUrl = Url.Action("AdditionalSettings", "Administration");
+    var securitySettingsUrl = Url.Action("SecuritySettings", "Administration");
+    var licenseExpired = await LicenseManagement.ValidateBoldLicense();
 }
 
     <nav id="admin-menu-nav-bar" class="admin-nav-bar">
@@ -29,17 +28,15 @@
                     <span>[[[Site]]]</span>
                 </a>
             </li>
-            @if (isBoldReportsOnPremise)
-            {
-                <li class="admin-menu-item @(currentUrl.IndexOf(lookandfeelUrl, StringComparison.CurrentCultureIgnoreCase) > -1  ? "active" : string.Empty)">
-                    <a id="site-settings-link" href="@lookandfeelUrl" role="tab">
-                        <i class="su su-look-and-feel"></i>
-                        <span>[[[Look and Feel]]]</span>
-                    </a>
-                </li>
-            }
 
-            @if (isBoldBIOnPremise)
+            <li class="admin-menu-item @(currentUrl.IndexOf(lookandfeelUrl, StringComparison.CurrentCultureIgnoreCase) > -1  ? "active" : string.Empty)">
+                <a id="site-settings-link" href="@lookandfeelUrl" role="tab">
+                    <i class="su su-look-and-feel"></i>
+                    <span>[[[Look and Feel]]]</span>
+                </a>
+            </li>
+
+            @if (GlobalAppSettings.IsBoldBIOnPremise)
             {
                 <li class="admin-menu-item @(currentUrl.IndexOf(embedSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)">
                     <a id="embed-settings-link" href="@embedSettingsUrl" role="tab">
@@ -66,13 +63,22 @@
                     <span>[[[Authentication]]]</span>
                 </a>
             </li>
+            @if (GlobalAppSettings.IsBoldBIOnPremise)
+            {
+                <li class="admin-menu-item @(currentUrl.IndexOf(securitySettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)">
+                    <a href="@securitySettingsUrl" role="tab">
+                        <i class="su su-shield"></i>
+                        <span>[[[Security]]]</span>
+                    </a>
+                </li>
+            }
             <li class="admin-menu-item @(currentUrl.IndexOf(apiKeysUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)">
                 <a id="api-keys-link" href="@apiKeysUrl" role="tab">
                     <i class="su su-api-keys"></i>
                     <span>[[[API Keys]]]</span>
                 </a>
             </li>
-            <li class="admin-menu-item @(currentUrl.IndexOf(additionalSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" >
+            <li class="admin-menu-item @(currentUrl.IndexOf(additionalSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)">
                 <a id="additional-settings-link" href="@additionalSettingsUrl" role="tab">
                     <i class="su su-nav-settings"></i>
                     <span>[[[Configuration]]]</span>
@@ -80,7 +86,14 @@
             </li>
             <li class="admin-menu-item @(currentUrl.IndexOf(manageLicenseUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)">
                 <a id="license-settings-link" href="@manageLicenseUrl" role="tab">
-                    <i class="su su-license-settings"></i>
+                    @if (licenseExpired.IsBoldBILicenseExpired || licenseExpired.IsBoldReportsLicenseExpired)
+                    {
+                        <span class="su su-license-notification" id="license-icon"><span class="su su-license-notification path1"></span><span class="su su-license-notification path2"></span></span>
+                    }
+                    else
+                    {
+                        <span class="su su-license-notification" id="license-icon"><span class="su su-license-notification path1"></span></span>
+                    }
                     <span>[[[Manage License]]]</span>
                 </a>
             </li>

@@ -61,6 +61,10 @@ ej.ReportViewer.Locale["es-ES"] = {
             headerText: "Refrescar",
             contentText: "Actualizar el informe."
         },
+        find: {
+            headerText: 'Encontrar',
+            contentText: 'Busque texto en el informe.'
+        },
         stop: {
             headerText: 'Detener',
             contentText: 'Dejar de procesar el informe.'
@@ -107,22 +111,148 @@ ej.ReportViewer.Locale["es-ES"] = {
         bottom: "Fondo",
         right: "Derecha",
         left: "Izquierda",
-        unit: "pg",
+        pageUnits: 'Unidades de página',
+        unitin: 'en',
+        unitcm: 'cm',
+        inches: 'Pulgadas',
+        centimeters: 'centímetros',
         orientation: "Orientación",
         portrait: "Retrato",
         landscape: "Paisaje",
         doneButton: "Hecho",
-        cancelButton: "Cancelar"
+        cancelButton: "Cancelar",
+        paperTypes: [{ text: "A3", value: "A3" }, { text: "A4", value: "A4" }, { text: "B4 (JIS)", value: "B4(JIS)" }, { text: "B5 (JIS)", value: "B5(JIS)" }, { text: "Sobre #10", value: "Envelope #10" }, { text: "Sobre monarca", value: "Envelope Monarch" }, { text: "Ejecutivo", value: "Executive" }, { text: "Legal", value: "Legal" }, { text: "Letra", value: "Letter" }, { text: "Tabloide", value: "Tabloid" }, { text: "Personalizado", value: "Custom" }]
     },
     exportsetupDialog: {
         close: 'Cerca',
+        commonOptions: {
+            header: 'Configuraciones comunes',
+            imageQuality: 'La calidad de imagen',
+            imageQualityTypes:
+                [{ text: "Bajo", value: "2" },
+                { text: "Medio", value: "5" },
+                { text: "Elevado", value: "10" }]
+        },
+        pdfOptions: {
+            header: 'Configuración de PDF',
+            complexScript: 'Escritura compleja',
+            conformance: 'Nivel de conformidad',
+            conformanceTypes: [{ text: "Ninguno", value: 0 }, { text: "Pdf/A1B", value: 1 }, { text: "Pdf/X1A2001", value: 2 }, { text: "Pdf/A2B", value: 3 }, { text: "Pdf/A3B", value: 4 },
+            { text: "Pdf/A1A", value: 5 }, { text: "Pdf/A2A", value: 6 }, { text: "Pdf/A2U", value: 7 }, { text: "Pdf/A3A", value: 8 }, { text: "Pdf/A3U", value: 9 }],
+        },
         excel: 'Sobresalir',
-        word: 'Palabra',
-        imageQuality: 'Calidad de la imagen',
+        securityOptions: {
+            header: "Configuraciones de seguridad",
+            enableProtection: "Habilitar protección",
+            protect: "Contraseña para proteger",
+            edit: "Contraseña para editar",
+        },
+        wordOptions: {
+            header: 'Configuración de palabras',
+            protection: 'Tipo de protección',
+            topSpacing: 'Espaciado superior',
+            bottomSpacing: 'Espaciado inferior',
+            formatList: [
+                { text: "Documento de Word 97-2003 (.doc)", value: 0 },
+                { text: "Plantilla de Word 97-2003 (.dot)", value: 1 },
+                { text: "Documento de Word (.docx)", value: 2 },
+                { text: "Documento XML abierto estricto 2007 (.docx)", value: 3 },
+                { text: "Documento XML abierto estricto 2010 (.docx)", value: 4 },
+                { text: "Documento XML abierto estricto 2013 (.docx)", value: 5 },
+                { text: "Plantilla XML abierta estricta 2007 (.dotx)", value: 6 },
+                { text: "Plantilla XML abierta estricta 2010 (.dotx)", value: 7 },
+                { text: "Plantilla XML abierta estricta 2013 (.dotx)", value: 8 },
+                { text: "Documento habilitado para macros de Word 2007 (.docm)", value: 9 },
+                { text: "Documento habilitado para macros de Word 2010 (.docm)", value: 10 },
+                { text: "Documento habilitado para macros de Word 2013 (.docm)", value: 11 },
+                { text: "Plantilla habilitada para macros de Word 2007 (.dotm)", value: 12 },
+                { text: "Plantilla habilitada para macros de Word 2010 (.dotm)", value: 13 },
+                { text: "Plantilla habilitada para macros de Word 2013 (.dotm)", value: 14 },
+                { text: "Formato de texto enriquecido (.rtf)", value: 15 },
+                { text: "Texto sin formato (.txt)", value: 16 },
+                { text: "Página web (.html)", value: 18 }
+            ],
+            layoutTypes: [{ text: "Por defecto", value: 0 }, { text: "Nivel superior", value: 1 }],
+            protectionTypes: [{ text: "Sin protección", value: -1 }, { text: "Permitir solo revisiones", value: 0 }, { text: "Permitir solo comentarios", value: 1 }, { text: "Solo permitir campos de formulario", value: 2 }, { text: "Permitir solo lectura", value: 3 }],
+        },
+        layoutOption: 'Opción de diseño',
+        saveType: 'Guardar tipo',
+        unit: 'pg',
         exportFormat: 'Formato de exportación',
+        pptOptions: {
+            header: "Configuración de PowerPoint",
+            pptTypes: [
+                { text: "PowerPoint 97to2003 Presentation (.ppt)", value: 0 },
+                { text: "PowerPoint 2007 Presentation (.pptx)", value: 1 },
+                { text: "PowerPoint 2010 Presentation (.pptx)", value: 2 },
+                { text: "PowerPoint 2013 Presentation (.pptx)", value: 3 }
+            ]
+        },
         dpi: 'dpi',
+
         doneButton: 'DE ACUERDO',
-        cancelButton: 'Cancelar'
+        cancelButton: 'Cancelar',
+        csvOptions: {
+            delimiter: 'Delimitador de campo',
+            formatter: 'Valores con formato',
+            header: 'Configuración de CSV',
+            qualifier: 'Calificador de texto',
+            customVal: 'Valor personalizado',
+            qualifierList: [{ text: "Doble comillas", value: "\"" }, { text: "Comillas simples", value: "'" }, { text: "Ninguna", value: "" }, { text: "Personalizado", value: "Custom" }],
+            delimiterList: [{ text: "Coma", value: "," }, { text: "Espacio", value: " " }, { text: "Pestaña", value: "   " }, { text: "Punto y coma", value: ";" }, { text: "Personalizado", value: "Custom" }]
+        },
+        htmlOptions: {
+            header: 'Configuración HTML',
+            separator: 'Separador de página'
+        },
+        excelOptions:
+        {
+            header: 'Configuración de Excel',
+            sheetProtection: 'Protección de hojas',
+            disableCellFormat: 'Deshabilitar formato de celda',
+            readonly: 'Solo lectura',
+            saveTypes: [
+                { text: "Libro de Excel97to2003 (.xls)", value: 0 },
+                { text: "Libro de Excel 2007 (.xlsx)", value: 1 },
+                { text: "Libro de Excel 2010 (.xlsx)", value: 2 },
+                { text: "Libro de Excel 2013 (.xlsx)", value: 3 },
+                { text: "Libro de Excel 2016 (.xlsx) ", value: 4 }
+            ],
+            sheetProtectionTypes: [
+                { text: "Ninguna", value: 0 },
+                { text: "Objetos", value: 1 },
+                { text: "Escenarios", value: 2 },
+                { text: "Formateo de celdas", value: 4 },
+                { text: "Columnas de formato", value: 8 },
+                { text: "Formateo de filas", value: 16 },
+                { text: "Insertar columnas", value: 32 },
+                { text: "Insertar filas", value: 64 },
+                { text: "Inserción de hipervínculos", value: 128 },
+                { text: "Eliminación de columnas", value: 256 },
+                { text: "Eliminación de filas", value: 512 },
+                { text: "Celdas bloqueadas", value: 1024 },
+                { text: "Clasificación", value: 2048 },
+                { text: "Filtración", value: 4096 },
+                { text: "Uso de tablas dinámicas", value: 8192 },
+                { text: "Celdas desbloqueadas", value: 16384 },
+                { text: "Contenido", value: 32768 },
+                { text: "Todos", value: 65535 }
+            ],
+            disableCellFormatTypes: [
+                { text: "Ninguna", value: 0 },
+                { text: "Todos", value: 1 },
+                { text: "Frontera", value: 2 },
+                { text: "Estilo", value: 3 }
+            ],
+            layoutOptionTypes: [
+                { text: "Por defecto", value: 0 },
+                { text: "Ignorar combinación de celdas", value: 1 }
+            ],
+        }
+    },
+    findAlertMessage: {
+        resultsEndReached: 'Has llegado al final de los resultados de búsqueda. Si desea continuar, cierre el cuadro de diálogo y busque de nuevo.',
+        noResultsFound: 'El texto especificado no coincide con ninguno de los contenidos del informe. Cambie su palabra clave de búsqueda y vuelva a intentarlo.'
     },
     credential: {
         userName: "Nombre de usuario",
