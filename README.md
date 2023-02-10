@@ -1,4 +1,4 @@
-This v4.2.53 version contains v4.2.52 features and below additional improvements
+This v4.2.53 version contains v4.2.52 features and below additional improvements.
 
 # Bold Reports Improvements 
 
