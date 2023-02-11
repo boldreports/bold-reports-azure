@@ -1,0 +1,804 @@
+﻿@using System.Globalization;
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var language = CultureInfo.CurrentCulture.Name;
+    var isUserAuthenticatedInCurrentTenant = ViewBag.IsUserAuthenticatedInCurrentTenant;
+    var parentId = ViewBag.ParentId;
+    var itemDetail = ViewBag.itemDetail as ItemDetail;
+    var isUserAuthenticated = "false";
+    var enableComment = "false";
+    var enableViews = "false";
+    var canEdit = itemDetail.CanWrite;
+    var embedConfig = ViewBag.EmbedConfig as EmbedConfig;
+    var filterQuery = ViewBag.FilterQuery;
+    var userId = ViewBag.UserId;
+    var enableExport = "true";
+    var canSaveView = "true";
+    var embedSignature = ViewBag.EmbedSignature;
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+
+    if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
+    {
+        canEdit = false;
+    }
+}
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <link href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />
+    }
+    else
+    {
+        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/bootstrap-theme/bold.reportviewer.min.css" rel="stylesheet" type="text/css" />
+    }
+    @if (!isMobile)
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report-mobile.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-render-report.min.css" />
+        </environment>
+    }
+
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        @if (!isMobile)
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery.min.js"></script>
+            </environment>
+        }
+        else
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery-mobile.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery-mobile.min.js"></script>
+            </environment>
+        }
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-data.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-svg-base.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js"></script>
+        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js"></script>
+        @if (!isMobile)
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render.min.js"></script>
+            </environment>
+        }
+        else
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-mobile.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-mobile.min.js"></script>
+            </environment>
+        }
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/reportviewer/ej.localetexts.@string.Concat(language,".js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+    }
+    else
+    {
+        @if (!isMobile)
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery.min.js"></script>
+            </environment>
+        }
+        else
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery-mobile.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-jquery-mobile.min.js"></script>
+            </environment>
+        }
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-data.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
+        @if (!isMobile)
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-server.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-server.min.js"></script>
+            </environment>
+        }
+        else
+        {
+            <environment include="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-server-mobile.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-render-server-mobile.min.js"></script>
+            </environment>
+        }
+    }
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.min.js"></script>
+    </environment>
+
+    @if (isMobile && !Context.User.Identity.IsAuthenticated)
+    {
+        <style>
+            #sync_report_viewer {
+                margin-bottom: 0 !important;
+                height: 100%;
+            }
+
+            .e-reportviewer-viewer {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    }
+    <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+</head>
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%" ng-app="serverApp">
+
+    <input id="favorite_Item" type="hidden" data-item-id="@ViewBag.ItemId" data-parent-id="@ViewBag.ParentId" data-favorite-value="@ViewBag.IsFavorite">
+    <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">
+    <input id="report_Comment" type="hidden" data-item-id="@ViewBag.ItemId.Split('/')[0]">
+    <input id="dashboard_Comment" type="hidden" data-item-id="@ViewBag.ItemId" data-category-name="@ViewBag.itemDetail.CategoryName" data-item-name="@ViewBag.itemDetail.Name">
+    <input id="is_mobile" type="hidden" value="@isMobile.ToString().ToLower()">
+    <input id="item-version" type="hidden" value="@ViewBag.Version" />
+
+    <div id="sync_report_viewer" style="height: 100%; width: 100%; padding-right: 0px" class="sync_report"></div>
+    <input type="hidden" id="report-filter-query-name" />
+    <input type="hidden" id="report-filter-query-value" />
+    <input type="hidden" id="get-link-url" />
+    @if (isMobile && Context.User.Identity.IsAuthenticated)
+    {
+        <nav id="server-mobile-navbar" class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav col-xs-12 no-padding no-margin">
+                    @if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated)
+                    {
+                        <li class="col-xs-3">
+                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a>
+                        </li>
+                        <li class="col-xs-3">
+                            <a href="javascript:void(0)" class="su su-report active"></a>
+                        </li>
+                        <li class="col-xs-3">
+                            @if (ViewBag.IsReportCommented == "true")
+                            {
+                                <a href="javascript:void(0)" class="su su-with-comment server-comment"></a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" class="su su-without-comment server-comment"></a>
+                            }
+                        </li>
+                        <li class="col-xs-3">
+                            <a href="javascript:void(0)" class="su su-view active"></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="col-xs-4">
+                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a>
+                        </li>
+                        <li class="col-xs-4">
+                            <a href="javascript:void(0)" class="su su-report active"></a>
+                        </li>
+                        <li class="col-xs-4">
+                            <a href="javascript:void(0)" class="su su-view server-item-view"></a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    }
+    @if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && isUserAuthenticatedInCurrentTenant || embedConfig.IsEmbedCode)
+    {
+        <div id="commentModuleContainer" class="displayNone" style="background-color: #fff;">
+            <iframe id="commentModuleContainer_iframe" class="comment-popup-frame" data-item-id="@ViewBag.ItemId" style="height: 100%; width: 100%;"></iframe>
+            <div class="loader-blue loader-icon " id="comment-module-container-loader-icon">
+                <svg class="circular">
+                    <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+                </svg>
+            </div>
+        </div>
+    }
+
+    <div id="viewShare_popup" class="col-md-12 DisplayNone">
+        <div id="sharepopup_wrapper_WaitingPopup" class="e-waitpopup-sharepopup">
+            <div class="loader-blue loader-icon" id="loader-icon">
+                <svg class="circular">
+                    <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+                </svg>
+            </div>
+        </div>
+        <iframe id="viewShare_popup_iframe" class="EditIframe"></iframe>
+    </div>
+
+    <div class="ViewShare_popup_shadow"></div>
+
+    @* ******************* Please add new iframes below this line *************** *@
+    <div id="commentImage_popup" class="col-md-12 no-padding hidden custom-bootstrap-styles" style="display: none;">
+        <div class="col-lg-12 no-padding" id="PopupContainer">
+            <div class="col-md-12">
+                <div class="col-xs-12 no-padding" style="float:right">
+                    <a href="javascript:void(0);" onclick="commentImageDialogClose()" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
+                </div>
+            </div>
+            <div class="dialogBody col-xs-12 no-padding">
+                <img id="commentImage_popup_image" src="" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div id="save-view-popup" class="displayNone" data-item-id="@(parentId != null ? parentId : itemDetail.Id)" data-widget-id="" data-widget-name="">
+        <iframe id="save-view-popup-iframe" class="" style="height: 100%; width: 100%;"></iframe>
+    </div>
+
+    <div id="success-alert" class="custom-bootstrap-styles">
+        <div id="image-container">
+            <div class="image-holder">
+                <span class="su su-tick" alt="Success Icon"></span>
+            </div>
+        </div>
+        <div id="message">
+            <h1 id="message-header"></h1>
+            <span id="message-content"></span>
+        </div>
+    </div>
+    <div id="warning-alert" class="custom-bootstrap-styles">
+        <div id="image-container">
+            <span class="su su-warning-alt" alt="Warning Icon"></span>
+        </div>
+        <div id="message" class="div-close">
+            <h1 id="message-header"></h1>
+            <span id="message-content"></span>
+        </div>
+        <div class="close-div">
+            <span id="close-content">[[[Close]]]</span>
+        </div>
+    </div>
+
+    @if (!embedConfig.IsEmbedReport || @embedConfig.HasViews && !itemDetail.IsPublic)
+    {
+        @await Html.PartialAsync("_ReportViews")
+    }
+    @if (!embedConfig.IsEmbedCode && isUserAuthenticatedInCurrentTenant)
+    {
+        @await Html.PartialAsync("../Items/_SharePermission");
+    }
+
+</body>
+</html>
+
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+</environment>
+<script type="text/javascript">
+
+    @{
+        var userName = "";
+        if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && isUserAuthenticatedInCurrentTenant || embedConfig.IsEmbedCode)
+        {
+            enableComment = (!(embedConfig.HasReportComments)) ? "false" : "true";
+            enableViews = (!(embedConfig.HasViews)) ? "false" : "true";
+            isUserAuthenticated = embedConfig.IsEmbedCode ? "false" : "true";
+            userName = embedConfig.IsEmbedCode ? embedConfig.UserInfo.Email.ToString() : emailAddress.ToLower();
+            if (embedSignature)
+            {
+                enableExport = (!(embedConfig.HasExport)) ? "false" : "true";
+                canSaveView = (!(embedConfig.CanSaveView)) ? "false" : "true";
+            }
+        }
+        else
+        {
+            enableComment = "false";
+            enableViews = "false";
+            isUserAuthenticated = "false";
+        }
+        }
+
+     var userId = "@userId";
+     var userName = "@userName";
+     var viewId = "@ViewBag.ViewId";
+     var baseUrl = "@globalAppSettings.SystemSettings.BaseUrl";
+     var isUserAuthenticated = "@isUserAuthenticated";
+     var enableComment = '@enableComment';
+     var enableExport = '@enableExport';
+     var canSaveView = '@canSaveView';
+     var isReportCommented = '@ViewBag.IsReportCommented';
+     var canEdit = "@canEdit";
+     var editReportUrl = encodeURI("@Url.Action("ReportDesigner", "Designer")" + "/@itemDetail.Id/@itemDetail.CategoryName/@itemDetail.Name");
+     var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
+     var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
+     var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
+
+     var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
+     var addViewUrl = { "web": "@Url.Action("OnFilterSave", "ReportViews")", "api": "/items/views/add" };
+     var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
+     var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
+     var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
+
+     var reportServerApiUrl = "@reportServerApiUrl";
+     var filterQuery = "@filterQuery";
+
+     var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
+     var parentId = "@parentId";
+     var pageurl = "@requestUrl.LocalPath";
+
+     var item_Id = "@ViewBag.ItemId.Split('/')[0]";
+     var sameOrigin = true;
+     var isSubmit = true;
+
+     var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
+    var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+    var isAdmin = "@isAdmin";
+    var ItemType = "@ViewBag.ItemType";
+    var customFontsName = [];
+
+        function renderComments() {
+            var src = $("#commentModuleContainer iframe").attr("src");
+            if (src === undefined || src === "") {
+            $("#commentModuleContainer iframe").attr("src", commentPageUrl + "?itemId=" + $("#commentModuleContainer_iframe").attr("data-item-id") + "&userId=" + userId + "&viewer=v2");
+        }
+        if ($("#commentModuleContainer").hasClass("displayNone")) {
+            $("#close-container").trigger("click");
+            $("#dashboard-comment").addClass("highlight-icon");
+            $("#comment-module-container-loader-icon").show();
+            openDashboardComment(null);
+            $("#sync_report_viewer").css("width", $(window).width() - 410);
+            $("#sync_report_viewer").data("boldReportViewer")._viewerResize();
+        }
+        else {
+            $("#dashboard-comment").removeClass("highlight-icon");
+            closeDashboardComment();
+            $("#sync_report_viewer").css("width", $(window).width());
+         }
+        }
+
+    function mobileViewAvailable()
+    {
+        if ($("#is_mobile").val() == "true" && '@isUserAuthenticated' == "true") {
+            var reportComment = isReportCommented.toLowerCase() == "true" ? '<a href="javascript:void(0)" class="su su-with-comment server-comment"></a>' : '<a href="javascript:void(0)" class="su su-without-comment server-comment"></a>';
+            var mobileNavBar = '<li class="col-xs-4"> <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a></li><li class="col-xs-4"><a href="javascript:void(0)" class="su su-report active"></a></li><li class="col-xs-4">' + reportComment + '</li>';
+            if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
+                var element = $("#server-mobile-navbar").children().find(".navbar-nav");
+                element.html("");
+                element.append(mobileNavBar);
+            }
+        }
+    }
+
+    function commentImageDialogClose() {
+        $("#commentImage_popup").ejDialog("close");
+        $("#commentImage_popup_image").attr('src', "");
+    }
+
+    function commentSection() {
+        var $ulContainer = $("#sync_report_viewer_toolbarContainer ");
+        $divouter = ej.buildTag("ul.e-reportviewer-toolbarul e-ul e-horizontal ",
+            "",
+            { 'float': 'right' },
+            {});
+
+        if ("@enableExport" == "false") {
+            $("#sync_report_viewer_toolbar_li_export").remove();
+        }
+
+//Render custom icons
+
+        var $lilink = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
+            "",
+            { 'display': 'inline-block', },
+            { 'id': 'sync_report_viewer_toolbar_link', 'title': '[[[Views]]]' });
+
+        var $spanlink = ej.buildTag("span.su-view e-reportviewer-icon",
+                "",
+                {},
+            { 'id': 'sync_report_viewer_toolbar_link' });
+
+
+        if ("@enableComment" == "true") {
+            var $licom = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
+                "",
+                { 'display': 'inline-block', },
+                { 'id': 'sync_report_viewer_toolbar_com', 'title': '[[[Comments]]]' });
+            if ("@Html.Raw(ViewBag.IsReportCommented)" == "true") {
+                var $spancom = ej.buildTag("span.su-with-comment e-reportviewer-icon",
+                    "",
+                    {},
+                    { 'id': 'sync_report_viewer_toolicon_com' });
+            } else {
+                var $spancom = ej.buildTag("span.su-without-comment e-reportviewer-icon",
+                    "",
+                    {},
+                    { 'id': 'sync_report_viewer_toolicon_com' });
+            }
+        }
+
+        var $liedit = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
+            "",
+            { 'display': 'inline-block'},
+            { 'id': 'sync_report_viewer_toolbar_edit', 'title': '[[[Edit Report]]]' });
+
+        var $spanedit = ej.buildTag("span.su-edit e-reportviewer-icon",
+            "",
+            {},
+            { 'id': 'sync_report_viewer_toolbar_edit' });
+
+        // edit
+        if (canEdit == "True") {
+            $divouter.append($liedit);
+            $liedit.append($spanedit);
+
+            $liedit.hover(function () {
+                $liedit.addClass("e-hover");
+            },
+                function () {
+                    $liedit.removeClass("e-hover");
+                });
+
+            $liedit.click(function (e) {
+                window.open(editReportUrl, '_blank');
+            });
+        }
+
+// comment
+        if ("@enableComment" == "true") {
+            $divouter.append($licom);
+            $licom.append($spancom);
+
+            $licom.hover(function () {
+                $licom.addClass("e-hover");
+            },
+            function () {
+                $licom.removeClass("e-hover");
+            });
+
+            $licom.click(function (e) {
+                renderComments();
+            });
+        }
+
+// link
+
+        if ("@enableViews" == "true")
+        {
+            $divouter.append($lilink);
+            $lilink.append($spanlink);
+            if ("@canSaveView" == "false") {
+                $("#save-lable-section").remove();
+            }
+
+            $lilink.hover(function () {
+                $lilink.addClass("e-hover");
+            },
+                function () {
+                    $lilink.removeClass("e-hover");
+                });
+
+            $lilink.click(function (e) {
+                openViews();
+            });
+        }
+
+        $ulContainer.append($divouter);
+        if($("#is_mobile").val() == "true")
+        {
+            if (($(parent.window).width()) < 1400) {
+                $("#sync_report_viewer_toolbar_link").hide();
+                $("#sync_report_viewer_toolbar_edit").hide();
+            }
+        }
+    }
+
+    $(document)
+        .ready(function () {
+            try {
+                sameOrigin = window.parent.location.host == window.location.host;
+            }
+            catch (e) {
+                sameOrigin = false;
+            }
+
+            ReportViewer();
+            reportviewerObj = $("#sync_report_viewer").data("boldReportViewer");
+            loadCustomFonts();
+        });
+
+    var token = "@ViewBag.AccessToken";
+    var isPublic = "@ViewBag.IsPublic";
+    var xServerToken = "@ViewBag.XServerToken";
+    //adding token and itemid in ajax request headers for rendering reports in viewer
+    function OnAjaxRequest(args) {
+        if (isPublic === "true")
+        {
+            args.headers.push({ Key: 'X-Server-Token', Value: xServerToken }, { Key: 'ReportId', Value: item_Id });
+        }
+        else
+        {
+            args.headers.push({ Key: 'Authorization', Value: token }, { Key: 'ReportId', Value: item_Id });
+        }
+    }
+    //adding token and itemid in "form request headers" for export reports in viewer
+    function OnExportClick(args) {
+        if ($("#reportserverapireportid").length) {
+            $("#reportserverapitoken").val(token);
+            $("#reportserverapireportid").val(item_Id);
+        }
+        else {
+            var authorizationToken = document.createElement("input");
+            $(authorizationToken).attr({ "type": "hidden", "id": "reportserverapitoken", "name": "Authorization", "value": token });
+            $(args.exportAction).append(authorizationToken);
+            var reportId = document.createElement("input");
+            $(reportId).attr({ "type": "hidden", "id": "reportserverapireportid", "name": "ReportId", "value": item_Id });
+            $(args.exportAction).append(reportId);
+        }
+    }
+
+    function windowUnload(args) {
+        var viewer = $("#sync_report_viewer").data('boldReportViewer');
+
+        if (viewer && isSubmit) {
+            viewer.clearReportCache();
+        }
+        isSubmit = true;
+    }
+
+    function formSubmit(args) {
+        isSubmit = false;
+    }
+
+    function ReportViewer() {
+        $(document.body).bind('submit', $.proxy(this.formSubmit, this));
+        $(window).bind('beforeunload', $.proxy(this.windowUnload, this));
+        if (viewId != null && viewId != "") {
+            loadReportView();
+        } else {
+            filterParameters = removeLabels(filterParameters);
+                $("#sync_report_viewer")
+                .boldReportViewer(
+                    {
+                        reportServiceUrl: "@reportServerApiUrl" + "/reports",
+                        processingMode: ej.ReportViewer.ProcessingMode.Remote,
+                        reportPath: "@ViewBag.ItemId",
+                        reportServerUrl: "@reportServerApiUrl" + "/reports",
+                        ajaxBeforeLoad: "OnAjaxRequest",
+                        reportExport: "OnExportClick",
+                        exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
+                        isResponsive: true,
+                        reportLoaded: "openComments",
+                        viewReportClick: "ViewReportClick",
+                        renderingComplete: 'filterView',
+                        parameters: filterParameters,
+                        locale: '@language',
+                        fontNames: customFontsName,
+					    parameterSettings: {
+                               labelWidth: 'auto'
+                        },
+                        toolbarSettings: {
+                            items: ej.ReportViewer.ToolbarItems.All
+                        }
+            });
+            if ($("#sync_report_viewer_toolicon_com").length < 1) {
+                commentSection();
+            }
+        }
+    }
+
+    function loadReportView() {
+        var parameter = "";
+        var viewName = "";
+        var canUpdate = false;
+        var link = "";
+        $.ajax({
+            type: "POST",
+            url: getViewParameterUrl,
+            data: { ViewId: viewId, UserId: userId, UserName: userName, itemid: item_Id },
+            success: function (data) {
+                var viewDetails;
+                if (data.viewDetails != null && data.viewDetails != '') {
+                    if (data.isPublic) {
+                        viewDetails = data.viewDetails;
+                        viewName = viewDetails.ViewName;
+                        parameter = viewDetails.QueryString;
+                        canUpdate = viewDetails.CanEdit;
+                    } else {
+                        viewDetails = data.viewDetails;
+                        viewName = viewDetails.ViewName;
+                        parameter = viewDetails.QueryString;
+                        canUpdate = viewDetails.CanEdit;
+                    }
+                }
+                else {
+                    window.location.href = ((window.location.origin + window.location.pathname));
+                }
+
+                if (parameter != null && parameter != '') {
+                    var encodeParams = encodeURIComponent(parameter);
+                    parameter = JSON.parse('[' + decodeURIComponent(encodeParams) + ']');
+                    parameter = removeLabels(parameter);
+                } else {
+                    window.location.href = ((window.location.origin + window.location.pathname));
+                }
+                $("#sync_report_viewer")
+                    .boldReportViewer({
+                        reportServiceUrl: "@reportServerApiUrl" + "/reports",
+                        processingMode: ej.ReportViewer.ProcessingMode.Remote,
+                        reportPath: "@ViewBag.ItemId",
+                        reportServerUrl: "@reportServerApiUrl" + "/reports",
+                        ajaxBeforeLoad: "OnAjaxRequest",
+                        reportExport: "OnExportClick",
+                        exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
+                        reportLoaded: "openComments",
+                        viewReportClick: "ViewReportClick",
+                        renderingComplete: 'filterView',
+                        locale: '@language',
+                        fontNames: customFontsName,
+                        parameters: parameter,
+						 parameterSettings: {
+                               labelWidth: 'auto'
+                        },
+                        toolbarSettings: {
+                            items: ej.ReportViewer.ToolbarItems.All
+                        }
+                    });
+                $("#current-view").show();
+                $("#current-view").html("");
+                if (canUpdate) {
+                    $("#saved-filter-update").show();
+                    $("#update-view").addClass("pointer-events");
+                    $("#update-view").css("opacity", 0.5);
+                } else {
+                    $("#saved-filter-Saveas").show();
+                }
+                if (enableComment.toString().toLowerCase() == "true") {
+                    $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").removeClass("pointer-events");
+                    $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").css("opacity", 1);
+                } else {
+                    $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").addClass("pointer-events");
+                    $("#new-save,#saved-filter-update,#saved-filter-Saveas,#save-filter,#filter_name").css("opacity", 0.5);
+                }
+                $("#nofilters").css("display", "none");
+                $("#save-lable-section label").html("");
+                link = '<a class="saved-view-link txt-overflow" href="' +
+                    pageurl +
+                    '?viewid=' +
+                    viewId +
+                    '" target="_blank" data-toggle="tooltip" data-original-title="' + viewName + '">' +
+                    viewName +
+                    '</a>';
+                $("#save-lable-section label").append(link);
+                $("#save-lable-section").show();
+                $("#new-save").hide();
+                $("#unsaved-filter,#unsaved-filter-title").show();
+                $('.saved-view[viewid="' + viewId + '"').css("background-color", "#f9f9f9");
+                if ($("#sync_report_viewer_toolicon_com").length < 1) {
+                    commentSection();
+                }
+            },
+            error: function () {
+                window.location.href = ((window.location.origin + window.location.pathname));
+            }
+        });
+    }
+
+        function removeLabels(parameter) {
+            if (parameter !== null && parameter !== undefined && parameter.length > 0) {
+                for (i = 0; i < parameter.length; i++) {
+                    delete parameter[i]["labels"];
+                }
+            }
+            return parameter;
+    }
+
+    function loadCustomFonts() {
+            @if (ServerAppConfig.CustomFont != null && ServerAppConfig.CustomFont.Count > 0)
+            {
+                foreach (var font in ServerAppConfig.CustomFont)
+                {
+                    @:customFontsName.push("@font.Key");
+                    @:addCustomFonts("@font.Key", "@font.Value");
+                }
+            }
+    }
+
+        function isFontFaceExist() {
+            try {
+                return FontFace ? true : false;
+            } catch (error) {
+                return false;
+            }
+        }
+
+    function addCustomFonts(fontFamily, fontFile) {
+        var customFontUrl = baseUrl + "/content/custom-fonts/" + fontFile;
+            if (isFontFaceExist()) {
+                try {
+                    const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
+                    customFont.load().then(function (loadedFont) {
+                        document.fonts.add(loadedFont);
+                    }).catch(function (error) {
+                        console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                    });
+                } catch (error) {
+                    console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                }
+            } else {
+                //Classic Approach Common for all browsers to load fonts
+                try {
+                    const style = document.createElement('style');
+                    style.innerHTML = '@@font-face { font-family:' + fontFamily + '; src: url(' + customFontUrl + ');}';
+                    document.head.appendChild(style);
+
+                    var link = document.createElement('link');
+                    link.setAttribute('rel', 'stylesheet');
+                    link.setAttribute('type', 'text/css');
+                    link.setAttribute('href', customFontUrl + fontFile);
+                    document.head.appendChild(link);
+                } catch (error) {
+                    console.log('Failed to register stylesheet for the font: ' + fontFamily + '; Error: ' + error);
+                }
+            }
+        }
+
+</script>

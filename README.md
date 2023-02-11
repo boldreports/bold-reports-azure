@@ -1,20 +1,20 @@
-# Bold Reports On-Premise Edition
+This v4.2.53 version contains v4.2.52 features and below additional improvements.
 
- The Bold Reports On-Premise Edition is an end-to-end solution for creating, managing and sharing interactive business Reports. The Bold Reports gives a complete solution for enterprise reporting. It shuns proprietary reporting standards, and builds the open Report Definition Language (RDL) specification by using products such as the SQL Server. Reporting Server comes with a designer and a rich deployment environment, that provides support for a variety of platforms, out of the box.
- 
- Deploying of Bold Reports On-Premise Edition can be done in Windows and Azure App Service.
+# Bold Reports Improvements 
 
- Learn how to deploy the Bold Reports On-Premise Edition in Windows client and server OS machines [here](https://redirect.boldbi.com/?id=4017).
+### 1. Authenticate with Azure AD B2C service.
 
-## Deploy Bold Reports On-Premise Edition as Azure Web App using ARM Template
+We integrated the support in bold reports server to import the user from Azure AD B2C service. Please follow the below steps to import the users into report server
 
-This repository holds the Azure App Service package of the Bold Reports which you can deploy in the Azure using ARM templates to spin a Bold Reports On-Premise Edition instance. It holds the package according to the release versions of the main application.
 
->**Note**: This repository holds Bold Reports Azure App Service package from version v1.1.0.x
+* Login to the report server, then navigate to this settings URL({Bold Reports application URL}/ums/administration/sso?view=azure-ad-b2c-settings)
 
-New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://redirect.boldbi.com/?id=4018).
+* Add and save your B2C settings.
 
-## Reference Link
+* Logout the report server.
 
-* [Documentation](https://redirect.boldbi.com/?id=4007)
-* [Feature tour](https://www.boldreports.com/features)
+* In login page you will find the button for “Azure AD B2C” then click and proceed for login.
+
+* Now, you will get the B2C service login page, provide your credential and proceed login.
+
+* On successful authentication, the user will be added to the report server, and you will be redirected to the report server home page.

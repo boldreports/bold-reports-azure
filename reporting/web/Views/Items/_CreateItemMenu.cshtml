@@ -1,0 +1,243 @@
+﻿@{
+    Layout = null;
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isItemPageRequested = (requestUrl.AbsolutePath == "/" || requestUrl.AbsolutePath == Url.Content("~/") || requestUrl.ToString().IndexOf("/reports", StringComparison.CurrentCultureIgnoreCase) > 0 || requestUrl.ToString().IndexOf("/data-sources", StringComparison.CurrentCultureIgnoreCase) > 0 || requestUrl.ToString().IndexOf("/datasets", StringComparison.CurrentCultureIgnoreCase) > 0 || requestUrl.ToString().IndexOf("/schedules", StringComparison.CurrentCultureIgnoreCase) > 0) && !isMobile;
+    var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
+    var itemPermissions = Model as Dictionary<ItemType, bool>;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var showImport = requestUrl.LocalPath.ToLower() == Url.Action("Reports", "Reports");
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+<script>
+    var isDraftExistUrl = "@Url.Action("IsDraftExist", "items")";
+    var dashboardDesignerUrl = "@Url.Action("ReportDesigner", "Designer")";
+    var createDatasetUrl = "@Url.Action("CreateDataSet", "DataSets")";
+    var createNewDatasourceUrl = "@Url.Action("CreateDataSource", "DataSources")";
+    var addReportIframeUrl = "@Url.Action("addreport", "reports")";
+    var addDatasetUrl = "@Url.Action("AddDataset", "DataSets")";
+     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+</script>
+
+<div id="create-item-container">
+    <aside class="create-menu create-menu-effect">
+        <div class="create-dashboard-section col-xs-12">
+            <div class="create-dashboard-header-section col-xs-12 no-padding">
+                <div class="create-dashboard-header-title">
+                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report] || (itemPermissions.ContainsKey(ItemType.Dataset) && (itemPermissions[ItemType.Dataset])) || (itemPermissions.ContainsKey(ItemType.Datasource) && (itemPermissions[ItemType.Datasource])) || (itemPermissions.ContainsKey(ItemType.Schedule) && (itemPermissions[ItemType.Schedule])))
+                    {
+                        <label>[[[Create Report]]]</label>
+                    }
+                    else
+                    {
+                        <label>[[[Support Request]]]</label>
+                    }
+                </div>
+            </div>
+            <div class="create-item-body-section col-xs-12 no-padding">
+                <ul class="col-xs-12 no-padding">
+                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report])
+                    {
+                        <li class="create-dashboard-scratch">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/blank-dashboard.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Start from Scratch]]]</label><br>
+                                    <span>[[[Start with a new report.]]]</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        if (ServerAppConfig.IsSelfHosted && isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report] && showImport)
+                        {
+                            <li class="deploy-template-dashboard add-sample-button">
+                                <div class="create-item-list-section">
+                                    <div class="create-item-list-icon" style="float: left;">
+                                        <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/template-dashboard.svg">
+                                    </div>
+                                    <div class="create-item-list-title">
+                                        <label>[[[Sample Reports]]]</label><br>
+                                        <span>[[[Explore the sample reports gallery.]]]</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="upload-report" data-action="Upload">
+                                <div class="create-item-list-section">
+                                    <div class="create-item-list-icon" style="float: left;">
+                                        <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/upload-report.svg">
+                                    </div>
+                                    <div class="create-item-list-title">
+                                        <label>[[[Upload Report]]]</label><br>
+                                        <span>[[[Upload your RDL file to the server.]]]</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+
+                    @if (!ServerAppConfig.IsSelfHosted && isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report])
+                    {
+                        <li id="upload-report" data-action="Upload">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/upload-report.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Upload Report]]]</label><br>
+                                    <span>[[[Upload your RDL file to the server.]]]</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                    @if (!ServerAppConfig.IsSelfHosted)
+                    {
+                        <li class="request-concierge-support">
+                            <a href="@ServerAppConfig.AppSettings.Syncfusion.Support.CreateTicket" target="_blank" class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/support.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Support]]]</label><br>
+                                    <span>[[[Having trouble? Contact our dedicated support team now]]]</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="create-item-section col-xs-12">
+            <div class="create-item-body-section col-xs-12 no-padding">
+                <ul class="col-xs-12 no-padding">
+                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Category) && itemPermissions[ItemType.Category] && showImport)
+                    {
+                <li id="add-new-category">
+                    <div class="create-item-list-section">
+                        <div class="create-item-list-icon" style="float: left;">
+                            <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/create-category.svg">
+                        </div>
+                        <div class="create-item-list-title">
+                            <label>[[[Create Category]]]</label><br>
+                            <span>[[[Create a new category and categorize your reports.]]]</span>
+                        </div>
+                    </div>
+                </li>}
+                    <environment include="Development,CloudDevelopment">
+                        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js"></script>
+                    </environment>
+                    <environment exclude="Development,CloudDevelopment">
+                        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js"></script>
+                    </environment>
+                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Datasource) && itemPermissions[ItemType.Datasource])
+                    {
+                        <li id="create-New-datasource-connection">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/create-dataset.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Create Datasource]]]</label><br>
+                                    <span>
+                                        [[[Create a new data source from
+                                        connectors and build report.]]]
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    }                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Dataset) && itemPermissions[ItemType.Dataset])
+                    {
+                        <li id="create-dataset-connection">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/create-dataset.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Create Dataset]]]</label><br>
+                                    <span>
+                                        [[[Create a new data set from
+                                        connectors and build report.]]]
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="upload-dataset-connection" data-action="Upload">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/upload-dataset.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Upload Dataset]]]</label><br>
+                                    <span>
+                                        [[[Upload your existing RSD file
+                                        to the server.]]]
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Schedule) && itemPermissions[ItemType.Schedule] && itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && itemsCount[ItemType.Report] > 0)
+                    {
+                        <li id="create_schedule">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/create-schedule.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Schedule]]]</label><br>
+                                    <span>
+                                        [[[Monitor your data in order
+                                        to recognize emerging trends]]]
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </aside>
+</div>
+<div id="create-menu-backdrop" style="display: none;"></div>
+<div id="save-draft-container" class="e-control e-popup e-popup-close">
+    <form id="save-draft-form" name="saveDraftForm">
+        <div class="save-draft-content-section">
+            <div class="save-draft-title">[[[Let's start with a name for your report.]]]</div>
+            <div class="row save-draft-input-section">
+                <div class="col-xs-12 save-draft-input-segment">
+                    <span>
+                        <input class="save-draft-input" id="save-draft-input" name="dashboardName" maxlength="255" tabindex="1" data-msg-containerid="plugin_validation" />
+                    </span>
+                    <span id="validate-dashboard-name" class="validation-message"></span>
+                    <div id="plugin_validation" class="validation-message"></div>
+                </div>
+            </div>
+            <div class="save-draft-note">
+                [[[All reports are auto-saved as drafts for you to continue where you left off. Publishing a report must be done manually.]]]
+            </div>
+        </div>
+    </form>
+</div>
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-item-menu.css" />
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-item-menu.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-item-menu.min.css" />
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-item-menu.min.js"></script>
+</environment>
+<div id="create-dataset-popup" class="no-padding" style="display:none">
+    <iframe id="create-dataset-iframe" class="create-dataset-iframe"></iframe>
+</div>
+<div id="report_popup" class="col-md-12" style="display:none">
+    <iframe id="report_iframe" class="EditIframe"></iframe>
+</div>
+<div id="addDataSetDom" style="display:none">
+    <iframe id="dataset_popup" class="dataSetDialog EditIframe"></iframe>
+</div>
+<div id="select_datasource_popup" class="col-md-12" style="display:none">
+    <iframe id="datasource_iframe" class="EditIframe"></iframe>
+</div>
