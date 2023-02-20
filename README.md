@@ -10,10 +10,6 @@
 * [Kubernetes](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-kubernetes/)
 * [Docker](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-docker/)
  
- Deploying of Bold Reports On-Premise Edition can be done in Windows and Azure App Service.
-
- Learn how to deploy the Bold Reports On-Premise Edition in Windows client and server OS machines [here](https://redirect.boldbi.com/?id=4017).
-
 ## Deploy Bold Reports On-Premise Edition as Azure Web App using ARM Template
 
 This repository holds the Azure App Service package of the Bold Reports which you can deploy in the Azure using ARM templates to spin a Bold Reports On-Premise Edition instance. It holds the package according to the release versions of the main application.
