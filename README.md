@@ -18,6 +18,10 @@ This repository holds the Azure App Service package of the Bold Reports which yo
 
 New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/azure-app-service/using-arm-template/).
 
+## Deploy Bold BI Enterprise Edition and Bold Reports Enterprise in Azure Web App using ARM Template
+To deploy both Bold BI and Bold Reports on a single Azure App Service, kindly use the following repository. <br/>
+https://github.com/boldbi/bi_and_reports_azure-arm-template
+
 ## Reference Link
 
 * [Documentation](https://help.boldreports.com/enterprise-reporting/administrator-guide/application-startup/)
