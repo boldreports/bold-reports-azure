@@ -1,0 +1,19 @@
+﻿@{
+    var hasBoldBIOnPremise = ViewData["hasBoldBIOnPremise"].ToString() == "True";
+    var hasBoldReportsOnPremise = ViewData["hasBoldReportsOnPremise"].ToString() == "True";
+    var isCommonDeployment = ViewData["isCommonDeployment"].ToString() == "True";
+}
+<div class="@(@isCommonDeployment || @hasBoldReportsOnPremise ? "show" : "hide")">
+    <div class="sub-section col-xs-12 no-padding font-section @(!@isCommonDeployment && @hasBoldReportsOnPremise ? "remove-section" : "")">
+        <h3 class="title sub-section-heading">[[[Fonts]]]</h3>
+        <div class="form-group section-content-first">
+            @Html.Label("font-style", "[[[Font Style]]]", new { @class = "app-textbox-label" })
+            <p class="upload-link-btn">
+                <a href="javascript:void(0)" onclick="onUploadFontDialogOpen()" title="[[[Upload the font file here.]]]">[[[Add a new font]]]</a>
+            </p>
+            <div class="admin-settings-drop-down col-lg-12 no-padding section-dropdown-content-first">
+                @Html.DropDownList("fontfamily", ViewBag.FontList as IEnumerable<SelectListItem>, new { id = "fontfamily", @class = "form-control", data_none_results_text = "[[[No results match]]]", data_size = "5", data_live_search = "false" })
+            </div>
+        </div>
+    </div>
+</div>

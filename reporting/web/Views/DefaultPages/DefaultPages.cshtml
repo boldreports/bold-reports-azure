@@ -1,0 +1,96 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var model = ViewBag.Permissions as Dictionary<ItemType, bool>;
+    var itemType = ViewBag.ItemType;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var fileName = itemType.ToString().ToLower() + ".svg";
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var displayName = Context.Session.GetString("displayname") != null ? Context.Session.GetString("displayname") : string.Empty;
+    var hasDashboards = (itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && (itemsCount[ItemType.Report] > 0));
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/default-pages.css" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/default-pages.min.css" />
+</environment>
+<script>
+    var dashboardItemCount = "@itemsCount[ItemType.Report]";
+</script>
+<link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+<div class="col-xs-12 defafult-pages-container no-padding">
+    <div class="default-pages">
+        <img class="default-pages-dashboard-image" src="@(GlobalAppSettings.CdnDomain)/static/default-pages/v1/@fileName">
+        <h1 class="default-pages-header">@(itemType == ItemType.Report ? "[[[Reports]]]" : itemType == ItemType.Schedule ? "[[[Schedules]]]" : itemType == ItemType.Datasource ? "[[[Data Sources]]]" : "[[[Datasets]]]")</h1>
+
+        @if (itemType == ItemType.Report)
+        {
+            <p class="default-pages-message">[[[Report Server is a web-based report management solution that provides an end-to-end solution for creating, storing, managing, sharing, and]]] <br /> [[[scheduling reports from any desktop or mobile browser.]]]</p>
+            if (!isMobile && model != null && model.ContainsKey(ItemType.Report) && model[ItemType.Report])
+            {
+                <button class="sf-primary-button app-btn-primary" data-action="create-items">[[[Create my first Report]]]</button>
+                <div class="dashboard-notification">
+                    <img class="stacked-column" src="@(GlobalAppSettings.CdnDomain)/static/default-pages/v1/report-notification.svg">
+                    <div class="dashboard-main">
+                        <h2 class="default-pages-header">[[[Report Samples]]]</h2>
+                        <span class="notification-close su-close"></span>
+                        <p class="message">[[[Explore our features and see what]]] @(GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier ? "Syncfusion" : "Bold Reports") [[[is capable of with our sample reports.]]]</p>
+                        <div class="explore">
+                            <a class="sf-nav-link">
+                                [[[Explore]]]
+                                <span class="arrow su-arrow-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else if (itemType == ItemType.Datasource)
+        {
+            <p class="default-pages-message">[[[Build your data source from]]] Microsoft SQL Server, Oracle, OLEDB, ODBC, <br /> Web API, MySQL, PostgreSQL,[[[ and more.]]]</p>
+            if (!isMobile && model != null && model.ContainsKey(ItemType.Datasource) && model[ItemType.Datasource])
+            {
+                 <button class="cd-btn sf-primary-button app-btn-primary" value="datasource-but">[[[Create my first Data Source]]]</button>
+            }
+        }
+        else if (itemType == ItemType.Dataset)
+        {
+            <p class="default-pages-message">[[[A data set is a collection of data. Most commonly, a data set corresponds to the contents of a]]] <br /> [[[single database table, or a single statistical data matrix.]]]</p>
+            if (!isMobile && model != null && model.ContainsKey(ItemType.Dataset) && model[ItemType.Dataset])
+            {
+                 <button class="cds-btn sf-primary-button app-btn-primary">[[[Create my first Dataset]]]</button>
+            }
+        }
+        else if (itemType == ItemType.Schedule)
+        {
+            if (hasDashboards)
+            {
+                <p class="default-pages-message">[[[Schedule your reports to export them and send them through email.]]]</p>
+            }
+            else
+            {
+                <p class="default-pages-message">
+                    [[[Report Server enables you to schedule your reports and distribute them according to a recurring scheduled interval.]]] <br />
+                    [[[This is the best way to make sure you're never caught off guard by your data. To setup a schedule, you need to create a report first.]]]
+                </p>
+            }
+
+            if (!isMobile)
+            {
+                if (hasDashboards)
+                {
+                    if (model != null && model.ContainsKey(ItemType.Schedule) && model[ItemType.Schedule])
+                    {
+                        <button class="sf-primary-button app-btn-primary create-schedule">[[[Create Schedule]]]</button>
+                    }
+                }
+                else if (model != null && model.ContainsKey(ItemType.Report) && model[ItemType.Report])
+                {
+                    <button class="sf-primary-button app-btn-primary" data-action="create-items">[[[Create Report]]]</button>
+                }
+            }
+        }
+    </div>
+</div>

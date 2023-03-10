@@ -1,0 +1,100 @@
+﻿@using Newtonsoft.Json
+@inject ServerPrincipal _identityResponse
+@{
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+
+    ViewBag.Title = "[[[Administration]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.MessageBox = false;
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isADPage = requestUrl.ToString().IndexOf("/administration/user-directory-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var isEmailPage = requestUrl.ToString().IndexOf("e-mail-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var isAccountsPage = requestUrl.ToString().IndexOf("user-settings", StringComparison.CurrentCultureIgnoreCase) > 0;
+    ViewBag.HelpSiteUrl = isEmailPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.EmailSettings) : isADPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AzureAdSettings) :
+         isAccountsPage ? GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AccountSiteSettings) : GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SiteSettings);
+    var isSitesPage = requestUrl.ToString().IndexOf("/administration/site", StringComparison.CurrentCultureIgnoreCase) > 0 || requestUrl.ToString().IndexOf("/administration", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
+    var isAdmin = _identityResponse.IsAdmin;
+}
+
+@section styles{
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/site-settings.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-database-import.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/site-settings.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-database-import.min.css" />
+    </environment>
+}
+
+
+@section scripts{
+
+    <script>
+        serverApp.controller("adSettingsController", ["$scope", function ($scope) {
+            $scope.regex = '^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/[a-zA-Z0-9]+[a-zA-Z0-9]*(\.[a-z]{2,8})?)*?$';
+            $scope.distinguishedNameRegex = /^(\w+[=]{1}[a-zA-Z0-9-_\s]+)([\,{1}]\w+[=]{1}[a-zA-Z0-9-_\s]+)*$/;
+        }]);
+
+    </script>
+
+    <script type="text/javascript">
+    var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
+    var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
+    var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
+    var updateSiteSettingsUrl = "@Url.Action("UpdateSystemSettings", "Administration")";
+    var setLanguageUrl = "@Url.Action("SetLanguage", "Administration")";
+    var isAzureApplication = "@isAzureApplication".toLowerCase();
+    var isSelfHosted = "@ServerAppConfig.IsSelfHosted";
+
+    $(function() {
+        $(document).click(function(e){
+            if (e.target.id !== "error_icon") {
+                $("#ssl-help-message").hide();
+            }
+        });
+    });
+    </script>
+
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/site-settings.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/site-settings.min.js"></script>
+    </environment>
+
+}
+
+
+@section MainSection{
+    @await Html.PartialAsync("_AdminMenu")
+    @await Html.PartialAsync("_DialogBox")
+    @if (isSitesPage && !isADPage)
+    {
+        @await Html.PartialAsync("_SiteSettings")
+    }
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        @await Html.PartialAsync("_EmailSettings")
+        @await Html.PartialAsync("_AccountSettings")
+    }
+    @if (isADPage)
+    {
+        @await Html.PartialAsync("_ActiveDirectorySettings")
+    }
+
+    @if (!ViewBag.ThirdPartyLogins || !ViewBag.WhiteLabel || !ViewBag.CustomDomain)
+    {
+        @await Html.PartialAsync("~/Views/UnlockFeatures/UnlockFeatures.cshtml")
+    }
+
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+
+}

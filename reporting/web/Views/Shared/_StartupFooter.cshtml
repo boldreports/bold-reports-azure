@@ -1,0 +1,36 @@
+﻿<div id="base-footer-div">
+    @using i18n.Core.Abstractions.Domain
+    @using Microsoft.AspNetCore.Builder;
+    @inject RequestLocalizationOptions _localizationOptions
+    @{
+        var globalAppSettings = _globalAppSettings;
+        var tenantAppConfig = new TenantAppConfiguration(globalAppSettings);
+        }
+        <footer>
+            <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding layout-footer no-margin">
+                <div class="col-xs-12 col-md-2 col-sm-4 col-lg-3 dropup no-padding language-area no-margin pull-left">
+                    <div class="no-padding col-sm-12 no-margin pull-left" id="lang_menu">
+                         <p class="no-margin pull-left" id="copyrightinfo"> @Html.Raw(globalAppSettings.SystemSettings.CopyrightInformation.Replace("$$CurrentYear$$", DateTime.Now.Year.ToString()))</p>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-10 col-sm-8 col-lg-9 no-padding no-margin pull-right" id="enablefooter">
+                    @if (globalAppSettings.SystemSettings.IsShowPoweredBySyncfusion)
+                    {
+                        <p class="no-margin pull-right" id="poweredbysyncfusion">
+                            [[[Powered by]]]
+                            @if (globalAppSettings.SystemSettings.StorageType == (int)StorageType.AzureBlob)
+                            {
+                                <img src="@globalAppSettings.AzureBlob.AzureBlobStorageUri.TrimEnd('/')/@globalAppSettings.AzureBlob.AzureBlobStorageContainerName/@tenantAppConfig.GetStorageMode()/content/images/application/footer_logo.png" alt="syncfusion" width="102px" height="22px">
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/content/images/application/footer_logo.png")" alt="Syncfusion" width="110px" height="25px">
+                            }
+                        </p>
+                    }
+                </div>
+            </div>
+        </footer>
+    </div>
+
