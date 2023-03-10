@@ -1,0 +1,10 @@
+﻿<div class="cds-footer-container" ng-controller="dataSetFooterCtrl">
+    <div ng-if="isDataSourceList">
+        <button type="button" class="cds-footer-back-btn secondary-button app-btn-secondary" ng-click="onBackBtnClick()">Back</button>
+        <button type="button" ng-disabled="!dataSourceName" class="cds-footer-connect-btn primary-button app-btn-primary" ng-click="onConnectBtnClick()">Connect</button>
+    </div>
+    <div ng-if="!isDataSourceList">
+        <button type="button" class="cds-footer-back-btn secondary-button app-btn-secondary" ng-click="onDataSetFormBackBtnClick()">Back</button>
+        <button type="button" class="cds-footer-proceed-btn primary-button app-btn-primary" ng-click="onProceedBtnClick()">Proceed to Query Designer</button>
+    </div>
+</div>

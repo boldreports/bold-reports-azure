@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+    bool isParameterHidden = false;
+    var hasdependent = "";
+    var hasdependentValue = "";
+    var hasdependentboolValue = "";
+    var showHiddenParameter = "";
+    bool hiddenParameter = false;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+@using BoldReports.Web
+@model List<ReportParameterInfo>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.css" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.min.css" />
+</environment>
+<body>
+    <input type="hidden" value="@ViewBag.Username" id="userName" />
+    <div class="col-sm-12 col-xs-12 no-padding parameter-popup-body" id="parameters-panel">
+        @foreach (var parameter in @Model)
+        {
+            foreach (var param in ViewBag.ReportParameter)
+            {
+                if (param.Name == parameter.Name)
+                {
+                    isParameterHidden = param.Hidden == false ? parameter.Values.Count == 0 ? false : param.UseDefault : param.Hidden;
+                    hiddenParameter = param.Hidden == null ? false : param.Hidden;
+                    showHiddenParameter = hiddenParameter ? "none" : "block";
+                }
+            }
+            hasdependent = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependent" : "";
+            hasdependentValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentValue" : "";
+            hasdependentboolValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentboolValue" : "";
+        <div class="col-sm-12 col-xs-12 no-padding">
+            @if (parameter.Prompt == null)
+            {
+                <div class="col-sm-2 col-xs-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Name</label></div>
+            }
+            else
+            {
+                <div class="col-sm-2 col-xs-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Prompt</label></div>
+            }
+            @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
+            {
+                <div class="col-sm-4 col-xs-4 parameter-input" style="display:@showHiddenParameter;">
+                    <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" data-size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
+                        @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
+                        {
+                            foreach (var parameterData in parameter.ReportParameterData)
+                            {
+                                <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+            else if (parameter.DataType == ParamType.Boolean || parameter.ElementType == ElementType.RadioButton)
+            {
+                <div class="col-sm-4 col-xs-4 boolean parameter-input parameter-boolean" style="display:@showHiddenParameter;">
+                    <div class="col-sm-5 col-xs-5">
+                        <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
+                        <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <input id="false-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="false" @(isParameterHidden ? "disabled" : "")>
+                        <label for="false" class="pointer normal-font notransition">[[[False]]]</label>
+                    </div>
+                </div>
+            }
+            else if (parameter.DataType == ParamType.DateTime && parameter.ElementType == ElementType.DateTime)
+            {
+                <div class="col-sm-4 col-xs-4 parameter-input parameter-datetime" style="padding-left: 6px; display:@showHiddenParameter;">
+                    <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                </div>
+            }
+            else
+            {
+                if (parameter.Values != null)
+                {
+                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                        <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count> 0? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                        <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",",  new List<string>() )" @(isParameterHidden ? "disabled" : "")>
+                    </div>
+                }
+            }
+        <div class="page-indent text" style="display:@showHiddenParameter;">
+            @if (parameter.Values == null || !parameter.Values.Any())
+            {
+                @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default", disabled = "true" })
+                @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
+                <div class="parameter-tool-tip">
+                    <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                    <div class="dropdown-menu" id="parameter" role="menu">[[[There is no default value configured for this parameter.]]]</div>
+                </div>
+            }
+            else
+            {
+                @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
+                @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
+            }
+        </div>
+            <div class="col-sm-4 col-xs-4 no-padding validate-error" id="@parameter.Name-error-container" style="display:@showHiddenParameter;">
+                <div id="@parameter.Name-parameter-validator"></div>
+            </div>
+        </div>
+        }
+    </div>
+</body>
+</html>
+<script>
+    window.parameterObj = @Html.Raw(Json.Serialize(Model));
+    window.reportparameterObj = @Html.Raw(Json.Serialize(ViewBag.ReportParameter));
+    window.reportparameterDefaultValue = @Html.Raw(Json.Serialize(ViewBag.DefaultValues));
+    window.reportParamType = {
+        Boolean: @((int)ParamType.Boolean),
+        DateTime:  @((int)ParamType.DateTime),
+        Float:  @((int)ParamType.Float),
+        Integer: @((int)ParamType.Integer),
+        String:  @((int)ParamType.String),
+    };
+    window.reportElementType = {
+        MultiValue:  @((int)ElementType.MultiValue),
+        RadioButton: @((int)ElementType.RadioButton),
+        DateTime: @((int)ElementType.DateTime),
+        ComboBox: @((int)ElementType.ComboBox),
+        Textbox: @((int)ElementType.Textbox),
+        Checkbox: @((int)ElementType.Checkbox),
+    };
+    window.reportParameterType = {
+        String: @((int)BoldReports.RDL.DOM.DataTypes.String),
+        Boolean:  @((int)BoldReports.RDL.DOM.DataTypes.Boolean),
+        DateTime:  @((int)BoldReports.RDL.DOM.DataTypes.DateTime),
+        Integer: @((int)BoldReports.RDL.DOM.DataTypes.Integer),
+        Float:  @((int)BoldReports.RDL.DOM.DataTypes.Float),
+        Decimal: @((int)BoldReports.RDL.DOM.DataTypes.Decimal),
+    };
+</script>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.min.js"></script>
+</environment>

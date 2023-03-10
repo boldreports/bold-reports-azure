@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "_SaveView";
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<!DOCTYPE html>
+<html class="dashboard-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/save-view.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/save-view.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    @if (ViewBag.ViewerType == "v2")
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/save-view-v2.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/save-view-v2.min.js"></script>
+        </environment>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/save-view.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/save-view.min.js"></script>
+        </environment>
+    }
+
+    <script type="text/javascript">
+        var rootUrlAction = "@Url.Action("", "")";
+        var addViewUrl = { "web": "@Url.Action("onfiltersave", "ReportViews")", "api": "/items/views/add" };
+        var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
+
+        var sameOrigin;
+        try {
+            sameOrigin = window.parent.location.host == window.location.host;
+        }
+        catch (e) {
+            sameOrigin = false;
+        }
+    </script>
+</head>
+<body class="no-margin">
+    <div id="save-view-container" class="dialog">
+        <div class="col-md-12 dialog-header">
+            <span class="su su-view Head-icon"></span>
+            <span class="PopupTitle">[[[Save View]]]</span>
+            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="closeSaveViewPopup()"><span class="su su-close"></span></a>
+        </div>
+        <span id="user-name" type="hidden" value="@ViewBag.userName"></span>
+        <span id="user-id" type="hidden" value="@ViewBag.userId"></span>
+        <form name="save-view-form" id="save-view-form" class="dialog-body col-xs-12 no-padding">
+            <div>
+                <div class="col-xs-12 padding20 no-bottom-padding" id="item-name-division">
+                    <div class="col-xs-4 no-padding text-right text-label">[[[Name]]]<span class="mandatory">*</span></div>
+                    <div class="col-xs-1 no-padding"></div>
+                    <div class="col-xs-7 no-padding">
+                        <input type="text" id="view-name" name="viewnewname" maxlength="255" class="form-control site-orgname-fields text" />
+                        <span class="validation-errors"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-xs-12 dialog-footer no-right-padding no-left-padding" id="action-button-division">
+            <div class="rightAlign">
+                <input type="button" title="" id="save-button" class="btn primary-button app-btn-primary" value=[[[Save]]] />
+                <input type="button" id="cancel-button" title="" class="btn secondary-button app-btn-secondary" value="[[[Cancel]]]" onclick="closeSaveViewPopup()" />
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var dashboardViewWaitingPopupTemplateId = createLoader("dashboard-view-toogle");
+            parent.$("#dashboard-view-toogle").ejWaitingPopup({ template: $("#" + dashboardViewWaitingPopupTemplateId) });
+            parent.$("#save-view-popup_wrapper").ejWaitingPopup("hide");
+        });
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+</body>
+</html>
+
+

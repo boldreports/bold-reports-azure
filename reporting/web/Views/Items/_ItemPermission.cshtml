@@ -1,0 +1,410 @@
+﻿@model Tuple<List<ItemUsers>, List<ItemUsers>>
+@inject ServerPrincipal _identityResponse
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isAdmin = _identityResponse.IsAdmin;
+
+    var itemUrl = string.Empty;
+
+    if (ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString())
+    {
+        itemUrl = Url.Action("Index", "FileRender", new { itemid = ViewBag.ItemId, category = ViewBag.CategoryName, dashboard = ViewBag.Name }, requestUrl.Scheme);
+    }
+    else if (ViewBag.ItemType.ToString() == ItemType.Slideshow.ToString())
+    {
+        itemUrl = Url.Action("SlideshowPreview", "Slideshow", new { itemId = ViewBag.ItemId, slideshowName = ViewBag.Name }, requestUrl.Scheme);
+    }
+}
+
+<!DOCTYPE html>
+<html class="dashboard-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>[[[Manage Permission]]]</title>
+    <script>
+        var deleteuserPermissionUrl = "@Url.Action("DeleteUserItemPermission", "permission")";
+        var deleteGroupPermissionUrl = "@Url.Action("DeleteGroupItemPermission", "permission")";
+        var getItemUserPermissionUrl = "@Url.Action("ItemUserPermissionList", "items")";
+        var getItemGroupPermissionUrl = "@Url.Action("ItemGroupPermissionList", "items")";
+        var addnewpermissionUrl = "@Url.Action("AddItemPermission", "Permission")";
+        var isPresentEmailId = "@Url.Action("IsPresentEmailId", "UserManagement")";
+        var postactionUrl = "@Url.Action("postaction", "UserManagement")";
+        var checkMailSettingUrl = "@Url.Action("checkmailsettingsexist", "Administration")";
+        var isUsernameExistsUrl = "@Url.Action("IsUsernameExists", "UserManagement")";
+        window.accessList = "@Html.Raw(ViewBag.PermissionAccess)";
+        window.userList = "@Html.Raw(ViewBag.allUser)";
+        window.groupList = "@Html.Raw(ViewBag.allGroup)";
+        var isAdmin = "@isAdmin";
+        var itemTypeForUrl = "@Html.Raw(@ViewBag.ItemType)";
+    </script>
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/itempermission.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itempermission.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/itempermission.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itempermission.min.js"></script>
+    </environment>
+
+
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+
+</head>
+
+<body class="overflow-none permission-popup" id="permission-container">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog col-lg-12 popup-header no-padding" role="document">
+
+            <div class="modal-content col-lg-12" id="popup-container" data-spy="scroll">
+
+                <div class="col-lg-12 modal-header">
+                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 no-padding">
+                        @if (ViewBag.IsOwner)
+                        {
+                            <span class="su su-manage-permission head-icon col-lg-1 col-xs-1 col-sm-1 col-md-1 header-icon"></span>
+                        }
+                        else
+                        {
+                            <span class="su su-view-permission head-icon col-lg-1 col-xs-1 col-sm-1 col-md-1 header-icon"></span>
+                        }
+                        <span class="modal-title popup-title schedule-popup-title ellipsis col-lg-10 col-xs-10 col-sm-10 col-md-10 no-padding" title="@ViewBag.FullItemName">@ViewBag.FullItemName</span>
+                    </div>
+                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1  no-padding pull-right">
+                        <a href="javascript:void(0);" title="[[[Close]]]" class="itempermission-popup-close pull-right popup-close"><span class="su su-close"></span></a>
+                    </div>
+                </div>
+                <div class="modal-body col-lg-12">
+                    <ul id="user-tab-nav" class="nav nav-tabs share-tab-active" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#share-to-tab" id="share-to" aria-controls="share-to-tab" role="tab" data-toggle="tab">[[[Share To]]]</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#share-with-tab" id="share-with" aria-controls="share-with-tab" role="tab" data-toggle="tab">[[[Shared With]]]</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        @if (ViewBag.IsOwner)
+                        {
+                            <div role="tabpanel" class="tab-pane active" id="share-to-tab">
+                                <div class="share-popup col-sm-12 col-xs-12 no-padding">
+                                    <p class="user-group-permission-lable share-to-padding">
+                                        [[[Share]]] @((ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString()) ? "dashboards" : ViewBag.ItemType.ToString() == ItemType.Slideshow.ToString() ? "slideshow" : ViewBag.ItemType.ToString() == ItemType.Category.ToString() ? "category" : ViewBag.ItemType.ToString() == ItemType.Dataset.ToString() ? "dataset" : "the data source") [[[with users and groups by selecting from the options below. You can also enter a name or email address in the Users drop-down to invite new users.]]]
+                                    </p>
+                                    <div class="user-group col-sm-12 col-xs-12 share-to-padding">
+                                        <div id="user-search-container" class="col-sm-4 col-xs-4 no-margin i-search-fields ">
+                                            <label>[[[Users]]]</label>
+                                            <select id="user-search" class="selectpicker" data-size="5" data-live-search="true" data-none-results-text="[[[No results match]]]" data-live-search-placeholder="[[[Search]]]" title="[[[Select Users]]]" data-hide-disabled="true" multiple="" data-actions-box="true"></select>
+                                        </div>
+                                        <div id="group-search-container" class="col-sm-4 col-xs-4 no-margin i-search-fields ">
+                                            <label>[[[Groups]]]</label>
+                                            <select id="group-search" class="selectpicker" data-size="5" data-live-search="true" data-none-results-text="[[[No results match]]]" data-live-search-placeholder="[[[Search]]]" title="[[[Select Groups]]]" data-hide-disabled="true" multiple="" data-actions-box="true"></select>
+                                        </div>
+                                        <div id="access-selection-container" class="col-xs-4 no-padding">
+                                            <label>[[[Access Mode]]]</label>
+                                            <select id="access-selection" class="selectpicker" data-size="5" title="[[[Select Access]]]"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 button-area share-button pull-right share-to-padding">
+                                        <input name="Save" value="[[[Share]]]" class="primary-button app-btn-primary pull-right" id="save-permission" disabled="true" type="button">
+                                    </div>
+                                    @if (ViewBag.ItemType.ToString() == ItemType.Slideshow.ToString() || ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString())
+                                    {
+                                        <div id="report-link" class="share-to-padding">
+                                            <label class="popup-label dashboard-link-lable">@(ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString() ? "Link to Dashboard:" : "Link to SlideShow:") </label>
+                                            <input onClick="this.setSelectionRange(0, this.value.length)" type="text" id="item-link" data-href="@itemUrl" value="@itemUrl" class="form-control" readonly />
+                                            <div class="form-control su su-copy text focus" id="item-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
+                                        </div>
+                                        <div class="notes col-xs-12 share-to-padding">
+                                            <div class="notes-head col-xs-12">
+                                                <strong style="padding-top:15px;float:left" class="note">[[[Note:]]]</strong>
+                                            </div>
+                                            @if (ViewBag.ItemType.ToString() == ItemType.Dashboard.ToString())
+                                            {
+                                                <div class="sharing-permissions-dashboard-link col-xs-12">
+                                                    [[[Anyone can navigate to this link, but only users with the appropriate permissions will be able to view the dashboard.]]]
+                                                </div>
+                                            }
+                                            @if (ViewBag.ItemType.ToString() == ItemType.Slideshow.ToString())
+                                            {
+                                                <div class="sharing-permissions-slideshow-link col-xs-12">
+                                                    [[[Anyone can navigate to this link, but only users with the appropriate permissions will be able to view items in the slideshow.]]]
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*<div class="col-xs-12 assigned-permission no-padding">
+                                    <h4 class="no-margin">[[[Assigned Permissions]]]</h4>
+                                </div>*@
+                        }
+                        <div role="tabpanel" class="tab-pane" id="share-with-tab">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" id="first-tab" class="active users-tab">
+                                    <a id="users-tab" class="no-style active-content" href="#" data-report-id="" data-created-by="" data-report-name="@ViewBag.FullItemName" class="folder-manage-tab folder-tab-color active-tab" data-purpose="View" role="tab" aria-controls="users" data-toggle="tab">[[[Users]]]</a>
+                                </li>
+                                <li role="presentation" id="second-tab">
+                                    <a id="groups-tab" class="no-style inactive-content" href="#" data-report-id="" data-created-by="" data-report-name="@ViewBag.FullItemName" class="folder-manage-tab section-gray-heading" data-isrightpane="false" role="tab" aria-controls="groups" data-toggle="tab">[[[Groups]]]</a>
+                                </li>
+                            </ul>
+
+                            <div id="permission-container" class="col-xs-12 permission-container-padding no-left-padding">
+                                <div id="user-search-area" class="show pull-right">
+                                    <input type="text" id="search-user-permission" class="pull-left" placeholder="[[[Search]]]" />
+                                    <span class="su su-inner-close pull-left close-icon clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                                    <span class="su su-search search pull-left" title="[[[Search]]]"></span>
+                                </div>
+                                <div id="group-search-area" class="hidden pull-right">
+                                    <input type="text" id="search-group-permission" class="pull-left" placeholder="[[[Search]]]" />
+                                    <span class="su su-inner-close close-icon pull-left clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                                    <span class="su su-search search pull-left" title="[[[Search]]]"></span>
+                                </div>
+                                <div id="item-user-permission-container" class="show col-xs-12 no-padding" data-previous-parent-id="none" data-parent-id="home" data-type="self">
+                                    <div class="col-xs-12 no-padding" style="display:block; padding-top:20px; float:left;">
+                                        <div id="itempermissiongrid" class="grid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="item-group-permission-container" class="hidden col-xs-12 no-padding" data-previous-parent-id="none" data-parent-id="home" data-type="self">
+                                    <div class="col-xs-12 no-padding" style="display:block; padding-top:20px; float:left;">
+                                        <div id="itemgrouppermissiongrid" class="grid">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-lg-12 margin-top no-padding">
+                        <input type="button" id="close-button" title="[[[Close]]]" class="secondary-button app-btn-secondary pull-right itempermission-popup-close" value="[[[Close]]]" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageBox" style="display:none">
+        <div class="message-header"></div>
+        <div class="message-box-close"></div>
+        <div class="message-content text-center"></div>
+        <div class="message-box-btn-holder"></div>
+    </div>
+
+    <div id="success-alert" style="display:none">
+        <div id="image-container">
+            <div class="image-holder">
+                <span class="su su-tick" alt="Success Icon"></span>
+            </div>
+        </div>
+        <div id="message">
+            <h1 id="message-header"></h1>
+            <span id="message-content"></span>
+        </div>
+    </div>
+
+    <input type="hidden" id="item-id-hidden" value="@ViewBag.ItemId" />
+    <input type="hidden" id="item-type-id-hidden" value="@ViewBag.ItemTypeId" />
+    <input type="hidden" id="is-owner" value="@ViewBag.IsOwner.ToString()" />
+    <input type="hidden" id="item-name-hidden" value="@ViewBag.Name" />
+    <input type="hidden" id="item-category-name-hidden" value="@ViewBag.CategoryName" />
+    <input type="hidden" id="item-type-hidden" value="@ViewBag.ItemType" />
+
+    <script type="text/x-jsrender" id="commandstemplate">
+        <div>
+            {{if IsUserPermission}}
+            {{if CanRemove}}
+            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            {{/if}}
+            {{else}}
+            <span title="{{:TargetGroupName}}" class="group-permission" data-toggle="tooltip" data-permission-id="{{:PermissionId}}"><a href="#">{{:TargetGroupName}}</a></span>
+            {{/if}}
+        </div>
+    </script>
+    <script type="text/x-jsrender" id="accessmodetemplate">
+        <div title="{{:PermissionAccessDescription}}">{{:PermissionAccessDescription}}</div>
+    </script>
+    <script type="text/x-jsrender" id="usernametemplate">
+        <div class="grid-content" title="{{:DisplayName}}" data-toggle="tooltip">{{:DisplayName}}</div>
+    </script>
+    <script type="text/x-jsrender" id="entitytemplate">
+        <div class="grid-content" title="{{:PermissionEntityDescription}}" data-toggle="tooltip">{{:PermissionEntityDescription}}</div>
+    </script>
+    <script type="text/x-jsrender" id="permissionaccessheader">
+        <div class="item-header">[[[Permission Access]]]</div>
+    </script>
+    <script type="text/x-jsrender" id="entityheader">
+        <div class="item-header">[[[Permission Entity]]]</div>
+    </script>
+    <script type="text/x-jsrender" id="usernameheader">
+        <div class="item-header">[[[Name]]]</div>
+    </script>
+    <script type="text/x-jsrender" id="actionsheader">
+        @if (ViewBag.IsOwner)
+        {
+            <div>[[[Actions]]]</div>
+        }
+        else
+        {
+            <div>[[[Group]]]</div>
+        }
+    </script>
+
+    <script type="text/x-jsrender" id="groupactiontemplate">
+        <div>
+            {{if CanRemove}}
+            <span><a href="javascript:void(0);" class="delete-group-permission" data-permission-id="{{:PermissionId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            {{/if}}
+        </div>
+    </script>
+    <script type="text/x-jsrender" id="groupnametemplate">
+        <div class="grid-content" title="{{:TargetGroupName}}" data-toggle="tooltip">{{:TargetGroupName}}</div>
+    </script>
+    <script type="text/x-jsrender" id="groupnameheader">
+        <div class="item-header">[[[Name]]]</div>
+    </script>
+    <script>
+
+        var userId =@Context.Request.Query["userid"]
+        $(document).ready(function () {
+            if($("#is-owner").val().toLowerCase() == "true"){
+                var pageSize = 5;
+            }else{
+                var pageSize = 8;
+            }
+
+            var itemId = '@Context.Request.Query["ItemId"]';
+            addPlacehoder("#search-area");
+            var userPermission = @Html.Raw(Json.Serialize(Model.Item1));
+            userPermission = ej.parseJSON(userPermission);
+            ej.support.enableLocalizedSort = true;
+                GridLocalization();
+            $("#itempermissiongrid").ejGrid({
+                dataSource: userPermission,
+                gridLines: ej.Grid.GridLines.Horizontal,
+                allowPaging: true,
+                pageSettings: { pageSize: pageSize },
+                allowSorting: true,
+                allowFiltering: true,
+                filterSettings: { filterType: "excel" },
+                allowSearching: true,
+                enableAltRow: false,
+                allowSelection: true,
+                actionComplete: function () {
+                    showOrHideGridPager("#itempermissiongrid");
+                },
+                rowDataBound: function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                    window.parent.$('#permission-popup_wrapper').ejWaitingPopup("hide");
+                },
+                dataBound: function (args) {
+                    $('[data-toggle="tooltip"]').tooltip();
+                },
+                columns: [
+                    {
+                        width: 80,
+                        field: "DisplayName",
+                        templateID: "#usernametemplate",
+                        headerTemplateID: "#usernameheader",
+                    },
+                    {
+                        width: 90,
+                        field: "PermissionAccessDescription",
+                        templateID: "#accessmodetemplate",
+                        headerTemplateID: "#permissionaccessheader"
+                    },
+                    {
+                        field: "PermissionEntityDescription",
+                        templateID: "#entitytemplate",
+                        headerTemplateID: "#entityheader",
+                        width: 90
+                    },
+                    {
+                        template: true,
+                        allowSorting: false,
+                        templateID: "#commandstemplate",
+                        headerTemplateID: "#actionsheader",
+                        width: (window.innerWidth > 1024) ? 40 : 60
+                    }
+                ]
+
+            });
+
+            var grouppermission = @Html.Raw(Json.Serialize(Model.Item2));
+            grouppermission = ej.parseJSON(grouppermission);
+            ej.support.enableLocalizedSort = true;
+
+            $("#itemgrouppermissiongrid").ejGrid({
+                dataSource: grouppermission,
+                gridLines: ej.Grid.GridLines.Horizontal,
+                allowPaging: true,
+                pageSettings: { pageSize: pageSize  },
+                allowSorting: true,
+                allowFiltering: true,
+                filterSettings: { filterType: "excel" },
+                allowSearching: true,
+                allowSelection: true,
+                actionComplete: function () {
+                    showOrHideGridPager("#itemgrouppermissiongrid");
+                },
+                rowDataBound: function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                    window.parent.$('#permission-popup_wrapper').ejWaitingPopup("hide");
+                },
+                dataBound: function (args) {
+                    $('[data-toggle="tooltip"]').tooltip();
+                },
+                columns: [
+                    {
+                        width: 80,
+                        field: "TargetGroupName",
+                        templateID: "#groupnametemplate",
+                        headerTemplateID: "#groupnameheader",
+                    },
+                    {
+                        width: 90,
+                        field: "PermissionAccessDescription",
+                        templateID: "#accessmodetemplate",
+                        headerTemplateID: "#permissionaccessheader"
+                    },
+                    {
+                        field: "PermissionEntityDescription",
+                        templateID: "#entitytemplate",
+                        headerTemplateID: "#entityheader",
+                        width: 90
+                    },
+                    {
+                        template: true,
+                        allowSorting: false,
+                        templateID: "#groupactiontemplate",
+                        headerTemplateID: "#actionsheader",
+                        width: $("#is-owner").val().toLowerCase() == "true" ? ((window.innerWidth > 1024) ? 40 : 60) : 0,
+                        visible: $("#is-owner").val().toLowerCase() == "true" ? true : false
+                    }
+                ]
+
+            });
+            });
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    @await Html.PartialAsync("../UserManagement/_UserAddDialog")
+    @await Html.PartialAsync("../UserManagement/_LimitUserCreation")
+</body>
+</html>
