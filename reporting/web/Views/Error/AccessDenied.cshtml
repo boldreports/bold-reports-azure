@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "[[[Access Denied]]]";
+    Layout = "~/Views/Shared/WolfPackMaster.cshtml";
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = string.Empty;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+    else
+    {
+        reportServerResourceUrl = ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    }
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrapjs.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrapjs.min.js"></script>
+    </environment>
+}
+
+@section MainSection{
+    <h2>[[[Access Denied]]]</h2>
+}

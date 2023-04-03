@@ -1,0 +1,2332 @@
+<?xml version="1.0"?>
+<Report xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style>
+          <BackgroundColor>#f8f8f8</BackgroundColor>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+        <ReportItems>
+          <Tablix Name="Tablix3">
+            <Left>9.375pt</Left>
+            <Top>253.125pt</Top>
+            <Height>46.875pt</Height>
+            <Width>703.125pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>RechargeImported</DataSetName>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+            </PageBreak>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>146.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>146.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>146.9922pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>146.9922pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>116.2598pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>26.25pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox110">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>26.25pt</Height>
+                          <Width>146.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Date</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox29">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>26.25pt</Height>
+                          <Width>146.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Recharge ID</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox31">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>26.25pt</Height>
+                          <Width>146.9925pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Plan Type</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox91">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>26.25pt</Height>
+                          <Width>146.9925pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox71">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>26.25pt</Height>
+                          <Width>116.2598pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Validity in Days</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>20.25pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox22">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>146.25pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Format(Fields!Recharge_Date.Value,"MM/dd/yyyy")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox23">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>146.25pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!RechargeID.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox24">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>146.9925pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PlanType.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox26">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>146.9925pt</Width>
+                          <Style>
+                            <BackgroundColor>=IIf(Fields!Amount.Value &gt; 1899, " #ff4800", "Transparent")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="$"+Fields!Amount.Value</Value>
+                                  <Style>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox28">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>116.2598pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Validity.Value</Value>
+                                  <Style>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details2" />
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Recharge_Date.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Tablix Name="Tablix4">
+            <Left>9.375pt</Left>
+            <Top>337.5pt</Top>
+            <Height>46.875pt</Height>
+            <Width>703.125pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>Activity</DataSetName>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+            </PageBreak>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!Activities_Date.Value</Value>
+                <Direction>Descending</Direction>
+              </SortExpression>
+            </SortExpressions>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>233.9941pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>233.9941pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>234.7559pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>27pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1101">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>233.994pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Date</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox32">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>233.994pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Activity</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox33">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>234.756pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Usage</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>20.25pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox34">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>233.994pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Format(Fields!Activities_Date.Value,"MM/dd/yyyy")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox35">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>233.994pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Activity.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox36">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>20.25pt</Height>
+                          <Width>234.756pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Usage.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details3" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Tablix Name="Tablix5">
+            <Left>9.375pt</Left>
+            <Top>421.875pt</Top>
+            <Height>46.875pt</Height>
+            <Width>703.125pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>Tickets</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>140.2441pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>140.2441pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>140.2441pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>140.9961pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>141.0156pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>27pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1102">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Ticket ID</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1103">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Date</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1104">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Issue</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1105">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>140.9962pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Priority</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1106">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>27pt</Height>
+                          <Width>141.0157pt</Width>
+                          <Style>
+                            <BackgroundColor>#e3e6ea</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Status</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>19.5pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox40">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>19.5pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TicketID.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox41">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>19.5pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Format(Fields!Ticket_Date.Value,"MM/dd/yyyy")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox42">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>19.5pt</Height>
+                          <Width>140.244pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Issue.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox44">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>19.5pt</Height>
+                          <Width>140.9962pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Priority.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox46">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>19.5pt</Height>
+                          <Width>141.0157pt</Width>
+                          <Style>
+                            <BackgroundColor>=IIf(Fields!Status.Value Like "Open*", " #ff4800","Transparent")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Status.Value</Value>
+                                  <Style>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details4" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Rectangle Name="Rectangle1">
+            <Left>9.375pt</Left>
+            <Top>9.375pt</Top>
+            <Height>103.125pt</Height>
+            <Width>225pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <Border>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <Textbox Name="TextBox47">
+                <Left>0.37500pt</Left>
+                <Top>19.125pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Bottom</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Number</Value>
+                        <Style>
+                          <FontSize>17.49975pt</FontSize>
+                          <Color>#2f1110</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="TextBox48">
+                <Left>0.37500pt</Left>
+                <Top>47.25pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Trim(Parameters!Ph.Value)</Value>
+                        <Style>
+                          <FontSize>17.49975pt</FontSize>
+                          <Color>Black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+          <Rectangle Name="Rectangle2">
+            <Left>243.75pt</Left>
+            <Top>9.375pt</Top>
+            <Height>215.625pt</Height>
+            <Width>225pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <Border>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <GaugePanel Name="RadialGauge1">
+                <Left>9.375pt</Left>
+                <Top>18.75pt</Top>
+                <Height>191.625pt</Height>
+                <Width>206.25pt</Width>
+                <Style>
+                  <Border>
+                    <Color>LightGrey</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <DataSetName>RechargeImported</DataSetName>
+                <RadialGauges>
+                  <RadialGauge Name="RadialGaugeSet">
+                    <Top>0</Top>
+                    <Left>0</Left>
+                    <Height>100</Height>
+                    <Width>100</Width>
+                    <ZIndex>0</ZIndex>
+                    <ToolTip>="Total Amount Spent: $"+Sum(Fields!Amount.Value,"RechargeImported")</ToolTip>
+                    <ParentItem />
+                    <AspectRatio>0</AspectRatio>
+                    <BackFrame>
+                      <FrameBackground>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                      </FrameBackground>
+                      <FrameImage>
+                        <Source>External</Source>
+                        <Value />
+                        <ClipImage>false</ClipImage>
+                        <Transparency>0</Transparency>
+                      </FrameImage>
+                      <FrameShape>CustomCircular2</FrameShape>
+                      <FrameStyle>None</FrameStyle>
+                      <FrameWidth>8</FrameWidth>
+                      <GlassEffect>None</GlassEffect>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </BackFrame>
+                    <ClipContent>false</ClipContent>
+                    <GaugeScales>
+                      <RadialScale Name="RadialScale">
+                        <GaugePointers>
+                          <RadialPointer Name="RadialPointer">
+                            <Style>
+                              <BackgroundColor>#ff4800</BackgroundColor>
+                              <Border>
+                                <Color>LightGrey</Color>
+                                <Style>None</Style>
+                              </Border>
+                            </Style>
+                            <GaugeInputValue>
+                              <AddConstant>0</AddConstant>
+                              <MaxPercent>0</MaxPercent>
+                              <MinPercent>0</MinPercent>
+                              <Multiplier>1</Multiplier>
+                              <Value>=Sum(Fields!Amount.Value,"RechargeImported")</Value>
+                            </GaugeInputValue>
+                            <BarStart>ScaleStart</BarStart>
+                            <MarkerStyle>Rectangle</MarkerStyle>
+                            <Placement>Cross</Placement>
+                            <DistanceFromScale>0</DistanceFromScale>
+                            <MarkerLength>25</MarkerLength>
+                            <SnappingEnabled>false</SnappingEnabled>
+                            <SnappingInterval>0</SnappingInterval>
+                            <Hidden>false</Hidden>
+                            <Width>30</Width>
+                            <PointerCap>
+                              <Style>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                              <CapStyle>RoundedDark</CapStyle>
+                              <OnTop>false</OnTop>
+                              <Reflection>false</Reflection>
+                              <Hidden>false</Hidden>
+                              <Width>33</Width>
+                            </PointerCap>
+                            <Type>Bar</Type>
+                            <NeedleStyle>Tapered</NeedleStyle>
+                          </RadialPointer>
+                        </GaugePointers>
+                        <Style>
+                          <BackgroundColor>LightGrey</BackgroundColor>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                        <MaximumValue>
+                          <AddConstant>0</AddConstant>
+                          <MaxPercent>0</MaxPercent>
+                          <MinPercent>0</MinPercent>
+                          <Multiplier>1</Multiplier>
+                          <Value>=Sum(Fields!Amount.Value,"RechargeImported")+1000</Value>
+                        </MaximumValue>
+                        <MinimumValue>
+                          <AddConstant>0</AddConstant>
+                          <MaxPercent>0</MaxPercent>
+                          <MinPercent>0</MinPercent>
+                          <Multiplier>1</Multiplier>
+                          <Value>0</Value>
+                        </MinimumValue>
+                        <GaugeMajorTickMarks>
+                          <Style>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <Border>
+                              <Color>Transparent</Color>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                          <DistanceFromScale>0</DistanceFromScale>
+                          <Placement>Cross</Placement>
+                          <EnableGradient>false</EnableGradient>
+                          <GradientDensity>0</GradientDensity>
+                          <Length>14</Length>
+                          <Width>8</Width>
+                          <Shape>Rectangle</Shape>
+                          <Hidden>true</Hidden>
+                          <Interval>NaN</Interval>
+                          <IntervalOffset>NaN</IntervalOffset>
+                        </GaugeMajorTickMarks>
+                        <GaugeMinorTickMarks>
+                          <Style>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <Border>
+                              <Color>Transparent</Color>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                          <DistanceFromScale>0</DistanceFromScale>
+                          <Placement>Cross</Placement>
+                          <EnableGradient>false</EnableGradient>
+                          <GradientDensity>0</GradientDensity>
+                          <Length>8</Length>
+                          <Width>3</Width>
+                          <Shape>Rectangle</Shape>
+                          <Hidden>true</Hidden>
+                          <Interval>NaN</Interval>
+                          <IntervalOffset>NaN</IntervalOffset>
+                        </GaugeMinorTickMarks>
+                        <ScaleLabels>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <Color>Black</Color>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                          <Interval>NaN</Interval>
+                          <IntervalOffset>NaN</IntervalOffset>
+                          <AllowUpsideDown>false</AllowUpsideDown>
+                          <DistanceFromScale>0</DistanceFromScale>
+                          <FontAngle>0</FontAngle>
+                          <Placement>Outside</Placement>
+                          <RotateLabels>false</RotateLabels>
+                          <ShowEndLabels>true</ShowEndLabels>
+                          <Hidden>false</Hidden>
+                          <UseFontPercent>true</UseFontPercent>
+                        </ScaleLabels>
+                        <Interval>=Sum(Fields!Amount.Value,"RechargeImported")+1000</Interval>
+                        <IntervalOffset>NaN</IntervalOffset>
+                        <Logarithmic>false</Logarithmic>
+                        <LogarithmicBase>10</LogarithmicBase>
+                        <Reversed>false</Reversed>
+                        <TickMarksOnTop>false</TickMarksOnTop>
+                        <ToolTip />
+                        <Hidden>false</Hidden>
+                        <Width>30</Width>
+                        <Radius>37</Radius>
+                        <StartAngle>20</StartAngle>
+                        <SweepAngle>320</SweepAngle>
+                      </RadialScale>
+                    </GaugeScales>
+                    <PivotX>50</PivotX>
+                    <PivotY>50</PivotY>
+                  </RadialGauge>
+                </RadialGauges>
+                <AntiAliasing>All</AntiAliasing>
+                <TextAntiAliasingQuality>High</TextAntiAliasingQuality>
+                <AutoLayout>false</AutoLayout>
+                <ShadowIntensity>25</ShadowIntensity>
+              </GaugePanel>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+          <Textbox Name="TextBox49">
+            <Left>253.125pt</Left>
+            <Top>9.375pt</Top>
+            <Height>18.75pt</Height>
+            <Width>206.25pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Total Amount Spent</Value>
+                    <Style>
+                      <Color>Black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Rectangle Name="Rectangle3">
+            <Left>478.125pt</Left>
+            <Top>9.375pt</Top>
+            <Height>103.125pt</Height>
+            <Width>234.375pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <Border>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <Textbox Name="TextBox50">
+                <Left>0pt</Left>
+                <Top>18.75pt</Top>
+                <Height>28.125pt</Height>
+                <Width>225pt</Width>
+                <Style>
+                  <VerticalAlign>Bottom</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Subscriber Satisfaction Rate</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Color>#2f1110</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="TextBox51">
+                <Left>0pt</Left>
+                <Top>46.875pt</Top>
+                <Height>28.125pt</Height>
+                <Width>225pt</Width>
+                <Style>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Count(Fields!Satisfaction.Value,"Tickets")/Count(Fields!TicketID.Value,"Tickets")</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Format>0.00 %</Format>
+                          <Color>black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+          <Rectangle Name="Rectangle6">
+            <Left>9.375pt</Left>
+            <Top>121.875pt</Top>
+            <Height>103.125pt</Height>
+            <Width>225pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <Border>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <Textbox Name="TextBox56">
+                <Left>0.37500pt</Left>
+                <Top>19.125pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Bottom</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Last Recharge Date</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Color>#2f1110</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="TextBox57">
+                <Left>0.37500pt</Left>
+                <Top>47.25pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(First(Fields!Recharge_Date.Value,"RechargeImported"),"MM/dd/yyyy")</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Color>black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+          <Rectangle Name="Rectangle7">
+            <Left>478.125pt</Left>
+            <Top>121.875pt</Top>
+            <Height>103.125pt</Height>
+            <Width>234.375pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <Border>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <Textbox Name="TextBox58">
+                <Left>0.37500pt</Left>
+                <Top>19.125pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Bottom</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Last Recharge Amount</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Color>#2f1110</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="TextBox59">
+                <Left>0.37500pt</Left>
+                <Top>47.25pt</Top>
+                <Height>28.125pt</Height>
+                <Width>215.625pt</Width>
+                <Style>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Amount.Value,"RechargeImported")</Value>
+                        <Style>
+                          <FontSize>17.4997pt</FontSize>
+                          <Format>'$'#,0;('$'#,0)</Format>
+                          <Color>black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+          <Textbox Name="TextBox60">
+            <Left>9.375pt</Left>
+            <Top>231.75pt</Top>
+            <Height>18.75pt</Height>
+            <Width>150pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Recharge Details</Value>
+                    <Style>
+                      <Color>Black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Textbox Name="TextBox61">
+            <Left>9.375pt</Left>
+            <Top>316.125pt</Top>
+            <Height>18.75pt</Height>
+            <Width>150pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Activity Details</Value>
+                    <Style>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Textbox Name="TextBox62">
+            <Left>9.375pt</Left>
+            <Top>400.5pt</Top>
+            <Height>18.75pt</Height>
+            <Width>150pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Tickets Details</Value>
+                    <Style>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+        </ReportItems>
+        <Height>471pt</Height>
+      </Body>
+      <Width>717.75pt</Width>
+      <Page>
+        <PageHeight>780pt</PageHeight>
+        <PageWidth>717.75pt</PageWidth>
+        <PageFooter>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>0.72917in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+        </PageFooter>
+        <LeftMargin>0pt</LeftMargin>
+        <RightMargin>0pt</RightMargin>
+        <TopMargin>0pt</TopMargin>
+        <BottomMargin>0pt</BottomMargin>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Telecom">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=dataplatformdemodata.syncfusion.com;Initial Catalog=Telecom;User ID=demoreadonly@data-platform-demo;Password=N@c)=Y8s*1&amp;dh;</ConnectString>
+        <rd:IsDesignState>true</rd:IsDesignState>
+      </ConnectionProperties>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="SubscribersImported">
+      <Fields>
+        <Field Name="SubscriberID">
+          <DataField>SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="SubscriberName">
+          <DataField>SubscriberName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ServiceType">
+          <DataField>ServiceType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ServiceStatus_SubscriberID">
+          <DataField>ServiceStatus_SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ServiceStatus_Date">
+          <DataField>ServiceStatus_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ServiceStatus">
+          <DataField>ServiceStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Telecom</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [dbo].[Subscribers].[SubscriberID],
+[dbo].[Subscribers].[SubscriberName],
+[dbo].[Subscribers].[Date],
+[dbo].[Subscribers].[ServiceType],
+[dbo].[Subscribers].[Address],
+[dbo].[Subscribers].[City],
+[dbo].[Subscribers].[State],
+[dbo].[Subscribers].[Phone],
+[dbo].[ServiceStatus].[SubscriberID] AS [ServiceStatus_SubscriberID],
+[dbo].[ServiceStatus].[Date] AS [ServiceStatus_Date],
+[dbo].[ServiceStatus].[ServiceStatus] FROM [dbo].[Subscribers] INNER JOIN [dbo].[ServiceStatus] ON [dbo].[Subscribers].[SubscriberID]=[dbo].[ServiceStatus].[SubscriberID]</CommandText>
+        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <Tables>
+            <Table Name="Subscribers" Schema="dbo">
+              <Columns>
+                <Column Name="SubscriberID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SubscriberName" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Date" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ServiceType" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Address" IsDuplicate="False" IsSelected="True" />
+                <Column Name="City" IsDuplicate="False" IsSelected="True" />
+                <Column Name="State" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Phone" IsDuplicate="False" IsSelected="True" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="dbo" SchemaType="Schema" />
+                <SchemaInfo Name="Tables" SchemaType="Category" />
+                <SchemaInfo Name="Subscribers" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+            <Table Name="ServiceStatus" Schema="dbo">
+              <Columns>
+                <Column Name="SubscriberID" AliasName="ServiceStatus_SubscriberID" IsDuplicate="True" IsSelected="True" />
+                <Column Name="Date" AliasName="ServiceStatus_Date" IsDuplicate="True" IsSelected="True" />
+                <Column Name="ServiceStatus" IsDuplicate="False" IsSelected="True" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="dbo" SchemaType="Schema" />
+                <SchemaInfo Name="Tables" SchemaType="Category" />
+                <SchemaInfo Name="ServiceStatus" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+          </Tables>
+          <Joins>
+            <Join LeftTable="Subscribers" RightTable="ServiceStatus" JoinType="Inner">
+              <JoinFields>
+                <JoinField LeftField="SubscriberID" RightField="SubscriberID" OperatorType="=" />
+              </JoinFields>
+            </Join>
+          </Joins>
+        </QueryDesignerState>
+      </Query>
+    </DataSet>
+    <DataSet Name="Tickets">
+      <Fields>
+        <Field Name="SubscriberID">
+          <DataField>SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="SubscriberName">
+          <DataField>SubscriberName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ServiceType">
+          <DataField>ServiceType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TicketID">
+          <DataField>TicketID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Ticket_Date">
+          <DataField>Ticket_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Ticket_SubscriberID">
+          <DataField>Ticket_SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Location">
+          <DataField>Location</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Issue">
+          <DataField>Issue</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Status">
+          <DataField>Status</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Satisfaction">
+          <DataField>Satisfaction</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Telecom</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [dbo].[Subscribers].[SubscriberID],
+[dbo].[Subscribers].[SubscriberName],
+[dbo].[Subscribers].[Date],
+[dbo].[Subscribers].[ServiceType],
+[dbo].[Subscribers].[Address],
+[dbo].[Subscribers].[City],
+[dbo].[Subscribers].[State],
+[dbo].[Subscribers].[Phone],
+[dbo].[Ticket].[TicketID],
+[dbo].[Ticket].[Date] AS [Ticket_Date],
+[dbo].[Ticket].[SubscriberID] AS [Ticket_SubscriberID],
+[dbo].[Ticket].[Location],
+[dbo].[Ticket].[Issue],
+[dbo].[Ticket].[Priority],
+[dbo].[Ticket].[Status],
+(CASE WHEN [dbo].[Ticket].[Status]='Resolved' THEN [dbo].[Ticket].[TicketID] ELSE null END ) AS [Satisfaction]
+FROM [dbo].[Subscribers] INNER JOIN [dbo].[Ticket] ON [dbo].[Subscribers].[SubscriberID]=[dbo].[Ticket].[SubscriberID]
+WHERE ([dbo].[Subscribers].[Phone] = (@Ph))</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@Ph">
+            <Value>=Parameters!Ph.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="Activity">
+      <Fields>
+        <Field Name="SubscriberID">
+          <DataField>SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="SubscriberName">
+          <DataField>SubscriberName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ServiceType">
+          <DataField>ServiceType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Activities_SubscriberID">
+          <DataField>Activities_SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Activities_Date">
+          <DataField>Activities_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Activity">
+          <DataField>Activity</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Usage">
+          <DataField>Usage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Telecom</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [dbo].[Subscribers].[SubscriberID],
+[dbo].[Subscribers].[SubscriberName],
+[dbo].[Subscribers].[Date],
+[dbo].[Subscribers].[ServiceType],
+[dbo].[Subscribers].[Address],
+[dbo].[Subscribers].[City],
+[dbo].[Subscribers].[State],
+[dbo].[Subscribers].[Phone],
+[dbo].[Activities].[ID],
+[dbo].[Activities].[SubscriberID] AS [Activities_SubscriberID],
+[dbo].[Activities].[Date] AS [Activities_Date],
+[dbo].[Activities].[Activity],
+[dbo].[Activities].[Usage] FROM [dbo].[Subscribers] INNER JOIN [dbo].[Activities] ON [dbo].[Subscribers].[SubscriberID]=[dbo].[Activities].[SubscriberID]
+WHERE ([dbo].[Subscribers].[Phone] = (@Ph))</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@Ph">
+            <Value>=Parameters!Ph.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="RechargeImported">
+      <Fields>
+        <Field Name="SubscriberID">
+          <DataField>SubscriberID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="SubscriberName">
+          <DataField>SubscriberName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ServiceType">
+          <DataField>ServiceType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RechargeID">
+          <DataField>RechargeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SubscribersID">
+          <DataField>SubscribersID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Recharge_Date">
+          <DataField>Recharge_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="RechargeType">
+          <DataField>RechargeType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PlanType">
+          <DataField>PlanType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Validity">
+          <DataField>Validity</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PaymentMode">
+          <DataField>PaymentMode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Telecom</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [dbo].[Subscribers].[SubscriberID],
+[dbo].[Subscribers].[SubscriberName],
+[dbo].[Subscribers].[Date],
+[dbo].[Subscribers].[ServiceType],
+[dbo].[Subscribers].[Address],
+[dbo].[Subscribers].[City],
+[dbo].[Subscribers].[State],
+[dbo].[Subscribers].[Phone],
+[dbo].[Recharge].[RechargeID],
+[dbo].[Recharge].[SubscribersID],
+[dbo].[Recharge].[Date] AS [Recharge_Date],
+[dbo].[Recharge].[RechargeType],
+[dbo].[Recharge].[PlanType],
+[dbo].[Recharge].[Amount],
+[dbo].[Recharge].[Validity],
+[dbo].[Recharge].[PaymentMode]
+FROM [dbo].[Subscribers] INNER JOIN [dbo].[Recharge] ON [dbo].[Subscribers].[SubscriberID]=[dbo].[Recharge].[SubscribersID]
+WHERE ([dbo].[Subscribers].[Phone] = (@Ph))
+ORDER BY [dbo].[Recharge].[Date] DESC</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@Ph">
+            <Value>=Parameters!Ph.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="Phone">
+      <Fields>
+        <Field Name="Phone">
+          <DataField>Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Telecom</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT DISTINCT
+[dbo].[Subscribers].[Phone]
+FROM [dbo].[Subscribers] INNER JOIN [dbo].[ServiceStatus] ON [dbo].[Subscribers].[SubscriberID]=[dbo].[ServiceStatus].[SubscriberID]
+WHERE [dbo].[Subscribers].[Phone] !=9332541823
+ORDER BY [dbo].[Subscribers].[Phone] DESC</CommandText>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Ph">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>Phone</DataSetName>
+          <ValueField>Phone</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Number</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Phone</DataSetName>
+          <ValueField>Phone</ValueField>
+          <LabelField>Phone</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Ph</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>
