@@ -1159,13 +1159,6 @@
             <param name="itemRequest">ItemRequest object which is sent as request</param>
             <returns>The response is sent as ItemResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.GetDataSet(System.Collections.Generic.List{System.String})">
-            <summary>
-            This method is used to get the dataset content as bytes.
-            </summary>
-            <param name="datasetList">list of datasets of the report.</param>
-            <returns>It returns list of dataset content and its id/name.</returns>
-        </member>
         <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.GetDataSourceDefinitionById(Syncfusion.Server.Base.DataClasses.ItemRequest,System.Boolean)">
             <summary>
             Get data source definition by data source guid id
@@ -1174,22 +1167,6 @@
             <param name="isDecryptPassword">isDecryptPassword default value false</param>
             <param name="itemRequest">item request class object</param>
             <returns>Class type ItemResponse</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.DownloadDataSourceFileById(System.Collections.Generic.List{System.String},System.Boolean,System.Boolean)">
-            <summary>
-            The method will get the data source location and convert the xml to bytes
-            </summary>
-            <param name="datasourceReferences">It contains either datasource id or datasource name</param>
-            <param name="isInternalApiRequest">isDecryptPassword default value false</param>
-            <param name="isDecryptPassword">isDecryptPassword default value false</param>
-            <returns>It returns filecontent of the reports in bytes and its id/name.</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Models.ReportServer.Viewer.GetReportById(Syncfusion.Server.Base.DataClasses.ItemRequest)">
-            <summary>
-            Get the report definition and list of data source definition
-            </summary>
-            <param name="itemRequest">item request class object</param>
-            <returns>Class type ViewerReport API</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.AddSchedule(Syncfusion.Server.Base.DataClasses.ApiScheduleRequest,System.Boolean,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.ApiReportParameter})">
             <summary>

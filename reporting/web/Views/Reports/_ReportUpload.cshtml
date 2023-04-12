@@ -48,6 +48,9 @@
                     $('#browse_file').attr('title', filename);
                     parent.$("#datasource_list_table").html("");
                     parent.$("#dataset_list_table").html("");
+                    parent.$("#datasource_list").hide();
+                    parent.$("#dataset_list").hide();
+                    parent.$("#automap-message").hide();
                     $("#rdl_file_upload_btn").removeAttr("disabled");
                     $("#rdl_file_upload_btn").focus();
                     parent.$("#uploadValidation").html("[[[Please upload the report]]]");

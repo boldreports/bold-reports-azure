@@ -3,6 +3,7 @@
     Layout = null;
     var globalAppSettings = _globalAppSettings;
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var viewerUrl = globalAppSettings.SystemSettings.ViewerUrl;
     var language = CultureInfo.CurrentCulture.Name;
     var isUserAuthenticatedInCurrentTenant = ViewBag.IsUserAuthenticatedInCurrentTenant;
     var parentId = ViewBag.ParentId;
@@ -174,20 +175,12 @@
     }
 
     <environment include="Development,CloudDevelopment">
-        <script>
-            var sharePermissionScript = "@reportServerResourceUrl/cdn/scripts/share-permission.js";
-            var sharePermissionStyle = "@reportServerResourceUrl/cdn/css/share-permission.css";
-            var reportOptionScript = "@reportServerResourceUrl/cdn/scripts/report-options.js";
-            var reportOptionStyle = "@reportServerResourceUrl/cdn/css/report-options.css";
-        </script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <script>
-            var sharePermissionScript = "@reportServerResourceUrl/cdn/scripts/share-permission.min.js";
-            var sharePermissionStyle = "@reportServerResourceUrl/cdn/css/share-permission.min.css";
-            var reportOptionScript = "@reportServerResourceUrl/cdn/scripts/report-options.min.js";
-            var reportOptionStyle = "@reportServerResourceUrl/cdn/css/report-options.min.css";
-        </script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission.min.js"></script>
     </environment>
 
     @if (isMobile && !Context.User.Identity.IsAuthenticated)
@@ -338,10 +331,6 @@
     {
         @await Html.PartialAsync("../Items/_SharePermission");
     }
-    @if (isUserAuthenticatedInCurrentTenant)
-    {
-        @await Html.PartialAsync("../Items/_ItemInfo")
-    }
 
 </body>
 </html>
@@ -396,7 +385,6 @@
      var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
      var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
      var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
-     var viewDashboardUrlAction = "@Url.Action("Reports", "Reports")";
 
      var reportServerApiUrl = "@reportServerApiUrl";
      var filterQuery = "@filterQuery";
@@ -415,7 +403,6 @@
     var ItemType = "@ViewBag.ItemType";
     var customFontsName = [];
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
-    var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
 
         function renderComments() {
             var src = $("#commentModuleContainer iframe").attr("src");
@@ -512,30 +499,6 @@
             "",
             {},
             { 'id': 'sync_report_viewer_toolbar_edit' });
-
-        var $liinfo = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
-            "",
-            { 'display': 'inline-block' },
-            { 'id': 'sync_report_viewer_toolbar_info', 'title': '[[[Info]]]' });
-
-        var $spaninfo = ej.buildTag("span.su-info e-reportviewer-icon",
-            "",
-            { 'position': 'absolute' },
-            { 'id': 'sync_report_viewer_toolbar_info' });
-
-        if (isUserAuthenticatedInCurrentTenant) {
-            $divouter.append($liinfo);
-            $liinfo.append($spaninfo);
-            $liinfo.hover(function () {
-                $liinfo.addClass("e-hover");
-            },
-                function () {
-                    $liinfo.removeClass("e-hover");
-                });
-            $liinfo.click(function (e) {
-                openInfo();
-            });
-        }
 
         // edit
         if (canEdit == "True") {
@@ -670,17 +633,17 @@
                 $("#sync_report_viewer")
                 .boldReportViewer(
                     {
-                        reportServiceUrl: "@reportServerApiUrl" + "/reports",
+                        reportServiceUrl: "@viewerUrl",
                         processingMode: ej.ReportViewer.ProcessingMode.Remote,
                         reportPath: "@ViewBag.ItemId",
-                        reportServerUrl: "@reportServerApiUrl" + "/reports",
+                        reportServerUrl: "@viewerUrl",
                         ajaxBeforeLoad: "OnAjaxRequest",
                         reportExport: "OnExportClick",
                         exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
                         isResponsive: true,
                         reportLoaded: "openComments",
                         viewReportClick: "ViewReportClick",
-                        renderingComplete: 'getReportOptions',
+                        renderingComplete: 'filterView',
                         parameters: filterParameters,
                         locale: '@language',
                         fontNames: customFontsName,
@@ -734,16 +697,16 @@
                 }
                 $("#sync_report_viewer")
                     .boldReportViewer({
-                        reportServiceUrl: "@reportServerApiUrl" + "/reports",
+                        reportServiceUrl: "@viewerUrl",
                         processingMode: ej.ReportViewer.ProcessingMode.Remote,
                         reportPath: "@ViewBag.ItemId",
-                        reportServerUrl: "@reportServerApiUrl" + "/reports",
+                        reportServerUrl: "@viewerUrl",
                         ajaxBeforeLoad: "OnAjaxRequest",
                         reportExport: "OnExportClick",
                         exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
                         reportLoaded: "openComments",
                         viewReportClick: "ViewReportClick",
-                        renderingComplete: 'getReportOptions',
+                        renderingComplete: 'filterView',
                         locale: '@language',
                         fontNames: customFontsName,
                         parameters: parameter,
@@ -860,39 +823,5 @@
                 url: "/robots.txt",
             });
         })
-    }
-
-    function getReportOptions(args) {
-        filterView(args);
-        getReportOptionBundles();
-    }
-
-    function getReportOptionBundles() {
-        var preloadScripts = [];
-        var preloadStyles = [];
-        if (!embedConfig.IsEmbedCode) {
-            preloadScripts.push(sharePermissionScript);
-            preloadStyles.push(sharePermissionStyle);
-        }
-        preloadScripts.push(reportOptionScript);
-        preloadStyles.push(reportOptionStyle);
-
-        function ReportDelayResources(resourceLinkArray, resourceType) {
-            for (var resource = 0; resource < resourceLinkArray.length; resource++) {
-                if (resourceType == "script") {
-                    var preloadLink = document.createElement(resourceType);
-                    preloadLink.type = "text/javascript";
-                    preloadLink.src = resourceLinkArray[resource];
-                } else {
-                    var preloadLink = document.createElement("link");
-                    preloadLink.rel = "stylesheet";
-                    preloadLink.href = resourceLinkArray[resource];
-                }
-                $("body").append(preloadLink);
-            }
-        }
-
-        ReportDelayResources(preloadScripts, "script");
-        ReportDelayResources(preloadStyles, "style");
     }
 </script>

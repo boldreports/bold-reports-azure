@@ -9,12 +9,13 @@ Param(
 )
 
 $rootPath = "../../reporting"
-$pluginDirectories = "api","jobs","web","reportservice"
+$pluginDirectories = "api","jobs","web","viewer","reportservice"
 $apijson="${rootPath}/api/appsettings.Production.json;"
 $jobsjson="${rootPath}/jobs/appsettings.Production.json;"
 $webjson="${rootPath}/web/appsettings.Production.json;"
+$viewerjson="${rootPath}/viewer/appsettings.Production.json;"
 $servicejson="${rootPath}/reportservice/appsettings.json"
-$jsonfiles="$apijson$jobsjson$webjson$servicejson"
+$jsonfiles="$apijson$jobsjson$webjson$viewerjson$servicejson"
 $mysqlassemblies=""
 $postgresqlassemblies=""
 $oracleassemblies=""

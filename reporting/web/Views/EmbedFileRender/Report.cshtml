@@ -16,6 +16,7 @@
     var itemLocation = ViewBag.ItemLocation as string;
     itemLocation = itemLocation.Replace("\\", "\\\\");
     var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var viewerUrl = globalAppSettings.SystemSettings.ViewerUrl;
     var userId = 0;
     var userName = "";
     var isMarkItemsPublic = globalAppSettings.SystemSettings.IsMarkItemsPublic;
@@ -604,11 +605,11 @@ else
                 $("#sync_report_viewer")
                     .boldReportViewer(
                         {
-                            reportServiceUrl: "@baseUrl" + "/api/reports",
+                            reportServiceUrl: "@viewerUrl",
                             reportCacheID: "@ViewBag.ReportId",
                             processingMode: ej.ReportViewer.ProcessingMode.Remote,
                             reportPath: "@ViewBag.ItemId",
-                            reportServerUrl: "@baseUrl" + "/api/reports",
+                            reportServerUrl: "@viewerUrl",
                             ajaxBeforeLoad: "OnAjaxRequest",
                             reportExport: "OnExportClick",
                             exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
@@ -679,11 +680,11 @@ else
                  if ($("#sync_report_viewer").data("boldReportViewer") == null) {
                     $("#sync_report_viewer")
                         .boldReportViewer({
-                            reportServiceUrl: "@baseUrl" + "/api/reports",
+                            reportServiceUrl: "@viewerUrl",
                             reportCacheID: "@ViewBag.ReportId",
                             processingMode: ej.ReportViewer.ProcessingMode.Remote,
                             reportPath: "@ViewBag.ItemId",
-                            reportServerUrl: "@baseUrl" + "/api/reports",
+                            reportServerUrl: "@viewerUrl",
                             ajaxBeforeLoad: "OnAjaxRequest",
                             reportExport: "OnExportClick",
                             exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
