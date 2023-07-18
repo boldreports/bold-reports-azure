@@ -23,7 +23,7 @@
     }
 </script>
 
-@Html.Partial("~/Views/Shared/_LoaderIcon.cshtml")
+@await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
 <environment include="Development,CloudDevelopment">
     <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js"></script>

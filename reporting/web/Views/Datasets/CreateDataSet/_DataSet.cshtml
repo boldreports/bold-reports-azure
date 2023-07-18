@@ -22,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="ds-dataset-form-container" ng-style="{'display': isDataSourceList ? 'none' : 'block'}">
-                                @{ Html.RenderPartial("~/Views/Items/_DataSetForm.cshtml"); }
+                                @{ await Html.RenderPartialAsync("~/Views/Items/_DataSetForm.cshtml"); }
                             </div>
                         </div>
                     </div>
@@ -30,5 +30,5 @@
             </div>
         </div>
     </div>
-    @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_Footer.cshtml"); }
+    @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_Footer.cshtml"); }
 </div>

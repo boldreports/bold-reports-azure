@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+@using Newtonsoft.Json
+@using System.IO
+@{
+    var globalAppSettings = _globalAppSettings;
+    Layout = null;
+    var itemDetails = ViewBag.itemDetails;
+    var token = ViewBag.AccessToken;
+    var itemLocation = ViewBag.itemLocation;
+    var permissionDetails = ViewBag.permissionDetails;
+    var itemId = itemDetails.Id;
+    var itemName = itemDetails.Name;
+    var description = itemDetails.Description;
+    var categoryName = itemDetails.CategoryName;
+    var categoryId = itemDetails.CategoryId;
+    var isDraft = itemDetails.IsDraft;
+    var CanWrite = permissionDetails != null ? permissionDetails[0].CanWrite : false;
+    var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var reportServiceUrl = designerServiceUrl + "/api/Designer/PostDesignerAction";
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var xmlContent = File.ReadAllText(itemLocation);
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+<html lang="en" style="height:100%;width:100%">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@itemName - Edit Report As XML - @globalAppSettings.SystemSettings.OrganizationName</title>
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-xml-editor.min.css" />
+    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" rel="stylesheet" />
+    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-buttons.css" rel="stylesheet" />
+    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-popups.css" rel="stylesheet" />
+    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-navigations.css" rel="stylesheet" />
+    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" rel="stylesheet" />
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-xml-editor.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-data.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-buttons.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-navigations.min.js"></script>
+    <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
+</head>
+<body>
+    <div id="toolbar"></div>
+    <div id="editor-container">
+        <div id="editor"></div>
+    </div>
+    <div id="toast-message-container"></div>
+
+    <script>
+        ejs.popups.createSpinner({
+            target: document.getElementById('editor-container'),
+            cssClass: 'e-spin-overlay'
+        });
+        var reportDesignerToken;
+        window.onload = function () {
+            var id = "container";
+            getAuthenticationToken(id);
+        };
+        var categoryName = "@categoryName";
+        var reportName = "@itemName";
+        var path = (categoryName ? categoryName + '/' : '') + reportName;
+        var reportInfo = {
+            reportServerUrl: "@reportServerApiUrl",
+            reportPath: path
+        };
+        var originalXmlContent = @Html.Raw(JsonConvert.SerializeObject(xmlContent));
+
+        var editor = CodeMirror(document.getElementById("editor"), {
+            mode: "xml",
+            lineNumbers: true,
+            tabSize: 1,
+            autofocus: true,
+            dragDrop: false,
+            cursorBlinkRate: 0,
+            cursorScrollMargin: 5,
+            inputStyle: "textarea",
+            scrollbarStyle: "native",
+            autoCloseBrackets: true,
+            value: @Html.Raw(JsonConvert.SerializeObject(xmlContent)),
+            viewportMargin: 100,
+            extraKeys: {
+                "Ctrl-F": "findPersistent",
+                "Ctrl-G ": "findNext",
+                "Shift-Ctrl-G": "findPrev",
+                "Shift-Ctrl-F": "replace",
+                "Shift-Ctrl-R": "replaceAll",
+                "Ctrl-Z": "undo",
+                "Ctrl-Y": "redo"
+            }
+        });
+
+        var toolbar = new ej.navigations.Toolbar({
+            items: [
+                {
+                    text: "[[[Undo]]]",
+                    tooltipText: "[[[Undo]]]",
+                    prefixIcon: "e-icons e-undo",
+                    id: "undo",
+                    click: handleUndo
+                },
+                {
+                    text: "[[[Redo]]]",
+                    tooltipText: "[[[Redo]]]",
+                    prefixIcon: "e-icons e-redo",
+                    id: "redo",
+                    click: handleRedo
+                },
+                {
+                    type: "Separator"
+                },
+                {
+                    text: "[[[Search]]]",
+                    tooltipText: "[[[Search]]]",
+                    prefixIcon: "e-icons e-search",
+                    id: "search",
+                    click: handleSearch
+                },
+                {
+                    text: "[[[Replace]]]",
+                    tooltipText: "[[[Replace]]]",
+                    prefixIcon: "e-icons e-replace",
+                    id: "replace",
+                    click: handleReplace
+                },
+                {
+                    type: "Separator"
+                },
+                {
+                    text: false ? "[[[Save]]]" : "[[[Publish]]]",
+                    tooltipText: false ? "[[[Save]]]" : "[[[Publish]]]",
+                    id: "publish",
+                    align: "Right",
+                    click: handlePublish
+                }
+            ]
+        });
+
+        toolbar.appendTo("#toolbar");
+        toolbar.enableItems([0, 1], false);
+
+        window.addEventListener("beforeunload", function (e) {
+            var editedXmlContent = editor.getValue();
+            if (originalXmlContent !== editedXmlContent) {
+                var confirmationMessage = "[[[You have made modifications. Do you want to close without publishing?]]]";
+                (e || window.event).returnValue = confirmationMessage;
+                return confirmationMessage;
+            }
+        });
+
+        function handleUndo() {
+            editor.execCommand("undo");
+        }
+
+        function handleRedo() {
+            editor.execCommand("redo");
+        }
+
+        function handleSearch() {
+            editor.execCommand("findPersistent");
+        }
+
+        function handleReplace() {
+            editor.execCommand("replace");
+        }
+
+        function handlePublish() {
+            var editedXmlContent = editor.getValue();
+            editor.setOption("readOnly", "nocursor");
+            toolbar.disable(true);
+            ej.popups.showSpinner(document.getElementById('editor-container'));
+            var designerAction = false ? "autoDraftReport" : "saveServerReport";
+
+            $.ajax({
+                url: "@reportServiceUrl",
+                type: 'POST',
+                async: true,
+                crossDomain: true,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                headers: {
+                    'serviceAuthorizationToken': "@token",
+                    'reportDesignerToken': reportDesignerToken,
+                    'ServerUrl': "@reportServerApiUrl"
+                },
+                data: JSON.stringify({
+                    designerAction: designerAction,
+                    reportInfo: reportInfo,
+                    rdlXML: editedXmlContent,
+                    reportName: "@itemName",
+                    datasourceMapping: getDataSourceMap(editedXmlContent),
+                    datasetMapping: getDataSetMap(editedXmlContent)
+                }),
+                success: function (data) {
+                    if (data && typeof (data) === 'string' && data.indexOf('Sf_Exception') !== -1) {
+                        alertMessage(false);
+                    }
+                    else {
+                        originalXmlContent = editedXmlContent;
+                        alertMessage(true);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alertMessage(false);
+                },
+                complete: function () {
+                    ej.popups.hideSpinner(document.getElementById('editor-container'));
+                    editor.setOption("readOnly", false);
+                    toolbar.disable(false);
+                }
+            });
+        }
+
+        function getDataSourceMap(xmlString) {
+            let mappingInfo = [];
+            let xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
+            let datasources = xmlDoc.getElementsByTagName('DataSource');
+            if (datasources && datasources.length > 0) {
+                for (let index = 0; index < datasources.length; index++) {
+                    let dataSourceReference = datasources[index].getElementsByTagName('DataSourceReference')[0];
+                    if (dataSourceReference && dataSourceReference.textContent) {
+                        mappingInfo.push({
+                            Name: datasources[index].getAttribute('Name'),
+                            DataSourceId: dataSourceReference.textContent
+                        });
+                    }
+                }
+            }
+            return mappingInfo && mappingInfo.length > 0 ? mappingInfo : null;
+        }
+
+        function getDataSetMap(xmlString) {
+            let mappingInfo = [];
+            let xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
+            let dataSets = xmlDoc.getElementsByTagName('DataSet');
+            if (dataSets && dataSets.length > 0) {
+                for (let index = 0; index < dataSets.length; index++) {
+                    let sharedDataSetReference = dataSets[index].getElementsByTagName('SharedDataSetReference')[0];
+                    if (sharedDataSetReference && sharedDataSetReference.textContent) {
+                        mappingInfo.push({
+                            Name: dataSets[index].getAttribute('Name'),
+                            DataSetId: sharedDataSetReference.textContent
+                        });
+                    }
+                }
+            }
+            return mappingInfo && mappingInfo.length > 0 ? mappingInfo : null;
+        }
+
+        function alertMessage(status) {
+            var toastMessage;
+            var className;
+            var toastTitle;
+            if (status) {
+                toastMessage = false ? "[[[Report has been saved successfully.]]]" : "[[[Report has been published successfully.]]]";
+                className = 'e-toast-success';
+                toastTitle = "[[[Success!]]]";
+            } else {
+                toastMessage = false ? "[[[An error occurred  while saving the report.]]]" : "[[[An error occurred while publishing the report.]]]";
+                className = 'e-toast-danger';
+                toastTitle = "[[[Error!]]]"
+            }
+            var toast = new ejs.notifications.Toast({
+                title: toastTitle,
+                content: toastMessage,
+                target: document.body,
+                cssClass: className,
+                timeOut: 3000,
+                position: { X: 'Right', Y: 'Top' },
+                showCloseButton: true,
+                newestOnTop: true,
+                animation: {
+                    hide: { effect: 'SlideRightOut' },
+                    show: { effect: 'SlideRightIn' }
+                }
+            });
+            toast.appendTo('#toast-message-container');
+            toast.show();
+        }
+
+        function getAuthenticationToken(id) {
+            var guid = ejs.data.DataUtil.getGuid();
+            reportDesignerToken = id + '_' + guid;
+        }
+
+        editor.on("change", function () {
+            if (editor.historySize().undo === 0) {
+                toolbar.enableItems([0], false);
+            } else {
+                toolbar.enableItems([0], true);
+            }
+            if (editor.historySize().redo === 0) {
+                toolbar.enableItems([1], false);
+            } else {
+                toolbar.enableItems([1], true);
+            }
+        });
+
+    </script>
+    <style>
+        #editor-container {
+            margin-top: 40px;
+            height: calc(100vh - 40px);
+        }
+
+        #editor {
+            height: 100%;
+            width: 100vw;
+            overflow: auto;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+        .CodeMirror {
+            height: calc(100vh - 40px);
+            width: 100vw;
+        }
+
+        #toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw !important;
+            z-index: 9999;
+            border: 1px solid #e5e5e5;
+        }
+
+        .e-icons.e-undo:before {
+            content: "\e341";
+        }
+
+        .e-icons.e-redo:before {
+            content: "\e354";
+        }
+
+        .e-icons.e-search:before {
+            content: "\e97d";
+        }
+
+        .e-icons.e-replace:before {
+            content: "\e359";
+        }
+
+        #publish {
+            background-color: #0565ff;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+            margin: 0px;
+            width: 75px !important;
+        }
+
+            #publish span {
+                color: #fff;
+            }
+
+            #publish:hover {
+                background-color: #5eb8ff;
+            }
+
+                #publish:hover span {
+                    color: #fff;
+                }
+    </style>
+</body>
+</html>

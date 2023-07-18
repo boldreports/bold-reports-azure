@@ -32,6 +32,7 @@
                 parent.$("#uploadValidation").html("");
                 parent.$("#publish_file").attr("disabled", true);
                 var filename = $("#browse_file").val();
+                var previousRSDFileName = $("#upload_browse_file").val().slice(0, -4);
                 if (filename == "") {
                     $("#upload_browse_file").val('');
                 }
@@ -43,12 +44,13 @@
                     parent.$("#rsd_filename").val(filename);
                     $("#upload_browse_file").val(filename);
                     window.parent.$("#rsd_filename").val(filename);
-                    window.parent.$("#file_name").val(filename.slice(0, -4));
+                    if ((window.parent.$(".edit-datasetname-field").val() == "") || (window.parent.$(".edit-datasetname-field").val() == previousRSDFileName)) {
+                    window.parent.$(".edit-datasetname-field").val(filename.slice(0, -4));
+                    }
+                    window.parent.$("#addItemForm, #editItemForm").valid();
                     $('#browse_file').attr('title', filename);
                     parent.$("#datasource_list_table").html("");
-                    $("#rsd_file_upload_btn").removeAttr("disabled");
-                    $("#rsd_file_upload_btn").focus();
-                    parent.$("#uploadValidation").html("[[[Please upload the dataset]]]");
+                    $("#upload-form").submit();
                     if (parent.isEditPopup) {
                         parent.$("#comment").removeAttr("readonly");
                     }
@@ -56,7 +58,6 @@
                     $("#upload_browse_file").closest("span").addClass("has-error");
                     $("#browse_file").closest('div').addClass("error-file-upload");
                     parent.$("#uploadValidation").text("[[[Please choose a valid RSD file to upload]]]");
-                    $("#rsd_file_upload_btn").attr("disabled", "disabled");
                     $("#publish_report").attr("disabled", "disabled");
                     $('#browse_file').attr('title', filename);
                 }
@@ -98,7 +99,6 @@
         {
             <input type="hidden" name="previousFileName" value="none" />
         }
-        <input id="rsd_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button app-btn-primary" disabled data-previous-filename="none" />
     </form>
 </body>
 </html>

@@ -80,6 +80,8 @@ CREATE TABLE BOLDRS_UserPreference(
 	ItemSort varchar(4000) NULL,
 	ItemFilters varchar(4000) NULL,
 	Notifications varchar(4000) NULL,
+	DesignerFeatures varchar(4000) NULL,
+	ViewerFeatures varchar(4000) NULL,
 	ModifiedDate timestamp NOT NULL,
 	IsActive smallint NOT NULL)
 ;

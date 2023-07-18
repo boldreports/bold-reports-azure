@@ -48,14 +48,29 @@
     var getdefaultavatarUrl="@Url.Action("getdefaultavatar", "User")";
     var itemId = "@ViewBag.itemId";
     var isSydjViewer = "@ViewBag.ViewerVersion" == "v2";
+    var isViewerV2Enabled = parent.isViewerV2Enabled;
+    var embedConfig = parent.embedConfig;
+    var tailwindClassName = "";
 
     </script>
-
     <!--[if LT IE  10]>
         <script>
             i_am_ie9 = true;
         </script>
     <![endif]-->
+
+    <style>
+         .apply-tailwind-background {
+            background: var(--blue-magenta) !important;
+            border: 1px solid var(--blue-magenta) !important;
+        }
+        .apply-tailwind-color {
+            color: var(--blue-magenta) !important;
+        }
+        .apply-tailwind-stroke {
+            stroke: var(--blue-magenta) !important;
+        }
+    </style>
 
     <environment include="Development,CloudDevelopment">
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/comments-page.js"></script>
@@ -148,5 +163,14 @@
     <environment exclude="Development,CloudDevelopment">
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     </environment>
+
+    <script>
+        if (isViewerV2Enabled && embedConfig!="undefined" && !embedConfig.IsEmbedCode) {
+            $("#post-comment, #save-edit").addClass("apply-tailwind-background");
+            $(".sort-active").addClass("apply-tailwind-color");
+            $(".loader-icon .path").addClass("apply-tailwind-stroke");
+            tailwindClassName = "apply-tailwind-background";
+        }
+    </script>
 </body>
 </html>

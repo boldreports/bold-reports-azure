@@ -2746,10 +2746,10 @@ ej.ReportDesigner.Locale['it-IT'] = {
             cancelReportProcessMsg: 'L\'elaborazione del rapporto è stata annullata.'
         },
         progressMessage: {
-            exportLoadingMessage: 'Preparazione del documento di esportazione... attendere prego...',
-            printLoadingMessage: 'Preparazione dei dati di stampa… attendere prego...',
-            printPreparationMessage: 'Preparazione dei dati di stampa... {0}% completato... attendere prego...',
-            exportPreparationMessage: 'Preparazione del documento di esportazione... {0}% completato... attendere prego...',
+            exportLoadingMessage: 'Esportazione report...',
+            printLoadingMessage: 'Stampa rapporto...',
+            printPreparationMessage: 'Preparazione alla stampa dei dati... {0}% completata... Attendere...',
+            exportPreparationMessage: 'Preparazione per lesportazione del documento... { 0} % completata...Attendere...',
             cancelText: 'Annulla',
         },
         alertMessage: {
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['it-IT'] = {
             RVERR0009: 'I margini sono sovrapposti o esterni alla carta. Immettere una dimensione del margine diversa.',
             RVERR0010: 'Immettere un valore per il parametro',
             RVERR0011: 'Il parametro non può essere vuoto',
-            RVERR0012: 'Il valore fornito per il parametro del report {parameterprompt} non è valido per il suo tipo.'
+            RVERR0012: 'Il valore fornito per il parametro del report {parameterprompt} non è valido per il suo tipo.',
+            RVERR0013: 'Inserisci i valori per i parametri',
+            RVERR0014: 'I parametri non possono essere vuoti',
+            RVERR0015: 'Il valore richiesto per i nomi dei parametri di',
         },
         reportItemLabel: {
             Tablix: 'Voce del report Tablix',

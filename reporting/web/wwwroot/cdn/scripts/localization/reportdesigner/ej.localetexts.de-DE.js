@@ -2746,10 +2746,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
             cancelReportProcessMsg: 'Die Berichtsverarbeitung wurde abgebrochen.',
         },
         progressMessage: {
-            exportLoadingMessage: 'Exportdokument wird vorbereitet ... Bitte warten Sie ...',
-            printLoadingMessage: 'Druckdaten vorbereiten ... Bitte warten Sie ...',
-            printPreparationMessage: 'Druckdaten werden vorbereitet ... {0}% abgeschlossen ... Bitte warten ...',
-            exportPreparationMessage: 'Export wird vorbereitet ... {0}% abgeschlossen ... Bitte warten ...',
+            exportLoadingMessage: 'Bericht wird exportiert...',
+            printLoadingMessage: 'Bericht drucken...',
+            printPreparationMessage: 'Druckdaten werden vorbereitet... {0} % abgeschlossen... Bitte warten...',
+            exportPreparationMessage: 'Der Export des Dokuments wird vorbereitet... {0} % abgeschlossen... Bitte warten...',
             cancelText: 'stornieren',
         },
         alertMessage: {
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['de-DE'] = {
             RVERR0009: 'Die Ränder sind überlappt oder sie liegen außerhalb des Papiers. Geben Sie eine andere Randgröße ein.',
             RVERR0010: 'Bitte geben Sie einen Wert für den Parameter ein',
             RVERR0011: 'Der Parameter darf nicht leer sein',
-            RVERR0012: 'Der für den Berichtsparameter {parameterprompt} angegebene Wert ist für seinen Typ nicht gültig.'
+            RVERR0012: 'Der für den Berichtsparameter {parameterprompt} angegebene Wert ist für seinen Typ nicht gültig.',
+            RVERR0013: 'Der für Parameternamen erforderliche Wert',
+            RVERR0014: 'Parameter dürfen nicht leer sein',
+            RVERR0015: 'Der für Parameternamen erforderliche Wert',
         },
         reportItemLabel: {
             Tablix: 'Tablix-Berichtselement',

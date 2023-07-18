@@ -11,6 +11,7 @@
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
+    var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
 }
 
 <!DOCTYPE html>
@@ -33,8 +34,8 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/update-datasource-dependent.min.css" />
         </environment>
-        <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" rel="stylesheet" />
-        <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" rel="stylesheet" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/update-datasource.css" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/update-datasource-dependent.js"></script>
@@ -63,8 +64,8 @@
     }
     else
     {
-        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
-        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" rel="stylesheet" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
@@ -108,7 +109,7 @@
         <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
         <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
     }
-<script>
+    <script>
         let conString = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.conString)));
         let dataSourceDetail = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.dataSourceDetail)));
 		var isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
@@ -124,14 +125,14 @@
         var custombrandName = "@ServerAppConfig.CustomBrandName";
         var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
         var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
-</script>
+    </script>
 </head>
 <body ng-app="updateDataSourceApp">
     <div id="updateDesigner" style="display:none !important"></div>
     <div class="ud-container" ng-controller="updateDataSourceCtrl">
-        @{ Html.RenderPartial("~/Views/DataSources/UpdateDataSource/_Header.cshtml"); }
+        @{ await Html.RenderPartialAsync("~/Views/DataSources/UpdateDataSource/_Header.cshtml"); }
         <div class="ud-connector" ng-if="selectedDataConnector">
-            @{ Html.RenderPartial("~/Views/DataSources/UpdateDataSource/_Connector.cshtml"); }
+            @{ await Html.RenderPartialAsync("~/Views/DataSources/UpdateDataSource/_Connector.cshtml"); }
         </div>
         <div class="dc-toast"></div>
     </div>

@@ -21,6 +21,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
+    var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -54,8 +55,8 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css"  />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css"/>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
         </environment>
@@ -101,8 +102,8 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
         </environment>
         <link href="@reportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
-        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
-        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" rel="stylesheet" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
         </environment>
@@ -230,7 +231,7 @@
         var _keyCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
         var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
-        var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);         
+        var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         isEdit = isEdit.toLowerCase();
 
 		if(isEdit === "true"){
@@ -258,304 +259,305 @@
             });
         });
 
-		function renderQueryDesigner() {
-        var designerModel = {
-            serviceUrl: serviceUrl,
-        toolbarSettings: {
-            items: ej.QueryDesigner.ToolbarItems.All & ~ej.QueryDesigner.ToolbarItems.Cancel & ~ej.QueryDesigner.ToolbarItems.Save & ~ej.QueryDesigner.ToolbarItems.InputDataSet
-        },
-        create: $.proxy(controlInitialization, this),
-        toolbarRendering: $.proxy(renderQueryToolbar, this),
-        reportServerUrl: "@reportServerApiUrl",
-        serviceAuthorizationToken: designerToken,
-        locale: '@language',
-        ajaxBeforeLoad: ajaxBeforeSend,
-        encryptData: encryptData,
-        decryptData: decryptData
-       };
-        var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
+        function renderQueryDesigner() {
+            var designerModel = {
+                serviceUrl: serviceUrl,
+                toolbarSettings: {
+                    items: ej.QueryDesigner.ToolbarItems.All & ~ej.QueryDesigner.ToolbarItems.Cancel
+                        & ~ej.QueryDesigner.ToolbarItems.Save & ~ej.QueryDesigner.ToolbarItems.InputDataSet
+                },
+                create: $.proxy(controlInitialization, this),
+                toolbarRendering: $.proxy(renderQueryToolbar, this),
+                reportServerUrl: "@reportServerApiUrl",
+                serviceAuthorizationToken: designerToken,
+                locale: '@language',
+                ajaxBeforeLoad: ajaxBeforeSend,
+                encryptData: encryptData,
+                decryptData: decryptData
+            };
+            var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
         }
 
-	   function controlInitialization(args) {
-		if(isEditReport){
-           editDataSet(datasetName);
-		}else{
-		    newDataSet(datasource);
-		}
-      }
-
-function renderQueryToolbar(args) {
-    var toolbarTarget = $(args.target);
-    toolbarTarget.find('#' + ctrlId + '_table_edit_dataset').parent().css('display','none');
-    var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
-    var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save and Exit]]]", {}, { id: ctrlId + '_query_save_btn' });
-    $divsave.append(saveButton);
-    toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divsave);
-    saveButton.ejButton({
-        width: '83px', showRoundedCorner: false, size: 'mini',
-        contentType: ej.ContentType.TextOnly, 'height': '25px',
-        'click': $.proxy(this.saveQueryDataSet, this)
-    });
-    var $divcancel = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
-    var cancelButton = this.btnCancelTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Cancel]]]", {}, { id: ctrlId + '_query_cancel_btn' });
-    $divcancel.append(cancelButton);
-    toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divcancel);
-    cancelButton.ejButton({
-        width: '78px', showRoundedCorner: false, size: 'mini',
-        contentType: ej.ContentType.TextOnly, 'height': '25px',
-        'click': $.proxy(this.cancelDataSet, this)
-    });
-}
-
-function cancelDataSet() {
-    window.location.href = '@Url.Action("DataSets", "DataSets")';
-}
-
-function saveQueryDataSet(event) {
-    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
-    queryDesigner.getDataSet(function (args) {
-        doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
-            'designerAction': isEditReport ? 'SaveSharedDataSet' : 'CreateSharedDataSet',
-            'sharedData': ej.ReportUtil.encryptSharedDatasetModel(args.newSharedDataSet,queryDesigner),
-            'name': datasetName,
-            'sharedDataMapping': args.sharedDataMapping,
-            'customData': {
-                'description': description
+        function controlInitialization(args) {
+            if (isEditReport) {
+                editDataSet(datasetName);
+            } else {
+                newDataSet(datasource);
             }
-        }), {
-            fnction: function (args) {
-                if (args && typeof (args) === 'string' && args.indexOf('Sf_Exception') !== -1) {
-                    alertMessage(false)
-                } else {
-                    alertMessage(true);
-                    if (!isEditReport) {
-                        isEditReport = true;
+        }
+
+        function renderQueryToolbar(args) {
+            var toolbarTarget = $(args.target);
+            toolbarTarget.find('#' + ctrlId + '_table_edit_dataset').parent().css('display', 'none');
+            var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
+            var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save and Exit]]]", {}, { id: ctrlId + '_query_save_btn' });
+            $divsave.append(saveButton);
+            toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divsave);
+            saveButton.ejButton({
+                width: '83px', showRoundedCorner: false, size: 'mini',
+                contentType: ej.ContentType.TextOnly, 'height': '25px',
+                'click': $.proxy(this.saveQueryDataSet, this)
+            });
+            var $divcancel = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
+            var cancelButton = this.btnCancelTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Cancel]]]", {}, { id: ctrlId + '_query_cancel_btn' });
+            $divcancel.append(cancelButton);
+            toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divcancel);
+            cancelButton.ejButton({
+                width: '78px', showRoundedCorner: false, size: 'mini',
+                contentType: ej.ContentType.TextOnly, 'height': '25px',
+                'click': $.proxy(this.cancelDataSet, this)
+            });
+        }
+
+        function cancelDataSet() {
+            window.location.href = '@Url.Action("DataSets", "DataSets")';
+        }
+
+        function saveQueryDataSet(event) {
+            var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+            queryDesigner.getDataSet(function (args) {
+                doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+                    'designerAction': isEditReport ? 'SaveSharedDataSet' : 'CreateSharedDataSet',
+                    'sharedData': ej.ReportUtil.encryptSharedDatasetModel(args.newSharedDataSet, queryDesigner),
+                    'name': datasetName,
+                    'sharedDataMapping': args.sharedDataMapping,
+                    'customData': {
+                        'description': description
                     }
+                }), {
+                    fnction: function (args) {
+                        if (args && typeof (args) === 'string' && args.indexOf('Sf_Exception') !== -1) {
+                            alertMessage(false)
+                        } else {
+                            alertMessage(true);
+                            if (!isEditReport) {
+                                isEditReport = true;
+                            }
+                        }
+                    },
+                    indicator: [function () {
+                        $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                    },
+                    function () {
+                        $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                    }]
+                });
+            });
+        }
+
+        function _injectKeys(args) {
+            if (args && args.headers) {
+                args.headers.push({ 'Key': 'keyCode', 'Value': _keyCode });
+                args.headers.push({ 'Key': 'ivCode', 'Value': _ivCode });
+            }
+        }
+
+        function alertMessage(status) {
+            var toastMessage;
+            var className;
+            var toastTitle;
+            if (status) {
+                if (isEditReport) {
+                    toastMessage = "[[[DataSet has been updated successfully]]]";
+                } else {
+                    toastMessage = "[[[DataSet has been added successfully]]]";
                 }
-            },
-            indicator: [function () {
+                className = 'e-toast-success';
+                toastTitle = "[[[Success!]]]";
+            } else {
+                if (isEditReport) {
+                    toastMessage = "[[[An error occured to update the dataset]]]";
+                } else {
+                    toastMessage = "[[[An error occured to add the dataset]]]";
+                }
+                className = 'e-toast-danger';
+                toastTitle = "[[[Error!]]]";
+            }
+            var toast = new ejs.notifications.Toast({
+                title: toastTitle,
+                content: toastMessage,
+                target: document.body,
+                cssClass: className,
+                timeOut: 3000,
+                position: { X: 'Right', Y: 'Top' },
+                showCloseButton: true,
+                newestOnTop: true,
+                animation: {
+                    hide: { effect: 'SlideRightOut' },
+                    show: { effect: 'SlideRightIn' }
+                }
+            });
+            toast.appendTo('#toast-message-container');
+            toast.show();
+            if (status) {
+                setTimeout(cancelDataSet, 3000);
+            }
+        }
+
+        function newDataSet(selectData) {
+            var designer = $('#' + ctrlId).data('boldReportQueryDesigner');
+            doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+                'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
+            }), {
+                fnction: function (args) {
+                    var dataSources = [];
+                    for (var index = 0; index < args.length; index++) {
+                        var dataSource = ej.ReportUtil.createDataSource();
+                        dataSource.ConnectionProperties = null;
+                        dataSource.DataSourceReference = args[index].Id;
+                        dataSource.Name = args[index].Name;
+                        dataSources.push(dataSource);
+                    }
+                    designer.datasetName = datasetName;
+                    designer.newDataSet(selectData, dataSources);
+                },
+                indicator: [function () {
                     $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
                 },
                 function () {
                     $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
                 }]
-        });
-    });
-}
-
-function _injectKeys(args) {
-    if (args && args.headers) {
-        args.headers.push({ 'Key': 'keyCode', 'Value': _keyCode });
-        args.headers.push({ 'Key': 'ivCode', 'Value': _ivCode });
-    }
-}
-
-function alertMessage(status) {
-    var toastMessage;
-    var className;
-    var toastTitle;
-    if (status) {
-        if (isEditReport) {
-            toastMessage = "[[[DataSet has been updated successfully]]]";
-        } else {
-            toastMessage = "[[[DataSet has been added successfully]]]";
+            });
         }
-        className = 'e-toast-success';
-        toastTitle = "[[[Success!]]]";
-    } else {
-        if (isEditReport) {
-            toastMessage = "[[[An error occured to update the dataset]]]";
-        } else {
-            toastMessage = "[[[An error occured to add the dataset]]]";
+
+        function editDataSet(dataSetName) {
+            var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+            doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+                'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
+            }), {
+                fnction: function (args) {
+                    var dataSources = [];
+                    for (var index = 0; index < args.length; index++) {
+                        var dataSource = ej.ReportUtil.createDataSource();
+                        dataSource.ConnectionProperties = null;
+                        dataSource.DataSourceReference = args[index].Id;
+                        dataSource.Name = args[index].Name;
+                        dataSources.push(dataSource);
+                    }
+                    editSharedDataSet(dataSetName, dataSources);
+                },
+                indicator: [function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                },
+                function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                }]
+            });
         }
-        className = 'e-toast-danger';
-        toastTitle = "[[[Error!]]]";
-    }
-    var toast = new ejs.notifications.Toast({
-        title: toastTitle,
-        content: toastMessage,
-        target: document.body,
-        cssClass: className,
-        timeOut: 3000,
-        position: { X: 'Right', Y: 'Top' },
-        showCloseButton: true,
-        newestOnTop: true,
-        animation: {
-            hide: { effect: 'SlideRightOut' },
-            show: { effect: 'SlideRightIn' }
+
+        function downloadDataSet() {
+            var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+            queryDesigner.getDataSet(function (args) {
+                ej.ReportUtil.doPostBack(serviceUrl + '/PostDesignerAction/', { 'name': args.newSharedDataSet.Name + '.rsd', 'sharedData': JSON.stringify(args.newSharedDataSet) }, queryDesigner);
+            });
         }
-    });
-    toast.appendTo('#toast-message-container');
-    toast.show();	
-    if (status) {
-        setTimeout(cancelDataSet, 3000);
-    }
-}
 
-function newDataSet(selectData) {
-    var designer = $('#' + ctrlId).data('boldReportQueryDesigner');
-    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
-        'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
-    }), {
-        fnction: function (args) {
-            var dataSources = [];
-            for (var index = 0; index < args.length; index++) {
-                var dataSource = ej.ReportUtil.createDataSource();
-                dataSource.ConnectionProperties = null;
-                dataSource.DataSourceReference = args[index].Id;
-                dataSource.Name = args[index].Name;
-                dataSources.push(dataSource);
-            }
-            designer.datasetName = datasetName;
-            designer.newDataSet(selectData, dataSources);
-        },
-        indicator: [function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
-            },
-            function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
-            }]
-    });
-}
-
-function editDataSet(dataSetName) {
-    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
-    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
-        'designerAction': ej.ReportUtil.DesignerAction.dataSourceCatalog,
-    }), {
-        fnction: function (args) {
-            var dataSources = [];
-            for (var index = 0; index < args.length; index++) {
-                var dataSource = ej.ReportUtil.createDataSource();
-                dataSource.ConnectionProperties = null;
-                dataSource.DataSourceReference = args[index].Id;
-                dataSource.Name = args[index].Name;
-                dataSources.push(dataSource);
-            }
-            editSharedDataSet(dataSetName, dataSources);
-        },
-        indicator: [function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
-            },
-            function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
-            }]
-    });
-}
-
-function downloadDataSet() {
-    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
-    queryDesigner.getDataSet(function (args) {
-        ej.ReportUtil.doPostBack(serviceUrl + '/PostDesignerAction/', { 'name': args.newSharedDataSet.Name + '.rsd', 'sharedData': JSON.stringify(args.newSharedDataSet) }, queryDesigner);
-    });
-}
-
-function editSharedDataSet(dataSetName, dataSources) {
-    var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
-    doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
-        'designerAction': ej.ReportUtil.DesignerAction.sharedDataSet,
-        'reportInfo': {
-            'dataSetRefer': dataSetName
-        }
-    }), {
-            fnction: function (args) {
-            queryDesigner.datasetName = datasetName;
-            queryDesigner.editDataSet(ej.ReportUtil.decryptDatasetModel(args, queryDesigner), dataSources);
-        },
-        indicator: [function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
-            },
-            function () {
-                $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
-            }]
-    });
-}
-
-function ajaxBeforeSend(args) {
-    _injectKeys(args);
-}
-
-function _encryptData(plainText) {
-    return _CryptoAES.AES.encrypt(
-        _CryptoAES.enc.Utf8.parse(plainText),
-        _key,
-        {
-            keySize: 128 / 8,
-            iv: _iv,
-            mode: _CryptoAES.mode.CBC,
-            padding: _CryptoAES.pad.Pkcs7
-        }).toString();
-}
-
-function _decryptData(cipherText) {
-    return _CryptoAES.AES.decrypt(
-        cipherText,
-        _key,
-        {
-            keySize: 128 / 8,
-            iv: _iv,
-            mode: _CryptoAES.mode.CBC,
-            padding: _CryptoAES.pad.Pkcs7
-        }).toString(_CryptoAES.enc.Utf8);
-}
-
-function encryptData(eventArgs) {
-    if (eventArgs && eventArgs.data) {
-        eventArgs.data = _encryptData(eventArgs.data);
-    }
-}
-
-function decryptData(eventArgs) {
-    if (eventArgs && eventArgs.data) {
-        eventArgs.data = _decryptData(eventArgs.data);
-    }
-}
-
-function _setRequestHeader(req){
-    if (req) {
-        req.setRequestHeader('keyCode', _keyCode);
-        req.setRequestHeader('ivCode', _ivCode);
-    }
-}
-
-function doAjaxPost(url, jsonObj, callBack) {
-    $.ajax({
-        type: 'POST',
-        url: url,
-        async: true,
-        crossDomain: true,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: jsonObj,
-        beforeSend: function (req) {
-            req.setRequestHeader('ServerUrl', '@reportServerApiUrl');
-            req.setRequestHeader('serviceAuthorizationToken', designerToken);
-            if (callBack && callBack.indicator && callBack.indicator.length > 0) {
-                ej.ReportUtil.invokeCallBack(callBack.indicator[0], {});
-            }
-             _setRequestHeader(req);
-        },
-        success: function (data) {
-            if (data && typeof (data.Data) !== 'undefined') {
-                data = data.Data;
-            }
-            var jsonData = data;
-            if (callBack) {
-                if (callBack.indicator && callBack.indicator.length > 0) {
-                    ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+        function editSharedDataSet(dataSetName, dataSources) {
+            var queryDesigner = $('#' + ctrlId).data('boldReportQueryDesigner');
+            doAjaxPost(serviceUrl + '/PostDesignerAction/', JSON.stringify({
+                'designerAction': ej.ReportUtil.DesignerAction.sharedDataSet,
+                'reportInfo': {
+                    'dataSetRefer': dataSetName
                 }
-                if (callBack.fnction) {
-                    ej.ReportUtil.invokeCallBack(callBack.fnction, jsonData);
-                }
-            }
-        },
-        error: function (msg, textStatus, errorThrown) {
-            if (callBack && callBack.indicator && callBack.indicator.length > 0) {
-                ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+            }), {
+                fnction: function (args) {
+                    queryDesigner.datasetName = datasetName;
+                    queryDesigner.editDataSet(ej.ReportUtil.decryptDatasetModel(args, queryDesigner), dataSources);
+                },
+                indicator: [function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                },
+                function () {
+                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                }]
+            });
+        }
+
+        function ajaxBeforeSend(args) {
+            _injectKeys(args);
+        }
+
+        function _encryptData(plainText) {
+            return _CryptoAES.AES.encrypt(
+                _CryptoAES.enc.Utf8.parse(plainText),
+                _key,
+                {
+                    keySize: 128 / 8,
+                    iv: _iv,
+                    mode: _CryptoAES.mode.CBC,
+                    padding: _CryptoAES.pad.Pkcs7
+                }).toString();
+        }
+
+        function _decryptData(cipherText) {
+            return _CryptoAES.AES.decrypt(
+                cipherText,
+                _key,
+                {
+                    keySize: 128 / 8,
+                    iv: _iv,
+                    mode: _CryptoAES.mode.CBC,
+                    padding: _CryptoAES.pad.Pkcs7
+                }).toString(_CryptoAES.enc.Utf8);
+        }
+
+        function encryptData(eventArgs) {
+            if (eventArgs && eventArgs.data) {
+                eventArgs.data = _encryptData(eventArgs.data);
             }
         }
-    });
-}
+
+        function decryptData(eventArgs) {
+            if (eventArgs && eventArgs.data) {
+                eventArgs.data = _decryptData(eventArgs.data);
+            }
+        }
+
+        function _setRequestHeader(req) {
+            if (req) {
+                req.setRequestHeader('keyCode', _keyCode);
+                req.setRequestHeader('ivCode', _ivCode);
+            }
+        }
+
+        function doAjaxPost(url, jsonObj, callBack) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                async: true,
+                crossDomain: true,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: jsonObj,
+                beforeSend: function (req) {
+                    req.setRequestHeader('ServerUrl', '@reportServerApiUrl');
+                    req.setRequestHeader('serviceAuthorizationToken', designerToken);
+                    if (callBack && callBack.indicator && callBack.indicator.length > 0) {
+                        ej.ReportUtil.invokeCallBack(callBack.indicator[0], {});
+                    }
+                    _setRequestHeader(req);
+                },
+                success: function (data) {
+                    if (data && typeof (data.Data) !== 'undefined') {
+                        data = data.Data;
+                    }
+                    var jsonData = data;
+                    if (callBack) {
+                        if (callBack.indicator && callBack.indicator.length > 0) {
+                            ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+                        }
+                        if (callBack.fnction) {
+                            ej.ReportUtil.invokeCallBack(callBack.fnction, jsonData);
+                        }
+                    }
+                },
+                error: function (msg, textStatus, errorThrown) {
+                    if (callBack && callBack.indicator && callBack.indicator.length > 0) {
+                        ej.ReportUtil.invokeCallBack(callBack.indicator[1], {});
+                    }
+                }
+            });
+        }
     </script>
 </head>
 <body style="overflow:hidden;position:static;margin:0; padding: 0;height:100%;width:100%">

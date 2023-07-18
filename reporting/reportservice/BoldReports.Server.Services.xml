@@ -119,6 +119,19 @@
             <param name="key">Unique key for the cache entry</param>
             <param name="cacheModel">Object to be cached</param>
         </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.AddToPermanantCache(System.String,System.Object)">
+            <summary>
+            Adds an object in the cache that will have an absolute expiration of one year.
+            </summary>
+            <param name="key">Unique key for the cache entry</param>
+            <param name="cacheModel">Object to be cached</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.RemoveFromCache(System.String)">
+            <summary>
+            Removes the cached object from memory.
+            </summary>
+            <param name="key">Unique key to be removed</param>
+        </member>
         <member name="M:BoldReports.Server.Services.CacheManager.IsInCache(System.String)">
             <summary>
             Checks whether there is an entry in cache
@@ -587,6 +600,65 @@
             <param name="chain"></param>
             <param name="sslPolicyErrors"></param>
             <returns></returns>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeHelper">
+            <summary>
+            Custom attribute helper class used for custom attribute value processing for data qurey and connection string properties
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.#ctor(BoldReports.Server.Services.HttpContextModel,System.Boolean)">
+            <summary>Custom Attribute helper constructor</summary>
+            <param name="httpContextModel">Represents the httpcontext from httprequest</param>
+            <param name="isIgnoreCache">Represents to get the attributes value from cache</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.GetCustomAttributes(System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>Method to decide to update the attribute value from cache or from server</summary>
+            <param name="authToken">Represents the serviceauthorization token for making server request.</param>
+            <param name="serverUrl">Represents the base server url.</param>
+            <param name="userid">Represents the userid</param>
+            <param name="attributes">Represents the attribute list in the input string</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.GetServerAttributes(System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>Method to remove cache and get custom attribute values</summary>
+            <param name="cacheKey">Represents the cache key name.</param>
+            <param name="authToken">Represents the serviceauthorization token for making server request.</param>
+            <param name="serverUrl">Represents the base server url.</param>
+            <param name="attributes">Represents the list of custom attribute used in custom query.</param>
+            <param name="userid">Represents the userid</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.ConvertToDictionary(System.Collections.Generic.List{BoldReports.Server.AttributeHelper.CustomAttributeField})">
+            <summary>Method to update the custom query with the attribute values</summary>
+            <param name="attributeInfo">Represents the list of current custom attribute of the query query along with values.</param>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeField">
+            <summary>
+            Custom attribute field model class used for deserializing the custom attribute response got from server request
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeField.Name">
+            <summary>
+            Gets or sets the name string value.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeField.Value">
+            <summary>
+            Gets or sets the value string value.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeRequest">
+            <summary>
+            Custom attribute request model class used for server request
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeRequest.EncryptedString">
+            <summary>
+            Gets or sets the encrypted string value.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeRequest.AttributeNames">
+            <summary>
+            Gets or sets the list of custom attribute name.
+            </summary>
         </member>
         <member name="T:BoldReports.Server.PublishHelpers.DownloadUploadHelper">
             <summary>

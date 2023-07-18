@@ -84,12 +84,12 @@
 </head>
 <body ng-app="createDataSetApp">
     <div class="cds-container" ng-controller="createDataSetCtrl">
-        @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_Header.cshtml"); }
+        @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_Header.cshtml"); }
         <div class="cds-cards" ng-if="!useExistingDataSource">
-            @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_DataSetCards.cshtml"); }
+            @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_DataSetCards.cshtml"); }
         </div>
         <div class="cds-existing-container" ng-if="useExistingDataSource">
-            @{ Html.RenderPartial("~/Views/Datasets/CreateDataSet/_DataSet.cshtml"); }
+            @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_DataSet.cshtml"); }
         </div>
         <div class="ds-toast"></div>
 

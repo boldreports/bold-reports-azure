@@ -289,13 +289,21 @@ ej.ReportViewer.Locale["it-IT"] = {
 		printAjaxFailureMsg: 'Impossibile stampare il documento a causa di un errore nel collegamento del servizio report.',
 		reportLoadAjaxFailureMsg: "Impossibile eseguire l'azione di report a causa di un errore nel collegamento del servizio report.",
 		cancelReportProcessMsg: "L'elaborazione del rapporto è stata annullata.",
+		htmlFailure: {
+			headerMsg: 'Impossibile caricare la risorsa: il server ha risposto con uno stato di',
+			authorizationMsg: "Si prega di controllare il token di autorizzazione fornito.",
+			detailMsg: "Fornire informazioni valide sul server di report (URL del server di report, credenziali del server di report, percorso del report, token di autorizzazione) per recuperare il flusso di report dal server."			
+		},
+		serviceURL: {
+			noURLFound: "L'URL del servizio di segnalazione non è specificato."
+		}
 	},
 	progressMessage: {
-		exportLoadingMessage: 'Preparazione del documento di esportazione ... attendere ...',
-		printLoadingMessage: 'Preparazione dei dati di stampa ... attendere ...',
-		printPreparationMessage: 'Preparazione dei dati di stampa ... {0}% completato ... Attendere ...',
-		exportPreparationMessage: 'Preparazione del documento di esportazione ... {0}% completato ... Attendere ...',
-		cancelText: 'Annulla',
+		exportLoadingMessage: 'Esportazione report...',
+		printLoadingMessage: 'Stampa rapporto...',
+		printPreparationMessage: 'Preparazione alla stampa dei dati... {0}% completata... Attendere...',
+		exportPreparationMessage: 'Preparazione per l'esportazione del documento... { 0} % completata...Attendere...',
+        cancelText: 'Annulla',
 	},
 	alertMessage: {
 		close: 'Vicino',
@@ -304,6 +312,9 @@ ej.ReportViewer.Locale["it-IT"] = {
 		showDetails: 'Mostra dettagli',
 		hideDetails: 'Nascondere dettagli',
 		reportLoad: 'Rapporto caricato:',
+		moreInformation: "Maggiori informazioni",
+		copied: "Copiato",
+		copyError: "copia",
 		RVERR0001: 'ReportViewer non è riuscito a caricare il report',
 		RVERR0002: 'ReportViewer non è riuscito a rendere il report',
 		RVERR0003: 'Si è verificato un errore nel postback ajax',
@@ -315,7 +326,10 @@ ej.ReportViewer.Locale["it-IT"] = {
 		RVERR0009: 'I margini sono sovrapposti o sono fuori carta. Inserisci una dimensione di margine diversa.',
 		RVERR0010: 'Si prega di inserire un valore per il parametro',
 		RVERR0011: 'Il parametro non può essere vuoto',
-		RVERR0012: 'Il valore fornito per il parametro del report {parameterprompt} non è valido per il suo tipo.'
+		RVERR0012: 'Il valore fornito per il parametro del report {parameterprompt} non è valido per il suo tipo.',
+		RVERR0013: 'Inserisci i valori per i parametri',
+		RVERR0014: 'I parametri non possono essere vuoti',
+		RVERR0015: 'Il valore richiesto per i nomi dei parametri di',
 	},
 	selectAll: 'Seleziona tutto',
 	viewButton: "Visualizza rapporto",

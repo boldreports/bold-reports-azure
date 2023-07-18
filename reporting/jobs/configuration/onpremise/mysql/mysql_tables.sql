@@ -87,6 +87,8 @@ CREATE TABLE  {database_name}.BOLDRS_UserPreference(
 	ItemSort varchar(4000) NULL,
 	ItemFilters varchar(4000) NULL,
 	Notifications varchar(4000) NULL,
+	ViewerFeatures text(4000) NULL,
+	DesignerFeatures text(4000) NULL,
 	ModifiedDate datetime NOT NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))

@@ -87,6 +87,8 @@ CREATE TABLE [BOLDRS_UserPreference](
 	[ItemSort] [nvarchar](4000) NULL,
 	[ItemFilters] [nvarchar](4000) NULL,
 	[Notifications] [nvarchar](4000) NULL,
+	[ViewerFeatures] [nvarchar](4000) NULL,
+	[DesignerFeatures] [nvarchar](4000) NULL,
 	[ModifiedDate] [datetime] NOT NULL,
 	[IsActive] [bit] NOT NULL)
 ;

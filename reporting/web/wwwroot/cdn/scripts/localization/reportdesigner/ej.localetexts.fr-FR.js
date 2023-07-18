@@ -2746,10 +2746,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             cancelReportProcessMsg: 'Le traitement du rapport a été annulé.'
         },
         progressMessage: {
-            exportLoadingMessage: 'Préparation du document d\'exportation ... Veuillez patienter ...',
-            printLoadingMessage: 'Préparation des données d\'impression… Veuillez patienter…',
-            printPreparationMessage: 'Préparation des données d\'impression ... {0}% terminé ... Veuillez patienter ...',
-            exportPreparationMessage: 'Préparation du document d\'exportation ... {0}% terminé ... Veuillez patienter ...',
+            exportLoadingMessage: 'Exportation du rapport...',
+            printLoadingMessage: 'Impression du rapport...',
+            printPreparationMessage: 'Préparation de l\'impression des données... {0}% terminé... Veuillez patienter...',
+            exportPreparationMessage: 'Préparation de l\'exportation du document... {0}% terminé... Veuillez patienter...',
             cancelText: 'Annuler'
         },
         alertMessage: {
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['fr-FR'] = {
             RVERR0009: 'Les marges sont superposées ou sont en dehors du papier. Saisissez une taille de marge différente.',
             RVERR0010: 'Entrez une valeur pour le paramètre',
             RVERR0011: 'Le paramètre ne peut pas être vide',
-            RVERR0012: 'La valeur fournie pour le paramètre de rapport {parameterprompt} n\'est pas valide pour son type.'
+            RVERR0012: 'La valeur fournie pour le paramètre de rapport {parameterprompt} n\'est pas valide pour son type.',
+            RVERR0013: 'Veuillez entrer des valeurs pour les paramètres',
+            RVERR0014: 'Les paramètres ne peuvent pas être vides',
+            RVERR0015: 'Veuillez entrer des valeurs pour les paramètres',
         },
         reportItemLabel: {
             Tablix: 'Élément de rapport de tableau matriciel',

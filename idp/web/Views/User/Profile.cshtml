@@ -13,7 +13,7 @@
     var userDetail = (User)ViewBag.UserDetail;
     var groupList = ViewBag.GroupList;
     ViewBag.Title = $"{T["Profile"].Value } | {GlobalAppSettings.SystemSettings.OrganizationName}";
-    var userId = Guid.Parse(GlobalAppSettings.HttpContextAccessor.HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+    var userId = Context.User.GetUserId();
 
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
     var isWindowsAdUser = (DirectoryType)userDetail.DirectoryTypeId == DirectoryType.WindowsAD;
@@ -201,7 +201,7 @@
             </div>
             <div class="admin-page-footer col-xs-12">
                 <div class="admin-page-actions col-lg-12 col-md-12">
-                    @if (returnUrl != null)
+                    @if (!string.IsNullOrEmpty(returnUrl))
                     {
                         <a href="@returnUrl" class="secondary-button pull-right" id="cancel-link-button">@T["Cancel"]</a>
                         <input id="hidden-return-url" class="hidden" value="@returnUrl"/>

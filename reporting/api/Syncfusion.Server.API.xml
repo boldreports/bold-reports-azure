@@ -665,56 +665,6 @@
             <param name="apiRequest">ItemRequest Class object</param>
             <returns>Class type Item Response</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.SlideShowController.GetSlideshowDetail(System.Guid)">
-            <summary>
-            Returns slideshow details from the server for a specified slideshow
-            </summary>
-            <remarks>
-            Server retrieves the respective item details for the slideshow id provided in id parameter for the current user.
-            </remarks>
-            <param name="id">Slideshow ID</param>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.SlideShowController.GetSlideshows">
-            <summary>
-            Returns list of slideshows from the server
-            </summary>
-            <remarks>
-            Server retrieves all the slideshows for the current user.
-            </remarks>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.SlideShowController.DeleteSlideshow(System.Guid)">
-            <summary>
-            Deletes the slideshow
-            </summary>
-            <remarks>
-            Users who have a delete access for slideshow, can delete the slideshow on the server by providing slideshow id parameter.
-            </remarks>
-            <param name="id">Slideshow ID.</param>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.SlideShowController.AddSlideshowJson(Syncfusion.Server.Base.DataClasses.API.ApiSlideshowAdd)">
-            <summary>
-            Add a new slideshow to the server
-            </summary>
-            <remarks>
-            Users who have a create access for slideshow, can add a new slideshow to the server by providing respective slideshow details in the request body.
-            </remarks>
-            <param name="apiSlideshowAdd">Details about the slideshow passed will be added to the server.</param>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
-        <member name="M:Syncfusion.Server.API.Controllers.SlideShowController.EditSlideshowJson(System.Guid,Syncfusion.Server.Base.DataClasses.API.ApiSlideshowEdit)">
-            <summary>
-            Edit Slideshow
-            </summary>
-            <remarks>
-            Users who have write access for slideshow can update an existing slideshow to the server by providing details of the respective slideshow in the request body.
-            </remarks>
-            <param name="id">Slideshow ID.</param>
-            <param name="apiSlideshowEdit">Details about the slideshow passed will be updated to the server.</param>
-            <returns>The response is sent as ApiResponse object</returns>
-        </member>
         <member name="M:Syncfusion.Server.API.Controllers.SystemSettingsController.GetPublicSettings">
             <summary>
             Get Public Settings

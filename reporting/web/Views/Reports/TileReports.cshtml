@@ -24,6 +24,7 @@
     var categorysortValue = ViewBag.CategorySortValue;
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
+    var isBlob = globalAppSettings.SystemSettings.StorageType;
 }
 
 @section scripts{
@@ -82,6 +83,7 @@
         var parameterObj;
         var reportparameterObj;
         var categoryList;
+        var editReportAsXMLUrl = "@Url.Action("EditReportAsXML", "Designer")";
         if ('@categories' != '') {
             categoryList =@Html.Raw(categories);
         }
@@ -475,6 +477,15 @@
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
+                                                    @if (!Convert.ToBoolean(isBlob))
+                                                    {
+                                                    <li ng-if="dashboardItem.CanWrite && !isTablet">
+                                                        <span class="option-click" title="" ng-click="editRDLInXML()">
+                                                            <i class="su su-embed"></i>
+                                                            <span>[[[Edit as XML]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    }
                                                     <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>

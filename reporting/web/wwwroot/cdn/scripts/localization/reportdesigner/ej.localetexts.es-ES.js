@@ -2746,10 +2746,10 @@ ej.ReportDesigner.Locale['es-ES'] = {
             cancelReportProcessMsg: 'El procesamiento de informe fue cancelado'
         },
         progressMessage: {
-            exportLoadingMessage: 'Preparando la exportación del documento... Por favor, espera...',
-            printLoadingMessage: 'Preparando datos de impresión... Por favor espera...',
-            printPreparationMessage: 'Preparando datos de impresión... {0}% completado... Por favor espera...',
-            exportPreparationMessage: 'Preparando la exportación del documento... {0}% completado... Por favor espera...',
+            exportLoadingMessage: 'Exportando informe...',
+            printLoadingMessage: 'Informe de impresión...',
+            printPreparationMessage: 'Preparándose para imprimir datos... {0}% completado... Espere...',
+            exportPreparationMessage: 'Preparándose para exportar el documento... {0}% completado... Por favor, espere...',
             cancelText: 'Cancelar',
         },
         alertMessage: {
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['es-ES'] = {
             RVERR0009: 'Los márgenes están superpuestos o fuera del papel. Introduce un tamaño de margen diferente.',
             RVERR0010: 'Indicar un valor para el parámetro',
             RVERR0011: 'El parámetro no puede estar vacío',
-            RVERR0012: 'El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo.'
+            RVERR0012: 'El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo.',
+            RVERR0013: 'Introduzca valores para los parámetros.',
+            RVERR0014: 'Los parámetros no pueden estar en blanco',
+            RVERR0015: 'El valor requerido para los nombres de parámetros de',
         },
         reportItemLabel: {
             Tablix: 'Elemento de informe tablix',

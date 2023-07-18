@@ -34,6 +34,7 @@
                 parent.$("#uploadValidation").html("");
                 parent.$("#publish_report").attr("disabled", true);
                 var filename = $("#browse_file").val();
+                var previousRDLFileName = $("#upload_browse_file").val().slice(0, -4);
                 if (filename == "") {
                     $("#upload_browse_file").val('');
                 }
@@ -45,15 +46,17 @@
                     parent.$("#rdl_filename").val(filename);
                     $("#upload_browse_file").val(filename);
                     window.parent.$("#rdl_filename").val(filename);
+                    if ((window.parent.$(".edit-field").val() == "") || (window.parent.$(".edit-field").val() == previousRDLFileName)) {
+                    window.parent.$(".edit-field").val(filename.slice(0, -4));
+                    }
+                    window.parent.$(".add-report-form, #edit-report-form").valid();
                     $('#browse_file').attr('title', filename);
                     parent.$("#datasource_list_table").html("");
                     parent.$("#dataset_list_table").html("");
                     parent.$("#datasource_list").hide();
                     parent.$("#dataset_list").hide();
                     parent.$("#automap-message").hide();
-                    $("#rdl_file_upload_btn").removeAttr("disabled");
-                    $("#rdl_file_upload_btn").focus();
-                    parent.$("#uploadValidation").html("[[[Please upload the report]]]");
+                    $("#upload-form").submit();
                     if (parent.isEditPopup) {
                         parent.$("#comment").removeAttr("readonly");
                     }
@@ -61,7 +64,6 @@
                     $("#upload_browse_file").closest("span").addClass("has-error");
                     $("#browse_file").closest('div').addClass("error-file-upload");
                     parent.$("#uploadValidation").text("[[[Please choose a valid RDL file to upload]]]");
-                    $("#rdl_file_upload_btn").attr("disabled", "disabled");
                     $("#publish_report").attr("disabled", "disabled");
                     $('#browse_file').attr('title', filename);
                 }
@@ -92,7 +94,7 @@
         <span>
             <input id='upload_browse_file' class='form-control input-fields text' readonly name='uploadedFileName' type='text' value="@ViewBag.FileName" tabindex="-1">
         </span>
-        <div class='fileUpload btn btn-default'>
+        <div class='col-xs-1 fileUpload btn btn-default'>
             <span>...</span><input id='browse_file' title="[[[No file selected.]]]" class='browse-button upload-btn' type='file' accept='.rdl' name="file">
         </div>
         @if (isUploaded)
@@ -103,7 +105,6 @@
         {
             <input type="hidden" name="previousFileName" value="none" />
         }
-        <input id="rdl_file_upload_btn" type="submit" value="[[[Upload]]]" class="btn primary-button app-btn-primary" disabled data-previous-filename="none" />
     </form>
 </body>
 </html>

@@ -213,7 +213,7 @@
                 {
                     <a type="button" class="link-button app-btn-link" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
                 }
-                @*<input type="button" class="primary-button app-btn-primary pull-right" id="add-custom-attribute" title="" value="[[[Add Attribute]]]" data-id="@ViewBag.groupId" onclick="addCustomAttribute('group')">*@
+                <input type="button" class="primary-button app-btn-primary pull-right" id="add-custom-attribute" title="" value="[[[Add Attribute]]]" data-id="@ViewBag.groupId" onclick="addCustomAttribute('group')">
                 @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || granularPermissions[PermissionEntity.SpecificGroup]) && ViewBag.groupId != 1)                {
                     <input type="button" class="critical-action-button app-btn-danger delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
                 }
@@ -224,9 +224,9 @@
                 <li id="general-tab" role="presentation" class='@isGeneralTab'>
                     <a href="#group-general-tab" id="group-general" aria-controls="group-general-tab" role="tab" data-toggle="tab">[[[General]]]</a>
                 </li>
-                @*<li id="attribute-tab" role="presentation" class='@isAttributeTab'>
+                <li id="attribute-tab" role="presentation" class='@isAttributeTab'>
                     <a href="#group-attribute-tab" id="group-attribute" aria-controls="group-attribute-tab" role="tab" data-toggle="tab">[[[Attributes]]]</a>
-                </li>*@
+                </li>
             </ul>
         </nav>
         <div class="tab-content">
@@ -262,7 +262,7 @@
 
                 </div>
             </div>
-            @*<div id="group-attribute-tab" role="tabpanel" class='tab-pane @isAttributeTab'>
+            <div id="group-attribute-tab" role="tabpanel" class='tab-pane @isAttributeTab'>
                 <div class="col-lg-12 admin-page-body">
                     <div id="GroupAttributesGrid"></div>
                 </div>
@@ -292,7 +292,7 @@
                         {{/if}}
                     </div>
                 </script>
-            </div>*@
+            </div>
         </div>
         <div id="delete-group-area" class="no-padding">
             <div id="delete-group-wrap"></div>
