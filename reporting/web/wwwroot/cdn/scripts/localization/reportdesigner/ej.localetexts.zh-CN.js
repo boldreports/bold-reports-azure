@@ -2743,10 +2743,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             cancelReportProcessMsg: '报表处理被取消。',
         },
         progressMessage: {
-            exportLoadingMessage: '准备出口文件......请稍候......',
-            printLoadingMessage: '准备打印数据......请稍候......',
-            printPreparationMessage: '准备打印数据... {0}已完成...请稍候...',
-            exportPreparationMessage: '准备导出文档... {0}％已完成...请稍候...',
+            exportLoadingMessage: '报告导出...',
+            printLoadingMessage: '报告打印...',
+            printPreparationMessage: '正在准备打印数据...已完成 {0}%...请稍候...',
+            exportPreparationMessage: '正在准备导出文档...已完成 {0}%...请稍候...',
             cancelText: '取消',
         },
         alertMessage: {
@@ -2767,7 +2767,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             RVERR0009: '他的利润率是重叠的或者他们不在报纸上。输入不同的保证金大小.',
             RVERR0010: '请为参数输入一个值',
             RVERR0011: '该参数不能为空',
-            RVERR0012: '为报告参数{參數提示}提供的值对其类型无效.'
+            RVERR0012: '为报告参数{參數提示}提供的值对其类型无效.',
+            RVERR0013: '請輸入參數值',
+            RVERR0014: '參數不能為空',
+            RVERR0015: '參數名稱所需的值',
         },
         reportItemLabel: {
             Tablix: 'Tablix报告项目',

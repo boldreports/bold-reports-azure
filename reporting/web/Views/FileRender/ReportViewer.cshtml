@@ -380,6 +380,7 @@
      var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
      var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
 
+     var updateViewerUserPreference = "@Url.Action("SaveViewerUserPreference", "User")";
      var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
      var addViewUrl = { "web": "@Url.Action("OnFilterSave", "ReportViews")", "api": "/items/views/add" };
      var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
@@ -403,6 +404,8 @@
     var ItemType = "@ViewBag.ItemType";
     var customFontsName = [];
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var isViewerV2Enabled = @Json.Serialize(ViewBag.IsViewerV2Enabled);
+    var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
 
         function renderComments() {
             var src = $("#commentModuleContainer iframe").attr("src");
@@ -459,6 +462,28 @@
             $("#sync_report_viewer_toolbar_li_export").remove();
         }
 
+//Toggle button
+        if (!embedConfig.IsEmbedCode && (isUserAuthenticatedInCurrentTenant || !reportItemDetail.IsPublic)) {
+            var $litoggle = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt", "", {},
+                {
+                    'id': 'sync_report_viewer_toolbar_li_ReportViewToggle',
+                    'data-toggle': 'tooltip', 
+                    'data-placement': 'bottom',
+                    'title': window.Server.App.LocalizationContent.ViewerToggleInfo,
+                    'data-container': 'body' 
+                }
+            );
+            var $spantoggle = ej.buildTag("span.e-customoption",
+                "",
+                {},
+                { 'id': 'sync_report_viewer_toolbar_ReportViewToggle' }
+            );
+            var $toggleTag = ejToggleInitialize();
+            $spantoggle.append($toggleTag);
+            $litoggle.append($spantoggle);
+            $divouter.append($litoggle);
+        }
+
 //Render custom icons
 
         var $lilink = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
@@ -492,8 +517,8 @@
 
         var $liedit = ej.buildTag("li.e-reportviewer-toolbarli e-tooltxt",
             "",
-            { 'display': 'inline-block'},
-            { 'id': 'sync_report_viewer_toolbar_edit', 'title': '[[[Edit Report]]]' });
+            {},
+            { 'id': 'sync_report_viewer_toolbar_edit', 'title': '[[[Edit Report]]]', 'style': "display: inline-block;margin-left: 9px !important;" });
 
         var $spanedit = ej.buildTag("span.su-edit e-reportviewer-icon",
             "",
@@ -557,6 +582,7 @@
         }
 
         $ulContainer.append($divouter);
+        $('[data-toggle="tooltip"]').tooltip();
         if($("#is_mobile").val() == "true")
         {
             if (($(parent.window).width()) < 1400) {
@@ -585,7 +611,7 @@
     var xServerToken = "@ViewBag.XServerToken";
     //adding token and itemid in ajax request headers for rendering reports in viewer
     function OnAjaxRequest(args) {
-        if (isPublic === "true")
+        if (!isUserAuthenticatedInCurrentTenant && isPublic === "true")
         {
             args.headers.push({ Key: 'X-Server-Token', Value: xServerToken }, { Key: 'ReportId', Value: item_Id });
         }
@@ -639,20 +665,24 @@
                         reportServerUrl: "@viewerUrl",
                         ajaxBeforeLoad: "OnAjaxRequest",
                         reportExport: "OnExportClick",
+                        renderingBegin: "onRenderingAction",
                         exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
                         isResponsive: true,
                         reportLoaded: "openComments",
                         viewReportClick: "ViewReportClick",
                         renderingComplete: 'filterView',
+                        parameterChange: 'onParameterValueChange',
                         parameters: filterParameters,
                         locale: '@language',
                         fontNames: customFontsName,
 					    parameterSettings: {
-                               labelWidth: 'auto'
+                              labelWidth: 'auto',
+                              popupHeight: '250px',
+                              itemWidth: '320px'
                         },
                         toolbarSettings: {
-                            items: ej.ReportViewer.ToolbarItems.All
-                        }
+                            items: ej.ReportViewer.ToolbarItems.All & ~ej.ReportViewer.ToolbarItems.Find & ~ej.ReportViewer.ToolbarItems.Analytics
+                        },
             });
             if ($("#sync_report_viewer_toolicon_com").length < 1) {
                 commentSection();
@@ -703,19 +733,23 @@
                         reportServerUrl: "@viewerUrl",
                         ajaxBeforeLoad: "OnAjaxRequest",
                         reportExport: "OnExportClick",
+                        renderingBegin: "onRenderingAction",
                         exportSettings: { wordFormat: ej.ReportViewer.WordFormats.Word2013, pptFormat: ej.ReportViewer.PPTFormats.PowerPoint2013, excelFormat: ej.ReportViewer.ExcelFormats.Excel2013 },
                         reportLoaded: "openComments",
                         viewReportClick: "ViewReportClick",
                         renderingComplete: 'filterView',
+                        parameterChange: 'onParameterValueChange',
                         locale: '@language',
                         fontNames: customFontsName,
                         parameters: parameter,
 						 parameterSettings: {
-                               labelWidth: 'auto'
+                               labelWidth: 'auto',
+                               popupHeight: '250px',
+                               itemWidth: '320px'
                         },
                         toolbarSettings: {
-                            items: ej.ReportViewer.ToolbarItems.All
-                        }
+                            items: ej.ReportViewer.ToolbarItems.All & ~ej.ReportViewer.ToolbarItems.Find & ~ej.ReportViewer.ToolbarItems.Analytics
+                        },
                     });
                 $("#current-view").show();
                 $("#current-view").html("");
@@ -737,8 +771,8 @@
                 $("#save-lable-section label").html("");
                 link = '<a class="saved-view-link txt-overflow" href="' +
                     pageurl +
-                    '?viewid=' +
-                    viewId +
+                    '?viewname=' +
+                    viewName +
                     '" target="_blank" data-toggle="tooltip" data-original-title="' + viewName + '">' +
                     viewName +
                     '</a>';
@@ -824,4 +858,53 @@
             });
         })
     }
+
+    function ejToggleInitialize() {
+            var toggleTag = ej.buildTag(
+                'div.e-viewer-code-switcher e-viewer-tab-focus',
+                '',
+                {},
+                { 'id': 'ReportViewToggle_div', 'tabindex': '0', 'role': 'button', 'aria-label': 'ReportViewToggle', 'style': 'float: left; width: 50px; display: contents' });
+            var label = ej.buildTag(
+                'span.switchLabel',
+                window.Server.App.LocalizationContent.TryNewViewer,
+                {
+                    'align-items': 'center',
+                    'color': 'var(--primary-black)',
+                    'display': 'inline-flex',
+                    'float': 'left',
+                    'font-style': 'normal',
+                    'font-weight': '400',
+                    'line-height': '18px',
+                    'margin-right': '2px'
+                },
+                {
+                    'id': 'ReportViewToggle_label'
+                }
+                );
+            var switcher = ej.buildTag(
+                'label.e-viewer-switch',
+                '',
+                {
+                    'display': 'inline-flex',
+                    'float': 'left'
+                },
+                {
+                    'id': 'ReportViewToggle_container'
+                });
+            var isChecked = isViewerV2Enabled ? "checked" : "";
+            this.paramSwitcher = $('<input type=\'checkbox\' id=ReportViewToggle_input ' + isChecked + '>');
+            this.paramSwitcher.bind("change", onToggleChange);
+            switcher.append(this.paramSwitcher);
+            switcher.append('<div style=\'cursor:pointer;\' class=\'e-viewer-slider round\'></div>');
+            switcher.before('Open: ');
+            toggleTag.append(label);
+            toggleTag.append(switcher);
+            return toggleTag;
+    }
+    
+    function onToggleChange(e) {
+        saveViewerUserPreference(userId, e.target.checked);
+    }
+
 </script>

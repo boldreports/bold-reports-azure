@@ -25,7 +25,7 @@
                                 <div class="dataContainer e-reportdesigner-designer-configuration"></div>
                             </div>
                             <div class="dc-dataset-form-container" ng-style="{'display': !datasetCreation ? 'none' : 'block'}">
-                                @{ Html.RenderPartial("~/Views/Items/_DataSetForm.cshtml"); }
+                                @{ await Html.RenderPartialAsync("~/Views/Items/_DataSetForm.cshtml"); }
                             </div>
                         </div>
                     </div>
@@ -48,5 +48,5 @@
             <button type="button" class="data-designer-alert-no-btn secondary-button app-btn-secondary" ng-click="onAlertNoBtnClick()">No</button>
         </div>
     </div>
-    @{ Html.RenderPartial("~/Views/DataSources/CreateDataSource/_Footer.cshtml"); }
+    @{ await Html.RenderPartialAsync("~/Views/DataSources/CreateDataSource/_Footer.cshtml"); }
 </div>

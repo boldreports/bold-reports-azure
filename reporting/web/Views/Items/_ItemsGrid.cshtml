@@ -241,6 +241,23 @@
             </a>
         </li>
         {{/if}}
+
+        {{if @(globalAppSettings.SystemSettings.StorageType) == @((int)StorageType.FileStorage)}}
+        {{if CanWrite}}
+        {{if ~checkMobile()}}
+        {{if ItemType == "@((int)ItemType.Dataset)"}}
+        <li role="separator" class="divider"></li>
+        <li>
+            <a href="@Url.Action("EditDataSetAsXML","Reports")/{{:Name}}" title="" target="_blank">
+                <i class="su su-embed"></i>
+                <span>[[[Edit as XML]]]</span>
+            </a>
+        </li>
+        {{/if}}
+        {{/if}}
+        {{/if}}
+        {{/if}}
+        
         {{if ~checkMobile()}}
         {{if CanWrite || CanDelete || ItemType=="@((int)ItemType.Report)"}}
         {{/if}}
@@ -277,6 +294,24 @@
         {{/if}}
         {{/if}}
         {{/if}}*@
+
+        {{if @(globalAppSettings.SystemSettings.StorageType) == @((int)StorageType.FileStorage)}}
+        {{if !IsLocked}}
+        {{if ~checkMobile()}}
+        {{if CanWrite}}
+        {{if ItemType=="@((int)ItemType.Datasource)"}}
+        <li>
+            <a href="@Url.Action("EditDataSourceAsXML","DataSources")/{{:Name}}" title="" target="_blank">
+                <i class="su su-embed"></i>
+                <span>[[[Edit as XML]]]</span>
+            </a>
+        </li>
+        {{/if}}
+        {{/if}}
+        {{/if}}
+        {{/if}}
+        {{/if}}
+
         {{if !IsLocked}}
         {{if (~checkMobile() && CanWrite && ItemType!="@((int)ItemType.Datasource)")}}
         <li role="separator" class="divider"></li>

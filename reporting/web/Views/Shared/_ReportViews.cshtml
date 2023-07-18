@@ -13,6 +13,62 @@
         isUserAuthenticated = "false";
     }
 }
+
+@if (ViewBag.IsViewLoadedInIframe != null && ViewBag.IsViewLoadedInIframe == true)
+{
+    <script>
+        var isViewerV2Enabled = true;
+        var viewReportClick = false;
+        var viewId = parent.viewId;
+        var reportId = parent.reportId;
+        var pageurl = parent.pageurl;
+        var userId = parent.userId;
+        var userName = parent.userName;
+        var getSavedViewUrl = parent.getSavedViewUrl;
+        var embedConfig = parent.embedConfig;
+        var isPublic = parent.isPublic;
+        var itemViewShareIframeUrl = parent.itemViewShareIframeUrl;
+    </script>
+
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.min.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.min.js"></script>
+    </environment>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <style>
+        #report-view-toogle {
+            background-color: var(--alice-blue) !important;
+        }
+        .saved-filter-anchor, .highlight-name, .saved-filter-anchor:hover, .sort-active {
+            color: var(--blue-magenta) !important;
+        }
+
+        .loader-icon .path {
+            stroke: var(--blue-magenta) !important;
+        }
+    </style>
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+}
 <script>
     $(document).ready(function () {
 
@@ -35,15 +91,6 @@
             $(".options li#comments").css("display", "none");
         }
 
-        if ((@ViewBag.IsPublic == true && @isUserAuthenticated == true)) {
-            $("#save-view, #reset-view").attr("disabled", false);
-            $("[data-toggle=tooltip]").tooltip("enable");
-        }
-        else if((@ViewBag.IsPublic == true && @isUserAuthenticated == false)) {
-            $("#save-view, #reset-view").attr("disabled", true);
-            $("[data-toggle=tooltip]").tooltip("disable");
-        }
-
         $("#messageBox").ejDialog({
             width: ((sameOrigin ? parent.window.innerWidth : window.innerWidth) > 460) ? "450px" : ((sameOrigin ? parent.window.innerWidth : window.innerWidth) - 10),
             height: "150px",
@@ -57,77 +104,7 @@
     });
 </script>
 <div class="list-group server-report-view" id="report-view-toogle" style="display: block">
-    <div id="header-pane">
-        <span class="view-heading" id="view-heading" style="display: none">
-            [[[CURRENT VIEW]]]
-        </span>
-        <div class="col-xs-2 no-padding" id="close-view">
-            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" style="display: none" onclick="CloseReportView()"><span class="su su-close"></span></a>
-        </div>
-    </div>
-
-    <nav class="list-group" style="display: none" id="report-views">
-        <div id="entire-label-section">
-            <div style="display: none" id="save-section" class="save-section">
-                <div class="input-group">
-                    <div id="filter-name-input">
-                        <input type="text" class="form-control" placeholder="[[[Unsaved View]]]" aria-describedby="basic-addon1" id="filter_name">
-                    </div>
-                    <span class="input-group-addon su su-tick cursor-pointer save-filter" id="save-filter" data-toggle="tooltip" data-original-title="[[[Save View]]]"></span>
-                    <span class="input-group-addon su su-close cursor-pointer" id="clear-txt" data-toggle="tooltip" data-original-title="[[[Cancel]]]"></span>
-                </div>
-            </div>
-            <div id="save-lable-section" class="" style="display: none">
-                <label class="cursor-default txt-overflow">[[[Unsaved View]]]</label>
-                <div class="saved-views" id="new-save" style="display: none">
-                    <div class="su">
-                        <button class="su-save cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save]]]" id="save-view"></button>
-                    </div>
-                    <div class="su ">
-                        <button class="su-reset clear cursor-pointer" id="reset-view" data-toggle="tooltip" data-original-title="[[[Reset]]]"></button>
-                    </div>
-                </div>
-                <div class="saved-views" id="saved-filter-update" style="display: none">
-                    <div class="su">
-                        <span class="su-saveas cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save As]]]" id="save-as-view"></span>
-                    </div>
-                    <div class="su">
-                        <span class="su-save cursor-pointer" data-toggle="tooltip" data-original-title="[[[Update]]]" id="update-view" viewid="@ViewBag.ViewId"></span>
-                    </div>
-                    <div class="su" id="">
-                        <span class="su-reset clear cursor-pointer" data-toggle="tooltip" data-original-title="[[[Reset]]]"></span>
-                    </div>
-                </div>
-                <div class="saved-views" id="saved-filter-Saveas" style="display: none">
-                    <div class="su">
-                        <span class="su-saveas cursor-pointer" data-toggle="tooltip" data-original-title="[[[Save As]]]" id="save-as-view"></span>
-                    </div>
-                    <div class="su" id="">
-                        <span class="su-reset clear cursor-pointer" data-toggle="tooltip" data-original-title="[[[Reset]]]"></span>
-                    </div>
-                </div>
-            </div>
-            <div style="display: none" id="save-as-section" class="save-section">
-                <input type="text" class="form-control" placeholder="[[[Untitled View]]]" aria-describedby="basic-addon1" id="filter_name">
-                <span class="input-group-addon su su-tick cursor-pointer save-filter" id="save-filter" data-toggle="tooltip" data-original-title="[[[Save View]]]"></span>
-                <span class="input-group-addon su su-close cursor-pointer clear" id="clear-txt" data-toggle="tooltip" data-original-title="[[[Clear]]]"></span>
-            </div>
-            <div id="current-view" style="display: none">
-            </div>
-        </div>
-        <div id="nofilters" style="float: left">
-            <div class="cursor-default" style="display: block">
-                <label class="cursor-default txt-overflow">[[[No filters applied.]]]</label>
-                <br style="clear: both">
-            </div>
-        </div>
-        <div id="unsaved-filter-title" style="display: block;">
-            <label class="cursor-default applied-filters">[[[Applied Filters:]]]</label>
-        </div>
-        <div id="unsaved-filter" style="display: block;max-height: 250px">
-            <div id="unsaved-filter-parameter" style="float: left">
-            </div>
-        </div>
+    <nav class="list-group" style="display: none" id="report-views">      
         <div id="saved-filter" style="display: block;">
         </div>
     </nav>

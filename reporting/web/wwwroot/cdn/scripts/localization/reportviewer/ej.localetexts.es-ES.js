@@ -246,7 +246,7 @@ ej.ReportViewer.Locale["es-ES"] = {
             qualifier: "Calificador de texto",
             customVal: "Valor personalizado",
             qualifierList: [
-                { text: "Comillas dobles", value: """ },
+                { text: "Comillas dobles", value: "\"" },
                 { text: "Comillas sencillas", value: "\"" },
                 { text: "Ninguno", value: "" },
                 { text: "Personalizado", value: "Personalizado" }
@@ -328,14 +328,22 @@ ej.ReportViewer.Locale["es-ES"] = {
         exportAjaxFailureMsg: "No se ha podido exportar el documento debido a un fallo en la conexión del servicio de informes.",
         printAjaxFailureMsg: "No se ha podido imprimir el documento debido a un fallo en la conexión del Servicio de informes.",
         reportLoadAjaxFailureMsg: "No se ha podido avanzar en la acción del Informe debido a un fallo en la conexión del servicio de informes.",
-        cancelReportProcessMsg: "El procesamiento de informe fue cancelado"
+        cancelReportProcessMsg: "El procesamiento de informe fue cancelado",
+        htmlFailure: { 
+            headerMsg: "Error al cargar el recurso: el servidor respondió con un estado de",
+            authorizationMsg: "Compruebe amablemente el token de autorización proporcionado.",
+            detailMsg: "Proporcione la información válida del servidor de informes (URL del servidor de informes, credencial del servidor de informes, ruta del informe, token de autorización) para recuperar el flujo de informes del servidor."           
+        },
+        serviceURL: {
+            noURLFound: "No se especifica la URL del servicio de informes."
+        }
     },
     progressMessage: {
-        exportLoadingMessage: "Preparando la exportación del documento... Por favor, espera...",
-        printLoadingMessage: "Preparando datos de impresión... Por favor espera...",
-        printPreparationMessage: "Preparando datos de impresión... {0}% completado... Por favor espera...",
-        exportPreparationMessage: "Preparando la exportación del documento... {0}% completado... Por favor espera...",
-        cancelText: "Cancelar",
+        exportLoadingMessage: "Exportando informe...",
+        printLoadingMessage: "Informe de impresión...",
+        printPreparationMessage: "Preparándose para imprimir datos... {0}% completado... Espere...",
+        exportPreparationMessage: "Preparándose para exportar el documento... {0}% completado... Por favor, espere...",
+        cancelText: "cancelar",
     },
     alertMessage: {
         close: "Cerrar",
@@ -344,6 +352,9 @@ ej.ReportViewer.Locale["es-ES"] = {
         showDetails: "Mostrar detalles",
         hideDetails: "Ocultar detalles",
         reportLoad: "Informe cargado:",
+        moreInformation: "Más información",
+        copied: "Copiado",
+        copyError: "Copiar",
         RVERR0001: "El visualizador de informes no pudo cargar el informe",
         RVERR0002: "El visualizador de informes no pudo procesar el informe",
         RVERR0003: "Se ha producido un error en la transmisión de datos ajax",
@@ -355,7 +366,10 @@ ej.ReportViewer.Locale["es-ES"] = {
         RVERR0009: "Los márgenes están superpuestos o fuera del papel. Introduce un tamaño de margen diferente.",
         RVERR0010: "Indicar un valor para el parámetro",
         RVERR0011: "El parámetro no puede estar vacío",
-        RVERR0012: "El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo."
+        RVERR0012: "El valor proporcionado para el parámetro de informe {parameterprompt} no es válido para su tipo.",
+        RVERR0013: 'Introduzca valores para los parámetros.',
+        RVERR0014: 'Los parámetros no pueden estar en blanco',
+        RVERR0015: 'El valor requerido para los nombres de parámetros de',
     },
     selectAll: "Seleccionar todo",
     viewButton: "Vista del informe",

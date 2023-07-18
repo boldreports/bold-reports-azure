@@ -287,12 +287,20 @@ ej.ReportViewer.Locale["zh-CN"] = {
         printAjaxFailureMsg: '由于连接报告服务失败，无法打印文档。',
         reportLoadAjaxFailureMsg: '由于连接报告服务失败，无法推进报告操作。',
         cancelReportProcessMsg: '报表处理被取消。',
+        htmlFailure: {
+            headerMsg: '无法加载资源：服务器响应状态为',
+            authorizationMsg: "请检查提供的授权令牌。",
+            detailMsg: "提供有效的报表服务器信息（报表服务器 URL、报表服务器凭据、报表路径、授权令牌）以从服务器检索报表流。"
+        },
+        serviceURL: {
+            noURLFound: "未指定报告服务 URL。"
+        }
     },
     progressMessage: {
-        exportLoadingMessage: '准备出口文件......请稍候......',
-        printLoadingMessage: '准备打印数据......请稍候......',
-        printPreparationMessage: '准备打印数据... {0}已完成...请稍候...',
-        exportPreparationMessage: '准备导出文档... {0}％已完成...请稍候...',
+        exportLoadingMessage: '报告导出...',
+        printLoadingMessage: '报告打印...',
+        printPreparationMessage: '正在准备打印数据...已完成 {0}%...请稍候...',
+        exportPreparationMessage: '正在准备导出文档...已完成 {0}%...请稍候...',
         cancelText: '取消',
     },
     alertMessage: {
@@ -302,6 +310,9 @@ ej.ReportViewer.Locale["zh-CN"] = {
         showDetails: '显示详细资料',
         hideDetails: '隐藏细节',
         reportLoad: '已加载报告:',
+        moreInformation: "更多信息",
+        copied: "已复制",
+        copyError: "复制",
         RVERR0001: 'ReportViewer无法加载报告',
         RVERR0002: 'ReportViewer无法呈现报告',
         RVERR0003: 'ajax回发中发生错误',
@@ -313,7 +324,10 @@ ej.ReportViewer.Locale["zh-CN"] = {
         RVERR0009: '他的利润率是重叠的或者他们不在报纸上。输入不同的保证金大小.',
         RVERR0010: '请为参数输入一个值',
         RVERR0011: '该参数不能为空',
-        RVERR0012: '为报告参数{parameterprompt}提供的值对其类型无效.'
+        RVERR0012: '为报告参数{parameterprompt}提供的值对其类型无效.',
+        RVERR0013: '請輸入參數值',
+        RVERR0014: '參數不能為空',
+        RVERR0015: '參數名稱所需的值',
     },
     selectAll: '全选',
     viewButton: "查看报告",

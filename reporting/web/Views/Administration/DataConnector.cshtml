@@ -11,6 +11,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
+    var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
 }
 
 @section meta{
@@ -26,17 +27,17 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.css" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.css" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.min.css" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/data-configuration/data-configuration.min.css" />
     </environment>
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
 }
@@ -46,15 +47,15 @@
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.js"></script>        
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.min.js"></script>
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.min.js"></script>
-        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration.min.js"></script>        
     </environment>
     <script src="@reportServerResourceUrl/cdn/scripts/localization/datatileconfiguration/ej.localetexts.@string.Concat(language, ".js")"></script>
     <script>

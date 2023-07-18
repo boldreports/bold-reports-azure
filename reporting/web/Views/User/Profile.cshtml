@@ -7,7 +7,6 @@
     var userDetail = (User)ViewBag.UserDetail;
     var groupList = ViewBag.GroupList;
     ViewBag.Title = "[[[My Profile]]] - " + globalAppSettings.SystemSettings.OrganizationName;
-    var userHomepage = ViewBag.UserHomepage as List<HomepageDetail>;
     var idpProfileUrl = ViewBag.IdpProfileUrl;
     var idpChangePasswordUrl = ViewBag.IdpChangePasswordUrl;
     var isProfileUpdateSuccess = ViewBag.IsProfileUpdateSuccess;
@@ -40,11 +39,14 @@
         var deleteavatarUrl = "@Url.Action("deleteavatar", "UserManagement")";
         var getdefaultavatarUrl = "@Url.Action("getdefaultavatar", "User")";
         var saveUserNotificationSettingsUrl = "@Url.Action("savenotificationsettings", "User")";
+        var updateViewerDesignerUserPreference = "@Url.Action("SaveViewerDesignerUserPreference", "User")";
 
         var successMessage = "@isProfileUpdateSuccess";
         var failureMessage = "@isProfileUpdateFailure";
         var passwordSuccessMessage = "@isPasswordUpdateSuccess";
         var passwordFailureMessage = "@isPasswordUpdateFailure";
+        var isViewerEnabled = @Json.Serialize(ViewBag.IsViewerV2Enabled);
+        var isDesignerEnabled = @Json.Serialize(ViewBag.IsDesignerV2Enabled);
 
         window.onload = function (e) {
             if (successMessage.toLowerCase() === "true" && successMessage != null) {
@@ -63,6 +65,7 @@
 
         $(document).ready(function () {
             $("#avatar-button-click, #avatar-delete-click").css("display","none");
+            $(".ej2-user-preference-toggle-disabled").attr("disabled", true);
             if (@ViewBag.EditProfile > 0) {
                 $("#edit").trigger("click");
             }
@@ -95,23 +98,7 @@
                 });
                 eDialog = $("#avatar-upload-box").data("ejDialog");
                 eDialog.close();
-            });
-
-            if(@userHomepage.Count == 0){
-                $("#default-homepage").find(".remove-default-homepage").remove();
-                $("#default-homepage").selectpicker("refresh");
-                $(".btn-group .bs-searchbox").after("<span class='no-result'>[[[No Results Found]]]</span>");
-            }
-            if ("@ViewBag.IsDefaultHomepage" == "True") {
-                $("#default-homepage").val("@ViewBag.DefaultHomePageId");
-                $("#default-homepage").attr("data-original-value", "@ViewBag.DefaultHomePageId");
-                $("#default-homepage option:eq(0)").before("<option class='remove-default-homepage' value='null'>[[[No default Pinboard]]]</option>");
-            }
-
-            if("@ViewBag.DefaultHomePageName" == ""){
-                $("#no-default-homepage").removeClass("hide");
-                $("#homepage-name").addClass("hide");
-            }
+            });            
         });
     </script>
 }
@@ -217,54 +204,66 @@
                                 }
                             </div>
                         </div>
-                        @if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
-                        {
-                            <div class="form-group no-padding" id="homepage-container">
-                                <label class="label-panel text-right app-textbox-label">
-                                    [[[Default pinboard]]]
-                                    @if (!@ServerAppConfig.IsHideHelpLink)
-                                    {
-                                    <div id="info-tag">
-                                        <span class="dropdown-toggle cursor-type" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                                        <div class="col-xs-2 dropdown-menu" id="tooltip-info" role="menu">
-                                            [[[Click ]]] <a href="@(ConfigurationManager.AppSettings["documentation:base_url"] + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.SetDefaultPinboards))">[[[here]]]</a>[[[ to learn how to set a default pinboard.]]]
-                                        </div>
-                                    </div>
-                                    }
-                                </label>
-
-                                <div class="col-sm-5 col-xs-12 group-list" title="@ViewBag.DefaultHomePageName" id="homepage-name" data-toggle="tooltip" data-placement="top">
-                                    @ViewBag.DefaultHomePageName
-                                </div>
-                                <div class="col-sm-5 col-xs-12 group-list hide" id="no-default-homepage">
-                                    [[[No default Pinboard]]]
-                                </div>
-                                <div class="col-sm-5 col-xs-12 group-list hide" id="homepage-list">
-                                    <select id="default-homepage" data-live-search="true" class="selectpicker" data-size="5" title="[[[Select Pinboard]]]" data-original-value="null">
-                                        <option data-hidden="true" value="">[[[Select Default Homepage]]]</option>
-                                        @for (var item = 0; item < userHomepage.Count; item++)
-                                        {
-                                            <option value="@userHomepage[item].Id">@userHomepage[item].Name</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        }
                     </form>
                 </div>
-                @if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
-                {
-                    <div id="edit-button" class="col-sm-3 col-xs-12 no-padding">
-                        <input type="button" class="secondary-button app-btn-secondary pull-right" id="edit" title="" value="[[[Edit]]]">
-                        <input type="button" class="secondary-button app-btn-secondary pull-right popup-close" title="" id="cancel-button" value="[[[Cancel]]]">
-                        <input type="button" class="primary-button app-btn-primary pull-right inactive-content" id="save-button" title="" onclick="SaveProfile()" value="[[[Save]]]">
-                    </div>
-                }
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                     <h5 id="success-message"></h5>
                 </div>
             </div>
             @await Html.PartialAsync("_UserNotificationPreference")
+            <div id="user-preference-settings" class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-margin admin-page-body">
+                <input type="hidden" class="page-title" data-page="Viewer / Designer preference">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="user-preference-heading-form-div">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding" id="section-heading">
+                        [[[Viewer / Designer preference]]]
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" id="user-preference-form-div">
+                    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-preference-form no-padding" autocomplete="off">
+                        <div class="user-preference-table col-sm-8 col-xs-12" cellpadding="20">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding margin-top16">
+                                <label valign="top" class="user-preference-content col-xs-12 col-sm-5 col-md-6 col-lg-5 no-padding text-right">
+                                    [[[Switch to the new Viewer]]]
+                                    <div id="user-preference-info-tag">
+                                        <span class="dropdown-toggle cursor-type" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                        <div class="col-xs-2 dropdown-menu" id="tooltip-info" role="menu">
+                                            [[[Toggle between the old and new viewer]]]
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 no-padding dropdown">
+                                    <span class="material-switch text-left">
+                                        <input class="selectpicker ej2-user-preference-toggle-disabled" type="checkbox" id="user-profile-report-view-input" @(ViewBag.IsViewerV2Enabled ? "checked" : string.Empty) />
+                                        <label for="user-profile-report-view-input" class="label-primary"></label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding margin-top16">
+                                <label class="col-xs-12 col-sm-5 col-md-6 col-lg-5 no-padding user-preference-content text-right">
+                                    [[[Switch to the new Designer]]]
+                                    <div id="user-preference-info-tag">
+                                        <span class="dropdown-toggle cursor-type" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                        <div class="col-xs-2 dropdown-menu" id="tooltip-info" role="menu">
+                                            [[[Toggle between the old and new designer]]]
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="hidden-visibility col-xs-11 col-sm-6 col-md-4 col-lg-3 no-padding dropdown">
+                                    <span class="material-switch text-left">
+                                        <input class="selectpicker ej2-user-preference-toggle-disabled" type="checkbox" id="user-profile-report-design-input" @(ViewBag.IsDesignerV2Enabled ? "checked" : string.Empty) />
+                                        <label for="user-profile-report-design-input" class="label-primary"></label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="edit-ej2-preference-button" class="col-sm-4 col-xs-12 no-padding">
+                            <input type="button" class="secondary-button app-btn-secondary pull-right" id="edit-ej2-user-preference-settings" title="" value="[[[Edit]]]">
+                            <input type="button" class="secondary-button app-btn-secondary pull-right" title="" id="cancel-ej2-user-preference-settings" value="[[[Cancel]]]">
+                            <input type="button" class="primary-button app-btn-primary pull-right inactive-content" id="update-ej2-user-preference-settings" title="" value="[[[Save]]]">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <input type="hidden" id="image" value="" />

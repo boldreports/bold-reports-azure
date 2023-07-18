@@ -285,12 +285,20 @@ ej.ReportViewer.Locale["fr-FR"] = {
         printAjaxFailureMsg: "Impossible d'imprimer le document en raison de l'échec de la connexion à Report Service.",
         reportLoadAjaxFailureMsg: "Impossible de faire avancer l'action Report en raison de l'échec de la connexion du service de rapport.",
         cancelReportProcessMsg: 'Le traitement du rapport a été annulé.',
+        htmlFailure: {
+            headerMsg: 'Échec du chargement de la ressource : le serveur a répondu avec un état de',
+            authorizationMsg: "Veuillez vérifier le jeton d'autorisation fourni.",
+            detailMsg: "Fournissez les informations valides du serveur de rapports (URL du serveur de rapports, informations d'identification du serveur de rapports, chemin du rapport, jeton d'autorisation) pour récupérer le flux de rapports à partir du serveur."        
+        },
+        serviceURL: {
+            noURLFound: "L'URL du service de rapport n'est pas spécifiée."
+        }
     },
     progressMessage: {
-        exportLoadingMessage: "Préparation du document d'exportation ... Veuillez patienter ...",
-        printLoadingMessage: "Préparation des données d'impression... Veuillez patienter…",
-        printPreparationMessage: "Préparation des données d'impression ... {0}% terminé ... Veuillez patienter ...",
-        exportPreparationMessage: "Préparation du document d'exportation ... {0}% terminé ... Veuillez patienter ...",
+        exportLoadingMessage: "Exportation du rapport...",
+        printLoadingMessage: "Impression du rapport...",
+        printPreparationMessage: "Préparation de l'impression des données... {0}% terminé... Veuillez patienter...",
+        exportPreparationMessage: "Préparation de l'exportation du document... {0}% terminé... Veuillez patienter...",
         cancelText: 'Annuler',
     },
     alertMessage: {
@@ -300,6 +308,9 @@ ej.ReportViewer.Locale["fr-FR"] = {
         showDetails: 'Afficher les d閠ails',
         hideDetails: 'Cacher les d閠ails',
         reportLoad: 'Rapport charg?',
+        moreInformation: "Més informació",
+        copied: "Copié",
+        copyError: "Copie",
         RVERR0001: 'La visionneuse de rapports n\'a pas pu charger le rapport',
         RVERR0002: 'La visionneuse de rapports n\'a pas r閡ssi ?afficher le rapport',
         RVERR0003: 'Une erreur s\'est produite dans la publication ajax',
@@ -311,7 +322,10 @@ ej.ReportViewer.Locale["fr-FR"] = {
         RVERR0009: 'Les marges se chevauchent ou se trouvent sur le papier. Entrez une taille de marge diff閞ente.',
         RVERR0010: 'Veuillez entrer une valeur pour le param鑤re',
         RVERR0011: 'Le param鑤re ne peut pas 阾re vide',
-        RVERR0012: 'La valeur fournie pour le param鑤re de rapport {invite de param鑤re} n\'est pas valide pour son type.'
+        RVERR0012: 'La valeur fournie pour le param鑤re de rapport {invite de param鑤re} n\'est pas valide pour son type.',
+        RVERR0013: 'Veuillez entrer des valeurs pour les paramètres',
+        RVERR0014: 'Les paramètres ne peuvent pas être vides',
+        RVERR0015: 'Veuillez entrer des valeurs pour les paramètres',
     },
     selectAll: "Tout s閘ectionner",
     viewButton: "Voir le rapport",

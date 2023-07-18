@@ -1700,12 +1700,20 @@
                         printAjaxFailureMsg: 'Unable to print the document due to failure of connecting Report Service.',
                         reportLoadAjaxFailureMsg: 'Unable to progress the Report action due to failure of connecting Report Service.',
                         cancelReportProcessMsg: 'Report processing was canceled.',
+                        htmlFailure: { 
+                            headerMsg: 'Failed to load resource: The server responded with a status of',
+                            authorizationMsg: "Kindly check the provided authorization token.",
+                            detailMsg: "Provide the valid report server information (ReportServerURL, ReportServerCredential, ReportPath, Authorization Token) to retrieve the report stream from server."
+                        },
+                        serviceURL: {
+                            noURLFound: "Report service URL is not specified."
+                        }
                     },
                     progressMessage: {
-                        exportLoadingMessage: 'Preparing exporting document... Please wait...',
-                        printLoadingMessage: 'Preparing print data… Please wait...',
-                        printPreparationMessage: 'Preparing print data... {0}% completed... Please wait...',
-                        exportPreparationMessage: 'Preparing exporting document... {0}% completed... Please wait...',
+                        exportLoadingMessage: 'Report Exporting... ',
+                        printLoadingMessage: 'Report Printing... ',
+                        printPreparationMessage: 'Preparing to print data... {0}% completed... Please wait...',
+                        exportPreparationMessage: 'Preparing to export document... {0}% completed... Please wait...',
                         cancelText: 'Cancel',
                     },
                     alertMessage: {
@@ -1715,6 +1723,9 @@
                         showDetails: 'Show details',
                         hideDetails: 'Hide details',
                         reportLoad: 'Report loaded:',
+                        moreInformation: "More Information",
+                        copied: "Copied",
+                        copyError: "Copy",
                         RVERR0001: 'ReportViewer could not load the Report',
                         RVERR0002: 'ReportViewer could not process the Report',
                         RVERR0003: 'An error occurred in the return of ajax data',
@@ -1726,7 +1737,10 @@
                         RVERR0009: 'The margins are superimposed or are outside the paper. Enter a different margin size.',
                         RVERR0010: 'Enter a value for the parameter',
                         RVERR0011: 'The parameter cannot be blank',
-                        RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.'
+                        RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.',
+                        RVERR0013: 'Please enter values for the parameters',
+                        RVERR0014: 'Parameters cannot be blank',
+                        RVERR0015: 'The value required for parameters names of',
                     },
                     reportItemLabel: {
                         Tablix: 'Tablix report item',

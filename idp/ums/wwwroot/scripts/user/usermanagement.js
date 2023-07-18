@@ -329,7 +329,7 @@ function fnOnUserGridLoad(args) {
 }
 
 function fnbeforeDataBound(args) {
-    if (args.count == 0) {
+    if (args.count == 0 && !(args.actual.status)) {
         WarningAlert(window.Server.App.LocalizationContent.Users, window.Server.App.LocalizationContent.FailedToGetUsers, args.result, 7000);
     }
 }
@@ -365,7 +365,7 @@ function fnUserRowSelected(args) {
             }
             else {
                 $(".user-delete-button").css("display", "block");
-                $("#grant-user-").css("disabled", true);
+                $("#grant-user-button").css("disabled", true);
             }
         });
     }
@@ -1066,6 +1066,7 @@ function MakeMultipleUserAdmin() {
             if (result.Status) {
                 SuccessAlert(window.Server.App.LocalizationContent.AssignRole, window.Server.App.LocalizationContent.MakeAdmin, 7000)
                 userGrid.refresh();
+                userGrid.clearSelection();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("multiple-admin-confirmation");
                 onMultipleAdminDialogClose();
@@ -1073,6 +1074,7 @@ function MakeMultipleUserAdmin() {
             else {
                 WarningAlert(window.Server.App.LocalizationContent.AssignRole, window.Server.App.LocalizationContent.MakeAdminError, result.Message, 7000)
                 userGrid.refresh();
+                userGrid.clearSelection();
                 $("#grant-user-button, #assign-user-role-button").attr("disabled", true);
                 hideWaitingPopup("multiple-admin-confirmation");
                 onMultipleAdminDialogClose();

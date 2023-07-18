@@ -2746,11 +2746,11 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             cancelReportProcessMsg: 'Rapor işleme iptal edildi.'
         },
         progressMessage: {
-            exportLoadingMessage: 'Dışa aktarma belgesi hazırlanıyor ... Lütfen bekleyin ...',
-            printLoadingMessage: 'Baskı verileri hazırlanıyor… Lütfen bekleyin ...',
-            printPreparationMessage: 'Baskı verileri hazırlanıyor ...% {0} tamamlandı ... Lütfen bekleyin ...',
-            exportPreparationMessage: 'Doküman dışa aktarılıyor ...% {0} tamamlandı ... Lütfen bekleyin ...',
-            cancelText: 'İptal etmek',
+            exportLoadingMessage: 'Rapor Dışa Aktarılıyor...',
+            printLoadingMessage: 'Rapor Yazdırma...',
+            printPreparationMessage: 'Veriler yazdırılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
+            exportPreparationMessage: 'Doküman dışa aktarılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
+            cancelText: 'iptal etmek',
         },
         alertMessage: {
             close: 'Kapat',
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             RVERR0009: 'Kenar boşlukları üst üste binmiş veya kağıdın dışında. Farklı bir kenar boşluğu boyutu girin.',
             RVERR0010: 'Parametre için bir değer girin',
             RVERR0011: 'Parametre boş olamaz',
-            RVERR0012: '{Parameterprompt} rapor parametresi için sağlanan değer, türü için geçerli değil.'
+            RVERR0012: '{Parameterprompt} rapor parametresi için sağlanan değer, türü için geçerli değil.',
+            RVERR0013: 'Lütfen parametreler için değer girin',
+            RVERR0014: 'Parametreler boş olamaz',
+            RVERR0015: 'parametre adları için gereken değer',
         },
         reportItemLabel: {
             Tablix: 'Tablix raporu öğesi',

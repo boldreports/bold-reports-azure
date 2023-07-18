@@ -286,12 +286,20 @@ ej.ReportViewer.Locale["tr-TR"] = {
         printAjaxFailureMsg: 'Det gick inte att skriva ut dokumentet på grund av att det inte gick att ansluta Report Service.',
         reportLoadAjaxFailureMsg: 'Det gick inte att göra rapporteringsåtgärden på grund av misslyckande att ansluta Report Service.',
         cancelReportProcessMsg: 'Rapor işleme iptal edildi.',
+        htmlFailure: {
+            headerMsg: 'Kaynak yüklenemedi: Sunucu şu durumla yanıt verdi:',
+            authorizationMsg: "Lütfen sağlanan yetkilendirme jetonunu kontrol edin.",
+            detailMsg: "Rapor akışını sunucudan almak için geçerli rapor sunucusu bilgilerini (Rapor Sunucusu URL'si, Rapor Sunucusu Kimlik Bilgileri, Rapor Yolu, Yetkilendirme Simgesi) sağlayın." 
+        },
+        serviceURL: {
+            noURLFound: "Raporlama hizmeti URL'si belirtilmedi."
+        }
     },
     progressMessage: {
-        exportLoadingMessage: 'Förbereder exporterande dokument ... Vänligen vänta ...',
-        printLoadingMessage: 'Preparing print data… Please wait...',
-        printPreparationMessage: 'Preparing print data... {0}% completed... Please wait...',
-        exportPreparationMessage: 'Preparing exporting document... {0}% completed... Please wait...',
+        exportLoadingMessage: 'Rapor Dışa Aktarılıyor...',
+        printLoadingMessage: 'Rapor Yazdırma...',
+        printPreparationMessage: 'Veriler yazdırılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
+        exportPreparationMessage: 'Doküman dışa aktarılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
         cancelText: 'iptal etmek',
     },
     alertMessage: {
@@ -301,6 +309,9 @@ ej.ReportViewer.Locale["tr-TR"] = {
         showDetails: 'Detayları göster',
         hideDetails: 'Detayları gizle',
         reportLoad: 'Raporu Yüklendi:',
+        moreInformation: "Daha fazla bilgi",
+        copied: "kopyalandı",
+        copyError: "kopyala",
         RVERR0001: 'ReportViewer Raporu yüklenemedi',
         RVERR0002: 'ReportViewer Raporu oluşturmayı başaramadı',
         RVERR0003: 'Ajax geri dönüşünde bir hata oluştu',
@@ -312,7 +323,10 @@ ej.ReportViewer.Locale["tr-TR"] = {
         RVERR0009: 'Kenar boşlukları çakışıyor veya kağıttan çıkıyorlar. Farklı bir kenar boşluğu boyutu girin.',
         RVERR0010: 'Lütfen parametre için bir değer girin',
         RVERR0011: 'Parametre boş bırakılamaz',
-        RVERR0012: 'Rapor parametresi {parameterprompt} için verilen değer, türü için geçerli değil.'
+        RVERR0012: 'Rapor parametresi {parameterprompt} için verilen değer, türü için geçerli değil.',
+        RVERR0013: 'Lütfen parametreler için değer girin',
+        RVERR0014: 'Parametreler boş olamaz',
+        RVERR0015: 'parametre adları için gereken değer',
     },
     selectAll: 'Hepsini seç',
     viewButton: "Raporu görüntüle",

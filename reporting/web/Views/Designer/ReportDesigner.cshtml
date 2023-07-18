@@ -42,6 +42,8 @@
     var custombrandName = "@ServerAppConfig.CustomBrandName";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
+    var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
+    var userId = _identityResponse.User.UserId;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -74,7 +76,7 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />   
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
@@ -115,7 +117,7 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
-        <script src = "@reportServerResourceUrl/cdn/scripts/localization/reportdesigner/ej.localetexts.@string.Concat(language, ".js")" ></script >
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/reportdesigner/ej.localetexts.@string.Concat(language, ".js")"></script>
         <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
     }
     else
@@ -155,13 +157,13 @@
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
-        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
-        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
+        <script type='text/javascript' src='@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js'></script>
+        <script type='text/javascript' src='@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportdesigner.min.js'></script>
         <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/custom.salesforce.min.js'></script>
         <environment include="Development,CloudDevelopment">
-             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
@@ -186,7 +188,6 @@
     }
 
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
-
 
     <style>
         body {
@@ -416,6 +417,7 @@
         var getUserNotificationsPartialViewResultUrl = "@Url.Action("GetUserNotificationsPartialViewResult", "notification")";
         var addCategoryUrl = "@Url.Action("addcategory", "category")";
         var rootUrlAction = "@rootUrlAction";
+        var updateDesignerUserPreference = "@Url.Action("SaveDesignerUserPreference", "User")";
         var controlId = 'container';
         var isEditReport = false;
         var relativeDateTimer = null;
@@ -462,7 +464,8 @@
         var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
-        
+        var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
+
         if(isEdit === "true"){
             isEditReport = true;
         }
@@ -665,7 +668,7 @@
                     padding: _CryptoAES.pad.Pkcs7
                 }).toString(_CryptoAES.enc.Utf8);
         }
-        
+
         function encryptData(eventArgs) {
             if (eventArgs && eventArgs.data) {
                 eventArgs.data = _encryptData(eventArgs.data);
@@ -719,7 +722,7 @@
 
         function reportSaved(args) {
             if (args.reportAction == 'Saved' && args.status == false) {
-                alertMessage(false);
+                alertMessage(false, window.Server.App.LocalizationContent.Error + "!", window.Server.App.LocalizationContent.DesignerPublishError);
                 return;
             }
             reportId = args.publishId ? args.publishId : reportId;
@@ -745,22 +748,16 @@
                     history.pushState('', newTitle, window.location.href.split("report-designer")[0] + "report-designer" + '/' + reportId + '/' + categoryName + '/' + reportName);
                 }
                 isDraft = designer.isNewServerReport().toString();
-                alertMessage(true);
+                alertMessage(true, window.Server.App.LocalizationContent.Success + "!", window.Server.App.LocalizationContent.DesignerPublishSuccess);
             }
         }
 
-        function alertMessage(status) {
-            var toastMessage;
+        function alertMessage(status, toastTitle, toastMessage) {
             var className;
-            var toastTitle;
             if (status) {
-                toastMessage = "[[[Report has been published successfully]]]";
                 className = 'e-toast-success';
-                toastTitle = "[[[Success!]]]";
             } else {
-                toastMessage = "[[[An error occured while publishing the report.]]]";
                 className = 'e-toast-danger';
-                toastTitle = "[[[Error!]]]"
             }
             var toast = new ejs.notifications.Toast({
                 title: toastTitle,
@@ -929,8 +926,8 @@
                 'display': 'table',
                 'float': 'left'
             }, {
-                    'id': controlId + '_design_header_draft_div'
-                });
+                'id': controlId + '_design_header_draft_div'
+            });
 
             var draftInnerDiv = ej.buildTag('div', '', {
                 'display': 'table-cell',
@@ -938,8 +935,7 @@
                 'text-align': 'center'
             });
             var draftIcon = ej.buildTag(
-                'span.e-designer-viewCheckIcon e-designer-viewCheck', '', {
-                },
+                'span.e-designer-viewCheckIcon e-designer-viewCheck', '', {},
                 {
                     'id': controlId + '_design_header_draft_icon'
                 });
@@ -958,12 +954,12 @@
                 'position': 'absolute',
                 'left': '45%'
             }, {
-                    'id': controlId + '_design_header_view_div'
-                });
+                'id': controlId + '_design_header_view_div'
+            });
             var designerInnerDiv = ej.buildTag('div', '', {
-                    'display': 'table-cell',
-                    'vertical-align': 'middle'
-                });
+                'display': 'table-cell',
+                'vertical-align': 'middle'
+            });
             var designEle = ej.buildTag(
                 'span.e-rptdesigner-header-design e-userselect e-rptdesigner-header-selection e-designer-fontfamily',
                 "[[[Design]]]",
@@ -987,8 +983,8 @@
                 'display': 'table',
                 'float': 'right'
             }, {
-                    'id': controlId + '_design_header_publish_div'
-                });
+                'id': controlId + '_design_header_publish_div'
+            });
             var publishDiv = ej.buildTag('div.e-rptdesigner e-publish-btn-wrapper', '', {
                 'display': 'table-cell',
                 'vertical-align': 'middle',
@@ -996,22 +992,23 @@
             });
             var publishBtn = ej.buildTag('button.e-designer-fontfamily', "[[[Publish]]]", {
             }, {
-                    'id': controlId + '_design_header_publish_btn'
-                });
+                'id': controlId + '_design_header_publish_btn'
+            });
             var ulTag = ej.buildTag('ul.e-publish-menu-ul e-designer-fontfamily', '', {
             }, {
-                    'id': controlId + '_design_header_publish_ul'
-                });
+                'id': controlId + '_design_header_publish_ul'
+            });
             var liTag = ej.buildTag('li', '', {
             }, {
-                });
+            });
             var spanTag = ej.buildTag('a', "[[[Publish As]]]", {
             }, {});
             ulTag.append(liTag);
             liTag.append(spanTag);
             publishDiv.append(publishBtn, ulTag);
             publishContainer.append(publishDiv);
-            divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
+            var toggleTag = onToggleInitialize();
+            divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer, toggleTag);
 
             publishBtn.ejSplitButton({
                 targetID: controlId + '_design_header_publish_ul',
@@ -1021,6 +1018,7 @@
                 click: $.proxy(browseReport, this, true),
                 itemSelected: $.proxy(browseReport, this, false)
             });
+            $('[data-toggle="tooltip"]').tooltip();
         }
 
         function designViewChange(args) {
@@ -1179,6 +1177,77 @@
                 $('#' + controlId + '_design_header_publish_div').css('opacity', '1');
                 $('#' + controlId + '_design_header_publish_btn').data('ejSplitButton').enable();
             }
+        }
+
+        function onToggleChange(e) {
+            var isEnabled = false;
+            var toggleButton = document.getElementById("ReportViewToggle_input");
+            if (toggleButton.ej2_instances) {
+              toggleButton = toggleButton.ej2_instances[0];
+              isEnabled = e.checked;
+            } else {
+              isEnabled = e.target.checked;
+            }
+            $.ajax({
+                type: "POST",
+                url: updateDesignerUserPreference,
+                data: { userId: @userId, isEnabled: isEnabled },
+                success: function (data) {
+                    if (data) {
+                        var params = new URLSearchParams(window.location.search);
+                        if (params.has("newlook")) {
+                            params.delete("newlook");
+                            history.pushState(null, '', '?' + params.toString());
+                        }
+                        window.location.reload();
+                    }
+                    else {
+                        toggleButton.checked = !isEnabled;
+                    }
+                },
+                error: function () {
+                    toggleButton.checked = !isEnabled;
+                    alertMessage(false, window.Server.App.LocalizationContent.DesignerVersion, window.Server.App.LocalizationContent.InternalServerError);
+                }
+            });
+        }
+
+        function onToggleInitialize() {
+            var toggleTag = ej.buildTag(
+                'div',
+                '',
+                {
+                    'display': 'inline-flex',
+                    'align-items': 'center',
+                    'margin': '10px 13px',
+                    'border-right': '2px solid var(--light-grey)',
+                    'gap': '6px',
+                    'float': 'right'
+                },
+                {
+                    'id': 'ReportViewToggle_div', 'tabindex': '0', 'role': 'button', 'aria-label': 'ReportViewToggle',
+                    'data-toggle': 'tooltip',
+                    'data-placement': 'bottom',
+                    'title': window.Server.App.LocalizationContent.DesignerToggleInfo,
+                    'data-container': 'body'
+                });
+            var label = ej.buildTag('span.e-designer-label', window.Server.App.LocalizationContent.TryNewDesigner, {},
+                {
+                    'id': 'ReportViewToggle_label'
+                }
+            );
+            toggleTag.append(label);
+            var switcher = ej.buildTag('label.e-qrydesigner-switch', '', { 'margin-right': '13px' },
+                {
+                    'id': 'ReportViewToggle_container'
+                });
+            this.paramSwitcher = $('<input type=\'checkbox\' id=ReportViewToggle_input ' + '>');
+            this.paramSwitcher.bind("change", onToggleChange);
+            switcher.append(this.paramSwitcher);
+            switcher.append('<div style=\'cursor:pointer;\' class=\'e-qrydesigner-slider round\'></div>');
+            switcher.before('Open: ');
+            toggleTag.append(switcher);
+            return toggleTag;
         }
     </script>
 </head>

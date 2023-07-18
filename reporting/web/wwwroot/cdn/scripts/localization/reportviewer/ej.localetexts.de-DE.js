@@ -247,7 +247,7 @@ ej.ReportViewer.Locale["de-DE"] = {
                 { text: "Verschlossene Zellen", value: 1024 },
                 { text: "Sortierung", value: 2048 },
                 { text: "Filtern", value: 4096 },
-                { text: "Verwenden von Pivot-Tabellen", value 8192 },
+                { text: "Verwenden von Pivot-Tabellen", value: 8192 },
                 { text: "Entsperrte Zellen", value: 16384 },
                 { text: "Inhalt", value: 32768 },
                 { text: "Alle", value: 65535 }
@@ -292,12 +292,20 @@ ej.ReportViewer.Locale["de-DE"] = {
         printAjaxFailureMsg: 'Das Dokument kann nicht gedruckt werden, weil der Report Service nicht verbunden wurde.',
         reportLoadAjaxFailureMsg: 'Die Berichtsaktion kann nicht ausgeführt werden, weil der Berichtsdienst nicht verbunden werden konnte.',
         cancelReportProcessMsg: 'Die Berichtsverarbeitung wurde abgebrochen.',
+        htmlFailure: {
+            headerMsg: 'Ressource konnte nicht geladen werden: Der Server hat mit dem Status geantwortet',
+            authorizationMsg: "Bitte überprüfen Sie das bereitgestellte Autorisierungstoken.",
+            detailMsg: "Geben Sie die gültigen Berichtsserverinformationen (Berichtsserver-URL, Berichtsserver-Anmeldeinformationen, Berichtspfad, Autorisierungstoken) an, um den Berichtsstream vom Server abzurufen."
+        },
+        serviceURL: {
+            noURLFound: "Die URL des Berichtsdiensts ist nicht angegeben."
+        }
     },
     progressMessage: {
-        exportLoadingMessage: 'Exportdokument wird vorbereitet ... Bitte warten Sie ...',
-        printLoadingMessage: 'Druckdaten vorbereiten ... Bitte warten Sie ...',
-        printPreparationMessage: 'Druckdaten werden vorbereitet ... {0}% abgeschlossen ... Bitte warten ...',
-        exportPreparationMessage: 'Export wird vorbereitet ... {0}% abgeschlossen ... Bitte warten ...',
+        exportLoadingMessage: 'Bericht wird exportiert...',
+        printLoadingMessage: 'Bericht drucken...',
+        printPreparationMessage: 'Druckdaten werden vorbereitet... {0} % abgeschlossen... Bitte warten...',
+        exportPreparationMessage: 'Der Export des Dokuments wird vorbereitet... {0} % abgeschlossen... Bitte warten...',
         cancelText: 'stornieren',
     },
     alertMessage: {
@@ -307,6 +315,9 @@ ej.ReportViewer.Locale["de-DE"] = {
         showDetails: 'Zeige Einzelheiten',
         hideDetails: 'ausblenden Einzelheiten',
         reportLoad: 'Bericht geladen:',
+        moreInformation: "Mehr Informationen",
+        copied: "Kopiert",
+        copyError: "Kopieren",
         RVERR0001: 'Berichts Viewer konnte den Bericht nicht laden',
         RVERR0002: 'Berichts Viewer konnte den Bericht nicht rendern',
         RVERR0003: 'Beim Ajax-Postback ist ein Fehler aufgetreten',
@@ -318,7 +329,10 @@ ej.ReportViewer.Locale["de-DE"] = {
         RVERR0009: 'Die Ränder sind überlappt oder sie liegen außerhalb des Papiers. Geben Sie eine andere Randgröße ein.',
         RVERR0010: 'Bitte geben Sie einen Wert für den Parameter ein',
         RVERR0011: 'Der Parameter darf nicht leer sein',
-        RVERR0012: 'Der für den Berichtsparameter {parameterprompt} angegebene Wert ist für seinen Typ nicht gültig.'
+        RVERR0012: 'Der für den Berichtsparameter {parameterprompt} angegebene Wert ist für seinen Typ nicht gültig.',
+        RVERR0013: 'Der für Parameternamen erforderliche Wert',
+        RVERR0014: 'Parameter dürfen nicht leer sein',
+        RVERR0015: 'Der für Parameternamen erforderliche Wert',
     },
     selectAll: 'Wählen Sie Alle',
     viewButton: "Bericht sehen",

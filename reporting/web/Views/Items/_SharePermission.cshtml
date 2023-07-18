@@ -17,6 +17,79 @@
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var specificGroupEntity = (int)PermissionEntity.SpecificGroup;
     var currentuserId = _identityResponse.User.UserId;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@if (ViewBag.IsViewLoadedInIframe != null && ViewBag.IsViewLoadedInIframe)
+{
+    <script>
+        var isViewerV2Enabled = true;
+        var viewReportClick = false;
+        var viewId = parent.reportId;
+        var reportId = parent.reportId;
+        var item_Id = parent.reportId;
+        var pageurl = parent.pageurl;
+        var userId = parent.userId;
+        var userName = parent.userName;
+        var getSavedViewUrl = parent.getSavedViewUrl;
+        var embedConfig = parent.embedConfig;
+        var isPublic = parent.isPublic;
+        var ItemType = parent.ItemType;
+        var isAdmin = parent.isAdmin;
+    </script>
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission-v2.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/angular-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission-v2.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.min.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/share-permission-v2.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/angular-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/share-permission-v2.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.min.js"></script>
+    </environment>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+
+    <style>
+        body {
+            background: transparent !important;
+        }
+
+        #share-permission-button, #manage-access-save-button {
+            background: var(--blue-magenta) !important;
+            border: 1px solid var(--blue-magenta) !important;
+        }
+
+        #user-group-search-container #user-group-search-input_wrapper.e-atc.e-widget.e-focus .e-in-wrap.e-box {
+            border: 1px solid var(--blue-magenta) !important;
+        }
+
+        .sort-active {
+            color: var(--blue-magenta) !important;
+        }
+
+        .loader-icon .path {
+            stroke: var(--blue-magenta) !important;
+        }
+    </style>
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 }
 
 <script>
@@ -38,7 +111,7 @@
     var granularPermissions = @Html.Raw(JsonConvert.SerializeObject(granularPermissions));
 </script>
 
-<div id="share-permission-popup" class="fluent-popup custom-bootstrap-styles" style="display:none;">
+<div id="share-permission-popup" class="fluent-popup custom-bootstrap-styles" style="display:none;" ng-app="sharePermission">
     <div class="fluent-popup-header">
         <h4 class="popup-title">
             <span id="share-permission-dialog-header">[[[Share with others]]]</span>
@@ -152,7 +225,7 @@
                                         </div>
                                         <div class="col-xs-2 no-padding shared-user-group-img-container">
                                             <div class="profile-pic-tag" data-id="{{people.IdPReferenceId}}" data-type="user" data-display-name={{people.DisplayName}} data-image-size="32" data-placement="top" ng-if="people.TargetUserId > 0"></div>
-                                            <div class="group-logo" ng-style="GetGroupColor(people.TargetGroupColor, '{{$index}}')" ng-if="people.TargetGroupId > 0"><i class="su su-group"></i></div>
+                                            <div class="group-logo vertical-alignment" ng-style="GetGroupColor(people.TargetGroupColor, '{{$index}}')" ng-if="people.TargetGroupId > 0"><i class="su su-group"></i></div>
                                         </div>
                                         <div class="col-xs-9 no-padding shared-user-group-display-name-container">
                                             <div class="shared-user-group-display-name"><span data-toggle="tooltip" data-placement="top" data-container="body" title="{{people.DisplayName != null ? people.DisplayName : people.TargetGroupName}}">{{people.DisplayName != null ? people.DisplayName : people.TargetGroupName}}</span></div>
@@ -165,10 +238,10 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-12 no-padding action-for-delete-container" ng-show="{{(people.TargetUserId != currentUserId) && (people.CanRemove)}}">
-                                            <div class="col-xs-10 no-padding change-access-mode-select">
+                                            <div class="col-xs-10 no-padding change-access-mode-select" ng-show="currentItemType != @itemViewType">
                                                 <select class="change-access-mode-selection selectpicker" title="" data-original-title="" id="select_{{$index}}" name="accessMode" ng-change="updateValue(people.PermissionAccess, '{{$index}}')" ng-model="people.PermissionAccess" ng-options="parseInt(p.Key) as p.Value for p in accessModes" ng-show="currentItemType != @itemViewType"></select>
                                             </div>
-                                            <div class="col-xs-2 no-padding shared-user-group-delete-access-container">
+                                            <div class="col-xs-2 no-padding shared-user-group-delete-access-container vertical-alignment pull-right">
                                                 <i class="su su-close mark-for-deletion-icon" ng-show="{{(people.IsUserPermission && people.CanRemove) || (people.CanRemove && people.TargetGroupId > 0)}}" ng-click="MarkForDeletion($event, people.PermissionAccess, $index)"></i>
                                             </div>
                                         </div>
@@ -182,7 +255,7 @@
                                         </div>
                                         <div class="col-xs-12 no-padding marked-for-delete-container" style="display:none">
                                             <div class="col-xs-10 no-padding marked-for-delete-text"><span>[[[Marked for Delete]]]</span></div>
-                                            <div class="col-xs-2 no-padding marked-for-delete-icon-container">
+                                            <div class="col-xs-2 no-padding marked-for-delete-icon-container vertical-alignment">
                                                 <i class="su su-minus-circle remove-mark-for-deletion-icon" ng-click="RemoveMarkForDeletion($event, people.PermissionAccess,$index)"></i>
                                             </div>
                                         </div>

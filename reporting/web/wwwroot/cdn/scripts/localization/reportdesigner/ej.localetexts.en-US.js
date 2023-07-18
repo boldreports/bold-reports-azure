@@ -2746,10 +2746,10 @@ ej.ReportDesigner.Locale['en-US'] = {
             cancelReportProcessMsg: 'Report processing was canceled.'
         },
         progressMessage: {
-            exportLoadingMessage: 'Preparing exporting document... Please wait...',
-            printLoadingMessage: 'Preparing print data… Please wait...',
-            printPreparationMessage: 'Preparing print data... {0}% completed... Please wait...',
-            exportPreparationMessage: 'Preparing exporting document... {0}% completed... Please wait...',
+            exportLoadingMessage: 'Report Exporting... ',
+            printLoadingMessage: 'Report Printing... ',
+            printPreparationMessage: 'Preparing to print data... {0}% completed... Please wait...',
+            exportPreparationMessage: 'Preparing to export document... {0}% completed... Please wait...',
             cancelText: 'Cancel',
         },
         alertMessage: {
@@ -2770,7 +2770,10 @@ ej.ReportDesigner.Locale['en-US'] = {
             RVERR0009: 'The margins are superimposed or are outside the paper. Enter a different margin size.',
             RVERR0010: 'Enter a value for the parameter',
             RVERR0011: 'The parameter cannot be blank',
-            RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.'
+            RVERR0012: 'The value provided for the report parameter {parameterprompt} is not valid for its type.',
+            RVERR0013: 'Please enter values for the parameters',
+            RVERR0014: 'Parameters cannot be blank',
+            RVERR0015: 'The value required for parameters names of',
         },
         reportItemLabel: {
             Tablix: 'Tablix report item',
