@@ -2750,7 +2750,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             printLoadingMessage: 'Rapor Yazdırma...',
             printPreparationMessage: 'Veriler yazdırılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
             exportPreparationMessage: 'Doküman dışa aktarılmaya hazırlanıyor... %{0} tamamlandı... Lütfen bekleyin...',
-            cancelText: 'iptal etmek',
+            cancelText: 'İptal etmek',
         },
         alertMessage: {
             close: 'Kapat',

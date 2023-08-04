@@ -1170,12 +1170,16 @@
                 $('#' + controlId + '_design_header_preview').attr('disabled', 'disabled').css('opacity', '0.5');
                 $('#' + controlId + '_design_header_publish_div').css('opacity', '0.3');
                 $('#' + controlId + '_design_header_publish_btn').data('ejSplitButton').disable();
+                $('#ReportViewToggle_div').css('opacity', '0.3');
+                $('#ReportViewToggle_input').attr('disabled', 'true');
             } else {
                 $('#' + controlId + '_designer_header_reportName').removeAttr('disabled').css('opacity', '1');
                 $('#' + controlId + '_design_header_designview').removeAttr('disabled').css('opacity', '1');
                 $('#' + controlId + '_design_header_preview').removeAttr('disabled').css('opacity', '1');
                 $('#' + controlId + '_design_header_publish_div').css('opacity', '1');
                 $('#' + controlId + '_design_header_publish_btn').data('ejSplitButton').enable();
+                $('#ReportViewToggle_div').css('opacity', '1');
+                $('#ReportViewToggle_input').removeAttr('disabled');
             }
         }
 
