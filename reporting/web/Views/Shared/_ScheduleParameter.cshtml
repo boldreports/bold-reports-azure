@@ -31,9 +31,7 @@
             {
                 if (param.Name == parameter.Name)
                 {
-                    isParameterHidden = param.Hidden == false ? parameter.Values.Count == 0 ? false : param.UseDefault : param.Hidden;
-                    hiddenParameter = param.Hidden == null ? false : param.Hidden;
-                    showHiddenParameter = hiddenParameter ? "none" : "block";
+                    isParameterHidden = param.UseDefault;
                 }
             }
             hasdependent = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependent" : "";
@@ -42,15 +40,15 @@
         <div class="col-sm-12 col-xs-12 no-padding">
             @if (parameter.Prompt == null)
             {
-                <div class="col-sm-2 col-xs-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Name</label></div>
+                    <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Name</label></div>
             }
             else
             {
-                <div class="col-sm-2 col-xs-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Prompt</label></div>
+                    <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Prompt</label></div>
             }
             @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
             {
-                <div class="col-sm-4 col-xs-4 parameter-input" style="display:@showHiddenParameter;">
+                    <div class="col-sm-4 col-xs-4 parameter-input">
                     <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" data-size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
                         @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
                         {
@@ -64,7 +62,7 @@
             }
             else if (parameter.DataType == ParamType.Boolean || parameter.ElementType == ElementType.RadioButton)
             {
-                <div class="col-sm-4 col-xs-4 boolean parameter-input parameter-boolean" style="display:@showHiddenParameter;">
+                 <div class="col-sm-4 col-xs-4 boolean parameter-input parameter-boolean">
                     <div class="col-sm-5 col-xs-5">
                         <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
                         <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
@@ -77,7 +75,7 @@
             }
             else if (parameter.DataType == ParamType.DateTime && parameter.ElementType == ElementType.DateTime)
             {
-                <div class="col-sm-4 col-xs-4 parameter-input parameter-datetime" style="padding-left: 6px; display:@showHiddenParameter;">
+                <div class="col-sm-4 col-xs-4 parameter-input parameter-datetime" style="padding-left: 6px;">
                     <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
                 </div>
             }
@@ -85,18 +83,18 @@
             {
                 if (parameter.Values != null)
                 {
-                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
                         <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count> 0? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
                     </div>
                 }
                 else
                 {
-                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
                         <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",",  new List<string>() )" @(isParameterHidden ? "disabled" : "")>
                     </div>
                 }
             }
-        <div class="page-indent text" style="display:@showHiddenParameter;">
+        <div class="page-indent text">
             @if (parameter.Values == null || !parameter.Values.Any())
             {
                 @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default", disabled = "true" })
@@ -112,7 +110,7 @@
                 @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
             }
         </div>
-            <div class="col-sm-4 col-xs-4 no-padding validate-error" id="@parameter.Name-error-container" style="display:@showHiddenParameter;">
+            <div class="col-sm-4 col-xs-4 no-padding validate-error" id="@parameter.Name-error-container">
                 <div id="@parameter.Name-parameter-validator"></div>
             </div>
         </div>
@@ -124,6 +122,7 @@
     window.parameterObj = @Html.Raw(Json.Serialize(Model));
     window.reportparameterObj = @Html.Raw(Json.Serialize(ViewBag.ReportParameter));
     window.reportparameterDefaultValue = @Html.Raw(Json.Serialize(ViewBag.DefaultValues));
+    window.defaultValue = @Html.Raw(Json.Serialize(ViewBag.ParameterDefaultValues));
     window.reportParamType = {
         Boolean: @((int)ParamType.Boolean),
         DateTime:  @((int)ParamType.DateTime),
