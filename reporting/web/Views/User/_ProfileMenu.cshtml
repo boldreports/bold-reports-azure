@@ -23,16 +23,13 @@
                 <span>[[[My Permissions]]]</span>
             </a>
         </li>
-        @if (ServerAppConfig.IsSelfHosted)
-        {
-            <li>
-                <a id="personal-access-token-link" class="admin-menu-item @(currentUrl.IndexOf(personalAccessTokenPageUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@personalAccessTokenPageUrl" role="tab">
-                    <i class="su su-embed"></i>
-                    <span>[[[Personal Access Token]]]</span>
-                </a>
-            </li>
-        }
-        else
+        <li>
+            <a id="personal-access-token-link" class="admin-menu-item @(currentUrl.IndexOf(personalAccessTokenPageUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@personalAccessTokenPageUrl" role="tab">
+                <i class="su su-embed"></i>
+                <span>[[[Personal Access Token]]]</span>
+            </a>
+        </li>
+        @if (!ServerAppConfig.IsSelfHosted)
         {
             <li>
                 <a id="ticket-listing-link" class="admin-menu-item @(currentUrl.IndexOf(supportTicketsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@supportTicketsUrl" role="tab">
