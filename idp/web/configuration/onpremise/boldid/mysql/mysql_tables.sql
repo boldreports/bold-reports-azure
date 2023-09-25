@@ -353,6 +353,8 @@ CREATE TABLE {database_name}.BOLDTC_TenantInfo (
 	DatabaseType int Default 0,
 	BlobConnectionString longtext,
 	ConnectionString longtext,
+	SchemaName longtext,
+	Prefix longtext,
 	AdditionalParameters longtext,
 	MaintenanceDatabase char(255) NULL,
 	TenantSQLServerId int,

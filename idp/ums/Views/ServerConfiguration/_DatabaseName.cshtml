@@ -3,11 +3,42 @@
     var dbnameHelp = ViewBag.TenantType == TenantType.BoldBIOnPremise ? T["This is where we store the BI tenants, dashboard resources, and data store configuration."] : T["This is where we store the Bold Reports tenants, reports resources and their access permissions."];
     var sqlParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
 }
+
+<script>
+    var defaultValues = {
+        PostgreSQLPort: "@DefaultValue.PostgreSQLPort",
+        MySQLPort: "@DefaultValue.MySQLPort",
+        PostgreSQLMaintenanceDatabase: "@DefaultValue.PostgreSQLMaintenaceDatabase",
+        DefaultDatabaseName: "@DefaultValue.DefaultDatabaseName",
+        DefaultServerDatabaseName: "@DefaultValue.DefaultServerDatabaseName",
+        DefaultDatastoreDatabaseName: "@DefaultValue.DefaultDatastoreDatabaseName",
+        DefaultSchemaForMSSQL: "@DefaultValue.DefaultSchemaForMSSQL",
+        DefaultSchemaForPostgres: "@DefaultValue.DefaultSchemaForPostgres",
+        DefaultPrefixForUMS: "@DefaultValue.DefaultPrefixForUMS",
+        DefaultPrefixForBI: "@DefaultValue.DefaultPrefixForBI",
+        DefaultPrefixForReports: "@DefaultValue.DefaultPrefixForReports"
+    };
+</script>
+
 <div id="simple_tab_db_name">
     <div class="txt-holder database-name center-align">
         <input type="text" id="txt-dbname" name="dbname" class="" onkeyup="return forceToLower(this);" placeholder="@T["Database name"]" />
         <span class="startup-validation validation-txt-errors"></span>
             <div class="info-content txt-box-info db-name-info">@dbnameHelp</div>
+    </div>
+    <div class="txt-holder database-name center-align" id="table-prefix-ums">
+        <input type="text" id="txt-ums-prefix" name="umsPrefix" class="" placeholder="@T["ID tables prefix"]" />
+        <span class="startup-validation validation-txt-errors"></span>
+        <div class="info-content txt-box-info db-name-info">
+            @Html.Raw(string.Format(T["Customizable prefix for ID tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+        </div>
+    </div>
+    <div class="txt-holder database-name center-align" id="simple-server-prefix">
+        <input type="text" id="txt-server-prefix" name="serverPrefix" class="" placeholder="@T["Server tables prefix"]" />
+        <span class="startup-validation validation-txt-errors"></span>
+        <div class="info-content txt-box-info db-prefix-info">
+            @Html.Raw(string.Format(T["Customizable prefix for server tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+        </div>
     </div>
     <div class="sql-server-existing-db center-align">
         <div class="txt-holder databse-dropdown text-wrap database-dropdown-margin center-align">
@@ -15,6 +46,21 @@
             <span class="startup-validation validation-txt-errors"></span>
                 <div class="info-content txt-box-info db-name-info">@dbnameHelp</div>
         </div>
+        <div class="txt-holder databse-dropdown text-wrap database-dropdown-margin center-align" id="table-prefix-name">
+            <input type="text" id="ums-table-prefix" name="tablePrefix" class="" placeholder="@T["ID tables prefix "]" />
+            <span class="startup-validation validation-txt-errors"></span>
+            <div class="info-content txt-box-info server-db-info">
+                @Html.Raw(string.Format(T["Customizable prefix for ID tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+            </div>
+        </div>
+        <div class="txt-holder databse-dropdown text-wrap database-dropdown-margin center-align" id="simple-tenant-prefix">
+            <input type="text" id="tenant-table-prefix" name="tenantTablePrefix" class="" placeholder="@T["Server tables prefix "]" />
+        <span class="startup-validation validation-txt-errors"></span>
+            <div class="info-content txt-box-info db-prefix-info">
+                @Html.Raw(string.Format(T["Customizable prefix for server tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+        </div>
+        </div>
+        
     </div>
 </div>
 
@@ -25,11 +71,25 @@
         <div class="info-content txt-box-info server-db-info">@Html.Raw(string.Format(T["This is where we store the {0}{1}{2}, users, and their resource access permissions."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
         </div>
     </div>
+    <div class="txt-holder database-name center-align">
+        <input type="text" id="server-prefix-name" name="serverPrefixName" class="" placeholder="@T["Server tables prefix"]" />
+        <span class="startup-validation validation-txt-errors"></span>
+        <div class="info-content txt-box-info db-prefix-info">
+            @Html.Raw(string.Format(T["Customizable prefix for server tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+        </div>
+    </div>
     <div class="sql-server-existing-db center-align">
         <div class="txt-holder  text-wrap database-dropdown-margin center-align">
             <input type="text" id="server-existing-dbname" name="serverexistingdbname" class="" placeholder="@T["Server database name"]" />
             <span class="startup-validation validation-txt-errors"></span>
             <div class="info-content txt-box-info server-db-info">@Html.Raw(string.Format(T["This is where we store the {0}{1}{2}, users, and their resource access permissions."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
+            </div>
+        </div>
+        <div class="txt-holder  text-wrap database-dropdown-margin center-align">
+            <input type="text" id="server-table-prefix" name="serverTablePrefix" class="" placeholder="@T["Server tables prefix"]" />
+            <span class="startup-validation validation-txt-errors"></span>
+            <div class="info-content txt-box-info db-prefix-info">
+                @Html.Raw(string.Format(T["Customizable prefix for server tables."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
             </div>
         </div>
     </div>

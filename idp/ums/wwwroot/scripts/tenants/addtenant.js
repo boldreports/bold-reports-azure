@@ -607,6 +607,8 @@ function getTenant(id) {
                 var databaseInformation = JSON.parse(data.DatabaseDetails);
                 var authentication = "";
                 $("#admin-nav").hide();
+                $("#table-prefix-ums").hide();
+                $("#table-prefix-name").hide();
                 if (databaseInformation.ServerType == 0) {
                     fillCommonDatbaseValues(databaseInformation);
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
@@ -622,11 +624,15 @@ function getTenant(id) {
                         document.getElementById("txt-login").ej2_instances[0].enabled = false;
                         document.getElementById("txt-password-db").ej2_instances[0].enabled = false;
                     }
+                    $("#table-prefix-name").hide();
+                    $("#table-prefix-ums").hide();
                 } else if (databaseInformation.ServerType === 1) {
                     document.getElementById("database-type").ej2_instances[0].value = "MySQL";
                     fillCommonDatbaseValues(databaseInformation);
                     $('.auth-type').removeClass("show").addClass("hide");
                     $('.port-num').removeClass("show").addClass("hide");
+                    $("#table-prefix-ums").hide();
+                    $("#table-prefix-name").hide();
                     document.getElementById("txt-portnumber").ej2_instances[0].value = databaseInformation.Port;
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
                     document.getElementById("txt-login").ej2_instances[0].value = databaseInformation.UserName;
@@ -636,6 +642,8 @@ function getTenant(id) {
                     fillCommonDatbaseValues(databaseInformation);
                     $('.auth-type').removeClass("show").addClass("hide");
                     $('.port-num, .maintenancedb').removeClass("hide hidden").addClass("show");
+                    $("#table-prefix-ums").hide();
+                    $("#table-prefix-name").hide();
                     document.getElementById("maintenance-db").ej2_instances[0].value = data.TenantDetails.MaintenanceDatabase;
                     document.getElementById("txt-portnumber").ej2_instances[0].value = databaseInformation.Port;
                     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
@@ -672,6 +680,8 @@ function fillCommonDatbaseValues(databaseInformation) {
     $(".new-db,.existing-db").css("display", "none");
     document.getElementById("txt-servername").ej2_instances[0].value = databaseInformation.ServerName;
     document.getElementById("txt-dbname").ej2_instances[0].value = databaseInformation.DatabaseName;
+    document.getElementById("schema-name").ej2_instances[0].value = databaseInformation.SchemaName;
+    document.getElementById("txt-server-prefix").ej2_instances[0].value = databaseInformation.Prefix;
     document.getElementById("additional-parameter").ej2_instances[0].value = databaseInformation.AdditionalParameters;
     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);
 }
@@ -686,12 +696,15 @@ function updateTenant(waitingPopUpElement, connectionString) {
     else {
         siteIdentifier = true;
     }
+    
     var tenantIdentifier = $("#tenant-identifier").val();
     var additionalParameters = $("#additional-parameter").val();
+    var schemaName = $("#schema-name").val();
+    var tenantPrefix = $("#txt-server-prefix").val();
     $.ajax({
         type: "POST",
         url: updateTenantDetailsUrl,
-        data: { tenantId: tenantId, tenantName: name, tenantIdentifier: tenantIdentifier, tenantUrl: tenantUrl, databaseDetails: connectionString, additionalParameters: additionalParameters, useSiteIdentifier: siteIdentifier },
+        data: { tenantId: tenantId, tenantName: name, tenantIdentifier: tenantIdentifier, tenantUrl: tenantUrl, databaseDetails: connectionString, additionalParameters: additionalParameters, useSiteIdentifier: siteIdentifier, SchemaName: schemaName, Prefix: tenantPrefix },
         success: function (data) {
             if (data.result == true) {
                 parent.hideWaitingPopup(waitingPopUpElement);
@@ -808,6 +821,10 @@ function nextToDatabasePage() {
     $("#header-description").html(window.Server.App.LocalizationContent.PlaceToCreateShare.format(item));
     $("#used-tenant-name").html($("#tenant-name").val());
 
+    if (isSiteCreation) {
+        $(".db-schema-info").html(window.Server.App.LocalizationContent.SchemaInfo);
+        $(".db-prefix-info").html(window.Server.App.LocalizationContent.PrefixInfo);
+    }
     if (isBoldReportsTenantType()) {
         var helpData = "Enterprise Reporting";
         $("#used-tenant-identifier").html($(".url-part").text().replace(/\s/g, '').replace("i.e", ''));
