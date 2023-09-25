@@ -50,6 +50,14 @@ $(document).ready(function () {
     inputBoxInitialization('#txt-emailid');
     inputBoxInitialization('#new-password');
     inputBoxInitialization('#txt-confirm-password');
+
+    inputBoxInitialization('#tenant-table-prefix');
+    inputBoxInitialization('#server-table-prefix');
+    inputBoxInitialization('#txt-server-prefix');
+    inputBoxInitialization('#server-prefix-name');
+    inputBoxInitialization('#txt-ums-prefix');
+    inputBoxInitialization('#ums-table-prefix');
+    inputBoxInitialization('#schema-name');
 });
 
 function onDropDownListChange(args) {

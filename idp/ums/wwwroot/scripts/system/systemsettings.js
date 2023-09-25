@@ -56,6 +56,8 @@ $(document).ready(function () {
         if ($(this).attr("id") == "advanced-tab") {
             $("#default-tab").removeClass("active");
             $("#advanced-tab").addClass("active");
+            $("#simple-tenant-prefix").hide();
+            $("#simple-server-prefix").hide();
             if (!isSiteCreation) {
                 $("#label_txt-dbname").html(window.Server.App.LocalizationContent.IDDatabaseName);
                 $("#label_database-name").html(window.Server.App.LocalizationContent.IDDatabaseName);
@@ -70,9 +72,14 @@ $(document).ready(function () {
             }
 
             if (!isSiteCreation) {
-                $(".db-name-info").html(window.Server.App.LocalizationContent.DatabaseInfo);
                 $("#simple_tab_db_name").show();
+                $(".db-name-info").html(window.Server.App.LocalizationContent.DatabaseInfo);
+                $(".db-schema-info").html(window.Server.App.LocalizationContent.SchemaInfo);
                 prefillDbNames();
+            }
+            else {
+                $(".db-schema-info").html(window.Server.App.LocalizationContent.SchemaInfo);
+                $(".db-prefix-info").html(window.Server.App.LocalizationContent.PrefixInfo);
             }
 
             isSimpleModeValue = "false";
@@ -81,14 +88,28 @@ $(document).ready(function () {
             $("#default-tab").addClass("active");
             $("#advanced-tab").removeClass("active");
             $("#simple_tab_db_name").show();
+            $("#simple-tenant-prefix").show();
+            $("#simple-server-prefix").show();
+            if (document.getElementById("existing-db").checked) {
+                $("#simple-server-prefix").hide();
+            }
             if (!isSiteCreation) {
                 $("#label_txt-dbname").html(window.Server.App.LocalizationContent.DatabaseName);
-                $("#label_database-name").html(window.Server.App.LocalizationContent.DatabaseName);
+                $("#label_database-name").html(window.Server.App.LocalizationContent.DatabaseName); 
             }
+            else {
+                $("#table-prefix-ums").hide();
+                $("#table-prefix-name").hide();
+            }
+
             $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI.format("Embedded BI") : window.Server.App.LocalizationContent.DatabaseInfoReports.format("Enterprise Reporting"));
             if (!isSiteCreation) {
                 $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI3 : window.Server.App.LocalizationContent.DatabaseInfoReports2.format("Enterprise Reporting", "report"));
                 prefillDbNames();
+            }
+            else {
+                $(".db-schema-info").html(window.Server.App.LocalizationContent.SchemaInfo);
+                $(".db-prefix-info").html(window.Server.App.LocalizationContent.PrefixInfo);
             }
             $("#advanced_tab_db_name").hide();
             isSimpleModeValue = "true";
@@ -134,25 +155,21 @@ function getFormData() {
     var maintenanceDb = $('#maintenance-db').val();
     var enableSSL = $("#secure-sql-connection").is(":checked");
     var additionalParameters = $("#additional-parameter").val();
-
+    var schemaName = $("#schema-name").val();
+    var prefix = $("#new-db").is(":checked") ? $("#txt-ums-prefix").val() : $("#ums-table-prefix").val();
+    var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
+    var tenantPrefix = isAdvancedTab ? ($("#new-db").is(":checked") ? $("#server-prefix-name").val() : $("#server-table-prefix").val()) : ($("#new-db").is(":checked") ? $("#txt-server-prefix").val() : $("#tenant-table-prefix").val());
     switch (database) {
-        case "mssqlce":
-            var prefix = $("#tenant-table-prefix").val();
-            break;
         case "mssql":
-            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
             var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#databaseName").val();
             break;
         case "mysql":
-            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
             var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
             break;
         case "oracle":
-            var prefix = ($("#table-prefix-oracle").val() === "" || $("#new-db-oracle").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix-oracle").val();
             var databaseName = $("#new-db-oracle").is(":checked") ? $("#client-username").val() : $("#database-name-oracle").val();
             break;
         case "postgresql":
-            var prefix = ($("#table-prefix").val() === "" || $("#new-db").is(":checked")) ? $("#tenant-table-prefix").val() : $("#table-prefix").val();
             var databaseName = $("#new-db").is(":checked") ? $("#txt-dbname").val() : $("#database-name").val();
             break;
     }
@@ -185,7 +202,10 @@ function getFormData() {
             Prefix: prefix,
             SslEnabled: enableSSL,
             IsNewDatabase: isNewDatabase,
-            AdditionalParameters: additionalParameters
+            AdditionalParameters: additionalParameters,
+            SchemaName: schemaName,
+            Prefix: prefix,
+            TenantPrefix: tenantPrefix
         },
         StorageType: window.storageType
     };
@@ -282,7 +302,7 @@ function existingDbConfiguration(element) {
 function checkingExistingDB(element) {
     $('#details-next').attr("disabled", true);
     var databaseValidationMessage = window.Server.App.LocalizationContent.OneOrMoreErrors.format("<a id='know-more-error'>", "</a>");
-
+    var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
     window.serverName = $("#txt-servername").val();
     window.portNumber = $("#txt-portnumber").val();
     window.maintenanceDb = $('#maintenance-db').val();
@@ -296,13 +316,16 @@ function checkingExistingDB(element) {
     window.intermediateDatabaseName = $("#imdb-existing-dbname").val();
     window.sslEnabled = $("#secure-sql-connection").is(":checked");
     window.additionalParameters = $("#additional-parameter").val();
+    window.prefix = $("#new-db").is(":checked") ? $("#txt-ums-prefix").val() : $("#ums-table-prefix").val();
+    window.tenantPrefix = isAdvancedTab ? ($("#new-db").is(":checked") ? $("#server-prefix-name").val() : $("#server-table-prefix").val()) : ($("#new-db").is(":checked") ? $("#txt-server-prefix").val() : $("#tenant-table-prefix").val());
+    window.schemaName = $("#schema-name").val();
    
     $.ajax({
         type: "POST",
         url: connectDatabaseUrl,
         async: false,
         data: {
-            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: false, TenantType: getTenantType(), additionalParameters: window.additionalParameters }),
+            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: false, TenantType: getTenantType(), additionalParameters: window.additionalParameters, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix }),
             isSimpleMode: isSimpleModeSelction(),
             isSiteCreation: true
         },
@@ -317,7 +340,7 @@ function checkingExistingDB(element) {
                     url: checkTableExistsUrl,
                     async: false,
                     data: {
-                        data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: getTenantType(), IsNewDatabase: false, additionalParameters: window.additionalParameters }),
+                        data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: getTenantType(), IsNewDatabase: false, additionalParameters: window.additionalParameters, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix }),
                         isSimpleMode: isSimpleModeSelction(),
                         isSiteCreation: true
                     },
@@ -384,7 +407,7 @@ function checkingNewDBConnection(element, actionType) {
             type: "POST",
             url: checkValidDatabaseUrl,
             async: false,
-            data: { tenantId: tenantId, connectionString: window.connectionString },
+            data: { tenantId: tenantId, connectionString: window.connectionString, updateSchema: window.schemaName, updatePrefix: window.tenantPrefix, TenantPrefix: window.tenantPrefix },
             success: function (response) {
                 if (response.Status) {
                     isValidDBDetail = true;
@@ -432,6 +455,7 @@ function connectDatabase(element, actionType) {
     var ValidationMessage = window.Server.App.LocalizationContent.OneOrMoreErrors.format("<a id='know-more-error'>", "</a>");
     var result = "";
     var isNewDatabase = true;
+    var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
     window.serverName = $("#txt-servername").val();
     window.portNumber = $("#txt-portnumber").val();
     window.maintenanceDb = $('#maintenance-db').val();
@@ -444,6 +468,9 @@ function connectDatabase(element, actionType) {
     window.intermediateDatabaseName = $("#imdbname").val();
     window.sslEnabled = $("#secure-sql-connection").is(":checked");
     window.additionalParameters = $("#additional-parameter").val();
+    window.prefix = $("#new-db").is(":checked") ? $("#txt-ums-prefix").val() : $("#ums-table-prefix").val();
+    window.tenantPrefix = isAdvancedTab ? ($("#new-db").is(":checked") ? $("#server-prefix-name").val() : $("#server-table-prefix").val()) : ($("#new-db").is(":checked") ? $("#txt-server-prefix").val() : $("#tenant-table-prefix").val());
+    window.schemaName = $("#schema-name").val();
     if (actionType == "edit") {
         isNewDatabase = false;
     }
@@ -453,7 +480,7 @@ function connectDatabase(element, actionType) {
         url: connectDatabaseUrl,
         async: false,
         data: {
-            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabase, TenantType: getTenantType(), additionalParameters: window.additionalParameters }),
+            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabase, TenantType: getTenantType(), additionalParameters: window.additionalParameters, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix, ActionType: actionType }),
             isSimpleMode: isSimpleModeSelction(),
             isSiteCreation: true
         },
@@ -491,6 +518,10 @@ function getDatabaseFormValues() {
     var authenticationType = 0;
     var enableSSL = $("#secure-sql-connection").is(":checked");
     var additionalParameters = $("#additional-parameter").val();
+    var schemaName = $("#schema-name").val();
+    var prefix = $("#new-db").is(":checked") ? $("#txt-ums-prefix").val() : $("#ums-table-prefix").val();
+    var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
+    var tenantPrefix = isAdvancedTab ? ($("#new-db").is(":checked") ? $("#server-prefix-name").val() : $("#server-table-prefix").val()) : ($("#new-db").is(":checked") ? $("#txt-server-prefix").val() : $("#tenant-table-prefix").val());
     if (!(getRadioButtonValue("checkWindows") == "windows"))
         authenticationType = 1;
         formData = {
@@ -505,7 +536,10 @@ function getDatabaseFormValues() {
                 MaintenanceDatabase: maintenanceDb,
                 SslEnabled: enableSSL,
                 IsNewDatabase: isNewDatabase,
-                AdditionalParameters: additionalParameters
+                AdditionalParameters: additionalParameters,
+                SchemaName: schemaName,
+                Prefix: prefix,
+                TenantPrefix: tenantPrefix
             },
             StorageType: $("input[name='IsBlobStorage']:checked").val(),
             TenantIsolation:
@@ -718,6 +752,10 @@ function getTenantType() {
 
 function forceToLower(input) {
     input.value = input.value.toLowerCase();
+}
+
+function validateNoWhiteSpace(input) {
+    input.value = input.value.replace(/\s/g, '');
 }
 
 function getDropDownValue(id) {
