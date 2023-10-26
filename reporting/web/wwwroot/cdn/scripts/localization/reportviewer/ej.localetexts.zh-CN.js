@@ -18,10 +18,10 @@ ej.ReportViewer.Locale["zh-CN"] = {
             headerText: "出口",
             contentText: "选择导出的文件格式。",
             Pdf: "PDF",
-            Excel: "高强",
-            Word: "字",
+            Excel: "Excel",
+            Word: "Word",
             Html: "HTML",
-            PPT: '微軟幻燈片軟件',
+            PPT: 'PowerPoint',
             CSV: 'CSV',
             XML: 'XML'
         },

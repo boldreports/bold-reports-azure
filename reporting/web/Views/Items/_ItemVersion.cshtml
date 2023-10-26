@@ -105,6 +105,14 @@
                     </li>
                     {{/if}}
                     {{/if}}
+                    {{if CanDownload}}
+                    <li>
+                <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/report/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" onclick="downloadReport(this)">
+                            <i class="su su-download"></i>
+                            <span>[[[Download Report]]]</span>
+                        </a>
+                    </li>
+                    {{/if}}
                     @*{{if CanDownload == true}}
             {{if ItemTypeId == "@((int)ItemType.Dashboard)"}}
             <li>

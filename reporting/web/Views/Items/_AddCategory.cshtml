@@ -10,7 +10,6 @@
 
 @if (isReportDesigner)
 {
-    <link href="@reportServerResourceUrl/Styles/LESS/Components/Buttons.less" rel="stylesheet" />
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>

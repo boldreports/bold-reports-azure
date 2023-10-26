@@ -24,8 +24,12 @@ $(document).ready(function () {
     //});
 
     if ($(".security-setting-container").is(":visible")) {
-        if (location.href.match(/2fa/)) {
+        if (location.href.match(/2fa/) || isShow2fa) {
             $("#2fa").tab("show");
+            var query = (window.location.search).toString();
+            if (!query.includes("&view=2fa")) {
+                history.pushState(null, '', query + '&view=2fa');
+            }
         }
         else {
             $("#change-password").tab("show");
@@ -203,6 +207,7 @@ $(document).ready(function () {
         messages: {
             "new-password": {
                 required: window.Server.App.LocalizationContent.NewPasswordValidator,
+                isValidPassword: window.Server.App.LocalizationContent.InvalidPasswordValidator
             },
             "confirm-password": {
                 required: window.Server.App.LocalizationContent.ConfirmPasswordValidator,
@@ -641,7 +646,7 @@ function onUserChangePasswordClick() {
             }
         }
     );
-
+    $(".popover").hide();
 }
 function editUser(fulldata) {
     var specficuserdetails = fulldata;

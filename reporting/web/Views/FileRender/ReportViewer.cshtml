@@ -397,6 +397,7 @@
      var item_Id = "@ViewBag.ItemId.Split('/')[0]";
      var sameOrigin = true;
      var isSubmit = true;
+     var canHideSaveViewBtn = false;
 
      var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
     var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
@@ -713,6 +714,7 @@
                         parameter = viewDetails.QueryString;
                         canUpdate = viewDetails.CanEdit;
                     }
+                    canHideSaveViewBtn = !viewDetails.CanEdit;
                 }
                 else {
                     window.location.href = ((window.location.origin + window.location.pathname));
@@ -820,7 +822,7 @@
         }
 
     function addCustomFonts(fontFamily, fontFile) {
-        var customFontUrl = baseUrl + "/content/custom-fonts/" + fontFile;
+        var customFontUrl = encodeURI(baseUrl + "/content/custom-fonts/" + fontFile);
             if (isFontFaceExist()) {
                 try {
                     const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');

@@ -177,7 +177,7 @@
                     <span class="menu-icon-container">
                         <i class="su su-logout"></i>
                     </span>
-                    <span class="menu-label">[[[Log Out]]]</span>
+                    <span class="menu-label">[[[Sign out]]]</span>
                 </a>
             </li>
         </ul>
@@ -300,12 +300,12 @@
                             <li class="sf-sub-menu-separator"></li>
                             <li class="sub-menu-item">
                                 <a class="request-concierge-support" href="@ServerAppConfig.AppSettings.Syncfusion.Support.CreateTicket" target="_blank">
-                                    [[[Create Incidents]]]
+                                    [[[Create Ticket]]]
                                 </a>
                             </li>
                             <li class="sub-menu-item">
                                 <a href="@ServerAppConfig.AppSettings.Syncfusion.Support.ListTicket" target="_blank">
-                                    [[[My Incidents]]]
+                                    [[[My Tickets]]]
                                 </a>
                             </li>
                             if (Convert.ToBoolean(Context.Session.GetString("IsAdmin")))
@@ -321,7 +321,7 @@
                         <li class="sf-sub-menu-separator"></li>
                         <li class="sub-menu-item">
                             <a href="@Url.Action("logout", "accounts" )">
-                                [[[Logout]]]
+                                [[[Sign out]]]
                             </a>
                         </li>
                     </ul>

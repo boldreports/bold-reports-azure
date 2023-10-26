@@ -51,7 +51,7 @@
                             </div>
                         </li>
 
-                        if (ServerAppConfig.IsSelfHosted && isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report] && showImport)
+                        if (ServerAppConfig.IsSelfHosted && showImport)
                         {
                             <li class="deploy-template-dashboard add-sample-button">
                                 <div class="create-item-list-section">
@@ -64,6 +64,10 @@
                                     </div>
                                 </div>
                             </li>
+                        }
+
+                        if (showImport)
+                        {
                             <li id="upload-report" data-action="Upload">
                                 <div class="create-item-list-section">
                                     <div class="create-item-list-icon" style="float: left;">
@@ -76,21 +80,6 @@
                                 </div>
                             </li>
                         }
-                    }
-
-                    @if (!ServerAppConfig.IsSelfHosted && isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report])
-                    {
-                        <li id="upload-report" data-action="Upload">
-                            <div class="create-item-list-section">
-                                <div class="create-item-list-icon" style="float: left;">
-                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/upload-report.svg">
-                                </div>
-                                <div class="create-item-list-title">
-                                    <label>[[[Upload Report]]]</label><br>
-                                    <span>[[[Upload your RDL file to the server.]]]</span>
-                                </div>
-                            </div>
-                        </li>
                     }
 
                     @if (!ServerAppConfig.IsSelfHosted)

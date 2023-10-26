@@ -98,8 +98,10 @@
         var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
         var pageurl = "@requestUrl.LocalPath";
         var reportId = "@ViewBag.ItemId.Split('/')[0]";
+        var reportPath = "@ViewBag.ItemId";
         var sameOrigin = true;
         var isSubmit = true;
+        var canHideSaveViewBtn = false;
         var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
         var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
         var isAdmin = "@isAdmin";
@@ -113,6 +115,7 @@
         var canCreateComments = @Json.Serialize(canCreateComments);
         var enableViews = @Json.Serialize(enableViews);
         var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
+        var isMobile = @Json.Serialize(isMobile);
     </script>
 
     <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
@@ -130,11 +133,11 @@
         <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
             <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
         </div>
-        <div id="report_viewer_v2_toolbar">
-            @if(canEdit){
+        @if(canEdit){
+            <div id="report_viewer_v2_toolbar">
                 <span class="su-edit-tailwind" id="report_viewer_v2_edit" onclick="editReport()"></span>
-            }
-        </div>
+            </div>
+        } 
     </div>
 
     <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">

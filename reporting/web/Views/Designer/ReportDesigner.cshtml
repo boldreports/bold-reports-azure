@@ -539,6 +539,7 @@
                 reportServerUrl: "@reportServerApiUrl",
                 create: $.proxy(controlInitialized, this),
                 reportSaved: $.proxy(reportSaved, this),
+                reportOpened: $.proxy(reportOpened, this),
                 serviceAuthorizationToken: designerToken,
                 toolbarSettings: {
                     items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.New
@@ -589,7 +590,7 @@
         }
 
         function addCustomFonts(fontFamily, fontFile) {
-            var customFontUrl = "@baseUrl/content/custom-fonts/" + fontFile;
+            var customFontUrl = encodeURI("@baseUrl/content/custom-fonts/" + fontFile);
             if (isFontFaceExist()) {
                 try {
                     const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
@@ -686,7 +687,7 @@
                 args.headers.push({ Key: 'ReportId', Value: reportId });
             }
             if (args.actionType === 'openServerReport' || args.actionType === 'saveServerReport'
-                || args.actionType === 'createServerReport' || args.actionType === 'CheckDraftReport') {
+                || args.actionType === 'createServerReport' || args.actionType === 'HasDraftReport') {
                 var reportServerData = {
                     'category': categoryName,
                     'categoryId': categoryId,
@@ -702,7 +703,7 @@
                 args.data = reportServerData;
             }
 
-            if (args.actionType === 'AutoDraftReport') {
+            if (args.actionType === 'CreateDraftReport') {
                 $('#' + controlId + '_design_header_draft_icon').removeClass('e-designer-draft-status-success').addClass('e-designer-draft-status-progress');
                 $('#' + controlId + '_design_header_draft_status').text("[[[Saving draft...]]]");
             }
@@ -750,6 +751,19 @@
                 isDraft = designer.isNewServerReport().toString();
                 alertMessage(true, window.Server.App.LocalizationContent.Success + "!", window.Server.App.LocalizationContent.DesignerPublishSuccess);
             }
+        }
+
+        function reportOpened() {
+            if (hasReportPart()) {
+                var designer = $('#' + controlId).data('boldReportDesigner');
+                designer.getInstance('ReportUtil').ejAlertDialog('Report Part', 'The report \'' + reportName + '\' designed in Report Designer 2.0 and it contains report parts. If you publish the report in Report Designer 1.0, then you will loss the report parts mapping information', false, true, false, '');
+            }
+        }
+
+        function hasReportPart() {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            var elements = designer.designerPanel.designArea.find("[partid]");
+            return elements.length > 0 ? true : false;
         }
 
         function alertMessage(status, toastTitle, toastMessage) {

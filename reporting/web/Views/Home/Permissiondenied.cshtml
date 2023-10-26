@@ -7,6 +7,8 @@
     var url = new Uri(Context.Request.GetDisplayUrl());
     var requestUrl = url.AbsolutePath.ToString().ToLower();
     var reportsPageUrl = Url.Action("Reports", "Reports");
+    var datasetDesignerPageUrl = Url.Action("DatasetDesigner", "Reports");
+    var isDatasetDesignerPage = requestUrl.Contains(datasetDesignerPageUrl);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
@@ -29,7 +31,7 @@
                     <img src="@GlobalAppSettings.CdnDomain/static/error-pages/v1/access-denied.svg" class="error-image-2">
                 </div>
                 <div class="error-type">[[[Access Denied]]]</div>
-                @if (requestUrl.IndexOf(reportsPageUrl, StringComparison.OrdinalIgnoreCase) != -1)
+                @if (!isDatasetDesignerPage && requestUrl.IndexOf(reportsPageUrl, StringComparison.OrdinalIgnoreCase) != -1)
                 {
                     <div class="error-text">
                         [[[You do not have permission to view this report.]]]<br>[[[Please contact your administrator.]]]
