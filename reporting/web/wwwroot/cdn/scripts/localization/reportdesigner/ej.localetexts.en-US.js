@@ -788,6 +788,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             position: 'Title Position'
         },
         axis: {
+            axisType: 'Axis Type',
             booleanPropertyLabel: 'Enable Axis',
             title: 'Axis Title',
             alignment: 'Alignment',
@@ -915,6 +916,15 @@ ej.ReportDesigner.Locale['en-US'] = {
                         barLabelStyle: 'BarLabelStyle',
                         smartLabelStyle: 'LabelStyle'
                     }
+                }
+            },
+            axisSettings: {
+                categoryName: 'Axis Settings',
+                categoryAxis: 'Category',
+                valueAxis: 'Value',
+                axisTypes: {
+                    primary: 'Primary',
+                    secondary: 'Secondary'
                 }
             },
             link: 'Link',
@@ -1878,7 +1888,9 @@ ej.ReportDesigner.Locale['en-US'] = {
                 serverName: 'Server Name',
                 savePassword: 'Save Password',
                 database: 'Database',
-                advanceSwitch: 'Advanced Options'
+                advanceSwitch: 'Advanced Options',
+                encrypt: 'Encrypt',
+                trustserver: 'Trust Server Certificate'
             },
             advanceOption: {
                 connectionString: 'Connection String',

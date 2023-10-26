@@ -788,6 +788,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             position: 'Başlık Konumu'
         },
         axis: {
+            axisType: 'Eksen Tipi',
             booleanPropertyLabel: 'Ekseni Etkinleştir',
             title: 'Eksen Başlığı',
             alignment: 'Hizalama',
@@ -915,6 +916,15 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                         barLabelStyle: 'BarEtiketStil',
                         smartLabelStyle: 'Etiket Stili'
                     }
+                }
+            },
+            axisSettings: {
+                categoryName: 'Eksen Ayarları',
+                categoryAxis: 'Kategori',
+                valueAxis: 'Değer',
+                axisTypes: {
+                    primary: 'Öncelik',
+                    secondary: 'İkincil'
                 }
             },
             link: 'Bağlantı',
@@ -1878,7 +1888,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 serverName: 'Sunucu adı',
                 savePassword: 'Şifreyi kaydet',
                 database: 'Veri tabanı',
-                advanceSwitch: 'Gelişmiş seçenekler'
+                advanceSwitch: 'Gelişmiş seçenekler',
+                encrypt: 'şifrelemek',
+                trustserver: 'Sunucu Sertifikasına Güven'
             },
             advanceOption: {
                 connectionString: 'Bağlantı dizisi',
@@ -2436,9 +2448,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
                 contentText: 'Dışa aktarılan dosya formatını seçin.',
                 Pdf: 'PDF',
                 Excel: 'Excel',
-                Word: 'Kelime',
+                Word: 'Word',
                 Html: 'HTML',
-                PPT: 'Priz',
+                PPT: 'PowerPoint',
                 CSV: 'CSV',
                 XML: 'XML'
             },

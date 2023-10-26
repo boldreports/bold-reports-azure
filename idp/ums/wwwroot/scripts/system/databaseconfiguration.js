@@ -92,13 +92,13 @@
                 required: window.Server.App.LocalizationContent.TheDatabaseValidator
             },
             databaseName: {
-                required: window.Server.App.LocalizationContent.ExistingDatabaseValidator
+                required: window.Server.App.LocalizationContent.TheDatabaseValidator
             },
             serverdbname: {
                 required: window.Server.App.LocalizationContent.TheTenantServerDatabaseValidator
             },
             serverexistingdbname: {
-                required: window.Server.App.LocalizationContent.ExistingDatabaseValidator
+                required: window.Server.App.LocalizationContent.TheTenantServerDatabaseValidator
             },
             designerdbname: {
                 required: window.Server.App.LocalizationContent.TheDesignerDatabaseValidator
@@ -363,7 +363,7 @@ $(document).on("click", "#db-config-submit, #sql-existing-db-submit", function (
                                 }
                             });
                     }
-                   
+
                     $(".db-connect-outer-container").find(".title").html(window.Server.App.LocalizationContent.DatabaseCreation + "!");
                     $("#txt-dbname").focus();
                 }
@@ -371,7 +371,7 @@ $(document).on("click", "#db-config-submit, #sql-existing-db-submit", function (
                     hideWaitingPopup('startup-waiting-element');
                     var id = "#txt-dbname";
                     if (isNewDatabaseTab) {
-                       id = result.Data.connectionResponse.IsServerDatabaseError ? "#txt-dbname" : result.Data.connectionResponse.IsTenantServerDatabaseError ? "#server-dbname" : result.Data.connectionResponse.IsIntermediateServerDatabaseError ? "#imdbname" : id;
+                        id = result.Data.connectionResponse.IsServerDatabaseError ? "#txt-dbname" : result.Data.connectionResponse.IsTenantServerDatabaseError ? "#server-dbname" : result.Data.connectionResponse.IsIntermediateServerDatabaseError ? "#imdbname" : id;
                     }
                     else {
                         id = result.Data.connectionResponse.IsServerDatabaseError ? "#database-name" : result.Data.connectionResponse.IsTenantServerDatabaseError ? "#server-existing-dbname" : result.Data.connectionResponse.IsIntermediateServerDatabaseError ? "#imdb-existing-dbname" : id;
@@ -382,7 +382,7 @@ $(document).on("click", "#db-config-submit, #sql-existing-db-submit", function (
                     else {
                         $("#sql-existing-db-submit").show().prop("disabled", false);
                     }
-                   
+
                     errorContent = result.Data.value;
                     $(id).closest('div').addClass("e-error");
                     $(id).closest(".e-outline").siblings(".startup-validation").html(databaseValidationMessage).show();
@@ -545,7 +545,7 @@ function onDatbaseChange(args) {
             $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
             $(".content-display").hide();
             $(".show-sql-content").slideDown("slow");
-            
+
             if (!isSiteCreation) {
                 prefillDbNames();
             }
@@ -582,7 +582,7 @@ function onDatbaseChange(args) {
             $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
             $(".content-display").hide();
             $(".show-sql-content").slideDown("slow");
-           
+
             if (!isSiteCreation) {
                 prefillDbNames();
             }
@@ -601,7 +601,7 @@ function onDatbaseChange(args) {
 
             break;
     }
-        $("#new-db").prop("checked", true).trigger("change");
+    $("#new-db").prop("checked", true).trigger("change");
 
     if (getRadioButtonValue("databaseType") == "1") {
         $("#sql-existing-db-submit, .sql-server-existing-db").show();
@@ -632,7 +632,7 @@ function onDatbaseChange(args) {
                 break;
         }
     }
- 
+
     addPlacehoder("#system-settings-db-selection-container");
     changeFooterPostion();
 };
@@ -698,3 +698,13 @@ function removeError() {
     $(".validation-txt-errors").hide();
     $(".database-error").hide();
 }
+
+$(document).on("change", "#existing-db", function () {
+    $(".data-store-hide").removeClass("show").addClass("hidden");
+    $(".data-store-existing-db-hide").removeClass("hidden").addClass("show");
+});
+
+$(document).on("change", "#new-db", function () {
+    $(".data-store-hide").removeClass("hidden").addClass("show");
+    $(".data-store-existing-db-hide").removeClass("show").addClass("hidden");
+});

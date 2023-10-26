@@ -49,7 +49,6 @@ var excludedSearchKeys = [
 ];
 
 $(document).ready(function () {
-    setClientLocaleCookie("boldservice.client.locale", 365);
     createWaitingPopup('body');
     createWaitingPopup('server-app-container');
     createWaitingPopup('content-area');
@@ -751,7 +750,7 @@ function IsEmail(email) {
 }
 
 function UsernameValidation(username) {
-    var filter = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){1,252}[a-zA-Z0-9]$/;
+    var filter = /^(?:(?!\.{2}|_{2}|-{2})[\p{L}\p{N}0-9_.-]+@[\p{L}\p{N}\-]+(\.[\p{L}\-]+)*|[\p{L}\p{N}0-9_.-]+)$/u;
     if (filter.test(username)) {
         return true;
     }
@@ -1044,15 +1043,12 @@ function getUrlQueryVariable(url, variable) {
     return null;
 }
 
-function setClientLocaleCookie(name, exdays) {
-    var value = {
-        Locale: navigator.language,
-        TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    };
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays++);
-    var cookie_value = escape(JSON.stringify(value)) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
-    document.cookie = name + "=" + cookie_value + ";path=/";
+function SetHttpOnlyCookie(cookieName, cookieValue, expires, isCookiePathRequired) {
+    $.ajax({
+        type: "POST",
+        url: setCookieHttpOnlyUrl,
+        data: { cookieName: cookieName, cookieValue: cookieValue, expires: expires, isCookiePathRequired: isCookiePathRequired }
+    });
 }
 
 function profileDisplayNameSelection() {

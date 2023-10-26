@@ -24,7 +24,7 @@
                             <input type="radio" id="specific-permission" class="css-radio" value="specific-permission" name="permissionType" ng-click="onClickSpecificResource(true)">
                             <label for="specific-permission" class="app-textbox-label radio-label"><span class="text">[[[Specific Resources]]]</span></label>
                         </div>
-                    @if (isAdmin)
+                    @if (isAdmin && ServerAppConfig.IsSelfHosted)
                     {
                                 <div class="all-permission select-permission all-permission-settings">
                                     <input type="radio" id="all-permission-settings" class="css-radio" value="all-permission-settings" name="permissionType" ng-click="onClickAllSettings(true)">

@@ -788,6 +788,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             position: '标题位置'
         },
         axis: {
+            axisType: '轴类型',
             booleanPropertyLabel: '启用轴',
             title: '轴标题',
             alignment: '对准',
@@ -915,6 +916,15 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                         barLabelStyle: '酒吧标签样式',
                         smartLabelStyle: '标签样式'
                     }
+                }
+            },
+            axisSettings: {
+                categoryName: '轴设置',
+                categoryAxis: '类别',
+                valueAxis: '价值',
+                axisTypes: {
+                    primary: '基本的',
+                    secondary: '中学'
                 }
             },
             link: '链接',
@@ -1878,7 +1888,9 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 serverName: '服务器名称',
                 savePassword: '保存密码',
                 database: '数据库',
-                advanceSwitch: '高级选项'
+                advanceSwitch: '高级选项',
+                encrypt: '加密',
+                trustserver: '信任服务器证书'
             },
             advanceOption: {
                 connectionString: '连接字符串',
@@ -2435,10 +2447,10 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 headerText: '出口',
                 contentText: '选择导出的文件格式。',
                 Pdf: 'PDF',
-                Excel: '高强',
-                Word: '字',
+                Excel: 'Excel',
+                Word: 'Word',
                 Html: 'HTML',
-                PPT: '幻灯片',
+                PPT: 'PowerPoint',
                 CSV: 'CSV',
                 XML: 'XML'
             },

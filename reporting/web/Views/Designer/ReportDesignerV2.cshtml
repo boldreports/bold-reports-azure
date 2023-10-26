@@ -356,6 +356,7 @@
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
+        var enableReportPart = true;
 
         if(isEdit === "true"){
             isEditReport = true;
@@ -430,6 +431,7 @@
                 reportServerUrl: "@reportServerApiUrl",
                 create: $.proxy(controlInitialized, this),
                 reportSaved: $.proxy(reportSaved, this),
+                reportPartSaved: $.proxy(draftReportPart, this),
                 serviceAuthorizationToken: designerToken,
                 toolbarSettings: {
                     items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.New
@@ -454,7 +456,8 @@
                     customLinks: window.customLinks,
                     contactMail: 'support@boldreports.com'
                 },
-                enableImageBlobing: true
+                enableImageBlobing: true,
+                enableReportPart: enableReportPart
             };
 
             var designer = new boldReportDesigner($('#' + controlId), designerModel);
@@ -480,7 +483,7 @@
         }
 
         function addCustomFonts(fontFamily, fontFile) {
-            var customFontUrl = "@baseUrl/content/custom-fonts/" + fontFile;
+            var customFontUrl = encodeURI("@baseUrl/content/custom-fonts/" + fontFile);
             if (isFontFaceExist()) {
                 try {
                     const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
@@ -577,7 +580,7 @@
                 args.headers.push({ Key: 'ReportId', Value: reportId });
             }
             if (args.actionType === 'openServerReport' || args.actionType === 'saveServerReport'
-                || args.actionType === 'createServerReport' || args.actionType === 'CheckDraftReport') {
+                || args.actionType === 'createServerReport' || args.actionType === 'HasDraftReport') {
                 var reportServerData = {
                     'category': categoryName,
                     'categoryId': categoryId,
@@ -593,7 +596,7 @@
                 args.data = reportServerData;
             }
 
-            if (args.actionType === 'AutoDraftReport') {
+            if (args.actionType === 'CreateDraftReport') {
                 $('#' + controlId + '_design_header_draft_icon').removeClass('e-designer-draft-status-success').addClass('e-designer-draft-status-progress');
                 $('#' + controlId + '_design_header_draft_status').text("[[[Saving draft...]]]");
             }
@@ -609,6 +612,11 @@
 
         function formSubmit(args) {
             isSubmit = false;
+        }
+
+        function draftReportPart(args) {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            designer.notifyChange();
         }
 
         function reportSaved(args) {
@@ -711,10 +719,25 @@
         }
 
         boldReportDesigner.prototype.keyDownSaveAction = function () {
-            browseReport(true);
+            publishReport(true);
         }
 
-        function browseReport(isPublish) {
+        function publishAction(args) {
+            if (args && args.name === 'click') {
+                this.publishReport(true);
+            } else if (args && args.name === 'select' && args.item && args.item.value === 'report') {
+                this.publishReport(false);
+            } else if (args && args.name === 'select' && args.item && args.item.value === 'reportpart') {
+                this.publishReportPart();
+            }
+        }
+
+        function publishReportPart() {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            designer.showReportPartPublish();
+        }
+
+        function publishReport(isPublish) {
             var designer = $('#' + controlId).data('boldReportDesigner');
             var tagInfo = { tags: tags, selectedTags: selectedTags };
             var proxy = this;
@@ -890,10 +913,14 @@
             var toggleTag = onToggleInitialize();
             divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer, toggleTag);
 
+            var items = [{ text: 'Publish As', value: 'report' }];
+            if (enableReportPart) {
+                items.push({ text: 'Publish Report Part', value: 'reportpart' });
+            }
             var splitButton = new ejs.splitbuttons.SplitButton({
-                items: [{ text: 'Publish As' }], content: 'Publish',
-                click: $.proxy(browseReport, this, true),
-                select: $.proxy(browseReport, this, false)
+                items: items, content: 'Publish',
+                click: $.proxy(publishAction, this),
+                select: $.proxy(publishAction, this)
             });
             splitButton.appendTo(publishBtn[0]);
 
