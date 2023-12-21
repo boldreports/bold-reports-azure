@@ -2796,6 +2796,26 @@ ej.ReportDesigner.Locale['fr-CA'] = {
             Line: 'Élément de rapport de ligne',
             Subreport: 'Sous-élément de rapport'
         },
+        reportParameter: {
+            operators: {
+                equals: 'Équivaut à',
+                notEqualTo: 'Pas égal à',
+                lessThan: 'Moins que',
+                greaterThan: 'Plus grand que',
+                lessOrEqual: 'Inférieur ou égal',
+                greaterOrEqual: 'Supérieur ou égal',
+                contains: 'Contient',
+                doesNotContain: 'Contient pas de',
+                startsWith: 'Commence avec',
+                endsWith: 'Se termine par',
+                is: 'Est',
+                isNot: 'Nest pas',
+                in: 'Dans',
+                notIn: 'Pas dedans',
+                between: 'Entre',
+                relative: 'Relatif'
+            }
+        },
         selectAll: 'Tout sélectionner',
         viewButton: 'Voir le rapport',
         parameterBlock: 'Parameter Block',

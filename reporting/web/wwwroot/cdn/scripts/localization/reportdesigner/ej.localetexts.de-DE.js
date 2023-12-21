@@ -2800,6 +2800,26 @@ ej.ReportDesigner.Locale['de-DE'] = {
             Line: 'Werbebuchungsposten',
             Subreport: 'Unterberichtsartikel'
         },
+        reportParameter: {
+            operators: {
+                equals: 'Gleich',
+                notEqualTo: 'Nicht gleichzusetzen mit',
+                lessThan: 'Weniger als',
+                greaterThan: 'Größer als',
+                lessOrEqual: 'Weniger oder gleich',
+                greaterOrEqual: 'Größer oder gleich',
+                contains: 'Enthält',
+                doesNotContain: 'Nicht enthalten',
+                startsWith: 'Beginnt mit',
+                endsWith: 'Endet mit',
+                is: 'Ist',
+                isNot: 'Ist nicht',
+                in: 'In',
+                notIn: 'Nicht in',
+                between: 'Zwischen',
+                relative: 'Relativ'
+            }
+        },
         selectAll: 'Wählen Sie Alle',
         viewButton: 'Zeige Bericht',
         parameterBlock: 'Parameterblock',
@@ -4164,7 +4184,9 @@ ej.ReportDesigner.Locale['de-DE'] = {
         nameWaterMark: 'Parametername',
         valueWaterMark: 'Wert',
         closeToolTip: 'Schließen',
-        deleteField: 'Feld löschen'
+        deleteField: 'Feld löschen',
+        allowMultiple: 'Mehrere Werte zulassen',
+        allowNull: 'Erlaubt einen Nullwert'
     },
     queryDesigner: {
         storeParameter: {

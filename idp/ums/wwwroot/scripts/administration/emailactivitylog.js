@@ -45,6 +45,7 @@ $(document).ready(function () {
         if (location.href.match(/logs/)) {
             $("#email-logs-tab").tab("show");
             $("#email-settings").hide();
+            $(".email-settings-option").hide();
             var query = (window.location.search).toString();
             if (query != "?view=logs") {
                 history.pushState(null, '', '?view=logs');
@@ -54,28 +55,29 @@ $(document).ready(function () {
         else {
             $("#email-settings-tab").tab("show");
             $("#logs").hide();
+            $(".email-settings-option").show();
             var query = (window.location.search).toString();
             if (query != "?view=email-settings") {
                 history.pushState(null, '', '?view=email-settings');
             }
         }
-        
     }
-
 
     $("a[data-toggle='tab']").on('click', function (e) {
         if ($(this).attr("id") == "email-logs-tab") {
             $("#logs").show();
             $("#email-settings").hide();
+            $(".email-settings-option").hide();
             var query = (window.location.search).toString();
             if (query != "?view=logs") {
                 history.pushState(null, '', '?view=logs');
             }
             emailActivityLogGrid();
         }
-        else if ($(this).attr("id") == "email-settings-tab"){
+        else if ($(this).attr("id") == "email-settings-tab") {
             $("#email-settings").show();
             $("#logs").hide();
+            $(".email-settings-option").show();
                 var query = (window.location.search).toString();
             if (query != "?view=email-settings") {
                 history.pushState(null, '', '?view=email-settings');
@@ -137,10 +139,11 @@ function emailActivityLogGrid() {
 
 $(document).on("click", "#apply-button", function () {
     setTimpickerValue();
-    var dateRange = $("#datePicker").val().split('-');
-    var startDate = $.trim(dateRange[0]) != "" ? $.trim(dateRange[0]) + " " + emailLogStartDateTime : "";
-    var endDate = $.trim(dateRange[1]) != "" ? $.trim(dateRange[1]) + " " + emailLogEndDateTime : "";
-     var eventType = document.getElementById("email-event").ej2_instances[0].value;
+    var startDateRange = document.getElementById("datePicker").ej2_instances[0].startValue != null ? document.getElementById("datePicker").ej2_instances[0].startValue.toLocaleDateString('en-US') : "";
+    var endDateRange = document.getElementById("datePicker").ej2_instances[0].endValue != null ? document.getElementById("datePicker").ej2_instances[0].endValue.toLocaleDateString('en-US') : "";
+    var startDate = startDateRange != "" ? startDateRange + " " + emailLogStartDateTime : "";
+    var endDate = endDateRange != "" ? endDateRange + " " + emailLogEndDateTime : "";
+    var eventType = document.getElementById("email-event").ej2_instances[0].value;
     var gridObj = document.getElementById("emailActivityLogGrid").ej2_instances[0];
     var emaildata = new ej.data.DataManager({ url: filterEmailLogsUrl + "?startDate=" + startDate + "&endDate=" + endDate + "&eventType=" + eventType, adaptor: new ej.data.UrlAdaptor() });
     gridObj.dataSource = emaildata;

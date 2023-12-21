@@ -328,6 +328,26 @@ ej.ReportViewer.Locale["tr-TR"] = {
         RVERR0014: 'Parametreler boş olamaz',
         RVERR0015: 'parametre adları için gereken değer',
     },
+    reportParameter: {
+        operators: {
+            equals: 'eşittir',
+            notEqualTo: 'Eşit değil',
+            lessThan: 'Daha az',
+            greaterThan: 'daha büyük',
+            lessOrEqual: 'Daha az veya eşit',
+            greaterOrEqual: 'Daha büyük veya eşit',
+            contains: 'içerir',
+            doesNotContain: 'Dahil değil',
+            startsWith: 'İle başlar',
+            endsWith: 'ile biter',
+            is: 'Dır-dir',
+            isNot: 'Değil',
+            in: 'İçinde',
+            notIn: 'Değil',
+            between: 'Arasında',
+            relative: 'Akraba'
+        }
+    },
     selectAll: 'Hepsini seç',
     viewButton: "Raporu görüntüle",
     parameterProcessingMessage: 'Laddar beroende parametrar ...',

@@ -2800,6 +2800,26 @@ ej.ReportDesigner.Locale['it-IT'] = {
             Line: 'Elemento del rapporto di linea',
             Subreport: 'Voce di report secondario'
         },
+        reportParameter: {
+            operators: {
+                equals: 'Equivale',
+                notEqualTo: 'Non uguale a',
+                lessThan: 'Meno di',
+                greaterThan: 'Più grande di',
+                lessOrEqual: 'Minore o uguale',
+                greaterOrEqual: 'Maggiore o uguale',
+                contains: 'Contiene',
+                doesNotContain: 'Non contenere',
+                startsWith: 'Inizia con',
+                endsWith: 'Finisce con',
+                is: 'È',
+                isNot: 'Non è',
+                in: 'Nella',
+                notIn: 'Non in',
+                between: 'Fra',
+                relative: 'Parente'
+            }
+        },
         selectAll: 'Seleziona tutto',
         viewButton: 'Visualizza rapporto',
         parameterBlock: 'Blocco parametri',
@@ -4165,7 +4185,9 @@ ej.ReportDesigner.Locale['it-IT'] = {
         nameWaterMark: 'Nome parametro',
         valueWaterMark: 'Valore',
         closeToolTip: 'Vicina',
-        deleteField: 'Elimina campo'
+        deleteField: 'Elimina campo',
+        allowMultiple: 'Consenti più valori',
+        allowNull: 'Consente valore nullo'
     },
     queryDesigner: {
         storeParameter: {

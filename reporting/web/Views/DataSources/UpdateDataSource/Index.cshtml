@@ -7,7 +7,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
-    var reportServerApiUrl = new DashboardServerApiEndPoints(globalAppSettings).BoldReportsApiUrl();
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
@@ -39,6 +39,8 @@
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/update-datasource.css" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/update-datasource-dependent.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.js"></script>
@@ -50,6 +52,8 @@
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/update-datasource.min.css" />
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/update-datasource-dependent.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.min.js"></script>
@@ -87,6 +91,8 @@
         <script type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/update-datasource-dependent.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.js"></script>
@@ -97,6 +103,8 @@
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/update-datasource-dependent.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.min.js"></script>

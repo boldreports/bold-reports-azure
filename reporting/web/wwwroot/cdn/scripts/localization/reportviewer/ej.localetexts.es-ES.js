@@ -371,6 +371,26 @@ ej.ReportViewer.Locale["es-ES"] = {
         RVERR0014: 'Los parámetros no pueden estar en blanco',
         RVERR0015: 'El valor requerido para los nombres de parámetros de',
     },
+    reportParameter: {
+        operators: {
+            equals: 'igual',
+            notEqualTo: 'No igual a',
+            lessThan: 'Menos que',
+            greaterThan: 'Mas grande que',
+            lessOrEqual: 'menor o igual',
+            greaterOrEqual: 'Mayor o igual',
+            contains: 'Contiene',
+            doesNotContain: 'No contiene',
+            startsWith: 'Comienza con',
+            endsWith: 'Termina con',
+            is: 'Es',
+            isNot: 'No es',
+            in: 'En',
+            notIn: 'No en',
+            between: 'Entre',
+            relative: 'Relativo'
+        }
+    },
     selectAll: "Seleccionar todo",
     viewButton: "Vista del informe",
     parameterProcessingMessage: 'Cargando parámetros dependientes ...',

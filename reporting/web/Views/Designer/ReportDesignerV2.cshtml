@@ -44,6 +44,7 @@
     var cdnDomain = GlobalAppSettings.CdnDomain;
     var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
     var userId = _identityResponse.User.UserId;
+    var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -58,6 +59,7 @@
     {
         <title>Untitled - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     @if (ServerAppConfig.IsSelfHosted)
     {
         <environment include="Development,CloudDevelopment">
@@ -87,6 +89,7 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
@@ -96,6 +99,7 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
@@ -240,6 +244,15 @@
         .e-designer-header :-ms-input-placeholder {
             font-style: normal !important;
         }
+
+        .e-designer-header .e-control.e-tooltip,
+        .e-designer-header .e-switch-wrapper.e-wrapper,
+        .e-designer-header .e-switch-wrapper .e-switch,
+        .e-designer-header .e-switch-wrapper .e-switch-on,
+        .e-designer-header .e-switch-wrapper .e-switch-off,
+        .e-designer-header .e-control.e-btn {
+            font-family: var(--report-designer-font, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', 'Arial') !important;
+        }
     </style>
 
     @if (!ServerAppConfig.IsCustomThemeForMenu)
@@ -357,6 +370,8 @@
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
         var enableReportPart = true;
+        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
 
         if(isEdit === "true"){
             isEditReport = true;
@@ -1159,7 +1174,5 @@
         Html.RenderPartial("~/Views/Shared/_DesignerTour.cshtml");
         @Scripts.Render("~/bundles/scripts/reports-tour")
     }*@
-
-    @await Html.PartialAsync("../Items/_AddCategory", new ViewDataDictionary(ViewData) { { "IsReportDesigner", true } });
 </body>
 </html>

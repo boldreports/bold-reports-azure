@@ -11,6 +11,10 @@
             padding: 28% 0% 20% 25%;
             font-size: 14px;
         }
+
+        .search-margin{
+            margin-bottom: 15px !important;
+        }
     }
 
     #application-tab {
@@ -36,9 +40,40 @@
         }
     }
 
-    #custom-attribute-tab, #data-security-tab {
+    #custom-attribute-tab, #data-security-tab, .user-attributes-content {
         #add-custom-attribute, .application-isolation-code {
             margin-bottom: 20px;
+        }
+    }
+
+    #site-settings-tab {
+        .admin-page-body {
+            .site-settings {
+                padding: 20px 20px 15px 20px;
+
+                .switch-padding {
+                    padding-top: 20px;
+                    margin-left: 30px;
+                }
+
+                .settings-info {
+                    color: $info-text-color;
+                    padding-left: 5px;
+                }
+            }
+
+            .e-checkbox-wrapper .e-frame {
+                height: 16px;
+                width: 16px;
+            }
+
+            label {
+                padding-left: 5px;
+            }
+        }
+
+        #update-tenant-settings {
+            width: 90px !important;
         }
     }
 
@@ -105,4 +140,25 @@
 
 #master-site-change{
     line-height:5px;
+}
+
+.e-popup .e-checkbox-wrapper .e-frame.e-check, .e-popup .e-checkbox-wrapper:hover .e-css.e-checkbox-wrapper .e-frame.e-check {
+    background-color: $primary-button-bg-normal-color;
+    color: $white;
+}
+
+.e-input-group:not(.e-float-icon-left):not(.e-float-input)::before, .e-input-group:not(.e-float-icon-left):not(.e-float-input)::after {
+    background-color: transparent !important;
+}
+
+.e-checkbox-wrapper .e-frame.e-check {
+    background-color: $primary-button-bg-normal-color !important;
+    border: 1px solid $primary-button-border-normal-color;
+    color: $primary-button-text-normal-color !important;
+}
+
+.e-custom.e-non-float:not(.e-popup-open) {
+    height: 32px !important;
+    font-family: var(--font-family) !important;
+    font-size: 14px !important;
 }

@@ -327,6 +327,26 @@ ej.ReportViewer.Locale["fr-CA"] = {
         RVERR0014: 'Les paramètres ne peuvent pas être vides',
         RVERR0015: 'Veuillez entrer des valeurs pour les paramètres',
     },
+    reportParameter: {
+        operators: {
+            equals: 'Équivaut à',
+            notEqualTo: 'Pas égal à',
+            lessThan: 'Moins que',
+            greaterThan: 'Plus grand que',
+            lessOrEqual: 'Inférieur ou égal',
+            greaterOrEqual: 'Supérieur ou égal',
+            contains: 'Contient',
+            doesNotContain: 'Contient pas de',
+            startsWith: 'Commence avec',
+            endsWith: 'Se termine par',
+            is: 'Est',
+            isNot: 'Nest pas',
+            in: 'Dans',
+            notIn: 'Pas dedans',
+            between: 'Entre',
+            relative: 'Relatif'
+        }
+    },
     selectAll: "Tout s閘ectionner",
     viewButton: "Voir le rapport",
     parameterProcessingMessage: 'Chargement des paramètres dépendants ...',

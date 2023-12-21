@@ -7,6 +7,7 @@
     </div>
     <div class="dataset-form-container">
         <form action="@Url.Action("DatasetDesigner", "Reports")" class="dataset-form" method="POST" target="_blank">
+            @Html.AntiForgeryToken()
             <table unselectable="on" class="dataset-form-name-container">
                 <tr>
                     <td><label class="e-designer-title-label">DataSet Name</label></td>

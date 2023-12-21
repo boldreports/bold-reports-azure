@@ -97,6 +97,11 @@
                     url: "@Url.Action("SearchActiveDirectoryUsers", "UserManagement")",
                     adaptor: new ej.UrlAdaptor()
                 });
+                if (typeof ej != "undefined" && typeof ej.UrlAdaptor != "undefined") {
+                    ej.UrlAdaptor.prototype.beforeSend = function (dm, request) {
+                        request.setRequestHeader("X-XSRF-TOKEN", extractXSRFTokenFromCookie());
+                    };
+                }
                 </text>
                 }
                 else
@@ -106,6 +111,11 @@
                     url: "@Url.Action("SearchAzureADUsers", "UserManagement")",
                     adaptor: new ej.UrlAdaptor()
                 });
+                if (typeof ej != "undefined" && typeof ej.UrlAdaptor != "undefined") {
+                    ej.UrlAdaptor.prototype.beforeSend = function (dm, request) {
+                        request.setRequestHeader("X-XSRF-TOKEN", extractXSRFTokenFromCookie());
+                    };
+                }
                 </text>
                 }
                 ej.support.stableSort = false;

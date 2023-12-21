@@ -47,7 +47,19 @@
                     <div class="suspended-page-title">
                         Suspended
                     </div>
-                    <div class="suspended-page-content">Subscription to the Reports has been suspended. Please contact your System Administrator for more details.</div>
+                    <div class="suspended-page-content">
+                        [[[Subscription to the reports have been suspended.]]]
+                        @if (!ServerAppConfig.IsSelfHosted)
+                        {
+                            <div>
+                                @Html.Raw(string.Format("[[[If you are a subscription administrator for {0}, you can activate your suspended site {1}here.]]]", globalAppSettings.SystemSettings.OrganizationName, "<a href='" + ServerAppConfig.AppSettings.EndPoints.TenantAppUrl + "sites/" + _globalAppSettings.SystemSettings.TenantId + "/subscription' class='redirect-link' target='_blank'>"))
+                            </div>
+                        }
+                        else
+                        {
+                            <div>[[[Please contact your System Administrator for more details.]]]</div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

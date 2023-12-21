@@ -23,6 +23,7 @@
     var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var canCreateComments = false;
+    var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -93,6 +94,7 @@
         var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
         var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
         var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
+        var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
         var reportServerApiUrl = "@reportServerApiUrl";
         var filterQuery = "@filterQuery";
         var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
@@ -116,6 +118,7 @@
         var enableViews = @Json.Serialize(enableViews);
         var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
         var isMobile = @Json.Serialize(isMobile);
+        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
     </script>
 
     <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
@@ -137,7 +140,7 @@
             <div id="report_viewer_v2_toolbar">
                 <span class="su-edit-tailwind" id="report_viewer_v2_edit" onclick="editReport()"></span>
             </div>
-        } 
+        }
     </div>
 
     <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">

@@ -8,6 +8,7 @@
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var isAdmin = _identityResponse.IsAdmin;
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
+    var passwordPolicy = ServerAppConfig.PasswordPolicy;
 }
 
 @section scripts{
@@ -42,6 +43,11 @@
         var isPresentEmailId = "@Url.Action("IsPresentEmailId", "UserManagement")";
         var isUsernameExistsUrl = "@Url.Action("IsUsernameExists", "UserManagement")";
         var isEmailRequired = "@isEmailRequired";
+        var minimumLength = "@passwordPolicy.MinimumLength";
+        var lowerCaseRequired = "@passwordPolicy.LowerCaseRequired";
+        var upperCaseRequired = "@passwordPolicy.UpperCaseRequired";
+        var numberRequired = "@passwordPolicy.NumberRequired";
+        var specialCharactersRequired = "@passwordPolicy.SpecialCharactersRequired";
         serverApp.controller("GroupEditController", function ($scope) {
             $scope.selectedRow = 1;
             $scope.page = 0;

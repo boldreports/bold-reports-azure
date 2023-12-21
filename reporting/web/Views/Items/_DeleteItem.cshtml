@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
     var itemType = (ItemType)Model.Value;
-    var itemTypeName = itemType.ToString().ToLower() == "datasource" ? "[[[Data Source]]]" : itemType.ToString();
+    var itemTypeName = itemType.ToString().ToLower() == "datasource" ? "[[[Data Source]]]" : itemType == ItemType.ReportPart ? "[[[Report Part]]]" : itemType.ToString();
 }
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
@@ -42,6 +42,10 @@
             @if (itemType == ItemType.Slideshow)
             {
             <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-slideshow" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
+            }
+            else if (itemType == ItemType.ReportPart)
+            {
+                    <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-report-part" data-item-id="@ViewData["ItemId"]" data-item-name="@ViewData["ItemName"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
             }
             else
             {

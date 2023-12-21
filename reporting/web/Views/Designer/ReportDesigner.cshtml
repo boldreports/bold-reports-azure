@@ -44,6 +44,7 @@
     var cdnDomain = GlobalAppSettings.CdnDomain;
     var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
     var userId = _identityResponse.User.UserId;
+    var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -58,6 +59,7 @@
     {
         <title>Untitled - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     @if (ServerAppConfig.IsSelfHosted)
     {
         <environment include="Development,CloudDevelopment">
@@ -102,6 +104,7 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
@@ -112,6 +115,7 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
@@ -211,7 +215,7 @@
         }
 
         #messageBox_wrapper {
-            height: 200px !important;
+            height: 150px !important;
         }
 
         .message-content {
@@ -465,6 +469,8 @@
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
+        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
 
         if(isEdit === "true"){
             isEditReport = true;
@@ -756,7 +762,7 @@
         function reportOpened() {
             if (hasReportPart()) {
                 var designer = $('#' + controlId).data('boldReportDesigner');
-                designer.getInstance('ReportUtil').ejAlertDialog('Report Part', 'The report \'' + reportName + '\' designed in Report Designer 2.0 and it contains report parts. If you publish the report in Report Designer 1.0, then you will loss the report parts mapping information', false, true, false, '');
+                designer.getInstance('ReportUtil').ejAlertDialog('Report Part', 'The report \'' + reportName + '\' was designed in Report Designer 2.0 and contains report parts. If you publish the report in Report Designer 1.0, you will loss the report parts mapping information.', false, true, true, '');
             }
         }
 
@@ -1275,11 +1281,11 @@
     <div id="designer-loading-icon" style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%"></div>
     @if (ViewBag.isEdit)
     {
-        <div id="messageBox">
+        <div id="messageBox" style="display:none">
             <div class="message-header"></div>
             <div class="message-box-close"></div>
             <div class="message-content text-center"></div>
-            <div class="message-box-btn-holder" style="display:none"></div>
+            <div class="message-box-btn-holder"></div>
         </div>
     }
     @*@if (showTour)
@@ -1288,7 +1294,5 @@
         Html.RenderPartial("~/Views/Shared/_DesignerTour.cshtml");
         @Scripts.Render("~/bundles/scripts/reports-tour")
     }*@
-
-    @await Html.PartialAsync("../Items/_AddCategory", new ViewDataDictionary(ViewData) { { "IsReportDesigner", true } });
 </body>
 </html>

@@ -205,6 +205,14 @@ $(document).ready(function () {
     });
 
     dropDownList.appendTo("#download-logs-dialog-dropdown");
+    var UserNameElement = $(".top-menu-user-name .top-menu-user-name-style:first").text();
+    var UserEmailElement = $(".top-menu-user-name .top-menu-user-email-style:first").text();
+    if (UserNameElement.length > 21 || UserEmailElement.length > 25) {
+        $(".top-menu-profile-hover").attr("title", "<span class='tooltip-row'>" + UserNameElement + "</span><span class='tooltip-row'>" + UserEmailElement + "</span>");
+        $(".top-menu-profile-hover").tooltip({
+            html: true,
+        });
+    }
 });
 
 $(document).on("click", "#download-log", function () {
@@ -1121,6 +1129,10 @@ function copyToClipboard(inputId, buttonId) {
         if (buttonId == "#api-copy-client-secret" || buttonId == "#copy-client-secret") {
             copyText.attr("type", "password");
         }
+
+        if (inputId === "#copy-recovery") {
+            $("#copy-recovery").css("display", "none");
+        }
     }
     else {
         var copyText = $(inputId);
@@ -1128,6 +1140,10 @@ function copyToClipboard(inputId, buttonId) {
         document.execCommand("copy");
         if (buttonId == "#api-copy-client-secret" || buttonId == "#copy-client-secret") {
             copyText.attr("type", "password");
+        }
+
+        if (inputId === "#copy-recovery") {
+            $("#copy-recovery").css("display", "none");
         }
     }
     setTimeout(function () {
@@ -1210,4 +1226,10 @@ $(document).on("click", "#copy-error-area", function (e) {
     $("#copy-error-area").attr("data-original-title", window.Server.App.LocalizationContent.Copied);
     $("#copy-error-area").tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.Copied).tooltip("fixTitle").tooltip("show");
     setTimeout(function () { $("#copy-error-area").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy); $("#copy-error-area").tooltip(); }, 3000);
+});
+
+$('body').on('click', 'a', function () {
+    if (enableSameTabLinkTarget && $(this).attr('href') !== undefined && !($(this).attr("href").includes("redirect.boldbi.com"))) {
+        $(this).attr("target", "_self");
+    }
 });

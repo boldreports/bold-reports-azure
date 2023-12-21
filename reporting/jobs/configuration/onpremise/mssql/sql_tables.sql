@@ -89,6 +89,7 @@ CREATE TABLE [BOLDRS_UserPreference](
 	[Notifications] [nvarchar](4000) NULL,
 	[ViewerFeatures] [nvarchar](4000) NULL,
 	[DesignerFeatures] [nvarchar](4000) NULL,
+	[ServerFeatures] [nvarchar](4000) NULL,
 	[ModifiedDate] [datetime] NOT NULL,
 	[IsActive] [bit] NOT NULL)
 ;
@@ -782,6 +783,18 @@ CREATE TABLE [BOLDRS_ReportPartLinkage](
 	[ModifiedById] [int] NOT NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[ModifiedDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL)
+;
+
+CREATE TABLE [BOLDRS_UserSession](
+	[Id] [uniqueidentifier] PRIMARY KEY NOT NULL,
+	[IdpReferenceId]  [uniqueidentifier] NOT NULL,
+	[SessionId]  [uniqueidentifier] NOT NULL,
+	[DirectoryTypeId] [int] NOT NULL,
+	[IpAddress] [nvarchar](255) NOT NULL,
+	[Browser] [nvarchar](255) NOT NULL,
+	[LoggedInTime] [datetime] NOT NULL,
+	[LastActive] [datetime] NULL,
 	[IsActive] [bit] NOT NULL)
 ;
 

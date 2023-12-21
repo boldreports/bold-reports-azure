@@ -5,7 +5,7 @@
     ViewBag.Title = "[[[Data Connectors]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     bool isSelfHosted = ServerAppConfig.IsSelfHosted;
     var language = CultureInfo.CurrentCulture.Name;
-    var boldReportsApiUrl = new DashboardServerApiEndPoints(globalAppSettings).BoldReportsApiUrl();
+    var boldReportsApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');

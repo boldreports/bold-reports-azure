@@ -2800,6 +2800,26 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             Line: 'Satır raporu öğesi',
             Subreport: 'Alt rapor öğesi'
         },
+        reportParameter: {
+            operators: {
+                equals: 'eşittir',
+                notEqualTo: 'Eşit değil',
+                lessThan: 'Daha az',
+                greaterThan: 'daha büyük',
+                lessOrEqual: 'Daha az veya eşit',
+                greaterOrEqual: 'Daha büyük veya eşit',
+                contains: 'içerir',
+                doesNotContain: 'Dahil değil',
+                startsWith: 'İle başlar',
+                endsWith: 'ile biter',
+                is: 'Dır-dir',
+                isNot: 'Değil',
+                in: 'İçinde',
+                notIn: 'Değil',
+                between: 'Arasında',
+                relative: 'Akraba'
+            }
+        },
         selectAll: 'Hepsini seç',
         viewButton: 'Raporu görüntüle',
         parameterBlock: 'Parametre Bloğu',
@@ -4165,7 +4185,9 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         nameWaterMark: 'Parametre adı',
         valueWaterMark: 'Değer',
         closeToolTip: 'Kapat',
-        deleteField: 'Alanı Sil'
+        deleteField: 'Alanı Sil',
+        allowMultiple: 'Birden fazla değere izin ver',
+        allowNull: 'Boş değere izin verir'
     },
     queryDesigner: {
         storeParameter: {

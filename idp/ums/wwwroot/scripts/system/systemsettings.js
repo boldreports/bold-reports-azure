@@ -85,9 +85,9 @@ $(document).ready(function () {
                 $("#label_txt-dbname").html(window.Server.App.LocalizationContent.DatabaseName);
                 $("#label_database-name").html(window.Server.App.LocalizationContent.DatabaseName);
             }
-            $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI.format("Embedded BI") : window.Server.App.LocalizationContent.DatabaseInfoReports.format("Enterprise Reporting"));
+            $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI.format(biProductname) : window.Server.App.LocalizationContent.DatabaseInfoReports.format(reportsProductname));
             if (!isSiteCreation) {
-                $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI3 : window.Server.App.LocalizationContent.DatabaseInfoReports2.format("Enterprise Reporting", "report"));
+                $(".db-name-info").html(isBoldBI ? window.Server.App.LocalizationContent.DatabaseInfoBI3 : window.Server.App.LocalizationContent.DatabaseInfoReports2.format(reportsProductname, "report"));
                 prefillDbNames();
             }
             $("#advanced_tab_db_name").hide();
@@ -520,11 +520,11 @@ function getDatabaseFormValues() {
 }
 
 
-function postSystemSettingsData(systemSettingsDetails, azuredetails, userName, tenantDetails, brandingType, isAddFromServer, userId) {
+function postSystemSettingsData(systemSettingsDetails, azuredetails, userName, tenantDetails, brandingType, isAddFromServer, userId, globalSettingsValues) {
     var userNameData = (userName != undefined && userName != null) ? JSON.stringify(userName) : $("#tenant-email").val();
     var tenantDetailsData = (tenantDetails != undefined && tenantDetails != null) ? JSON.stringify(tenantDetails) : null;
     var userIdValue = (userId != undefined && userId !=null) ? JSON.stringify(userId) : null;
-    setSystemSettingsData = { systemSettingsData: JSON.stringify(systemSettingsDetails), azureData: JSON.stringify(azuredetails), userName: userNameData, tenantDetails: tenantDetailsData, brandingType: brandingType, userIds: userIdValue };
+    setSystemSettingsData = { systemSettingsData: JSON.stringify(systemSettingsDetails), azureData: JSON.stringify(azuredetails), userName: userNameData, tenantDetails: tenantDetailsData, brandingType: brandingType, userIds: userIdValue, globalSettingsOptions: globalSettingsValues };
     $.ajax({
         type: "POST", url: setSystemSettingsUrl, data: setSystemSettingsData,
         success: function (setSystemSettingsResponse) {

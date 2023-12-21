@@ -13,7 +13,7 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
-    var reportServerApiUrl = new DashboardServerApiEndPoints(globalAppSettings).BoldReportsApiUrl();
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
@@ -50,9 +50,13 @@
         </environment>
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js"></script>
         </environment>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
@@ -101,9 +105,13 @@
 
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/server-core.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js"></script>
         </environment>
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>

@@ -42,39 +42,26 @@
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" />
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
         </environment>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-data.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-svg-base.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
-        <script type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
         <environment include="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -82,8 +69,8 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -102,36 +89,22 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
         </environment>
         <link href="@reportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
         </environment>
-        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
-        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
         <environment include="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
         </environment>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-base.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-pdf-export.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-data.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/common/ej2-svg-base.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-circulargauge.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-lineargauge.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/data-visualization/ej2-maps.min.js'></script>
-        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-popups.min.js"></script>
-        <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
-        <script type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportdesigner.min.js'></script>
         <environment include="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -139,8 +112,8 @@
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
-            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -267,7 +240,7 @@
                         & ~ej.QueryDesigner.ToolbarItems.Save & ~ej.QueryDesigner.ToolbarItems.InputDataSet
                 },
                 create: $.proxy(controlInitialization, this),
-                toolbarRendering: $.proxy(renderQueryToolbar, this),
+                toolbarRendering: $.proxy(renderEJ2ToolbarItems , this),
                 reportServerUrl: "@reportServerApiUrl",
                 serviceAuthorizationToken: designerToken,
                 locale: '@language',
@@ -279,6 +252,8 @@
         }
 
         function controlInitialization(args) {
+            var designer = $('#' + ctrlId).data('boldReportQueryDesigner');
+            designer.editType = 'shared';
             if (isEditReport) {
                 editDataSet(datasetName);
             } else {
@@ -286,27 +261,58 @@
             }
         }
 
-        function renderQueryToolbar(args) {
-            var toolbarTarget = $(args.target);
-            toolbarTarget.find('#' + ctrlId + '_table_edit_dataset').parent().css('display', 'none');
-            var $divsave = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
-            var saveButton = this.btnSaveTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Save and Exit]]]", {}, { id: ctrlId + '_query_save_btn' });
-            $divsave.append(saveButton);
-            toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divsave);
-            saveButton.ejButton({
-                width: '83px', showRoundedCorner: false, size: 'mini',
-                contentType: ej.ContentType.TextOnly, 'height': '25px',
-                'click': $.proxy(this.saveQueryDataSet, this)
-            });
-            var $divcancel = ej.buildTag('div', '', { 'margin': '1px 5px', 'float': 'left', 'display': 'inline-block', 'padding-top': '0.5px' }, {});
-            var cancelButton = this.btnCancelTag = ej.buildTag('button.e-reportdesigner-dataset-btn', "[[[Cancel]]]", {}, { id: ctrlId + '_query_cancel_btn' });
-            $divcancel.append(cancelButton);
-            toolbarTarget.find('#' + ctrlId + '_div_dataset_save').before($divcancel);
-            cancelButton.ejButton({
-                width: '78px', showRoundedCorner: false, size: 'mini',
-                contentType: ej.ContentType.TextOnly, 'height': '25px',
-                'click': $.proxy(this.cancelDataSet, this)
-            });
+        function renderEJ2ToolbarItems(args) {
+            if (args.action === 'beforeCreate') {
+                args.items.push({
+                    GroupName: 'customitems',
+                    GroupId: ctrlId + '_custom_group',
+                    Items: [
+                        {
+                            template: getTemplate('save', 'Save and Exit'),
+                            align: 'Right',
+                            overflow: 'Show',
+                            id: ctrlId + '_custom_toolbar_btn_save',
+                            htmlAttributes: {
+                                id: ctrlId + '_custom_toolbar_save',
+                                'aria-label': 'Save and Exit'
+                            }
+                        },
+                        {
+                            template: getTemplate('cancel', 'Cancel'),
+                            align: 'Right',
+                            overflow: 'Show',
+                            id: ctrlId + '_custom_toolbar_btn_cancel',
+                            htmlAttributes: {
+                                id: ctrlId + '_custom_toolbar_cancel',
+                                'aria-label': 'Cancel'
+                            }
+                        }
+                    ]
+                });
+            } else if (args.action === 'onCreate') {
+                var saveBtnTag = args.target.find('#' + ctrlId + '_custom_toolbar_btn_save');
+                var test = new ejs.buttons.Button({
+                    isPrimary: true,
+                    cssClass: 'e-medium'
+                });
+                test.appendTo(saveBtnTag[0]);
+                saveBtnTag[0].onclick = $.proxy(this.saveQueryDataSet, this);
+                var cancelBtnTag = args.target.find('#' + ctrlId + '_custom_toolbar_btn_cancel');
+                var test = new ejs.buttons.Button({
+                    cssClass: 'e-medium'
+                });
+                test.appendTo(cancelBtnTag[0]);
+                cancelBtnTag[0].onclick = $.proxy(this.cancelDataSet, this);
+            }
+        }
+
+        function getTemplate(itemType, btnText) {
+            var domElement = ej.buildTag(
+                'button.e-reportdesigner-dataset-btn',
+                btnText,
+                {},
+                { id: ctrlId + '_custom_toolbar_btn_' + itemType, type: 'button' });
+            return domElement[0].outerHTML;
         }
 
         function cancelDataSet() {
@@ -336,10 +342,10 @@
                         }
                     },
                     indicator: [function () {
-                        $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                        ejs.popups.showSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                     },
                     function () {
-                        $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                        ejs.popups.hideSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                     }]
                 });
             });
@@ -412,10 +418,10 @@
                     designer.newDataSet(selectData, dataSources);
                 },
                 indicator: [function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                    ejs.popups.showSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 },
                 function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                    ejs.popups.hideSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 }]
             });
         }
@@ -437,10 +443,10 @@
                     editSharedDataSet(dataSetName, dataSources);
                 },
                 indicator: [function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                    ejs.popups.showSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 },
                 function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                    ejs.popups.hideSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 }]
             });
         }
@@ -465,10 +471,10 @@
                     queryDesigner.editDataSet(ej.ReportUtil.decryptDatasetModel(args, queryDesigner), dataSources);
                 },
                 indicator: [function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').show();
+                    ejs.popups.showSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 },
                 function () {
-                    $('#' + ctrlId + '_div_designerArea').data('ejWaitingPopup').hide();
+                    ejs.popups.hideSpinner($('#' + ctrlId + '_div_designerArea')[0]);
                 }]
             });
         }

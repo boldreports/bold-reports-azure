@@ -82,6 +82,7 @@ CREATE TABLE BOLDRS_UserPreference(
 	Notifications varchar(4000) NULL,
 	DesignerFeatures varchar(4000) NULL,
 	ViewerFeatures varchar(4000) NULL,
+	ServerFeatures varchar(4000) NULL,
 	ModifiedDate timestamp NOT NULL,
 	IsActive smallint NOT NULL)
 ;
@@ -776,6 +777,18 @@ CREATE TABLE BOLDRS_ReportPartTypeInfo(
 	ModifiedById int NOT NULL,
 	CreatedDate timestamp NOT NULL,
 	ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL)
+;
+
+CREATE TABLE BOLDRS_UserSession(
+	Id uuid primary key NOT NULL,
+	IdpReferenceId uuid NOT NULL,
+	SessionId uuid NOT NULL,
+	DirectoryTypeId int NOT NULL DEFAULT 0,
+	IpAddress varchar(255) NULL,
+	Browser varchar(1024) NULL,
+	LoggedInTime timestamp NULL,
+	LastActive timestamp NULL,
 	IsActive smallint NOT NULL)
 ;
 	

@@ -2797,6 +2797,26 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             Line: '报告订单项',
             Subreport: '子报告项目'
         },
+        reportParameter: {
+            operators: {
+                equals: '等于',
+                notEqualTo: '不等于',
+                lessThan: '少于',
+                greaterThan: '比...更棒',
+                lessOrEqual: '小于或等于',
+                greaterOrEqual: '大于或等于',
+                contains: '包含',
+                doesNotContain: '不含',
+                startsWith: '以。。开始',
+                endsWith: '以。。结束',
+                is: '是',
+                isNot: '不是',
+                in: '在',
+                notIn: '不在',
+                between: '之间',
+                relative: '相对的'
+            }
+        },
         selectAll: '全选',
         viewButton: '查看报告',
         parameterBlock: '参数块',
@@ -4160,7 +4180,9 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         nameWaterMark: '参数名称',
         valueWaterMark: '值',
         closeToolTip: '关',
-        deleteField: '删除栏位'
+        deleteField: '删除栏位',
+        allowMultiple: '允许多个值',
+        allowNull: '允许空值'
     },
     queryDesigner: {
         storeParameter: {

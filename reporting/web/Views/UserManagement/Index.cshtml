@@ -10,6 +10,7 @@
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
     var isAdmin = _identityResponse.IsAdmin;
     var permissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
+    var passwordPolicy = ServerAppConfig.PasswordPolicy;
 }
 
 @section scripts{
@@ -42,6 +43,11 @@
         var isEmailRequired = "@isEmailRequired";
         var isAdmin = @Json.Serialize(isAdmin);
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var minimumLength = "@passwordPolicy.MinimumLength";
+        var lowerCaseRequired = "@passwordPolicy.LowerCaseRequired";
+        var upperCaseRequired = "@passwordPolicy.UpperCaseRequired";
+        var numberRequired = "@passwordPolicy.NumberRequired";
+        var specialCharactersRequired = "@passwordPolicy.SpecialCharactersRequired";
 
     </script>
     <script>

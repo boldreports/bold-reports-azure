@@ -329,6 +329,26 @@ ej.ReportViewer.Locale["zh-CN"] = {
         RVERR0014: '參數不能為空',
         RVERR0015: '參數名稱所需的值',
     },
+    reportParameter: {
+        operators: {
+            equals: '等于',
+            notEqualTo: '不等于',
+            lessThan: '少于',
+            greaterThan: '比...更棒',
+            lessOrEqual: '小于或等于',
+            greaterOrEqual: '大于或等于',
+            contains: '包含',
+            doesNotContain: '不含',
+            startsWith: '以。。开始',
+            endsWith: '以。。结束',
+            is: '是',
+            isNot: '不是',
+            in: '在',
+            notIn: '不在',
+            between: '之间',
+            relative: '相对的'
+        }
+    },
     selectAll: '全选',
     viewButton: "查看报告",
     parameterProcessingMessage: '加载相关参数......',

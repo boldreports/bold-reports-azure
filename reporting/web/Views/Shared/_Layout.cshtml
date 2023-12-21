@@ -70,6 +70,16 @@
             margin-left: -27px;
             margin-top: -27px;
         }
+
+        #session-time-dialog .e-dlg-header-content .e-btn .e-btn-icon.e-icon-dlg-close {
+            bottom: 3px !important;
+            right: 8px !important;
+            position: relative !important;
+        }
+
+        #session-time-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn{
+            bottom:5px !important
+        }
     </style>
 
     @if (!ServerAppConfig.IsCustomThemeForMenu)
@@ -250,9 +260,11 @@
         var feedbackSendUrl = "@Url.Action("AddUserFeedback", "Feedback")";
         var feedbackCookieUrl = "@Url.Action("SetUserFeedbackCookies", "FeedBack")";
         var createDatasourceIframeUrl = "@Url.Action("Connection", "DataSourceDesigner")";
+        var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
         var appBranding = "@GlobalAppSettings.Branding";
         var rootUrl = "@rootUrl";
         var rootUrlAction = "@rootUrl";
+        var canCheckSession = "@ServerAppConfig.IsSelfHosted";
     </script>
     @if (isMobile)
     {

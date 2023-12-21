@@ -25,6 +25,7 @@
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
     var isBlob = globalAppSettings.SystemSettings.StorageType;
+    var reportLayoutView = ViewBag.ReportLayoutView;
 }
 
 @section scripts{
@@ -45,6 +46,7 @@
 @section MainSection{
     <script>
         var getItemUrl = "@Url.Action("GetItems", "Reports")";
+        var getItemGridUrl = "@Url.Action("GetItemsGrid", "Reports")";
         var processOptionUrl = "@Url.Action("ProcessOptions", "reports")";
         var favoriteItemUrl = "@Url.Action("MakeFavorite", "items")";
         var getCategories = "@Url.Action("RefreshCategoryList", "Reports")";
@@ -84,6 +86,11 @@
         var reportparameterObj;
         var categoryList;
         var editReportAsXMLUrl = "@Url.Action("EditReportAsXML", "Designer")";
+        var updateReportLayoutViewUrl = "@Url.Action("UpdateReportLayoutView", "Reports")";
+        var getReportListUrl = "@Url.Action("GetReportPartList", "ReportPart")";
+        var reportPartDeleteUrl = "@Url.Action("DeleteReportPart", "ReportPart")";
+        var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
+        var reportLayoutView = @reportLayoutView;
         if ('@categories' != '') {
             categoryList =@Html.Raw(categories);
         }
@@ -122,6 +129,10 @@
                     <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.DraftItems)}" ng-click="setActive(@((int)DisplayCategory.DraftItems), '[[[Drafts]]]', $event)">
                         <span class="category-icon su su-draft"></span>
                         <span class="category-bar-header">[[[Drafts]]]</span>
+                    </li>
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.ReportParts)}" ng-click="setActive(@((int)DisplayCategory.ReportParts), '[[[Report Parts]]]', $event)">
+                        <span class="category-icon su su-report-part"></span>
+                        <span class="category-bar-header">[[[Report Parts]]]</span>
                     </li>
                     <li class="category-list">
                         <div class="col-xs-12 no-padding">
@@ -232,9 +243,9 @@
             </div>
             <div id="dashboard-list-panel" ng-show="!isMobile || !expandCatSec">
                 <div class="dashboard-action-container col-xs-12 no-padding">
-                    <div class="col-xs-5 col-lg-6 col-md-7 col-sm-10 no-padding category-info-container" ng-show="!isMobile">
+                    <div class="col-xs-5 col-lg-5 col-md-7 col-sm-10 no-padding category-info-container" ng-show="!isMobile">
                         <span class="col-xs-12 no-padding report-filter-module" ng-show="!showSearch">
-                            <ul class="report-filter-module ng-scope" ng-if="activeMenu !== 9 && activeMenu !== 2">
+                            <ul class="report-filter-module ng-scope" ng-if="activeMenu !== 9 && activeMenu !== 2 && activeMenu !== @((int)DisplayCategory.ReportParts)">
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.AllReports)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.AllReports))">
                                     <a class="dashboard-sort-options" href="javascript:void(0);">
                                         <i class="su su-all-dashboards"></i>
@@ -262,22 +273,43 @@
                             </ul>
                         </span>
                     </div>
-                    <div class="dashboard-dropdown-container col-xs-7 col-lg-6 col-md-5 col-sm-2 no-padding">
+                    <div class="dashboard-dropdown-container col-xs-7 col-lg-7 col-md-5 col-sm-2 no-padding">
+                        <div class="dashboard-view-container ng-hide" id="dashboard-view-dropdown" ng-if="activeMenu !== @((int)DisplayCategory.ReportParts)" ng-show="!showSearch && !isTablet">
+                            <span id="view-menu-border" class="dropdown-toggle" data-toggle="dropdown">
+                                <span title="Card View" ng-class="{'active-layout-view': reportLayoutView === @((int)ReportLayoutView.Card), 'inactive-layout-view': reportLayoutView !== @((int)ReportLayoutView.Card)}">
+                                    <span class="view-icon su-card"></span>
+                                    <span class="su-dropdown-arrow"></span>
+                                </span>
+                                <span title="Grid View" ng-class="{'active-layout-view': reportLayoutView === @((int)ReportLayoutView.Grid), 'inactive-layout-view': reportLayoutView !== @((int)ReportLayoutView.Grid)}">
+                                    <span class="view-icon su-grid"></span>
+                                    <span class="su-dropdown-arrow"></span>
+                                </span>
+                            </span>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-click="changeView(@((int)ReportLayoutView.Card))">
+                                    <a class="text" href="javascript:void(0);">
+                                        <span><i class="su-card"></i></span>
+                                        <span class="view-text">[[[Card View]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Grid)}" ng-click="changeView(@((int)ReportLayoutView.Grid))">
+                                    <a class="text" href="javascript:void(0);">
+                                        <i class="su-grid"></i>
+                                        <span class="view-text">[[[Grid View]]]</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="no-padding item-searchbox-container" ng-class="showSearch ? 'search-active' : ''">
                             <span ng-show="isTablet && !showSearch" ng-init="showSearch=false" ng-click="onMobileSearchClicked()" class="su su-search pull-right mobile-dashboard-search ng-hide"></span>
                             <div ng-show="!isTablet || showSearch" class="col-xs-3 no-padding item-searchbox-container">
                                 <div class="dashboard-search-area">
                                     <span class="su su-inner-close pull-right no-margin ng-hide" ng-show="dashboardSearchQuery != ''" ng-click="onDashboardSearchClear()" ng-class="isFocus ? 'active' : ''" data-html="true" title="<span class='clear-search-tooltip'>[[[Clear search]]]</span>" data-container="body" data-toggle="tooltip"></span>
                                     <span class="su su-search pull-right no-margin" ng-show="dashboardSearchQuery == ''" ng-class="isFocus ? 'active' : ''" title="[[[Search]]]" data-toggle="tooltip" data-container="body"></span>
-                                    <input type="text" id="dashboard-search-items" class="pull-right no-margin" ng-change="doDashboardSearch()" ng-model="dashboardSearchQuery" ng-focus="isFocus = true" ng-blur="onSearchFocusOut()" placeholder="[[[Search reports]]]" />
+                                    <input type="text" id="dashboard-search-items" class="pull-right no-margin" ng-change="doDashboardSearch()" ng-model="dashboardSearchQuery" ng-focus="isFocus = true" ng-blur="onSearchFocusOut()" placeholder="[[[Search]]]" />
                                 </div>
                             </div>
                         </div>
-                        <span class="text-right ng-hide" id="order" ng-show="isTablet && !showSearch" data-toggle="modal" data-target="#dashboard-sort-modal" data-container="body" ng-class="sortDirection == 'descending' ? 'descending':'ascending'">
-                            &nbsp;
-                            <span class="su su-sort-left"></span>
-                            <span class="su su-sort-right"></span>
-                        </span>
                         <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet">
                             <span class="dashboard-dropdown-label">[[[Sort]]]</span>
                             <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
@@ -292,7 +324,12 @@
                                     </optgroup>
                                 </select>
                             </div>
-                        </div> 
+                        </div>
+                        <span class="text-right ng-hide" id="order" ng-show="isTablet && !showSearch" data-toggle="modal" data-target="#dashboard-sort-modal" data-container="body" ng-class="sortDirection == 'descending' ? 'descending':'ascending'">
+                            &nbsp;
+                            <span class="su su-sort-left"></span>
+                            <span class="su su-sort-right"></span>
+                        </span>
                     </div>
                 </div>
                 <div class="dashboard-list-container col-xs-12 no-padding">
@@ -300,7 +337,7 @@
                         <span class="bg-warning text-warning" ng-show="isAdmin">[[[ Public reports are disabled in ]]] <a class="app-hyperlink" href="@Url.Action("ReportSettings", "Administration")">[[[report settings.]]]</a></span>
                         <span class="bg-warning text-warning" ng-show="!isAdmin">[[[Public reports are disabled by the system administrator. Please contact your system administrator to enable this.]]]</span>
                     </div>
-                    <div id="parent-dashboard-scroll-element" ng-show="totalDashboardCount != 0">
+                    <div id="parent-dashboard-scroll-element" ng-class="{'grid-active' : reportLayoutView === @((int)ReportLayoutView.Grid),'card-active' : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-show="totalDashboardCount != 0">
                         <div id="dashboard-scroll-element" class="col-xs-12 no-padding">
                             <div id="dashboard-scroll-content" class="col-xs-12 no-padding">
                                 <div class="col-xs-12 no-padding" ng-show="!dashboardDataBindComplete">
@@ -329,7 +366,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="dashboard-list-section col-xs-12 no-padding ng-hide" ng-show="dashboardDataBindComplete">
+                                <ul class="dashboard-list-section col-xs-12 no-padding ng-hide" ng-if="activeMenu !== @((int)DisplayCategory.ReportParts)" ng-show="dashboardDataBindComplete && reportLayoutView === @((int)ReportLayoutView.Card)">
                                     <li ng-repeat="dashboardItem in dashboardList" class="col-xs-12 no-padding dashboard-tile" my-post-repeat-directive>
                                         <div ng-if="!dashboardItem.IsDraft" class="col-xs-12 no-padding">
                                             <span class="su favorite" data-favorite="{{dashboardItem.IsFavorite}}" ng-click="toggleFavorite($event)" ng-class="!dashboardItem.IsDraft ? (dashboardItem.IsFavorite ? 'su-favorite' : 'su-dis-favorite') : ''"></span>
@@ -581,6 +618,85 @@
                                         </div>
                                     </li>
                                 </ul>
+                                <div id="item-grid-container" data-grid-name="reports" ng-show="reportLayoutView === @((int)ReportLayoutView.Grid) && totalDashboardCount != 0 && dashboardDataBindComplete && activeMenu !== @((int)DisplayCategory.ReportParts)">
+                                    <div class="grid-view">
+                                        <div class="grid-container grid">
+                                            @await Html.PartialAsync("../Reports/_GridLayout")
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="dashboard-list-section col-xs-12 no-padding ng-hide" ng-show="dashboardDataBindComplete && activeMenu === @((int)DisplayCategory.ReportParts)">
+                                    <li ng-repeat="dashboardItem in dashboardList" class="col-xs-12 no-padding dashboard-tile" my-post-repeat-directive>
+                                        <div ng-if="activeMenu === @((int)DisplayCategory.ReportParts)" class="col-xs-12 no-padding">
+                                            <div class="col-xs-12 open-link no-padding">
+                                                <a class="col-xs-12 no-padding">
+                                                    <div class="col-xs-12 report-details" ng-class="dashboardItem.Description == '' ? 'add-custom-padding' : ''">
+                                                        <span class="dashboard-name no-padding" ng-class="setWidthForDashboardName()">
+                                                            <span>
+                                                                {{dashboardItem.Name}}
+                                                            </span>
+                                                            <span ng-if="dashboardItem.Description!=''" class="author-name col-xs-12 no-padding">
+                                                                <span>{{dashboardItem.Description}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-12 report-tile-footer">
+                                                        <div class="footer-owner-name col-xs-3 no-padding" title="[[[Owner]]]">
+                                                            <span class="category-icon su su-user custom-style"></span>
+                                                            <span class="footer-text">{{dashboardItem.CreatedByDisplayName}}</span>
+                                                        </div>
+                                                        <div class="footer-modified-date col-xs-3 no-padding" title="[[[Modified Date]]]">
+                                                            <span class="category-icon su su-cache_3 custom-style"></span>
+                                                            <span class="footer-text" ng-show="!isTablet">
+                                                                {{dashboardItem.ModifiedDate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="dashboard-share" ng-if="!isTablet">
+                                                <span ng-click="editReportPart()" ng-if="!isTablet" class="su su-edit" title="Edit"></span>
+                                            </div>
+                                            <div class="no-padding options context-menu" ng-if="!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin">
+                                                <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown"></span>
+                                                <ul class="dropdown-menu dashboard-options" role="menu">
+                                                    <li ng-if="!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin">
+                                                        <span title="" class="item-delete option-click" ng-click="deleteReportPart()">
+                                                            <i class="su su-delete"></i>
+                                                            <span>[[[Delete]]]</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-xs-12 no-padding" ng-show="isAppendLoading">
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -593,15 +709,19 @@
                             <span class="dashboard-empty-message" ng-show="!canCreateDashboard">[[[No reports have been shared with you.]]]</span>
                             <span class="dashboard-empty-message" ng-show="canCreateDashboard">[[[You don’t have any reports and no reports have been shared with you.]]]</span>
                         </div>
-                        <div ng-show="categoryList.length !== 0 && activeMenu !== @((int)DisplayCategory.DraftItems)">
-                            <span class="dashboard-empty-message" ng-show="selectedFilter === @((int)DisplayCategory.AllReports) && dashboardSearchQuery == ''">[[[No reports available to display.]]]</span>
-                            <span class="dashboard-empty-message" ng-show="selectedFilter !== @((int)DisplayCategory.AllReports) || dashboardSearchQuery != ''">[[[No reports were found that match your search. Try modifying your search or filters.]]]</span>
+                        <div ng-show="categoryList.length !== 0 && activeMenu !== @((int)DisplayCategory.DraftItems) && activeMenu !== @((int)DisplayCategory.ReportParts)">
+                            <span class="dashboard-empty-message" ng-show="selectedFilter === @((int)DisplayCategory.AllReports) && dashboardSearchQuery == ''">[[[No reports are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="selectedFilter !== @((int)DisplayCategory.AllReports) || dashboardSearchQuery != ''">[[[No reports match your search. Try modifying your search or filters.]]]</span>
                         </div>
                         <div ng-show="activeMenu === @((int)DisplayCategory.DraftItems)">
-                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No drafts available to display.]]]</span>
-                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No drafts were found that match your search. Try modifying your search.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No drafts are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No drafts match your search. Try modifying your search.]]]</span>
                         </div>
-                        <div class="create-buttton">
+                        <div ng-show="activeMenu === @((int)DisplayCategory.ReportParts)">
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No report parts are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No report parts match your search. Try modifying your search.]]]</span>
+                        </div>
+                        <div class="create-buttton" ng-show="activeMenu !== @((int)DisplayCategory.ReportParts)">
                             <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button app-btn-primary">[[[Create Report]]]</button>
                         </div>
                     </div>

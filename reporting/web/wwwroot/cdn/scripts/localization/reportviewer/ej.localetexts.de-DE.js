@@ -334,6 +334,26 @@ ej.ReportViewer.Locale["de-DE"] = {
         RVERR0014: 'Parameter dürfen nicht leer sein',
         RVERR0015: 'Der für Parameternamen erforderliche Wert',
     },
+    reportParameter: {
+        operators: {
+            equals: 'Gleich',
+            notEqualTo: 'Nicht gleichzusetzen mit',
+            lessThan: 'Weniger als',
+            greaterThan: 'Größer als',
+            lessOrEqual: 'Weniger oder gleich',
+            greaterOrEqual: 'Größer oder gleich',
+            contains: 'Enthält',
+            doesNotContain: 'Nicht enthalten',
+            startsWith: 'Beginnt mit',
+            endsWith: 'Endet mit',
+            is: 'Ist',
+            isNot: 'Ist nicht',
+            in: 'In',
+            notIn: 'Nicht in',
+            between: 'Zwischen',
+            relative: 'Relativ'
+        }
+    },
     selectAll: 'Wählen Sie Alle',
     viewButton: "Bericht sehen",
     parameterProcessingMessage: 'Abhängige Parameter werden geladen ...',

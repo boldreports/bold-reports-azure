@@ -90,6 +90,7 @@
 </head>
 <body onload="load();">
     <form name="uploadReportForm" id="upload-form" method="post" onsubmit="return onUploadReport();" action="@Url.Action("UploadReport", "Reports")" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
         <label for="browse_file" class="trigger-file-input-wrapper-report"></label>
         <span>
             <input id='upload_browse_file' class='form-control input-fields text' readonly name='uploadedFileName' type='text' value="@ViewBag.FileName" tabindex="-1">

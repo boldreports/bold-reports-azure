@@ -331,6 +331,26 @@ ej.ReportViewer.Locale["it-IT"] = {
 		RVERR0014: 'I parametri non possono essere vuoti',
 		RVERR0015: 'Il valore richiesto per i nomi dei parametri di',
 	},
+	reportParameter: {
+		operators: {
+			equals: 'Equivale',
+			notEqualTo: 'Non uguale a',
+			lessThan: 'Meno di',
+			greaterThan: 'Più grande di',
+			lessOrEqual: 'Minore o uguale',
+			greaterOrEqual: 'Maggiore o uguale',
+			contains: 'Contiene',
+			doesNotContain: 'Non contenere',
+			startsWith: 'Inizia con',
+			endsWith: 'Finisce con',
+			is: 'È',
+			isNot: 'Non è',
+			in: 'Nella',
+			notIn: 'Non in',
+			between: 'Fra',
+			relative: 'Parente'
+		}
+	},
 	selectAll: 'Seleziona tutto',
 	viewButton: "Visualizza rapporto",
 	parameterProcessingMessage: 'Caricamento dei parametri dipendenti ...',

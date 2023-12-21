@@ -172,6 +172,7 @@
             </div>
         </form>
         <form action="@Url.Action("DatasetDesigner", "Reports")" id="create-report-form" method="POST" target="_blank">
+            @Html.AntiForgeryToken()
             <input id="dataset-description" name="description" type="hidden" value="">
             <input id="dataset-name" name="datasetName" type="hidden" value="">
             <input id="datasource-name" name="datasourceName" type="hidden" value="">

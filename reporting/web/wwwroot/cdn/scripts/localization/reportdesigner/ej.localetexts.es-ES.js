@@ -2800,6 +2800,26 @@ ej.ReportDesigner.Locale['es-ES'] = {
             Line: 'Elemento de informe de línea',
             Subreport: 'Elemento del subinforme'
         },
+        reportParameter: {
+            operators: {
+                equals: 'igual',
+                notEqualTo: 'No igual a',
+                lessThan: 'Menos que',
+                greaterThan: 'Mas grande que',
+                lessOrEqual: 'menor o igual',
+                greaterOrEqual: 'Mayor o igual',
+                contains: 'Contiene',
+                doesNotContain: 'No contiene',
+                startsWith: 'Comienza con',
+                endsWith: 'Termina con',
+                is: 'Es',
+                isNot: 'No es',
+                in: 'En',
+                notIn: 'No en',
+                between: 'Entre',
+                relative: 'Relativo'
+            }
+        },
         selectAll: 'Seleccionar todo',
         viewButton: 'Ver informe',
         parameterBlock: 'Bloqueo de parámetro',
@@ -4165,7 +4185,9 @@ ej.ReportDesigner.Locale['es-ES'] = {
         nameWaterMark: 'Nombre de parámetro',
         valueWaterMark: 'Valor',
         closeToolTip: 'Cerrar',
-        deleteField: 'Borrar campo'
+        deleteField: 'Borrar campo',
+        allowMultiple: 'Permitir múltiples valores',
+        allowNull: 'Permite valor nulo'
     },
     queryDesigner: {
         storeParameter: {
