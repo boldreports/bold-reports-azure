@@ -630,8 +630,14 @@
         }
 
         function draftReportPart(args) {
+            if (args.reportAction == 'PartSaved' && args.status == false) {
+                alertMessage(false, window.Server.App.LocalizationContent.Error + "!", window.Server.App.LocalizationContent.PartPublishError);
+                return;
+            }
+    
             var designer = $('#' + controlId).data('boldReportDesigner');
             designer.notifyChange();
+            alertMessage(true, window.Server.App.LocalizationContent.Success + "!", window.Server.App.LocalizationContent.PartPublishSuccess);
         }
 
         function reportSaved(args) {

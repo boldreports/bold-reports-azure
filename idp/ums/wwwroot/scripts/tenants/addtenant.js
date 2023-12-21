@@ -34,11 +34,13 @@ $(document).ready(function () {
 
     var tenantTypeDropDown = getDropDownValue("tenant-type");
     if (tenantTypeDropDown != "BoldBiOnPremise") {
-        $(".reports-branding").css("display", "none");
+        $(".reports-branding").css("display", "inline");
+        $(".bi-branding").css("display", "none");
         $(".selector").addClass("selector-alignment");
     }
     else {
         $(".bi-branding").css("display", "inline");
+        $(".reports-branding").css("display", "none");
         $(".selector").addClass("selector-alignment");
     }
 
@@ -226,30 +228,23 @@ $(document).ready(function () {
                         newDbConfiguration(waitingPopUpElement);
                     }
 
-                    if (!isBoldReportsTenantType()) {
-                        if (!$(".database-error").is(":visible")) {
-                            if ($("#txt-password-db").is(":text")) {
-                                $("#txt-password-db").parent().find(".show-hide-password").click();
-                                $("#txt-password-db").parent().find(".tooltip").css("display", "none");
-                            }
-                            else {
-                                saveDatabaseValuesTemporarly();
-                                moveStepper("front", 3);
-
-                                if (actionType.toLowerCase() == "edit") {
-                                    $(this).attr("value", "Update");
-                                    $(this).removeClass("storage-config").addClass("update");
-                                } else {
-                                    $(this).attr("value", "Next");
-                                    nextToStoragePage();
-                                }
-                                $(this).removeAttr("disabled").addClass("next-alignment");
-                            }
+                    if (!$(".database-error").is(":visible")) {
+                        if ($("#txt-password-db").is(":text")) {
+                            $("#txt-password-db").parent().find(".show-hide-password").click();
+                            $("#txt-password-db").parent().find(".tooltip").css("display", "none");
                         }
-                    }
-                    else {
+
                         saveDatabaseValuesTemporarly();
-                        nextToStoragePage()
+                        moveStepper("front", 3);
+
+                        if (actionType.toLowerCase() == "edit") {
+                            $(this).attr("value", "Update");
+                            $(this).removeClass("storage-config").addClass("update");
+                        } else {
+                            $(this).attr("value", "Next");
+                            nextToStoragePage();
+                        }
+                        $(this).removeAttr("disabled").addClass("next-alignment");
                     }
                     
                     $('#details-next').removeAttr("disabled");
