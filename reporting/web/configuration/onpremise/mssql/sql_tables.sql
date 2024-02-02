@@ -258,7 +258,9 @@ CREATE TABLE [BOLDRS_ScheduleDetail](
 	[IsNotifySaveAs] [bit] NOT NULL,
 	[IsOverwrite] [bit] NOT NULL,
 	[ExportFileName] [nvarchar](150) NULL,
-	[ScheduleExportInfo] [nvarchar](4000) NULL)
+	[ScheduleExportInfo] [nvarchar](4000) NULL,
+	[IsEmailAttachment] [bit] NOT NULL DEFAULT 1,
+	[IsInsertReportInMailBody] [bit] NOT NULL DEFAULT 0)
 ;
 
 CREATE TABLE [BOLDRS_SubscribedUser](
