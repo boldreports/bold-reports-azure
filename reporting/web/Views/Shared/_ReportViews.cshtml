@@ -1,0 +1,152 @@
+﻿@inject ServerPrincipal _identityResponse
+@{
+    var enableComment = "false";
+    var isUserAuthenticated = "false";
+    if (_identityResponse != null && _identityResponse.IsAuthenticated)
+    {
+        enableComment = "true";
+        isUserAuthenticated = "true";
+    }
+    else
+    {
+        enableComment = "false";
+        isUserAuthenticated = "false";
+    }
+}
+
+@if (ViewBag.IsViewLoadedInIframe != null && ViewBag.IsViewLoadedInIframe == true)
+{
+    <script>
+        var isViewerV2Enabled = true;
+        var viewReportClick = false;
+        var viewId = parent.viewId;
+        var reportId = parent.reportId;
+        var pageurl = parent.pageurl;
+        var userId = parent.userId;
+        var userName = parent.userName;
+        var getSavedViewUrl = parent.getSavedViewUrl;
+        var embedConfig = parent.embedConfig;
+        var isPublic = parent.isPublic;
+        var itemViewShareIframeUrl = parent.itemViewShareIframeUrl;
+    </script>
+
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.min.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/bootstrap-dependencies.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.min.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-views-v2.min.css" />
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/bootstrap-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.min.js"></script>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-views-v2.min.js"></script>
+    </environment>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    <style>
+        #report-view-toogle {
+            background-color: var(--alice-blue) !important;
+        }
+        .saved-filter-anchor, .highlight-name, .saved-filter-anchor:hover, .sort-active {
+            color: var(--blue-magenta) !important;
+        }
+
+        .loader-icon .path {
+            stroke: var(--blue-magenta) !important;
+        }
+    </style>
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+}
+<script>
+    $(document).ready(function () {
+
+        try {
+            sameOrigin = window.parent.location.host == window.location.host;
+        }
+        catch (e) {
+            sameOrigin = false;
+        }
+
+        var dashboardViewWaitingPopupTemplateId = createLoader("report-view-toogle");
+        $("#report-view-toogle").ejWaitingPopup({ template: $("#" + dashboardViewWaitingPopupTemplateId) });
+
+        if (@enableComment == true)
+        {
+            $(".options li#comments").css("display", "block");
+        }
+        else
+        {
+            $(".options li#comments").css("display", "none");
+        }
+
+        $("#messageBox").ejDialog({
+            width: ((sameOrigin ? parent.window.innerWidth : window.innerWidth) > 460) ? "450px" : ((sameOrigin ? parent.window.innerWidth : window.innerWidth) - 10),
+            height: "150px",
+            showOnInit: false,
+            allowDraggable: true,
+            enableResize: false,
+            showHeader: false,
+            enableModal: true,
+            close: "onMessageDialogClose"
+        });
+    });
+</script>
+<div class="list-group server-report-view" id="report-view-toogle" style="display: block">
+    <nav class="list-group" style="display: none" id="report-views">      
+        <div id="saved-filter" style="display: block;">
+        </div>
+    </nav>
+</div>
+
+<div id="delete-div" style="display: none" class="col-lg-12 no-padding">
+    <div id="PopupContainerDelete">
+        <div class="col-md-12 header-menu header-pad-top header-menu-margin">
+            <div class="col-xs-6 no-padding">
+                <span class="su su-delete Head-icon"></span>
+                <span class="PopupTitle">[[[Delete View]]]</span>
+            </div>
+            <div class="col-xs-6 no-padding">
+                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onDeleteItemDialogClose()"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        <div class="dialogBody col-xs-12 no-padding delete-dialog-body">
+            <div>
+                <div class="deleteItem">
+                    <span id="delete-content"><span>[[[Are you sure you want to delete the view ]]] — </span><span id="delete_item_name" class="delete-item-body highlight-name delete_item_name"></span> ?</span>
+                    <span style="width: 354px; float: left" class="message-content text-center" id="delete-confirmation">[[[View has been deleted successfully]]]</span>
+                    <span style="width: 320px; float: left" class="message-content text-center" id="delete-error">[[[Try again later]]]</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 dialogFooter no-right-padding no-left-padding">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-8 no-padding rightAlign validationArea">
+                <input type="button" class="critical-action-button app-btn-danger rightAlign" value="[[[Yes]]]" id="delete_item" tabindex="1" />
+                <input type="button" id="CancelDelete" class="secondary-button app-btn-secondary rightAlign" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
+            </div>
+            <div class="col-xs-8 no-padding centerAlign successArea" style="display: none">
+                <input title="" type="button" id="ok-button" class="secondary-button app-btn-secondary PopupClose pull-center" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageBox">
+    <div class="message-header"></div>
+    <div class="message-box-close"></div>
+    <div class="message-content text-center"></div>
+    <div class="message-box-btn-holder"></div>
+</div>

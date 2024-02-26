@@ -1,0 +1,952 @@
+﻿<!DOCTYPE html>
+@using Newtonsoft.Json
+@using Syncfusion.Server.Base.Environment
+@using System.Globalization;
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var tenantAppConfiguration = new TenantAppConfiguration(globalAppSettings);
+    var language = CultureInfo.CurrentCulture.Name;
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var tourCookie = Context.Request.Cookies["syncfusion.reports.designer.tour"];
+    var tourObj = new TourCookie();
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
+    if (tourCookie != null)
+    {
+        tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
+    }
+    var showTour = !new DeviceDetection(Context).IsMobile && ((tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")));
+    var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var reportServiceUrl = designerServiceUrl + "/api/Designer";
+    var datasourcePermisions = ViewBag.DatasourcePermission;
+    var datasetPermissions = ViewBag.DatasetPermission;
+    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var dataConnectors = @Json.Serialize(ViewBag.DataConnectors);
+    var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+    var customHelpLinkDomain = "@(ServerAppConfig.AllowCustomHelpLink ? ServerAppConfig.AppSettings.Documentation.BaseUri : string.Empty)";
+    var custombrandName = "@ServerAppConfig.CustomBrandName";
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
+    var userId = _identityResponse.User.UserId;
+    var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
+}
+
+<html lang="en" style="height:100%;width:100%">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    @if (ViewBag.ReportPartName != null)
+    {
+        <title>@Html.Raw(ViewBag.ReportPartName) - [[[Design Report Part]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+    }
+    else
+    {
+        <title>Untitled - [[[Design Report Part]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+    }
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/v2.0/reportdesigner/ej.localetexts.@string.Concat(language, ".min.js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/v2.0/reportviewer/ej.localetexts.@string.Concat(language, ".min.js")"></script>
+        <script src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
+        </environment>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/extensions/barcode.reportitem.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServiceCdnLink/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer.min.js"></script>
+        </environment>
+        <script asp-append-version="true" src="@reportServiceCdnLink/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+        <script asp-append-version="true" src="@reportServiceCdnLink/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/qrbarcode.reportitem.js"></script>
+            <script asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+        </environment>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/qrbarcode.reportitem.js'></script>
+        <script type='text/javascript' src='@reportServiceCdnLink/extensions/barcode.reportitem.js'></script>
+    }
+
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+
+    <style>
+        .e-rptdesigner-header-selection {
+            background: var(--blue-magenta) !important;
+            color: #ffffff !important;
+            border-color: var(--blue-magenta) !important;
+            font-weight: 600 !important;
+        }
+
+        .e-rptdesigner.e-publish-btn-wrapper .e-btn {
+            font-size: 13px !important;
+        }
+
+        .e-rptdesigner-header-design,
+        .e-rptdesigner-header-preview {
+            height: 28px;
+            width: 88px;
+            float: left;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            border: 1px solid #b3b3b3;
+            background: #ffffff;
+            padding: 4px 0px;
+        }
+
+        .e-rptdesigner-header-design {
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+        }
+
+        .e-rptdesigner-header-preview {
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .e-designer-draft.e-rptdesigner-checkmark:before {
+            visibility: hidden;
+            color: #333333;
+        }
+
+        .e-designer-draft-status-success.e-rptdesigner-checkmark:before {
+            visibility: visible;
+            color: #4dd964;
+        }
+
+        .e-designer-draft-status-progress.e-rptdesigner-checkmark:before {
+            visibility: visible;
+            color: #5d5d5d;
+        }
+
+        .e-designer-draft-status-text {
+            color: #5d5d5d;
+            font-size: 12px;
+            margin-left: 2px;
+        }
+
+        .e-designer-new-folder-btn {
+            overflow: hidden !important;
+            white-space: nowrap !important;
+            -ms-text-overflow: ellipsis !important;
+            line-height: normal !important;
+            height: 28px !important;
+            width: 120px !important;
+            max-width: 120px;
+            font-weight: 400 !important;
+            font-size: 11px !important;
+            border-radius: 4px !important;
+            padding-bottom: 0.2em !important;
+        }
+
+        .e-designer-header ::placeholder {
+            font-style: normal !important;
+        }
+
+        .e-designer-header ::-webkit-input-placeholder {
+            font-style: normal !important;
+        }
+
+        .e-designer-header :-ms-input-placeholder {
+            font-style: normal !important;
+        }
+
+        .e-designer-header .e-control.e-tooltip,
+        .e-designer-header .e-switch-wrapper.e-wrapper,
+        .e-designer-header .e-switch-wrapper .e-switch,
+        .e-designer-header .e-switch-wrapper .e-switch-on,
+        .e-designer-header .e-switch-wrapper .e-switch-off,
+        .e-designer-header .e-control.e-btn {
+            font-family: var(--report-designer-font, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', 'Arial') !important;
+        }
+    </style>
+
+    @if (!ServerAppConfig.IsCustomThemeForMenu)
+    {
+        <style>
+            :root {
+                --nav-menu-bg-color: var(--white);
+                --nav-menu-text-color: var(--primary-black);
+                --nav-menu-text-sec-color: var(--grey-700);
+                --nav-menu-content-color: var(--grey-800);
+                --nav-menu-active-color: var(--blue-lighter);
+                --nav-menu-active-text-color: var(--blue);
+                --nav-menu-active-sec-color: var(--blue);
+                --nav-menu-active-content-color: var(--grey-800);
+                --nav-menu-hover-color: var(--grey-300);
+                --nav-menu-hover-text-color: var(--primary-black);
+                --nav-menu-hover-text-sec-color: var(--grey-700);
+                --nav-menu-hover-content-color: var(--grey-800);
+                --nav-menu-create-icon-bgcolor: var(--blue);
+                --nav-menu-separtor-icon-color: var(--grey-400);
+                --item-menu-hover-bg-color: var(--white);
+                --item-menu-hover-border-color: var(--blue);
+                --item-menu-section-bg-color: var(--blue-lighten);
+                --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            :root {
+                @ServerAppConfig.ThemeStyle --item-menu-bg-color: var(--nav-menu-bg-color);
+                --item-menu-section-bg-color: var(--nav-menu-bg-color);
+                --item-menu-title-color: var(--nav-menu-text-color);
+                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
+                --item-menu-hover-bg-color: var( --nav-menu-hover-color);
+                --item-menu-hover-border-color: var( --nav-menu-hover-color);
+                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
+                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
+                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
+                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
+                --nav-notification-heading-text-color: var(--nav-menu-text-color);
+                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-text-color: var(--nav-menu-content-color);
+                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
+                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
+                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
+            }
+        </style>
+    }
+
+    <script>
+        var controlId = 'container';
+        var isEditReport = false;
+        var relativeDateTimer = null;
+        var reportPartId = "@Html.Raw(ViewBag.ReportPartId)";
+        var reportPartName = "@Html.Raw(ViewBag.ReportPartName)";
+        var description = "@Html.Raw(ViewBag.description)";
+        var isEdit = "@ViewBag.isEdit";
+        isEdit = isEdit.toLowerCase();
+        var pageTitle = "@Html.Raw(oraganisationName)";
+        var readWriteDeletePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create;
+        var readWritePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create & ~ej.ReportDesigner.Permission.Delete;
+        var readPermission = ej.ReportDesigner.Permission.Shared;
+        var createPermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Delete & ~ej.ReportDesigner.Permission.Edit;
+        var allPermission = ej.ReportDesigner.Permission.All;
+        var createReadWritePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Delete;
+        var createReadPermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Delete & ~ej.ReportDesigner.Permission.Edit;
+        var noPermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create & ~ej.ReportDesigner.Permission.Edit & ~ej.ReportDesigner.Permission.Delete & ~ej.ReportDesigner.Permission.Shared;
+        var custombrandName = "@ServerAppConfig.CustomBrandName";
+        var isCustomDomain = "@ServerAppConfig.AllowCustomHelpLink";
+        var customDomain = isCustomDomain.toLowerCase() == "true" ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
+        var isHideHelpLinks = "@ServerAppConfig.IsHideHelpLink";
+        var isHideHelpLink = isHideHelpLinks.toLowerCase() == "true" ? true : false;
+        var customFontsName = [];
+        var _CryptoAES = window['CryptoJS'];
+        var _keyCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
+        var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
+        var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
+        var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
+        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
+
+        if (isEdit === "true") {
+            isEditReport = true;
+        }
+        var isSubmit = true;
+        var designerToken = "@ViewBag.AccessToken";
+
+        $(document).ready(function () {
+            loadCustomFonts();
+            renderDesignerHeader();
+            refreshReportDesignerFooter();
+            renderDesigner();
+            $(window).resize(refreshReportDesignerFooter);
+        });
+
+        function refreshReportDesignerFooter() {
+            var windowHeight = $(window).innerHeight();
+            var headerHeight = $("#" + controlId + "_designer_header").outerHeight();
+            var containerHeight = windowHeight - headerHeight;
+            $("#container").height(containerHeight);
+            $("#container").width($(window).width());
+        }
+
+        function renderDesigner() {
+            $(document.body).bind('submit', $.proxy(this.formSubmit, this));
+            $(window).bind('beforeunload', $.proxy(this.windowUnload, this));
+            var datasetPermission = noPermission;
+            var datasourcePermission = noPermission;
+            var filterDataTiles = (@dataConnectors) ? JSON.parse(@dataConnectors) : [];
+
+            if ('@datasetPermissions[PermissionAccess.ReadWriteDelete]' == 'True') {
+                datasetPermission = '@datasetPermissions[PermissionAccess.Create]' == 'True' ? allPermission : readWriteDeletePermission;
+            }
+            else if ('@datasetPermissions[PermissionAccess.ReadWrite]' == 'True') {
+                datasetPermission = '@datasetPermissions[PermissionAccess.Create]' == 'True' ? createReadWritePermission : readWritePermission;
+            }
+            else if ('@datasetPermissions[PermissionAccess.Read]' == 'True') {
+                datasetPermission = '@datasetPermissions[PermissionAccess.Create]' == 'True' ? createReadPermission : readPermission;
+            }
+            else if ('@datasetPermissions[PermissionAccess.Create]' == 'True') {
+                datasetPermission = createPermission;
+            }
+            else {
+                datasetPermission = noPermission;
+            }
+            if ('@datasourcePermisions[PermissionAccess.ReadWriteDelete]' == 'True') {
+                datasourcePermission = '@datasourcePermisions[PermissionAccess.Create]' == 'True' ? allPermission : readWriteDeletePermission;
+            }
+            else if ('@datasourcePermisions[PermissionAccess.ReadWrite]' == 'True') {
+                datasourcePermission = '@datasourcePermisions[PermissionAccess.Create]' == 'True' ? createReadWritePermission : readWritePermission;
+            }
+            else if ('@datasourcePermisions[PermissionAccess.Read]' == 'True') {
+                datasourcePermission = '@datasourcePermisions[PermissionAccess.Create]' == 'True' ? createReadPermission : readPermission;
+            }
+            else if ('@datasourcePermisions[PermissionAccess.Create]' == 'True') {
+                datasourcePermission = createPermission;
+            }
+            else {
+                datasourcePermission = noPermission;
+            }
+
+            var designerModel = {
+                enableAutoDraft: true,
+                serviceUrl: "@reportServiceUrl",
+                filterDataConnectors: filterDataTiles,
+                ajaxBeforeLoad: ajaxBeforeSend,
+                encryptData: encryptData,
+                decryptData: decryptData,
+                reportServerUrl: "@reportServerApiUrl",
+                create: $.proxy(controlInitialized, this),
+                reportSaved: $.proxy(reportPartSaved, this),
+                reportPartSaved: $.proxy(reportPartSaved, this),
+                reportOpened: $.proxy(reportPartOpened, this),
+                reportPartOpened: $.proxy(reportPartOpened, this),
+                serviceAuthorizationToken: designerToken,
+                toolbarSettings: {
+                    items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.New
+                        & ~ej.ReportDesigner.ToolbarItems.Open & ~ej.ReportDesigner.ToolbarItems.Save
+                        & ~ej.ReportDesigner.ToolbarItems.Preview & ~ej.ReportDesigner.ToolbarItems.EditDesign
+                },
+                permissionSettings: {
+                    dataSource: datasourcePermission,
+                    dataSet: datasetPermission
+                },
+                locale: '@language',
+                reportDataExtensions: (@isSelfHosted.ToString().ToLower()) ? window.dataExtensions : window.cloudDataExtensions,
+                reportItemExtensions: window.itemExtensions,
+                queryDesignerAction: disableDesignerHeaderPane,
+                mapShapData: window.ShapData,
+                fontNames: customFontsName,
+                isAzureApp: (@isAzureApplication.ToString().ToLower()),
+                customBrandSettings: {
+                    hideHelpLink: isHideHelpLink,
+                    customDomain: customDomain,
+                    customBrandName: custombrandName,
+                    customLinks: window.customLinks,
+                    contactMail: 'support@boldreports.com'
+                },
+                enableImageBlobing: true,
+                enableReportPart: false
+            };
+
+            var designer = new boldReportDesigner($('#' + controlId), designerModel);
+        }
+
+        function loadCustomFonts() {
+            @if (ServerAppConfig.CustomFont != null && ServerAppConfig.CustomFont.Count > 0) {
+                foreach(var font in ServerAppConfig.CustomFont)
+                {
+                    @: customFontsName.push("@font.Key");
+                    @: addCustomFonts("@font.Key", "@font.Value");
+                }
+            }
+        }
+
+        function isFontFaceExist() {
+            try {
+                return FontFace ? true : false;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function addCustomFonts(fontFamily, fontFile) {
+            var customFontUrl = encodeURI("@baseUrl/content/custom-fonts/" + fontFile);
+            if (isFontFaceExist()) {
+                try {
+                    const customFont = new FontFace(fontFamily, 'url(' + customFontUrl + ')');
+                    customFont.load().then(function (loadedFont) {
+                        document.fonts.add(loadedFont);
+                    }).catch(function (error) {
+                        console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                    });
+                } catch (error) {
+                    console.log('Failed to load font: ' + fontFamily + '; Error: ' + error);
+                }
+            } else {
+                //Classic Approach Common for all browsers to load fonts
+                try {
+                    const style = document.createElement('style');
+                    style.innerHTML = '@@font-face { font-family:' + fontFamily + '; src: url(' + customFontUrl + ');}';
+                    document.head.appendChild(style);
+
+                    var link = document.createElement('link');
+                    link.setAttribute('rel', 'stylesheet');
+                    link.setAttribute('type', 'text/css');
+                    link.setAttribute('href', customFontUrl);
+                    document.head.appendChild(link);
+                } catch (error) {
+                    console.log('Failed to register stylesheet for the font: ' + fontFamily + '; Error: ' + error);
+                }
+            }
+        }
+
+        function controlInitialized(args) {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            $('#' + controlId + '_designer_header_reportPartName').val(reportPartName);
+            designer.showImportData = true;
+            designer.isReportPart = true;
+            var partInfo = {
+                partId: reportPartId,
+                partName: reportPartName
+            };
+            if (isEditReport) {
+                designer.openReportPart(partInfo);
+            }
+        }
+
+        function _encryptData(plainText) {
+            return _CryptoAES.AES.encrypt(
+                _CryptoAES.enc.Utf8.parse(plainText),
+                _key,
+                {
+                    keySize: 128 / 8,
+                    iv: _iv,
+                    mode: _CryptoAES.mode.CBC,
+                    padding: _CryptoAES.pad.Pkcs7
+                }).toString();
+        }
+
+        function _decryptData(cipherText) {
+            return _CryptoAES.AES.decrypt(
+                cipherText,
+                _key,
+                {
+                    keySize: 128 / 8,
+                    iv: _iv,
+                    mode: _CryptoAES.mode.CBC,
+                    padding: _CryptoAES.pad.Pkcs7
+                }).toString(_CryptoAES.enc.Utf8);
+        }
+
+        function encryptData(eventArgs) {
+            if (eventArgs && eventArgs.data) {
+                eventArgs.data = _encryptData(eventArgs.data);
+            }
+        }
+
+        function decryptData(eventArgs) {
+            if (eventArgs && eventArgs.data) {
+                eventArgs.data = _decryptData(eventArgs.data);
+            }
+        }
+
+        function ajaxBeforeSend(args) {
+            if (args.headers) {
+                args.headers.push({ Key: 'ReportId', Value: reportPartId });
+            }
+            if (args.actionType === 'OpenReportPart' || args.actionType === 'SaveReportPart'
+                || args.actionType === 'HasDraftReport') {
+                var reportServerData = {
+                    'reportName': reportPartName,
+                    'description': description,
+                    'isEdit': isEditReport,
+                    'isReportPart': true
+                };
+
+                args.data = reportServerData;
+            }
+
+            if (args.actionType === 'CreateDraftReport') {
+                $('#' + controlId + '_design_header_draft_icon').removeClass('e-designer-draft-status-success').addClass('e-designer-draft-status-progress');
+                $('#' + controlId + '_design_header_draft_status').text("[[[Saving draft...]]]");
+            }
+            _injectKeys(args);
+        }
+
+        function _injectKeys(args) {
+            if (args && args.headers) {
+                args.headers.push({ 'Key': 'keyCode', 'Value': _keyCode });
+                args.headers.push({ 'Key': 'ivCode', 'Value': _ivCode });
+            }
+        }
+
+        function formSubmit(args) {
+            isSubmit = false;
+        }
+
+        function reportPartOpened(args) {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            var partItem = designer.designerPanel.designBodyTag.children('.e-reportitem');
+            if (partItem.length === 1) {
+                partItem.attr({ 'partname': reportPartName, 'partid': reportPartId });
+            }
+            designer.designerPanel.updateTargetAreaSize(designer.designerPanel.designBodyTag);
+        }
+
+        function reportPartSaved(args) {
+            if (args.reportAction == 'PartSaved' && args.status == false) {
+                alertMessage(false, window.Server.App.LocalizationContent.Error + "!", window.Server.App.LocalizationContent.PartPublishError);
+                return;
+            }
+            isEditReport = true;
+            if (args.reportAction === 'AutoDraft') {
+                updateAutoSavedTime(args.status);
+                $('#' + controlId + '_design_header_draft_status').attr({ 'data-datetime': (new Date()).toISOString() });
+                if (relativeDateTimer == null) {
+                    relativeDateTimer = initializeRelativeTimer();
+                }
+            } else {
+                var partInfo = args.partInfo;
+                var designer = $('#' + controlId).data('boldReportDesigner');
+                designer.reportFileName = reportPartName = partInfo && partInfo.partName ? partInfo.partName : reportPartName;
+                reportPartName = partInfo && partInfo.partName ? partInfo.partName : reportPartName;
+                reportPartId = partInfo && partInfo.partId ? partInfo.partId : reportPartId;
+                description = partInfo && partInfo.partDescription ? partInfo.partDescription : description;
+                version = partInfo && partInfo.partVersion ? partInfo.partVersion : null;
+                if (partInfo && partInfo.itemId) {
+                    var designer = $('#' + controlId).data('boldReportDesigner');
+                    var partItem = designer.designerPanel.designArea.find('.e-designersection #' + partInfo.itemId);
+                    partItem.attr({ 'partname': reportPartName, 'partid': reportPartId });
+                }
+                var newTitle = reportPartName + ' - Design Report Part - ' + pageTitle;
+                document.title = newTitle;
+                $('#' + controlId + '_designer_header_reportPartName').val(reportPartName);
+                if (version) {
+                    history.pushState('', newTitle, window.location.href.split("report-part")[0] + "report-part" + '/' + reportPartId + '/' + reportPartName + '?v=' + version);
+                } else {
+                    history.pushState('', newTitle, window.location.href.split("report-part")[0] + "report-part" + '/' + reportPartId + '/' + reportPartName);
+                }
+                alertMessage(true, window.Server.App.LocalizationContent.Success + "!", window.Server.App.LocalizationContent.PartPublishSuccess);
+            }
+        }
+
+        function alertMessage(status, toastTitle, toastMessage) {
+            var className;
+            if (status) {
+                className = 'e-toast-success';
+            } else {
+                className = 'e-toast-danger';
+            }
+            var toast = new ejs.notifications.Toast({
+                title: toastTitle,
+                content: toastMessage,
+                target: document.body,
+                cssClass: className,
+                timeOut: 3000,
+                position: { X: 'Right', Y: 'Top' },
+                showCloseButton: true,
+                newestOnTop: true,
+                animation: {
+                    hide: { effect: 'SlideRightOut' },
+                    show: { effect: 'SlideRightIn' }
+                },
+                width: '320px'
+            });
+            toast.appendTo('#toast-message-container');
+            toast.show();
+        }
+
+        function initializeRelativeTimer() {
+            return setTimeout(
+                $.proxy(function () {
+                    updateAutoSavedTime(true);
+                    clearTimeout(relativeDateTimer);
+                    relativeDateTimer = initializeRelativeTimer();
+                },
+                    this),
+                60000);
+        }
+
+        boldReportDesigner.prototype.keyDownSaveAction = function () {
+            publishAction({ name: 'click' });
+        }
+
+        function publishAction(args) {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            var partInfo = {
+                partId: reportPartId,
+                partName: designer.reportFileName,
+                description: description
+            };
+            if (args && args.name === 'click') {
+                var partItem = designer.designerPanel.designArea.find("[partid='" + reportPartId + "']");
+                if (partItem.length == 1 && (reportPartName === designer.reportFileName)) {
+                    partInfo.partItem = partItem;
+                    designer.saveReportPart(partInfo);
+                } else {
+                    designer.showReportPartPublish(partInfo);
+                }
+            } else if (args && args.name === 'select' && args.item && args.item.value === 'reportpart') {
+                designer.showReportPartPublish(partInfo);
+            }
+        }
+
+        function windowUnload(args) {
+            var designer = $('#' + controlId).data('boldReportDesigner');
+
+            if (designer && isSubmit) {
+                designer.disposeViewerCache();
+            }
+
+            isSubmit = true;
+        }
+
+        function renderDesignerHeader() {
+            var divouter = ej.buildTag('div.e-designer-header', '', {
+                'height': '40px',
+                'width': '100%',
+                'overflow': 'hidden',
+                'box-sizing': 'border-box',
+                'padding': '0px 10px',
+                'background': '#ffffff'
+            },
+                {
+                    'id': controlId + '_designer_header'
+                });
+            $('#' + controlId).before(divouter);
+            var backArrowOuterDiv = ej.buildTag('div', '', {
+                'height': '100%',
+                'width': '30px',
+                'display': 'table',
+                'float': 'left'
+            },
+                {
+                    'id': controlId + '_designer_header_backarrow_div'
+                });
+            var backArrowInnerDiv = ej.buildTag('div', '', {
+                'display': 'table-cell',
+                'vertical-align': 'middle',
+                'text-align': 'center',
+                'padding-top': '2px'
+            });
+            var backArrowEle = ej.buildTag(
+                'span.e-rptdesigner-headericon e-rptdesigner-data-icon e-reportdesigner-backarrow',
+                '',
+                {
+                    'padding': '5px',
+                    'cursor': 'pointer'
+                },
+                {
+                    'id': controlId + '_designer_header_backarrow'
+                });
+            backArrowOuterDiv.append(backArrowInnerDiv);
+            backArrowInnerDiv.append(backArrowEle);
+            backArrowEle.bind('click', backToServer);
+            var reportNameOuterDiv = ej.buildTag('div', '', {
+                'height': '100%',
+                'width': '180px',
+                'display': 'table',
+                'float': 'left',
+                'padding': '0px 6px'
+            });
+            var reportNameInnerDiv = ej.buildTag('div', '', {
+                'display': 'table-cell',
+                'vertical-align': 'middle',
+                'text-align': 'center'
+            });
+            var rptNameEle = ej.buildTag(
+                'input.e-rptdesigner-inputPath e-textbox e-designer-fontfamily',
+                '',
+                {
+                    'height': '28px',
+                    'width': '180px',
+                    'border': '1px solid #c8c8c8',
+                    'font-size': '12px',
+                    'letter-spacing': '0.3px',
+                    'border-radius': '4px'
+                },
+                {
+                    'id': controlId + '_designer_header_reportPartName',
+                    'spellcheck': 'false', 'type': 'text',
+                    'placeholder': "[[[Report Name]]]"
+                });
+            reportNameOuterDiv.append(reportNameInnerDiv);
+            reportNameInnerDiv.append(rptNameEle);
+            rptNameEle.bind('blur', textFocusOut);
+            rptNameEle.bind('keyup', textKeyup);
+            var draftDiv = ej.buildTag('div', '', {
+                'height': '100%',
+                'display': 'flex',
+                'float': 'left'
+            }, {
+                'id': controlId + '_design_header_draft_div'
+            });
+
+            var draftInnerDiv = ej.buildTag('div', '', {
+                'display': 'inline-flex',
+                'align-items': 'center'
+            });
+            var draftIcon = ej.buildTag(
+                'span.e-designer-viewCheckIcon e-designer-draft e-rptdesigner-checkmark', '', {},
+                {
+                    'id': controlId + '_design_header_draft_icon'
+                });
+            var draftStatus = ej.buildTag('span.e-designer-draft-status-text e-designer-fontfamily', '',
+                {},
+                {
+                    'id': controlId + '_design_header_draft_status'
+                });
+            draftInnerDiv.append(draftIcon, draftStatus);
+            draftDiv.append(draftInnerDiv);
+            var designerViewDiv = ej.buildTag('div', '', {
+                'height': '40px',
+                'float': 'left',
+                'padding': '0px 10px',
+                'display': 'table',
+                'position': 'absolute',
+                'left': '45%'
+            }, {
+                'id': controlId + '_design_header_view_div'
+            });
+            var designerInnerDiv = ej.buildTag('div', '', {
+                'display': 'table-cell',
+                'vertical-align': 'middle'
+            });
+            var designEle = ej.buildTag(
+                'span.e-rptdesigner-header-design e-userselect e-rptdesigner-header-selection e-designer-fontfamily',
+                "[[[Design]]]",
+                {},
+                {
+                    'id': controlId + '_design_header_designview'
+                });
+            var previewEle = ej.buildTag(
+                'span.e-rptdesigner-header-preview e-userselect e-designer-fontfamily',
+                "[[[Preview]]]",
+                {},
+                {
+                    'id': controlId + '_design_header_preview'
+                });
+            designerInnerDiv.append(designEle, previewEle);
+            designerViewDiv.append(designerInnerDiv);
+            designEle.bind('click', designViewChange);
+            previewEle.bind('click', designViewChange);
+            var publishContainer = ej.buildTag('div', '', {
+                'height': '100%',
+                'display': 'table',
+                'float': 'right'
+            }, {
+                'id': controlId + '_design_header_publish_div'
+            });
+            var publishDiv = ej.buildTag('div.e-rptdesigner e-publish-btn-wrapper', '', {
+                'display': 'table-cell',
+                'vertical-align': 'middle',
+                'text-align': 'center'
+            });
+            var publishBtn = ej.buildTag('button.e-designer-fontfamily', '', {
+            }, {
+                'id': controlId + '_design_header_publish_btn'
+            });
+            publishDiv.append(publishBtn);
+            publishContainer.append(publishDiv);
+            divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
+
+            var items = [{ text: 'Publish As', value: 'reportpart' }];
+            var splitButton = new ejs.splitbuttons.SplitButton({
+                items: items, content: 'Publish',
+                click: $.proxy(publishAction, this),
+                select: $.proxy(publishAction, this)
+            });
+            splitButton.appendTo(publishBtn[0]);
+        }
+
+        function designViewChange(args) {
+            if (args && args.currentTarget) {
+                var targetEle = $(args.currentTarget);
+                if (!targetEle.attr('disabled') && !targetEle.hasClass('e-rptdesigner-header-selection')) {
+                    if (targetEle.hasClass('e-rptdesigner-header-design')) {
+                        $('#' + controlId + '_design_header_preview').removeClass('e-rptdesigner-header-selection');
+                        targetEle.addClass('e-rptdesigner-header-selection');
+                        var designer = $('#' + controlId).data('boldReportDesigner');
+                        designer.showDesign();
+                    } else if (targetEle.hasClass('e-rptdesigner-header-preview')) {
+                        $('#' + controlId + '_design_header_designview').removeClass('e-rptdesigner-header-selection');
+                        targetEle.addClass('e-rptdesigner-header-selection');
+                        var designer = $('#' + controlId).data('boldReportDesigner');
+                        designer.showPreview();
+                    }
+                }
+            }
+        }
+
+        function textKeyup(args) {
+            if (args.keyCode === 13) {
+                updateReportPartName();
+            }
+        }
+
+        function textFocusOut(args) {
+            updateReportPartName();
+        }
+
+        function updateReportPartName() {
+            var rprtName = $('#' + controlId + '_designer_header_reportPartName').val();
+            var designer = $('#' + controlId).data('boldReportDesigner');
+            designer.reportFileName = (rprtName && rprtName.length > 0) ? rprtName : reportPartName;
+        }
+
+        function backToServer(args) {
+            if (args && args.target && !$(args.target).attr('disabled')) {
+                window.location.href = '@Url.Action("Reports", "Reports")' + '?view=report-parts';
+            }
+        }
+
+        function updateAutoSavedTime(state) {
+            if (state) {
+                var updateTime = $('#' + controlId + '_design_header_draft_status').attr('data-datetime');
+                updateRelativeTime(updateTime);
+            } else {
+                $('#' + controlId + '_design_header_draft_icon').addClass('e-designer-draft-status-progress').removeClass('e-designer-draft-status-success');
+                $('#' + controlId + '_design_header_draft_status').text("[[[Draft save failed]]]");
+            }
+        }
+
+        function updateRelativeTime(updateTime) {
+            var currentTime = new Date();
+            if (!updateTime) {
+                updateTime = currentTime;
+            }
+            $('#' + controlId + '_design_header_draft_icon').removeClass('e-designer-draft-status-progress').addClass('e-designer-draft-status-success');
+            $('#' + controlId + '_design_header_draft_status').text("[[[Draft auto-saved ]]]" + getRelativeTime(currentTime, new Date(updateTime)));
+        }
+
+        function getRelativeTime(currentTime, updateTime) {
+            var elapsedMinutes = Math.floor((currentTime.getTime() - updateTime.getTime()) / 60000);
+            var elapsedHours = Math.floor(elapsedMinutes / 60);
+            var elapsedDays = Math.floor(elapsedHours / 24);
+            if (elapsedMinutes < 1) {
+                return "[[[just now]]]";
+            } else if (elapsedMinutes < 2) {
+                return "[[[a minute ago]]]";
+            } else if (elapsedMinutes < 60) {
+                return elapsedMinutes + "[[[minutes ago]]]";
+            } else if (elapsedMinutes < 120) {
+                return "[[[an hour ago]]]";
+            } else if (elapsedHours < 24) {
+                return elapsedHours + "[[[hours ago]]]";
+            } else if (elapsedDays < 2) {
+                return "[[[yesterday]]]";
+            } else {
+                return elapsedDays + "[[[days ago]]]";
+            }
+        }
+
+        function disableDesignerHeaderPane(args) {
+            if (args && args.actionType && args.actionType === 'show') {
+                $('#' + controlId + '_designer_header_reportPartName').attr('disabled', 'disabled').css('opacity', '0.5');
+                $('#' + controlId + '_design_header_designview').attr('disabled', 'disabled').css('opacity', '0.5');
+                $('#' + controlId + '_design_header_preview').attr('disabled', 'disabled').css('opacity', '0.5');
+                $('#' + controlId + '_design_header_publish_div').css('opacity', '0.3');
+                $('#' + controlId + '_design_header_publish_btn')[0].ej2_instances[0].disabled = true;
+            } else {
+                $('#' + controlId + '_designer_header_reportPartName').removeAttr('disabled').css('opacity', '1');
+                $('#' + controlId + '_design_header_designview').removeAttr('disabled').css('opacity', '1');
+                $('#' + controlId + '_design_header_preview').removeAttr('disabled').css('opacity', '1');
+                $('#' + controlId + '_design_header_publish_div').css('opacity', '1');
+                $('#' + controlId + '_design_header_publish_btn')[0].ej2_instances[0].disabled = false;
+            }
+        }
+    </script>
+</head>
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
+    <div id="container"></div>
+    <div id="toast-message-container"></div>
+</body>
+</html>
