@@ -61,7 +61,7 @@
             $("#status-dom").hide();
 
             window.dateFormat = "@globalAppSettings.SystemSettings.DateFormat";
-            var fulldata=@Html.Raw(Json.Serialize(ViewBag.UserDetail));
+            var fulldata = @Json.Serialize(ViewBag.UserDetail);
             editUser(fulldata,"@globalAppSettings.SystemSettings.DateFormat");
             if (@ViewBag.EditUserProfile > 0) {
                 $("#edit").trigger("click");
@@ -315,7 +315,7 @@
                                     </div>
                                 </form>
                             </div>
-                            @if (userDetail.DirectoryType == DirectoryType.Local && (isAdmin || (!isAdmin && !userDetail.IsAdmin)))
+                            @if (ServerAppConfig.IsSelfHosted && userDetail.DirectoryType == DirectoryType.Local && (isAdmin || (!isAdmin && !userDetail.IsAdmin)))
                             {
                                 <div id="edit-button">
                                     <input type="button" class="secondary-button app-btn-secondary pull-right" id="edit" title="" value="[[[Edit Profile]]]">
@@ -323,7 +323,7 @@
                                     <input type="button" class="primary-button app-btn-primary pull-right inactive-content" id="save-button" title="" onclick="SaveUserdetails()" value="[[[Save]]]">
                                 </div>
                             }
-                            else if (!isAdmin && userDetail.IsAdmin)
+                            else if (ServerAppConfig.IsSelfHosted && !isAdmin && userDetail.IsAdmin)
                             {
                                 <div id="edit-button" class="disabled-edit-button" title="[[[You do not have the privilege to edit the admin user’s profile.]]]" data-toggle="tooltip">
                                     <input type="button" class="secondary-button pull-right diasbled-edit-button-hover" id="edit" value="[[[Edit Profile]]]" disabled="disabled">

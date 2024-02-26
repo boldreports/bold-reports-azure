@@ -34,9 +34,9 @@
        var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "Datasets")";
       $(document).ready(function () {
           var firstLoad = true;
-          $("#dataset_upload_iframe").load(function () {
+          $("#dataset_upload_iframe").on('load', function () {
             if (firstLoad) {
-                createEditDatasetPopup(@Html.Raw(Json.Serialize(ViewData["datasetInfo"])));
+                createEditDatasetPopup(@Json.Serialize(ViewData["datasetInfo"]));
                 firstLoad = false;
             }
             window.focus();

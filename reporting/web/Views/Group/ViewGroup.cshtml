@@ -24,7 +24,7 @@
     </environment>
 
     <script type="text/javascript">
-        var groupDetails=@Html.Raw(ViewBag.groupDetails);
+        var groupDetails = @Json.Serialize(ViewBag.groupDetails);
         var groupId = @ViewBag.groupId;
         var groupAttributesUrl = "@Url.Action("GetGroupAttributes", "CustomAttribute")";
 

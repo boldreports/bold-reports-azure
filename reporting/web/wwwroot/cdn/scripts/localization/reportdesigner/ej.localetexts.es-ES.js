@@ -2861,6 +2861,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
         errorMessage: {
             duplicateName: 'Por favor, introduce el nombre válido',
             emptyValueValidation: 'Seleccionar valor para el campo de expresión',
+            invalidCharacterValidation: 'El nombre no debe contener espacios ni caracteres especiales'
         },
         deleteField: 'Borrar campo'
     },
@@ -3071,7 +3072,7 @@ ej.ReportDesigner.Locale['es-ES'] = {
             pageName: 'El nombre de la página actual en el informe puede ser usado solo en el encabezado o en el pie de página',
             pageNumber: 'El número de página actual puede ser reiniciado usando saltos de páginas',
             reportFolder: 'La ruta completa de la carpeta que almacena el informe no incluye la URL del servidor del informe',
-            reportName: 'URL del servidor del informe donde dicho informe opera',
+            reportName: 'La variable contiene el nombre del informe actual.',
             reportServerUrl: 'URL del servidor del informe el cual dicho informe comienza a operar',
             totalPages: 'El número total de páginas en la secuencia continua de páginas actual sólo puede utilizarse en el encabezado y pie de página. El número se puede restablecer mediante saltos de página.',
             language: 'El ID de idioma del cliente que ejecuta el informe.',

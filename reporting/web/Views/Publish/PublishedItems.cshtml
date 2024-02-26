@@ -15,7 +15,7 @@
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/published-items.min.js"></script>
     </environment>
     <script>
-        var publishedItemDetails = @Html.Raw(Json.Serialize(ViewBag.PublishedItemDetails));
+        var publishedItemDetails = @Json.Serialize(ViewBag.PublishedItemDetails);
         var synchronizeSitesUrl = "@Url.Action("SynchronizePublishedItem", "Publish")";
         var removePublishedItemUrl = "@Url.Action("RemovePublishedItem", "Publish")";
     </script>

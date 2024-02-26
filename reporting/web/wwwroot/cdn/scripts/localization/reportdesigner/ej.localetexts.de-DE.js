@@ -2860,7 +2860,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         close: 'Schließen',
         errorMessage: {
             duplicateName: 'Bitte geben Sie den gültigen Namen ein',
-            emptyValueValidation: 'Wählen Sie einen Wert für ein Ausdrucksfeld'
+            emptyValueValidation: 'Wählen Sie einen Wert für ein Ausdrucksfeld',
+            invalidCharacterValidation: 'Name sollte keine Leerzeichen und Sonderzeichen enthalten'
         },
         deleteField: 'Feld löschen'
     },
@@ -3070,7 +3071,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
             pageName: 'Der Name der aktuellen Seite im Bericht kann nur in der Kopf- oder Fußzeile der Seite verwendet werden.',
             pageNumber: 'Die aktuelle Seitenzahl, die durch Seitenumbrüche zurückgesetzt werden kann',
             reportFolder: 'Der vollständige Pfad zu dem Ordner mit dem Bericht enthält nicht die Berichtsserver-URL.',
-            reportName: 'Die URL des Berichtsservers, auf dem der Bericht ausgeführt wird.',
+            reportName: 'The variable enthält den Namen des aktuellen Berichts.',
             reportServerUrl: 'Die URL des Berichtsservers, auf dem der Bericht ausgeführt wird.',
             totalPages: 'Die Gesamtzahl der Seiten in der aktuellen fortlaufenden Seitenfolge kann nur in der Kopf- und Fußzeile der Seite verwendet werden. Die Nummer kann mithilfe von Seitenumbrüchen zurückgesetzt werden.',
             language: 'Die Sprachen-ID des Clients, der den Bericht ausführt.',

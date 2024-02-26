@@ -855,6 +855,10 @@ INSERT into [BOLDRS_SettingsType] (Name,IsActive) Values (N'Subscription',1)
 ;
 INSERT into [BOLDRS_SettingsType] (Name,IsActive) Values (N'Payments',1)
 ;
+INSERT into [BOLDRS_SettingsType] (Name,IsActive) Values (N'CORS Settings',1)
+;
+INSERT into [BOLDRS_SettingsType] (Name,IsActive) Values (N'Security',1)
+;
 
 INSERT into [BOLDRS_ItemLogType] (Name,IsActive) VALUES ( N'Added',1)
 ;

@@ -5,7 +5,7 @@
     var globalAppSettings = _globalAppSettings;
     ViewBag.Title = globalAppSettings.SystemSettings.OrganizationName + " - [[[View My Permissions]]]";
     ViewBag.MessageBox = false;
-    var jsondata = JsonConvert.SerializeObject(Model);
+    var jsondata = Model;
     var gridName = ViewBag.gridName;
 }
 
@@ -55,7 +55,7 @@
         .ready(function() {
             $("#PermissionGrid")
                 .ejGrid({
-                    dataSource: @Html.Raw(jsondata),
+                    dataSource: @Json.Serialize(jsondata),
                     allowSearching: true,
                     allowSelection: false,
                     enableAltRow: false,

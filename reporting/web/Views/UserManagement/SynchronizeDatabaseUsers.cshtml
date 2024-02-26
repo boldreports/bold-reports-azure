@@ -69,7 +69,7 @@
     <script type="text/javascript" language="javascript">
         ej.support.stableSort = false;
         $("#search-ad-users").val("");
-        var data = @Html.Raw(Json.Serialize(ViewBag.DatabaseUsers));
+        var data = @Json.Serialize(ViewBag.DatabaseUsers);
         $(function () {
             data = ej.parseJSON(data);
             GridLocalization();

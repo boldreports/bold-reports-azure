@@ -88,7 +88,7 @@
             });
         });
 
-        $(window).load(function () {
+        $(window).on("load", function () {
             $('.lazyload').each(function () {
                 if ($(this).attr("data-id") == "footerlogo") {
                     $(this).parent().find("p#poweredbysyncfusion").append($("<img>").attr({

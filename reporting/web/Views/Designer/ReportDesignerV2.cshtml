@@ -34,7 +34,7 @@
 
     var datasourcePermisions = ViewBag.DatasourcePermission;
     var datasetPermissions = ViewBag.DatasetPermission;
-    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var organizationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var dataConnectors = @Json.Serialize(ViewBag.DataConnectors);
     var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
@@ -53,7 +53,7 @@
     <meta name="viewport" content="width=device-width" />
     @if (ViewBag.reportName != null)
     {
-        <title>@Html.Raw(ViewBag.reportName) - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+        <title>@ViewBag.reportName - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
     else
     {
@@ -245,13 +245,18 @@
             font-style: normal !important;
         }
 
+        .e-designer-header:not(.e-rptdesigner-checkmark),
         .e-designer-header .e-control.e-tooltip,
         .e-designer-header .e-switch-wrapper.e-wrapper,
         .e-designer-header .e-switch-wrapper .e-switch,
         .e-designer-header .e-switch-wrapper .e-switch-on,
         .e-designer-header .e-switch-wrapper .e-switch-off,
-        .e-designer-header .e-control.e-btn {
-            font-family: var(--report-designer-font, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', 'Arial') !important;
+        .e-designer-header .e-control.e-btn,
+        .e-designer-toast-message,
+        .e-designer-label-tooltip,
+        .e-designer-label-tooltip .e-tip-content,
+        .e-designer-publish-drpdown {
+            font-family: var(--report-designer-font, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', 'Arial');
         }
     </style>
 
@@ -326,16 +331,16 @@
         var isEditReport = false;
         var relativeDateTimer = null;
 
-        var categoryName = "@Html.Raw(ViewBag.categoryName)";
+        var categoryName = "@ViewBag.categoryName";
         var categoryId = "";
         var reportId = "@ViewBag.ReportId";
-        var reportName = "@Html.Raw(ViewBag.reportName)";
+        var reportName = "@ViewBag.reportName";
         var datasetName = "@ViewBag.datasetId";
-        var description = "@Html.Raw(ViewBag.description)";
+        var description = "@ViewBag.description";
         var isPublic = "@ViewBag.isPublic";
         isPublic = isPublic.toLowerCase();
-        var tags = @Html.Raw(Json.Serialize(ViewBag.tags));
-        var selectedTags = @Html.Raw(Json.Serialize(ViewBag.selectedTags));
+        var tags = @Json.Serialize(ViewBag.tags);
+        var selectedTags = @Json.Serialize(ViewBag.selectedTags);
         var isDraft = "@ViewBag.isDraft";
         var version = "@ViewBag.Version";
         isDraft = isDraft.toLowerCase();
@@ -348,7 +353,7 @@
         var warningMessage = isAdmin == "true" ? "[[[Public reports are disabled in]]] <a href='" + rootUrlAction + "/administration/report-settings' target='_blank'> [[[report settings]]]" : "[[[Public Reports are disabled by the system administrator. Please contact your system administrator to enable this.]]]";
         var isEdit = "@ViewBag.isEdit";
         isEdit = isEdit.toLowerCase();
-        var pageTitle = "@Html.Raw(oraganisationName)";
+        var pageTitle = "@organizationName";
         var readWriteDeletePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create;
         var readWritePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create & ~ej.ReportDesigner.Permission.Delete;
         var readPermission = ej.ReportDesigner.Permission.Shared;
@@ -370,7 +375,7 @@
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
         var enableReportPart = true;
-        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
 
         if(isEdit === "true"){
@@ -446,7 +451,7 @@
                 reportServerUrl: "@reportServerApiUrl",
                 create: $.proxy(controlInitialized, this),
                 reportSaved: $.proxy(reportSaved, this),
-                reportPartSaved: $.proxy(draftReportPart, this),
+                reportPartSaved: $.proxy(reportPartSaved, this),
                 serviceAuthorizationToken: designerToken,
                 toolbarSettings: {
                     items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.New
@@ -629,7 +634,7 @@
             isSubmit = false;
         }
 
-        function draftReportPart(args) {
+        function reportPartSaved(args) {
             if (args.reportAction == 'PartSaved' && args.status == false) {
                 alertMessage(false, window.Server.App.LocalizationContent.Error + "!", window.Server.App.LocalizationContent.PartPublishError);
                 return;
@@ -941,11 +946,12 @@
             var splitButton = new ejs.splitbuttons.SplitButton({
                 items: items, content: 'Publish',
                 click: $.proxy(publishAction, this),
-                select: $.proxy(publishAction, this)
+                select: $.proxy(publishAction, this),
+                cssClass: 'e-designer-publish-drpdown'
             });
             splitButton.appendTo(publishBtn[0]);
 
-            var infoTooltip = new ejs.popups.Tooltip({ content: window.Server.App.LocalizationContent.DesignerToggleInfo });
+            var infoTooltip = new ejs.popups.Tooltip({ cssClass: 'e-designer-label-tooltip', content: window.Server.App.LocalizationContent.DesignerToggleInfo });
             var switchObj = new ejs.buttons.Switch({
                 checked: isDesignerV2Enabled,
                 change: onToggleChange,
@@ -1173,7 +1179,7 @@
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
     <div id="container"></div>
-    <div id="toast-message-container"></div>
+    <div id="toast-message-container" class="e-designer-toast-message"></div>
     @*@if (showTour)
     {
         @Styles.Render("~/bundles/styles/reports-tour")

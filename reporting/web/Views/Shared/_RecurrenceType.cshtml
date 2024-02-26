@@ -24,6 +24,8 @@
          var getRecurrenceTypeUrl = "@Url.Action("GetRecurrenceType", "scheduler")";
          var getNextScheduleUrl = "@Url.Action("GetNextScheduleDate", "scheduler")";
     </script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej.editor.min.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2.numerictextbox.min.js"></script>
     <environment include="Development,CloudDevelopment">
         <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecurrence.js"></script>
     </environment>

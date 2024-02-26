@@ -1,4 +1,5 @@
 ﻿@using System.Runtime.InteropServices;
+@using System.Web;
 @{
     var globalAppSettings = _globalAppSettings;
     var tenantAppConfig = new TenantAppConfiguration(globalAppSettings);
@@ -12,6 +13,7 @@
     };
     var helpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DomainBinding);
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    var copyrightInformation = HttpUtility.HtmlDecode(globalAppSettings.SystemSettings.CopyrightInformation);
 }
 <script>
     var isSitesPage = "true";
@@ -215,7 +217,7 @@
                         <div class="form-group highlight-image">
                             <label class="col-xs-4 app-textbox-label">[[[Site copyright information]]]</label>
                             <div class="col-xs-8">
-                                <input type="text" id="site-copyright" name="site-copyright" class="form-control site-copyright-fields" placeholder="[[[Enter your copyright information]]]" value="@Html.Raw(globalAppSettings.SystemSettings.CopyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))" data-original-value="@Html.Raw(globalAppSettings.SystemSettings.CopyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))" />
+                                <input type="text" id="site-copyright" name="site-copyright" class="form-control site-copyright-fields" placeholder="[[[Enter your copyright information]]]" value="@(copyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))" data-original-value="@(copyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))" />
                             </div>
                             <div class="col-xs-12 no-padding">
                                 <div class="col-xs-4"></div>

@@ -15,8 +15,9 @@
         SettingsScopes.Payments.ToString(),
         SettingsScopes.Subscription.ToString(),
         SettingsScopes.SupportSettings.ToString(),
-        SettingsScopes.NotificationSettings.ToString()
-
+        SettingsScopes.NotificationSettings.ToString(),
+        SettingsScopes.CORSPolicySettings.ToString(),
+        SettingsScopes.Security.ToString()
     };
     var canShowAdminMenu = isAdmin || model[SettingsScopes.All] || model.Select(x => x).Where(x => scopeList.Contains(x.Key.ToString()) && x.Value == true).Count() > 1;
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
@@ -136,7 +137,7 @@
 
         @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.Security] || model[SettingsScopes.CORSPolicySettings])))
         {
-            @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.CORSPolicySettings]))
+            @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.CORSPolicySettings])))
             {
                 <li class="mobile-hidden">
                     <a id="cors-settings-link" class="admin-menu-item @(currentUrl.IndexOf(corsSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@corsSettingsUrl">

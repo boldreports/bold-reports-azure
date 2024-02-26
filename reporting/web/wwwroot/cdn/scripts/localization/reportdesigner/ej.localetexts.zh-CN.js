@@ -2857,7 +2857,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         close: '关',
         errorMessage: {
             duplicateName: '請輸入有效名稱',
-            emptyValueValidation: '为表达式字段选择值'
+            emptyValueValidation: '为表达式字段选择值',
+            invalidCharacterValidation: '名称不应包含空格和特殊字符'
         },
         deleteField: '删除栏位'
     },
@@ -3067,7 +3068,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             pageName: '报告中当前页面的名称只能用于页眉或页脚.',
             pageNumber: '当前页码可通过使用分页符重置',
             reportFolder: '包含报告的文件夹的完整路径不包含报告服务器URL.',
-            reportName: '运行报告的报告服务器的URL',
+            reportName: '该变量包含当前报告的名称。',
             reportServerUrl: '运行报表的报表服务器的URL.',
             totalPages: '当前连续页面序列中的页面总数 只能在页眉和页脚中使用. 该号码可以通过使用分页符重置.',
             language: '运行报表的客户端的语言ID.',

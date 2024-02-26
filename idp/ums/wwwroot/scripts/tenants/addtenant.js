@@ -25,6 +25,7 @@ $(document).ready(function () {
 
     $('[data-toggle="popover"]').popover();
 
+
     if (!isCommonLogin && isBoldBIMultiTenant.toLowerCase() == "true") {
         document.getElementById("tenant-type").ej2_instances[0].enabled = false;
     }
@@ -33,7 +34,7 @@ $(document).ready(function () {
     }
 
     var tenantTypeDropDown = getDropDownValue("tenant-type");
-    if (tenantTypeDropDown != "BoldBiOnPremise") {
+    if (tenantTypeDropDown.toLowerCase() != "boldbionpremise") {
         $(".reports-branding").css("display", "inline");
         $(".bi-branding").css("display", "none");
         $(".selector").addClass("selector-alignment");
@@ -113,11 +114,7 @@ $(document).ready(function () {
             modalheight = $("#dialog-body-container").height() + $("#dialog-body-header").height() + 102;
         }
 
-        if (height > modalheight) {
-            $(".dialog-body-div").css("height", height);
-        } else {
-            $(".dialog-body-div").css("height", modalheight);
-        }
+        $(".dialog-body-div").css("height", "auto");
         gridHeight = height;
     });
 
@@ -353,9 +350,11 @@ $(document).ready(function () {
             $("#header-title").html(window.Server.App.LocalizationContent.SiteCreation);
             if (item === "dashboards") {
                 $("#header-description").html(window.Server.App.LocalizationContent.BoldBiMultiTenancy);
+                $("#master-site-description").html(window.Server.App.LocalizationContent.MasterSiteDescription.format("dashboard", "dashboards"));
             }
             else {
                 $("#header-description").html(window.Server.App.LocalizationContent.BoldReportsMultiTenancy);
+                $("#master-site-description").html(window.Server.App.LocalizationContent.MasterSiteDescription.format("reports", "reports"));
             }
             if ($('input[name="identifier"]').prop("checked")) {
                 $("#tenant-identifier").attr("disabled", true);
@@ -589,10 +588,12 @@ function getTenant(id) {
                 if (isBoldReportsTenantType()) {
                     item = "reports";
                     $("#header-description").html(window.Server.App.LocalizationContent.BoldReportsMultiTenancy);
+                    $("#master-site-description").html(window.Server.App.LocalizationContent.MasterSiteDescription.format("reports", "reports"));
                 }
                 else {
                     item = "dashboards";
                     $("#header-description").html(window.Server.App.LocalizationContent.BoldBiMultiTenancy);
+                    $("#master-site-description").html(window.Server.App.LocalizationContent.MasterSiteDescription.format("dashboard", "dashboards"));
                 }
                 if (useSiteIdentifierEnable && data.TenantDetails.Tenant.UseSiteIdentifier) {
                     $(".site-url-identifier").removeClass("hide");

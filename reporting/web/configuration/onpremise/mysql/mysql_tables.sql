@@ -926,6 +926,10 @@ INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ( 'Subscr
 ;
 INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ( 'Payments',1)
 ;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('CORS Settings',1)
+;
+INSERT into {database_name}.BOLDRS_SettingsType (Name,IsActive) VALUES ('Security',1)
+;
 
 INSERT into  {database_name}.BOLDRS_ItemLogType (Name,IsActive) VALUES ( 'Added',1)
 ;

@@ -35,9 +35,9 @@
     <script>
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
         var updateCorsSettingsUrl = "@Url.Action("UpdateCorsSettings", "Administration")";
-        var allowedOriginsList = @Html.Raw(Json.Serialize(allowedOrigins));
-        var allowedHeadersList = @Html.Raw(Json.Serialize(allowedHeaders));
-        var allowedExposeHeadersList = @Html.Raw(Json.Serialize(allowedExposeHeaders));
+        var allowedOriginsList = @Json.Serialize(allowedOrigins);
+        var allowedHeadersList = @Json.Serialize(allowedHeaders);
+        var allowedExposeHeadersList = @Json.Serialize(allowedExposeHeaders);
     </script>
 }
 

@@ -53,7 +53,7 @@
         var userDirectoryAzure = "@userDirectoryAzureHelpSiteUrl";
         var userDirectoryDatabase = "@userDirectoryDatabaseHelpSiteUrl";
         var userDirectoryWindows = "@userDirectoryWindowsHelpSiteUrl";
-        var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
+        var SystemSettingsProperties = @Json.Serialize(ViewBag.SystemSettings);
         var isAzureApplication = @Json.Serialize(isAzureApplication);
         var enableWindowsAD = @Json.Serialize(enableWindowsAD);
     </script>
@@ -635,10 +635,10 @@
                 {
                     <button type="button" title="" id="update-active-dir-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right update-system-settings  @(!ServerAppConfig.IsSelfHosted ? " hidden" : string.Empty )" ng-disabled="windowsAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
                 }
-                <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right @(ServerAppConfig.IsSelfHosted ? " hidden" : string.Empty)" ng-disabled="azureAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
-                <button type="button" title="" id="save-db-settings" disabled="disabled" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">[[[Save]]]</button>
-                <button type="button" id="connect-database" class="primary-button app-btn-primary pull-right connect-database-button" disabled="disabled">[[[Next]]]</button>
-                <button type="button" id="change-connection" class="primary-button app-btn-primary  pull-right">[[[Back]]]</button>
+                <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right @(ServerAppConfig.IsSelfHosted ? " hidden" : string.Empty)" ng-disabled="azureAdSettingsForm.$invalid" ng-click="" style="display:none">[[[Save]]]</button>
+                <button type="button" title="" id="save-db-settings" disabled="disabled" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right" style="display:none">[[[Save]]]</button>
+                <button type="button" id="connect-database" class="primary-button app-btn-primary pull-right connect-database-button" disabled="disabled" style="display:none">[[[Next]]]</button>
+                <button type="button" id="change-connection" class="primary-button app-btn-primary  pull-right" style="display:none">[[[Back]]]</button>
             </div>
         }
 

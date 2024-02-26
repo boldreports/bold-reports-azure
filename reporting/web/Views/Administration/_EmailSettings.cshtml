@@ -27,7 +27,7 @@
     </environment>
     <script>
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
-        var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
+        var SystemSettingsProperties = @Json.Serialize(ViewBag.SystemSettings);
         var updateEmailSettingsUrl = "@Url.Action("UpdateEmailSettings", "Administration")";
     </script>
 }

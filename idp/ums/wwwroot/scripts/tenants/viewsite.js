@@ -119,7 +119,7 @@ $(document).ready(function () {
         }
         $('a[href="#custom-attribute-tab"]').tab("show");
     }
-    else if (query.includes("?tab=site-settings")) {
+    else if (query.includes("?tab=site-settings") && isActiveSite) {
         $('a[href="#site-settings-tab"]').tab("show");
     }
     else {
@@ -146,7 +146,7 @@ $(document).ready(function () {
             $("#custom-attribute a").attr("href", "#custom-attribute-tab");
             $('a[href="#custom-attribute-tab"]').tab('show');
         }
-        else if (tab === "site-settings") {
+        else if (tab === "site-settings" && isActiveSite) {
             $("#site-settings a").attr("href", "#site-settings-tab");
             $('a[href="#site-settings-tab"]').tab('show');
         }
@@ -949,13 +949,17 @@ function updateTenantStatus(actionUrl, tenantId, action) {
                 else if (action === "activate") {
                     SuccessAlert(actionName + " " + window.Server.App.LocalizationContent.SiteLetter, window.Server.App.LocalizationContent.SiteActivatedSuccess, 7000);
                 }
-
-                var tenantGridObj = document.getElementById('tenants_grid').ej2_instances[0];
-                tenantGridObj.refresh();
             }
             else {
-                WarningAlert(actionName + " " + window.Server.App.LocalizationContent.SiteLetter, window.Server.App.LocalizationContent.InternalServerErrorTryAgain, data.Message, 7000);
+                if (data.IsMasterSite) {
+                    WarningAlert(actionName + " " + window.Server.App.LocalizationContent.SiteLetter, window.Server.App.LocalizationContent.SuspendOrDeleteSiteFailed.format(action), data.Message, 7000);
+                }
+                else {
+                    WarningAlert(actionName + " " + window.Server.App.LocalizationContent.SiteLetter, window.Server.App.LocalizationContent.InternalServerErrorTryAgain, data.Message, 7000);
+                }
             }
+            var tenantGridObj = document.getElementById('tenants_grid').ej2_instances[0];
+            tenantGridObj.refresh();
         },
         complete: function () {
             hideWaitingPopup('messageBox');

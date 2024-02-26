@@ -9,6 +9,7 @@
     var isAdmin = _identityResponse.IsAdmin;
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
     var passwordPolicy = ServerAppConfig.PasswordPolicy;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
 }
 
 @section scripts{
@@ -35,19 +36,14 @@
         var deleteGroupViewUrl = "@Url.Action("DeleteGroupView", "Group")";
         var deleteGroupUserViewUrl = "@Url.Action("DeleteGroupUserView", "Group")";
         var addUserInGroupUrl = "@Url.Action("AddUserInGroup", "Group")";
-        var groupDetails=@Html.Raw(@ViewBag.groupDetails);
-        var allUsers=@Html.Raw(@ViewBag.allUser);
+        var groupDetails = @Json.Serialize(ViewBag.groupDetails);
+        var allUsers = @Json.Serialize(ViewBag.allUser);
         var groupId =@Context.Request.Query["groupId"];
         var checkMailSettingUrl = "@Url.Action("checkmailsettingsexist", "Administration")";
         var postactionUrl = "@Url.Action("postaction", "UserManagement")";
         var isPresentEmailId = "@Url.Action("IsPresentEmailId", "UserManagement")";
         var isUsernameExistsUrl = "@Url.Action("IsUsernameExists", "UserManagement")";
         var isEmailRequired = "@isEmailRequired";
-        var minimumLength = "@passwordPolicy.MinimumLength";
-        var lowerCaseRequired = "@passwordPolicy.LowerCaseRequired";
-        var upperCaseRequired = "@passwordPolicy.UpperCaseRequired";
-        var numberRequired = "@passwordPolicy.NumberRequired";
-        var specialCharactersRequired = "@passwordPolicy.SpecialCharactersRequired";
         serverApp.controller("GroupEditController", function ($scope) {
             $scope.selectedRow = 1;
             $scope.page = 0;
@@ -142,6 +138,16 @@
             }
         });
     </script>
+    @if (isSelfHosted)
+    {
+        <script>
+            var minimumLength = "@passwordPolicy.MinimumLength";
+            var lowerCaseRequired = "@passwordPolicy.LowerCaseRequired";
+            var upperCaseRequired = "@passwordPolicy.UpperCaseRequired";
+            var numberRequired = "@passwordPolicy.NumberRequired";
+            var specialCharactersRequired = "@passwordPolicy.SpecialCharactersRequired";
+        </script>
+    }
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 }
 @section MainSection{

@@ -25,7 +25,7 @@
     </environment>
 
 <script type="text/javascript">
-    var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
+    var SystemSettingsProperties = @Json.Serialize(ViewBag.SystemSettings);
     var checkMailSettingUrl = "@Url.Action("CheckMailSettingsExist", "Administration")";
     var emailActivation = "@ActivationType.EmailActivation";
     var updateAccountsSettingsUrl = "@Url.Action("UpdateAccountsSettings", "Administration")";

@@ -52,7 +52,7 @@
                         @if (!ServerAppConfig.IsSelfHosted)
                         {
                             <div>
-                                @Html.Raw(string.Format("[[[If you are a subscription administrator for {0}, you can activate your suspended site {1}here.]]]", globalAppSettings.SystemSettings.OrganizationName, "<a href='" + ServerAppConfig.AppSettings.EndPoints.TenantAppUrl + "sites/" + _globalAppSettings.SystemSettings.TenantId + "/subscription' class='redirect-link' target='_blank'>"))
+                                <span>[[[If you are a subscription administrator for ]]]@(globalAppSettings.SystemSettings.OrganizationName)[[[, you can activate your suspended site ]]]<a href='" + @ServerAppConfig.AppSettings.EndPoints.TenantAppUrl + "sites/" + @_globalAppSettings.SystemSettings.TenantId + "/subscription' class='redirect-link' target='_blank'>[[[here.]]]</a></span>
                             </div>
                         }
                         else

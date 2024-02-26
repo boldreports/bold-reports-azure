@@ -39,7 +39,7 @@
     var dashboardServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var manageSitesUrl = idPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/sites";
     var isMasterTenant = Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
-    var userPermissionItem = JsonConvert.SerializeObject(ViewBag.ItemAddOptions);
+    var userPermissionItem = ViewBag.ItemAddOptions;
     var hasOwnedReport = ViewBag.HasOwnedReport;
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
     if (allItemsCount == null && ServerAppConfig.IsUserBasedMenu)
@@ -353,8 +353,8 @@
         var isImageRequest = @Json.Serialize(isImageRequest);
         var isAdmin = @Json.Serialize(Convert.ToBoolean(Context.Session.GetString("IsAdmin")));
         var isMasterTenant = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
-        var userPermissionItem = @Html.Raw(userPermissionItem);
+        var userPermissionItem = @Json.Serialize(userPermissionItem);
         var isUserBasedMenu = @Json.Serialize(ServerAppConfig.IsUserBasedMenu);
-        var allItemsCount = @Html.Raw(JsonConvert.SerializeObject(allItemsCount));
+        var allItemsCount = @Json.Serialize(allItemsCount);
         var hasOwnedReport = @Json.Serialize(hasOwnedReport);
 </script>

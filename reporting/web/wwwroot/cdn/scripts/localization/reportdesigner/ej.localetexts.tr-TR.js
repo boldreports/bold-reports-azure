@@ -2861,6 +2861,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
         errorMessage: {
             duplicateName: 'Lütfen geçerli adı girin',
             emptyValueValidation: 'Bir ifade alanı için değer seçin',
+            invalidCharacterValidation: 'Ad, boşluk ve özel karakterler içermemelidir'
         },
         deleteField: 'Alanı Sil'
     },
@@ -3071,7 +3072,7 @@ ej.ReportDesigner.Locale['tr-TR'] = {
             pageName: 'Rapordaki mevcut sayfanın adı yalnızca sayfa üstbilgisi veya altbilgisinde kullanılabilir.',
             pageNumber: 'Sayfa sonları kullanılarak sıfırlanabilen mevcut sayfa numarası',
             reportFolder: 'Raporu içeren klasörün tam yolu, rapor sunucusu URL\'sini içermez.',
-            reportName: 'Raporun çalıştırıldığı rapor sunucusunun URL\'si.',
+            reportName: 'Değişken geçerli raporun adını içerir.',
             reportServerUrl: 'Raporun çalıştırıldığı rapor sunucusunun URL\'si.',
             totalPages: 'Mevcut sürekli sayfa dizisindeki toplam sayfa sayısı yalnızca sayfa üstbilgisi ve altbilgisinde kullanılabilir. Numara, sayfa sonları kullanılarak sıfırlanabilir.',
             language: 'Raporu çalıştıran istemcinin dil kimliği.',

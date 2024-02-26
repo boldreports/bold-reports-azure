@@ -24,7 +24,7 @@
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
             var reportDesignerUrl = "@Url.Action("ReportDesigner", "Reports")";
             var canCreateCategory = "@canCreateCategory";
-            var tagList = @Html.Raw(Json.Serialize(ViewBag.Tag));
+            var tagList = @Json.Serialize(ViewBag.Tag);
 
             function load() {
                 window.parent.parent.$("#report_popup_wrapper").ejWaitingPopup("hide");

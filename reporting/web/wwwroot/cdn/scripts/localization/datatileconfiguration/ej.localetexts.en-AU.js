@@ -5,7 +5,7 @@ ej.DataTileConfiguration.Locale['en-AU'] = {
         files: 'Files',
         services: 'Services'
     },
-    enableAllCheckbox: 'EnableAll',
+    enableAllCheckbox: 'Enable All',
     selectedText: ' of {count} selected',
     noDataText: 'No data sources found',
     alertHeaderText: 'ReportDesigner',

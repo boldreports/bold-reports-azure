@@ -316,7 +316,7 @@
 
     <script>
         $(document).ready(function () {
-            var categories = @Html.Raw(Json.Serialize(ViewBag.CategoryDetails));
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
             var options = "";
             for (var t = 0; t < categories.length; t++) {
                 options += '<option value=' + categories[t].Id + '>' + categories[t].Name + '</option>';
@@ -329,7 +329,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var tenants = @Html.Raw(Json.Serialize(ViewBag.Tenant));
+            var tenants = @Json.Serialize(ViewBag.Tenant);
             var tenantoption = "";
             for (var t = 0; t < tenants.length; t++) {
                 tenantoption += "<option value='" + tenants[t].TenantName + "'>" + tenants[t].TenantName + "</option>";
@@ -342,10 +342,10 @@
     </script>
     <script>
         $(document).ready(function () {
-            var sharedDataSet = @Html.Raw(Json.Serialize(ViewBag.SharedDataset));
-            var availableSharedDS = @Html.Raw(Json.Serialize(ViewBag.AvailableSharedDS));
-            var sharedDataSource = @Html.Raw(Json.Serialize(ViewBag.SharedDataSource));
-            var availableSharedDataSource = @Html.Raw(Json.Serialize(ViewBag.AvailableSharedDataSource));
+            var sharedDataSet = @Json.Serialize(ViewBag.SharedDataset);
+            var availableSharedDS = @Json.Serialize(ViewBag.AvailableSharedDS);
+            var sharedDataSource = @Json.Serialize(ViewBag.SharedDataSource);
+            var availableSharedDataSource = @Json.Serialize(ViewBag.AvailableSharedDataSource);
             if ((sharedDataSet && sharedDataSet.length > 0) || (sharedDataSource && sharedDataSource.length > 0)) {
                 $("#copyreport_advance_button").css('display', 'block');
             }
@@ -396,9 +396,9 @@
     </script>
     <script>
         $(document).ready(function () {
-            var reportCategoryList = @Html.Raw(Json.Serialize(ViewBag.CategoryDetails));
-            var drillthroughreportReferences = @Html.Raw(Json.Serialize(ViewBag.itemReferences["drillthroughreport"]));
-            var subreportReferences = @Html.Raw(Json.Serialize(ViewBag.itemReferences["subreport"]));
+            var reportCategoryList = @Json.Serialize(ViewBag.CategoryDetails);
+            var drillthroughreportReferences = @Json.Serialize(ViewBag.itemReferences["drillthroughreport"]);
+            var subreportReferences = @Json.Serialize(ViewBag.itemReferences["subreport"]);
 
             if ((drillthroughreportReferences && drillthroughreportReferences.length > 0) || (subreportReferences && subreportReferences.length > 0)) {
                 $("#copyreport_advance_button").css('display', 'block');

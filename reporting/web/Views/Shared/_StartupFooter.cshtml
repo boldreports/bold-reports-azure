@@ -1,16 +1,18 @@
 ﻿<div id="base-footer-div">
     @using i18n.Core.Abstractions.Domain
     @using Microsoft.AspNetCore.Builder;
+    @using System.Web;
     @inject RequestLocalizationOptions _localizationOptions
     @{
         var globalAppSettings = _globalAppSettings;
         var tenantAppConfig = new TenantAppConfiguration(globalAppSettings);
+        var copyrightInformation = HttpUtility.HtmlDecode(globalAppSettings.SystemSettings.CopyrightInformation);
         }
         <footer>
             <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding layout-footer no-margin">
                 <div class="col-xs-12 col-md-2 col-sm-4 col-lg-3 dropup no-padding language-area no-margin pull-left">
                     <div class="no-padding col-sm-12 no-margin pull-left" id="lang_menu">
-                         <p class="no-margin pull-left" id="copyrightinfo"> @Html.Raw(globalAppSettings.SystemSettings.CopyrightInformation.Replace("$$CurrentYear$$", DateTime.Now.Year.ToString()))</p>
+                         <p class="no-margin pull-left" id="copyrightinfo"> @(copyrightInformation.Replace("$$CurrentYear$$", DateTime.Now.Year.ToString()))</p>
                     </div>
                 </div>
 

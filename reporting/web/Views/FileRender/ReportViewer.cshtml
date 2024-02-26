@@ -377,7 +377,7 @@
      var isReportCommented = '@ViewBag.IsReportCommented';
      var canEdit = "@canEdit";
      var editReportUrl = encodeURI("@Url.Action("ReportDesigner", "Designer")" + "/@itemDetail.Id/@itemDetail.CategoryName/@itemDetail.Name");
-     var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
+     var filterParameters = JSON.parse('@Json.Serialize(ViewBag.FilterParameters)');
      var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
      var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
 
@@ -401,15 +401,15 @@
      var isSubmit = true;
      var canHideSaveViewBtn = false;
 
-     var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
-    var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+     var embedConfig = @Json.Serialize(embedConfig);
+    var reportItemDetail = @Json.Serialize(itemDetail);
     var isAdmin = "@isAdmin";
     var ItemType = "@ViewBag.ItemType";
     var customFontsName = [];
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
     var isViewerV2Enabled = @Json.Serialize(ViewBag.IsViewerV2Enabled);
     var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
-    var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+    var canCheckSession = @Json.Serialize(canShowSession);
 
         function renderComments() {
             var src = $("#commentModuleContainer iframe").attr("src");
@@ -506,7 +506,7 @@
                 "",
                 { 'display': 'inline-block', },
                 { 'id': 'sync_report_viewer_toolbar_com', 'title': '[[[Comments]]]' });
-            if ("@Html.Raw(ViewBag.IsReportCommented)" == "true") {
+            if ("@ViewBag.IsReportCommented" == "true") {
                 var $spancom = ej.buildTag("span.su-with-comment e-reportviewer-icon",
                     "",
                     {},
