@@ -35,7 +35,7 @@
                 <div id="toRemoveCulture"></div>
             </div>
             <div class="var-drop-box col-xs-12" style="width:220px;">
-                <select id="variable-drop-box" data-live-search="true" title='[[[variables]]]' name="" class="selectpicker" style="width:183px;" data-size="7" data-none-results-text="[[[No results match]]]">
+                <select id="variable-drop-box" data-live-search="true" title='[[[variables]]]' name="" class="selectpicker" style="width:183px;" size="7" data-none-results-text="[[[No results match]]]">
                     @foreach (CustomEmailTemplate val in Enum.GetValues(typeof(CustomEmailTemplate)))
                     {
                         <option value="@val">@GlobalAppSettings.GetDescription(val)</option>

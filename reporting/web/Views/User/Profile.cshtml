@@ -31,7 +31,7 @@
     <script type="text/javascript">
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
         var updateprofilepictureUrl = "@Url.Action("updateprofilepicture", "User")";
-        var isAdmin = @Html.Raw(Json.Serialize(ViewBag.IsAdminAccount));
+        var isAdmin = @Json.Serialize(ViewBag.IsAdminAccount);
         var fileUploadUrl = "@Url.Action("Upload", "fileupload")";
         var avatarUrl = "@(idPUrl + Url.Action("Avatar", "User"))";
         var updateUserProfileUrl = "@Url.Action("UpdateUserHomePageInProfile", "User")";
@@ -73,7 +73,7 @@
                 $("#edit-settings").trigger("click");
             }
             $('[data-toggle="tooltip"]').tooltip();
-            var fulldata = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.ProfileDetail)));
+            var fulldata = JSON.parse(@Json.Serialize(ViewBag.ProfileDetail));
             window.dateFormat = "@globalAppSettings.SystemSettings.DateFormat";
             editUser(fulldata, "@globalAppSettings.SystemSettings.DateFormat");
 

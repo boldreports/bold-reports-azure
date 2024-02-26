@@ -80,7 +80,7 @@
     <script type="text/javascript" language="javascript">
         ej.support.stableSort = false;
         $("#search-ad-users").val("");
-        var data = @Html.Raw(Json.Serialize(ViewBag.ActiveDirectoryUsers));
+        var data = @Json.Serialize(ViewBag.ActiveDirectoryUsers);
         $(function () {
             $.views.helpers({
                 renderDoubleQuotes: function (inputString) {

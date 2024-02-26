@@ -150,8 +150,8 @@
     </div>
     <script>
         $(document).ready(function () {
-            var sharedDataSource = @Html.Raw(Json.Serialize(ViewBag.SharedDataSource));
-            var availableSharedDS = @Html.Raw(Json.Serialize(ViewBag.AvailableSharedDS));
+            var sharedDataSource = @Json.Serialize(ViewBag.SharedDataSource);
+            var availableSharedDS = @Json.Serialize(ViewBag.AvailableSharedDS);
             oldDatasetID = "@ViewBag.ItemId";
         if (sharedDataSource && sharedDataSource.length > 0) {
             $("#copy_dataset").css('display', 'block');
@@ -159,7 +159,7 @@
         var html = "";
         for (var dataSource = 0; dataSource < sharedDataSource.length; dataSource++) {
             html += '<li class="copy-shared-datasource"><div class="col-xs-12 padding20 top-padding20 bottom-padding20" id="action-datasource-division"><div class="col-xs-3 no-padding text-right text-label">' + sharedDataSource[dataSource].Name + '</div>' +
-                '<div class="col-xs-1 no-padding"></div><div class="col-xs-7 no-padding dropup"><select class="datasource-picker" id="sharedDataSourceList' + dataSource + '" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:230px" data-size="3" title="' + 'SelectDataSource' + '">';
+                '<div class="col-xs-1 no-padding"></div><div class="col-xs-7 no-padding dropup"><select class="datasource-picker" id="sharedDataSourceList' + dataSource + '" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:230px" size="3" title="' + 'SelectDataSource' + '">';
             var option = "";
             for (var dataset = 0; dataset < availableSharedDS.length; dataset++) {
                 option += '<option data-key=' + sharedDataSource[dataSource].Name + ' data-id=' + availableSharedDS[dataset].Id + ' value=' + availableSharedDS[dataset].Name + '>' + availableSharedDS[dataset].Name + '</option>';

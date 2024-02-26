@@ -34,7 +34,7 @@
                 addPlacehoder("#ScheduleDialog");
                 var itemId = "@Context.Request.Query["itemId"].ToString()";
 
-                var option = @Html.Raw(ViewBag.ProcessOption);
+                var option = @Json.Serialize(ViewBag.ProcessOption);
                 var origin = "@ViewBag.Origin";
                 var processOption = option.Data;
                 if (processOption.data != "") {

@@ -36,12 +36,12 @@
     <script>
         var updateCSPSettingsUrl = "@Url.Action("UpdateSecuritySettings", "Administration")";
         var updateXFrameHeaderSettingsUrl = "@Url.Action("UpdateXFrameHeaderSettings", "Administration")";
-        var styleSourcesList = @Html.Raw(Json.Serialize(styleSources));
-        var scriptSourcesList = @Html.Raw(Json.Serialize(scriptSources));
-        var fontSourcesList = @Html.Raw(Json.Serialize(fontSources));
-        var imgSourcesList = @Html.Raw(Json.Serialize(imgSources));
-        var connectSourcesList = @Html.Raw(Json.Serialize(connectSources));
-        var frameSourcesList = @Html.Raw(Json.Serialize(frameSources));
+        var styleSourcesList = @Json.Serialize(styleSources);
+        var scriptSourcesList = @Json.Serialize(scriptSources);
+        var fontSourcesList = @Json.Serialize(fontSources);
+        var imgSourcesList = @Json.Serialize(imgSources);
+        var connectSourcesList = @Json.Serialize(connectSources);
+        var frameSourcesList = @Json.Serialize(frameSources);
         var contentSecurityPolicyUrl = helpSiteBaseUrl + "@GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ContentSecurityPolicy)";
         var xFrameOptionUrl = helpSiteBaseUrl + "@GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.XFrameOption)";
     </script>
@@ -84,7 +84,7 @@
                                         </label>
                                     </div>
                                     <div class="info-message">
-                                        [[[You can configure a content security policy (CSP) for your site. CSP will not be applied if this option is disabled.]]] @Html.Raw(string.Format("[[[Click {0}here{1} to learn more.]]]", "<a class='app-hyperlink' href='" + helpSiteBaseUrl + contentSecurityPolicyHelpSiteUrl + "' target='_blank'>", "</a>"))
+                                        <span>[[[You can configure a content security policy (CSP) for your site. CSP will not be applied if this option is disabled. Click ]]]<a class="app-hyperlink" href="@(helpSiteBaseUrl + contentSecurityPolicyHelpSiteUrl)" target="_blank">[[[here]]]</a> [[[to learn more.]]]</span>
                                     </div>
                                 </div>
                             </div>

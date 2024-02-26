@@ -1,5 +1,6 @@
 ﻿@using Syncfusion.Server.Base.Environment
 @using Microsoft.AspNetCore.Builder;
+@using System.Web;
 @inject RequestLocalizationOptions _localizationOptions
 @{
     var globalAppSettings = (GlobalAppSettings)ViewBag.appsettings;
@@ -10,6 +11,7 @@
     var separatorFooterClass = (globalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion || globalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "show" : "hide";
     var isMobile = new DeviceDetection(Context).IsMobile;
     var footerLogo = !string.IsNullOrWhiteSpace(globalAppSettings.SystemSettings.FooterLogo) ? globalAppSettings.SystemSettings.FooterLogo : globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + @ServerAppConfig.AppSettings.AppBranding.Identifier + "/footer_logo.svg";
+    var copyrightInformation = HttpUtility.HtmlDecode(globalAppSettings.SystemSettings.CopyrightInformation);
     }
 
 
@@ -40,7 +42,7 @@
                     <div class="copyright-poweredby">
                         <div class="col-xs-6 col-md-9 col-sm-9 col-lg-9 dropup no-padding language-area pull-left no-margin no-padding">
                             <div class="no-padding pull-left" id="lang_menu">
-                                 <p class="no-margin pull-left @copyrightClass" id="copyrightinfo"> @Html.Raw(globalAppSettings.SystemSettings.CopyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))</p>
+                                 <p class="no-margin pull-left @copyrightClass" id="copyrightinfo"> @(copyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))</p>
                             </div>
                         </div>
                         <div class="col-xs-5 col-md-3 col-sm-3 col-lg-3 no-padding no-margin pull-right" id="enablefooter">

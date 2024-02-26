@@ -16,7 +16,7 @@
     <script>
         var addSampleDashboardUrl = "@Url.Action("AddSampleItem", "Items")";
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
-        window.samplesList = @Html.Raw(Json.Serialize(Model.Categories));
+        window.samplesList = @Json.Serialize(Model.Categories);
     </script>
 
     <environment include="Development,CloudDevelopment">

@@ -118,8 +118,8 @@
         <script type="text/javascript" src="@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js"></script>
     }
     <script>
-        let conString = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.conString)));
-        let dataSourceDetail = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.dataSourceDetail)));
+        let conString = JSON.parse(@Json.Serialize(ViewBag.conString));
+        let dataSourceDetail = JSON.parse(@Json.Serialize(ViewBag.dataSourceDetail));
 		var isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
         var isWindows = @Json.Serialize(@isWindowsPlatform);
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);

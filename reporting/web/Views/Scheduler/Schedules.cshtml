@@ -62,7 +62,7 @@
                         }
                     });
                     addPlacehoder("#search-area");
-                    var schedules = @Html.Raw(Json.Serialize(Model));
+                    var schedules = @Json.Serialize(Model);
                     schedules = ej.parseJSON(schedules);
                     ej.support.enableLocalizedSort = true;
                     $("#scheduleGrid")
@@ -84,6 +84,7 @@
                                 $('[data-toggle="tooltip"]').tooltip();
                                 if (args.model.currentViewData.length === 0) {
                                     rowBound();
+                                    showOrHideLastRun();
                                 }
 
                                 showOrHideGridPager("#scheduleGrid");

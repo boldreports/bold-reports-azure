@@ -67,7 +67,7 @@
             GridLocalization();
             $("#search-ad-groups").val("");
             addPlacehoder("#search-area");
-            var data = @Html.Raw(Json.Serialize(ViewBag.ActiveDirectoryGroups));
+            var data = @Json.Serialize(ViewBag.ActiveDirectoryGroups);
             data = ej.parseJSON(data);
             $("#Grid").ejGrid({
                 dataSource: data,
@@ -198,7 +198,7 @@
             @if (ViewBag.AdSync > 0)
             {
                 <div class="col-xs-7 page-title">[[[Active Directory Synchronization - GROUPS]]] (<span id="group-count">@ViewBag.groupCount</span>)</div>
-                <div class="col-xs-10">
+                <div class="col-xs-10 page-description">
                     [[[Select groups to synchronize with Active Directory]]]
                 </div>
             }

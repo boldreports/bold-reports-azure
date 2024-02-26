@@ -1,6 +1,6 @@
 ﻿@model List<SchemaInfo>
 <script>
-    var tableSchema=@Html.Raw(Json.Serialize(Model))
+    var tableSchema = @Json.Serialize(Model);
     var importDatabaseQuerySchema = {};
 </script>
 <div class="col-xs-12 schema-selection">

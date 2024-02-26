@@ -22,7 +22,7 @@
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var datasourcePermisions = ViewBag.DatasourcePermission;
     var datasetPermissions = ViewBag.DatasetPermission;
-    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var organizationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var dataConnectors = @Json.Serialize(ViewBag.DataConnectors);
     var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
@@ -40,7 +40,7 @@
     <meta name="viewport" content="width=device-width" />
     @if (ViewBag.ReportPartName != null)
     {
-        <title>@Html.Raw(ViewBag.ReportPartName) - [[[Design Report Part]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+        <title>@ViewBag.ReportPartName - [[[Design Report Part]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
     else
     {
@@ -307,12 +307,12 @@
         var controlId = 'container';
         var isEditReport = false;
         var relativeDateTimer = null;
-        var reportPartId = "@Html.Raw(ViewBag.ReportPartId)";
-        var reportPartName = "@Html.Raw(ViewBag.ReportPartName)";
-        var description = "@Html.Raw(ViewBag.description)";
+        var reportPartId = "@ViewBag.ReportPartId";
+        var reportPartName = "@ViewBag.ReportPartName";
+        var description = "@ViewBag.description";
         var isEdit = "@ViewBag.isEdit";
         isEdit = isEdit.toLowerCase();
-        var pageTitle = "@Html.Raw(oraganisationName)";
+        var pageTitle = "@organizationName";
         var readWriteDeletePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create;
         var readWritePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create & ~ej.ReportDesigner.Permission.Delete;
         var readPermission = ej.ReportDesigner.Permission.Shared;
@@ -332,7 +332,7 @@
         var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
-        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
 
         if (isEdit === "true") {

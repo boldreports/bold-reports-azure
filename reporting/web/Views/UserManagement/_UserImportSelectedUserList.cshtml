@@ -59,7 +59,7 @@
 </script>
 
 <script type="text/javascript">
-    var gridData = @Html.Raw(Json.Serialize(ViewBag.ExternalDatabaseUsers));
+    var gridData = @Json.Serialize(ViewBag.ExternalDatabaseUsers);
 </script>
 
 <div id="grid-container" class="col-xs-12">

@@ -20,7 +20,7 @@
             var deletetemporaryrdlreportUrl = "@Url.Action("deletetemporaryrdlreport", "reports")";
             var reportselectdatasourceUrl = "@Url.Action("reportselectdatasource", "reports")";
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
-            var tagList = @Html.Raw(Json.Serialize(ViewBag.Tag));
+            var tagList = @Json.Serialize(ViewBag.Tag);
     </script>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
@@ -39,7 +39,7 @@
 
     <script>
             $(function () {
-                createEditRdlPopup(@Html.Raw(Json.Serialize(ViewData["reportInfo"])));
+                createEditRdlPopup(@Json.Serialize(ViewData["reportInfo"]));
                 window.focus();
             });
 
@@ -53,7 +53,7 @@
                     $(".dialog").removeClass("iframe");
                 }
         }
-        window.data = @Html.Raw(Json.Serialize(ViewData["reportInfo"]));
+        window.data = @Json.Serialize(ViewData["reportInfo"]);
     </script>
 </head>
 <body style="background-color: white" onload="load();">

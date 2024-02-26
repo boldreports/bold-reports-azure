@@ -9,7 +9,7 @@
     var language = CultureInfo.CurrentCulture.Name;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
 
-    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var organizationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');

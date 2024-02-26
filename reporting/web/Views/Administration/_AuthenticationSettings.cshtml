@@ -66,15 +66,15 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
         var updateLoginOptionsUrl = "@Url.Action("UpdateLoginOptions", "Administration")";
         var defaultauthsettingsUrl = "@Url.Action("UpdateDefaultAuthentication", "Administration")";
         var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
-        var SystemSettingsProperties = @Html.Raw(Json.Serialize(ViewBag.SystemSettings));
+        var SystemSettingsProperties = @Json.Serialize(ViewBag.SystemSettings);
         var isAzureApplication = @Json.Serialize(isAzureApplication);
         var userDirectoryWindows = "@authenticationGeneralHelpSiteUrl";
         var isOpenIdIdentityProviderOptionEnabled = @Json.Serialize(isOpenIdIdentityProviderOptionEnabled);
         var isOAuthIdIdentityProviderOptionEnabled = @Json.Serialize(isOAuthIdIdentityProviderOptionEnabled);
         var isOpenIdCustomMailOptionEnabled = @Json.Serialize(isOpenIdCustomMailOptionEnabled);
         var isOAuthCustomMailOptionEnabled = @Json.Serialize(isOAuthCustomMailOptionEnabled);
-        var openIdCustomMailContent = @Html.Raw(Json.Serialize(openIdCustomMailContent));
-        var oAuthCustomMailContent = @Html.Raw(Json.Serialize(oAuthCustomMailContent));
+        var openIdCustomMailContent = @Json.Serialize(openIdCustomMailContent);
+        var oAuthCustomMailContent = @Json.Serialize(oAuthCustomMailContent);
     </script>
     <script type="text/javascript">
 
@@ -158,6 +158,7 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
 
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
+    @await Html.PartialAsync("_DialogBox")
     <div id="active-directory-container" role="tabpanel" class="col-xs-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
 
         <div class="col-md-12 import-area admin-page-header">
@@ -666,9 +667,9 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
             <div class="admin-page-actions col-lg-12 col-md-12">
                 <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-active-dir-settings" title="">[[[Cancel]]]</a>
                 <button type="submit" id="update-defaultauthlogin-settings" class="primary-button app-btn-primary pull-right update-defaultauth-settings">[[[Save]]]</button>
-                <button type="submit" id="update-auth-control" class="primary-button app-btn-primary pull-right">[[[Save]]]</button>
-                <button type="submit" id="update-oauth-settings" class="primary-button app-btn-primary pull-right update-auth-settings" ng-disabled="oauthSettingsForm.$invalid">[[[Save]]]</button>
-                <button type="submit" id="update-openid-settings" class="primary-button app-btn-primary pull-right update-auth-settings" ng-disabled="openidSettingsForm.$invalid">[[[Save]]]</button>
+                <button type="submit" id="update-auth-control" class="primary-button app-btn-primary pull-right" style="display:none">[[[Save]]]</button>
+                <button type="submit" id="update-oauth-settings" class="primary-button app-btn-primary pull-right update-auth-settings" ng-disabled="oauthSettingsForm.$invalid" style="display:none">[[[Save]]]</button>
+                <button type="submit" id="update-openid-settings" class="primary-button app-btn-primary pull-right update-auth-settings" ng-disabled="openidSettingsForm.$invalid" style="display:none">[[[Save]]]</button>
             </div>
         }
 

@@ -51,7 +51,7 @@
             @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
             {
                 <div class="col-sm-4 col-xs-4 parameter-input" style="display:@showHiddenParameter;">
-                    <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" data-size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
+                    <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
                         @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
                         {
                             foreach (var parameterData in parameter.ReportParameterData)
@@ -121,9 +121,9 @@
 </body>
 </html>
 <script>
-    window.parameterObj = @Html.Raw(Json.Serialize(Model));
-    window.reportparameterObj = @Html.Raw(Json.Serialize(ViewBag.ReportParameter));
-    window.reportparameterDefaultValue = @Html.Raw(Json.Serialize(ViewBag.DefaultValues));
+    window.parameterObj = @Json.Serialize(Model);
+    window.reportparameterObj = @Json.Serialize(ViewBag.ReportParameter);
+    window.reportparameterDefaultValue = @Json.Serialize(ViewBag.DefaultValues);
     window.reportParamType = {
         Boolean: @((int)ParamType.Boolean),
         DateTime:  @((int)ParamType.DateTime),

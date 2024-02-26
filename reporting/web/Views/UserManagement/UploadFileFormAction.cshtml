@@ -45,7 +45,7 @@
         });
     </script>
     <script type="text/javascript">
-        var data1 = @Html.Raw(ViewBag.ser);
+        var data1 = @Json.Serialize(ViewBag.User);
         var csvImportGridColumn = [
             { field: "Username", cssClass: "user-name", headerText: "[[[Username]]]", width: 50, visible: isSelfHosted },
             { field: "Email", cssClass: "email-id", headerText: "[[[Email Address]]]", width: 50 },
@@ -137,7 +137,7 @@
                             }
                             else if (ViewBag.InvalidUser != null)
                             {
-                                <span id="user-import-validation-msg">@Html.Raw(ViewBag.InvalidUser)</span>
+                                <span id="user-import-validation-msg">@ViewBag.InvalidUser</span>
                             }
                             else
                             {

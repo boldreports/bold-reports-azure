@@ -43,8 +43,8 @@
         $(document).ready(function () {
             parent.$("#add-permission_wrapper").ejWaitingPopup("hide");
         });
-        var entityObj = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.PermissionEntity)));
-        var accessObj = JSON.parse(@Html.Raw(Json.Serialize(ViewBag.PermissionAccess)));
+        var entityObj = JSON.parse(@Json.Serialize(ViewBag.PermissionEntity));
+        var accessObj = JSON.parse(@Json.Serialize(ViewBag.PermissionAccess));
     </script>
 </head>
 <body class="add-permissions" id="add-user-permission">

@@ -13,7 +13,6 @@
 <script>
     var dashboardGrid;
     var filter = [];
-    var isAdminUser = @Json.Serialize(isAdmin);
 </script>
 
 <div id="items">
@@ -55,13 +54,13 @@
              <i class="su su-edit"></i>
            </span>
        {{/if}}
-       {{if (CreatedById == @(userId) || isAdminUser) && ~checkTablet() && IsDraft }}
+       {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet() && IsDraft }}
            <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}"  onclick="dashboardGrid.editDraftDashboard(this)">
              <i class="su su-edit"></i>
            </span>
        {{/if}}
        {{if !IsDraft}}
-       {{if isAdminUser || hasDashboardSharePermission || CreatedById == @(userId)}}
+       {{if @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true || hasDashboardSharePermission || CreatedById == @(userId)}}
            <span class="item-permissions grid-hover-options" title="[[[Share]]]" data-created-by-id="{{:CreatedById}}" data-extension="{{:Extension}}" data-is-public="{{:IsPublic}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" data-item-type="{{:ItemType}}" onclick="dashboardGrid.shareDashboardPermission(this)">
                 <i class="su su-share"></i>
            </span>
@@ -95,7 +94,7 @@
         </span>
         <ul class="dropdown-menu dashboard-options" role="menu">
             {{if !IsDraft}}
-            {{if CreatedById==@(userId) || isAdminUser}}
+            {{if CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true}}
             <li>
                 {{if !IsPublic}}
                 <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-url="{{:~fileUrlEncode(Id)}}" class="make-public option-click" onclick="dashboardGrid.makePublic(this)">
@@ -131,7 +130,7 @@
                     <i class="su su-filter"></i>
                     <span>[[[Views]]]</span>
                 </a>
-                <ul class="dropdown-menu item-views" role="menu">
+                <ul class="dropdown-menu item-views no-padding" role="menu">
                     <li>
                         <span class="view-name" href="javascript:void(0);">
                             [[[Loading...]]]
@@ -182,7 +181,7 @@
             {{if @(Convert.ToBoolean(isMasterTenant).ToString().ToLower()) == true }}
             {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
             {{if ~checkTablet() }}
-            {{if (CreatedById == @(userId) || isAdminUser)}}
+            {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true)}}
             {{if !IsMultiDashboard }}
             <li>
                 <a href="javascript:void(0);" class="option-click" data-action="Publish" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.getPublishSiteDetailDialog(this)">
@@ -195,7 +194,7 @@
             {{/if}}
             {{/if}}
             {{/if}}
-            {{if (CanSchedule || CreatedById == @(userId) || isAdminUser) && ~checkTablet()}}
+            {{if (CanSchedule || CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
             <li role="separator" class="divider"></li>
             {{/if}}
             {{if CanSchedule && ~checkTablet()}}
@@ -251,7 +250,7 @@
                 </a>
             </li>
             {{else}}
-            {{if (CreatedById==@(userId) || isAdminUser) && ~checkTablet()}}
+            {{if (CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
             <li>
                 <a href="javascript:void(0);" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:Description}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" onclick="dashboardGrid.openInfo(this)">
                     <i class="su su-info"></i>
@@ -477,4 +476,7 @@
             reportGrid.destroy();
         initializeGrid();
     };
+    $(document).on("show.bs.tooltip", function () {
+        $(".tooltip").not(this).hide();
+    });
 </script>

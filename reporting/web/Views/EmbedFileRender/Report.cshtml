@@ -59,7 +59,7 @@
     <script src="@reportServerResourceUrl/cdn/scripts/localization/reportviewer/ej.localetexts.@string.Concat(language,".js")"></script>
 
     <script>
-        var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
+        var filterParameters = JSON.parse('@Json.Serialize(ViewBag.FilterParameters)');
         var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
         var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
         var addViewUrl = "@Url.Action("onfiltersave", "ReportViews")";
@@ -298,7 +298,7 @@
                     var messageData = JSON.parse(event.data);
                     if (messageData["access_token"] != "") {
                         var embeddedToken = messageData["access_token"];
-                        var itemLoc = "@Html.Raw(itemLocation)";
+                        var itemLoc = "@itemLocation";
                         $.ajax({
                             type: "POST",
                             url: embeddedLoginUrl,
@@ -503,7 +503,7 @@ else
             "",
             { 'display': 'inline-block', },
             { 'id': 'sync_report_viewer_toolbar_com', 'title': '[[[Comments]]]' });
-        if ("@Html.Raw(ViewBag.IsReportCommented)" == "true") {
+        if ("@ViewBag.IsReportCommented" == "true") {
             var $spancom = ej.buildTag("span.su-with-comment e-reportviewer-icon",
                 "",
                 {},

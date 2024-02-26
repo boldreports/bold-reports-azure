@@ -2861,6 +2861,7 @@ ej.ReportDesigner.Locale['en-US'] = {
         errorMessage: {
             duplicateName: 'Please enter the valid name',
             emptyValueValidation: 'Choose value for an expression field',
+            invalidCharacterValidation: 'Name should not contain spaces and special characters'
         },
         deleteField: 'Delete Field'
     },
@@ -3071,7 +3072,7 @@ ej.ReportDesigner.Locale['en-US'] = {
             pageName: 'The name of the current page in the report can be used only in the page header or footer.',
             pageNumber: 'The current page number that can be reset through the use of page breaks',
             reportFolder: 'The full path to the folder containing the report does not include the report server URL.',
-            reportName: 'The URL of the report server where the report is run.',
+            reportName: 'The variable contains the name of the current report.',
             reportServerUrl: 'The URL of the report server on which the report is being run.',
             totalPages: 'The total number of pages in the current continuous page sequence can be used only in the page header and footer. The number can be reset by using page breaks.',
             language: 'The language ID of the client running the report.',

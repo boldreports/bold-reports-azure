@@ -114,35 +114,33 @@
                                 </div>
                             </div>
                         </div>
-                        @if (isSelfHosted)
-                        {
-                            <div class="col-sm-12 col-xs-12 no-padding">
-                                <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Export FileName ]]]<span class="mandatory">*</span></label></div>
-                                <div class="col-sm-4 col-xs-4 name-field">
-                                    <input type="text" class="form-control cls-schname" name="" id="export-filename" maxlength="100" value="{:ScheduleName}-{:ReportName}-{:Timestamp}">
-                                    <div class="validate-error" id="export-filename-error-container">
-                                        <div id="schedule-name-validator"></div>
-                                    </div>
-                                    <span id="export-filename-error-message" class="ErrorMessage validate-error">[[[Please select variables for export filename]]]</span>
+                        
+                        <div class="col-sm-12 col-xs-12 no-padding">
+                            <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Export FileName ]]]<span class="mandatory">*</span></label></div>
+                            <div class="col-sm-4 col-xs-4 name-field">
+                                <input type="text" class="form-control cls-schname" name="" id="export-filename" maxlength="100" value="{:ScheduleName}-{:ReportName}-{:Timestamp}">
+                                <div class="validate-error" id="export-filename-error-container">
+                                    <div id="schedule-name-validator"></div>
                                 </div>
-                                <div class="col-sm-6 col-xs-6 filename-dropdown">
-                                    <select id="file-template-variable-drop-box" data-live-search="true" title="[[[Select variables]]]" name="" class="selectpicker file-template" style="width:183px;" data-size="7" multiple="" data-none-results-text="[[[No results match]]]">
-                                        @if (Enum.GetValues(typeof(CustomFileTemplate)).Length > 0)
-                                        {
-                                            @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
-                                            {
-                                                <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
-                                        }
-
-                                    </select>
-                                </div>
+                                <span id="export-filename-error-message" class="ErrorMessage validate-error">[[[Please select variables for export filename]]]</span>
                             </div>
-                        }
+                            <div class="col-sm-6 col-xs-6 filename-dropdown">
+                                <select id="file-template-variable-drop-box" data-live-search="true" title="[[[Select variables]]]" name="" class="selectpicker file-template" style="width:183px;" data-size="7" multiple="" data-none-results-text="[[[No results match]]]">
+                                    @if (Enum.GetValues(typeof(CustomFileTemplate)).Length > 0)
+                                    {
+                                        @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
+                                        {
+                                            <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
 
                         @*@if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
                             {

@@ -91,7 +91,7 @@
             <div class="item-header">[[[Username]]]</div>
         </script>
         <script type="text/javascript">
-                var gridData = @Html.Raw(Json.Serialize(ViewBag.ExternalDatabaseUsers));
+            var gridData = @Json.Serialize(ViewBag.ExternalDatabaseUsers);
         </script>
 
         <script type="text/javascript">

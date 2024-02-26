@@ -82,7 +82,7 @@
         var isReportCommented = '@ViewBag.IsReportCommented';
         var canEdit = @Json.Serialize(canEdit);
         var editReportUrl = encodeURI("@Url.Action("ReportDesigner", "Designer")" + "/@itemDetail.Id/@itemDetail.CategoryName/@itemDetail.Name");
-        var filterParameters = JSON.parse('@Html.Raw(ViewBag.FilterParameters)');
+        var filterParameters = JSON.parse('@Json.Serialize(ViewBag.FilterParameters)');
         var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
         var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
         var updateViewerUserPreference = "@Url.Action("SaveViewerUserPreference", "User")";
@@ -104,8 +104,8 @@
         var sameOrigin = true;
         var isSubmit = true;
         var canHideSaveViewBtn = false;
-        var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
-        var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+        var embedConfig = @Json.Serialize(embedConfig);
+        var reportItemDetail = @Json.Serialize(itemDetail);
         var isAdmin = "@isAdmin";
         var ItemType = "@ViewBag.ItemType";
         var customFontsName = [];
@@ -118,7 +118,7 @@
         var enableViews = @Json.Serialize(enableViews);
         var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
         var isMobile = @Json.Serialize(isMobile);
-        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var canCheckSession = @Json.Serialize(canShowSession);
     </script>
 
     <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
@@ -271,6 +271,15 @@
                     @:addCustomFonts("@font.Key", "@font.Value");
                 }
             }
+        }
+
+        if (!isSelfHosted) {
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $.ajax({
+                    type: "Get",
+                    url: "/robots.txt",
+                });
+            })
         }
     </script>
 </body>

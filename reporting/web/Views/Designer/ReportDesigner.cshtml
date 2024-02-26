@@ -34,7 +34,7 @@
 
     var datasourcePermisions = ViewBag.DatasourcePermission;
     var datasetPermissions = ViewBag.DatasetPermission;
-    var oraganisationName = globalAppSettings.SystemSettings.OrganizationName;
+    var organizationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var dataConnectors = @Json.Serialize(ViewBag.DataConnectors);
     var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
@@ -53,7 +53,7 @@
     <meta name="viewport" content="width=device-width" />
     @if (ViewBag.reportName != null)
     {
-        <title>@Html.Raw(ViewBag.reportName) - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+        <title>@ViewBag.reportName - [[[Design Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
     else
     {
@@ -426,16 +426,16 @@
         var isEditReport = false;
         var relativeDateTimer = null;
 
-        var categoryName = "@Html.Raw(ViewBag.categoryName)";
+        var categoryName = "@ViewBag.categoryName";
         var categoryId = "";
         var reportId = "@ViewBag.ReportId";
-        var reportName = "@Html.Raw(ViewBag.reportName)";
+        var reportName = "@ViewBag.reportName";
         var datasetName = "@ViewBag.datasetId";
-        var description = "@Html.Raw(ViewBag.description)";
+        var description = "@ViewBag.description";
         var isPublic = "@ViewBag.isPublic";
         isPublic = isPublic.toLowerCase();
-        var tags = @Html.Raw(Json.Serialize(ViewBag.tags));
-        var selectedTags = @Html.Raw(Json.Serialize(ViewBag.selectedTags));
+        var tags = @Json.Serialize(ViewBag.tags);
+        var selectedTags = @Json.Serialize(ViewBag.selectedTags);
         var isDraft = "@ViewBag.isDraft";
         var version = "@ViewBag.Version";
         isDraft = isDraft.toLowerCase();
@@ -448,7 +448,7 @@
         var warningMessage = isAdmin == "true" ? "[[[Public reports are disabled in]]] <a href='" + rootUrlAction + "/administration/report-settings' target='_blank'> [[[report settings]]]" : "[[[Public Reports are disabled by the system administrator. Please contact your system administrator to enable this.]]]";
         var isEdit = "@ViewBag.isEdit";
         isEdit = isEdit.toLowerCase();
-        var pageTitle = "@Html.Raw(oraganisationName)";
+        var pageTitle = "@organizationName";
         var readWriteDeletePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create;
         var readWritePermission = ej.ReportDesigner.Permission.All & ~ej.ReportDesigner.Permission.Create & ~ej.ReportDesigner.Permission.Delete;
         var readPermission = ej.ReportDesigner.Permission.Shared;
@@ -469,7 +469,7 @@
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
-        var canCheckSession = @Html.Raw(Json.Serialize(canShowSession));
+        var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
 
         if(isEdit === "true"){

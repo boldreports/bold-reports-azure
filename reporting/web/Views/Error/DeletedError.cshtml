@@ -55,13 +55,13 @@
                         @if (isRecentlyDeletedTenant)
                         {
                             <div>
-                                @Html.Raw(string.Format("[[[Please contact Bold Reports support to recover your site {0}here.]]]", "<a href='https://www." + GlobalAppSettings.BrandingDomain + "/support' class='redirect-link' target='_blank'>"))
+                                <span>[[[Please contact Bold Reports support to recover your site ]]]<a href='https://www." + @GlobalAppSettings.BrandingDomain + "/support' class='redirect-link' target='_blank'>[[[here.]]]</a></span>
                             </div>
                         }
                         else
                         {
                             <div>
-                                @Html.Raw(string.Format("[[[If you want to start a new subscription, please contact Bold Reports support {0}here.]]]", "<a href='https://www." + GlobalAppSettings.BrandingDomain + "/support' class='redirect-link' target='_blank'>"))
+                                <span>[[[If you want to start a new subscription, please contact Bold Reports support ]]]<a href='https://www." + @GlobalAppSettings.BrandingDomain + "/support' class='redirect-link' target='_blank'>[[[here.]]]</a></span>
                             </div>
                         }
                     </div>

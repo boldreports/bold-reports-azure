@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width" />
     @if (ViewBag.datasetName != null)
     {
-        <title>@Html.Raw(ViewBag.datasetName) - [[[Design Dataset]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+        <title>@ViewBag.datasetName - [[[Design Dataset]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
     }
     else
     {
@@ -192,14 +192,13 @@
     <script>
         var controlId = 'container';
 		var isEditReport = false;
-
         var designerToken = "@ViewBag.AccessToken";
-        var categoryName = "@Html.Raw(categoryName)";
-        var reportName = "@Html.Raw(reportName)";
-        var datasetName = "@Html.Raw(ViewBag.datasetName)";
-        var description = "@Html.Raw(ViewBag.description)";
+        var categoryName = "@categoryName";
+        var reportName = "@reportName";
+        var datasetName = "@ViewBag.datasetName";
+        var description = "@ViewBag.description";
         var isEdit = "@ViewBag.isEdit";
-		var datasource = "@Html.Raw(ViewBag.datasourceName)";
+        var datasource = "@ViewBag.datasourceName";
         var _CryptoAES = window['CryptoJS'];
         var _keyCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
         var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
@@ -372,9 +371,9 @@
                 toastTitle = "[[[Success!]]]";
             } else {
                 if (isEditReport) {
-                    toastMessage = "[[[An error occured to update the dataset]]]";
+                    toastMessage = "[[[An error occurred to update the dataset]]]";
                 } else {
-                    toastMessage = "[[[An error occured to add the dataset]]]";
+                    toastMessage = "[[[An error occurred to add the dataset]]]";
                 }
                 className = 'e-toast-danger';
                 toastTitle = "[[[Error!]]]";

@@ -26,11 +26,11 @@
     <script>
     var saveReportOptionUrl = "@Url.Action("AddProcessingOption", "reports")";
     var reportProcessOptionScheduleUrl = "@Url.Action("ReportProcessOptionsSchedule", "reports")";
-    var itemList = @Html.Raw(ViewBag.itemList);
-    var categoryList = @Html.Raw(ViewBag.categoryList);
-    var selectedItemList = @Html.Raw(ViewBag.selectedItemList);
-    var option = @Html.Raw(ViewBag.ProcessOption);
-    var categoryItems = @Html.Raw(ViewBag.ItemCategoryMappingList);
+    var itemList = @Json.Serialize(ViewBag.itemList);
+    var categoryList = @Json.Serialize(ViewBag.categoryList);
+    var selectedItemList = @Json.Serialize(ViewBag.selectedItemList);
+    var option = @Json.Serialize(ViewBag.ProcessOption);
+    var categoryItems = @Json.Serialize(ViewBag.ItemCategoryMappingList);
 
         function load() {
             $('[data-toggle="tooltip"]').tooltip();
