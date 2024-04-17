@@ -283,6 +283,8 @@ ej.ReportViewer.Locale["zh-CN"] = {
         middleMessage: ' 点击这里',
         endMessage: '查看错误的详细信息',
         closeMessage: '关闭此消息',
+        licenseMsgWeb: 'Bold 许可证未在您的应用程序中注册。请使用有效的许可证来永久删除此许可证验证消息。您还可以获得 30 天的免费评估许可证，以便在评估期间暂时删除此消息。请参阅此帮助主题 (https://help.boldreports.com/licensing/licensing-errors/#invalid-license-key) 了解更多信息。',
+        licenseMsgNetCore: '该应用程序是使用 Bold 的试用版构建的。请使用有效的许可证来永久删除此许可证验证消息。您还可以获得 30 天的免费评估许可证，以便在评估期间暂时删除此消息。请参阅此帮助主题 (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) 了解更多信息.',
         exportAjaxFailureMsg: '由于连接报告服务失败，无法导出文档。',
         printAjaxFailureMsg: '由于连接报告服务失败，无法打印文档。',
         reportLoadAjaxFailureMsg: '由于连接报告服务失败，无法推进报告操作。',

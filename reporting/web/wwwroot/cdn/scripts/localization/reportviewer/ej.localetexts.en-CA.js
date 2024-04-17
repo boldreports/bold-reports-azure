@@ -283,6 +283,8 @@ ej.ReportViewer.Locale["en-CA"] = {
         middleMessage: ' Click here',
         endMessage: 'to see the details of the error',
         closeMessage: 'Close this message',
+        licenseMsgWeb: 'The Bold license is not registered in your application. Please use a valid license to permanently remove this license validation message. You can also obtain a free 30-day evaluation license to temporarily remove this message during the evaluation period. Please refer to this help topic(https://help.boldreports.com/licensing/licensing-errors/#license-token-not-registered) for more information.',
+        licenseMsgNetCore: 'This application was built using a trial version of Bold. Please use a valid license to permanently remove this license validation message. You can also obtain a free 30-day evaluation license to temporarily remove this message during the evaluation period. Please refer to this help topic (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) for more information.',
         exportAjaxFailureMsg: 'Unable to export the document due to failure of connecting Report Service.',
         printAjaxFailureMsg: 'Unable to print the document due to failure of connecting Report Service.',
         reportLoadAjaxFailureMsg: 'Unable to progress the Report action due to failure of connecting Report Service.',

@@ -274,6 +274,8 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	IsOverwrite tinyint NOT NULL,
 	ExportFileName varchar(130) NULL,
 	ScheduleExportInfo text(500) NULL,
+	IsEmailAttachment tinyint NOT NULL DEFAULT 1,
+	IsInsertReportInMailBody tinyint NOT NULL DEFAULT 0,
 	PRIMARY KEY (Id))
 ;
 
