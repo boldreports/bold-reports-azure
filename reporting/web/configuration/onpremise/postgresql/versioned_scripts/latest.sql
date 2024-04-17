@@ -1,4 +1,4 @@
-INSERT into BOLDRS_SettingsType (Name, IsActive) Values (N'CORS Settings',1)
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsEmailAttachment smallint NOT NULL DEFAULT 1
 ;
-INSERT into BOLDRS_SettingsType (Name, IsActive) Values (N'Security',1)
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsInsertReportInMailBody smallint NOT NULL DEFAULT 0
 ;

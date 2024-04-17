@@ -282,6 +282,8 @@ ej.ReportViewer.Locale["tr-TR"] = {
         middleMessage: ' Buraya TIKLAYIN',
         endMessage: 'hata ayrıntılarını görmek için',
         closeMessage: 'Bu mesajı kapat',
+        licenseMsgWeb: 'Bold lisansı başvurunuzda kayıtlı değil. Bu lisans doğrulama mesajını kalıcı olarak kaldırmak için lütfen geçerli bir lisans kullanın. Ayrıca, değerlendirme süresi boyunca bu mesajı geçici olarak kaldırmak için 30 günlük ücretsiz bir değerlendirme lisansı da alabilirsiniz. Lütfen bu yardım konusuna bakın (https://help.boldreports.com/licensing/licensing-errors/#invalid-license-key) daha fazla bilgi için.',
+        licenseMsgNetCore: "Bu uygulama Bold'un deneme sürümü kullanılarak oluşturuldu. Bu lisans doğrulama mesajını kalıcı olarak kaldırmak için lütfen geçerli bir lisans kullanın. Ayrıca, değerlendirme süresi boyunca bu mesajı geçici olarak kaldırmak için 30 günlük ücretsiz bir değerlendirme lisansı da alabilirsiniz. Lütfen bu yardım konusuna bakın (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) daha fazla bilgi için.",
         exportAjaxFailureMsg: 'Det gick inte att exportera dokumentet på grund av att det inte gick att ansluta Report Service.',
         printAjaxFailureMsg: 'Det gick inte att skriva ut dokumentet på grund av att det inte gick att ansluta Report Service.',
         reportLoadAjaxFailureMsg: 'Det gick inte att göra rapporteringsåtgärden på grund av misslyckande att ansluta Report Service.',
