@@ -325,6 +325,8 @@ ej.ReportViewer.Locale["es-ES"] = {
         middleMessage: "Haz clic aquí",
         endMessage: "para ver los detalles del error",
         closeMessage: "Cerrar este mensaje",
+        licenseMsgWeb: 'La licencia Bold no está registrada en su aplicación. Utilice una licencia válida para eliminar permanentemente este mensaje de validación de licencia. También puede obtener una licencia de evaluación gratuita de 30 días para eliminar temporalmente este mensaje durante el período de evaluación. Consulte este tema de ayuda. (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) para más información.',
+        licenseMsgNetCore: 'Esta aplicación se creó utilizando una versión de prueba de Bold. Utilice una licencia válida para eliminar permanentemente este mensaje de validación de licencia. También puede obtener una licencia de evaluación gratuita de 30 días para eliminar temporalmente este mensaje durante el período de evaluación. Consulte este tema de ayuda. (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) para más información.',
         exportAjaxFailureMsg: "No se ha podido exportar el documento debido a un fallo en la conexión del servicio de informes.",
         printAjaxFailureMsg: "No se ha podido imprimir el documento debido a un fallo en la conexión del Servicio de informes.",
         reportLoadAjaxFailureMsg: "No se ha podido avanzar en la acción del Informe debido a un fallo en la conexión del servicio de informes.",

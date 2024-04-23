@@ -288,6 +288,8 @@ ej.ReportViewer.Locale["de-DE"] = {
         middleMessage: 'Hier klicken',
         endMessage: 'um die Fehlerdetails zu sehen',
         closeMessage: 'Schließen Sie diese Nachricht',
+        licenseMsgWeb: 'Die Bold-Lizenz ist in Ihrer Bewerbung nicht registriert. Bitte verwenden Sie eine gültige Lizenz, um diese Lizenzvalidierungsmeldung dauerhaft zu entfernen. Sie können auch eine kostenlose 30-Tage-Testlizenz erwerben, um diese Meldung während des Testzeitraums vorübergehend zu entfernen. Bitte beachten Sie dieses Hilfethema (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) für mehr Informationen.',
+        licenseMsgNetCore: 'Diese Anwendung wurde mit einer Testversion von Bold erstellt. Bitte verwenden Sie eine gültige Lizenz, um diese Lizenzvalidierungsmeldung dauerhaft zu entfernen. Sie können auch eine kostenlose 30-Tage-Testlizenz erwerben, um diese Meldung während des Testzeitraums vorübergehend zu entfernen. Bitte beachten Sie dieses Hilfethema (https://help.boldreports.com/licensing/licensing-errors/#license-key-not-registered) für mehr Informationen.',
         exportAjaxFailureMsg: 'Das Dokument kann nicht exportiert werden, weil der Berichtsdienst nicht verbunden wurde.',
         printAjaxFailureMsg: 'Das Dokument kann nicht gedruckt werden, weil der Report Service nicht verbunden wurde.',
         reportLoadAjaxFailureMsg: 'Die Berichtsaktion kann nicht ausgeführt werden, weil der Berichtsdienst nicht verbunden werden konnte.',
