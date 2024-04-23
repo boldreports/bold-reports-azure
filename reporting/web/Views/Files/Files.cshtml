@@ -1,0 +1,80 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    ViewBag.Title = globalAppSettings.SystemSettings.OrganizationName + " - [[[Files]]]";
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@model List<ItemDetail>
+<script>
+    var EditFilePopupUrl = "@Url.Action("getfiledetails", "files")";
+</script>
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-page.css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/file-page.min.css" />
+    </environment>
+}
+
+@section scripts{
+    @if (!isMobile)
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/files-page.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/files-page.min.js"></script>
+        </environment>
+    }
+    else
+    {
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/files-page-mobile.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/files-page-mobile.min.js"></script>
+        </environment>
+    }
+}
+
+@section MainSection{
+    <div id="item-grid-container" data-grid-name="files" class="row admin-page-container">
+        <input type="hidden" class="page-name" data-content="[[[FILES]]]">
+        @if (!isMobile)
+        {
+            <div class="import-area admin-page-header">
+                <h2 class="page-title">[[[FILES]]]</h2>
+            </div>
+            <div class="admin-page-body">
+                <div id="search-area" class="pull-right">
+                    <input type="text" id="search-items" class="pull-left no-margin" placeholder="[[[Search files]]]" />
+                    <span class="su close-icon su-inner-close pull-left no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                    <span class="su su-search search-item pull-left no-margin" title="[[[Search files]]]"></span>
+                </div>
+
+                <div class="grid-container grid">
+                    @await Html.PartialAsync("../Items/_ItemsGrid", new ViewDataDictionary(ViewData) { { "gridName", "files" } })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="grid-container grid">
+                @await Html.PartialAsync("../Items/_ItemsGridForMobile", new ViewDataDictionary(ViewData) { { "gridName", "files" } })
+            </div>
+        }
+    </div>
+    <div id="edit-file-popup">
+        <iframe id="edit-file-popup-iframe" class="fileDialog"></iframe>
+    </div>
+    <div id="popup-container">
+        <iframe id="scheduler-popup-iframe"></iframe>
+    </div>
+    @if (!isMobile)
+    {
+        @await Html.PartialAsync("../Items/_AddItems")
+    }
+
+}

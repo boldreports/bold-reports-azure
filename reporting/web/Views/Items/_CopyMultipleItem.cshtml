@@ -1,0 +1,367 @@
+﻿@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
+    var siteName = ViewBag.TenantName;
+    var actionItem = ViewBag.Action;
+    var canCreateCategory = ViewData["CanCreateCategory"] != null ? Convert.ToBoolean(ViewData["CanCreateCategory"]) : false;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+}
+<script>
+    var copyMultipleItemUrl = "@Url.Action("copymultiplereports", "items")";
+    var getReportUrl = "@Url.Action("GetItems", "reports")";
+    var tenantItemUrl = "@Url.Action("getcategory", "items")";
+    var tenantMultipleCopyItemUrl = "@Url.Action("tenantmultiplecopy", "items")";
+    var canCreateCategory = "@canCreateCategory";
+    var actionItem = "@actionItem";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var addButton = '<span class="col-xs-1 input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;right:5px;" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
+    var triggeredElementId = '';
+    function load() {
+        if (($(parent.window).width()) > 1400) {
+            $(".dialog").addClass("iframe");
+        }
+        if (($(parent.window).width()) < 1400) {
+            $(".dialog").removeClass("iframe");
+        }
+    }
+</script>
+@await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js"></script>
+    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.min.js"></script>
+</environment>
+
+<body onload="load()">
+    <div id="PopupContainer" class="dialog">
+        <div class="col-md-12 dialog-header">
+            <div class="col-xs-11 no-padding">
+                @{
+                    <span class="su su-copy Head-icon"></span>
+                }
+                @{
+                    if (ViewBag.Action == "Copy")
+                    {
+                        <span class="PopupTitle">[[[Copy Multiple Reports]]]</span>
+                    }
+                    else if (ViewBag.Action == "Copytenant")
+                    {
+                        <span class="PopupTitle">[[[Copy Reports to Tenants]]]</span>
+                    }
+                }
+            </div>
+            <div class="col-xs-1 no-padding">
+                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose close-dialog"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        @if (TempData["ErrorMessage"] == null)
+        {
+            if (isSelfHosted == true && ViewBag.Action == "Copy")
+            {
+                <form class="dialog-body col-xs-12 no-padding copy-move-category" id="item_action_form">
+                    <div class="tenant-parent" id="tenant-parent-div">
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[From Category]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-7 no-padding third-block">
+                                <select id="FromCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" title='[[[Select category]]]' style="width:230px;"></select>
+                            </div>
+                            <div class="fourth-block"></div>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="report-list-division">
+                            <div class="col-xs-3 no-padding text-right text-label">[[[Report]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div id="multi-report-container" class="col-xs-7 no-padding">
+                                <select id="MultiReportList" class="selectpicker" data-dropup-auto="false" data-hide-disabled="true" data-live-search="true" data-size="3" title='[[[Select Report]]]' style="width:230px" multiple="multiple" data-actions-box="true"></select>
+                                <span class="validation-error text" style="margin-top:0px !important"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Target Category]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            @if (canCreateCategory)
+                            {
+                                <div class="col-xs-6 no-padding first-block" id="category-list">
+                                    <select id="TargetCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" title='[[[Select category]]]' style="width:230px;" multiple="multiple"></select>
+                                    <span class="category-validation-error text"></span>
+                                </div>
+                                <span class="col-xs-1 input-group-btn no-padding" id="add-new-category">
+                                    <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                </span>
+                                <div class="second-block"> </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-7 no-padding third-block">
+                                    <select id="TargetCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" title='[[[Select category]]]' style="width:230px;" multiple="multiple"></select>
+                                </div>
+                                <div class="fourth-block"></div>
+                            }
+                        </div>
+                        <div id="overwrite" class="enable-overwrite-report col-xs-12 padding20 no-bottom-padding bottom-margin30">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Report]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                <label class="switch" style="transform: scale(0.8);">
+                                    <input type="checkbox" id="overwrite_report" name="overwrite_report">
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <div class="dropdown-menu" role="menu" style="padding:5px">[[[If enabled, Report will overwrite and map the existing report's data source and dataset on the target tenant.]]]</div>
+                            </div>
+                            @* <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Datasource]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                <label class="switch" style="transform: scale(0.8);">
+                                    <input type="checkbox" id="overwrite_datasource" name="overwrite_datasource">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Dataset]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                <label class="switch" style="transform: scale(0.8);">
+                                    <input type="checkbox" id="overwrite_dataset" name="overwrite_dataset">
+                                    <span class="slider"></span>
+                                </label>
+                            </div> *@
+                        </div>
+                    </div>
+                    <input type="hidden" id="tenantHidden" value="@siteName">
+                    <input type="hidden" id="multipleTenantList" value="@siteName">
+                </form>
+            }
+            if (isSelfHosted == true && ViewBag.Action == "Copytenant")
+            {
+                <form class="dialog-body col-xs-12 no-padding copy-move-category" id="item_action_form">
+                    <div class="tenant-parent" id="tenant-parent-div">
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Publish]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-7 no-padding">
+                                <select id="publishSite" class="selectpicker" data-dropup-auto="false" data-size="3" title='[[[Select Publish Site]]]' style="width:230px">
+                                    <option value="InternalSite">[[[Internal Site]]]</option>
+                                    <option value="ExternalSite">[[[External Site]]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[From Category]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-7 no-padding third-block">
+                                <select id="FromCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" title='[[[Select category]]]' style="width:230px;"></select>
+                            </div>
+                            <div class="fourth-block"></div>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="report-list-division">
+                            <div class="col-xs-3 no-padding text-right text-label">[[[Report(s)]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div id="multi-report-container" class="col-xs-7 no-padding">
+                                <select id="MultiReportList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-hide-disabled="true" data-size="3" title='[[[Select Report]]]' style="width:230px" multiple="multiple" data-actions-box="true"></select>
+                                <span class="report-validation-error text" style="margin-top:0px !important"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-tenant-division">
+                            <div class="col-xs-3 no-padding text-right text-label">[[[Target Tenant]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div id="multi-tenant-container" class="col-xs-6 no-padding">
+                                <select id="multipleTenantList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-hide-disabled="true" data-size="3" title='[[[Select tenant]]]' style="width:230px" multiple="multiple" data-actions-box="true"></select>
+                                <span class="tenant-validation-error text"></span>
+                            </div>
+                            <span class="col-xs-1 input-group-btn no-padding" id="add-external-sites" style="display:none">
+                                <button id="add-external-sites" class="btn btn-default" type="button" data-placement="right" title="[[[Add external sites]]]" data-toggle="tooltip" onclick="getExternalSitesDetailDialog()"><span class="su-add"></span></button>
+                            </span>
+                        </div>
+                        <div class="col-xs-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Target Category]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            @if (canCreateCategory)
+                            {
+                                <div class="col-xs-6 no-padding first-block" id="category-list">
+                                    <select id="TargetCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-hide-disabled="true" data-size="3" title='[[[Select category]]]' style="width:230px;"></select>
+                                    <input type="text" class="form-control cls-schname" name="" id="TargetCategoryListTextbox" maxlength="100" style="display:none" />
+                                    <span class="category-validation-error text"></span>
+                                </div>
+                                <span class="col-xs-1 input-group-btn no-padding" id="add-new-category">
+                                    <button id="addCategoryButton" class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                </span>
+                                <div class="col-xs-6 no-padding first-block" id="categoryValidation">
+                                    <span class="category-validation-error text" style="display:none">b</span>
+                                </div>
+                                <div class="second-block"> </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-7 no-padding third-block" id="category-list">
+                                    <select id="TargetCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-hide-disabled="true" data-size="3" title='[[[Select category]]]' style="width:230px;"></select>
+                                    <input type="text" class="form-control cls-schname" name="" id="TargetCategoryListTextbox" maxlength="100" style="display:none" />
+                                    <span class="category-validation-error text"></span>
+                                </div>
+                                <div class="fourth-block"></div>
+                            }
+                        </div>
+                        <div id="overwrite" class="enable-overwrite-report col-xs-12 padding20 no-bottom-padding bottom-margin30">
+                            <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Report]]]</div>
+                            <div class="col-xs-1 no-padding"></div>
+                            <div class="col-xs-8 no-padding">
+                                <label class="switch" style="transform: scale(0.8);">
+                                    <input type="checkbox" id="overwrite_report" name="overwrite_report">
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <div class="dropdown-menu" role="menu" style="padding:5px">[[[If enabled, Report will overwrite and map the existing report's data source and dataset on the target tenant.]]]</div>
+                            </div>
+                            @*  <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Datasource]]]</div>
+                    <div class="col-xs-1 no-padding"></div>
+                    <div class="col-xs-8 no-padding">
+                    <label class="switch" style="transform: scale(0.8);">
+                    <input type="checkbox" id="overwrite_datasource" name="overwrite_datasource">
+                    <span class="slider"></span>
+                    </label>
+                    </div>
+                    <div class="col-xs-3 no-padding text-right text-label"> [[[Overwrite Dataset]]]</div>
+                    <div class="col-xs-1 no-padding"></div>
+                    <div class="col-xs-8 no-padding">
+                    <label class="switch" style="transform: scale(0.8);">
+                    <input type="checkbox" id="overwrite_dataset" name="overwrite_dataset">
+                    <span class="slider"></span>
+                    </label>
+                    </div> *@
+                        </div>
+                    </div>
+                    <input type="hidden" id="tenantHidden" value="@siteName">
+                </form>
+            }
+            <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                <div class="col-xs-12" style="padding-left:300px">
+                    @{
+                        <input type="button" title="" id="CopyReportButton" class="app-button app-primary-button app-btn-primary" value="[[[Copy]]]" />
+                    }
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Cancel]]]" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="dialog-body col-xs-12 no-padding">
+                <div class="col-xs-12 no-left-padding padding20 no-right-padding bottom-margin30">
+                    <div class="permission-denied">@TempData["ErrorMessage"]</div>
+                </div>
+                <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                    <div class="col-xs-12 no-padding text-center">
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
+                    </div>
+                </div>
+            </div>
+        }
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var categories = @Html.Raw(Json.Serialize(ViewBag.CategoryDetails));
+            var options = "";
+            for (var t = 0; t < categories.length; t++) {
+                options += '<option value=' + categories[t].Id + '>' + categories[t].Name + '</option>';
+            }
+            if ("@actionItem" == "Copy") {
+                $("#TargetCategoryList").html(options);
+                $("#TargetCategoryList").selectpicker("refresh");
+            }
+            else if ("@actionItem" == "Copytenant") {
+                $("#TargetCategoryList").selectpicker("refresh");
+            }
+            var fromCategoryOptions = "";
+            for (var t = 0; t < categories.length; t++) {
+                fromCategoryOptions += '<option value=' + categories[t].Id + '>' + categories[t].Name + '</option>';
+            }
+            $("#publishSite").selectpicker("refresh");
+            $("#FromCategoryList").html(fromCategoryOptions);
+            $("#FromCategoryList").selectpicker("refresh");
+            $("#add-new-category [data-toggle='tooltip']").tooltip();
+            var reports = @Html.Raw(Json.Serialize(ViewBag.ItemList));
+            var reportoptions = "";
+            for (var t = 0; t < reports.length; t++) {
+                reportoptions += '<option value=' + reports[t].Id + '>' + reports[t].Name + '</option>';
+            }
+            $("#MultiReportList").html(reportoptions);
+            $("#MultiReportList").selectpicker("refresh");
+            window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+            $("#multi-report-container .bs-deselect-all").after("<div class='bs-select-all-custom'><span>" + window.Server.App.LocalizationContent.Select + "</span><span class='bs-select-custom-tick glyphicon glyphicon-ok' ></span></div>");
+            $(document).on("click", "#multi-report-container .bs-select-all-custom", function (e) {
+                $("#MultiReportList").data("selectpicker").selectAll();
+                $(this).removeClass("bs-select-all-custom").addClass("bs-deselect-all-custom");
+                $($(this).children("span")[0]).text(window.Server.App.LocalizationContent.Clear);
+                e.stopPropagation();
+            });
+            $(document).on("click", "#multi-report-container .bs-deselect-all-custom", function (e) {
+                $("#MultiReportList").data("selectpicker").deselectAll();
+                $(this).removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
+                $($(this).children("span")[0]).text(window.Server.App.LocalizationContent.Select);
+                e.stopPropagation();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var tenants = @Html.Raw(Json.Serialize(ViewBag.Tenant));
+            var tenantoption = "";
+            for (var t = 0; t < tenants.length; t++) {
+                tenantoption += "<option value='" + tenants[t].TenantName + "'>" + tenants[t].TenantName + "</option>";
+            }
+            $("#multipleTenantList").html(tenantoption);
+            $("#multipleTenantList").val("@siteName");
+            $("#multipleTenantList").selectpicker("refresh");
+            window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+            $("#multi-tenant-container .bs-deselect-all").after("<div class='bs-select-all-custom'><span>" + window.Server.App.LocalizationContent.Select + "</span><span class='bs-select-custom-tick glyphicon glyphicon-ok' ></span></div>");
+            $(document).on("click", "#multi-tenant-container .bs-select-all-custom", function (e) {
+                $("#multipleTenantList ").data("selectpicker").selectAll();
+                $(this).removeClass("bs-select-all-custom").addClass("bs-deselect-all-custom");
+                $($(this).children("span")[0]).text(window.Server.App.LocalizationContent.Clear);
+                e.stopPropagation();
+            });
+            $(document).on("click", "#multi-tenant-container .bs-deselect-all-custom", function (e) {
+                $("#multipleTenantList").data("selectpicker").deselectAll();
+                $(this).removeClass("bs-deselect-all-custom").addClass("bs-select-all-custom");
+                $($(this).children("span")[0]).text(window.Server.App.LocalizationContent.Select);
+                e.stopPropagation();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var reportCategoryList = @Html.Raw(Json.Serialize(ViewBag.CategoryDetails));
+            window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#multipleTenantList").on("change", function () {
+                var mutilpleTenants = $("#multipleTenantList option:selected").length;
+                if (mutilpleTenants > 1) {
+                    var inputHtml = '<input type="text" class="form-control cls-schname" name="" id="TargetCategoryListTextbox" style ="width: 285px" />';
+                    var validationHtml = '<span class="category-validation-error text" style ="margin-left: 160px" ></span>';
+                    $('#category-list').html(inputHtml);
+                    $('#categoryValidation').html(validationHtml);
+                    $("#addCategoryButton").hide();
+                }
+                else {
+                    var selectHtml = '<select id="TargetCategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-hide-disabled="true" data-size="3" title="[[[Select category]]]" style="width:230px;"></select>';
+                    $('#category-list').html(selectHtml);
+                    $('#TargetCategoryList').selectpicker();
+                    $("#addCategoryButton").show();
+                }
+            });
+        });
+    </script>
+</body>
