@@ -1,0 +1,494 @@
+﻿@inject ServerPrincipal _identityResponse
+@{
+    var globalAppSettings = _globalAppSettings;
+    var userId = _identityResponse.User.UserId;
+    var isAdmin = _identityResponse.IsAdmin;
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var dashboardUrl = Url.Action("Reports", "Reports");
+    var downloadUrl = dashboardUrl.TrimEnd('/').Remove(dashboardUrl.LastIndexOf('/'));
+    var downloadReportUrl = downloadUrl + "/items/download/report";
+    var isBlob = globalAppSettings.SystemSettings.StorageType;
+    var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
+}
+<script nonce="@Context.Items["ScriptNonce"]">
+    var dashboardGrid;
+    var filter = [];
+</script>
+
+<div id="items">
+</div>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="favorite">
+    <span title='{{:IsFavorite ? "[[[Remove from Favorites]]]" : "[[[Add to Favorites]]]"}}' data-is-favorite="{{:IsFavorite}}" data-item-id="{{:Id}}" onclick="dashboardGrid.toggleFavorite(this)" class='{{:IsFavorite ? "su-favorite" : "su-dis-favorite"}}'></span>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="description">
+    <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-toggle="tooltip" data-placement="top">
+        <span>
+            {{>Description}}
+        </span>
+    </div>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="category">
+    <span title="{{:CategoryName}}" data-toggle="tooltip" data-placement="top">
+        {{>CategoryName}}
+    </span>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="createdbydisplayname">
+    <span title="{{:CreatedByDisplayName}}" data-toggle="tooltip" data-placement="top">
+        {{>CreatedByDisplayName}}
+    </span>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="gridhoveroptions">
+    <div class="grid-hover" data-toggle="tooltip" data-placement="top">
+        {{if !IsDraft}}
+            <a class="dashboard-open grid-hover-options " title="[[[Open]]]" href="@dashboardUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}?showmyreports=1" target="_blank">
+                <i class="su su-external-link"></i>
+            </a>
+        {{/if}}
+       {{if CanWrite &&  !IsDraft}}
+           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" onclick="dashboardGrid.editDashboard(this)">
+             <i class="su su-edit"></i>
+           </span>
+       {{/if}}
+       {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet() && IsDraft }}
+           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}"  onclick="dashboardGrid.editDraftDashboard(this)">
+             <i class="su su-edit"></i>
+           </span>
+       {{/if}}
+       {{if !IsDraft}}
+       {{if @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true || hasDashboardSharePermission || CreatedById == @(userId)}}
+           <span class="item-permissions grid-hover-options" title="[[[Share]]]" data-created-by-id="{{:CreatedById}}" data-extension="{{:Extension}}" data-is-public="{{:IsPublic}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" data-item-type="{{:ItemType}}" onclick="dashboardGrid.shareDashboardPermission(this)">
+                <i class="su su-share"></i>
+           </span>
+       {{/if}}
+       {{/if}}  
+    </div>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemname">
+    <div class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
+        {{if !IsDraft}}
+                <a href="@Url.Action("Reports", "Reports")/{{:Id}}/{{:CategoryName}}/{{:Name}}" style="max-width: 100%;vertical-align: middle;" target="_blank">
+                <span>
+                    {{>Name}}
+                </span>
+            </a>
+        {{else}}
+            <a href="@Url.Action("ReportDesigner", "Designer")/{{:Id}}/draft/{{:Name}}" style="max-width: 100%;vertical-align: middle;" target="_blank">
+                <span>
+                    {{>Name}}
+                </span>
+            </a>
+        {{/if}}
+    </div>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
+    <div class="dropdown context-menu">
+        <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
+            <i class="su su-options"></i>
+        </span>
+        <ul class="dropdown-menu dashboard-options" role="menu">
+            {{if !IsDraft}}
+            {{if CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true}}
+            {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == false && IsPublic}}
+            <li>
+                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" onclick="dashboardGrid.makePrivate(this)">
+                <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
+                <span>[[[Make Private]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == true}}
+            <li>
+                {{if !IsPublic}}
+                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-url="{{:~fileUrlEncode(Id)}}" class="make-public option-click" onclick="dashboardGrid.makePublic(this)">
+                    <i class="su su-public"></i>
+                    <span>[[[Make Public]]]</span>
+                </a>
+                {{/if}}
+                {{if IsPublic}}
+                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" onclick="dashboardGrid.makePrivate(this)">
+                <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
+                <span>[[[Make Private]]]</span>
+                </a>
+                {{/if}}
+            </li>
+            {{/if}}
+            {{/if}}
+            <li>
+                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" class="option-click" onclick="dashboardGrid.getItemLink(this)">
+                    <i class="su su-link"></i>
+                    <span>[[[Get Link]]]</span>
+                </a>
+            </li>
+            {{if CanDownload && !IsLocked}}
+            <li>
+                <a href="@downloadReportUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}" onclick="dashboardGrid.downloadReport(this)">
+                    <i class="su su-download"></i>
+                    <span>[[[Download Report]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if ~checkTablet()}}
+                {{if (@(Convert.ToBoolean(ServerAppConfig.EnableViewsInReportsMenu).ToString().ToLower()) == true)}}
+                    <li class="dropdown dashboard-views" data-load="true" >
+                        <a href="javascript:void(0);" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" onmouseover="dashboardGrid.getDashboardViews(event, this)" class="dropdown-toggle views" data-toggle="dropdown">
+                            <i class="su su-filter"></i>
+                            <span>[[[Views]]]</span>
+                        </a>
+                        <ul class="dropdown-menu item-views no-padding" role="menu">
+                            <li>
+                                <span class="view-name" href="javascript:void(0);">
+                                    [[[Loading...]]]
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                {{/if}}
+            <li>
+                <a class="view-scheduless option-click" href="@Url.Action("Schedules", "Scheduler")?report={{:Name}}" data-item-name="{{:Name}}" target="_blank" onclick="dashboardGrid.viewSchedules(this)">
+                    <i class="su su-nav-schedule"></i>
+                    <span>[[[View Schedules]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            <li>
+                <a href="javascript:void(0);" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}" onclick="dashboardGrid.openInfo(this)">
+                    <i class="su su-info"></i>
+                    <span>[[[Info]]]</span>
+                </a>
+            </li>
+            {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked}}
+            <li role="separator" class="divider"></li>
+            {{/if}}
+            {{if CanMove && ~checkTablet() && !IsLocked}}
+            <li>
+                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Move" class="option-click" onclick="dashboardGrid.moveDashboard(this)">
+                    <i class="su su-move"></i>
+                    <span>[[[Move]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if CanCopy && ~checkTablet() && !IsLocked}}
+            <li>
+                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Copy" class="option-click" onclick="dashboardGrid.copyDashboard(this)">
+                    <i class="su su-copy"></i>
+                    <span>[[[Copy]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && CanClone && ~checkTablet() && !IsLocked}}
+            <li>
+                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Clone" class="option-click" onclick="dashboardGrid.cloneDashboard(this)">
+                    <i class="su su-clone"></i>
+                    <span>[[[Clone]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if @(Convert.ToBoolean(isMasterTenant).ToString().ToLower()) == true }}
+            {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
+            {{if ~checkTablet() }}
+            {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true)}}
+            {{if !IsMultiDashboard }}
+            <li>
+                <a href="javascript:void(0);" class="option-click" data-action="Publish" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.getPublishSiteDetailDialog(this)">
+                    <i class="su su-publish"></i>
+                    <span>[[[Publish]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{if (CanSchedule || CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
+            <li role="separator" class="divider"></li>
+            {{/if}}
+            {{if CanSchedule && ~checkTablet()}}
+            <li>
+                <a href="javascript:void(0);" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" data-IsMulti-Dashboard="{{:IsMultiDashboard}}" class="option-click" onclick="dashboardGrid.scheduleDashboard(this)">
+                    <i class="su su-nav-schedule"></i>
+                    <span>[[[Create Schedule]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if ~checkTablet()}}
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="javascript:void(0);" class="version" data-item-name="{{:Name}}" data-item-id="{{:Id}}" onclick="dashboardGrid.versionHistory(this)">
+                    <i class="su su-versions"></i>
+                    <span>[[[Version History]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if (CanWrite || CanDelete) && ~checkTablet()}}
+            <li role="separator" class="divider"></li>
+            {{/if}}
+            {{if @(globalAppSettings.SystemSettings.StorageType) == @((int)StorageType.FileStorage)}}
+            {{if CanWrite && ~checkTablet() && !IsDraft}}
+            <li>
+                <a class="option-click" title="" data-category-name="{{:CategoryName}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}"  onclick="dashboardGrid.editRDLInXML(this)">
+                    <i class="su su-embed"></i>
+                    <span>[[[Edit as XML]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{/if}}
+            {{if CanWrite && ~checkTablet() && !IsLocked}}
+            <li>
+                <a href="javascript:void(0);" data-item-id="{{:Id}}" onclick="dashboardGrid.updateReport(this)">
+                    <i class="su su-edit"></i>
+                    <span>[[[Update]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{if CanDelete && ~checkTablet()}}
+            <li>
+                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.deleteItem(this)">
+                    <i class="su su-delete"></i>
+                    <span>[[[Delete]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            <li>
+                <a class="option-click" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" onclick="dashboardGrid.exportReport(this)">
+                    <i class="su su-upload"></i>
+                    <span>[[[Export]]]</span>
+                </a>
+            </li>
+            {{else}}
+            {{if (CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
+            <li>
+                <a href="javascript:void(0);" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}" onclick="dashboardGrid.openInfo(this)">
+                    <i class="su su-info"></i>
+                    <span>[[[Info]]]</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.deleteItem(this)">
+                    <i class="su su-delete"></i>
+                    <span>[[[Delete]]]</span>
+                </a>
+            </li>
+            {{/if}}
+            {{/if}}
+        </ul>
+    </div>
+</script>
+
+<script nonce="@Context.Items["ScriptNonce"]">
+    $(window).resize(function () {
+        var gridObj = $("#items").data("ejGrid");
+        var gridName = $('#item-grid-container').attr("data-grid-name")
+        if (gridObj != null && dashboardGrid.activeMenu != displayCategory.DraftItems) {
+            if (window.innerWidth <= 1040) {
+                gridObj.hideColumns("Description");
+                gridObj.hideColumns("GridHoverOptions");
+            } else {
+                gridObj.showColumns("Description");
+                gridObj.showColumns("GridHoverOptions");
+            }
+            if ($("#clear-search").css("display") == "block" || $("#clear-search").css("display") == "inline-block") {
+                $("#search-items").css("display", "block");
+            }
+
+        }
+    });
+
+    $.views.helpers({
+        urlEncode: function (category, item) {
+            return encodeURI("@Url.Action("Index", "FileRender")/" + category + "/" + item);
+        },
+        widgetUrlEncode: function (item) {
+            return encodeURI("@Url.Action("widgets", "FileRender")/" + item);
+        },
+        fileUrlEncode: function (item) {
+            return encodeURI("@Url.Action("Download", "Files")/" + item + "?compress=true");
+        },
+        checkMobile: function () {
+            return ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1040));
+        },
+        checkTablet: function () {
+            return window.innerWidth > 900;
+        },
+        renderDoubleQuotes: function (inputString) {
+            return inputString ? inputString.replace(new RegExp("\"", 'g'), '&quot;') : "";
+        }
+    });
+
+    function initializeGrid() {
+        var dataManager = ej.DataManager({
+            url: getItemGridUrl,
+            adaptor: new ej.UrlAdaptor(),
+        });
+
+        dataManager.adaptor.beforeSend = function (dm, request) {
+            request.setRequestHeader('X-XSRF-TOKEN', extractXSRFTokenFromCookie());
+        };
+        $("#items").ejGrid({
+            dataSource: dataManager,
+            gridLines: ej.Grid.GridLines.Horizontal,
+            allowPaging: true,
+            pageSettings: { pageSize: defaultReportTakeCountForGrid },
+            allowSorting: false,
+            allowScrolling: false,
+            enableAltRow: false,
+            allowSearching: true,
+            allowFiltering: false,
+            allowSelection: false,
+            actionBegin: "fnActionBegin",
+            actionComplete: "fnActionComplete",
+            rowSelecting: function (args) {
+                if (args.target.hasClass("favoriteItem")) {
+                    args.cancel = true;
+                }
+            },
+            rowDataBound: function () {
+                var itemGridWaitingPopupTemplateId = createLoader("items");
+                this.element.ejWaitingPopup({ template: $("#" + itemGridWaitingPopupTemplateId) });
+            },
+            dataBound: function (args) {
+                if (!navigator.userAgent.match(/Windows Phone/i)) { // To avoid tooltips in windows phone.
+                    $("[data-toggle='tooltip']").tooltip();
+                }
+            },
+            enableRowHover: true,
+            columns: [
+                {
+                    template: true,
+                    templateID: "#favorite",
+                    width: 13,
+                    allowFiltering: false,
+                    allowSorting: false,
+                    visible: filter.displayCategory != displayCategory.DraftItems
+                },
+                {
+                    headerText: "[[[Name]]]",
+                    template: true,
+                    headerTemplateID: "#itemnameheader",
+                    templateID: "#itemname",
+                    field: "Name",
+                    width: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1200)) ? 100 : 120,
+                    type: "string",
+                    allowFiltering: true
+                },
+                {
+                    headerText: "[[[Description]]]",
+                    width: (window.innerWidth > 1200) ? 55 : 80,
+                    template: true,
+                    headerTemplateID: "#descriptionheader",
+                    field: "Description",
+                    templateID: "#description",
+                    type: "string",
+                    allowFiltering: true,
+                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1040) && filter.displayCategory != displayCategory.DraftItems)
+                },
+                {
+                    headerText: "[[[Category]]]",
+                    width: (window.innerWidth > 1200) ? 40 : 50,
+                    field: "CategoryName",
+                    headerTemplateID: "#categoryheader",
+                    visible: (("@isMobile.ToString().ToLower()" == "false") && (window.innerWidth > 1040) && (filter.filterCollection == 0 && filter.displayCategory != displayCategory.DraftItems)),
+                    allowFiltering: true,
+                    template: true,
+                    templateID: "#category",
+                    type: "string"
+                },
+                {
+                    headerText: "[[[Owner]]]",
+                    width: (window.innerWidth > 1200) ? 40 : 50,
+                    headerTemplateID: "#ownerheader",
+                    field: "CreatedByDisplayName",
+                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1200)),
+                    allowFiltering: true,
+                    template: true,
+                    templateID: "#createdbydisplayname",
+                    type: "string"
+                },
+                {
+                    width: 45,
+                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1200)),
+                    template: true,
+                    field: "GridHoverOptions",
+                    headerText: '',
+                    templateID: "#gridhoveroptions",
+                    allowFiltering: false
+                },
+                {
+                    template: true,
+                    templateID: "#options",
+                    width: (window.innerWidth > 1200 && filter.displayCategory != displayCategory.DraftItems) ? 15 : (filter.displayCategory == displayCategory.DraftItems) ? 8 : 25,
+                    allowFiltering: false,
+                    allowSorting: false
+                }
+            ]
+        });
+    }
+
+    function fnActionBegin(args) {
+        this.model.query._params.push({ key: "searchKey", value: filter.searchKey });
+
+        if (filter.filterCollection != undefined && filter.filterCollection.length > 0) {
+            this.model.query._params.push({ key: "filterCollection", value: filter.filterCollection });
+        }
+
+        if (filter.sorted != undefined && filter.sorted.length > 0) {
+            args.model.query._params.push({ key: "sorted", value: filter.sorted });
+        }
+
+        if (filter.displayCategory != 0) {
+            args.model.query._params.push({
+                key: "displayCategory",
+                value: filter.displayCategory
+            });
+        }
+
+        if (args.requestType == "refresh" && !this.initialRender) {
+            $("#items").find(".e-gridcontent").css("visibility", "hidden");
+        }
+    }
+
+    function fnActionComplete(args) {
+        $("#item-list-panel > .item-navigation, #item-list-panel > #category-listing").css("visibility", "visible");
+        $("[data-toggle='tooltip']").tooltip();
+        var gridObj = $("#items").data("ejGrid");
+        dashboardGrid.totalDashboardCount = gridObj._gridRecordsCount;
+        dashboardGrid.doDashboardComplete();
+        if (gridObj._gridRecordsCount == 0) {
+            this.getContentTable().find("tbody .emptyrecord").html(window.Server.App.LocalizationContent.NoDashboards);
+            dashboardGrid.dashboardDataBindComplete = false;
+        }
+        var gridName = $('#item-grid-container').attr("data-grid-name");
+        var publicDashboard = $("ul.item-navigation li.public-items").hasClass("active");
+        var isMarkItemsPublic = $("#isMarkItemspublic").val();
+        if (gridName.toLowerCase() == "dashboards" || gridName.toLowerCase() == "reports") {
+            if (publicDashboard == true && gridObj._gridRecordsCount > 0 && isMarkItemsPublic == "False") {
+                $(".tool-tip").show();
+            }
+            else {
+                $(".tool-tip").hide();
+            }
+        }
+
+        if (args.requestType == "refresh" && !this.initialRender) {
+            $("#items").find(".e-gridcontent").css("visibility", "visible");
+        }
+    }
+
+    function setGrid(filters) {
+        var reportGrid = $("#items").data("ejGrid");
+        dashboardGrid = angular.element('[ng-controller=DashboardCtrl]').scope();
+        filter = filters;
+        if (reportGrid != undefined)
+            reportGrid.destroy();
+        initializeGrid();
+    };
+    $(document).on("show.bs.tooltip", function () {
+        $(".tooltip").not(this).hide();
+    });
+</script>

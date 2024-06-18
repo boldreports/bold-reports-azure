@@ -1,0 +1,159 @@
+﻿@using System.Globalization;
+﻿@using System.Runtime.InteropServices;
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+
+    var tenantAppConfiguration = new TenantAppConfiguration(globalAppSettings);
+    var language = CultureInfo.CurrentCulture.Name;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+
+    var organizationName = globalAppSettings.SystemSettings.OrganizationName;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var reportServiceUrl = designerServiceUrl + "/api/Designer";
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
+    ViewBag.Title = "[[[Create Data Source]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <title>@ViewBag.Title</title>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource-dependent.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource-dependent.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource-dependent.js")" crossorigin="anonymous"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/crypto-js.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource-dependent.min.js")" crossorigin="anonymous"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/crypto-js.min.js")" crossorigin="anonymous"></script>
+        </environment>
+
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+        </environment>
+        <script nonce="@Context.Items["ScriptNonce"]" src="@reportServerResourceUrl/cdn/scripts/localization/v2.0/reportdesigner/ej.localetexts.@string.Concat(language, ".min.js")"></script>
+    }
+    else
+    {
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+        <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource-dependent.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource-dependent.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.css")" crossorigin="anonymous" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/localizationcontent.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.min.css")" crossorigin="anonymous" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/localizationcontent.min.js")" crossorigin="anonymous"></script>
+        </environment>
+
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource-dependent.js")" crossorigin="anonymous"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/crypto-js.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource-dependent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource-dependent.min.js")" crossorigin="anonymous"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/crypto-js.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/crypto-js.min.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+        </environment>
+        <script nonce="@Context.Items["ScriptNonce"]" src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
+    }
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var datasource = "@Url.Action("DataSources", "DataSources")";
+        var isWindows = @Json.Serialize(@isWindowsPlatform);
+        var designerToken = "@ViewBag.AccessToken";
+        var connectionList = null;
+        var availableDSList = [];
+        var designerInstance;
+        var serverURL = "@reportServerApiUrl";
+        var serviceURL = "@designerServiceUrl" + "/api/Designer";
+        var getDataConnectors = "@designerServiceUrl" + "/api/v1.0/configuration/GetDataConnectors/";
+        var custombrandName = "@ServerAppConfig.CustomBrandName";
+        var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
+        var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+    </script>
+</head>
+<body class="cd" ng-app="createDataSourceApp">
+    <div id="designer" style="display:none !important"></div>
+
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/widget-angular.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/widget-angular.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/widget-angular.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/custombranding.config.js"></script>
+    </environment>
+    <div class="cd-container" ng-controller="createDataSourceCtrl">
+        @{ await Html.RenderPartialAsync("~/Views/DataSources/CreateDataSource/_Header.cshtml"); }
+        <div class="cd-connector-list rs-scroller" ng-style="{'display': selectedDataConnector ? 'none' : 'block'}">
+            @{ await Html.RenderPartialAsync("~/Views/DataSources/CreateDataSource/_ConnectorsList.cshtml"); }
+        </div>
+        <div class="cd-connector" ng-if="selectedDataConnector">
+            @{ await Html.RenderPartialAsync("~/Views/DataSources/CreateDataSource/_Connector.cshtml"); }
+        </div>
+
+        <div class="dc-toast"></div>
+
+    </div>
+</body>
+<environment include="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-datasource.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-datasource.min.js")" crossorigin="anonymous"></script>
+</environment>
+</html>
