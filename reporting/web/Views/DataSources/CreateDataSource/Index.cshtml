@@ -80,8 +80,6 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource-dependent.min.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
-        <link href="@cdnDomain/static/essentialjs/content/ej2-base.css" rel="stylesheet" />
-        <link href="@cdnDomain/static/essentialjs/content/ej2-notifications.css" rel="stylesheet" />
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.css")" crossorigin="anonymous" />
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/localizationcontent.js")" crossorigin="anonymous"></script>
