@@ -1,0 +1,72 @@
+﻿@using System.Globalization;
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    var globalAppSettings = _globalAppSettings;
+    var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    ViewBag.Title = "[[[Data Connectors]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-designer.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/connector-page.css")" crossorigin="anonymous" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-designer.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/connector-page.min.css")" crossorigin="anonymous" />
+    </environment>
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/essentialjs/datatile-configuration-dependency.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/connector-page.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce ="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]"  asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/connector-page.min.js")" crossorigin="anonymous"></script>
+    </environment>
+    <script>
+        window.addEventListener('message', function (event) {
+            if (event && event.data && !isNaN(event.data)) {
+                $('#dataConnector_iframe').height(event.data);
+            }
+        });
+    </script>
+}
+
+@section MainSection{
+    @await Html.PartialAsync("_AdminMenu")
+    <div id="look-and-feel-container" class="col-xs-12 admin-page-container">
+        <div id="dataconnector-settings-header" class="col-xs-12 admin-page-header">
+            <hgroup class="col-lg-6">
+                <h1 class="h2 page-title">
+                    [[[DATA CONNECTORS CONFIGURATION]]]
+                </h1>
+                <h5 class="page-description">
+                    [[[Configure any number of connections for your applications by choosing connectors from the list below.]]]
+                </h5>
+            </hgroup>
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+                [[[Save]]]
+            </button>
+        </div>
+
+        <div id="look-and-feel-form col-lg-12 col-md-12" style="padding-bottom: 20px !important">
+            <iframe id="dataConnector_iframe" class="dataConnector-iframe" src="@Url.Action("DataConnectorSettings", "Administration")" style="height: 100%; width: 100%; overflow: hidden;border: none;"></iframe>
+        </div>
+        <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+                [[[Save]]]
+            </button>
+        </div>
+    </div>
+}

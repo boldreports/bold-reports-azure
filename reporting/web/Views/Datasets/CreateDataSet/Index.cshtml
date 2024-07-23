@@ -1,0 +1,93 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var CreateAccess = ViewData["CreateAccess"] != null ? Convert.ToBoolean(ViewData["CreateAccess"]) : false;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var cdnDomain = GlobalAppSettings.CdnDomain;
+    ViewBag.Title = "[[[Create Dataset]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    @if (ServerAppConfig.IsSelfHosted)
+    {
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.css")" crossorigin="anonymous" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.min.css")" crossorigin="anonymous" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset-dependent.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset-dependent.min.js")" crossorigin="anonymous"></script>
+        </environment>
+        <script nonce="@Context.Items["ScriptNonce"]"  asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+    }
+    else
+    {
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.css")" crossorigin="anonymous" />
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.min.css")" crossorigin="anonymous" />
+        </environment>
+        <environment include="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset-dependent.js")" crossorigin="anonymous"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset-dependent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset-dependent.min.js")" crossorigin="anonymous"></script>
+        </environment>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+    }
+    <script nonce="@Context.Items["ScriptNonce"]">
+        let basePath = "@Url.Content("~/")";
+        let dataset = "@Url.Action("datasets", "datasets")";
+    </script>
+</head>
+<body ng-app="createDataSetApp">
+    <div class="cds-container" ng-controller="createDataSetCtrl">
+        @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_Header.cshtml"); }
+        <div class="cds-cards" ng-if="!useExistingDataSource">
+            @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_DataSetCards.cshtml"); }
+        </div>
+        <div class="cds-existing-container" ng-if="useExistingDataSource">
+            @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_DataSet.cshtml"); }
+        </div>
+        <div class="ds-toast"></div>
+
+    </div>
+</body>
+<environment include="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/create-dataset.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/create-dataset.min.js")" crossorigin="anonymous"></script>
+</environment>
+</html>

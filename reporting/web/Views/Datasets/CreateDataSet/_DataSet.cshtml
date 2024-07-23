@@ -1,0 +1,36 @@
+﻿<script nonce="@Context.Items["ScriptNonce"]">
+    var getDataSources = "@Url.Action("GetItems", "DataSources")";
+</script>
+<div class="ds-dataset-container" ng-controller="dataSetContainerCtrl">
+    <div class="ds-dataset" ng-controller="dataSetCtrl">
+        <div class="ds-scroller-container rs-scroller">
+            <div class="ds-scroller">
+                <div class="ds-config-container">
+                    <div class="ds-config">
+                        <div class="ds-container">
+                            <div class="ds-datasource-list-container" ng-style="{'display': !isDataSourceList ? 'none' : 'block'}">
+                                <div class="ds-filter-autocomplete-container">
+                                    <span class="e-input-group e-control-wrapper dc-filter-autocomplete">
+                                        <input type="text" class="e-autocomplete e-control e-lib e-input" ng-model="searchText" placeholder="[[[Search Data Source]]]" onfocus="onFocus()" onblur="onBlur()">
+                                        <span ng-click="onAutocompleteTailClick($event)" ng-class="searchText.length ? 'ds-delete': 'ds-search'"></span>
+                                    </span>
+                                </div>
+                                <div class="ds-datasource-lists rs-scroller">
+                                    <div class="ds-datasource-list" ng-click="onDataSourceClick($event, value.Name)" ng-repeat="(key, value) in dataSourceList">
+                                        <div class="ds-datasource-list-check-icon"></div>
+                                        <div class="ds-datasource-list-name">{{value.Name}}</div>
+                                    </div>
+                                    <div class="ds-datasource-list-empty" ng-class="dataSourceList.length ? '': 'active'">[[[No records to display]]]</div>
+                                </div>
+                            </div>
+                            <div class="ds-dataset-form-container" ng-style="{'display': isDataSourceList ? 'none' : 'block'}">
+                                @{ await Html.RenderPartialAsync("~/Views/Items/_DataSetForm.cshtml"); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_Footer.cshtml"); }
+</div>
