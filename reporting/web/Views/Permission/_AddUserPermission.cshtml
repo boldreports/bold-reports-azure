@@ -1,0 +1,62 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<!DOCTYPE html>
+
+<html class="dashboard-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var addUserPermissionViewIframeUrl = "@Url.Action("AddUserPermissionView", "permission")";
+        var getPermissionEntityUrl = "@Url.Action("GetPermissionEntity", "permission")";
+        var getItemScopeUrl = "@Url.Action("GetItemScope", "permission")";
+        var getItemScopeAccessUrl = "@Url.Action("GetItemScopeAccess", "permission")";
+        var addnewuserpermissionUrl = "@Url.Action("addnewpermission", "permission")";
+        var deleteuserPermissionUrl = "@Url.Action("DeleteUserPermission", "permission")";
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/iframe.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/adduserpermission.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/adduserpermission.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/iframe.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/adduserpermission.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/adduserpermission.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/iframe.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/iframe.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/adduserpermission.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/adduserpermission.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/iframe.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/iframe.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/adduserpermission.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/adduserpermission.min.js")" crossorigin="anonymous"></script>
+    </environment>
+
+
+    @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+
+    <script nonce="@Context.Items["ScriptNonce"]">
+        $(document).ready(function () {
+            parent.$("#add-permission_wrapper").ejWaitingPopup("hide");
+        });
+        var entityObj = JSON.parse(@Json.Serialize(ViewBag.PermissionEntity));
+        var accessObj = JSON.parse(@Json.Serialize(ViewBag.PermissionAccess));
+    </script>
+</head>
+<body class="add-permissions" id="add-user-permission">
+    @await Html.PartialAsync("_AddPermission")
+    <input type="hidden" id="user-id-hidden" value="@ViewBag.userId" />
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    </environment>
+</body>
+</html>
