@@ -1,1 +1,0 @@
-ALTER TABLE {database_name}.BOLDTC_TenantUser ADD IsFavorite tinyint NOT NULL DEFAULT 0;
