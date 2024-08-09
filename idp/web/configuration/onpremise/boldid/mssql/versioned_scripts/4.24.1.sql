@@ -1,1 +1,0 @@
-ALTER TABLE [BOLDTC_TenantUser] ADD [IsFavorite] bit Not NULL Default 0;
