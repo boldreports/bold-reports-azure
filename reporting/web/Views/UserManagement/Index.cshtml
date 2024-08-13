@@ -138,15 +138,15 @@
                 <i class="su su-eye"></i>
             </a>
             {{if Email == "@ViewBag.LoggedUser"}}
-            <a href="javascript:void(0);" title="[[[It's You]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+            <a href="#" class="prevent-default-action" title="[[[It's You]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
                 <i class="su su-delete disabled-icon-color"></i>
             </a>
             {{else IsAdmin && ~isAdmin() == false}}
-            <a href="javascript:void(0);" title="[[[You cannot delete the system administrator]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+            <a href="#" class="prevent-default-action" title="[[[You cannot delete the system administrator]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
                 <i class="su su-delete disabled-icon-color"></i>
             </a>
             {{else}}
-            <a class="delete-class" href="javascript:void(0);" title="[[[Remove Access]]]" data-toggle="tooltip" data-email="{{:Email}}" data-content="{{:UserId}}">
+            <a class="delete-class prevent-default-action" href="#" title="[[[Remove Access]]]" data-toggle="tooltip" data-email="{{:Email}}" data-content="{{:UserId}}">
                 <i class="su su-delete"></i>
             </a>
             {{/if}}
@@ -253,7 +253,11 @@
                     return @isAdmin.ToString().ToLower();
                 }
             });
+
+            $(document).on("click", ".prevent-default-action", function (e) {
+                e.preventDefault();
             });
+        });
     </script>
 }
 
@@ -272,7 +276,7 @@
                     <li class="dropdown no-padding">
                         @if (new DeviceDetection(Context).IsMobile)
                         {
-                        <button class="primary-button app-btn-primary" id="new-user-dropdown" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
+                        <button class="primary-button app-btn-primary" id="new-user-dropdown create-user-mobile" title="[[[Add new user]]]">
                             [[[New User]]]
                         </button>
                         }
@@ -283,8 +287,8 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu add-user-dropdown multi-level" role="menu" id="dropdown-options">
-                                <li id="create-user" title="[[[Add new user]]]" onclick="onUserAddDialogOpen()">
-                                    <a href="javascript:void(0);" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
+                                <li id="create-user" title="[[[Add new user]]]">
+                                    <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
                                         <i class="su su-user-add"> </i>
                                         <span>[[[Add User]]]</span>
                                     </a>

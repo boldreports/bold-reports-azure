@@ -23,6 +23,10 @@
         .ready(function () {
             $("#default-password, #custom-password").prop("disabled", "disabled");
             $("#enable-password-protection").prop("disabled", "disabled");
+
+            $(document).on("click", "#default-password", DisablePasswordCondition);
+
+            $(document).on("click", "#custom-password", EnablePasswordCondition);
         });
 </script>
 
@@ -47,11 +51,11 @@
 @Html.Label("password-type-label", "[[[Password Type]]]", new { @class = "col-lg-4 col-md-4 col-sm-4  app-textbox-label no-margin password-label-align" })
 <div class="col-lg-8 col-md-8 col-sm-8 no-margin form-input-field pull-left">
     <div class="pull-left col-lg-4 col-md-4 col-sm-4 no-margin no-padding">
-@Html.RadioButton("password-type", "", new { @class = "css-radio", @checked = "checked", onclick = "DisablePasswordCondition()", id = "default-password" })
+@Html.RadioButton("password-type", "", new { @class = "css-radio", @checked = "checked", id = "default-password" })
 @Html.Label("default-password", "[[[Default Password]]]", new { @class = "pull-left app-radio-label normal-font cls-margin-top8 notransition" })
 </div>
 <div class="pull-left col-lg-4 col-md-4 col-sm-4 no-margin no-padding">
-@Html.RadioButton("password-type", false, new { @class = "css-radio", onclick = "EnablePasswordCondition()", id = "custom-password" })
+@Html.RadioButton("password-type", false, new { @class = "css-radio", id = "custom-password" })
 @Html.Label("custom-password", "[[[Custom Password]]]", new { @class = "pull-left app-radio-label normal-font cls-margin-top8 notransition" })
 </div>
 <div class="bg-info col-lg-8 col-md-8 col-sm-8" id="default-password-info">
@@ -105,16 +109,20 @@
 }
 
    <div class="branding-sub-section admin-page-body">
-    <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP Settings]]]</h3>
+    <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP / SFTP Settings]]]</h3>
     <div id="location-export-options" class="col-sm-8 col-xs-8 no-margin">
         <div id="enable-checkbox">
             <input type="checkbox" id="location-export" />
-            <label class="app-checkbox-label normal-font notransition" for="location-export">[[[FTP Location Export]]]</label>
+            <label class="app-checkbox-label normal-font notransition" for="location-export">[[[FTP / SFTP Location Export]]]</label>
         </div>
         <form class="col-sm-12 col-xs-12 no-padding" id="ftp-form">
             <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
                 <div class="col-sm-4 col-xs-4">
-                    <label class="path-label">[[[Host]]]</label>
+                        <label class="path-label" style="float:left">[[[Host]]]</label>
+                        <div class="tool-tip col-xs-1" style="padding-left:1.2%;top:1px">
+                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                            <div class="dropdown-menu" role="menu" style="padding:5px; width: 420px !important;">[[[If using a custom FTP/SFTP port, include it in the host like this: ftp://domain:123 or sftp://domain:123.]]]</div>
+                        </div>
                     <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
                     <div id="hostname-validation" style="display: none"></div>
                 </div>

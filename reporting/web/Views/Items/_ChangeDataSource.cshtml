@@ -1,4 +1,5 @@
 ﻿@using Syncfusion.Server.Base.Helpers
+@model string
 
 @{
     Layout = null;
@@ -8,11 +9,15 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 
-<script nonce="@Context.Items["ScriptNonce"]">
+<script nonce="@Model">
     var addDatasetUrl = "@Url.Action("AddSharedDataset", "DataSets")";
     var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
     var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "Datasets")";
     var oldDatasetID = "";
+
+    $(document).ready(function () {
+        load();
+    });
 
     function load() {
         if (($(parent.window).width()) > 1400) {
@@ -28,13 +33,13 @@
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
 <environment include="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
 </environment>
 
-<body onload="load()">
+<body>
     <div id="PopupContainer" class="dialog">
         <div class="col-md-12 dialog-header">
             <div class="col-xs-11 no-padding">
@@ -43,7 +48,7 @@
                 <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
             </div>
             <div class="col-xs-1 no-padding">
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose close-dialog"><span class="su su-close"></span></a>
+                <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
             </div>
         </div>
         @if (TempData["ErrorMessage"] == null)
@@ -131,7 +136,7 @@
                     <span class="SuccessMessage"></span>
                 </div>
                 <div class="col-xs-6 rightAlign">
-                    <input type="button" title="" id="copy_dataset_button" class="app-button app-primary-button app-btn-primary" onclick="addDataSet()" value="[[[Save]]]" />
+                    <input type="button" title="" id="copy_dataset_button" class="app-button app-primary-button app-btn-primary" value="[[[Save]]]" />
                     <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Cancel]]]" />
                 </div>
             </div>
@@ -150,7 +155,7 @@
             </div>
         }
     </div>
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function () {
             var sharedDataSource = @Json.Serialize(ViewBag.SharedDataSource);
             var availableSharedDS = @Json.Serialize(ViewBag.AvailableSharedDS);

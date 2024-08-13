@@ -45,7 +45,10 @@
             var addDatasetUrl = "@Url.Action("AddSharedDataset", "Datasets")";
             var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "Datasets")";
             $(document).ready(function () {
+                load();
+
                 $(document).on("click", ".PopupClose", function (e) {
+                    e.preventDefault();
                     $("#addDataSetDom").find("iframe").contents().find("html").html("");
                     eDialog = parent.$("#addDataSetDom").data("ejDialog");
                     eDialog.close();
@@ -64,7 +67,7 @@
             }
     </script>
 </head>
-    <body onload="load();">
+    <body>
         <input type="hidden" id="publishedFileName" value="none">
         <input type="hidden" id="rsd_filename" value="[[[Browse file path]]]">
         <form name="addItemForm" id="addItemForm" method="post" action="@Url.Action("AddDataset", "Datasets")" enctype="multipart/form-data" autocomplete="off">
@@ -82,7 +85,7 @@
                             <span class="PopupTitle">[[[Create Dataset]]]</span>
                         }
                     }
-                    <a href="javascript:void(0);" title="Close" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" title="Close" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
                 <div class="dialog-body file-content-height col-xs-12 no-padding">
@@ -165,9 +168,9 @@
                         }
                         else if (ViewBag.Action == "Upload")
                         {
-                            <input type="button" title="" class="btn primary-button app-btn-primary" id="publish_file" onclick="addDataSet()" value="[[[Save]]]" tabindex="4" disabled />
+                            <input type="button" title="" class="btn primary-button app-btn-primary" id="publish_file" value="[[[Save]]]" tabindex="4" disabled />
                         }
-                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddDataSet" onclick="closeNewDatasetAddPopup()" value="[[[Cancel]]]" tabindex="5">
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddDataSet" value="[[[Cancel]]]" tabindex="5">
                         <input type="submit" class="hide-content" style="display: none;" />
                     </div>
                 </div>

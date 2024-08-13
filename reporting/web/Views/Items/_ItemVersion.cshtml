@@ -38,7 +38,7 @@
                             <span class="modal-title popup-title schedule-popup-title ellipsis col-lg-10 col-xs-10 col-sm-10 col-md-10 no-padding" data-toggle="tooltip" data-placement="bottom" data-container="body" style="font-size:16px;"></span>
                         </div>
                         <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 no-padding">
-                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="left" data-container="body" title="[[[Close]]]" class="popup-close pull-right"><span class="su su-close"></span></a>
+                            <a href="#" data-toggle="tooltip" data-placement="left" data-container="body" title="[[[Close]]]" class="popup-close pull-right prevent-default-action"><span class="su su-close"></span></a>
                         </div>
                     </div>
                     <div class="modal-body col-lg-12">
@@ -109,7 +109,7 @@
                     {{/if}}
                     {{if CanDownload}}
                     <li>
-                <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/report/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" onclick="downloadReport(this)">
+                <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/report/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" id="download-versioned-report">
                             <i class="su su-download"></i>
                             <span>[[[Download Report]]]</span>
                         </a>
@@ -129,7 +129,7 @@
                     {{if !IsCurrentVersion && CanWrite}}
                     <li role="separator" class="divider"></li>
                     <li>
-                        <a data-itemid="{{:ItemId}}" title="[[[Restore]]]" data-item-version="{{:VersionNumber}}" data-item-type="{{:ItemTypeId}}" class="item-roll-back" href="javascript:void(0);"><i class="su su-roll-back"></i><span>[[[Restore]]]</span></a>
+                        <a data-itemid="{{:ItemId}}" title="[[[Restore]]]" data-item-version="{{:VersionNumber}}" data-item-type="{{:ItemTypeId}}" class="item-roll-back prevent-default-action" href="#"><i class="su su-roll-back"></i><span>[[[Restore]]]</span></a>
                     </li>
                     {{/if}}
                 </ul>
@@ -140,7 +140,7 @@
                 </span>
                 <ul class="dropdown-menu" role="menu">
                     <li>
-                        <a data-itemid="{{:ItemId}}" title="[[[Restore]]]" data-item-version="{{:VersionNumber}}" data-item-type="{{:ItemTypeId}}" class="item-roll-back" href="javascript:void(0);"><i class="su su-roll-back"></i><span>[[[Restore]]]</span></a>
+                        <a data-itemid="{{:ItemId}}" title="[[[Restore]]]" data-item-version="{{:VersionNumber}}" data-item-type="{{:ItemTypeId}}" class="item-roll-back prevent-default-action" href="#"><i class="su su-roll-back"></i><span>[[[Restore]]]</span></a>
                     </li>
                 </ul>
                 {{/if}}
@@ -271,6 +271,14 @@
                     encodeString: function (inputString) {
                         return inputString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                     }
+                });
+
+                $(document).on("click", "#download-versioned-report", function () {
+                    downloadReport(this);
+                });
+
+                $(document).on("click", ".prevent-default-action", function (e) {
+                    e.preventDefault();
                 });
             });
         </script>

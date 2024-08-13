@@ -140,7 +140,7 @@
                 </div>
                 <div class="col-xs-2 public-private-change-section">
                     <div class="public-private-change-action">
-                        <a href="javascript:void(0);" onclick="changeAccessMode()" id="access-mode-change-link" class="app-hyperlink">[[[Change]]]</a>
+                        <a href="#" id="access-mode-change-link" class="app-hyperlink">[[[Change]]]</a>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="col-xs-2 public-private-change-section">
                     <div class="public-private-change-action">
-                        <a href="javascript:void(0);" onclick="changeAccessMode()" id="access-mode-change-link" class="app-hyperlink">[[[Change]]]</a>
+                        <a href="#" id="access-mode-change-link" class="app-hyperlink">[[[Change]]]</a>
                     </div>
                 </div>
             </div>
@@ -177,11 +177,11 @@
                 </div>
             </div>
             <div class="get-item-link-section" ng-show="currentItemType != @categoryType && currentItemType != @datasourceType && currentItemType != @datasetType && currentItemType !=@userManagement && currentItemType !=@itemViewType" >
-                <input onClick="this.setSelectionRange(0, this.value.length)" id="item-url" class="form-control" readonly />
+                <input id="item-url" class="form-control" readonly />
                 <div class="form-control text focus" id="item-url-copy" readonly="" data-original-title="[[[Click to copy]]]">[[[Copy link]]]</div>
             </div>
             <div class="get-item-embed-link-section col-xs-12 no-padding" ng-show="currentItemType != @categoryType && currentItemType != @datasourceType && currentItemType != @datasetType && currentItemType !=@userManagement && currentItemType !=@itemViewType">
-                <a class="get-embed-link app-hyperlink pull-left" href="javascript:void(0);" onclick="getEmbedCode()">&lt;/&gt; [[[Get Embed code]]]</a>
+                <a id="get-embed-code-link" class="get-embed-link app-hyperlink pull-left" href="#">&lt;/&gt; [[[Get Embed code]]]</a>
             </div>
             <hr class="divider-cls col-xs-12 no-padding" ng-if="currentItemType != @categoryType && currentItemType != @datasourceType && currentItemType !=@userManagement && currentItemType !=@itemViewType">
             <div id="assign-user-group-container">
@@ -204,7 +204,7 @@
                 </div>
             </div>
             <div id="show-shared-user-group-container" style="display:none;">
-                <a href="javascript:void(0);" onclick="showManageAccessContainer()" id="show-shared-user-group-link">
+                <a href="#" id="show-shared-user-group-link">
                     <div class="show-shared-user-group-section">
                         <div class="show-shared-user-group-label">[[[Shared with :]]]</div>
                         <div class="shared-user-group-name-section"></div>
@@ -433,8 +433,8 @@
                 <button type="button" id="manage-access-back-button" class="app-button app-secondary-button app-btn-secondary pull-left" style="display: none;">[[[Back]]]</button>
                 <button type="button" id="share-done-popup-button" class="app-button app-secondary-button app-btn-secondary pull-right">[[[Done]]]</button>
                 <button type="button" id="manage-access-cancel-button" class="app-button app-secondary-button app-btn-secondary pull-right" style="display: none;">[[[Cancel]]]</button>
-                <button type="button" id="share-permission-button" class="app-button app-primary-button app-btn-primary pull-right" onclick="saveItemPermission()" style="display: none;">[[[Share]]]</button>
-                <button type="button" id="add-owner-permission-button" class="app-button app-primary-button app-btn-primary pull-right" onclick="addGroupOwnerPermission()" style="display: none;">[[[Add Owner]]]</button>
+                <button type="button" id="share-permission-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Share]]]</button>
+                <button type="button" id="add-owner-permission-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Add Owner]]]</button>
                 <button type="button" id="manage-access-save-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Save]]]</button>
                 <button type="button" id="access-mode-cancel-button" class="app-button app-secondary-button app-btn-secondary pull-right" style="display: none;">[[[Cancel]]]</button>
                 <button type="button" id="access-mode-change-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;" disabled="disabled">[[[Change]]]</button>

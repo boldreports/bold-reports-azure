@@ -40,7 +40,10 @@
   
     <script nonce="@Context.Items["ScriptNonce"]">
         $(document).ready(function () {
+            load();
+
             $(document).on("click", ".PopupClose", function (e) {
+                e.preventDefault();
                 $("#addFileDom").find("iframe").contents().find("html").html("");
                 eDialog = parent.$("#addFileDom").data("ejDialog");
                 eDialog.close();
@@ -58,13 +61,13 @@
         }
     </script>
 </head>
-    <body onload="load();">
+    <body>
         <form name="addItemForm" id="addItemForm" method="post" action="~/files/addfile" enctype="multipart/form-data" autocomplete="off">
             <div id="PopupContainer" class="col-lg-12 no-padding add-dashboard-module dialog" role="dialog">
                 <div class="col-xs-12 dialog-header">
                     <span class="su su-document head-icon"></span>
                     <span class="PopupTitle">[[[Upload File]]]</span>
-                    <a href="javascript:void(0);" title="Close" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" title="Close" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
                 <div class="dialog-body file-content-height col-xs-12 no-padding">
@@ -116,8 +119,8 @@
 
                 <div class="dialog-footer">
                     <div class="pull-right">
-                        <input type="button" title="" class="btn primary-button app-btn-primary" id="publish-file" onclick="addfileValidate()" tabindex="4" value="[[[Add]]]" />
-                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddFile" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="5">
+                        <input type="button" title="" class="btn primary-button app-btn-primary" id="publish-file" tabindex="4" value="[[[Add]]]" />
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddFile" value="[[[Cancel]]]" tabindex="5">
                         <input type="submit" class="hide-content" style="display: none;" />
                     </div>
                 </div>

@@ -7,7 +7,7 @@
                     <span class="modal-title"> [[[License limit reached]]]</span>
                 </div>
                 <div class="col-xs-1 no-padding">
-                    <a href="javascript:void(0);" class="pull-right" title="[[[Close]]]" onclick="onLimitUserDialogClose()">
+                    <a href="#" id="limit-dialog-close-link" class="pull-right" title="[[[Close]]]">
                         <span class="su su-close"></span>
                     </a>
                 </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="col-xs-12 modal-footer">
                 <div class="col-xs-12 no-padding text-center validationArea" id="close">
-                    <input title="" type="button" id="Cancel" class="secondary-button app-btn-secondary" value="[[[OK]]]" onclick="onLimitUserDialogClose()" tabindex="3" autofocus />                </div>
+                    <input title="" type="button" id="Cancel" class="secondary-button app-btn-secondary" value="[[[OK]]]" tabindex="3" autofocus />                </div>
             </div>
         </div>
     </div>
@@ -49,6 +49,13 @@
             closeOnEscape: true,
             close: "onLimitUserDialogClose"
         });
+
+        $(document).on("click", "#limit-dialog-close-link", function (e) {
+            e.preventDefault();
+            onLimitUserDialogClose();
+        });
+
+        $(document).on("click", "#Cancel", onLimitUserDialogClose);
     });
 
     function onLimitUserDialogClose() {

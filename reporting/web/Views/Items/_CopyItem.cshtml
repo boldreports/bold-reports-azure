@@ -1,4 +1,5 @@
 ﻿@using Syncfusion.Server.Base.Helpers
+@model string
 
 @{
     Layout = null;
@@ -10,7 +11,7 @@
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
 }
 
-<script nonce="@Context.Items["ScriptNonce"]">
+<script nonce="@Model">
     var copyItemUrl = "@Url.Action("copyitem", "items")";
     var cloneItemUrl = "@Url.Action("cloneitem", "items")";
     var canCreateCategory = "@canCreateCategory";
@@ -21,6 +22,10 @@
     var addButton = '<span class="col-xs-1 input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;right:5px;" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
     var triggeredElementId = '';
      var siteName = @Json.Serialize(siteName);
+
+    $(document).ready(function () {
+        load();
+    });
 
     function load() {
         if (($(parent.window).width()) > 1400) {
@@ -37,13 +42,13 @@
 
 
 <environment include="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
 </environment>
 
-<body onload="load()">
+<body>
     <div id="PopupContainer" class="dialog">
 
         <div class="col-md-12 dialog-header">
@@ -71,7 +76,7 @@
                 <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
             </div>
             <div class="col-xs-1 no-padding">
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose close-dialog"><span class="su su-close"></span></a>
+                <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
             </div>
         </div>
         @if (TempData["ErrorMessage"] == null)
@@ -275,7 +280,7 @@
                     <span class="SuccessMessage"></span>
                     @{ if (ViewBag.Action == "Copy")
                         {
-                            <input type="button" id="copyreport_advance_button" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Advanced]]]" onclick="enableAdvanceOption()" />
+                            <input type="button" id="copyreport_advance_button" title="" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Advanced]]]" />
                         }
                     }
                 </div>
@@ -309,14 +314,14 @@
             </div>
         }
         <environment include="Development,CloudDevelopment">
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         </environment>
     </div>
 
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function () {
             var categories = @Json.Serialize(ViewBag.CategoryDetails);
             var options = "";
@@ -329,7 +334,7 @@
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
         });
     </script>
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function () {
             var tenants = @Json.Serialize(ViewBag.Tenant);
             var tenantoption = "";
@@ -342,7 +347,7 @@
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
         });
     </script>
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function () {
             var sharedDataSet = @Json.Serialize(ViewBag.SharedDataset);
             var availableSharedDS = @Json.Serialize(ViewBag.AvailableSharedDS);
@@ -396,7 +401,7 @@
             $("#copyreport_shared_datasource").css('display', 'block');
         }
     </script>
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function () {
             var reportCategoryList = @Json.Serialize(ViewBag.CategoryDetails);
             var drillthroughreportReferences = @Json.Serialize(ViewBag.itemReferences["drillthroughreport"]);

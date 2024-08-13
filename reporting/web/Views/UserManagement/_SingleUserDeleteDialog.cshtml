@@ -7,7 +7,7 @@
                     <span class="modal-title">[[[Remove Access]]]</span>
                 </div>
                 <div class="col-xs-4 no-padding">
-                    <a href="javascript:void(0);" onclick="onSingleDeleteDialogClose()" class="close">
+                    <a href="#" id="single-user-delete-dialog-close-link" class="close">
                         <i class="su su-close"></i>
                     </a>
                 </div>
@@ -21,8 +21,8 @@
                 <div class="col-xs-4"><input type="hidden" id="hiddenId" value="@ViewBag.id" /></div>
                 <div class="col-xs-8 no-padding">
                     <input type="hidden" value="">
-                    <input type="button" onclick="deleteSingleUser()" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" />
-                    <input type="button" onclick="onSingleDeleteDialogClose()" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" />
+                    <input type="button" id="delete-single-user-button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" />
+                    <input type="button" id="single-user-delete-dialog-close-button" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" />
                 </div>
             </div>
         </div>

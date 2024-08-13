@@ -16,160 +16,94 @@
     var permissionDetails = ViewBag.permissionDetails;
     var CanWrite = permissionDetails != null ? permissionDetails[0].CanWrite : false;
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
-    var xmlContent = File.ReadAllText(itemLocation);
+    var xmlContent = ViewBag.xmlContent;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 <html lang="en" style="height:100%;width:100%">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@itemName - Edit Dataset As XML - @globalAppSettings.SystemSettings.OrganizationName</title>
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-xml-editor.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-xml-editor.min.css")" crossorigin="anonymous" />
-    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-base.css" rel="stylesheet" />
-    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-buttons.css" rel="stylesheet" />
-    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-popups.css" rel="stylesheet" />
-    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-navigations.css" rel="stylesheet" />
-    <link href="@reportServerResourceUrl/cdn/css/essentialjs/ej2-notifications.css" rel="stylesheet" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-xml-editor.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-xml-editor.min.js")" crossorigin="anonymous"></script>
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/common/ej2-base.min.js"></script>
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-buttons.min.js"></script>
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-popups.min.js"></script>
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-navigations.min.js"></script>
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-notifications.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportdesigner.min.js"></script>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
+    </script>
 </head>
 <body>
     <div id="toolbar"></div>
     <div id="editor-container">
-        <div id="editor"></div>
+        <div id="dataset_xml_editor"></div>
+        <div id="alert_dialog"></div>
     </div>
     <div id="toast-message-container"></div>
 
     <script nonce="@Context.Items["ScriptNonce"]">
-        ejs.popups.createSpinner({
-            target: document.getElementById('editor-container'),
-            cssClass: 'e-spin-overlay'
-        });
+        createXmlSpinner();
         var originalXmlContent = @Html.Raw(JsonConvert.SerializeObject(xmlContent));
+        var landingPageUrl = '@Url.Action("DataSets", "DataSets")';
+        var shouldRunBeforeUnload = true;
 
-        var editor = CodeMirror(document.getElementById("editor"), {
-            mode: "xml",
-            lineNumbers: true,
-            tabSize: 1,
-            autofocus: true,
-            dragDrop: false,
-            cursorBlinkRate: 0,
-            cursorScrollMargin: 5,
-            inputStyle: "textarea",
-            scrollbarStyle: "native",
-            autoCloseBrackets: true,
-            value: @Html.Raw(JsonConvert.SerializeObject(xmlContent)),
-            viewportMargin: 100,
-            extraKeys: {
-                "Ctrl-F": "findPersistent",
-                "Ctrl-G ": "findNext",
-                "Shift-Ctrl-G": "findPrev",
-                "Shift-Ctrl-F": "replace",
-                "Shift-Ctrl-R": "replaceAll",
-                "Ctrl-Z": "undo",
-                "Ctrl-Y": "redo"
-            }
-        });
+        var editor = createXMLEditor("dataset_xml_editor", originalXmlContent);
 
-        var toolbar = new ej.navigations.Toolbar({
-            items: [
-                {
-                    text: "[[[Undo]]]",
-                    tooltipText: "[[[Undo]]]",
-                    prefixIcon: "e-icons e-undo",
-                    id: "undo",
-                    click: handleUndo
-                },
-                {
-                    text: "[[[Redo]]]",
-                    tooltipText: "[[[Redo]]]",
-                    prefixIcon: "e-icons e-redo",
-                    id: "redo",
-                    click: handleRedo
-                },
-                {
-                    type: "Separator"
-                },
-                {
-                    text: "[[[Search]]]",
-                    tooltipText: "[[[Search]]]",
-                    prefixIcon: "e-icons e-search",
-                    id: "search",
-                    click: handleSearch
-                },
-                {
-                    text: "[[[Replace]]]",
-                    tooltipText: "[[[Replace]]]",
-                    prefixIcon: "e-icons e-replace",
-                    id: "replace",
-                    click: handleReplace
-                },
-                {
-                    type: "Separator"
-                },
-                {
-                    text: "[[[Publish]]]",
-                    tooltipText: "[[[Publish]]]",
-                    id: "publish",
-                    align: "Right",
-                    click: handlePublish
-                }
-            ]
-        });
-
-        toolbar.appendTo("#toolbar");
+        createXmlAlertDlg("alert_dialog");
+        var alertDialog = document.getElementById("alert_dialog").ej2_instances[0];
+        createXmlToolbar("toolbar");
+        var toolbar = document.getElementById("toolbar").ej2_instances[0];
         toolbar.enableItems([0, 1], false);
 
         window.addEventListener("beforeunload", function (e) {
-            var editedXmlContent = editor.getValue();
-            if (originalXmlContent !== editedXmlContent) {
-                var confirmationMessage = "[[[You have made modifications. Do you want to close without publishing?]]]";
-                (e || window.event).returnValue = confirmationMessage;
-                return confirmationMessage;
+            if (shouldRunBeforeUnload) {
+                var editedXmlContent = editor.getValue();
+                if (!areXmlStringsEqual(originalXmlContent, editedXmlContent)) {
+                    var confirmationMessage = "[[[You have made modifications. Do you want to close without publishing?]]]";
+                    (e || window.event).returnValue = confirmationMessage;
+                    return confirmationMessage;
+                }
             }
         });
 
-        function handleUndo() {
-            editor.execCommand("undo");
-        }
-
-        function handleRedo() {
-            editor.execCommand("redo");
-        }
-
-        function handleSearch() {
-            editor.execCommand("findPersistent");
-        }
-
-        function handleReplace() {
-            editor.execCommand("replace");
-        }
-
         function handlePublish() {
+            var editedXmlContent = editor.getValue();
+            var xmlValidation = validateXML(editedXmlContent);
+            if (!xmlValidation.isValid) {
+                alertDialog.header = "[[[Invalid XML]]]";
+                showXmlAlertDlg(xmlValidation.err);
+                return;
+            }
             editor.setOption("readOnly", "nocursor");
             toolbar.disable(true);
-            ej.popups.showSpinner(document.getElementById('editor-container'));
+            ejs.popups.showSpinner(document.getElementById('editor-container'));
 
             var reportServerApiUrl = "@reportServerApiUrl";
-            var editedXmlContent = editor.getValue();
             var parser = new DOMParser();
             var xmlDoc = parser.parseFromString(editedXmlContent, 'application/xml');
             var dataSourceMappingInfoArray = [];
-            var xmlDataSourceDoc= xmlDoc.getElementsByTagName('DataSourceReference');
-            if(xmlDataSourceDoc && xmlDataSourceDoc.length > 0){
-            var dataSourceRefArray =  xmlDataSourceDoc[0].textContent.split('/');
-            var name = dataSourceRefArray[0];
-            var dataSourceId = dataSourceRefArray[1];
-            var dataSourceMappingInfoArray = [{
-                "Name": name,
-                "DataSourceId": dataSourceId,
-                "DataSourceName": name
-            }];
+            var xmlDataSourceDoc = xmlDoc.getElementsByTagName('DataSourceReference');
+            if (xmlDataSourceDoc && xmlDataSourceDoc.length > 0) {
+                var dataSourceRefArray = xmlDataSourceDoc[0].textContent.split('/');
+                var name = dataSourceRefArray[0];
+                var dataSourceId = dataSourceRefArray[1];
+                var dataSourceMappingInfoArray = [{
+                    "Name": name,
+                    "DataSourceId": dataSourceId,
+                    "DataSourceName": name
+                }];
             }
 
             var payload = {
@@ -196,14 +130,16 @@
                         alertMessage(true);
                     }
                     else {
-                        alertMessage(false);
+                        alertDialog.header = "[[[Error: Action Required]]]";
+                        showAlertDlg("[[[An error occurred while publishing the datasource.]]]");
                     }
                 },
                 error: function (xhr, status, error) {
-                    alertMessage(false);
+                    alertDialog.header = "[[[Request Error]]]";
+                    showAlertDlg(xhr.responseJSON ? xhr.responseJSON.message : error);
                 },
                 complete: function () {
-                    ej.popups.hideSpinner(document.getElementById('editor-container'));
+                    ejs.popups.hideSpinner(document.getElementById('editor-container'));
                     editor.setOption("readOnly", false);
                     toolbar.disable(false);
                 }
@@ -288,40 +224,20 @@
         }
 
         .e-icons.e-undo:before {
-            content: "\e341";
+            content: "\e713";
         }
 
         .e-icons.e-redo:before {
-            content: "\e354";
+            content: "\e755";
         }
 
         .e-icons.e-search:before {
-            content: "\e980";
+            content: "\e754";
         }
 
         .e-icons.e-replace:before {
-            content: "\e359";
+            content: "\e710";
         }
-
-        #publish {
-            background-color: #0565ff;
-            padding: 4px 8px;
-            transition: background-color 0.3s ease;
-            border-radius: 4px;
-            margin: 0px;
-        }
-
-            #publish span {
-                color: #fff;
-            }
-
-            #publish:hover {
-                background-color: #5eb8ff;
-            }
-
-                #publish:hover span {
-                    color: #fff;
-                }
     </style>
 </body>
 </html>

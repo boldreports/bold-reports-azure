@@ -111,7 +111,8 @@ CREATE TABLE BOLDRS_Item(
 	IsDraft smallint NULL DEFAULT 0,
 	IsUserBased smallint NULL,
 	IsActive smallint NULL,
-	IsLocked smallint NULL DEFAULT 0)
+	IsLocked smallint NULL DEFAULT 0,
+	ViewerFeatures varchar(4000) NULL)
 ;
 
 CREATE TABLE BOLDRS_ItemView(
@@ -238,6 +239,7 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	NextSchedule timestamp NULL,
 	ExportTypeId int NOT NULL,
 	IsEnabled smallint NOT NULL,
+	IsNoDataEnabled smallint NULL,
 	IsParameterEnabled smallint NOT NULL,
 	IsSaveAsFile smallint NOT NULL,
     IsSendAsMail smallint NOT NULL DEFAULT 1,

@@ -28,6 +28,7 @@
     var isMobile = new DeviceDetection(Context).IsMobile;
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 <html style="height: 100%">
 <head>
@@ -76,6 +77,15 @@
         var isAuthenticated = "@isAuthenticated.ToLower()";
         var isPublic = "@isPublic.ToLower()";
         var publicReportAuthentication = "@Context.User.Identity.IsAuthenticated";
+
+        var faviconLinkElement = document.getElementById("favicon-link");
+        var fallbackFaviconPath = '@faviconFallbackPath';
+        var faviconValidationImageObj = new Image();
+        faviconValidationImageObj.src = faviconLinkElement.href;
+
+        faviconValidationImageObj.addEventListener("error", function () {
+            faviconLinkElement.href = fallbackFaviconPath;
+        });
     </script>
     <style>
         .e-reportviewer * {
@@ -105,7 +115,7 @@
     }
     else
     {
-        <link rel="icon" href="@Url.Content("~/content/images/application/" +globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
+        <link rel="icon" href="@Url.Content("~/content/images/application/" +globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     }
     @{
         if (!string.IsNullOrWhiteSpace(Context.Request.Query["hascomments"]) && Context.Request.Query["hascomments"].ToString().ToLower() == "true")
@@ -157,45 +167,45 @@
                         if (enableComment == "true" && enableView == "true")
                         {
                             <li class="col-xs-4">
-                                <a href="javascript:void(0);" class="su su-report active"></a>
+                                <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
                             <li class="col-xs-4">
                                 @if (ViewBag.IsReportCommented == "true")
                                 {
-                                    <a href="javascript:void(0);" class="su su-with-comment server-comment"></a>
+                                    <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
                                 }
                                 else
                                 {
-                                    <a href="javascript:void(0);" class="su su-without-comment server-comment"></a>
+                                    <a href="#" class="su su-without-comment server-comment prevent-default-action"></a>
                                 }
                             </li>
                             <li class="col-xs-4">
-                                <a href="javascript:void(0);" class="su su-filter server-item-view"></a>
+                                <a href="#" class="su su-filter server-item-view prevent-default-action"></a>
                             </li>
                         }
                         else if (enableComment == "false" && enableView == "true")
                         {
                             <li class="col-xs-6">
-                                <a href="javascript:void(0);" class="su su-report active"></a>
+                                <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
                             <li class="col-xs-6">
-                                <a href="javascript:void(0);" class="su su-filter server-item-view"></a>
+                                <a href="#" class="su su-filter server-item-view prevent-default-action"></a>
                             </li>
 
                         }
                         else if (enableComment == "true" && enableView == "false")
                         {
                             <li class="col-xs-6">
-                                <a href="javascript:void(0);" class="su su-report active"></a>
+                                <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
                             <li class="col-xs-6">
                                 @if (ViewBag.IsReportCommented == "true")
                                 {
-                                    <a href="javascript:void(0);" class="su su-with-comment server-comment"></a>
+                                    <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
                                 }
                                 else
                                 {
-                                    <a href="javascript:void(0);" class="su su-without-comment server-comment"></a>
+                                    <a href="#" class="su su-without-comment server-comment prevent-default-action"></a>
                                 }
                             </li>
 
@@ -203,7 +213,7 @@
                         else if (enableComment == "false" && enableView == "false")
                         {
                             <li class="col-xs-12">
-                                <a href="javascript:void(0);" class="su su-report active"></a>
+                                <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
                         }
                     }
@@ -239,7 +249,7 @@
         <div class="col-lg-12 no-padding" id="PopupContainer">
             <div class="col-md-12 header-menu header-popup">
                 <div class="col-xs-12 no-padding" style="float:right">
-                    <a href="javascript:void(0);" onclick="CommentImageDialogClose()" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" id="comment-image-dialog-close" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
             </div>
             <div class="col-xs-12 no-padding">
@@ -467,6 +477,15 @@ else
                 }
             }
         }
+
+        $(document).on("click", "#comment-image-dialog-close", function (e) {
+            e.preventDefault();
+            commentImageDialogClose();
+        });
+
+        $(document).on("click", ".prevent-default-action", function (e) {
+            e.preventDefault();
+        });
     });
 
     var userId = '@userId';
@@ -747,6 +766,7 @@ else
         });
 
     }
+
     function CommentImageDialogClose() {
         $("#commentImage_popup").ejDialog("close");
         $("#commentImage_popup_image").attr('src', "");
@@ -761,18 +781,18 @@ else
         if ($("#is_mobile").val() == "true" && "@isAuthenticated" == "true") {
 
             var reportComment = isReportCommented.toLowerCase() == "true"
-                ? '<a href="javascript:void(0);" class="su su-with-comment server-comment"></a>'
-                : '<a href="javascript:void(0);" class="su su-without-comment server-comment"></a>';
+                ? '<a href="#" class="su su-with-comment server-comment prevent-default-action"></a>'
+                : '<a href="#" class="su su-without-comment server-comment prevent-default-action"></a>';
             if ('@enableComment' == "true" && '@enableView' == "true") {
                 var enableCommentSave =
-                    '<li class="col-xs-6"><a href="javascript:void(0);" class="su su-report active"></a></li><li class="col-xs-6">' + reportComment + '</li>';
+                    '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6">' + reportComment + '</li>';
                 if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                     var elementCommentSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementCommentSave.html("");
                     elementCommentSave.append(enableCommentSave);
                 } else {
                     var missingCommentSave =
-                        '<li class="col-xs-4"><a href="javascript:void(0);" class="su su-report active"></a></li><li class="col-xs-4">' + reportComment + '</li><li class="col-xs-4"><a href="javascript:void(0);" class="su su-filter server-item-view"></a></li>';
+                        '<li class="col-xs-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-4">' + reportComment + '</li><li class="col-xs-4"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
                     var elementMissingCommentSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementMissingCommentSave.html("");
                     elementMissingCommentSave.append(missingCommentSave);
@@ -781,13 +801,13 @@ else
 
             if ('@enableComment' == "false" && '@enableView' == "true") {
                 var enableSave =
-                    '<li class="col-xs-12"><a href="javascript:void(0);" class="su su-report active"></a></li>';
+                    '<li class="col-xs-12"><a href="#" class="su su-report active prevent-default-action"></a></li>';
                 if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                     $("#server-mobile-navbar").children().find(".navbar-nav").remove();
                     $("#server-mobile-navbar").remove();
                 } else {
                     var missingSave =
-                        '<li class="col-xs-6"><a href="javascript:void(0);" class="su su-report active"></a></li><li class="col-xs-6"><a href="javascript:void(0);" class="su su-filter server-item-view"></a></li>';
+                        '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
                     var elementMissingSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementMissingSave.html("");
                     elementMissingSave.append(missingSave);
@@ -796,7 +816,7 @@ else
 
             if ('@enableComment' == "true" && '@enableView' == "false") {
                 var enableComments =
-                    '<li class="col-xs-6"><a href="javascript:void(0);" class="su su-report active"></a></li><li class="col-xs-6">' + reportComment + '</li>';
+                    '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6">' + reportComment + '</li>';
                 var elementEnableComment = $("#server-mobile-navbar").children().find(".navbar-nav");
                 elementEnableComment.html("");
                 elementEnableComment.append(enableComments);

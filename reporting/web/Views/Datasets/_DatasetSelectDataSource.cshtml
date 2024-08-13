@@ -18,6 +18,10 @@
             var createdatasourceUrl = "@Url.Action("createdatasource", "datasources")";
         var testdatasourceconnectionUrl = "@Url.Action("testdatasourceconnection", "datasources")";
 
+        $(document).ready(function () {
+            load();
+        });
+
         function load() {
             $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
@@ -43,12 +47,12 @@
     </environment>
  
 </head>
-<body style="background-color:white" onload="load();">
+<body style="background-color:white">
     <div id="PopupContainer" class="col-lg-12 no-padding dialog">
         <div class="col-xs-12 dialog-header">
             <span class="su su-datasource Head-icon"></span>
             <span class="PopupTitle">[[[Select Data Source]]]</span>
-            <a href="javascript:void(0);" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose" onclick="closeNewDataSourcePopup()"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-data-source-popup"><span class="su su-close"></span></a>
         </div>
         <div id="datasource_popup_module" class="dialog-body col-xs-12 no-padding">
 
@@ -56,14 +60,14 @@
                 <div class='new-datasource-popup-btns datasource-btns'>
                     <div id="datasource_validation" style="color: #A94442; display: none; height: 0;"></div>
                     <div class='create-datasource-btns pull-right'>
-                        <input type='button' value='[[[Select]]]' id='publish_datasource' onclick="onSubmitDataSource()" class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
-                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewDataSourcePopup()" tabindex="16">
+                        <input type='button' value='[[[Select]]]' id='publish_datasource' class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
+                        <input type='button' id="cancel-new-data-source-popup" value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="16">
                     </div>
                 </div>
             </div>
             <div class='col-md-12 share-popup-header no-top-margin'>
                 <div id="datasource_tabs" class="col-md-12">
-                    <span class="datasource-tab-active heading" id="avl_datasource_tab" onclick="onAvailableDataSourceTabSelect()">[[[Available]]]</span>
+                    <span class="datasource-tab-active heading" id="avl_datasource_tab">[[[Available]]]</span>
                     <div id="rdl_new_tab_arrow" class="downArrow"></div>
                 </div>
             </div>
@@ -196,7 +200,7 @@
                                     @Html.Label("connect_option_none", "[[[Credentials are not required]]]", new { @class = "text labels" })
                                 </div>
                                 <div class="full-width connection-types text">
-                                    <input id="test_connection" type="button" value="[[[Test Connection]]]" onclick="onTestDataSourceConnection()" class="btn primary-button app-btn-primary" tabindex="14">
+                                    <input id="test_connection" type="button" value="[[[Test Connection]]]" class="btn primary-button app-btn-primary" tabindex="14">
                                 </div>
                                 <div class="full-width connection-types text">
                                     <span id="connection_test_validation_error" class="datasource-validation-messages text"></span>

@@ -63,7 +63,7 @@
 @section MainSection{
     @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Datasource) && itemsCount[ItemType.Datasource] > 0)
     {
-        <div id="item-grid-container" data-grid-name="datasources" class="admin-page-container">
+        <div id="item-grid-container" data-grid-name="datasources" class="admin-page-container" ng-controller="itemsCtrl" style="padding: 20px 20px 20px 30px;">
             <input type="hidden" class="page-name" data-content="[[[DATA SOURCES]]]">
             @if (!isMobile)
             {
@@ -111,5 +111,6 @@
         @await Html.PartialAsync("../Items/_AddItems")
         @await Html.PartialAsync("../Items/_ItemVersion")
         @await Html.PartialAsync("../Items/_SharePermission")
+        @await Html.PartialAsync("../Items/_ItemInfo")
     }
 }

@@ -147,6 +147,10 @@
                     $("#GroupAttributesGrid").ejWaitingPopup("hide");
                 }
             });
+
+            $(document).on("click", ".prevent-default-action", function (e) {
+                e.preventDefault();
+            });
         });
         $("#userList").selectpicker("refresh");
     </script>
@@ -193,6 +197,7 @@
         var addGroupViewUrl = "@Url.Action("AddGroupView","group")";
         var deleteGroupUrl = "@Url.Action("DeleteGroup", "group")";
         var groupPageUrl = "@Url.Action("group", "group")";
+        var groupPageNonce = "@Context.Items["ScriptNonce"]";
     </script>
 }
 
@@ -216,7 +221,7 @@
                 {
                     <a type="button" class="link-button app-btn-link" href="@Url.Action("editgroup","group")?groupId=@ViewBag.groupId">[[[Edit Group]]]</a>
                 }
-                <input type="button" class="primary-button app-btn-primary pull-right" id="add-custom-attribute" title="" value="[[[Add Attribute]]]" data-id="@ViewBag.groupId" onclick="addCustomAttribute('group')">
+                <input type="button" class="primary-button app-btn-primary pull-right" id="add-custom-attribute" title="" value="[[[Add Attribute]]]" data-id="@ViewBag.groupId">
                 @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || granularPermissions[PermissionEntity.SpecificGroup]) && ViewBag.groupId != 1)                {
                     <input type="button" class="critical-action-button app-btn-danger delete-group delete" title="" data-groupid="@ViewBag.groupId" value="[[[Delete Group]]]" data-groupname="{{allGroupDetails.GroupName}}" />
                 }
@@ -279,17 +284,17 @@
                 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
                     <div class="user-hover-options">
                         {{if AttributeType ==  @((int)AttributeType.Group)}}
-                        <a href="javascript:void(0);" id="edit-group-attribute" title="[[[Edit]]]" data-toggle="tooltip" data-id="{{:Id}}" data-name="group" onclick="editCustomAttribute(this)">
+                        <a href="#" id="edit-group-attribute" title="[[[Edit]]]" data-toggle="tooltip" data-id="{{:Id}}" data-name="group">
                             <i class="su su-edit"></i>
                         </a>
-                        <a class="delete-class" href="javascript:void(0);" id="remove-group-attribute" title="[[[Remove]]]" data-toggle="tooltip" data-id="{{:Id}}" data-name="group" onclick="deleteConfirmation(this)">
+                        <a class="delete-class" href="#" id="remove-group-attribute" title="[[[Remove]]]" data-toggle="tooltip" data-id="{{:Id}}" data-name="group">
                             <i class="su su-delete"></i>
                         </a>
                         {{else}}
-                        <a href="javascript:void(0);" title="[[[Edit]]]" data-toggle="tooltip" data-content="{{:Id}}">
+                        <a href="#" class="prevent-default-action" title="[[[Edit]]]" data-toggle="tooltip" data-content="{{:Id}}">
                             <i class="su su-edit disabled-icon-color"></i>
                         </a>
-                        <a class="delete-class" href="javascript:void(0);" title="[[[Remove]]]" data-toggle="tooltip" data-content="{{:Id}}">
+                        <a class="delete-class prevent-default-action" href="#" title="[[[Remove]]]" data-toggle="tooltip" data-content="{{:Id}}">
                             <i class="su su-delete disabled-icon-color"></i>
                         </a>
                         {{/if}}

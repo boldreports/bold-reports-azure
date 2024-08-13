@@ -19,7 +19,7 @@
 </div>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="favorite">
-    <span title='{{:IsFavorite ? "[[[Remove from Favorites]]]" : "[[[Add to Favorites]]]"}}' data-is-favorite="{{:IsFavorite}}" data-item-id="{{:Id}}" onclick="dashboardGrid.toggleFavorite(this)" class='{{:IsFavorite ? "su-favorite" : "su-dis-favorite"}}'></span>
+    <span title='{{:IsFavorite ? "[[[Remove from Favorites]]]" : "[[[Add to Favorites]]]"}}' data-is-favorite="{{:IsFavorite}}" data-item-id="{{:Id}}" class='{{:IsFavorite ? "su-favorite" : "su-dis-favorite"}}' id="toggle-favorite-report"></span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="description">
@@ -50,18 +50,18 @@
             </a>
         {{/if}}
        {{if CanWrite &&  !IsDraft}}
-           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" onclick="dashboardGrid.editDashboard(this)">
+           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" id="edit-report">
              <i class="su su-edit"></i>
            </span>
        {{/if}}
        {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet() && IsDraft }}
-           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}"  onclick="dashboardGrid.editDraftDashboard(this)">
+           <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" id="edit-draft-report">
              <i class="su su-edit"></i>
            </span>
        {{/if}}
        {{if !IsDraft}}
        {{if @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true || hasDashboardSharePermission || CreatedById == @(userId)}}
-           <span class="item-permissions grid-hover-options" title="[[[Share]]]" data-created-by-id="{{:CreatedById}}" data-extension="{{:Extension}}" data-is-public="{{:IsPublic}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" data-item-type="{{:ItemType}}" onclick="dashboardGrid.shareDashboardPermission(this)">
+           <span class="item-permissions grid-hover-options" title="[[[Share]]]" data-created-by-id="{{:CreatedById}}" data-extension="{{:Extension}}" data-is-public="{{:IsPublic}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" data-item-type="{{:ItemType}}" id="share-report-permission">
                 <i class="su su-share"></i>
            </span>
        {{/if}}
@@ -97,7 +97,7 @@
             {{if CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true}}
             {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == false && IsPublic}}
             <li>
-                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" onclick="dashboardGrid.makePrivate(this)">
+                <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" id="remove-public-grid">
                 <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
                 <span>[[[Make Private]]]</span>
                 </a>
@@ -106,13 +106,13 @@
             {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == true}}
             <li>
                 {{if !IsPublic}}
-                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-url="{{:~fileUrlEncode(Id)}}" class="make-public option-click" onclick="dashboardGrid.makePublic(this)">
+                <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-url="{{:~fileUrlEncode(Id)}}" class="make-public option-click" id="make-public-grid">
                     <i class="su su-public"></i>
                     <span>[[[Make Public]]]</span>
                 </a>
                 {{/if}}
                 {{if IsPublic}}
-                <a href="javascript:void(0);" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" onclick="dashboardGrid.makePrivate(this)">
+                <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" id="remove-public-grid">
                 <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
                 <span>[[[Make Private]]]</span>
                 </a>
@@ -121,14 +121,14 @@
             {{/if}}
             {{/if}}
             <li>
-                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" class="option-click" onclick="dashboardGrid.getItemLink(this)">
+                <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" class="option-click" id="get-item-link">
                     <i class="su su-link"></i>
                     <span>[[[Get Link]]]</span>
                 </a>
             </li>
             {{if CanDownload && !IsLocked}}
             <li>
-                <a href="@downloadReportUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}" onclick="dashboardGrid.downloadReport(this)">
+                <a href="@downloadReportUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}" id="download-report">
                     <i class="su su-download"></i>
                     <span>[[[Download Report]]]</span>
                 </a>
@@ -137,13 +137,13 @@
             {{if ~checkTablet()}}
                 {{if (@(Convert.ToBoolean(ServerAppConfig.EnableViewsInReportsMenu).ToString().ToLower()) == true)}}
                     <li class="dropdown dashboard-views" data-load="true" >
-                        <a href="javascript:void(0);" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" onmouseover="dashboardGrid.getDashboardViews(event, this)" class="dropdown-toggle views" data-toggle="dropdown">
+                        <a href="#" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" class="dropdown-toggle views" data-toggle="dropdown" id="report-views">
                             <i class="su su-filter"></i>
                             <span>[[[Views]]]</span>
                         </a>
                         <ul class="dropdown-menu item-views no-padding" role="menu">
                             <li>
-                                <span class="view-name" href="javascript:void(0);">
+                                <span class="view-name" href="#">
                                     [[[Loading...]]]
                                 </span>
                             </li>
@@ -151,24 +151,33 @@
                     </li>
                 {{/if}}
             <li>
-                <a class="view-scheduless option-click" href="@Url.Action("Schedules", "Scheduler")?report={{:Name}}" data-item-name="{{:Name}}" target="_blank" onclick="dashboardGrid.viewSchedules(this)">
+                <a class="view-scheduless option-click" href="@Url.Action("Schedules", "Scheduler")?report={{:Name}}" data-item-name="{{:Name}}" target="_blank" id="view-schedules">
                     <i class="su su-nav-schedule"></i>
                     <span>[[[View Schedules]]]</span>
                 </a>
             </li>
             {{/if}}
             <li>
-                <a href="javascript:void(0);" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}" onclick="dashboardGrid.openInfo(this)">
+                <a href="#" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}">
                     <i class="su su-info"></i>
                     <span>[[[Info]]]</span>
                 </a>
             </li>
+            {{if CanWrite && ~checkTablet() && !IsLocked}}
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="#" class="ProcessOption option-click" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" id="report-processing-option">
+                    <i class="su su-cache_3"></i>
+                    <span>[[[Processing Options]]]</span>
+                </a>
+            </li>
+            {{/if}}
             {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked}}
             <li role="separator" class="divider"></li>
             {{/if}}
             {{if CanMove && ~checkTablet() && !IsLocked}}
             <li>
-                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Move" class="option-click" onclick="dashboardGrid.moveDashboard(this)">
+                <a href="#" data-item-id="{{:Id}}" data-action="Move" class="option-click" id="move-report">
                     <i class="su su-move"></i>
                     <span>[[[Move]]]</span>
                 </a>
@@ -176,7 +185,7 @@
             {{/if}}
             {{if CanCopy && ~checkTablet() && !IsLocked}}
             <li>
-                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Copy" class="option-click" onclick="dashboardGrid.copyDashboard(this)">
+                <a href="#" data-item-id="{{:Id}}" data-action="Copy" class="option-click" id="copy-report">
                     <i class="su su-copy"></i>
                     <span>[[[Copy]]]</span>
                 </a>
@@ -184,7 +193,7 @@
             {{/if}}
             {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && CanClone && ~checkTablet() && !IsLocked}}
             <li>
-                <a href="javascript:void(0);" data-item-id="{{:Id}}" data-action="Clone" class="option-click" onclick="dashboardGrid.cloneDashboard(this)">
+                <a href="#" data-item-id="{{:Id}}" data-action="Clone" class="option-click" id="clone-report">
                     <i class="su su-clone"></i>
                     <span>[[[Clone]]]</span>
                 </a>
@@ -196,7 +205,7 @@
             {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true)}}
             {{if !IsMultiDashboard }}
             <li>
-                <a href="javascript:void(0);" class="option-click" data-action="Publish" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.getPublishSiteDetailDialog(this)">
+                <a href="#" class="option-click" data-action="Publish" data-item-id="{{:Id}}" data-item-name="{{:Name}}" id="tenant-publish-report">
                     <i class="su su-publish"></i>
                     <span>[[[Publish]]]</span>
                 </a>
@@ -211,7 +220,7 @@
             {{/if}}
             {{if CanSchedule && ~checkTablet()}}
             <li>
-                <a href="javascript:void(0);" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" data-IsMulti-Dashboard="{{:IsMultiDashboard}}" class="option-click" onclick="dashboardGrid.scheduleDashboard(this)">
+                <a href="#" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" data-IsMulti-Dashboard="{{:IsMultiDashboard}}" class="option-click" id="create-report-schedule">
                     <i class="su su-nav-schedule"></i>
                     <span>[[[Create Schedule]]]</span>
                 </a>
@@ -220,7 +229,7 @@
             {{if ~checkTablet()}}
             <li role="separator" class="divider"></li>
             <li>
-                <a href="javascript:void(0);" class="version" data-item-name="{{:Name}}" data-item-id="{{:Id}}" onclick="dashboardGrid.versionHistory(this)">
+                <a href="#" class="version" data-item-name="{{:Name}}" data-item-id="{{:Id}}" id="report-version-history">
                     <i class="su su-versions"></i>
                     <span>[[[Version History]]]</span>
                 </a>
@@ -229,19 +238,17 @@
             {{if (CanWrite || CanDelete) && ~checkTablet()}}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if @(globalAppSettings.SystemSettings.StorageType) == @((int)StorageType.FileStorage)}}
             {{if CanWrite && ~checkTablet() && !IsDraft}}
             <li>
-                <a class="option-click" title="" data-category-name="{{:CategoryName}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}"  onclick="dashboardGrid.editRDLInXML(this)">
+                <a class="option-click" title="" data-category-name="{{:CategoryName}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" id="edit-report-as-xml">
                     <i class="su su-embed"></i>
                     <span>[[[Edit as XML]]]</span>
                 </a>
             </li>
             {{/if}}
-            {{/if}}
             {{if CanWrite && ~checkTablet() && !IsLocked}}
             <li>
-                <a href="javascript:void(0);" data-item-id="{{:Id}}" onclick="dashboardGrid.updateReport(this)">
+                <a href="#" data-item-id="{{:Id}}" id="update-report">
                     <i class="su su-edit"></i>
                     <span>[[[Update]]]</span>
                 </a>
@@ -249,14 +256,14 @@
             {{/if}}
             {{if CanDelete && ~checkTablet()}}
             <li>
-                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.deleteItem(this)">
+                <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" class="delete-report">
                     <i class="su su-delete"></i>
                     <span>[[[Delete]]]</span>
                 </a>
             </li>
             {{/if}}
             <li>
-                <a class="option-click" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" onclick="dashboardGrid.exportReport(this)">
+                <a class="option-click" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" id="export-report">
                     <i class="su su-upload"></i>
                     <span>[[[Export]]]</span>
                 </a>
@@ -264,13 +271,13 @@
             {{else}}
             {{if (CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
             <li>
-                <a href="javascript:void(0);" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}" onclick="dashboardGrid.openInfo(this)">
+                <a href="#" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}">
                     <i class="su su-info"></i>
                     <span>[[[Info]]]</span>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0);" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" onclick="dashboardGrid.deleteItem(this)">
+                <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" class="delete-report">
                     <i class="su su-delete"></i>
                     <span>[[[Delete]]]</span>
                 </a>

@@ -38,7 +38,7 @@
                         <select id="multiselect-dropdown" class="form-control selectpicker" data-size="5" multiple="" data-actions-box="true" data-live-search="true"></select>
                     </div>
                     <span class="col-xs-1 input-group-btn no-padding" id="add-external-sites" ng-if="publishType == '@PublishType.External.ToString()'">
-                        <button class="btn btn-default" type="button" data-placement="right" title="[[[Add external sites]]]" data-toggle="tooltip" onclick="getExternalSitesDetailDialog()"><span class="su-add"></span></button>
+                        <button id="get-external-sites-detail" class="btn btn-default" type="button" data-placement="right" title="[[[Add external sites]]]" data-toggle="tooltip"><span class="su-add"></span></button>
                     </span>
                 </div>
                 <span id="active-sites-validation" class="validation-message text"></span>
@@ -83,7 +83,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-xs-6 advanced-page-container" ng-repeat="p in TargetSiteDetail" ng-if="p.TenantId == activeMenu.TenantId">
+            <div class="col-xs-6 advanced-page-container" ng-repeat="p in targetSiteDetail" ng-if="p.TenantId == activeMenu.TenantId">
                 <label>[[[Select the report owner for the destination site.]]]</label>
                 <div class="users-list">
                     <select id="user-selected" name="p.UserId" class="primary-select form-control" ng-model="p.UserId" data-size="5" data-live-search="true"></select>

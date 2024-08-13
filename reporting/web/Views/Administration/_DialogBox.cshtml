@@ -7,7 +7,7 @@
                     <span class="popup-title modal-title">[[[Confirmation Default Authentication]]]</span>
                 </div>
                 <div class="col-xs-6 no-padding text-right">
-                    <a href="javascript:void(0);" onclick="authenticationDialogBoxClose()" class="popup-close" title="[[[Close]]]">
+                    <a href="#" id="default-authentication-confirmation-dialog-close-link" class="popup-close" title="[[[Close]]]">
                         <span class="su su-close"></span>
                     </a>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="col-xs-4"></div>
                     <div class="col-xs-8 text-align no-padding margin-top">
                         <input type="button" value="[[[Yes]]]" style="margin-right: 15px" ng-click="confirmSsoSetting()" class="primary-button app-btn-primary update-oauth-or-openid-settings">
-                        <input type="button" value="[[[No]]]" onclick="authenticationDialogBoxClose()" class="secondary-button app-btn-secondary">
+                        <input type="button" value="[[[No]]]" id="default-authentication-confirmation-no" class="secondary-button app-btn-secondary">
 
                     </div>
                 </div>

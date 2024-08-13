@@ -16,9 +16,9 @@
             {{ItemDetail.Description}}
         </p>
         <span class="item-info-created">
-            <label class="info-label">{{ItemDetail.ItemType == ItemType.Report ? '[[[Report Id:]]]' : '[[[Report Part Id:]]]' }}</label> {{ItemDetail.Id}}
+            <label class="info-label">{{ItemDetail.ItemType == ItemType.Report ? '[[[Report Id:]]]' : ItemDetail.ItemType == ItemType.Dataset ? '[[[Dataset Id:]]]' : ItemDetail.ItemType == ItemType.DataSource ? '[[[Data source Id:]]]' : '[[[Report Part Id:]]]'}}</label> {{ItemDetail.Id}}
         </span>
-        <span class="item-info-created capitalize-text" ng-if="ItemDetail.ItemType != ItemType.Report && ItemDetail.IsDraft == false">
+        <span class="item-info-created capitalize-text" ng-if="ItemDetail.ItemType != ItemType.Report && ItemDetail.ItemType != ItemType.Dataset && ItemDetail.ItemType != ItemType.DataSource && ItemDetail.IsDraft == false">
             <label class="info-label">[[[Report Part Type:]]]</label> {{ItemDetail.ReportPartType}}
         </span>
         <span class="item-info-created">
@@ -51,7 +51,7 @@
 
     </div>
     <div class="fluent-popup-footer">
-        <div class="col-xs-12" ng-show="showDashboardLinkButton">
+        <div class="col-xs-12" ng-show="showDashboardLinkButton" ng-if="ItemDetail.ItemType != ItemType.Dataset && ItemDetail.ItemType != ItemType.DataSource">
             <a href="{{ItemDetail.ItemType == ItemType.Report ? viewDashboardUrl(ItemDetail.Id, ItemDetail.CategoryName, ItemDetail.Name, ItemDetail.IsDraft) : editReportPartUrl(ItemDetail.Id, ItemDetail.Name)}}" class="link-button app-btn-link" target="_blank" title="">{{GetInfoButtonText(ItemDetail.ItemType, ItemDetail.IsDraft)}}</a>
         </div>
         <div class="col-xs-12 ng-hide" ng-show="!showDashboardLinkButton">

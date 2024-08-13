@@ -49,6 +49,7 @@
     var userId = _identityResponse.User.UserId;
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var description = HttpUtility.HtmlDecode(ViewBag.description);
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -164,7 +165,7 @@
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/extensions/barcode.reportitem.js'></script>
     }
 
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
 
     <style>
         .e-rptdesigner-header-selection {
@@ -387,6 +388,15 @@
         var designerToken = "@ViewBag.AccessToken";
 
         $(document).ready(function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+
             loadCustomFonts();
             renderDesignerHeader();
             refreshReportDesignerFooter();
@@ -842,20 +852,13 @@
                 'text-align': 'center'
             });
             var rptNameEle = ej.buildTag(
-                'input.e-rptdesigner-inputPath e-textbox e-designer-fontfamily',
+                'input',
                 '',
                 {
-                    'height': '28px',
-                    'width': '180px',
-                    'border': '1px solid #c8c8c8',
-                    'font-size': '12px',
-                    'letter-spacing': '0.3px',
-                    'border-radius': '4px'
                 },
                 {
                     'id': controlId + '_designer_header_reportName',
-                    'spellcheck': 'false', 'type': 'text',
-                    'placeholder': "[[[Report Name]]]"
+                    'spellcheck': 'false'
                 });
             reportNameOuterDiv.append(reportNameInnerDiv);
             reportNameInnerDiv.append(rptNameEle);
@@ -936,6 +939,12 @@
             publishDiv.append(publishBtn);
             publishContainer.append(publishDiv);
             divouter.append(backArrowOuterDiv, reportNameOuterDiv, draftDiv, designerViewDiv, publishContainer);
+            var rptPathTxtbox = new ejs.inputs.TextBox({
+                placeholder: "[[[Report Name]]]",
+                cssClass: 'e-textbox e-designer-fontfamily',
+                width: '180px'
+            });
+            rptPathTxtbox.appendTo(rptNameEle[0]);
 
             var items = [{ text: '[[[Publish As]]]', value: 'report' }];
             if (enableReportPart) {

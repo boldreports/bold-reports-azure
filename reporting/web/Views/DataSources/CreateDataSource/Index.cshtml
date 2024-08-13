@@ -21,6 +21,7 @@
     var cdnDomain = GlobalAppSettings.CdnDomain;
     ViewBag.Title = "[[[Create Data Source]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 
 
@@ -28,7 +29,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     <title>@ViewBag.Title</title>
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     @if (ServerAppConfig.IsSelfHosted)
@@ -82,11 +83,9 @@
         </environment>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.css")" crossorigin="anonymous" />
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/localizationcontent.js")" crossorigin="anonymous"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.min.css")" crossorigin="anonymous" />
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/localizationcontent.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/localizationcontent.min.js")" crossorigin="anonymous"></script>
         </environment>
 
         <environment include="Development,CloudDevelopment">
@@ -122,6 +121,17 @@
         var custombrandName = "@ServerAppConfig.CustomBrandName";
         var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
         var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
     </script>
 </head>
 <body class="cd" ng-app="createDataSourceApp">

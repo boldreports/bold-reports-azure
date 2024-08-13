@@ -78,15 +78,6 @@
         }
         @if (ServerAppConfig.IsSelfHosted)
         {
-            @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.Connectors]))
-            {
-             <li>
-                <a id="datasource-settings-link" class="admin-menu-item @(currentUrl.IndexOf(dataConnectorUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@dataConnectorUrl" role="tab">
-                    <i class="su su-connector"><i class="su-connector path1" style="padding-right:0px"></i></i>
-                    <span>[[[Connectors]]]</span>
-                </a>
-            </li>
-            }
             @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.Email]))
             {
                 <li>
@@ -114,6 +105,16 @@
                     </a>
                 </li>
             }
+        }
+
+        @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.Connectors]))
+        {
+            <li>
+                <a id="datasource-settings-link" class="admin-menu-item @(currentUrl.IndexOf(dataConnectorUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@dataConnectorUrl" role="tab">
+                    <i class="su su-connector"><i class="su-connector path1" style="padding-right:0px"></i></i>
+                    <span>[[[Connectors]]]</span>
+                </a>
+            </li>
         }
 
         @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings]))

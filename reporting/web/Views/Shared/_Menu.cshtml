@@ -66,7 +66,7 @@
 <environment exclude="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/custom-ui.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/custom-ui.min.js")" crossorigin="anonymous"></script>
 </environment>
-<script>
+<script nonce="@Context.Items["ScriptNonce"]">
     var isMasterTenant = @Json.Serialize(isMasterTenant);
 </script>
 
@@ -102,7 +102,7 @@
             @if (!ServerAppConfig.IsSelfHosted || (ServerAppConfig.IsSelfHosted && isItemPageRequested && itemPermissions != null && ((itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report]) || (itemPermissions.ContainsKey(ItemType.Dataset) && itemPermissions[ItemType.Dataset]) || (itemPermissions.ContainsKey(ItemType.Datasource) && itemPermissions[ItemType.Datasource]) || (itemPermissions.ContainsKey(ItemType.Schedule) && itemPermissions[ItemType.Schedule])))) 
             {
                 <li class="sf-nav-item mobile-hidden" id="create-item" data-action="create-items">
-                    <a class="sf-nav-link" href="javascript:void(0);">
+                    <a class="sf-nav-link prevent-default-action" href="#">
                         <span class="menu-icon-container create-menu-icon">
                             <i class="su su-add"></i>
                         </span>
@@ -194,7 +194,7 @@
         <nav id="sub-nav" class="sf-nav-group mobile-hidden">
             <ul>
                 <li class="sub-menu-action">
-                    <span id="user-system-notification" class="menu-icon-container" onclick="openUserNotification()">
+                    <span id="user-system-notification" class="menu-icon-container">
                         <i class="su su-notification-alert"></i>
                     </span>
                 </li>
@@ -213,7 +213,7 @@
                                         <div>[[[Explore]]]</div>
                                     </li>
                                     <li class="sub-menu-item">
-                                        <a class="add-sample-button" href="javascript:void(0);">
+                                    <a class="add-sample-button prevent-default-action" href="#">
                                             [[[Sample Reports]]]
                                         </a>
                                     </li>
@@ -364,6 +364,7 @@
         var isMasterTenant = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
         var userPermissionItem = @Json.Serialize(userPermissionItem);
         var isUserBasedMenu = @Json.Serialize(ServerAppConfig.IsUserBasedMenu);
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
         var allItemsCount = @Json.Serialize(allItemsCount);
         var hasOwnedReport = @Json.Serialize(hasOwnedReport);
         var isHideETLOption = @Json.Serialize(ServerAppConfig.IsHideETLOption);

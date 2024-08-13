@@ -114,12 +114,12 @@
                     [[[IMPORT USERS ]]]
                 </h1>
                 <div class="import-users">
-                    <input type="button" value="[[[Import Users]]]" title="[[[Import users from the list below]]]" onclick="SaveUserListFromCSV()" id="import-button" class="primary-button app-btn-primary pull-right" disabled />
+                    <input type="button" value="[[[Import Users]]]" title="[[[Import users from the list below]]]" id="import-button" class="primary-button app-btn-primary pull-right" disabled />
                 </div>
             </div>
         </div>
         <div class="content-section admin-page-body">
-            <form action="@Url.Action("UploadFileFormAction", "UserManagement")" method="post" onsubmit="" enctype="multipart/form-data">
+            <form action="@Url.Action("UploadFileFormAction", "UserManagement")" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
                 <div class="col-md-12 import-file no-padding">
                     <div class="col-md-6 no-padding">

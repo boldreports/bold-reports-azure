@@ -1,7 +1,6 @@
 ﻿@model List<SchemaInfo>
 <script nonce="@Context.Items["ScriptNonce"]">
     var tableSchema = @Json.Serialize(Model);
-    var importDatabaseQuerySchema = {};
 </script>
 <div class="col-xs-12 schema-selection">
     <div class="table-list-treeview-header no-padding pull-left">

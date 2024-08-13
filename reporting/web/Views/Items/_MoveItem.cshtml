@@ -1,4 +1,5 @@
 ﻿@using Syncfusion.Server.Base.Helpers
+@model string
 
 @{
     Layout = null;
@@ -11,31 +12,35 @@
 
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
-<script nonce="@Context.Items["ScriptNonce"]">
-        var moveItemUrl = "@Url.Action("moveitem", "items")";
-        var canCreateCategory = "@canCreateCategory";
-        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+<script nonce="@Model">
+    var moveItemUrl = "@Url.Action("moveitem", "items")";
+    var canCreateCategory = "@canCreateCategory";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
 
-        function load() {
-            if (($(parent.window).width()) > 1400) {
-                $(".dialog").addClass("iframe");
-            }
+    $(document).ready(function () {
+        load();
+    });
 
-            if (($(parent.window).width()) < 1400) {
-                $(".dialog").removeClass("iframe");
-            }
+    function load() {
+        if (($(parent.window).width()) > 1400) {
+            $(".dialog").addClass("iframe");
         }
+
+        if (($(parent.window).width()) < 1400) {
+            $(".dialog").removeClass("iframe");
+        }
+    }
 </script>
 
 
 <environment include="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
-    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
 </environment>
 
-<body onload="load()">
+<body>
     <div id="PopupContainer" class="dialog">
 
         <div class="col-md-12 dialog-header">
@@ -45,7 +50,7 @@
                 <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
             </div>
             <div class="col-xs-1 no-padding">
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose close-dialog"><span class="su su-close"></span></a>
+                <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
             </div>
         </div>
         @if (TempData["ErrorMessage"] == null)
@@ -118,14 +123,14 @@
             </div>
         }
         <environment include="Development,CloudDevelopment">
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         </environment>
     </div>
 
-    <script nonce="@Context.Items["ScriptNonce"]">
+    <script nonce="@Model">
         $(document).ready(function() {
             var categories = @Json.Serialize(ViewBag.CategoryDetails);
             var options = "";

@@ -60,7 +60,7 @@
 @section MainSection{
     @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Dataset) && itemsCount[ItemType.Dataset] > 0)
     {
-        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container">
+        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container" ng-controller="itemsCtrl" style="padding: 20px 20px 20px 30px;">
             <input type="hidden" class="page-name" data-content="[[[DATASETS]]]">
             @if (!isMobile)
             {
@@ -107,5 +107,6 @@
         @await Html.PartialAsync("../Items/_AddItems")
         @await Html.PartialAsync("../Items/_ItemVersion")
         @await Html.PartialAsync("../Items/_SharePermission")
+        @await Html.PartialAsync("../Items/_ItemInfo")
     }
 }

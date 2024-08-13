@@ -468,6 +468,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         fileName: '文件名',
         waterMark: '报告名称',
         close: '关',
+        errorMessage: '指定报告名称',
+        invalidName: '不允许有特殊字符'
     },
     reportAction: {
         linkTo: '链接到',
@@ -1093,7 +1095,8 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             enableLabel: '启用标签',
             labelTarget: '目标',
             labelText: '文本',
-            alignment: '文字对齐',
+            textAlignment: '文字对齐',
+            verticalAlignment: '垂直对齐',
             alignmentTypes: {
                 leftAlignment: '剩下',
                 centerAlignment: '中央',
@@ -1404,6 +1407,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         },
         commonCategory: {
             placementCategory: {
+                placement: '放置',
                 inside: '内',
                 outside: '外',
                 cross: '交叉'
@@ -1721,7 +1725,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
         tags: '标签',
         newTag: '新的一天',
         tagWaterMark: '搜索标签',
-        splCharacter: '不支持特殊字符',
+        splCharacter: '不允许有特殊字符',
         addCategory: {
             title: '新类别',
             name: '名称',
@@ -1875,6 +1879,19 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 alertPrompt: '指定提示文字'
             }
         },
+        sshSettings: {
+            enable: '启用S​​SH',
+            serverName: 'SSH 服务器名称',
+            port: 'SSH端口',
+            userName: 'SSH 用户名',
+            password: 'SSH 密码',
+            alertMessage: {
+                serverName: '指定 SSH 服务器名称',
+                port: '指定 SSH 端口号',
+                userName: '指定 SSH 用户名',
+                password: '指定 SSH 密码'
+            }
+        },
         sqlDatasource: {
             authenticationType: '认证类型',
             window: '视窗',
@@ -1889,7 +1906,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
                 database: '数据库',
                 advanceSwitch: '高级选项',
                 encrypt: '加密',
-                trustserver: '信任服务器证书'
+                trustServer: '信任服务器证书'
             },
             advanceOption: {
                 connectionString: '连接字符串',
@@ -3499,7 +3516,7 @@ ej.ReportDesigner.Locale['zh-CN'] = {
             lineSpacing: '线高'
         },
         appearance: {
-            categoryName: 'Appearance',
+            categoryName: '外貌',
             borderTypes: {
                 default: '边境',
                 left: '剩下',

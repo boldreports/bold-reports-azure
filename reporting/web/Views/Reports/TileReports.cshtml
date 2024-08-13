@@ -95,6 +95,7 @@
         var reportLayoutView = @reportLayoutView;
         var categoryList = @Json.Serialize(categories);
         var granularPermissions = @Json.Serialize(granularPermissions);
+        var tileReportsPageNonce = "@Context.Items["ScriptNonce"]";
     </script>
     <script nonce="@Context.Items["ScriptNonce"]">
     var dashboardItemCount = "@itemsCount[ItemType.Report]";
@@ -142,31 +143,31 @@
 
                                 <ul class="dropdown-menu category-sort-filter-menu">
                                     <li ng-class="{selected : selectedCategorySort === 'ModifiedDate' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'ModifiedDate', 'descending')">
-                                        <a class="category-sort-options" href="javascript:void(0);">
+                                        <a class="category-sort-options prevent-default-action" href="#">
                                             <i class="su su-tick"></i>
                                             <span class="search-option">[[[Recently Updated]]]</span>
                                         </a>
                                     </li>
                                     <li ng-class="{selected : selectedCategorySort === 'Name' && categorySortDirection == 'ascending'}" ng-click="setSelectedSortCategory($event, 'Name', 'ascending')">
-                                        <a class="category-sort-options" href="javascript:void(0);">
+                                        <a class="category-sort-options prevent-default-action" href="#">
                                             <i class="su su-tick"></i>
                                             <span class="search-option">[[[Name (A-Z)]]]</span>
                                         </a>
                                     </li>
                                     <li ng-class="{selected : selectedCategorySort === 'Name' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'Name', 'descending')">
-                                        <a class="category-sort-options" href="javascript:void(0);">
+                                        <a class="category-sort-options prevent-default-action" href="#">
                                             <i class="su su-tick"></i>
                                             <span class="search-option">[[[Name (Z-A)]]]</span>
                                         </a>
                                     </li>
                                     <li ng-class="{selected : selectedCategorySort === 'ReportCount' && categorySortDirection == 'ascending'}" ng-click="setSelectedSortCategory($event, 'ReportCount', 'ascending')">
-                                        <a class="category-sort-options" href="javascript:void(0);">
+                                        <a class="category-sort-options prevent-default-action" href="#">
                                             <i class="su su-tick"></i>
                                             <span class="search-option">[[[Count (Ascending)]]]</span>
                                         </a>
                                     </li>
                                     <li ng-class="{selected : selectedCategorySort === 'ReportCount' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'ReportCount', 'descending')">
-                                        <a class="category-sort-options" href="javascript:void(0);">
+                                        <a class="category-sort-options prevent-default-action" href="#">
                                             <i class="su su-tick"></i>
                                             <span class="search-option">[[[Count (Descending)]]]</span>
                                         </a>
@@ -197,26 +198,26 @@
                                                             </span>
                                                             <ul class="dropdown-menu" role="menu">
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
-                                                                    <a href="javascript:void(0);" class="item-permissions" title="" ng-click="sharePermission(categoryItem.Id)">
+                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(categoryItem.Id)">
                                                                         <i class="su su-manage-permission"></i>
                                                                         <span>[[[Sharing Permissions]]]</span>
                                                                     </a>
                                                                     <hr class="no-margin" />
                                                                 </li>
                                                                 <li>
-                                                                    <a href="javascript:void(0);" class="item-permissions" title="" ng-click="togglePin($event)">
+                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="togglePin($event)">
                                                                         <i class="su" ng-class="categoryItem.IsPinned ? 'su-pin_unpin' : 'su-pin'"></i>
                                                                         <span>{{categoryItem.IsPinned ? '[[[Unpin]]]' : '[[[Pin]]]'}}</span>
                                                                     </a>
                                                                 </li>
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
-                                                                    <a class="EditCategory" href="javascript:void(0);" title="" ng-click="editCategory()">
+                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory()">
                                                                         <i class="su su-edit"></i>
                                                                         <span>[[[Update]]]</span>
                                                                     </a>
                                                                 </li>
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
-                                                                    <a class="DeleteCategory" href="javascript:void(0);" ng-click="deleteCategory()">
+                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory()">
                                                                         <i class="su su-delete"></i>
                                                                         <span>[[[Delete]]]</span>
                                                                     </a>
@@ -244,25 +245,25 @@
                         <span class="col-xs-12 no-padding report-filter-module" ng-show="!showSearch">
                             <ul class="report-filter-module ng-scope" ng-if="activeMenu !== 9 && activeMenu !== 2 && activeMenu !== @((int)DisplayCategory.ReportParts)">
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.AllReports)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.AllReports))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-all-dashboards"></i>
                                         <span class="search-option">[[[All]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : selectedFilter ===@((int)DisplayCategory.PublicItems)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.PublicItems))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-public"></i>
                                         <span class="search-option">[[[Public]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.OwnedByMe)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.OwnedByMe))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-user-1"></i>
                                         <span class="search-option">[[[Owned by me]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.SharedWithMe)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.SharedWithMe))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-group-1"></i>
                                         <span class="search-option">[[[Shared with me]]]</span>
                                     </a>
@@ -270,13 +271,13 @@
                             </ul>
                             <ul class="report-filter-module ng-scope ng-hide" ng-show="activeMenu == @((int)DisplayCategory.DraftItems)">
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.DraftItems)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.DraftItems))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-nav-report"></i>
                                         <span class="search-option">[[[Reports]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.DraftReportParts)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.DraftReportParts))">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
                                         <i class="su su-report-part"></i>
                                         <span class="search-option">[[[Report Parts]]]</span>
                                     </a>
@@ -298,13 +299,13 @@
                             </span>
                             <ul class="dropdown-menu">
                                 <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-click="changeView(@((int)ReportLayoutView.Card))">
-                                    <a class="text" href="javascript:void(0);">
+                                    <a class="text prevent-default-action" href="#">
                                         <span><i class="su-card"></i></span>
                                         <span class="view-text">[[[Card View]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Grid)}" ng-click="changeView(@((int)ReportLayoutView.Grid))">
-                                    <a class="text" href="javascript:void(0);">
+                                    <a class="text prevent-default-action" href="#">
                                         <i class="su-grid"></i>
                                         <span class="view-text">[[[Grid View]]]</span>
                                     </a>
@@ -469,13 +470,13 @@
                                                     @if (ServerAppConfig.EnableViewsInReportsMenu)
                                                     {
                                                         <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && !isTablet" class="dropdown dashboard-views no-padding" data-load="true">
-                                                            <span href="javascript:void(0);" class="dropdown-toggle views" data-toggle="dropdown" ng-mouseenter="getDashboardViews($event)">
+                                                            <span href="#" class="dropdown-toggle views prevent-default-action" data-toggle="dropdown" ng-mouseenter="getDashboardViews($event)">
                                                                 <i class="su su-filter"></i>
                                                                 <span>[[[Views]]]</span>
                                                             </span>
                                                             <ul class="dropdown-menu item-views no-padding" role="menu">
                                                                 <li>
-                                                                    <span class="view-name" href="javascript:void(0);">
+                                                                    <span class="view-name prevent-default-action" href="#">
                                                                         [[[Loading...]]]
                                                                     </span>
                                                                 </li>
@@ -492,6 +493,13 @@
                                                         <span class="option-click" title="" ng-click="openInfo()">
                                                             <i class="su su-info"></i>
                                                             <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked">
+                                                        <span title="" class="ProcessOption option-click" ng-click="ProcessOption()">
+                                                            <i class="su su-cache_3"></i>
+                                                            <span>[[[Processing Options]]]</span>
                                                         </span>
                                                     </li>
                                                     <li ng-if="(dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone) && !isTablet && !dashboardItem.IsLocked" role="separator" class="divider"></li>
@@ -527,7 +535,7 @@
                                                     }
                                                     <li ng-if="((dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanSchedule) || dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet" role="separator" class="divider"></li>
                                                     <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanSchedule && !isTablet">
-                                                        <span href="javascript:void(0);" class="schedule-dashboards option-click" title="" ng-click="scheduleDashboard()">
+                                                        <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" ng-click="scheduleDashboard()">
                                                             <i class="su su-nav-schedule"></i>
                                                             <span>[[[Create Schedule]]]</span>
                                                         </span>
@@ -547,20 +555,17 @@
                                                         </span>
                                                     </li>
                                                     <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.Extension == '.sydx' && dashboardItem.CanWrite && !isTablet">
-                                                        <span href="javascript:void(0);" title="" class="update-datasource option-click" ng-click="updateDashboardDataSource()">
+                                                        <span href="#" title="" class="update-datasource option-click prevent-default-action" ng-click="updateDashboardDataSource()">
                                                             <i class="su su-nav-datasource"></i>
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
-                                                    @if (!Convert.ToBoolean(isBlob))
-                                                    {
                                                     <li ng-if="dashboardItem.CanWrite && !isTablet">
                                                         <span class="option-click" title="" ng-click="editRDLInXML()">
                                                             <i class="su su-embed"></i>
                                                             <span>[[[Edit as XML]]]</span>
                                                         </span>
                                                     </li>
-                                                    }
                                                     <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>
@@ -784,37 +789,37 @@
                     <div class="modal-body no-padding">
                         <ul class="dashboard-sort-filter-menu no-padding">
                             @*<li ng-class="{selected : selectedSort === 'CreatedDate' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'CreatedDate', 'descending')">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options" href="#">
                                         <i class="su su-tick"></i>
                                         <span class="search-option">[[[Recently Added]]]</span>
                                     </a>
                                 </li>*@
                             <li ng-class="{selected : selectedSort === 'ModifiedDate' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'ModifiedDate', 'descending')">
-                                <a class="dashboard-sort-options" href="javascript:void(0);">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
                                     <i class="su su-tick"></i>
                                     <span class="search-option">[[[Recently Updated]]]</span>
                                 </a>
                             </li>
                             <li ng-class="{selected : selectedSort === 'Name' && sortDirection === 'ascending'}" ng-click="updateSortSelection($event, 'Name' , 'ascending')">
-                                <a class="dashboard-sort-options" href="javascript:void(0);">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
                                     <i class="su su-tick"></i>
                                     <span class="search-option">[[[Report Name (A-Z)]]]</span>
                                 </a>
                             </li>
                             <li ng-class="{selected : selectedSort === 'Name' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'Name', 'descending')">
-                                <a class="dashboard-sort-options" href="javascript:void(0);">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
                                     <i class="su su-tick"></i>
                                     <span class="search-option">[[[Report Name (Z-A)]]]</span>
                                 </a>
                             </li>
                             @*<li ng-class="{selected : selectedSort === 'CreatedByDisplayName' && sortDirection === 'ascending'}" ng-click="updateSortSelection($event, 'CreatedByDisplayName', 'ascending')">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options" href="#">
                                         <i class="su su-tick"></i>
                                         <span class="search-option">[[[Owner Name (A-Z)]]]</span>
                                     </a>
                                 </li>
                                 <li ng-class="{selected : selectedSort === 'CreatedByDisplayName' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'CreatedByDisplayName', 'descending')">
-                                    <a class="dashboard-sort-options" href="javascript:void(0);">
+                                    <a class="dashboard-sort-options" href="#">
                                         <i class="su su-tick"></i>
                                         <span class="search-option">[[[Owner Name (Z-A)]]]</span>
                                     </a>

@@ -12,6 +12,7 @@
     var scheduleReportSettingsHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ScheduleReportSettings);
     var customScheduleTemplateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.CustomScheduleTemplate);
     var publicReportsDeprecateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.PublicReportsDeprecated);
+    var reportSettingsPageNonce = Context.Items["ScriptNonce"];
 }
 
 @section styles{
@@ -112,7 +113,7 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="schedule-setting-tab">
-                    @await Html.PartialAsync("../Shared/_ScheduleExportFileSettings")
+                    @await Html.PartialAsync("../Shared/_ScheduleExportFileSettings", reportSettingsPageNonce)
                 </div>
                 <div role="tabpanel" class="tab-pane" id="scheduletemplate-setting-tab">
                     @await Html.PartialAsync("../Shared/_EmailEditor")

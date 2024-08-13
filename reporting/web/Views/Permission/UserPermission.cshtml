@@ -71,7 +71,7 @@
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="commandstemplate">
         <div>
             {{if IsUserPermission}}
-            <span><a href="javascript:void(0);" class="delete-permission" data-permission-id="{{:PermissionId}}"> [[[Remove]]]</a></span>
+            <span><a href="#" class="delete-permission prevent-default-action" data-permission-id="{{:PermissionId}}"> [[[Remove]]]</a></span>
             {{else}}
             <span title="{{:GroupName}}" data-toggle="tooltip"><a href="@Url.Action("grouppermission","permission")?groupId={{:TargetId}}">{{:GroupName}}</a></span>
             {{/if}}

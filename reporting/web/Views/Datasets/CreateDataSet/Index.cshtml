@@ -8,6 +8,7 @@
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
     ViewBag.Title = "[[[Create Dataset]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     @if (ServerAppConfig.IsSelfHosted)
     {
@@ -69,6 +70,17 @@
     <script nonce="@Context.Items["ScriptNonce"]">
         let basePath = "@Url.Content("~/")";
         let dataset = "@Url.Action("datasets", "datasets")";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
     </script>
 </head>
 <body ng-app="createDataSetApp">

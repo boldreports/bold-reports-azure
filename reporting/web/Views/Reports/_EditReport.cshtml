@@ -45,6 +45,10 @@
                 window.focus();
             });
 
+            $(document).ready(function () {
+                load();
+            });
+
             function load() {
                 $('[data-toggle="tooltip"]').tooltip();
                 if (($(parent.window).width()) > 1400) {
@@ -58,7 +62,7 @@
         window.data = @Json.Serialize(ViewData["reportInfo"]);
     </script>
 </head>
-<body style="background-color: white" onload="load();">
+<body style="background-color: white">
     <form name="addReportForm" id="edit-report-form" method="post" enctype="multipart/form-data" autocomplete="off">
         <div id="createReportPopupHolder" class="col-lg-12 no-padding edit-report-module dialog">
             <input type="hidden" name="selectedFolderId" id="selectedFolderId" value="" />
@@ -66,7 +70,7 @@
             <div class="col-xs-12 dialog-header">
                 <span class="su su-report Head-icon"></span>
                 <span class="PopupTitle extendedTitle">[[[Update Report]]]</span>
-                <a href="javascript:void(0);" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose" onclick="closeNewRDLAddPopup()"><span class="su su-close"></span></a>
+                <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-rdl-add-popup"><span class="su su-close"></span></a>
             </div>
             <div id="new_rdl_tab_content" class="col-xs-12 no-padding dialog-body">
                 <div class='col-md-12  new-rdl-content-holder' id='new_rdl_content_holder'>
@@ -125,7 +129,7 @@
                         <tr>
                             <td class="col-xs-3 text-right"><div class="bottom-margin40">[[[Tag Name]]]</div></td>
                             <td class="col-xs-9">
-                                <div id="taginfo" style="border-radius:4px;" onclick="openPopup(false);">
+                                <div id="taginfo" class="edit-report-page-taginfo" style="border-radius:4px;">
                                     <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
                                     <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
                                 </div>
@@ -145,8 +149,8 @@
             </div>
             <div class='col-xs-12 new-report-button-holder rightAlign no-left-padding fixed-footer dialog-footer'>
                 <div class='create-rdl-btns pull-right'>
-                    <input type='button' title="" value='[[[Update]]]' id='publish_report' onclick="addRDLReport()" class='btn primary-button app-btn-primary small-right-margin' disabled tabindex="5">
-                    <input type='button' title="" value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewRDLAddPopup()" tabindex="6">
+                    <input type='button' title="" value='[[[Update]]]' id='publish_report' class='btn primary-button app-btn-primary small-right-margin' disabled tabindex="5">
+                    <input type='button' title="" value='[[[Cancel]]]' id="cancel-rdl-add-popup" class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="6">
                 </div>
             </div>
         </div>

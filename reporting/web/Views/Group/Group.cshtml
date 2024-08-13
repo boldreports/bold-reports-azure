@@ -22,6 +22,7 @@
         var deleteGroupUrl = "@Url.Action("DeleteGroup", "Group")";
         var groupPageUrl = "@Url.Action("Group", "Group")";
         var deleteFromGroupListUrl = "@Url.Action("DeleteFromGroupList", "Group")";
+        var groupPageNonce = "@Context.Items["ScriptNonce"]";
     </script>
 
     <environment include="Development,CloudDevelopment">
@@ -64,11 +65,11 @@
                 </a>
             }
             {{if DirectoryType == @((int)DirectoryType.AzureAD)}}
-            <a href="javascript:void(0);" class="user-add-class" title="[[[You cannot add users to azure groups.]]]" data-toggle="tooltip" data-placement="left" data-groupid="{{:GroupId}}" data-directory-type="{{:DirectoryType}}">
+            <a href="#" class="user-add-class prevent-default-action" title="[[[You cannot add users to azure groups.]]]" data-toggle="tooltip" data-placement="left" data-groupid="{{:GroupId}}" data-directory-type="{{:DirectoryType}}">
                 <i class="su su-user-add disabled-icon-color"></i>
             </a>
             {{else DirectoryType == @((int)DirectoryType.WindowsAD)}}
-            <a href="javascript:void(0);" class="user-add-class" title="[[[You cannot add users to windows groups.]]]" data-toggle="tooltip" data-placement="left" data-groupid="{{:GroupId}}" data-directory-type="{{:DirectoryType}}">
+            <a href="#" class="user-add-class prevent-default-action" title="[[[You cannot add users to windows groups.]]]" data-toggle="tooltip" data-placement="left" data-groupid="{{:GroupId}}" data-directory-type="{{:DirectoryType}}">
                 <i class="su su-user-add disabled-icon-color"></i>
             </a>
             {{else}}
@@ -80,11 +81,11 @@
                 <i class="su su-eye"></i>
             </a>
             {{if CanDelete}}
-            <a href="javascript:void(0);" class="delete user-delete-class" data-groupid="{{:GroupId}}" title="[[[Delete]]]" data-toggle="tooltip" data-groupname="{{:GroupName}}">
+            <a href="#" class="delete user-delete-class prevent-default-action" data-groupid="{{:GroupId}}" title="[[[Delete]]]" data-toggle="tooltip" data-groupname="{{:GroupName}}">
                 <i class="su su-delete"></i>
             </a>
             {{else}}
-            <a href="javascript:void(0);" class="user-delete-class" data-groupid="{{:GroupId}}" title="[[[You cannot delete the administrator group.]]]" data-toggle="tooltip" data-placement="left" data-groupname="{{:GroupName}}">
+            <a href="#" class="user-delete-class prevent-default-action" data-groupid="{{:GroupId}}" title="[[[You cannot delete the administrator group.]]]" data-toggle="tooltip" data-placement="left" data-groupname="{{:GroupName}}">
                 <i class="su su-delete disabled-icon-color"></i>
             </a>
             {{/if}}
@@ -264,7 +265,7 @@
 
                         <ul class="dropdown-menu" role="menu" id="dropdown-options">
                             <li id="new-group-button" title="Add new group">
-                                <a href="javascript:void(0);" title="[[[Add new group]]]" data-toggle="tooltip" data-placement="top">
+                                <a href="#" class="prevent-default-action" title="[[[Add new group]]]" data-toggle="tooltip" data-placement="top">
                                     <i class="su su-group-1"></i>
                                     <span>[[[Create Group]]]</span>
                                 </a>

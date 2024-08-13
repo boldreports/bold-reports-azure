@@ -7,6 +7,7 @@
     ViewBag.Title = "[[[Data Connectors]]] - " + globalAppSettings.SystemSettings.OrganizationName;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 
 @section styles{
@@ -20,7 +21,7 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-designer.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/connector-page.min.css")" crossorigin="anonymous" />
     </environment>
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '~/content/images/application/favicon.png') this.href = '~/content/images/application/favicon.png';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
 }
 
 @section scripts{
@@ -32,7 +33,18 @@
         <script nonce ="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/essentialjs/datatile-configuration-dependency.min.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]"  asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/connector-page.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/connector-page.min.js")" crossorigin="anonymous"></script>
     </environment>
-    <script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
+
         window.addEventListener('message', function (event) {
             if (event && event.data && !isNaN(event.data)) {
                 $('#dataConnector_iframe').height(event.data);

@@ -121,6 +121,7 @@ CREATE TABLE  {database_name}.BOLDRS_Item(
 	IsDraft tinyint NULL DEFAULT 0,
 	IsUserBased tinyint NULL,
 	IsLocked tinyint NULL DEFAULT 0,
+	ViewerFeatures varchar(4000) NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -260,6 +261,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	NextSchedule datetime,
 	ExportTypeId int NOT NULL,
 	IsEnabled tinyint NOT NULL,
+	IsNoDataEnabled tinyint NULL,
 	IsParameterEnabled tinyint NOT NULL,
 	IsSaveAsFile tinyint NOT NULL,
     IsSendAsMail tinyint NOT NULL DEFAULT 1,

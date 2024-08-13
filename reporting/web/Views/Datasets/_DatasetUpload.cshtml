@@ -84,8 +84,8 @@
         });
     </script>
 </head>
-<body style="background-color:white" onload="load();">
-    <form name="uploadReportForm" id="upload-form" method="post" onsubmit="return onUploadDataset();" action="@Url.Action("UploadDataset", "Datasets")" enctype="multipart/form-data">
+<body style="background-color:white">
+    <form name="uploadReportForm" id="upload-form" method="post" action="@Url.Action("UploadDataset", "Datasets")" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         <label for="browse_file" class="trigger-file-input-wrapper-dataset"></label>
         <span>
@@ -106,6 +106,10 @@
 </body>
 </html>
 <script nonce="@Context.Items["ScriptNonce"]">
+    $("#upload-form").on("submit", function (event) {
+        onUploadDataset();
+    });
+
     function onUploadDataset() {
         if (window.parent.isEditPopup) {
             window.parent.editDatasetData.IsFileChanged = true;
@@ -115,6 +119,10 @@
             window.parent.parent.$("#addDataSetDom_wrapper").ejWaitingPopup("show");
         }
     }
+
+    $(document).ready(function () {
+        load();
+    });
 
     function load() {
         if (($(parent.window).width()) > 1400) {

@@ -8,7 +8,7 @@
             </div>
             <div class="dc-filter-autocomplete-container">
                 <span class="e-input-group e-control-wrapper dc-filter-autocomplete">
-                    <input type="text" class="e-autocomplete e-control e-lib e-input" ng-model="searchText" placeholder= "[[[Search Data Source]]]" onfocus="onFocus()" onblur="onBlur()">
+                    <input type="text" id="search-connectors" class="e-autocomplete e-control e-lib e-input" ng-model="searchText" placeholder= "[[[Search Data Source]]]">
                     <span ng-click="onAutocompleteTailClick($event)" ng-class="searchText.length ? 'dc-delete': 'dc-search'"></span>
                 </span>
             </div>

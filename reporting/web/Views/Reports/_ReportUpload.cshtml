@@ -90,8 +90,8 @@
         });
     </script>
 </head>
-<body onload="load();">
-    <form name="uploadReportForm" id="upload-form" method="post" onsubmit="return onUploadReport();" action="@Url.Action("UploadReport", "Reports")" enctype="multipart/form-data">
+<body>
+    <form name="uploadReportForm" id="upload-form" method="post" action="@Url.Action("UploadReport", "Reports")" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         <label for="browse_file" class="trigger-file-input-wrapper-report"></label>
         <span>
@@ -112,6 +112,10 @@
 </body>
 </html>
 <script nonce="@Context.Items["ScriptNonce"]">
+    $(document).on('submit', '#upload-form', function () {
+        onUploadReport();
+    });
+
     function onUploadReport() {
         if (window.parent.isEditPopup) {
             window.parent.editReportData.IsFileChanged = true;
@@ -119,6 +123,10 @@
         }
         window.parent.parent.$("#report_popup_wrapper").ejWaitingPopup("show");
     }
+
+    $(document).ready(function () {
+        load();
+    });
 
     function load() {
         if (($(parent.window).width()) > 1400) {

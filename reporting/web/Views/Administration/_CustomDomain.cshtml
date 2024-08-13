@@ -83,7 +83,7 @@
 
     <div id="card-payment-container" style="display: none;">
         <div class="fluent-popup-body col-xs-12">
-            <form onsubmit="validateForm(event)">
+            <form id="card-payment-form">
                 <div id="upgradecard-details">
                     @await Html.PartialAsync("../Payment/_CardInputElements")
                 </div>
@@ -114,7 +114,7 @@
                     <a class="app-hyperlink" href="@(ServerAppConfig.AppSettings.Documentation.BaseUri + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.CustomDomain))" target="_blank">[[[Learn how to do it.]]]</a>
                 </label>
                 <div class="input-group custom-domain-link-div">
-                    <input onClick="this.setSelectionRange(0, this.value.length)" value="@ServerAppConfig.AppSettings.EndPoints.CustomDomainMapping" type="text" class="form-control text-center custom-domain-link" readonly />
+                    <input id="custom-domain-link" value="@ServerAppConfig.AppSettings.EndPoints.CustomDomainMapping" type="text" class="form-control text-center custom-domain-link" readonly />
                     <span class="input-group-btn">
                         <button class="btn btn-default su su-copy custom-domain-link-copy" type="button" readonly="" data-original-title="[[[Click to copy]]]"></button>
                     </span>

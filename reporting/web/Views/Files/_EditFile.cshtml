@@ -30,7 +30,10 @@
         </environment>
         <script nonce="@Context.Items["ScriptNonce"]">
             $(document).ready(function () {
+                load();
+
                 $(document).on("click", ".PopupClose", function (e) {
+                    e.preventDefault();
                     $("#edit-file-popup").find("iframe").contents().find("html").html("");
                     eDialog = parent.$("#edit-file-popup").data("ejDialog");
                     eDialog.close();
@@ -49,7 +52,7 @@
             }
         </script>
     </head>
-    <body onload="load();">
+    <body>
         @{
     var hasError = !isValid ? "has-error" : "";
         }
@@ -59,7 +62,7 @@
                 <div class="col-xs-12 dialog-header">
                     <span class="su su-document Head-icon"></span>
                     <span class="PopupTitle">[[[Update File]]]</span>
-                    <a href="javascript:void(0);" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
                 <div class="dialog-body col-xs-12 no-padding file-content-height">
@@ -130,8 +133,8 @@
                 <div class="dialog-footer">
                     <div class="pull-right">
                         <input type="submit" class="hide-content" style="display: none;" />
-                        <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" onclick="validateNewFileForm()" disabled tabindex="4">
-                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditFile" onclick="closeEditFilePopup()" value="[[[Cancel]]]" tabindex="4">
+                        <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" disabled tabindex="4">
+                        <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditFile" value="[[[Cancel]]]" tabindex="4">
                     </div>
                 </div>
             </div>

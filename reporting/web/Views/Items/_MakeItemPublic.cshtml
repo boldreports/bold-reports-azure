@@ -19,6 +19,10 @@
     var makePublicUrl = "@Url.Action("makeitempublic", "items")";
     var makeItemPublicUrl = "@Url.Action("MakePublicItem", "items")";
 
+    $(document).ready(function () {
+        load();
+    });
+
     function load() {
         if (($(parent.window).width()) > 1400) {
             $(".dialog").addClass("iframe");
@@ -30,7 +34,7 @@
     }
 </script>
 
-<body onload="load();">
+<body>
 
     @if (IsMarkItemsPublic == true)
     {
@@ -38,7 +42,7 @@
             <div class="col-md-12 dialog-header">
                 <span class="su su-public Head-icon"></span>
                 <span class="PopupTitle">[[[Make Public]]]</span>
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onMakePublicDialogClose()"><span class="su su-close"></span></a>
+                <a href="#" id="make-public-dialog-close-link" title="[[[Close]]]" class="PopupClose"><span class="su su-close"></span></a>
             </div>
             <div class="dialog-body col-xs-12 no-padding" style="height:auto;">
                 <div class="col-xs-12 padding-bottom20">
@@ -68,10 +72,10 @@
 
                     <input type="button" class=" app-button app-primary-button app-btn-primary rightAlign" value="[[[Make Public]]]" data-item-type="@(itemTypeName)" id="make-public" data-name="@ViewData["ItemName"]" data-item-id="@ViewData["ItemId"]" tabindex="1" autofocus />
 
-                    <input type="button" id="Cancel" class=" app-button app-secondary-button app-btn-secondary PopupClose no" value="[[[No]]]" onclick="onMakePublicDialogClose()" tabindex="2" />
+                    <input type="button" id="Cancel" class=" app-button app-secondary-button app-btn-secondary PopupClose no make-public-dialog-cancel" value="[[[No]]]" tabindex="2" />
                 </div>
                 <div class="col-xs-8 no-padding centerAlign validationArea" id="close" style="display:none">
-                    <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Close]]]" onclick="onMakePublicDialogClose()" tabindex="3" autofocus />
+                    <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose make-public-dialog-cancel" value="[[[Close]]]" tabindex="3" autofocus />
                 </div>
             </div>
         </div>
@@ -82,7 +86,7 @@
             <div class="col-md-12 dialog-header">
                 <span class="su su-public Head-icon"></span>
                 <span class="PopupTitle">[[[Make Public]]]</span>
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onMakePublicDialogClose()"><span class="su su-close"></span></a>
+                <a href="#" id="make-public-dialog-close-link" title="[[[Close]]]" class="PopupClose"><span class="su su-close"></span></a>
             </div>
             <div class="dialog-body col-xs-12 no-padding" style="height:auto;">
                 <div class="col-xs-12 padding-bottom20">
@@ -111,10 +115,10 @@
                 <div class="col-xs-3"></div>
 
                 <div class="col-xs-9 no-padding centerAlign validationArea" id="select-area">
-                    <input type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose no" value="[[[Close]]]" onclick="onMakePublicDialogClose()" tabindex="2" />
+                    <input type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose no make-public-dialog-cancel" value="[[[Close]]]" tabindex="2" />
                 </div>
                 <div class="col-xs-8 no-padding centerAlign validationArea" id="close" style="display:none">
-                    <input id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose" type="button" autofocus="" tabindex="3" onclick="onRemovePublicDialogClose()" value="[[[Close]]]" title="">
+                    <input id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose remove-public-dialog-close-button" type="button" autofocus="" tabindex="3" value="[[[Close]]]" title="">
 
                 </div>
             </div>

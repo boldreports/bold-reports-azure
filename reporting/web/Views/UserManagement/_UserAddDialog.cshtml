@@ -1,5 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
+    var defaultGroupName = ViewBag.GroupName;
+    var defaultGroupId = ViewBag.GroupId;
 }
 <div id="user-add-dialog-wrapper" style="display:none">
     <div class="modal" tabindex="-1" role="dialog">
@@ -11,7 +13,7 @@
                         <span class="modal-title">[[[Add User]]]</span>
                     </div>
                     <div class="col-xs-4 no-padding">
-                        <a class="close" title="[[[Close]]]" href="javascript:void(0);" onclick="onUserAddDialogClose()">
+                        <a id="user-add-dialog-close-link" class="close" title="[[[Close]]]" href="#">
                             <i class="su su-close"></i>
                         </a>
                     </div>
@@ -93,13 +95,37 @@
                             </div>
                         </div>
                     }
+                    @if (defaultGroupId != 0)
+                    {
+                        <div class="col-xs-12 form-padding">
+                            <label class="col-xs-4 app-textbox-label text-right">Add to default group</label>
+                            <div class="col-xs-8 no-left-padding user-default-switch">
+                                <div class="switch-container">
+                                    <label class="switch">
+                                        <input type="checkbox" id="add-to-default-group" data-name="add-to-default-group" name="add-to-default-group">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="tool-tip">
+                                        <span class="dropdown-toggle" data-toggle="dropdown">
+                                            <span class="su su-info" title=""></span>
+                                        </span>
+                                    <div class="dropdown-menu" role="menu">
+                                        [[[Based on the account settings, the user will be added to the default group - @defaultGroupName.]]]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div id="defaultgroupid" style="display:none;">@defaultGroupId</div>
+                    <div id="defaultgroupname" style="display:none;">@defaultGroupName</div>
                     <div id="disable-info" style="padding:10px; display:inline-block;"></div>
                 </div>
                 <div class="col-xs-12 modal-footer">
                     <div class="col-xs-4"></div>
                     <div class="col-xs-8 no-padding">
                         <input type="button" id="add-user" class="primary-button app-btn-primary" value="[[[Add]]]" />
-                        <input type="button" id="cancel-user" class="secondary-button app-btn-secondary popup-close" value="[[[Cancel]]]" onclick="onUserAddDialogClose()" />
+                        <input type="button" id="cancel-user" class="secondary-button app-btn-secondary popup-close" value="[[[Cancel]]]" />
                     </div>
                 </div>
             </form>

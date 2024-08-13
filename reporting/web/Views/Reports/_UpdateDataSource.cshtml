@@ -54,7 +54,7 @@
             <span class="su su-nav-datasource Head-icon"></span>
             <span class="PopupTitle modal-title">[[[Update Data Source(s)]]]</span>
             <div class="dashboard-name report-name"><div class="float-left">[[[Update data sources connected to]]]&nbsp;</div><div class="item-name" data-toggle="tooltip" data-placement="bottom" data-original-title="@ViewBag.FullItemName">@ViewBag.FullItemName</div></div>
-            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="closeUpdateDataSourcePopup()"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" id="update-datasource-popup-close-link" class="PopupClose"><span class="su su-close"></span></a>
         </div>
     <div id="datasource-popup-module">
         <div class="col-sm-12 col-xs-12 category-module">
@@ -96,7 +96,7 @@
             </div>
             <div class="buttons-area pull-right no-padding">
                 <input type='button' title='' id="share-datasource" value='[[[Update]]]' class='btn primary-button app-btn-primary' data-item-id=@ViewData["ItemId"] data-mapid="name" tabindex="17">
-                <input type='button' title='' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary' onclick="closeUpdateDataSourcePopup()" tabindex="18">
+                    <input type='button' title='' value='[[[Cancel]]]' id="update-datasource-popup-close-button" class='btn secondary-button app-btn-secondary' tabindex="18">
             </div>
         </div>
         <form id='new-datasource-tab-content' class='col-md-12 update-datasource-tab-contents' autocomplete="off">

@@ -48,6 +48,7 @@
         var isPresentEmailId = "@Url.Action("IsPresentEmailId", "UserManagement")";
         var isUsernameExistsUrl = "@Url.Action("IsUsernameExists", "UserManagement")";
         var isEmailRequired = "@isEmailRequired";
+        var groupPageNonce = "@Context.Items["ScriptNonce"]";
         serverApp.controller("GroupEditController", function ($scope) {
             $scope.selectedRow = 1;
             $scope.page = 0;
@@ -184,11 +185,11 @@
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="actionstemplate">
         {{if @Convert.ToInt32(Context.Request.Query["groupId"])!=1}}
         <div>
-            <span><a href="javascript:void(0);" class="delete-user" title="" data-username="{{:DisplayName}}" data-userid="{{:UserId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            <span><a href="#" class="delete-user prevent-default-action" title="" data-username="{{:DisplayName}}" data-userid="{{:UserId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
         </div>
         {{else UserId != @ViewBag.CurrentUserId}}
         <div>
-            <span><a href="javascript:void(0);" class="delete-user" title="" data-username="{{:DisplayName}}" data-userid="{{:UserId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
+            <span><a href="#" class="delete-user prevent-default-action" title="" data-username="{{:DisplayName}}" data-userid="{{:UserId}}"><i class="su su-close"></i> [[[Remove]]]</a></span>
         </div>
         {{/if}}
     </script>
@@ -210,8 +211,8 @@
                     @if (ViewBag.IsLocalDirectory)
                     {
                         <feature name=@FeatureManagement.Yokogawa>
-                            <li id="add-user-button" title="[[[Add user]]]" onclick="onUserAddDialogOpen()">
-                                <a href="javascript:void(0);" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
+                            <li id="add-user-button" title="[[[Add user]]]">
+                                <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
                                     <i class="su su-user-add"> </i>
                                     <span>[[[Add User]]]</span>
                                 </a>
@@ -221,8 +222,8 @@
                     <feature name=@FeatureManagement.Yokogawa negate="true">
                         @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && ViewBag.IsLocalDirectory)
                         {
-                            <li id="add-user-button" title="[[[Add user]]]" onclick="onUserAddDialogOpen()">
-                                <a href="javascript:void(0);" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
+                            <li id="add-user-button" title="[[[Add user]]]">
+                                <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
                                     <i class="su su-user-add"> </i>
                                     <span>[[[Add User]]]</span>
                                 </a>
@@ -232,8 +233,8 @@
                     <feature name=@FeatureManagement.Yokogawa>
                         @if (ViewBag.IsLocalDirectory && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
                         {
-                            <li id="add-owner-button" title="[[[Add Owner]]]" onclick="addGroupOwnerDialogOpen()" data-groupid="@Context.Request.Query["groupId"]" data-groupname="{{allGroupDetails.GroupName}}">
-                                <a href="javascript:void(0);" title="[[[Add Owner]]]" data-toggle="tooltip" data-placement="top">
+                            <li id="add-owner-button" title="[[[Add Owner]]]" data-groupid="@Context.Request.Query["groupId"]" data-groupname="{{allGroupDetails.GroupName}}">
+                                <a href="#" class="prevent-default-action" title="[[[Add Owner]]]" data-toggle="tooltip" data-placement="top">
                                     <i class="su su-add-owner"> </i>
                                     <span>[[[Add Owner]]]</span>
                                 </a>
@@ -252,7 +253,7 @@
                     @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || granularPermissions[PermissionEntity.SpecificGroup]) && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
                     {
                         <li id="delete-button" class="delete" title="[[[Delete Group]]]" data-groupid="@Context.Request.Query["groupId"]" data-groupname="{{allGroupDetails.GroupName}}">
-                            <a href="javascript:void(0);" title="[[[Delete Group]]]" data-toggle="tooltip" data-placement="top">
+                            <a href="#" class="prevent-default-action" title="[[[Delete Group]]]" data-toggle="tooltip" data-placement="top">
                                 <i class="su su-delete"></i>
                                 <span>[[[Delete Group]]]</span>
                             </a>

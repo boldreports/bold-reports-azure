@@ -231,7 +231,9 @@ CREATE TABLE BOLDTC_TenantUser (
 	Id uuid NOT NULL,
 	UserId uuid NOT NULL,
 	TenantInfoId uuid NOT NULL,
+    IsFavorite smallint NOT NULL DEFAULT '0',
 	IsActive smallint NOT NULL,
+    LastAccessedDate timestamp NULL,
   CONSTRAINT PK_BOLDTC_TENANTUSER PRIMARY KEY (Id)
 )
 ;

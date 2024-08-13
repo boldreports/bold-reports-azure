@@ -1,5 +1,7 @@
-﻿@{ Layout = null; }
-<script nonce="@Context.Items["ScriptNonce"]">
+﻿@model string
+
+@{ Layout = null; }
+<script nonce="@Model">
         var deleteGroupUrl = "@Url.Action("DeleteGroup", "Group")";
         var groupPageUrl = "@Url.Action("Group", "Group")";
 </script>
@@ -12,7 +14,7 @@
                     <span class="modal-title">[[[Delete Group]]]</span>
                 </div>
                 <div class="col-xs-4 no-padding">
-                    <a href="javascript:void(0);" class="popup-close  pull-right"><span class="su su-close"></span></a>
+                    <a href="#" class="popup-close pull-right prevent-default-action"><span class="su su-close"></span></a>
                 </div>
             </div>
             <div class="modal-body col-xs-12 no-padding">

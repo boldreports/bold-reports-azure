@@ -19,6 +19,10 @@
         var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
         var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "DataSets")";
 
+        $(document).ready(function () {
+            load();
+        });
+
         function load() {
             $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
@@ -43,21 +47,21 @@
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/select-dataset.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/select-dataset.min.js")" crossorigin="anonymous"></script>
     </environment>
 </head>
-<body style="background-color:white" onload="load();">
+<body style="background-color:white">
     <div id="PopupContainer" class="col-lg-12 no-padding dialog">
         <div class="col-xs-12 dialog-header">
             <span class="su su-dataset Head-icon"></span>
             <span class="PopupTitle">[[[Select Dataset -]]]</span>
             <span class="rdl-dataset-name">@ViewData["sourceName"]</span>
-                <a href="javascript:void(0);" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose" onclick="closeNewDatasetPopup()"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-dataset-popup"><span class="su su-close"></span></a>
 </div>
         <div id="dataset_popup_module" class="dialog-body col-xs-12 no-padding">
             <div class='col-md-12 no-padding no-top-margin' id='new_datasetrsd_tab_content'>
                 <div class='new-dataset-popup-btns dataset-btns'>
                     <div id="dataset_validation" style="color: #A94442; display: none; height: 0;"></div>
                     <div class='create-dataset-btns pull-right'>
-                        <input type='button' value='[[[Select]]]' id='publish_dataset' onclick="onSubmitDataset()" class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
-                        <input type='button' value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' onclick="closeNewDatasetPopup()" tabindex="16">
+                        <input type='button' value='[[[Select]]]' id='publish_dataset' class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
+                        <input type='button' value='[[[Cancel]]]' id="cancel-new-dataset-popup" class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="16">
                     </div>
                 </div>
             </div>
@@ -66,7 +70,7 @@
             {
                 <div class='col-md-12 share-popup-header no-top-margin'>
                     <div id="dataset_tabs" class="col-md-12">
-                        <span class="dataset-tab-active heading" id="avl_dataset_tab" onclick="onAvailableDatasetTabSelect()">[[[Available]]]</span>
+                        <span class="dataset-tab-active heading" id="avl_dataset_tab">[[[Available]]]</span>
                         <div id="rdl_new_tab_arrow" class="downArrow"></div>
                     </div>
                 </div>

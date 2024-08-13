@@ -11,7 +11,7 @@
                             <div class="ds-datasource-list-container" ng-style="{'display': !isDataSourceList ? 'none' : 'block'}">
                                 <div class="ds-filter-autocomplete-container">
                                     <span class="e-input-group e-control-wrapper dc-filter-autocomplete">
-                                        <input type="text" class="e-autocomplete e-control e-lib e-input" ng-model="searchText" placeholder="[[[Search Data Source]]]" onfocus="onFocus()" onblur="onBlur()">
+                                        <input type="text" id="search-datasource" class="e-autocomplete e-control e-lib e-input" ng-model="searchText" placeholder="[[[Search Data Source]]]">
                                         <span ng-click="onAutocompleteTailClick($event)" ng-class="searchText.length ? 'ds-delete': 'ds-search'"></span>
                                     </span>
                                 </div>

@@ -7,9 +7,6 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var usersettings = Url.Action("administration", "administration") + "/user-settings";
 }
-<script nonce="@Context.Items["ScriptNonce"]">
-    var importDatabaseQuerySchema = {};
-</script>
 
 @section scripts{
     <environment include="Development,CloudDevelopment">
@@ -216,7 +213,7 @@
                     </h2>
                 </div>
                 <div class="col-lg-6 no-padding">
-                    <input type="button" value="[[[Import Users]]]" disabled="" title="[[[Import the selected users and activate their accounts]]]" onclick="SaveSelectedUsers()" id="import-selected" class="primary-button app-btn-primary pull-right import-button" />
+                    <input type="button" value="[[[Import Users]]]" disabled="" title="[[[Import the selected users and activate their accounts]]]" id="import-selected" class="primary-button app-btn-primary pull-right import-button" />
                 </div>
             </div>
 

@@ -8,7 +8,8 @@
     var fileName = itemType.ToString().ToLower() + ".svg";
     var isMobile = new DeviceDetection(Context).IsMobile;
     var displayName = Context.Session.GetString("displayname") != null ? Context.Session.GetString("displayname") : string.Empty;
-    var hasDashboards = (itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && (itemsCount[ItemType.Report] > 0));
+    var activeDraftsCount = ViewBag.ActiveDraftsCount;
+    var hasDashboards = (itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && (itemsCount[ItemType.Report] > 0) && (itemsCount[ItemType.Report] > activeDraftsCount));
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }
 
@@ -20,6 +21,7 @@
 </environment>
 <script nonce="@Context.Items["ScriptNonce"]">
     var dashboardItemCount = "@itemsCount[ItemType.Report]";
+    var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
 </script>
 <div class="col-xs-12 defafult-pages-container no-padding">
     <div class="default-pages">

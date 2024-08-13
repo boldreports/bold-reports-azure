@@ -16,19 +16,23 @@
         @ViewBag.Title
     </title>
     <script nonce="@Context.Items["ScriptNonce"]">
-    var editcategoryUrl = "@Url.Action("editcategory", "category")";
-            var reportsUrl = "@Url.Action("reports", "reports")";
+        var editcategoryUrl = "@Url.Action("editcategory", "category")";
+        var reportsUrl = "@Url.Action("reports", "reports")";
 
-            function load() {
-                $('[data-toggle="tooltip"]').tooltip();
-                if (($(parent.window).width()) > 1400) {
-                    $(".dialog").addClass("iframe");
-                }
+        $(document).ready(function () {
+            load();
+        });
 
-                if (($(parent.window).width()) < 1400) {
-                    $(".dialog").removeClass("iframe");
-                }
+        function load() {
+            $('[data-toggle="tooltip"]').tooltip();
+            if (($(parent.window).width()) > 1400) {
+                $(".dialog").addClass("iframe");
             }
+
+            if (($(parent.window).width()) < 1400) {
+                $(".dialog").removeClass("iframe");
+            }
+        }
     </script>
 
     <environment include="Development,CloudDevelopment">
@@ -41,13 +45,13 @@
     </environment>
 
 </head>
-<body style="background:white;" onload="load();" class="dialog">
+<body style="background:white;" class="dialog">
     <div class="col-md-12 dialog-header">
         <span class="su su-folder Head-icon"></span>
         <span class="PopupTitle">
             [[[Update Category]]]
         </span>
-        <a href="javascript:void(0);" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom" onclick="closeEditCategoryPopup()"><span class="su su-close"></span></a>
+        <a href="#" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom" id="close-edit-category-popup"><span class="su su-close"></span></a>
     </div>
     <form id="create_category_content" class="col-md-12 dialog-body" method="post" enctype="multipart/form-data" autocomplete="off">
         <table>
@@ -76,8 +80,8 @@
     </form>
     <div class="category-btns dialog-footer">
         <div class="pull-right">
-            <input type="submit" title="" class="col-md-2 btn primary-button app-btn-primary" value="[[[Update]]]" onclick="updateCategory()" id="saveEditCategory" disabled="disabled" tabindex="3">
-            <input type="button" title="" class="col-md-2 btn secondary-button app-btn-secondary" onclick="closeEditCategoryPopup()" value="[[[Cancel]]]" tabindex="4">
+            <input type="submit" title="" class="col-md-2 btn primary-button app-btn-primary" value="[[[Update]]]" id="saveEditCategory" disabled="disabled" tabindex="3">
+            <input type="button" title="" class="col-md-2 btn secondary-button app-btn-secondary" id="cancel-edit-category-popup" value="[[[Cancel]]]" tabindex="4">
         </div>
     </div>
 </body>

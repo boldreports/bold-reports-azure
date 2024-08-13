@@ -118,7 +118,8 @@ CREATE TABLE [BOLDRS_Item](
 	[IsDraft] [bit] NULL DEFAULT 0,
 	[IsUserBased] [bit] NULL,
 	[IsActive] [bit] NULL,
-	[IsLocked] [bit] NULL DEFAULT 0)
+	[IsLocked] [bit] NULL DEFAULT 0,
+	[ViewerFeatures] nvarchar(4000) null)
 ;
 
 CREATE TABLE [BOLDRS_ItemView](
@@ -245,6 +246,7 @@ CREATE TABLE [BOLDRS_ScheduleDetail](
 	[NextSchedule] [datetime] NULL,
 	[ExportTypeId] [int] NOT NULL,
 	[IsEnabled] [bit] NOT NULL,
+	[IsNoDataEnabled] [bit] NULL,
 	[IsParameterEnabled] [bit] NOT NULL,
 	[IsSaveAsFile] [bit] NOT NULL,
     [IsSendAsMail] [bit] NOT NULL DEFAULT 1,

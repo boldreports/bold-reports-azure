@@ -282,13 +282,13 @@
                     {{if ItemType=="@((int)ItemType.Dashboard)"}}
                     {{if !IsMultiDashboard}}
                     <li class="dropdown dashboard-views" data-load="true">
-                        <span href="javascript:void(0);" class="dropdown-toggle views" data-item-id="{{:Id}}" data-toggle="dropdown">
+                        <span href="#" class="dropdown-toggle views prevent-default-action" data-item-id="{{:Id}}" data-toggle="dropdown">
                             <i class="su su-filter"></i>
                             <span>[[[Views]]]</span>
                         </span>
                         <ul class="dropdown-menu item-views" role="menu">
                             <li>
-                                <span class="view-name" href="javascript:void(0);">
+                                <span class="view-name prevent-default-action" href="#">
                                     [[[Loading...]]]
                                 </span>
                             </li>
@@ -341,7 +341,7 @@
 
                     {{if (ItemType == "@((int)ItemType.Report)" || ItemType == "@((int)ItemType.Dashboard)") && CanSchedule}}
                     <li>
-                        <span href="javascript:void(0);" class="schedule-dashboards option-click" title="" data-category-name="{{:CategoryName}}" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:CategoryId}}">
+                        <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" data-category-name="{{:CategoryName}}" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:CategoryId}}">
                             <i class="su su-nav-schedule"></i>
                             <span>[[[Create Schedule]]]</span>
                         </span>
@@ -391,7 +391,7 @@
                     {{if ~checkMobile()}}
                     {{if ItemType=="@((int)ItemType.Dashboard)"}}
                     <li>
-                        <span href="javascript:void(0);" title="" class="update-datasource option-click" data-item-id="{{:Id}}">
+                        <span href="#" title="" class="update-datasource option-click prevent-default-action" data-item-id="{{:Id}}">
                             <i class="su su-nav-datasource"></i>
                             <span>[[[Update Data Source(s)]]]</span>
                         </span>
@@ -496,13 +496,13 @@
                     {{if ItemType=="@((int)ItemType.Dashboard)"}}
                     {{if !IsMultiDashboard}}
                     <li class="dropdown dashboard-views" data-load="true">
-                        <span href="javascript:void(0);" class="dropdown-toggle views" data-is-childdashboard="{{:IsChildDashboard}}" data-child-dashboard-name="{{:Name}}" data-parent-category-name="{{:ParentCategoryName}}" data-parent-itemname="{{:CategoryName}}" data-item-id="{{:Id}}" data-parent-item-id="{{:CategoryId}}" data-toggle="dropdown">
+                        <span href="#" class="dropdown-toggle views prevent-default-action" data-is-childdashboard="{{:IsChildDashboard}}" data-child-dashboard-name="{{:Name}}" data-parent-category-name="{{:ParentCategoryName}}" data-parent-itemname="{{:CategoryName}}" data-item-id="{{:Id}}" data-parent-item-id="{{:CategoryId}}" data-toggle="dropdown">
                             <i class="su su-filter"></i>
                             <span>[[[Views]]]</span>
                         </span>
                         <ul class="dropdown-menu item-views" role="menu">
                             <li>
-                                <span class="view-name" href="javascript:void(0);">
+                                <span class="view-name prevent-default-action" href="#">
                                     [[[Loading...]]]
                                 </span>
                             </li>
@@ -515,7 +515,7 @@
                     {{if (ItemType == "@((int)ItemType.Report)" || ItemType == "@((int)ItemType.Dashboard)") && CanSchedule}}
                     <li role="separator" class="divider"></li>
                     <li>
-                        <span href="javascript:void(0);" class="schedule-dashboards option-click" title="" data-category-name="{{:ParentCategoryName}}" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-multidashboard-name="{{:CategoryName}}">
+                        <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" data-category-name="{{:ParentCategoryName}}" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-multidashboard-name="{{:CategoryName}}">
                             <i class="su su-nav-schedule"></i>
                             <span>[[[Create Schedule]]]</span>
                         </span>
@@ -890,6 +890,10 @@
             renderDoubleQuotes: function (inputString) {
                 return inputString.replace(new RegExp("\"", 'g'), '&quot;');
             }
+        });
+
+        $(document).on("click", ".prevent-default-action", function (e) {
+            e.preventDefault();
         });
     });
 

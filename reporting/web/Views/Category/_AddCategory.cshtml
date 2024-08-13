@@ -31,6 +31,8 @@
             var setLanguageUrl = "@Url.Action("SetLanguage", "Administration")";
 
             $(document).ready(function () {
+                load();
+
                 $('[data-toggle="tooltip"]').tooltip();
             });
 
@@ -46,11 +48,11 @@
             }
     </script>
 </head>
-<body style="background:white;" onload="load();" class="dialog">
+<body style="background:white;" class="dialog">
     <div class="col-md-12 dialog-header">
         <span class="su su-folder Head-icon"></span>
         <span class="PopupTitle">[[[Create Category]]]</span>
-        <a href="javascript:void(0);" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom" onclick="closeAddItemPopup()"><span class="su su-close"></span></a>
+        <a href="#" id="close-add-item-popup" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom"><span class="su su-close"></span></a>
     </div>
     @if (isSuccess == false)
 {
@@ -84,8 +86,8 @@
     </form>
     <div class="category-btns dialog-footer">
         <div class="pull-right">
-            <input type="submit" title="" class="btn primary-button app-btn-primary" value="[[[Add]]]" tabindex="3" onclick="addItemValidate()">
-            <input type="button" title="" class="btn secondary-button app-btn-secondary" onclick="closeAddItemPopup()" value="[[[Cancel]]]" tabindex="4">
+                <input type="submit" title="" class="btn primary-button app-btn-primary" id="validate-add-item" value="[[[Add]]]" tabindex="3">
+                <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancel-add-item-popup" value="[[[Cancel]]]" tabindex="4">
         </div>
     </div>
     }

@@ -385,7 +385,7 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Redirect URI]]]</label>
                                             <div class="col-md-8 no-margin form-input-field">
-                                                <input onClick="this.setSelectionRange(0, this.value.length)" id="oauth-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
+                                                <input id="oauth-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
                                                 <div class="form-control su su-copy text focus" id="oauth-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
                                             </div>
                                         </div>
@@ -593,7 +593,7 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Redirect URI]]]</label>
                                             <div class="col-md-8 no-margin form-input-field">
-                                                <input onClick="this.setSelectionRange(0, this.value.length)" id="openid-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OidcCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
+                                                <input id="openid-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OidcCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
                                                 <div class="form-control su su-copy text focus" id="openid-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
                                             </div>
                                         </div>

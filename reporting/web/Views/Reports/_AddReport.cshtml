@@ -56,7 +56,7 @@
     </environment>
 </head>
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
-<body style="background-color:white" onload="load();">
+<body style="background-color:white">
 
     <div id="createReportPopupHolder" class="add-report-module dialog">
         <input type="hidden" name="selectedFolderId" id="selectedFolderId" value="" />
@@ -74,7 +74,7 @@
                     <span class="PopupTitle">[[[Create Report]]]</span>
                 }
             }
-            <a href="javascript:void(0);" class="PopupClose" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" onclick="closeNewRDLAddPopup()"><span class="su su-close"></span></a>
+            <a href="#" class="PopupClose close-new-rdl-add-popup" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom"><span class="su su-close"></span></a>
         </div>
         <form id='new_rdl_tab_content' class='dialog-body col-xs-12 no-padding add-report-form' autocomplete="off">
             <div class='col-xs-12 padding-bottom20 new-rdl-content-holder' id='new_rdl_content_holder'>
@@ -163,7 +163,7 @@
                     <tr>
                         <td class="col-xs-3 text-right"><div class="bottom-margin40">[[[Tag Name]]]</div></td>
                         <td class="col-xs-9">
-                            <div id="taginfo" style="border-radius:4px;" onclick="openPopup(true);">
+                            <div id="taginfo" class="add-report-page-taginfo" style="border-radius:4px;">
                                 <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
                                 <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
                             </div>
@@ -200,10 +200,10 @@
 
                     else if (ViewBag.Action == "Upload")
                     {
-                        <input type="button" title="" value="[[[Save]]]" id="publish_report" onclick="addRDLReport()" class="btn primary-button app-btn-primary small-right-margin" disabled>
+                        <input type="button" title="" value="[[[Save]]]" id="publish_report" class="btn primary-button app-btn-primary small-right-margin" disabled>
                     }
                 }                
-                <input type="button" title="" value="[[[Cancel]]]" class="btn secondary-button app-btn-secondary NoStyleCloseClick" onclick="closeNewRDLAddPopup()">
+                <input type="button" title="" value="[[[Cancel]]]" id="cancel-rdl-add-popup" class="btn secondary-button app-btn-secondary NoStyleCloseClick">
             </div>
         </div>
     </div>

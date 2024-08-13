@@ -7,7 +7,7 @@
                     <span class="modal-title">[[[Delete Groups]]]</span>
                 </div>
                 <div class="col-xs-4 no-padding">
-                    <a href="javascript:void(0);" onclick="onDeleteDialogClose()" class="close"><i class="su su-close"></i></a>
+                    <a href="#" id="delete-dialog-close-link" class="close"><i class="su su-close"></i></a>
                 </div>
             </div>
             <div class="modal-body col-xs-12">
@@ -26,8 +26,8 @@
                 <div class="col-xs-4"><input type="hidden" id="hiddenId" value="@ViewBag.id" /></div>
                 <div class="col-xs-8 no-padding">
                     <input type="hidden" value="">
-                    <input type="button" onclick="MakeFlyDeleteGroups()" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" />
-                    <input type="button" onclick="onDeleteDialogClose()" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" />
+                    <input type="button" id="make-fly-delete-groups" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" />
+                    <input type="button" id="delete-dialog-close-button" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" />
                 </div>
             </div>
         </div>

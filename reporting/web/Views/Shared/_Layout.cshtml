@@ -43,6 +43,7 @@
     var rootUrl = Context.Request.RouteValues["tenantName"] != null ? (Context.Request.PathBase + "/" + ServerAppConfig.TenantIdentifierPrefix + "/" + Context.Request.RouteValues["tenantName"]).TrimEnd('/') : Context.Request.PathBase.ToString();
     var isExludeEjDialog = ViewBag.IsExludeEjDialog != null ? ViewBag.IsExludeEjDialog : false;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 }
 <!DOCTYPE html>
 <html class="dashboard-server" lang="@globalAppSettings.SystemSettings.Language">
@@ -148,7 +149,7 @@
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
-    <link rel="icon" href="@faviconLogo" onerror="if (this.href !== null && this.href.toLowerCase() !== '@cdnLink/cdn/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon') this.href = '@cdnLink/images/application/@ServerAppConfig.AppSettings.AppBranding.Identifier/@IconFileNames.Favicon';" />
+    <link rel="icon" href="@faviconLogo" id="favicon-link" />
 
     <!--Prefetch viewer & designer resources-->
     @*<link rel="prefetch" href="@ServerAppConfig.InternalAppDataServiceUrl">*@
@@ -188,6 +189,19 @@
 };
 
  }
+
+    <script nonce="@Context.Items["ScriptNonce"]">
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
+    </script>
 </head>
 
 <body ng-app="serverApp" class="clearfix" id="body">
@@ -263,7 +277,7 @@
         var appBranding = "@GlobalAppSettings.Branding";
         var rootUrl = "@rootUrl";
         var rootUrlAction = "@rootUrl";
-        var canCheckSession = "@ServerAppConfig.IsSelfHosted";
+        var canCheckSession = @Json.Serialize(isSelfHosted);
         var etlHealthyStatusUrl = "@Url.Action("CheckETLHealthStatus", "Accounts")";
         var etlHelpLink = helpSiteBaseUrl + "@GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ETL)";
         var isUmsAdmin = "@identityResponse.IsUmsAdmin";

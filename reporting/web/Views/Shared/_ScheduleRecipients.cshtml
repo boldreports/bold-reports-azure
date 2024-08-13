@@ -120,13 +120,17 @@
         }
         <div id="location-export-checkbox" class="col-sm-12 col-xs-12">
             @Html.CheckBox("ftp-location-export", false, new { @class = "material-checkbox overwrite-checkbox" })
-            @Html.Label("ftp-location-export", "[[[FTP Location Export]]]")
+            @Html.Label("ftp-location-export", "[[[FTP / SFTP Location Export]]]")
         </div>
         <div class="col-sm-6 col-xs-6" id="checkbox-validation" style="visibility: hidden">[[[Please select at least one option to schedule a report ]]]</div>
         <form class="col-sm-12 col-xs-12" id="ftp-form">
             <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
                 <div class="col-sm-4 col-xs-4">
-                    <label class="path-label">[[[Host]]]</label>
+                    <label class="path-label" style="float:left">[[[Host]]]</label>
+                    <div class="tool-tip col-xs-1" style="padding-left:1.2%;top:1px">
+                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                        <div class="dropdown-menu" role="menu" style="padding:5px; width: 420px !important;">[[[If using a custom FTP/SFTP port, include it in the host like this: ftp://domain:123 or sftp://domain:123.]]]</div>
+                    </div>
                     <input type="text" class="form-control" id="ftp-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
                     <div id="ftp-hostname-validation" style="display: none"></div>
                 </div>

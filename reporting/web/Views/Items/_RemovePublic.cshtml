@@ -6,6 +6,10 @@
 <script nonce="@Context.Items["ScriptNonce"]">
     var removeItemPublicUrl = "@Url.Action("RemoveItemPublic", "items")";
 
+    $(document).ready(function () {
+        load();
+    });
+
     function load() {
         if (($(parent.window).width()) > 1400) {
             $(".dialog").addClass("iframe");
@@ -21,12 +25,12 @@
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
 
-<body onload="load()">
+<body>
     <div class="col-lg-12 no-padding dialog" id="PopupContainer">
         <div class="col-md-12 dialog-header">
             <span class="su su-remove-public Head-icon"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></span>
             <span class="PopupTitle">[[[Make Private]]]</span>
-            <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onRemovePublicDialogClose()"><span class="su su-close"></span></a>
+            <a href="#" id="remove-public-dialog-close-link" title="[[[Close]]]" class="PopupClose"><span class="su su-close"></span></a>
         </div>
         <div class="dialog-body col-xs-12 no-padding" style="height:auto;">
 
@@ -59,11 +63,11 @@
 
                 <input type="button" class="app-button app-primary-button app-btn-primary rightAlign" value="[[[Make Private]]]" id="remove-public" data-item-id="@ViewData["ItemId"]" data-itemtype="" tabindex="1" autofocus />
 
-                <input type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose no" value="[[[No]]]" onclick="onRemovePublicDialogClose()" tabindex="2" />
+                <input type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose no remove-public-dialog-close-button" value="[[[No]]]" tabindex="2" />
             </div>
             <div class="col-xs-8 no-padding centerAlign validationArea" id="remove-close" style="display:none">
 
-                <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[Close]]]" onclick="onRemovePublicDialogClose()" tabindex="3" autofocus />
+                <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose remove-public-dialog-close-button" value="[[[Close]]]" tabindex="3" autofocus />
             </div>
         </div>
     </div>

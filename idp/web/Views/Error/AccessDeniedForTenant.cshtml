@@ -5,7 +5,7 @@
     var returnUrl = ViewBag.ReturnUrl;
     var email = ViewBag.Email;
     var dns = ViewBag.DNS;
-    var imageHelper = new ImageHelper();
+    var imageHelper = new ImageHelper(Context);
 }
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
     @await Html.PartialAsync("../Shared/_ThemeReference")
     <link rel="stylesheet" href="~/bundles/css/error-page.css" integrity="@IntegrityTagHelper.GetIntegrity("bundles/css/error-page.css")" crossorigin="anonymous" asp-append-version="true" />
     <script nonce="@Context.Items["ScriptNonce"]">
-        var defaultErrorImageSrc = "@GlobalAppSettings.SystemSettings.CDNLink/images/application/@CloudAppConfig.AppBranding/@IconFileNames.LoginLogo";
+        var defaultErrorImageSrc = "@GlobalAppSettings.SystemSettings.CDNLink/images/application/@CloudAppConfig.AppBranding/@CloudAppConfig.Branding.BrandingImages.LoginLogo";
         document.addEventListener("DOMContentLoaded", function () {
             var logoimage = document.getElementById("access-denied-img");
             if (logoimage) {
@@ -34,7 +34,7 @@
         <div class="error-page-content">
             <div class="error-inside">
                 <div class="error-image-center-1">
-                    <img id="access-denied-img" src="@Url.Content($"{CloudAppConfig.TenantManagementUrl.TrimEnd('/')}/logos?type=login")" class="error-image-1">
+                    <img id="access-denied-img" src="@Url.Content($"{CloudAppConfig.TenantManagementUrl(Context).TrimEnd('/')}/logos?type=login")" class="error-image-1">
                 </div>
                 <div class="error-image-center-2">
                     <img src="@imageHelper.AccessDeniedImage()" class="error-image-2">

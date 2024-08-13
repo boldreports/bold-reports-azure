@@ -47,27 +47,27 @@
                                 <ul class="dropdown-menu" role="menu">
                                     {{if PublishJobHistory[0].Status == "Failed" || PublishJobHistory[0].Status == "Success"}}
                                     <li class="menu-group">
-                                        <a href="javascript:void(0);" title="[[[Synchronize]]]" onclick="onConfirmSynchronizeDialog()">
+                                        <a href="#" title="[[[Synchronize]]]" id="synchronize-report">
                                             <i class="su su-synchronize"></i>
                                             <span class="menu-text">[[[Synchronize]]]</span>
                                         </a>
                                     </li>
                                     {{/if}}
                                     <li class="menu-group">
-                                        <a href="javascript:void(0);" title="[[[Info]]]" onclick="openPublishInfo()">
+                                        <a href="#" title="[[[Info]]]" id="published-report-info">
                                             <i class="su su-info"></i>
                                             <span class="menu-text">[[[Info]]]</span>
                                         </a>
                                     </li>
                                     <li class="menu-group">
-                                        <a href="javascript:void(0);" title="[[[Publish History]]]" onclick="publishHistoryDialog()">
+                                        <a href="#" title="[[[Publish History]]]" id="publish-history">
                                             <i class="su su-versions"></i>
                                             <span class="menu-text">[[[Publish History]]]</span>
                                         </a>
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li class="menu-group">
-                                        <a href="javascript:void(0);" title="[[[Remove]]]" onclick="showRemoveConfirmation()">
+                                        <a href="#" title="[[[Remove]]]" id="published-report-remove-confirmation">
                                             <i class="su su-delete"></i>
                                             <span class="menu-text">[[[Remove]]]</span>
                                         </a>
@@ -101,7 +101,7 @@
                         </script>
                         <script nonce="@Context.Items["ScriptNonce"]" id="grouping-synchronize-template" type="text/x-jsrender">
                             {{:key}}
-                            <button class="btn display-none synchronize-button" onclick="onConfirmSynchronizeAllDialog(event)"><i class="su su-synchronize synchronize-icon-container"></i>[[[Synchronize]]]</button>
+                            <button class="btn display-none synchronize-button" id="synchronize-report-button"><i class="su su-synchronize synchronize-icon-container"></i>[[[Synchronize]]]</button>
                         </script>
                         <div id="PublishItemGrid"></div>
                         @await Html.PartialAsync("_PublishHistory")
@@ -113,7 +113,7 @@
                                     <span class="modal-title popup-title schedule-popup-title ellipsis col-lg-11 col-xs-11 col-sm-11 col-md-11 no-padding" data-toggle="tooltip" data-placement="bottom" data-container="body"><b>[[[Remove Published Report]]]</b></span>
                                 </div>
                                 <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 no-padding">
-                                    <a href="javascript:void(0);" title="[[[Close]]]" class="popup-close pull-right" onclick="hideRemoveConfirmation()"><span class="su su-close"></span></a>
+                                    <a href="#" title="[[[Close]]]" class="popup-close pull-right" id="remove-confirmation-close-link"><span class="su su-close"></span></a>
                                 </div>
                             </div>
                             <div class="col-lg-12 modal-body">
@@ -123,8 +123,8 @@
                                 </p>
                             </div>
                             <div class="col-lg-12 modal-footer">
-                                <input type="button" class="app-button app-secondary-button pull-right app-btn-secondary popup-close" value="[[[No]]]" onclick="hideRemoveConfirmation()" tabindex="-1" />
-                                <input type="button" class="app-button app-critical-action-button pull-right popup-close app-btn-danger" value="[[[Yes]]]" onclick="removePublishedItem()" tabindex="-1" />
+                                <input type="button" id="remove-confirmation-close-button" class="app-button app-secondary-button pull-right app-btn-secondary popup-close" value="[[[No]]]" tabindex="-1" />
+                                <input type="button" id="remove-published-report" class="app-button app-critical-action-button pull-right popup-close app-btn-danger" value="[[[Yes]]]" tabindex="-1" />
                             </div>
                         </div>
                     </div>

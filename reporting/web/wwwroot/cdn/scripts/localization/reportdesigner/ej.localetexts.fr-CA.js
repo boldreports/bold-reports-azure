@@ -346,11 +346,11 @@ ej.ReportDesigner.Locale['fr-CA'] = {
                 groupName: 'Régions de données',
                 Items: {
                     'tablix': {
-                        displayText: 'Table',
+                        displayText: 'Tableau',
                         tooltip: {
                             requirements: '1 ou plusieurs lignes / colonnes.',
                             description: 'Affichez les données paginées sous forme de tableau.',
-                            title: 'Table'
+                            title: 'Tableau'
                         }
                     },
                     'list': {
@@ -468,6 +468,8 @@ ej.ReportDesigner.Locale['fr-CA'] = {
         fileName: 'nom de fichier',
         waterMark: 'nom du rapport',
         close: 'Fermer',
+        errorMessage: 'Spécifiez le nom du rapport',
+        invalidName: 'Les caractères spéciaux ne sont pas autorisés'
     },
     reportAction: {
         linkTo: 'Lié à',
@@ -1088,7 +1090,8 @@ ej.ReportDesigner.Locale['fr-CA'] = {
             enableLabel: 'Activer l\'étiquette',
             labelTarget: 'Cible',
             labelText: 'Texte',
-            alignment: 'Alignement du texte',
+            textAlignment: 'Alignement du texte',
+            verticalAlignment: 'Alignement vertical',
             alignmentTypes: {
                 leftAlignment: 'La gauche',
                 centerAlignment: 'Centre',
@@ -1399,6 +1402,7 @@ ej.ReportDesigner.Locale['fr-CA'] = {
         },
         commonCategory: {
             placementCategory: {
+                placement: 'Placement',
                 inside: 'À l\'intérieur',
                 outside: 'À l\'extérieur',
                 cross: 'Traverser'
@@ -1716,7 +1720,7 @@ ej.ReportDesigner.Locale['fr-CA'] = {
         tags: 'Mots clés',
         newTag: 'Nouveau jour',
         tagWaterMark: 'Balise de recherche',
-        splCharacter: 'Les caractères spéciaux ne sont pas pris en charge',
+        splCharacter: 'Les caractères spéciaux ne sont pas autorisés',
         addCategory: {
             title: 'Nouvelle catégorie',
             name: 'prénom',
@@ -1870,6 +1874,19 @@ ej.ReportDesigner.Locale['fr-CA'] = {
                 alertPrompt: 'Spécifiez le texte d\'invite'
             }
         },
+        sshSettings: {
+            enable: 'Activer SSH',
+            serverName: 'Nom du serveur SSH',
+            port: 'Port SSH',
+            userName: 'Nom d\'utilisateur SSH',
+            password: 'Mot de passe SSH',
+            alertMessage: {
+                serverName: 'Spécifiez le nom du serveur SSH',
+                port: 'Spécifiez le numéro de port SSH',
+                userName: 'Spécifiez le nom d\'utilisateur SSH',
+                password: 'Spécifiez le mot de passe SSH'
+            }
+        },
         sqlDatasource: {
             authenticationType: 'type d\'identification',
             window: 'les fenêtres',
@@ -1884,7 +1901,7 @@ ej.ReportDesigner.Locale['fr-CA'] = {
                 database: 'Base de données',
                 advanceSwitch: 'Options avancées',
                 encrypt: 'chiffrer',
-                trustserver: 'Certificat de Serveur de Confiance'
+                trustServer: 'Certificat de Serveur de Confiance'
             },
             advanceOption: {
                 connectionString: 'Chaîne de connexion',
@@ -3998,7 +4015,7 @@ ej.ReportDesigner.Locale['fr-CA'] = {
     rowColumnGroup: {
         rowGroupLable: 'Groupes de lignes',
         columnGroupLable: 'Groupes de colonnes',
-        tablixAlertHeader: 'Tablix',
+        tablixAlertHeader: 'Tableau',
         alertMessage: 'Activer l\'option Développer pour sélectionner l\'élément de rapport de tableau matriciel',
         contextMenu: {
             addgroup: 'Ajouter un groupe',
@@ -4955,7 +4972,7 @@ ej.ReportDesigner.Locale['fr-CA'] = {
         }
     },
     mapBindingFields: {
-        headerText: 'BindingField Pairs',
+        headerText: 'Paires de champs de liaison',
         addText: 'AJOUTER',
         updateText: 'Mise à jour',
         fieldName: 'Nom de domaine',

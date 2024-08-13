@@ -12,11 +12,11 @@
 
 <div id="user-notification-container" ng-app="serverApp" ng-controller="UserNotificationController" class="col-xs-12 no-padding" style="display:none">
     <div class="notification-header col-xs-12">
-        <span class="su su-arrow-back" onclick="closeUserNotification()"></span>
+        <span id="close-user-notification" class="su su-arrow-back"></span>
         <span class="notification-title">[[[Notifications]]]</span>
         <a ng-show="notifications.length != 0" class="notification-setting-link ng-hide" href="@Url.Action("Profilepage","User")">[[[SETTINGS]]]</a>
     </div>
-    <div id="notification-content" class="notification-content-container-partial col-xs-12 no-padding" onscroll="onNotificationScroll()">
+    <div id="notification-content" class="notification-content-container-partial col-xs-12 no-padding">
         <ul ng-if="notifications.length!=0" id="notification-list-ul" class="notification-list-ul" ng-repeat="(key, value) in notifications | groupBy: valueGroupBy">
             <div class="notification-sub-heading">{{key}}</div>
             <li ng-repeat="item in value" notification-repeat-directive>

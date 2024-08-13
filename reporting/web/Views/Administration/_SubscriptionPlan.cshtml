@@ -115,7 +115,7 @@
                     {
                         if (!licenseSettings.IsKcBenefit && !ServerAppConfig.IsCustomPlan((SaaSPlan)(int.Parse(Model.PlanId))))
                         {
-                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" onclick="openPlanPickupPartial();" class="primary-button app-btn-primary pull-right">
+                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" class="primary-button app-btn-primary pull-right">
                                 [[[Change Plan]]]
                             </button>
                         }
@@ -214,7 +214,7 @@
                     </table>
                 </div>
                 <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" onclick="openSubscriptionSettings();" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
+                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
                         [[[Cancel my subscription]]]
                     </button>
                 </div>
@@ -245,10 +245,10 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 no-margin">
-                            <button type="button" title="" name="ChangeSubscriptionSettings" onclick="redirectToSubscriptionPlan();" class="primary-button app-btn-primary pull-right">
+                            <button type="button" title="" name="ChangeSubscriptionSettings" class="primary-button app-btn-primary pull-right redirect-to-subscription-plan">
                                 [[[Go back]]]
                             </button>
-                            <button type="button" title="" id="enable-cancelsubscription" onclick="cancelSubscriptionFeedback();" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
+                            <button type="button" title="" id="enable-cancelsubscription" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
                                 [[[Cancel my subscription]]]
                             </button>
                         </div>
@@ -277,10 +277,10 @@
                         <span>[[[Your billing period and billed amount is not affected by this action if you have already paid for the current billing cycle. Click]]] <b>[[[Reactivate my subscription]]]</b> [[[to continue using reports.]]] </span>
                     }
                     <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                        <button type="button" title="" onclick="redirectToSubscriptionPlan();" class="secondary-button app-btn-secondary pull-right">
+                        <button type="button" title="" class="secondary-button app-btn-secondary pull-right redirect-to-subscription-plan">
                             [[[Go back]]]
                         </button>
-                        <button type="button" title="" onclick="activateSubscription();" class="primary-button app-btn-primary reactivate-subscription-button pull-right">
+                        <button type="button" title="" id="reactivate-subscription-button" class="primary-button app-btn-primary reactivate-subscription-button pull-right">
                             [[[Reactivate my subscription]]]
                         </button>
                     </div>
@@ -390,7 +390,7 @@
             </form>
         </div>
         <div id="card-payment-container" style="display: none;">
-            <form onsubmit="validateForm(event)">
+            <form id="card-payment-form">
                 <div id="upgradecard-details">
                     @await Html.PartialAsync("../Payment/_CardInputElements")
                 </div>

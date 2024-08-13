@@ -9,6 +9,8 @@
 
 <script nonce="@Model">
     $(document).ready(function () {
+        load();
+
         $("#item-link-copy").removeClass("focusdiv");
         $("#item-link").on("focusin", function () {
             $("#item-link-copy").addClass("focusdiv");
@@ -37,7 +39,7 @@
     }
 </script>
 
-<body onload="load()">
+<body>
     <div id="get_item_link" class="col-xs-12 no-padding dialog custom-bootstrap-styles" style="display:none">
         <div class="col-xs-12 dialog-header">
             <div class="col-xs-6 no-padding">
@@ -45,7 +47,7 @@
                 <span class="PopupTitle">[[[Get Link]]]</span>
             </div>
             <div class="col-xs-6 no-padding">
-                <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onGetLinkDialogClose()"><span class="su su-close"></span></a>
+                <a href="#" id="get-link-dialog-close" title="[[[Close]]]" class="PopupClose"><span class="su su-close"></span></a>
             </div>
             <div class="report-name no-padding col-xs-12 link-item-name ellipsis" style="padding-left:5px;padding-top: 10px;"></div>
         </div>
@@ -68,7 +70,7 @@
                     </div>
 
                     <span class="update-link small" style="float:right;margin-right:14px;margin-bottom:2px;color: green;visibility: hidden">[[[Link updated.]]]</span>
-                    <input onClick="this.setSelectionRange(0, this.value.length)" id="item-link" class="form-control" readonly />
+                    <input id="item-link" class="form-control" readonly />
                     <div class="form-control su su-copy text focus" id="item-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
 
                     <div class="col-sm-12 col-xs-12 file-link no-padding" style="margin-top:15px;display:none">
@@ -125,7 +127,7 @@
         <div class="col-xs-12 dialog-footer rightAlign no-right-padding no-left-padding" style="position:relative !important;font-size:14px !important">
             <div class="pull-right"></div>
             <div class="no-padding centerAlign validationArea" id="close">
-                <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[OK]]]" onclick="onGetLinkDialogClose()" tabindex="3" autofocus />
+                <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary PopupClose" value="[[[OK]]]" tabindex="3" autofocus />
             </div>
         </div>
     </div>    

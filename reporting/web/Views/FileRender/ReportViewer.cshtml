@@ -30,6 +30,7 @@
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var categoryName = HttpUtility.HtmlDecode(ViewBag.itemDetail.CategoryName);
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -204,8 +205,20 @@
         </style>
     }
     <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+        <script nonce="@Context.Items["ScriptNonce"]">
+        document.addEventListener("DOMContentLoaded", function () {
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
+    </script>
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%" ng-app="serverApp">
 
@@ -228,35 +241,35 @@
                     @if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated)
                     {
                         <li class="col-xs-3">
-                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a>
+                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a>
                         </li>
                         <li class="col-xs-3">
-                            <a href="javascript:void(0);" class="su su-report active"></a>
+                            <a href="#" class="su su-report active prevent-default-action"></a>
                         </li>
                         <li class="col-xs-3">
                             @if (ViewBag.IsReportCommented == "true")
                             {
-                                <a href="javascript:void(0);" class="su su-with-comment server-comment"></a>
+                                <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
                             }
                             else
                             {
-                                <a href="javascript:void(0);" class="su su-without-comment server-comment"></a>
+                                <a href="#" class="su su-without-comment server-comment prevent-default-action"></a>
                             }
                         </li>
                         <li class="col-xs-3">
-                            <a href="javascript:void(0);" class="su su-view active"></a>
+                            <a href="#" class="su su-view active prevent-default-action"></a>
                         </li>
                     }
                     else
                     {
                         <li class="col-xs-4">
-                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a>
+                            <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a>
                         </li>
                         <li class="col-xs-4">
-                            <a href="javascript:void(0);" class="su su-report active"></a>
+                            <a href="#" class="su su-report active prevent-default-action"></a>
                         </li>
                         <li class="col-xs-4">
-                            <a href="javascript:void(0);" class="su su-view server-item-view"></a>
+                            <a href="#" class="su su-view server-item-view prevent-default-action"></a>
                         </li>
                     }
                 </ul>
@@ -293,7 +306,7 @@
         <div class="col-lg-12 no-padding" id="PopupContainer">
             <div class="col-md-12">
                 <div class="col-xs-12 no-padding" style="float:right">
-                    <a href="javascript:void(0);" onclick="commentImageDialogClose()" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
+                    <a href="#" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
                 </div>
             </div>
             <div class="dialogBody col-xs-12 no-padding">
@@ -417,31 +430,44 @@
     var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
     var canCheckSession = @Json.Serialize(canShowSession);
 
-        function renderComments() {
-            var src = $("#commentModuleContainer iframe").attr("src");
-            if (src === undefined || src === "") {
-            $("#commentModuleContainer iframe").attr("src", commentPageUrl + "?itemId=" + $("#commentModuleContainer_iframe").attr("data-item-id") + "&userId=" + userId + "&viewer=v2");
+    $(document).ready(function () {
+        $(document).on("click", ".load-popup", loadPopup);
+
+        $(document).on("click", ".closePopupImage", function (e) {
+            e.preventDefault();
+            commentImageDialogClose();
+        });
+
+        $(document).on("click", ".prevent-default-action", function (e) {
+            e.preventDefault();
+        });
+    });
+
+    function renderComments() {
+        var src = $("#commentModuleContainer iframe").attr("src");
+        if (src === undefined || src === "") {
+        $("#commentModuleContainer iframe").attr("src", commentPageUrl + "?itemId=" + $("#commentModuleContainer_iframe").attr("data-item-id") + "&userId=" + userId + "&viewer=v2");
+    }
+    if ($("#commentModuleContainer").hasClass("displayNone")) {
+        $("#close-container").trigger("click");
+        $("#dashboard-comment").addClass("highlight-icon");
+        $("#comment-module-container-loader-icon").show();
+        openDashboardComment(null);
+        $("#sync_report_viewer").css("width", $(window).width() - 410);
+        $("#sync_report_viewer").data("boldReportViewer")._viewerResize();
+    }
+    else {
+        $("#dashboard-comment").removeClass("highlight-icon");
+        closeDashboardComment();
+        $("#sync_report_viewer").css("width", $(window).width());
         }
-        if ($("#commentModuleContainer").hasClass("displayNone")) {
-            $("#close-container").trigger("click");
-            $("#dashboard-comment").addClass("highlight-icon");
-            $("#comment-module-container-loader-icon").show();
-            openDashboardComment(null);
-            $("#sync_report_viewer").css("width", $(window).width() - 410);
-            $("#sync_report_viewer").data("boldReportViewer")._viewerResize();
-        }
-        else {
-            $("#dashboard-comment").removeClass("highlight-icon");
-            closeDashboardComment();
-            $("#sync_report_viewer").css("width", $(window).width());
-         }
-        }
+    }
 
     function mobileViewAvailable()
     {
         if ($("#is_mobile").val() == "true" && '@isUserAuthenticated' == "true") {
-            var reportComment = isReportCommented.toLowerCase() == "true" ? '<a href="javascript:void(0);" class="su su-with-comment server-comment"></a>' : '<a href="javascript:void(0);" class="su su-without-comment server-comment"></a>';
-            var mobileNavBar = '<li class="col-xs-4"> <a href="@Url.Action("reports", "reports")" class="su su-nav-home" onclick="loadPopup();"></a></li><li class="col-xs-4"><a href="javascript:void(0);" class="su su-report active"></a></li><li class="col-xs-4">' + reportComment + '</li>';
+            var reportComment = isReportCommented.toLowerCase() == "true" ? '<a href="#" class="su su-with-comment server-comment prevent-default-action"></a>' : '<a href="#" class="su su-without-comment server-comment prevent-default-action"></a>';
+            var mobileNavBar = '<li class="col-xs-4"> <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a></li><li class="col-xs-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-4">' + reportComment + '</li>';
             if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                 var element = $("#server-mobile-navbar").children().find(".navbar-nav");
                 element.html("");

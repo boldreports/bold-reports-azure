@@ -17,7 +17,7 @@
                             <span class="modal-title popup-title schedule-popup-title ellipsis col-lg-10 col-xs-10 col-sm-10 col-md-10 no-padding" data-toggle="tooltip" data-placement="bottom" data-container="body" style="font-size:16px;"></span>
                         </div>
                         <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 no-padding">
-                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="left" data-container="body" title="[[[Close]]]" class="popup-close pull-right"><span class="su su-close"></span></a>
+                            <a href="#" data-toggle="tooltip" data-placement="left" data-container="body" title="[[[Close]]]" class="popup-close pull-right prevent-default-action"><span class="su su-close"></span></a>
                         </div>
                     </div>
                     <div class="modal-body col-lg-12">
@@ -44,7 +44,7 @@
             <h4 class="popup-title">
                 <span class="su su-info"></span>
                 <span id="info-dialog-header">[[[Failure Info]]]</span>
-                <button id="close-info-dialog" type="button" title="[[[Close]]]" data-toggle="tool-tip" data-container="body" class="close popup-close" onclick="closeFailureInfo()" aria-label="Close">
+                <button id="close-info-dialog" type="button" title="[[[Close]]]" data-toggle="tool-tip" data-container="body" class="close popup-close close-failure-info" aria-label="Close">
                     <span class="su su-close"></span>
                 </button>
             </h4>
@@ -54,7 +54,7 @@
         </div>
         <div class="fluent-popup-footer col-xs-12">
             <div class="col-xs-12 no-padding">
-                <button class="app-button app-secondary-button app-btn-secondary" onclick="closeFailureInfo()" title="Close">[[[Close]]]</button>
+                <button class="app-button app-secondary-button app-btn-secondary close-failure-info" title="Close">[[[Close]]]</button>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
 </script>
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="schedule_status">
     {{if Status == "Failed"}}
-    <span><a class="grid-content" href="javascript:void(0);" onclick="onFailureStatusClick()">{{:Status}}</a></span>
+    <span><a id="on-failure-status" class="grid-content" href="#">{{:Status}}</a></span>
     {{else}}
 <div class="grid-content" title="{{:Status}}" data-toggle="tooltip">{{:Status}}</div>
     {{/if}}
@@ -120,6 +120,15 @@
                     field: "ExecutedDateString"
                 },
             ]
+        });
+
+        $(document).on("click", "#on-failure-status", function (e) {
+            e.preventDefault();
+            onFailureStatusClick();
+        });
+
+        $(document).on("click", ".prevent-default-action", function (e) {
+            e.preventDefault();
         });
     });
 </script>

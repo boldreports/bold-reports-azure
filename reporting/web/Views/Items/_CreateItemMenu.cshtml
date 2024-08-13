@@ -8,7 +8,7 @@
     var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
     var itemPermissions = Model as Dictionary<ItemType, bool>;
     var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
-    var showImport = requestUrl.LocalPath.ToLower() == Url.Action("Reports", "Reports");
+    var showImport = requestUrl.LocalPath.ToLower().Contains(Url.Action("Reports", "Reports").ToLower());
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 }

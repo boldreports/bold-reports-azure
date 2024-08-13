@@ -15,7 +15,7 @@
             <span class="modal-title popup-title">[[[Delete]]] @(itemTypeName)</span>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 no-padding">
-            <a href="javascript:void(0);" onclick="onDeleteItemDialogClose()" title="[[[Close]]]" class="popup-close pull-right"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" class="popup-close pull-right delete-item-dialog-close-link"><span class="su su-close"></span></a>
         </div>
     </div>
     <div class="modal-body">
@@ -51,10 +51,10 @@
             {
             <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-item" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
             }
-            <input type="button" id="cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
+            <input type="button" id="cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[No]]]" tabindex="2" />
         </div>
         <div class="col-xs-8 padding-top success-area" style="display:none">
-            <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" autofocus />
+            <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[OK]]]" tabindex="3" autofocus />
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@ else
             <span class="modal-title">[[[Delete]]] @(itemTypeName)</span>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 no-padding">
-            <a href="javascript:void(0);" title="[[[Close]]]" onclick="onDeleteItemDialogClose()" class="popup-close pull-right"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" class="popup-close pull-right delete-item-dialog-close-link"><span class="su su-close"></span></a>
         </div>
     </div>
     <div class="modal-body text-center">
@@ -90,7 +90,7 @@ else
     </div>
 
     <div class="modal-footer text-center">
-        <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="1" autofocus />
+        <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[OK]]]" tabindex="1" autofocus />
     </div>
 </div>
 

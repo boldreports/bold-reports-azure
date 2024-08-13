@@ -14,6 +14,7 @@
     var enableViews = "false";
     var canEdit = itemDetail.CanWrite;
     var embedConfig = ViewBag.EmbedConfig as EmbedConfig;
+    var isCommonCacheEnabled = ViewBag.IsCommonCacheEnabled;
     var filterQuery = ViewBag.FilterQuery;
     var userId = ViewBag.UserId;
     var enableExport = "true";
@@ -29,6 +30,7 @@
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var categoryName = HttpUtility.HtmlDecode(ViewBag.itemDetail.CategoryName);
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
+    var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -125,16 +127,38 @@
         var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
         var isMobile = @Json.Serialize(isMobile);
         var canCheckSession = @Json.Serialize(canShowSession);
+        var isCommonCacheEnabled = @Json.Serialize(ViewBag.IsCommonCacheEnabled);
+        var commonCacheExpirationTime = @Json.Serialize(ViewBag.CommonCacheExpirationTime);        
+        var dateFormat = "";
+        var timeFormat = "";
+        var timeZone = "";
+
+        if (isCommonCacheEnabled){
+            dateFormat = "@globalAppSettings.SystemSettings.DateFormat";
+            timeFormat = @Json.Serialize(globalAppSettings.SystemSettings.TimeFormat) ? "HH:mm" : "hh:mm tt";
+            timeZone = "@globalAppSettings.SystemSettings.TimeZone";
+        }
 
         function decodeHtmlAsString(encodeString) {
             var textareaElement = document.createElement("textarea");
             textareaElement.innerHTML = encodeString;
             return textareaElement.value;
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var faviconLinkElement = document.getElementById("favicon-link");
+            var fallbackFaviconPath = '@faviconFallbackPath';
+            var faviconValidationImageObj = new Image();
+            faviconValidationImageObj.src = faviconLinkElement.href;
+
+            faviconValidationImageObj.addEventListener("error", function () {
+                faviconLinkElement.href = fallbackFaviconPath;
+            });
+        });
     </script>
 
     <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
-    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
+    <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 </head>
 <body>
@@ -142,7 +166,7 @@
         @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
         {
             <div id="report_viewer_v2_backarrow_div">
-                <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]" onclick="backToServer()"></span>
+                <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]"></span>
             </div>
         }
         <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
@@ -150,7 +174,15 @@
         </div>
         @if(canEdit){
             <div id="report_viewer_v2_toolbar">
-                <span class="su-edit-tailwind" id="report_viewer_v2_edit" onclick="editReport()"></span>
+                <span class="su-edit-tailwind" id="report_viewer_v2_edit"></span>
+            </div>
+        }
+        @if (isCommonCacheEnabled){
+            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_refresh_icon_div">
+                <span class="su-cache-refresh" id="report_viewer_v2_cache_refresh"></span>
+            </div>
+            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_reresh_time_div">
+                <span id="report_viewer_v2_show_time"></span>
             </div>
         }
     </div>
@@ -166,7 +198,7 @@
         <div class="col-lg-12 no-padding" id="PopupContainer">
             <div class="col-md-12">
                 <div class="col-xs-12 no-padding" style="float:right">
-                    <a href="javascript:void(0);" onclick="commentImageDialogClose()" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
+                    <a href="#" id="comment_image_dialog_close_link" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
                 </div>
             </div>
             <div class="dialogBody col-xs-12 no-padding">
@@ -226,7 +258,7 @@
                 <div class="col-xs-6 no-padding">
                     <span class="su su-delete Head-icon"></span>
                     <span class="PopupTitle">[[[Delete View]]]</span>
-                    <a href="javascript:void(0);" title="[[[Close]]]" class="PopupClose" onclick="onDeleteItemDialogClose()"><span class="su su-close"></span></a>
+                    <a href="#" id="delete-item-dialog-close-link" title="[[[Close]]]" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
             </div>
             <div class="dialogBody col-xs-12 no-padding delete-dialog-body">
@@ -243,10 +275,10 @@
                 <div class="col-xs-4"></div>
                 <div class="col-xs-8 no-padding rightAlign validationArea">
                     <input type="button" class="critical-action-button app-btn-danger rightAlign" value="[[[Yes]]]" id="delete_item" tabindex="1" />
-                    <input type="button" id="CancelDelete" class="secondary-button app-btn-secondary rightAlign" value="[[[No]]]" onclick="onDeleteItemDialogClose()" tabindex="2" />
+                    <input type="button" id="CancelDelete" class="secondary-button app-btn-secondary rightAlign" value="[[[No]]]" tabindex="2" />
                 </div>
                 <div class="col-xs-8 no-padding centerAlign successArea" style="display: none">
-                    <input title="" type="button" id="ok-button" class="secondary-button app-btn-secondary PopupClose pull-center" value="[[[OK]]]" onclick="onDeleteItemDialogClose()" tabindex="3" />
+                    <input title="" type="button" id="ok-button" class="secondary-button app-btn-secondary PopupClose pull-center" value="[[[OK]]]" tabindex="3" />
                 </div>
             </div>
         </div>

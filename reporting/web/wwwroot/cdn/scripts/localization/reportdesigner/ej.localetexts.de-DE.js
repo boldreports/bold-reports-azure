@@ -468,6 +468,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
         create: 'Erstellen',
         cancel: 'Stornieren',
         close: 'Schließen',
+        errorMessage: 'Geben Sie den Berichtsnamen an',
+        invalidName: 'Sonderzeichen sind nicht erlaubt'
     },
     reportAction: {
         linkTo: 'Link zu',
@@ -1093,7 +1095,8 @@ ej.ReportDesigner.Locale['de-DE'] = {
             enableLabel: 'Beschriftung aktivieren',
             labelTarget: 'Ziel',
             labelText: 'Text',
-            alignment: 'Textausrichtung',
+            textAlignment: 'Textausrichtung',
+            verticalAlignment: 'Vertikale Ausrichtung',
             alignmentTypes: {
                 leftAlignment: 'Links',
                 centerAlignment: 'Center',
@@ -1404,6 +1407,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         },
         commonCategory: {
             placementCategory: {
+                placement: 'Platzierung',
                 inside: 'Innerhalb',
                 outside: 'Draußen',
                 cross: 'Kreuz'
@@ -1721,7 +1725,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
         tags: 'Stichworte',
         newTag: 'New Tag',
         tagWaterMark: 'Such-Tag',
-        splCharacter: 'Sonderzeichen werden nicht unterstützt',
+        splCharacter: 'Sonderzeichen sind nicht erlaubt',
         addCategory: {
             title: 'Neue Kategorie',
             name: 'Name',
@@ -1875,6 +1879,19 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 alertPrompt: 'Geben Sie den Eingabeaufforderungstext an'
             }
         },
+        sshSettings: {
+            enable: 'Aktivieren Sie SSH',
+            serverName: 'SSH-Servername',
+            port: 'SSH-Port',
+            userName: 'SSH-Benutzername',
+            password: 'SSH-Passwort',
+            alertMessage: {
+                serverName: 'Geben Sie den SSH-Servernamen an',
+                port: 'Geben Sie die SSH-Portnummer an',
+                userName: 'Geben Sie den SSH-Benutzernamen an',
+                password: 'Geben Sie das SSH-Passwort an'
+            }
+        },
         sqlDatasource: {
             authenticationType: 'Authentifizierungsart',
             window: 'Fenster',
@@ -1889,7 +1906,7 @@ ej.ReportDesigner.Locale['de-DE'] = {
                 database: 'Datenbank',
                 advanceSwitch: 'Erweiterte Optionen',
                 encrypt: ' Verschlüsseln',
-                trustserver: 'Vertrauenswürdiges Serverzertifikat'
+                trustServer: 'Vertrauenswürdiges Serverzertifikat'
             },
             advanceOption: {
                 connectionString: 'Verbindungsstring',

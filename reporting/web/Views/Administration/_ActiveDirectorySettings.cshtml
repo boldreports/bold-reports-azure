@@ -289,7 +289,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-margin no-padding">
-                                    <input type="button" onclick="ActiveDirectoryFormValidate()" class="primary-button app-btn-primary pull-right test-connection" data-toggle="tooltip" data-placement="top" data-container="body" title="[[[Test Active Directory Connection]]]" value="[[[Test Connection]]]" ng-disabled="windowsAdSettingsForm.$invalid" />
+                                    <input type="button" id="test-windows-ad-connection" class="primary-button app-btn-primary pull-right test-connection" data-toggle="tooltip" data-placement="top" data-container="body" title="[[[Test Active Directory Connection]]]" value="[[[Test Connection]]]" ng-disabled="windowsAdSettingsForm.$invalid" />
                                 </div>
                                 <div class="col-md-6 error-message" style="display: none"></div>
                                 <div class="col-md-6 success-message" style="display: none"></div>
@@ -351,7 +351,7 @@
                             {
                                 <div class="col-md-12">
                                     <div class="col-md-6 no-padding no-margin">
-                                        <input type="button" id="testAzureConnection" ng-disabled="azureAdSettingsForm.$invalid" onclick="AzureADFormValidate()" class="primary-button app-btn-primary test-connection pull-right" title="[[[Test Azure Active Directory Connection]]]" value="[[[Test Connection]]]" />
+                                        <input type="button" id="testAzureConnection" ng-disabled="azureAdSettingsForm.$invalid" class="primary-button app-btn-primary test-connection pull-right" title="[[[Test Azure Active Directory Connection]]]" value="[[[Test Connection]]]" />
                                     </div>
                                     <div class="col-md-6 error-message" style="display: none"></div>
                                     <div class="col-md-6 success-message" style="display: none"></div>
