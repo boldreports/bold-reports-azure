@@ -59,6 +59,7 @@
         var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
         var viewSchedulesUrl = "@Url.Action("Schedules", "Scheduler")";
         var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
+        var copyMultipleReportIframeUrl = "@Url.Action("copymultipleitem", "items")";
         var moveIframeUrl = "@Url.Action("moveviewitem", "items")";
         var permissionIframeUrl = "@Url.Action("ItemPermissionView", "items")";
         var getdashboarddetailsUrl = "@Url.Action("getdashboarddetails", "reports")";
@@ -323,6 +324,13 @@
                             </div>
                         </div>
                         <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet">
+                            <div id="dashboard-bulk-action-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
+                                <select id="report-bulk-action" class="selectpicker no-padding" title="[[[Bulk Actions]]]">
+                                    <option value="bulk_action" data-hidden="true">[[[Bulk Actions]]]</option>
+                                    <option value="Copy to categories">[[[Copy to categories]]]</option>
+                                    <option value="Copy to tenant">[[[Copy to another tenant]]]</option>
+                                </select>
+                            </div>
                             <span class="dashboard-dropdown-label">[[[Sort]]]</span>
                             <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
                                 <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
