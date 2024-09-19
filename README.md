@@ -4,11 +4,11 @@
  
 Bold Reports On-Premise Edition can be installed in the following environments. 
 
-* [Windows](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/windows-installer/)
-* [Azure App Service](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/azure-app-service/)
-* [Linux](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-linux/)
-* [Kubernetes](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-kubernetes/)
-* [Docker](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-docker/)
+* [Windows](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/windows-installer/?utm_source=github&utm_medium=backlinks)
+* [Azure App Service](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/azure-app-service/?utm_source=github&utm_medium=backlinks)
+* [Linux](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-linux/?utm_source=github&utm_medium=backlinks)
+* [Kubernetes](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-kubernetes/?utm_source=github&utm_medium=backlinks)
+* [Docker](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/deploy-in-docker/?utm_source=github&utm_medium=backlinks)
 
 ## Deploy Bold Reports On-Premise Edition as Azure Web App using ARM Template
 
@@ -16,7 +16,7 @@ This repository holds the Azure App Service package of the Bold Reports which yo
 
 >**Note**: This repository holds Bold Reports Azure App Service package from version v1.1.0.x
 
-New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/azure-app-service/using-arm-template/).
+New Bold Reports On-Premise Edition Azure App Service Deployment can be done by following the instructions from [here](https://help.boldreports.com/enterprise-reporting/administrator-guide/installation/azure-app-service/using-arm-template/?utm_source=github&utm_medium=backlinks).
 
 ## Deploy Bold BI Enterprise Edition and Bold Reports Enterprise in Azure Web App using ARM Template
 To deploy both Bold BI and Bold Reports on a single Azure App Service, kindly use the following repository. <br/>
@@ -24,5 +24,5 @@ https://github.com/boldbi/bi_and_reports_azure-arm-template
 
 ## Reference Link
 
-* [Documentation](https://help.boldreports.com/enterprise-reporting/administrator-guide/application-startup/)
-* [Feature tour](https://www.boldreports.com/features)
+* [Documentation](https://help.boldreports.com/enterprise-reporting/administrator-guide/application-startup/?utm_source=github&utm_medium=backlinks)
+* [Feature tour](https://www.boldreports.com/features/?utm_source=github&utm_medium=backlinks)
