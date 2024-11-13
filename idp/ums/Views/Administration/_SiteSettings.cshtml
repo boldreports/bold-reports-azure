@@ -2,6 +2,7 @@
     var isEnableCopyrightInfo = (bool)ViewBag.SystemSettings.IsEnableCopyrightInfo;
     var isEnablePoweredBySyncfusion = (bool)ViewBag.SystemSettings.IsEnablePoweredBySyncfusion;
     var restartLink = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.RestartApplication);
+    var tenantTypeValue =(int)TenantType.BoldBIOnPremise;
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var isSitesPage = "true";
@@ -9,6 +10,8 @@
     var isEnablePoweredBySyncfusion = @Json.Serialize(isEnablePoweredBySyncfusion);
     var ignoreSslValidation = "@(GlobalAppSettings.SystemSettings.IgnoreSslValidation.ToString())".toLowerCase()  == "true";
     var restartLink = "@restartLink";
+    var tenantTypeValue =  @tenantTypeValue;
+    var validateIPWhitelistedUrl = "@Url.Action("IsIPWhitelisted", "TenantsManagement")";
 </script>
 <div id="site-settings-header" class="col-xs-12 header-section no-padding no-margin width-alignment">
     <div class="col-md-12 import-area admin-page-header">
@@ -38,6 +41,7 @@
 <div id="look-and-feel-container" class="admin-page-content-container col-xs-12">
     <div id="organization-block" class="admin-page-content col-xs-12 no-padding">
         <form id="look-and-feel-form" class="col-md-12 form-horizontal admin-page-body" autocomplete="off">
+            @Html.AntiForgeryToken()
             @await Html.PartialAsync("_GeneralSection")
             @await Html.PartialAsync("_DisplaySection")
             @await Html.PartialAsync("_BrandingSection")

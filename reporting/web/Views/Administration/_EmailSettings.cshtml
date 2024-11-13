@@ -79,7 +79,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group smtp-field">
                 @Html.Label("smtp-address", "[[[SMTP Server]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4" })
                 <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8">
-                    <input type="text" id="smtp-address" class="form-control mail-settings-fields" name="smtp_address" placeholder="[[[SMTP server]]]" value="@mailSettingsHost" />
+                    <input type="text" id="smtp-address" class="form-control mail-settings-fields" name="smtp_address" placeholder="[[[SMTP server]]]" value="@mailSettingsHost.TrimEnd(' ')" />
                     <span class="validation-errors"></span>
                 </div>
             </div>
@@ -93,14 +93,14 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group smtp-field">
                 @Html.Label("mail-display-name", "[[[Sender Name]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4" })
                 <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8">
-                    <input type="text" id="mail-display-name" class="form-control mail-settings-fields" name="mail_display_name" placeholder="[[[Sender name]]]" value="@mailSettingsSenderName" />
+                        <input type="text" id="mail-display-name" class="form-control mail-settings-fields" name="mail_display_name" placeholder="[[[Sender name]]]" value="@mailSettingsSenderName.TrimEnd(' ')" />
                     <span class="validation-errors"></span>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                 @Html.Label("mail-user-name", "[[[Sender Email Address]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4" })
                 <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8">
-                    <input type="text" id="mail-user-name" class="form-control mail-settings-fields" name="mail_user_name" placeholder="[[[Sender email address]]]" value="@mailSettingsAddress" />
+                        <input type="text" id="mail-user-name" class="form-control mail-settings-fields" name="mail_user_name" placeholder="[[[Sender email address]]]" value="@mailSettingsAddress.TrimEnd(' ')" />
                     <span class="validation-errors"></span>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                 <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8">
                     @if (globalAppSettings.SystemSettings.MailSettings.MailSettingsAuthType == MailSettingsAuthType.Basic)
                     {
-                        <input type="text" id="sender-user-name" class="form-control mail-settings-fields mail-credentials" name="sender_user_name" placeholder="[[[Username]]]" value="@mailSettingsUserName" />
+                            <input type="text" id="sender-user-name" class="form-control mail-settings-fields mail-credentials" name="sender_user_name" placeholder="[[[Username]]]" value="@mailSettingsUserName.TrimEnd(' ')" />
                     }
                     else
                     {

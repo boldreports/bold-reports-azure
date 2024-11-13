@@ -266,6 +266,16 @@
              <param name="sorted"></param>
              <returns></returns>
         </member>
+        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.AddSampleReportParts">
+            <summary>
+            This method is to get the sample report parts
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Server.Reports.Controllers.Items.ItemsController.AddSampleReportPart(System.String,System.String,System.String,Syncfusion.Server.Base.DataClasses.ReportPartType)">
+            <summary>
+            This method is to add the sample report part
+            </summary>
+        </member>
         <member name="M:Syncfusion.Server.Reports.Controllers.CategoryController.AddCategory(System.String,System.String)">
              <summary>
             
@@ -543,6 +553,14 @@
             <param name="selectedDataSources">List of selected folders for appropriate data sources of RDL</param>
             <param name="selectedDataSets">Selected dataset</param>
             <param name="currentUserId">Current User Id</param>
+            <returns>Status of operation</returns>
+        </member>
+        <member name="M:Syncfusion.Server.Reports.Models.ItemModel.AddSampleReportPartInReportServer(Syncfusion.Server.Base.DataClasses.ItemDetail,System.String,System.Int32,Syncfusion.Server.Base.DataClasses.ReportPartType)">
+            <summary>This method will add RSC report part which contains embed datasets and data sources</summary>
+            <param name="file">Http request elements which is used to add report part item in database</param>
+            <param name="temporaryFileName">File name of the saved file in temporary folder</param>
+            <param name="currentUserId">Current User Id</param>
+            <param name="reportPartType">Type of sample report part</param>
             <returns>Status of operation</returns>
         </member>
         <member name="M:Syncfusion.Server.Reports.Models.ScheduleManagement.DisableSchedule(System.Guid)">

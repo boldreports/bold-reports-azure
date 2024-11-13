@@ -18,10 +18,6 @@
             var createdatasourceUrl = "@Url.Action("createdatasource", "datasources")";
         var testdatasourceconnectionUrl = "@Url.Action("testdatasourceconnection", "datasources")";
 
-        $(document).ready(function () {
-            load();
-        });
-
         function load() {
             $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {

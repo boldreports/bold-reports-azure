@@ -67,10 +67,26 @@ Copy-Item -Path $clientlibraryextractpath/Npgsql.dll -Destination $destination
 }
 echo "postgresql libraries are installed"
 }
+"googlebigquery"{
+$googlebigqueryassemblies="${name}=BoldReports.Data.GoogleBigQuery;"
+Foreach ($dirname in $pluginDirectories)
+{
+$destination="$rootPath/$dirname"
+Copy-Item -Path $clientlibraryextractpath/BoldReports.Data.GoogleBigQuery.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Cloud.BigQuery.V2.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Api.Gax.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Api.Gax.Rest.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Apis.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Apis.Auth.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Apis.Bigquery.v2.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/Google.Apis.Core.dll -Destination $destination
+}
+echo "googlebigquery libraries are installed"
+}
 }
 }
 
-$clientLibraries="$mysqlassemblies$oracleassemblies$postgresqlassemblies$snowflakeassemblies"
+$clientLibraries="$mysqlassemblies$oracleassemblies$postgresqlassemblies$snowflakeassemblies$googlebigqueryassemblies"
 dotnet clientlibraryutility/ClientLibraryUtil.dll $clientLibraries $jsonfiles
 echo "client libraries are updated"
 }

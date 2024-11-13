@@ -8,6 +8,9 @@
     var isMobile = new DeviceDetection(Context).IsMobile;
     var query = ViewBag.SearchQuery;
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
+    var reportUrl = Url.Action("Reports", "Reports");
+    var downloadUrl = reportUrl.TrimEnd('/').Remove(reportUrl.LastIndexOf('/'));
+    var downloadDatasetUrl = downloadUrl + "/items/download";
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
@@ -171,7 +174,26 @@
                 <span>[[[Create Report]]]</span>
             </a>
         </li>
+        <li>
+            <a href="@Url.Action("ReportPart","Designer")?datasetId={{:Id}}" target="_blank" class="create-report-part-using-dataset" title="[[[Create report part using this Dataset]]]" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
+                <i class="su su-report-part"></i>
+                <span>[[[Create Report Part]]]</span>
+            </a>
+        </li>
         <li role="separator" class="divider"></li>
+        {{/if}}
+        {{/if}}
+
+        {{if CanDownload}}
+        {{if ~checkMobile()}}
+        {{if ItemType == "@((int)ItemType.Dataset)"}}
+        <li>
+            <a href="@downloadDatasetUrl/{{:ItemType}}/{{:Id}}/{{:Name}}" id="download-dataset">
+                <i class="su su-download"></i>
+                <span>[[[Download Dataset]]]</span>
+            </a>
+        </li>
+        {{/if}}
         {{/if}}
         {{/if}}
 

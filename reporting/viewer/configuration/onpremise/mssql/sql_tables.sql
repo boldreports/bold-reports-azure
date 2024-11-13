@@ -260,7 +260,8 @@ CREATE TABLE [BOLDRS_ScheduleDetail](
 	[IsNotifySaveAs] [bit] NOT NULL,
 	[IsOverwrite] [bit] NOT NULL,
 	[ExportFileName] [nvarchar](150) NULL,
-	[ScheduleExportInfo] [nvarchar](4000) NULL)
+	[ScheduleExportInfo] [nvarchar](4000) NULL,
+	[ScheduleBucketExportInfo] [nvarchar](4000) NULL)
 ;
 
 CREATE TABLE [BOLDRS_SubscribedUser](
@@ -1140,6 +1141,10 @@ INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId
 ;
 INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES(3,5,1)
 ;
+INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,5,1)
+;
+INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,5,1)
+;
 
 INSERT into [BOLDRS_PermissionLogType] (Name,IsActive) VALUES ( N'PermissionAdded',1)
 ;
@@ -1406,6 +1411,10 @@ INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive)
 INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'Subscription.Plan',N'Subscription.Plan',GETDATE(),1)
 ;
 INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'SiteSettings',N'SiteSettings',GETDATE(),1)
+;
+INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.ImportSampleData',N'ReportDesignerSettings.ImportSampleData',GETDATE(),1)
+;
+INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.CodeEditor',N'ReportDesignerSettings.CodeEditor',GETDATE(),1)
 ;
 
 INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (11,N'Contact',N'Contact',GETDATE(),1)

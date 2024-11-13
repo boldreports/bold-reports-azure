@@ -47,12 +47,19 @@
                 onCloseMessageBox();
                 $("#secret-code-link").css("display", "block");
                 $("#body").ejWaitingPopup("show");
+                var data = { expiryDays: parseInt($('#expiration-days').val()) };
+                if ($('#expiration-days').val() === "custom") {
+                    var datepicker = $('#custom-date').data('ejDatePicker');
+                    var selectedDate = datepicker.model.value;
+                    var today = new Date();
+                    today.setUTCHours(0, 0, 0, 0);
+                    var timeDiff = selectedDate - today;
+                    data.expiryDays = Math.round(timeDiff / (1000 * 60 * 60 * 24));
+                }
                 $.ajax({
                     type: "POST",
                     url: isGenerateAuthenticationTokenUrl,
-                    data: ({
-                        expiryDays: parseInt($('#expiration-days').val())
-                    }),
+                    data: data,
                     success: function (data) {
                         if (data) {
                             authenticationTokenChange(data);
@@ -71,7 +78,13 @@
                 $("#secret-code").removeAttr("disabled");
                 $("#secret-code-copy").removeAttr("disabled");
                 $("#secret-code").val(data)
-                $(".secret-code-notification").text(window.Server.App.LocalizationContent.NotificationMessage + " " + $('#expiration-days').val() + " " + window.Server.App.LocalizationContent.NotificationDays);
+                let customExpiryDate = $('#custom-date').val();
+                if (customExpiryDate) {
+                    $(".secret-code-notification").text(window.Server.App.LocalizationContent.NotificationMessageForCustomDate + " " + customExpiryDate);
+                }
+                if (data.expiryDays = parseInt($('#expiration-days').val())) {
+                    $(".secret-code-notification").text(window.Server.App.LocalizationContent.NotificationMessage + " " + $('#expiration-days').val() + " " + window.Server.App.LocalizationContent.NotificationDays);
+                }
                 $(".secret-code-notification").show();
             }
 
@@ -99,50 +112,75 @@
             getLinkInputObj.on("focusout", function () {
                 getLinkCopyLinkobj.removeClass("focusdiv");
             });
+      
+
+            $('#expiration-days').change(function () {
+                var dateFormat = "@globalAppSettings.SystemSettings.DateFormat";
+                if ($(this).val() === "custom") {
+                    $('.custom-date-picker').show();
+                    $("#custom-date").ejDatePicker({
+                        enableStrictMode: true,
+                        dateFormat: dateFormat,
+                        locale: dateFormat == "dd.MM.yyyy" ? "de-DE" : "en-US",
+                        minDate: new Date(),
+                        maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+                        cssClass: 'br-date-picker',
+                        buttonText: window.Server.App.LocalizationContent.Today,
+                    });
+
+                } else {
+                    $('.custom-date-picker').hide();
+                }
+            });
         })
+    
     </script>
 
 @await Html.PartialAsync("_ProfileMenu")
 
-<div id="embed-settings-container" class="col-xs-12 admin-page-container">
-    <div id="embed-settings-header" class="col-xs-12 admin-page-header">
-        <hgroup>
-            <h1 class="h2 page-title">
-                [[[PERSONAL ACCESS TOKEN]]]
-            </h1>
-        </hgroup>
-    </div>
-    <div id="embed-settings-body" class="admin-page-body">
-        <div id="get-secret-code" class="row input-field-wrapper">
-            <div class="col-xs-8 form-group expiry-dropdown">
-                @Html.Label("expiration", "[[[Expiration]]]", new { @class = "app-textbox-label col-md-4" })
-                <div class="form-input-field col-md-2">
-                    @Html.DropDownList("expiry", ViewBag.ExpirationDays as IEnumerable<SelectListItem>, new { @class = "selectpicker form-control", id = "expiration-days" })
+    <div id="embed-settings-container" class="col-xs-12 admin-page-container">
+        <div id="embed-settings-header" class="col-xs-12 admin-page-header">
+            <hgroup>
+                <h1 class="h2 page-title">
+                    [[[PERSONAL ACCESS TOKEN]]]
+                </h1>
+            </hgroup>
+        </div>
+        <div id="embed-settings-body" class="admin-page-body">
+            <div id="get-secret-code" class="row input-field-wrapper">
+                <div class="col-xs-8 form-group expiry-dropdown">
+                    @Html.Label("expiration", "[[[Expiration]]]", new { @class = "app-textbox-label col-md-4" })
+                    <div class="form-input-field col-md-2" style="width: 110px;">
+                        @Html.DropDownList("expiry", ViewBag.ExpirationDays as IEnumerable<SelectListItem>, new { @class = "selectpicker form-control", id = "expiration-days" })
+                    </div>
+                    <div class="form-input-field col-md-2 custom-date-picker" style="display:none;margin-left: 10px;">
+                        <input type="text" id="custom-date" />
+                    </div>
+
                 </div>
-            </div>
-            <div class="col-xs-8 field-container-dashboard">
-                <label class="col-md-4 app-textbox-label activation">
-                    [[[Authentication token]]]
-                </label>
-                <div class="col-md-7 secret-code-container">
-                    <div id="secret-code-link" class="col-xs-6" style="display:none">
-                        <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Authentication token]]]" autocomplete="off" disabled="disabled">
-                        <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
-                    </div>
-                    <button type="button" title="" id="generate-token" class="primary-button app-btn-primary">
-                        [[[Generate Token]]]
-                    </button>
-                    <div class="tool-tip col-xs-1">
-                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                        <div class="dropdown-menu" role="menu">[[[With this Access token, reporting controls can be securely embedded in your application. It is also used to access all the Report Server REST APIs.]]]</div>
-                    </div>
-                    <div class="col-lg-5 bg-warning secret-code-notification">
+                <div class="col-xs-8 field-container-dashboard">
+                    <label class="col-md-4 app-textbox-label activation">
+                        [[[Authentication token]]]
+                    </label>
+                    <div class="col-md-7 secret-code-container">
+                        <div id="secret-code-link" class="col-xs-6" style="display:none">
+                            <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Authentication token]]]" autocomplete="off" disabled="disabled">
+                            <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
+                        </div>
+                        <button type="button" title="" id="generate-token" class="primary-button app-btn-primary">
+                            [[[Generate Token]]]
+                        </button>
+                        <div class="tool-tip col-xs-1">
+                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                            <div class="dropdown-menu" role="menu">[[[With this Access token, reporting controls can be securely embedded in your application. It is also used to access all the Report Server REST APIs.]]]</div>
+                        </div>
+                        <div class="col-lg-5 bg-warning secret-code-notification">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 }
 

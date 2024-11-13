@@ -84,7 +84,7 @@
                                 <div class="col-xs-12 no-padding" ng-repeat="category in filteredSamples =(samples | filter:query | filter: filterByCategory )">
                                     <div class="col-xs-12 no-padding" ng-repeat="dashboard in category.Reports ">
                                         <div class="col-xs-3 sample-image">
-                                            <img ng-src="@reportServerResourceUrl/cdn/css/sample_reports/{{dashboard.ImageName | lowercase}}" />
+                                            <img ng-src="@reportServerResourceUrl/cdn/css/sample_items/{{dashboard.ImageName | lowercase}}" />
                                         </div>
                                         <div class="col-xs-9 sample-content">
                                             <div class="sample-name">{{dashboard.Name}}</div>

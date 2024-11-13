@@ -253,7 +253,8 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	IsOverwrite smallint NOT NULL DEFAULT 1,
 	IsNotifySaveAs smallint NOT NULL DEFAULT 1,
 	ExportFileName varchar(150) NULL,
-	ScheduleExportInfo varchar(4000) NULL)
+	ScheduleExportInfo varchar(4000) NULL,
+	ScheduleBucketExportInfo varchar(4000) NULL)
 ;
 
 CREATE TABLE BOLDRS_SubscribedUser(
@@ -1134,6 +1135,10 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (3,5,1)
 ;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,5,1)
+;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,5,1)
+;
 
 INSERT into BOLDRS_PermissionLogType (Name,IsActive) VALUES ( N'PermissionAdded',1)
 ;
@@ -1400,6 +1405,10 @@ INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) V
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'Subscription.Plan',N'Subscription.Plan',now() at time zone 'utc',1)
 ;
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'SiteSettings',N'SiteSettings',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.ImportSampleData',N'ReportDesignerSettings.ImportSampleData',now() at time zone 'utc',1)
+;
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.CodeEditor',N'ReportDesignerSettings.CodeEditor',now() at time zone 'utc',1)
 ;
 
 INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (11,N'Contact',N'Contact',now() at time zone 'utc',1)
