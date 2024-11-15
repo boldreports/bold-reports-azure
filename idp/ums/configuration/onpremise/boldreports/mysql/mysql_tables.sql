@@ -1211,10 +1211,7 @@ INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Perm
 ;
 INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(3,5,1)
 ;
-INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(17,5,1)
-;
-INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(18,5,1)
-;
+
 INSERT into  {database_name}.BOLDRS_PermissionLogType (Name,IsActive) VALUES ( 'PermissionAdded',1)
 ;
 INSERT into  {database_name}.BOLDRS_PermissionLogType (Name,IsActive) VALUES ( 'PermissionRemoved',1)
@@ -1483,8 +1480,6 @@ INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,Modifie
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'SiteSettings','SiteSettings',Now(),1)
 ;
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'ReportDesignerSettings.ImportSampleData','ReportDesignerSettings.ImportSampleData',Now(),1)
-;
-INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'ReportDesignerSettings.CodeEditor','ReportDesignerSettings.CodeEditor',Now(),1)
 ;
 
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (11,'Contact','Contact',Now(),1)

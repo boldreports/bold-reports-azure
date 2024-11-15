@@ -14,7 +14,6 @@
     var publicReportsDeprecateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.PublicReportsDeprecated);
     var reportSettingsPageNonce = Context.Items["ScriptNonce"];
     var showImportSampleData = Convert.ToBoolean(ViewBag.ShowImportSampleData);
-    var showCodeEditor = Convert.ToBoolean(ViewBag.IsShowCodeEditor);
 }
 
 @section styles{
@@ -134,23 +133,6 @@
                                         <div class="tool-tip col-xs-1 pull-right">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
                                             <div class="dropdown-menu" role="menu">[[[If disabled, Import Sample Data option will not be shown in Report Designer.]]]</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-8 field-container-dashboard">
-                                    <label class="col-md-4 app-textbox-label activation">
-                                        [[[Show Code Editor]]]
-                                    </label>
-                                    <div class="col-md-2 text-center switch-align">
-                                        <span class="material-switch text-left">
-                                            <input type="checkbox" id="disable-code-editor" @(showCodeEditor ? "checked" : string.Empty) />
-                                            <label for="disable-code-editor" class="label-primary"></label>
-                                        </span>
-                                        <div class="tool-tip col-xs-1 pull-right">
-                                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                                            <div class="dropdown-menu" role="menu">[[[If disabled, the code editor option will not be available in the query designer.]]]</div>
                                         </div>
                                     </div>
                                 </div>

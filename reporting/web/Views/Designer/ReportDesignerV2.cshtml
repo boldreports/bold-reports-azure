@@ -51,7 +51,6 @@
     var description = HttpUtility.HtmlDecode(ViewBag.description);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
     var isShowImportSampleData = globalAppSettings.SystemSettings.IsShowImportSampleData;
-    var isCodeEditorDisabled = !globalAppSettings.SystemSettings.IsShowCodeEditor;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -382,7 +381,6 @@
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
         var enableParameterOperator =  "@ViewBag.EnableParameterOperator".toLowerCase() === "true";
         var showImportSampleData = @Json.Serialize(isShowImportSampleData);
-        var isCodeEditorDisabled = @Json.Serialize(isCodeEditorDisabled);
 
         if(isEdit === "true"){
             isEditReport = true;

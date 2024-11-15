@@ -1132,10 +1132,6 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (3, 5, 1);
 
-INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17, 5, 1);
-
-INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18, 5, 1);
-
 INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES ('IsEmbedEnabled','false',CURRENT_TIMESTAMP at time zone 'utc',1)
 ;
 INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES ('EmbedSecret','',CURRENT_TIMESTAMP at time zone 'utc',1)
@@ -1413,7 +1409,6 @@ INSERT INTO BOLDRS_LogField (ModuleId, Field, Description, ModifiedDate, IsActiv
 
 INSERT INTO BOLDRS_LogField (ModuleId, Field, Description, ModifiedDate, IsActive) VALUES (10, 'ReportDesignerSettings.ImportSampleData', 'ReportDesignerSettings.ImportSampleData', SYSTIMESTAMP AT TIME ZONE 'UTC', 1);
 
-INSERT INTO BOLDRS_LogField (ModuleId, Field, Description, ModifiedDate, IsActive) VALUES (10, 'ReportDesignerSettings.CodeEditor', 'ReportDesignerSettings.CodeEditor', SYSTIMESTAMP AT TIME ZONE 'UTC', 1);
 -- Insert into BOLDRS_LogField for ModuleId 11
 INSERT INTO BOLDRS_LogField (ModuleId, Field, Description, ModifiedDate, IsActive) VALUES (11, 'Contact', 'Contact', SYSTIMESTAMP AT TIME ZONE 'UTC', 1);
 

@@ -28,7 +28,6 @@
     var description = HttpUtility.HtmlDecode(ViewBag.description);
     var datasetName = HttpUtility.HtmlDecode(ViewBag.datasetName);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
-    var isCodeEditorDisabled = !globalAppSettings.SystemSettings.IsShowCodeEditor;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -212,7 +211,6 @@
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         isEdit = isEdit.toLowerCase();
-        var isCodeEditorDisabled = @Json.Serialize(isCodeEditorDisabled);
 
 		if(isEdit === "true"){
 		    isEditReport = true;
