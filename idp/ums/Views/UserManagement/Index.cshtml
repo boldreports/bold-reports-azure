@@ -71,7 +71,7 @@
         <span class="grid-content" title="${Email}" data-toggle="tooltip">${Email}</span>
     </script>
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="activation-method-template">
-        ${if (ActivationMethod == null || ActivationMethod == " ")}
+        ${if (ActivationMethod == null || ActivationMethod == "" || ActivationMethod == " ")}
             @T["NA"]
         ${else}
             ${ActivationMethod}

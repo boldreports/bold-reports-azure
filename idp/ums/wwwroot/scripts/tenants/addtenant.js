@@ -301,18 +301,20 @@ $(document).ready(function () {
                 } else {
                     $(this).removeAttr("disabled");
                 }
-
-                if (isBoldReportsTenantType()) {
-                    document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                    document.getElementById("txt-server-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                    document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                    document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                }
-                else {
-                    document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
-                    document.getElementById("txt-server-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
-                    document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
-                    document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
+                
+                if( actionType.toLowerCase() != "edit") {
+                    if (isBoldReportsTenantType()) {
+                        document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
+                        document.getElementById("txt-server-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
+                        document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
+                        document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
+                    }
+                    else {
+                        document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
+                        document.getElementById("txt-server-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
+                        document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
+                        document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
+                    }
                 }
 
                 if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
@@ -554,7 +556,7 @@ $(document).ready(function () {
                 $('.auth-type').removeClass("hide").addClass("show");
             }
 
-            if (!isBoldReportsTenantType() || getDropDownValue("database-type").toLowerCase() === "mysql") {
+            if (!isBoldReportsTenantType() || getDropDownValue("database-type").toLowerCase() === "mysql" || getDropDownValue("database-type").toLowerCase() === "oracle") {
                 $('.database-schema-prefix-hide').removeClass("show").addClass("hidden");
             }
             
@@ -851,6 +853,7 @@ function fillCommonDatbaseValues(databaseInformation) {
     document.getElementById("txt-servername").ej2_instances[0].value = databaseInformation.ServerName;
     document.getElementById("txt-dbname").ej2_instances[0].value = databaseInformation.DatabaseName;
     document.getElementById("schema-name").ej2_instances[0].value = databaseInformation.SchemaName;
+    document.getElementById("tenant-table-prefix").ej2_instances[0].value = databaseInformation.Prefix;
     document.getElementById("txt-server-prefix").ej2_instances[0].value = databaseInformation.Prefix;
     document.getElementById("additional-parameter").ej2_instances[0].value = databaseInformation.AdditionalParameters;
     $("#secure-sql-connection").prop("checked", databaseInformation.SslEnabled);

@@ -1,7 +1,7 @@
 ﻿@{
     var globalAppSettings = _globalAppSettings;
     var defaultGroupName = ViewBag.GroupName;
-    var defaultGroupId = ViewBag.GroupId;
+    var defaultGroupId = ViewBag.GroupId ?? 0;
 }
 <div id="user-add-dialog-wrapper" style="display:none">
     <div class="modal" tabindex="-1" role="dialog">

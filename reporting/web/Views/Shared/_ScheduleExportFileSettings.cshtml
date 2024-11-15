@@ -3,6 +3,7 @@
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var globalAppSettings = _globalAppSettings;
     var defaultPath = ViewBag.Path;
+    var isDisableSchedule = ViewBag.DisableSchedule != null ? ViewBag.DisableSchedule : false;
 }
 <script nonce="@Model" type="text/javascript">
     var exportPathExist = "@Url.Action("CheckExportPathExist", "Administration")";
@@ -21,8 +22,8 @@
 
     $(document)
         .ready(function () {
-            $("#default-password, #custom-password").prop("disabled", "disabled");
-            $("#enable-password-protection").prop("disabled", "disabled");
+            $("#default-password, #custom-password").prop("enabled", "enabled");
+            $("#enable-password-protection").prop("enabled", "enabled");
 
             $(document).on("click", "#default-password", DisablePasswordCondition);
 
@@ -31,18 +32,38 @@
 </script>
 
 <form id="look-and-feel-form" class="col-md-12 form-horizontal no-padding" autocomplete="off">
+    <div id="disable-site-schedule-settings-body" class="branding-sub-section admin-page-body">
+        <h3 class="title col-xs-12  sub-section-heading blur-whitelable-content">[[[Schedule Control]]]</h3>
+        <div class="col-sm-12 col-xs-12">
+            <div class="col-sm-4 col-xs-4">
+                <label class="col-xs-6 app-textbox-label">
+                    [[[Disable Process Schedule]]]
+                </label>
+                <div class="col-xs-3 text-center switch-align">
+                    <span class="material-switch text-left">
+                        <input type="checkbox" id="disable-schedule"  @(isDisableSchedule ? "checked" : string.Empty) />
+                        <label for="disable-schedule" class="label-primary"></label>
+                    </span>
+                    <div class="tool-tip col-xs-1 pull-right">
+                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                        <div class="dropdown-menu" role="menu">[[[If disabled, this will stop all scheduled tasks from running for this site.]]]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="schedule-settings-body" class="general-sub-section admin-page-body schedule-password-body">
         <h3 class="title col-xs-12  sub-section-heading">[[[Mail attachment]]]</h3>
-         @*<div id="schedule-settings-body" class="admin-page-body schedule-password-body">*@
+        @*<div id="schedule-settings-body" class="admin-page-body schedule-password-body">*@
         <div class="col-lg-12 col-md-12 col-sm-12 check-box-label form-group">
-            <input type="checkbox" id="enable-compression" />
+            <input type="checkbox" id="enable-compression"/>
             <label class="app-checkbox-label normal-font notransition" for="enable-compression">[[[Enable File Compression]]]</label>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 no-padding form-group">
             @Html.Label("enable-password-protection-label", "[[[Enable Password Protection]]]", new { @class = "col-lg-4 col-md-4 col-sm-4 app-textbox-label no-margin notransition" })
             <div class="col-lg-8 col-md-8 col-sm-8 no-margin form-input-field pull-left switch-align">
                 <span class="material-switch text-left">
-                    <input type="checkbox" id="enable-password-protection" name="isPasswordProtected" />
+                    <input type="checkbox" id="enable-password-protection" name="isPasswordProtected"/>
                     <label for="enable-password-protection" class="label-primary cls-margin-top"></label>
                 </span>
             </div>
@@ -112,7 +133,7 @@
         <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[FTP / SFTP Settings]]]</h3>
         <div id="location-export-options" class="col-sm-8 col-xs-8 no-margin">
             <div id="enable-checkbox">
-                <input type="checkbox" id="location-export" />
+                <input type="checkbox" id="location-export"/>
                 <label class="app-checkbox-label normal-font notransition" for="location-export">[[[FTP / SFTP Location Export]]]</label>
             </div>
             <form class="col-sm-12 col-xs-12 no-padding" id="ftp-form">
@@ -123,12 +144,12 @@
                             <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
                             <div class="dropdown-menu" role="menu" style="padding:5px; width: 420px !important;">[[[If using a custom FTP/SFTP port, include it in the host like this: ftp://domain:123 or sftp://domain:123.]]]</div>
                         </div>
-                        <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
+                        <input type="text" class="form-control ftp-host-name" id="ftp-settings-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled"/>
                         <div id="hostname-validation" style="display: none"></div>
                     </div>
                     <div class="col-sm-4 col-xs-4">
                         <label class="path-label">[[[Username]]]</label>
-                        <input type="text" class="form-control ftp-user-name" id="ftp-settings-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
+                        <input type="text" class="form-control ftp-user-name" id="ftp-settings-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled"/>
                         <div id="username-validation" style="display: none"></div>
                     </div>
                     <div class="col-sm-4 col-xs-4">
@@ -146,7 +167,7 @@
         <h3 class="title col-xs-12 sub-section-heading blur-whitelable-content">[[[S3 Bucket Settings]]]</h3>
         <div id="s3-location-export-options" class="col-sm-12 col-xs-8 no-margin">
             <div id="s3-enable-checkbox">
-                <input type="checkbox" id="s3-location-export" />
+                <input type="checkbox" id="s3-location-export"/>
                 <label class="app-checkbox-label normal-font notransition" for="s3-location-export">[[[S3 Location Export]]]</label>
             </div>
             <form class="col-sm-12 col-xs-12 no-padding" id="s3bucket-form">
