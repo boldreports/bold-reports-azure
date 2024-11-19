@@ -30,6 +30,15 @@
             <remarks></remarks>
             <returns>The response is sent as ApiResponse Object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.V4.ItemsController.GetDraftReport">
+            <summary>
+            Returns list of draft Reports from the server
+            </summary>
+            <remarks>
+            Server retrieves the draft Reports for the current user.
+            </remarks>
+            <returns>The response is sent as ApiItemDetail object</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.V4.UsersController.AddUserV4Json(Syncfusion.Server.Base.DataClasses.ApiUserAdd)">
             <summary>
             Adds a user to the server.
@@ -466,6 +475,14 @@
             <param name="apiScheduleRequest">Details about the schedule passed will be added to the server.</param>
             <returns>The response is sent as a ApiScheduleResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.AddScheduleV4(Syncfusion.Server.Base.DataClasses.ApiScheduleRequestV4)">
+            <summary>
+            Add Schedule
+            </summary>
+            <remarks>Users who have create access for schedule can add new schedule to the server by providing respective details in the request body.</remarks>
+            <param name="apiScheduleRequest">Details about the schedule passed will be added to the server.</param>
+            <returns>The response is sent as a ApiScheduleResponse object</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.UpdateSchedule(System.Guid,Syncfusion.Server.Base.DataClasses.ApiUpdateScheduleRequest)">
             <summary>
             Update Schedule
@@ -482,6 +499,15 @@
             <param name="scheduleName"></param>
             <param name="apiUpdateScheduleRequestV3"></param>
             <returns></returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.UpdateScheduleV4(System.Guid,Syncfusion.Server.Base.DataClasses.ApiUpdateScheduleRequestV4)">
+            <summary>
+            Update Schedule
+            </summary>
+            <remarks>Users who have write access for schedule can update an existing schedule to the server by providing details of the respective schedule in the request body.</remarks>
+            <param name="scheduleid">Schedule ID.</param>
+            <param name="apiUpdateScheduleRequestV4">Details about the schedule passed will be updated to the server.</param>
+            <returns>The response is sent as a ApiScheduleResponse object</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.GetScheduleItems">
             <summary>

@@ -239,6 +239,7 @@ CREATE TABLE [BOLDTC_User] (
 	ExternalProviderId nvarchar(512),
 	DirectoryTypeId int NOT NULL,
 	IsActivated bit NOT NULL,
+    ActivationMethod nvarchar(20),
 	IsActive bit NOT NULL,
 	IsDeleted bit NOT NULL,
 	Status int NULL,
@@ -478,6 +479,7 @@ CREATE TABLE [BOLDTC_TenantInfo] (
 	IsMaster bit NOT NULL,
 	IsolationCode nvarchar(4000),
 	IsTenantIsolationCodeEnabled bit NOT NULL DEFAULT '0',
+    ResourceLimitationSettings nvarchar(max),
 	UseCustomBranding bit NOT NULL,
 	IsNewImDbDatabase bit NOT NULL,
 	IsNewDatabase bit NOT NULL,
@@ -971,6 +973,30 @@ CREATE TABLE [BOLDTC_UserLog] (
   ) WITH (IGNORE_DUP_KEY = OFF)
 )
 ;
+
+CREATE TABLE [BOLDTC_ActivityLog]
+(
+	Id int IDENTITY(1,1) NOT NULL,
+	EventCategory nvarchar(100) NOT NULL,
+	EventType nvarchar(100) NOT NULL,
+	EventDate datetime NOT NULL,
+	InitiatedBy nvarchar(255) NULL,
+	TargetUser nvarchar(255) NULL,
+	IpAddress nvarchar(100) NOT NULL,
+    AppSource nvarchar(255) NULL,
+	AppType nvarchar(255) NULL,
+	EventLog nvarchar(max) NULL,
+	ClientId nvarchar(100) NULL,
+	UserAgent nvarchar(255) NULL,
+	IsActive bit NOT NULL,
+	CanDelete bit NOT NULL,
+    CONSTRAINT [PK_BOLDTC_ActivityLog] PRIMARY KEY CLUSTERED
+    (
+    [Id] ASC
+    ) WITH (IGNORE_DUP_KEY = OFF)
+)
+;
+
 
 CREATE TABLE [BOLDTC_AzureBlob] (
 	Id int IDENTITY(1,1) NOT NULL,

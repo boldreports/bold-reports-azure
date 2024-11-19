@@ -70,84 +70,137 @@
                 @Html.Label("enable-send-mail", "[[[Email attachment]]]", new { @class = "clspadleft app-checkbox-label normal-font sendmail-label" })
             </div>
         </div>
-        
-        @if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
-        {
-            <div class="col-sm-12 col-xs-12 enable-save-block">
-                <div id="enable-save-as-file" class="col-sm-2 col-xs-2 no-padding no-margin">
-                    @Html.CheckBox("save-as-file", false, new { @class = "material-checkbox  enable-savefile-checkbox" })
-                    @Html.Label("save-as-file", "[[[Save as file]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
-                </div>
+        <div class="col-sm-12 col-xs-12 enable-save-block">
+            <div id="enable-save-as-file" class="col-sm-2 col-xs-2 no-padding no-margin">
+                @Html.CheckBox("save-as-file", false, new { @class = "material-checkbox  enable-savefile-checkbox" })
+                @Html.Label("save-as-file", "[[[Save as file]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
             </div>
-            <div class="col-sm-12 col-xs-12 save-as-file-type" style="display: none">
-                <div class="col-sm-12 col-xs-12">
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center"><label class="path-label">[[[Export path]]]</label></div>
-                    <div class="col-sm-4 col-xs-4"><input type="text" class="form-control" id="export-path" value="@path" dataType="string"></div>
-                    <div class="export-tag col-sm-2 col-xs-2 label-align-center">
-                        <span class="dropdown-toggle cursor-type" id="export-path-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                        <div class="col-xs-2 dropdown-menu" id="exportpath-help-message" role="menu">
-                            [[[Default export path will be]]] @path. [[[You can also store it in any other local server folder.]]]
+        </div>
+        <div class="col-sm-12 col-xs-12 save-as-file-type" style="display: none">
+            @if (ServerAppConfig.IsSelfHosted && !isAzureApplication)
+            {
+                <div id="saveas-export-checkbox" class="col-sm-12 col-xs-12">
+                    <div>
+                        <input type="radio" id="saveas-location-export" class="css-radio" value="saveas-location-export" name="location-export" checked="checked"/>
+                        <label for="saveas-location-export" class="pointer normal-font notransition">Local Export</label>
+                    </div>
+                </div>
+                <div id="local-export-div">
+                    <div class="col-sm-12 col-xs-12 save-as-file-type" style="display: none">
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center"><label class="path-label">[[[Export path]]]</label></div>
+                            <div class="col-sm-4 col-xs-4"><input type="text" class="form-control" id="export-path" value="@path" dataType="string"></div>
+                            <div class="export-tag col-sm-2 col-xs-2 label-align-center">
+                                <span class="dropdown-toggle cursor-type" id="export-path-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <div class="col-xs-2 dropdown-menu" id="exportpath-help-message" role="menu">
+                                    [[[Default export path will be]]] @path. [[[You can also store it in any other local server folder.]]]
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center directory-check" style="display: none; margin-left: -110px; margin-top:15px"></div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center"></div>
+                            <div class="col-sm-4 col-xs-4 no-margin">
+                                @Html.CheckBox("overwrite-file", false, new { @class = "material-checkbox overwrite-checkbox" })
+                                @Html.Label("overwrite-file", "[[[Overwrite the existing file]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center"></div>
+                            <div class="col-sm-4 col-xs-4 no-margin">
+                                @Html.CheckBox("notify-users", false, new { @class = "material-checkbox notify-users-checkbox" })
+                                @Html.Label("notify-users", "[[[Notify recipients]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center"><label class="maxreport-label">[[[Max reports count]]]</label></div>
+                            <div class="col-sm-4 col-xs-4"><input type="text" class="form-control" id="max-report-count" dataType="int" maxlength="2"></div>
+                            <div class="reportcount-tag col-sm-2 col-xs-2 label-align-center">
+                                <span class="dropdown-toggle cursor-type" id="report-count-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <div class="col-xs-2 dropdown-menu" id="reportcount-help-message" role="menu">
+                                    [[[When the export path reports count exceeds the max report's count, the older reports got deleted.]]]
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-3 no-padding label-align-center" id="report-count-validation" style="visibility: hidden;margin-left: -110px;margin-top:15px">[[[Please enter a valid report count]]]</div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center directory-check" style="display: none; margin-left: -110px; margin-top:15px"></div>
                 </div>
-                <div class="col-sm-12 col-xs-12">
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center"></div>
-                    <div class="col-sm-4 col-xs-4 no-margin">
-                        @Html.CheckBox("overwrite-file", false, new { @class = "material-checkbox overwrite-checkbox" })
-                        @Html.Label("overwrite-file", "[[[Overwrite the existing file]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
-                    </div>
-                </div>
-                <div class="col-sm-12 col-xs-12">
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center"></div>
-                    <div class="col-sm-4 col-xs-4 no-margin">
-                        @Html.CheckBox("notify-users", false, new { @class = "material-checkbox notify-users-checkbox" })
-                        @Html.Label("notify-users", "[[[Notify recipients]]]", new { @class = "clspadleft app-checkbox-label normal-font file-label" })
-                    </div>
-                </div>
-                <div class="col-sm-12 col-xs-12">
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center"><label class="maxreport-label">[[[Max reports count]]]</label></div>
-                    <div class="col-sm-4 col-xs-4"><input type="text" class="form-control" id="max-report-count" dataType="int" maxlength="2"></div>
-                    <div class="reportcount-tag col-sm-2 col-xs-2 label-align-center">
-                        <span class="dropdown-toggle cursor-type" id="report-count-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                        <div class="col-xs-2 dropdown-menu" id="reportcount-help-message" role="menu">
-                            [[[When the export path reports count exceeds the max report's count, the older reports got deleted.]]]
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-xs-3 no-padding label-align-center" id="report-count-validation" style="visibility: hidden;margin-left: -110px;margin-top:15px">[[[Please enter a valid report count]]]</div>
+            }
+
+            <div id="location-export-checkbox" class="col-sm-12 col-xs-12">
+                <div>
+                    <input type="radio" id="ftp-location-export" class="css-radio" value="ftp-location-export" name="location-export"/>
+                    <label for="ftp-location-export" class="pointer normal-font notransition">FTP / SFTP Location Export</label>
                 </div>
             </div>
-        }
-        <div id="location-export-checkbox" class="col-sm-12 col-xs-12">
-            @Html.CheckBox("ftp-location-export", false, new { @class = "material-checkbox overwrite-checkbox" })
-            @Html.Label("ftp-location-export", "[[[FTP / SFTP Location Export]]]")
+
+            <div id="ftp-export-div" style="display: none;">
+                <form class="col-sm-12 col-xs-12" id="ftp-form">
+                    <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label" style="float:left">[[[Host]]]</label>
+                            <div class="tool-tip col-xs-1" style="padding-left:1.2%;top:1px">
+                                <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <div class="dropdown-menu" role="menu" style="padding:5px">[[[ If using a custom FTP/SFTP port, include it with the host like this: ftp://domain:123 or sftp://domain:123. ]]]</div>
+                            </div>
+                            <input type="text" class="form-control" id="ftp-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled"/>
+                            <div id="ftp-hostname-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label">[[[Username]]]</label>
+                            <input type="text" class="form-control" id="ftp-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled"/>
+                            <div id="ftp-username-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label">[[[Password]]]</label>
+                            <input type="password" class="form-control password-field" id="ftp-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
+                            <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
+                            <div id="ftp-password-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6" id="ftp-validation" style="display: none"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="s3-export-checkbox" class="col-sm-12 col-xs-12">
+                <div>
+                    <input type="radio" id="s3bucket-location-export" class="css-radio" value="s3bucket-location-export" name="location-export"/>
+                    <label for="s3bucket-location-export" class="pointer normal-font notransition">S3 Bucket Location Export</label>
+                </div>
+            </div>
+
+            <div id="s3bucket-export-div" style="display: none;">
+                <form class="col-sm-12 col-xs-12" id="s3bucket-form">
+                    <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label" style="float:left">[[[Access Key]]]</label>
+                            <div class="tool-tip col-xs-1" style="padding-left:1.2%;top:1px"></div>
+                            <input type="text" class="form-control" id="s3-access-key" placeholder="Access Key" name="AccessKey" autocomplete="off" disabled="disabled"/>
+                            <div id="s3-accesskey-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label">[[[Secret Key]]]</label>
+                            <input type="password" class="form-control password-field" id="s3-secretkey" name="s3-secretkey" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
+                            <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
+                            <div id="s3-secretkey-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label">[[[Bucket Name]]]</label>
+                            <input type="text" class="form-control" id="s3-bucket-name" placeholder="[[[Bucket Name]]]" name="s3bucket-name" autocomplete="off" disabled="disabled"/>
+                            <div id="s3-bucketname-validation" style="display: none"></div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <label class="path-label">[[[Region]]]</label>
+                            <div class="dropup aws-s3-region-drop-down">
+                                @Html.DropDownList("region", ViewBag.AwsRegion as IEnumerable<SelectListItem>, new { id = "s3-region", @class = "selectpicker form-control", data_none_results_text = "[[[No results match]]]", data_size = "5", data_live_search = "true", data_live_search_placeholder = "Search", disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-sm-12 col-xs-12" id="s3-bucket-validation" style="display: none"></div>
+                </form>
+            </div>
         </div>
         <div class="col-sm-6 col-xs-6" id="checkbox-validation" style="visibility: hidden">[[[Please select at least one option to schedule a report ]]]</div>
-        <form class="col-sm-12 col-xs-12" id="ftp-form">
-            <div class="col-sm-12 col-xs-12 no-padding ftp-form-container">
-                <div class="col-sm-4 col-xs-4">
-                    <label class="path-label" style="float:left">[[[Host]]]</label>
-                    <div class="tool-tip col-xs-1" style="padding-left:1.2%;top:1px">
-                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                        <div class="dropdown-menu" role="menu" style="padding:5px; width: 420px !important;">[[[If using a custom FTP/SFTP port, include it in the host like this: ftp://domain:123 or sftp://domain:123.]]]</div>
-                    </div>
-                    <input type="text" class="form-control" id="ftp-host-name" placeholder="Host" name="host-name" autocomplete="off" disabled="disabled" />
-                    <div id="ftp-hostname-validation" style="display: none"></div>
-                </div>
-                <div class="col-sm-4 col-xs-4">
-                    <label class="path-label">[[[Username]]]</label>
-                    <input type="text" class="form-control" id="ftp-user-name" placeholder="[[[Username]]]" name="user-name" autocomplete="off" disabled="disabled" />
-                    <div id="ftp-username-validation" style="display: none"></div>
-                </div>
-                <div class="col-sm-4 col-xs-4">
-                    <label class="path-label">[[[Password]]]</label>
-                    <input type="password" class="form-control password-field" id="ftp-password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" disabled="disabled">
-                    <div class="su su-eye show-hide-password ftp-password-icon" style="position: absolute; right: 22px; top:33px; cursor:pointer"></div>
-                    <div id="ftp-password-validation" style="display: none"></div>
-                </div>
-                <div class="col-sm-6 col-xs-6" id="ftp-validation" style="display: none"></div>
-            </div>
-        </form>
         
         <div class="col-sm-12 col-xs-12 send-mail-block">
             <div class="col-sm-12 col-xs-12 send-mail-align">
@@ -204,7 +257,8 @@
            var getActiveandInactiveUserUrl = "@Url.Action("getallactivegroupsandusers", "accounts")";
            var updateScheduleUrl = "@Url.Action("UpdateSchedule", "scheduler")";
            var addScheduleUrl = "@Url.Action("AddSchedule", "scheduler")";
-           var validateFTPCredentials = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+           var validateFTPCredentialsUrl = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+           var validateS3BucketCredentialsUrl = "@Url.Action("ValidateS3Credentials", "Scheduler")";
            var isAzureApplication = @Json.Serialize(isAzureApplication);
            var isSelfHosted = @Json.Serialize(isSelfHosted);
 </script>

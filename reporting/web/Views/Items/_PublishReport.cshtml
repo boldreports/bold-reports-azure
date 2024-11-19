@@ -48,17 +48,22 @@
                 <div id="publish-plugin-validation" class="validation-message text"></div>
                 <label>[[[Report name]]]</label>
                 <input id="publish-report-name" class="form-control" maxlength="253" ng-model="PublishedItems.Name" disabled>
+                <div id="use-source-name-checkbox">
+                    <input type="checkbox" id="use-source-name" class="material-checkbox" />
+                    <input name="use-source-name" type="hidden" value="false">
+                    <label for="use-source-name" data-toggle="tooltip" data-placement="bottom" data-container="#use-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
+                </div>
                 <label>[[[Report description]]]</label>
                 <textarea id="publish-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" ng-model="PublishedItems.Description" maxlength="1024" rows="3"> </textarea>
-                <div id="publish-report-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div id="publish-report-checkbox">
                     @Html.CheckBox("publish-report-edit", new { @class = "material-checkbox" })
                     @Html.Label("publish-report-edit", "[[[Lock report editing in published site.]]]", new { @class = "toggle-space" })
                 </div>
-                <div id="publish-datasource-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div id="publish-datasource-checkbox">
                     @Html.CheckBox("publish-datasource-edit", new { @class = "material-checkbox" })
                     @Html.Label("publish-datasource-edit", "[[[Lock data source editing in published site.]]]", new { @class = "toggle-space" })
                 </div>
-                <div id="publish-dataset-checkbox" ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div id="publish-dataset-checkbox">
                     @Html.CheckBox("publish-dataset-edit", new { @class = "material-checkbox" })
                     @Html.Label("publish-dataset-edit", "[[[Lock dataset editing in published site.]]]", new { @class = "toggle-space" })
                 </div>
@@ -94,9 +99,14 @@
                 <div id="advanced-plugin-validation" class="validation-message text"></div>
                 <label>[[[Report name]]]</label>
                 <input ng-model="p.PublishItem.Name" id="advanced-report-name" class="form-control" maxlength="253" disabled>
+                <div id="advanced-source-name-checkbox">
+                    <input type="checkbox" id="advanced-source-name" class="material-checkbox" ng-model="p.UseSourceItemName" />
+                    <input name="advanced-source-name" type="hidden" value="false" ng-model="p.UseSourceItemName">
+                    <label for="advanced-source-name" data-toggle="tooltip" data-placement="bottom" data-container="#advanced-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
+                </div>
                 <label>[[[Report description]]]</label>
                 <textarea ng-model="p.PublishItem.Description" id="advanced-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" maxlength="1024"></textarea>
-                <div ng-if="publishType == '@PublishType.Internal.ToString()'">
+                <div>
                     <div id="advanced-report-checkbox">
                         <input type="checkbox" id="advanced-report-edit" class="material-checkbox" ng-model="p.PublishItem.IsLocked" />
                         <input name="advanced-report-edit" type="hidden" value="false" ng-model="p.PublishItem.IsLocked">
@@ -121,12 +131,12 @@
                 <br />
                 <p class="site-content">[[[Allows you to publish the report to the sites created in the same server.]]]</p>
             </div>
-            @*<div class="site-content-container">
+            <div class="site-content-container">
                 <input type="radio" name="publish-site" class="css-radio" id="external-site" ng-click="selectPublishType('@PublishType.External')" />
                 <label for="external-site" class="pull-left app-radio-label normal-font">[[[External Site]]]</label>
                 <br />
                 <p class="site-content">[[[Allows you to publish the report to the sites created in other servers.]]]</p>
-            </div>*@
+            </div>
         </div>
     </div>
 </body>

@@ -18,6 +18,10 @@
 
 @if (ViewBag.IsViewLoadedInIframe != null && ViewBag.IsViewLoadedInIframe == true)
 {
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
+
     <script nonce="@Context.Items["ScriptNonce"]">
         var isViewerV2Enabled = true;
         var viewReportClick = false;
@@ -30,10 +34,8 @@
         var embedConfig = parent.embedConfig;
         var isPublic = parent.isPublic;
         var itemViewShareIframeUrl = parent.itemViewShareIframeUrl;
+        var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
     </script>
-
-    var globalAppSettings = _globalAppSettings;
-    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />

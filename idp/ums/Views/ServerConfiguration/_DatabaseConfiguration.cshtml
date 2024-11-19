@@ -35,6 +35,7 @@
         </div>
 
         <form id="db-content-holder" class="col-md-12 no-padding display-none content-display text-wrap show-sql-content" autocomplete="off">
+            @Html.AntiForgeryToken()
             <div class="txt-holder center-align">
                 <input type="text" id="txt-servername" name="servername" placeholder="@T["Server name"]">
                 <span class="startup-validation validation-txt-errors"></span>
@@ -69,9 +70,8 @@
             </div>
             <div class="txt-holder center-align maintenancedb hidden">
                 <input type="text" id="maintenance-db" name="maintenancedatabase" class="" placeholder="@T["Maintenance Database"]" />
-
-                <div class="info-content txt-box-info">@T["The maintenance DB is a default database for users and applications to connect to. On PostgreSQL 8.1 and above, the maintenance DB is normally called ‘postgres’, and on earlier versions, ‘template1’."]</div>
                 <span class="startup-validation validation-txt-errors"></span>
+                <div class="info-content txt-box-info">@T["The maintenance DB is a default database for users and applications to connect to. On PostgreSQL 8.1 and above, the maintenance DB is normally called ‘postgres’, and on earlier versions, ‘template1’."]</div>
             </div>
             <div class="txt-holder center-align windows-disabled">
                 <input type="text" id="txt-login" name="username" class="" placeholder="@T["Username"]" />

@@ -19,10 +19,6 @@
         var isDatasetExistUrl = "@Url.Action("IsDatasetExist", "Datasets")";
         var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "DataSets")";
 
-        $(document).ready(function () {
-            load();
-        });
-
         function load() {
             $('[data-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {

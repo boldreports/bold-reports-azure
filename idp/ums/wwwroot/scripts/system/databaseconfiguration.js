@@ -43,6 +43,10 @@
         }
     }
 
+    $.validator.addMethod("isWhiteSpace", function (value, element) {
+        return !/^\s/.test(value);
+    }, window.Server.App.LocalizationContent.AvoidTrialingWhiteSpace);
+
     $("#db-content-holder").validate({
         errorElement: "span",
         onkeyup: function (element, event) {
@@ -60,6 +64,9 @@
                 isRequired: true
             },
             portnumber: {
+                isRequired: true
+            },
+            maintenancedatabase: {
                 isRequired: true
             },
             username: {
@@ -117,6 +124,9 @@
             },
             schemaName: {
                 isWhitespaceOrNumeric: true
+            },
+            additionalparameter: {
+                isWhiteSpace: true
             }
         },
         highlight: function (element) {
@@ -145,6 +155,9 @@
             },
             portnumber: {
                 isRequired: window.Server.App.LocalizationContent.PortValidator
+            },
+            maintenancedatabase: {
+                isRequired: window.Server.App.LocalizationContent.MaintenanceDbValidator
             },
             username: {
                 required: window.Server.App.LocalizationContent.UserNameValidator
@@ -875,6 +888,7 @@ function onDatbaseChange(args) {
             $("#move-to-next,.sqlce-content").removeClass("show").addClass("hide");
             $(".content-display").hide();
             $(".show-sql-content").slideDown("slow");
+            $("#input-schema").hide();
             var sslDiv = document.getElementById("ssl-block");
             var databaseSelectionDiv = document.getElementById('database-new-or-existing');
             $("#existing-db").prop("checked", true).trigger("change");
@@ -965,7 +979,7 @@ function onDatbaseChange(args) {
                     $('.advance-schema-prefix-hide').removeClass("show").addClass("hidden");
                     $('.simple-exist-schema-prefix-hide').removeClass("hidden").addClass("show");
             }
-
+            $(".database-schema-prefix-hide").removeClass("show").addClass("hidden");
             var link = document.getElementById("advanced-tab");
             
             link.classList.add("disable-adv");

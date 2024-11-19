@@ -6,6 +6,7 @@
     var addWidgetUrl = "@Url.Action("addwidget", "widgets")";
     var createDatasourceUrl = "@Url.Action("CreateDatasource", "DataSources")";
     var addSampleItemsUrl = "@Url.Action("AddSampleItems", "Items")";
+    var addSampleReportPartsUrl = "@Url.Action("AddSampleReportParts", "Items")";
     var schedulerIframeUrl = "@Url.Action("GetSchedulerDialog", "scheduler")";
 </script>
 <div id="datasource-popup" style="display:none">
@@ -34,4 +35,8 @@
     <div id="create-presentation-div">
         @*@{Html.RenderPartial("~/Views/Slideshow/_CreateSlideshow.cshtml");}*@
     </div>
+</div>
+
+<div id="sample-report-part-popup" class="no-padding" style="display:none">
+    <iframe id="sample-report-part-iframe" class="sample-reportpart-Iframe"></iframe>
 </div>

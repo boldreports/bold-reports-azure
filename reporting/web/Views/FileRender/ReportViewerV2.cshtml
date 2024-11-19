@@ -30,6 +30,7 @@
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var categoryName = HttpUtility.HtmlDecode(ViewBag.itemDetail.CategoryName);
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
@@ -127,6 +128,7 @@
         var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
         var isMobile = @Json.Serialize(isMobile);
         var canCheckSession = @Json.Serialize(canShowSession);
+        var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
         var isCommonCacheEnabled = @Json.Serialize(ViewBag.IsCommonCacheEnabled);
         var commonCacheExpirationTime = @Json.Serialize(ViewBag.CommonCacheExpirationTime);        
         var dateFormat = "";

@@ -177,13 +177,13 @@
                                                                     if (Model.FailureOccurrence == Model.FailureLimit)
                                                                     {
                                                                         <span>
-                                                                            Your scheduled Report has been disabled.
+                                                                            Your scheduled report has been disabled.
                                                                         </span>
                                                                     }
                                                                     else
                                                                     {
                                                                         <span>
-                                                                            Your scheduled Report has failed.
+                                                                            Your scheduled report failed.
                                                                         </span>
                                                                     }
                                                                 }
@@ -283,15 +283,13 @@
                                                                             if (Model.FailureOccurrence == Model.FailureLimit)
                                                                             {
                                                                                 <span>
-                                                                                    The application deactivates Report export schedule <b>@Model.ScheduleName</b> due to @Model.FailureLimit consecutive failures.
-                                                                                    You can enable the schedule once error has been resolved.
+                                                                                    The scheduled report <b>@Model.ScheduleName</b> has been disabled due to @Model.FailureLimit consecutive failures. You can re-enable the schedule once the error has been resolved.
                                                                                 </span>
                                                                             }
                                                                             else
                                                                             {
                                                                                 <span>
-                                                                                    Your Report export schedule
-                                                                                    <b>@Model.ScheduleName</b> has failed due to following error.                                                                                
+                                                                                    Your scheduled report <b>@Model.ScheduleName</b> failed due to the following error:
                                                                                 </span>
                                                                             }
                                                                         }

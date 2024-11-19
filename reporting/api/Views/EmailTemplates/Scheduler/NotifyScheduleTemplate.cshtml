@@ -230,41 +230,11 @@
                                                             <tr>
                                                                 <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;'>
                                                                     <span>
-                                                                        Please find the report that you had requested in the below directory path
+                                                                        The schedule @Model.ScheduleName exported <a href='@Model.BaseUrl/reports/@Model.ItemId/@Model.CategoryName/@Model.ReportName' style='color: #4a90e2;font-size: 14px;sans-serif;text-decoration: none;'>@Model.ReportName</a> to the following directory path:
                                                                     </span>
 																	<span>
-																	@Model.ExportPath
+																	    @Model.ExportPath.
 																	</span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
-                                        <tbody>
-                                            <tr>
-                                                <td style='font-size: 1px;' height='20'>&nbsp;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <table style='text-align:left;width:100%;' cellpadding='0' cellspacing='0'>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;'>
-                                                                    <span>
-                                                                        Schedule-
-                                                                        @Model.ScheduleName  has exported the report
-                                                                        <a href='@Model.BaseUrl/reports/@Model.ItemId/@Model.CategoryName/@Model.ReportName' style='color: #4a90e2;font-size: 14px;sans-serif;text-decoration: none;'>@Model.ReportName</a>
-                                                                    </span>
                                                                 </td>
                                                             </tr>
                                                         </tbody>

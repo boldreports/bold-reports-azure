@@ -38,6 +38,8 @@
     var reportPartName = HttpUtility.HtmlDecode(ViewBag.ReportPartName);
     var description = HttpUtility.HtmlDecode(ViewBag.description);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var categoryName = HttpUtility.HtmlDecode(ViewBag.categoryName);
+    var isShowImportSampleData = globalAppSettings.SystemSettings.IsShowImportSampleData;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -343,6 +345,9 @@
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
+        var enableParameterOperator =  "@ViewBag.EnableParameterOperator".toLowerCase() === "true";
+        var categoryName = decodeHtmlAsString("@categoryName");
+        var showImportSampleData = @Json.Serialize(isShowImportSampleData);
 
         if (isEdit === "true") {
             isEditReport = true;
@@ -451,7 +456,8 @@
                     contactMail: 'support@boldreports.com'
                 },
                 enableImageBlobing: true,
-                enableReportPart: false
+                enableReportPart: false,
+                enableParameterOperator: enableParameterOperator
             };
 
             var designer = new boldReportDesigner($('#' + controlId), designerModel);
@@ -509,7 +515,7 @@
         function controlInitialized(args) {
             var designer = $('#' + controlId).data('boldReportDesigner');
             $('#' + controlId + '_designer_header_reportPartName').val(reportPartName);
-            designer.showImportData = true;
+            designer.showImportData = showImportSampleData;
             designer.isOnPremiseMode = @isSelfHosted.ToString().ToLower();
             designer.isReportPart = true;
             var partInfo = {
@@ -526,7 +532,7 @@
                 if (hasDataSet) {
                     var newTitle = reportPartName + ' - Design Report Part - ' + pageTitle;
                     document.title = newTitle;
-                    history.pushState('', newTitle, window.location.href.split("report-part")[0] + "report-part" + '/' + reportPartId + '/' + reportPartName);
+                    history.pushState('', newTitle, window.location.href.split("report-part")[0] + "report-part" + '/' + reportPartId + '/' + categoryName + '/' + reportPartName);
                     designer.newServerReport(reportPartName, datasetName);
                 } else if (hasReportPartName) {
                     designer.newServerReport(reportPartName);

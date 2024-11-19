@@ -183,6 +183,7 @@ CREATE TABLE BOLDTC_User (
 	ExternalProviderId varchar(512),
 	DirectoryTypeId int NOT NULL,
 	IsActivated smallint NOT NULL,
+    ActivationMethod varchar(20),
 	IsActive smallint NOT NULL,
 	IsDeleted smallint NOT NULL,
 	Status int NULL,
@@ -363,6 +364,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	IsMaster smallint NOT NULL,
 	IsolationCode varchar(4000),
 	IsTenantIsolationCodeEnabled smallint NOT NULL DEFAULT '0',
+    ResourceLimitationSettings varchar(4000),
 	UseCustomBranding smallint NOT NULL,
 	IsNewImDbDatabase smallint NOT NULL,
 	IsNewDatabase smallint NOT NULL,
@@ -833,6 +835,26 @@ CREATE TABLE BOLDTC_EmailActivityLog(
 	IsActive smallint NOT NULL,
 	CONSTRAINT PK_BOLDTC_EMAILACTIVITYLOG PRIMARY KEY (Id) 
 	)
+;
+
+CREATE TABLE BOLDTC_ActivityLog
+(
+    Id SERIAL,
+    EventCategory varchar(100) NOT NULL,
+    EventType varchar(100) NOT NULL,
+    EventDate timestamp NOT NULL,
+    InitiatedBy uuid NULL,
+    TargetUser uuid NULL,
+    IpAddress varchar(100) NOT NULL,
+    AppSource varchar(255) NULL,
+    AppType varchar(255) NULL,
+    EventLog text NULL,
+    ClientId varchar(100) NULL,
+    UserAgent varchar(255) NULL,
+    IsActive smallint NOT NULL,
+    CanDelete smallint NOT NULL,
+    CONSTRAINT PK_BOLDTC_ACTIVITYLOG PRIMARY KEY (Id)
+)
 ;
 
 CREATE TABLE BOLDTC_QueryMetrics ( 

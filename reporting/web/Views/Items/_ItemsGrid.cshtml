@@ -172,6 +172,13 @@
             </a>
         </li>
         <li role="separator" class="divider"></li>
+        <li>
+            <a href="@Url.Action("ReportPart","Designer")?datasetId={{:Id}}" target="_blank" class="create-report-part-using-dataset" title="[[[Create report part using this Dataset]]]" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
+                <i class="su su-report-part"></i>
+                <span>[[[Create Report Part]]]</span>
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
         {{/if}}
         {{/if}}
 
@@ -230,11 +237,10 @@
                 <span>[[[Sharing Permissions]]]</span>
             </a>
         </li>
+         {{if ItemType == "@((int)ItemType.Dataset)" || ItemType == "@((int)ItemType.Datasource)"}}
+            <li role="separator" class="divider"></li>
         {{/if}}
         {{/if}}
-
-        {{if @*CanDownload ||*@ CreatedById==@(userId) || @(isAdmin) == true}}
-        <li role="separator" class="divider"></li>
         {{/if}}
 
         {{if (~checkMobile() && ItemType!="@((int)ItemType.Datasource)")}}
@@ -353,6 +359,9 @@
         {{/if}}
         {{if ~checkMobile()}}
         {{if CanDelete}}
+        {{if ItemType == "@((int)ItemType.Dataset)"}}
+                 <li role="separator" class="divider"></li>
+        {{/if}}
         <li>
             {{if ItemType=="@((int)ItemType.Datasource)"}}
             <a href="#" title="" class="item-delete prevent-default-action" data-itemtype="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-datasource-type="{{:DatasourceType}}">

@@ -17,6 +17,8 @@
     var frameSources = contentSecurityPolicySettings.FrameSource != null ? contentSecurityPolicySettings.FrameSource.Split(',') : contentSecurityPolicySettings.FrameSource;
     var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
     var contentSecurityPolicyHelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ContentSecurityPolicy);
+    var isNetworkSettingsTab = (Context.Request.Query["tab"].ToString().ToLower() == "network-settings") ? "active" : string.Empty;
+    var currentUserIPAddress = Context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
 }
 
 @section styles{
@@ -46,6 +48,10 @@
         var frameSourcesList = @Json.Serialize(frameSources);
         var contentSecurityPolicyUrl = helpSiteBaseUrl + "@GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ContentSecurityPolicy)";
         var xFrameOptionUrl = helpSiteBaseUrl + "@GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.XFrameOption)";
+        var updateNetworkSettingsUrl = "@Url.Action("UpdateNetworkSettings", "Administration")";
+        var fetchNetworkSettingsUrl = "@Url.Action("GetNetworkSettings", "Administration")";
+        var networkSettingsUrl = helpSiteBaseUrl;
+        var currentUserIP = "@currentUserIPAddress";
     </script>
 }
 
@@ -70,6 +76,9 @@
                 </li>
                 <li role="presentation" class="@isXFrameTab">
                     <a href="#x-frame-options" id="x-frame-options-tab" aria-controls="x-frame-options-tab" role="tab" data-toggle="tab">[[[X-Frame-Options]]]</a>
+                </li>
+                <li role="presentation" class="@isNetworkSettingsTab">
+                    <a href="#network-settings" id="network-settings-tab" aria-controls="network-settings-tab" role="tab" data-toggle="tab">IP Whitelisting</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -174,6 +183,9 @@
                 <div role="tabpanel" class="tab-pane @isXFrameTab" id="x-frame-options">
                     @await Html.PartialAsync("_XFrameOptionsSettings")
                 </div>
+                <div role="tabpanel" class="tab-pane @isNetworkSettingsTab" id="network-settings">
+                    @await Html.PartialAsync("_NetworkSettings")
+                </div>
             </div>
         </div>
         <div class="admin-page-actions col-xs-12">
@@ -182,6 +194,9 @@
                 [[[Save]]]
             </button>
             <button type="button" title="" id="update-x-frame-options-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">
+                [[[Save]]]
+            </button>
+            <button type="button" title="" id="update-network-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right" style="display: none;">
                 [[[Save]]]
             </button>
         </div>

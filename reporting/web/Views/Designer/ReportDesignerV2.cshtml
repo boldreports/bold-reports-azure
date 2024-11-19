@@ -50,6 +50,7 @@
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var description = HttpUtility.HtmlDecode(ViewBag.description);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var isShowImportSampleData = globalAppSettings.SystemSettings.IsShowImportSampleData;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -378,6 +379,8 @@
         var enableReportPart = true;
         var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
+        var enableParameterOperator =  "@ViewBag.EnableParameterOperator".toLowerCase() === "true";
+        var showImportSampleData = @Json.Serialize(isShowImportSampleData);
 
         if(isEdit === "true"){
             isEditReport = true;
@@ -486,7 +489,8 @@
                     contactMail: 'support@boldreports.com'
                 },
                 enableImageBlobing: true,
-                enableReportPart: enableReportPart
+                enableReportPart: enableReportPart,
+                enableParameterOperator: enableParameterOperator
             };
 
             var designer = new boldReportDesigner($('#' + controlId), designerModel);
@@ -546,7 +550,7 @@
             var designer = $('#' + controlId).data('boldReportDesigner');
             $('#' + controlId + '_designer_header_reportName').val(reportName);
             designer.openAction = $.proxy(openBrowseDialog, this);
-            designer.showImportData = true;
+            designer.showImportData = showImportSampleData;
             designer.isOnPremiseMode = @isSelfHosted.ToString().ToLower();
             if (isDraft === 'true' && isEmptyOrWhitespace(datasetName)) {
                 designer.openReportFromDraft(reportName);
@@ -741,7 +745,7 @@
             designer.newReport(reportName);
         }
 
-        function saveAsServer(name, category, catId, reportDescription, tags) {
+        function saveAsServer(name, category, catId, reportDescription, tags, callBackInfo) {
             var designer = $('#' + controlId).data('boldReportDesigner');
             categoryName = category;
             categoryId = catId;
@@ -749,7 +753,7 @@
             description = reportDescription;
             selectedTags = tags;
             designer.reportFileName = reportName;
-            designer.saveReport(categoryName + '/' + reportName);
+            designer.saveReport(categoryName + '/' + reportName, null, callBackInfo);
             $('#' + controlId + '_designer_header_reportName').val(reportName);
         }
 
@@ -779,7 +783,7 @@
             if (designer.isNewServerReport() || isDraft === 'true' || !isPublish || reportName !== designer.reportFileName) {
                 designer.openPublishDialog(description, function (args) {
                     if (args['type'] === 'Save') {
-                        proxy.saveAsServer(args.name, args.category, args.categoryId, args.description, args.tags);
+                        proxy.saveAsServer(args.name, args.category, args.categoryId, args.description, args.tags, args.callBackInfo);
                     }
                 }, enableCreateCategory, tagInfo );
             } else {

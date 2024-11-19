@@ -163,6 +163,7 @@
                     <span>[[[Info]]]</span>
                 </a>
             </li>
+            {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
             {{if CanWrite && ~checkTablet() && !IsLocked}}
             <li role="separator" class="divider"></li>
             <li>
@@ -171,6 +172,7 @@
                     <span>[[[Processing Options]]]</span>
                 </a>
             </li>
+            {{/if}}
             {{/if}}
             {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked}}
             <li role="separator" class="divider"></li>

@@ -13,6 +13,7 @@
     var customScheduleTemplateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.CustomScheduleTemplate);
     var publicReportsDeprecateHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.PublicReportsDeprecated);
     var reportSettingsPageNonce = Context.Items["ScriptNonce"];
+    var showImportSampleData = Convert.ToBoolean(ViewBag.ShowImportSampleData);
 }
 
 @section styles{
@@ -38,7 +39,8 @@
         var getScheduleFileSettingTypeUrl = "@Url.Action("GetScheduleFileSettingType", "Scheduler")";
         var subjectItem = "@Url.Action("GetSubjectItem", "scheduler")";
         var getScheduleContentUrl = "@Url.Action("GetScheduleCustomBody", "scheduler")";
-        var validateFTPCredentials = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+        var validateFTPCredentialsUrl = "@Url.Action("ValidateFTPCredentials", "scheduler")";
+        var validateS3BucketCredentialsUrl = "@Url.Action("ValidateS3Credentials", "scheduler")";
         var makePublicHelpSiteUrl = "@makePublicHelpSiteUrl";
         var scheduleReportSettingsHelpSiteUrl = "@scheduleReportSettingsHelpSiteUrl";
         var customScheduleTemplateHelpSiteUrl = "@customScheduleTemplateHelpSiteUrl";
@@ -69,6 +71,9 @@
                     <a href="#make-public-setting-tab" id="make-public-setting" aria-controls="make-public-setting-tab" role="tab" data-toggle="tab">[[[Report]]]</a>
                 </li>
                 <li role="presentation">
+                    <a href="#show-report-designer-setting-tab" id="report-designer-setting" aria-controls="report-designer-setting-tab" role="tab" data-toggle="tab">[[[Report Designer]]]</a>
+                </li>
+                <li role="presentation">
                     <a href="#schedule-setting-tab" id="schedule-setting" aria-controls="schedule-setting-tab" role="tab" data-toggle="tab">[[[Schedule]]]</a>
                 </li>
                 <li role="presentation">
@@ -82,28 +87,22 @@
                             <div class="col-xs-8 field-container-dashboard bottom-width ">
                                 <div class="col-md-4">
                                 </div>
-
                                 <div class="col-md-2 text-center notification-header">
                                     <strong>[[[Allow]]]</strong>
-
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-8 field-container-dashboard">
                                     <label class="col-md-4 app-textbox-label activation">
                                         [[[Mark reports as public]]]
-
                                     </label>
-
                                     <div class="col-md-2 text-center switch-align">
                                         <span class="material-switch text-left">
                                             <input type="checkbox" id="restrict-makepublic-dashboard" @(makepublic ? "checked" : string.Empty) />
-
                                             <label for="restrict-makepublic-dashboard" class="label-primary"></label>
                                         </span>
                                         <div class="tool-tip col-xs-1">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-
                                             <div class="dropdown-menu" role="menu">[[[If disabled, anonymous users cannot open current public reports. Click on public ]]] <a class="app-hyperlink" href="@Url.Action("reports", "reports", new { view="public"})">[[[reports]]] </a> [[[to view them.]]]</div>
                                         </div>
                                     </div>
@@ -118,15 +117,37 @@
                 <div role="tabpanel" class="tab-pane" id="scheduletemplate-setting-tab">
                     @await Html.PartialAsync("../Shared/_EmailEditor")
                 </div>
+                <div role="tabpanel" class="tab-pane" id="show-report-designer-setting-tab">
+                    <div id="dashboard-settings-body" class="admin-page-body">
+                        <div class="row input-field-wrapper">
+                            <div class="row">
+                                <div class="col-xs-8 field-container-dashboard">
+                                    <label class="col-md-4 app-textbox-label activation">
+                                        [[[Show Sample Data]]]
+                                    </label>
+                                    <div class="col-md-2 text-center switch-align">
+                                        <span class="material-switch text-left">
+                                            <input type="checkbox" id="show-sample-data-option" @(showImportSampleData ? "checked" : string.Empty) />
+                                            <label for="show-sample-data-option" class="label-primary"></label>
+                                        </span>
+                                        <div class="tool-tip col-xs-1 pull-right">
+                                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                            <div class="dropdown-menu" role="menu">[[[If disabled, Import Sample Data option will not be shown in Report Designer.]]]</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>				
             </div>
         </div>
-
-
         <div class="admin-page-actions col-xs-12">
             <a href="@Url.Action("reports", "reports")" class="secondary-button app-btn-secondary pull-right" id="cancel-dashboard-settings" title="">[[[Cancel]]]</a>
             <input type="button" title="" data-url="@Url.Action("UpdateReportSettings", "administration")" id="update-dashboard-settings" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
-            <input type="button" title="" data-url="@Url.Action("UpdateScheduleExportFileSetting", "administration")" id="update-schedule-settings" style="display: none;" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
+            <input type="button" title="" data-url="@Url.Action("UpdateScheduleSettings", "administration")" id="update-schedule-settings" style="display: none;" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
             <input type="button" title="" data-url="@Url.Action("UpdateEmailContent", "administration")" id="update-scheduletemplate-settings" style="display: none;" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
+			<input type="button" title="" data-url="@Url.Action("UpdateReportDesignerSettings", "administration")" id="update-report-designer-settings" style="display: none;" class="primary-button app-btn-primary pull-right" value="[[[Save]]]" />
         </div>
     </div>
     <environment include="Development,CloudDevelopment">

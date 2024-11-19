@@ -276,6 +276,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	IsOverwrite tinyint NOT NULL,
 	ExportFileName varchar(130) NULL,
 	ScheduleExportInfo text(500) NULL,
+	ScheduleBucketExportInfo text NULL,
 	PRIMARY KEY (Id))
 ;
 
@@ -1210,6 +1211,7 @@ INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Perm
 ;
 INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(3,5,1)
 ;
+
 INSERT into  {database_name}.BOLDRS_PermissionLogType (Name,IsActive) VALUES ( 'PermissionAdded',1)
 ;
 INSERT into  {database_name}.BOLDRS_PermissionLogType (Name,IsActive) VALUES ( 'PermissionRemoved',1)
@@ -1476,6 +1478,8 @@ INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,Modifie
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'Subscription.Plan','Subscription.Plan',Now(),1)
 ;
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'SiteSettings','SiteSettings',Now(),1)
+;
+INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'ReportDesignerSettings.ImportSampleData','ReportDesignerSettings.ImportSampleData',Now(),1)
 ;
 
 INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (11,'Contact','Contact',Now(),1)

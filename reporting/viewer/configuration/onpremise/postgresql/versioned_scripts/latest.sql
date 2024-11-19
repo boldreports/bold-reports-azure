@@ -1,3 +1,4 @@
-ALTER TABLE BOLDRS_ScheduleDetail ADD COLUMN IsNoDataEnabled smallint NULL;
-ALTER TABLE BOLDRS_Item ADD ViewerFeatures varchar(4000) NULL
+INSERT into BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.ImportSampleData',N'ReportDesignerSettings.ImportSampleData',now() at time zone 'utc',1)
+;
+ALTER TABLE BOLDRS_ScheduleDetail ADD ScheduleBucketExportInfo  varchar(4000) NULL
 ;

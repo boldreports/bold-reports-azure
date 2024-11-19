@@ -46,6 +46,7 @@
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
     var etlEndpointPrefix = ServerAppConfig.IsSelfHosted ? ServerAppConfig.InternalAppIdpUrl : ServerAppConfig.AppSettings.EndPoints.ETLSiteURL;
     var navigateETLUrl = etlEndpointPrefix + (ServerAppConfig.IsSelfHosted ? $"/{ServerAppConfig.ETLHostName}/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     if (allItemsCount == null && ServerAppConfig.IsUserBasedMenu)
     {
         var itemtypeList = new List<ItemType>
@@ -367,5 +368,6 @@
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
         var allItemsCount = @Json.Serialize(allItemsCount);
         var hasOwnedReport = @Json.Serialize(hasOwnedReport);
+        var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
         var isHideETLOption = @Json.Serialize(ServerAppConfig.IsHideETLOption);
 </script>
