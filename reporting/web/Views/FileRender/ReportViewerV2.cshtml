@@ -32,6 +32,7 @@
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
     var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var isHideReportViewerHeader = ServerAppConfig.IsHideReportViewerHeader;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -164,30 +165,33 @@
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 </head>
 <body>
-    <div id="report_viewer_v2_header">
-        @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
-        {
-            <div id="report_viewer_v2_backarrow_div">
-                <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]"></span>
+    @if (!isHideReportViewerHeader)
+    {
+        <div id="report_viewer_v2_header">
+            @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
+            {
+                <div id="report_viewer_v2_backarrow_div">
+                    <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]"></span>
+                </div>
+            }
+            <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
+                <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
             </div>
-        }
-        <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
-            <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
+            @if(canEdit){
+                <div id="report_viewer_v2_toolbar">
+                    <span class="su-edit-tailwind" id="report_viewer_v2_edit"></span>
+                </div>
+            }
+            @if (isCommonCacheEnabled){
+                <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_refresh_icon_div">
+                    <span class="su-cache-refresh" id="report_viewer_v2_cache_refresh"></span>
+                </div>
+                <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_reresh_time_div">
+                    <span id="report_viewer_v2_show_time"></span>
+                </div>
+            }
         </div>
-        @if(canEdit){
-            <div id="report_viewer_v2_toolbar">
-                <span class="su-edit-tailwind" id="report_viewer_v2_edit"></span>
-            </div>
-        }
-        @if (isCommonCacheEnabled){
-            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_refresh_icon_div">
-                <span class="su-cache-refresh" id="report_viewer_v2_cache_refresh"></span>
-            </div>
-            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_reresh_time_div">
-                <span id="report_viewer_v2_show_time"></span>
-            </div>
-        }
-    </div>
+    }
 
     <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">
     <input id="dashboard_Comment" type="hidden" data-item-id="@ViewBag.ItemId" data-category-name="@categoryName" data-item-name="@itemName">

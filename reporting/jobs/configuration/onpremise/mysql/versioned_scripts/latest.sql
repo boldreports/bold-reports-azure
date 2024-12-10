@@ -1,4 +1,8 @@
-INSERT into  {database_name}.BOLDRS_LogField (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,'ReportDesignerSettings.ImportSampleData','ReportDesignerSettings.ImportSampleData',Now(),1)
+ALTER TABLE boldrs_scheduleparameter MODIFY parameter TEXT
 ;
-ALTER TABLE {database_name}.BOLDRS_ScheduleDetail ADD COLUMN ScheduleBucketExportInfo text NULL
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(17,5,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(18,5,1)
+;
+INSERT INTO {database_name}.BOLDRS_GroupPermission (PermissionAccessId, PermissionEntityId, ItemId, GroupId, IsActive) VALUES (16,17,NULL,1,1)
 ;

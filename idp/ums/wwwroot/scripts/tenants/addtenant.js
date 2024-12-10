@@ -18,6 +18,7 @@ var haveTenantIdentifier = true;
 var validateTimer;
 var validateInterval = 1000;
 var tooltip;
+var emailTooltip = null;
 
 $(document).ready(function () {
     if (isCommonLogin) {
@@ -355,6 +356,9 @@ $(document).ready(function () {
                             $(this).removeClass("storage-config").addClass("update");
                         } else {
                             $(this).attr("value", "Next");
+                            if (IsBiPrefixSchema && getDropDownValue("tenant-type").toLowerCase() !== "boldreportsonpremise"){
+                                saveDefaultAttributes(databaseType, getDropDownValue("tenant-type"));
+                            }
                             nextToStoragePage();
                         }
                         $(this).removeAttr("disabled").addClass("next-alignment");

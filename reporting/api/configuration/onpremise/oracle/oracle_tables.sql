@@ -1132,6 +1132,10 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (3, 5, 1);
 
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17, 5, 1);
+
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18, 5, 1);
+
 INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES ('IsEmbedEnabled','false',CURRENT_TIMESTAMP at time zone 'utc',1)
 ;
 INSERT into BOLDRS_SystemSettings (Key,Value,ModifiedDate,IsActive) VALUES ('EmbedSecret','',CURRENT_TIMESTAMP at time zone 'utc',1)
