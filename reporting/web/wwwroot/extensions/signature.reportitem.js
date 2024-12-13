@@ -175,6 +175,7 @@ var EJSignature = (function () {
         if (this.customJSON === null) {
             this.customJSON = new ej.ReportModel.CustomReportItem().getModel();
             this.setPropertyVal('SignatureValue', '');
+            this.setPropertyVal('ContentEditable', 'true');
         }
         return this.customJSON;
     };
@@ -288,9 +289,10 @@ var EJSignature = (function () {
     EJSignature.prototype.updateSignature = function (imageDetails, reportItemName) {
         if (this.instance instanceof ej.ReportViewer && imageDetails.imageData && imageDetails.imageData.length > 0) {
             (this.instance).doAjaxPost('POST', (this.instance)._actionUrl, JSON.stringify({
-                'reportAction': 'UpdateSignature',
-                'imageData': imageDetails.imageData.replace(/^data:image\/png;base64,/, ''),
-                'reportItemName': reportItemName
+                'reportAction': 'UpdateValue',
+                'modelType': 'CustomReportItemModel',
+                'newValue': { 'imageData': imageDetails.imageData.replace(/^data:image\/png;base64,/, '') },
+                'itemName': reportItemName
             }), '_handleCustomItemError');
         }
     };

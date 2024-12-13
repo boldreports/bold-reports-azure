@@ -74,7 +74,10 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />
+            }
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/designer.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
@@ -84,7 +87,10 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/barcode.reportitem.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" />
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" />
+            }
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/designer.min.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
@@ -108,7 +114,10 @@
         <environment include="Development,CloudDevelopment">
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            }
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-designer-service.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/designercommon.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
@@ -119,7 +128,10 @@
         <environment exclude="Development,CloudDevelopment">
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            }
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-designer-service.min.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/designercommon.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/designercommon.min.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
@@ -145,7 +157,10 @@
         <link href="@reportServiceCdnLink/extensions/barcode.reportitem.css" rel="stylesheet" />
         <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/bootstrap-theme/bold.reportdesigner.min.css" rel="stylesheet" />
         <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportdesigner/fusion-theme/bold.reportdesigner-fusion.min.css" rel="stylesheet" />
-        <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" rel="stylesheet" />
+        @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+        {
+            <link href="@reportServiceCdnLink/cdn/css/essentialjs/reportviewer/custom.salesforce.min.css" rel="stylesheet" />
+        }
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/designer.css")" crossorigin="anonymous" />
         </environment>
@@ -171,11 +186,17 @@
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@cdnDomain/static/essentialjs/scripts/ej2-notifications.min.js'></script>
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportviewer.min.js'></script>
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/bold.reportdesigner.min.js'></script>
-        <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/custom.salesforce.min.js'></script>
+        @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+        {
+            <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/cdn/scripts/essentialjs/custom.salesforce.min.js'></script>
+        }
         <environment include="Development,CloudDevelopment">
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            }
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-designer-service.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -185,7 +206,10 @@
         <environment exclude="Development,CloudDevelopment">
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportviewer.min.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/bold.reportdesigner.min.js"></script>
-            <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "native")
+            {
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/custom.salesforce.min.js"></script>
+            }
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-designer-service.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-designer-service.min.js")" crossorigin="anonymous"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/barcode.reportitem.js"></script>
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
@@ -195,6 +219,8 @@
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/extensions/extension.config.js'></script>
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/extensions/qrbarcode.reportitem.js'></script>
         <script nonce="@Context.Items["ScriptNonce"]" type='text/javascript' src='@reportServiceCdnLink/extensions/barcode.reportitem.js'></script>
+        <script nonce="@Context.Items["ScriptNonce"]" src="@reportServerResourceUrl/cdn/scripts/localization/reportdesigner/ej.localetexts.@string.Concat(language, ".js")"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" src="@reportServerResourceUrl/cdn/scripts/localization/i18n/ej.culture.@string.Concat(language,".min.js")"></script>
     }
 
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />

@@ -17,8 +17,8 @@
     var isFirstTenant = ViewBag.IsFirstTenant;
     if (!string.IsNullOrWhiteSpace(ViewBag.appsettings.SystemSettings.LoginLogo))
     {
-        headerLogo = ViewBag.appsettings.SystemSettings.LoginLogo;
-        favLogo = ViewBag.appsettings.SystemSettings.FavIcon + "&random=" + Syncfusion.Server.Base.Helpers.DateTimeHelper.DateTimeToUnixTimeStamp(DateTime.Now);
+        headerLogo = new Uri(ViewBag.appsettings.SystemSettings.LoginLogo).PathAndQuery;
+        favLogo = new Uri(ViewBag.appsettings.SystemSettings.FavIcon).PathAndQuery + "&random=" + Syncfusion.Server.Base.Helpers.DateTimeHelper.DateTimeToUnixTimeStamp(DateTime.Now);
         orgName = ViewBag.appsettings.SystemSettings.OrganizationName;
     }
     else
