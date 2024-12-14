@@ -27,8 +27,8 @@ var itemExtensions = [{
         name: 'ESignature',
         className: 'EJSignature',
         imageClass: 'customitem-signature',
-        displayName: 'Signature',
-        category: 'Signatures',
+        displayName: 'Electronic',
+        category: 'Signature',
         toolTip: {
             requirements: 'Add a report item to the designer area.',
             description: 'This report item is used to add a graphic signature.',

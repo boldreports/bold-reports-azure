@@ -17,7 +17,6 @@ var SignatureDialog = (function () {
         this.isCropping = false;
         this.cropStartX = 0;
         this.cropStartY = 0;
-        this.tempCanvas = null;
         this.isCropEnabled = false;
         this.initialHgt = 273;
         this.initialWdth = 560;
@@ -129,11 +128,11 @@ var SignatureDialog = (function () {
             mode: 'Palette',
             height: '37px',
             open: $.proxy(this.colorPickerOpen, this),
-            onModeSwitch: $.proxy(this.colorPickerModeSwitch, this)
+            onModeSwitch: $.proxy(this.colorPickerModeSwitch, this),
+            change: $.proxy(this.onStrokeColorChange, this)
         });
         strokeColorTag.append(strokeColor);
         strokeColorDiv.append(strokeColorLabel, strokeColorTag);
-        this.strokeColorObj.change = $.proxy(this.onStrokeColorChange, this);
         this.strokeColorObj.appendTo(strokeColor[0]);
         target.append(strokeColorDiv);
     };
@@ -151,11 +150,11 @@ var SignatureDialog = (function () {
             placeHolder: '2',
             cssClass: 'e-rptdesigner-param-assign e-designer-ejwidgets e-rptdesigner-filter e-designer-dropdownlist e-standard',
             allowFiltering: true,
-            popupHeight: '180px'
+            popupHeight: '180px',
+            change: $.proxy(this.onLineWidthChange, this)
         });
         drpdwnTag.append(dropDown);
         strokeWidth.append(drpdwnLbl, drpdwnTag);
-        this.dropDownObj.change = $.proxy(this.onLineWidthChange, this);
         this.dropDownObj.appendTo(dropDown[0]);
         target.append(strokeWidth);
     };
@@ -264,24 +263,28 @@ var SignatureDialog = (function () {
         cropBox.css({ width: '0px', height: '0px', display: 'none' });
         canvas.style.cursor = 'default';
         this.isCropEnabled = false;
-        this.tempCanvas = null;
         this.isCropping = false;
+    };
+    SignatureDialog.prototype.hasCropBox = function () {
+        var cropBox = this.container.find('.e-signDialog-cropBox');
+        return cropBox.length > 0 && cropBox.is(':visible');
     };
     SignatureDialog.prototype.cropSelectedRegion = function () {
         var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
         var cropBox = this.container.find('.e-signDialog-cropBox');
         var ctx = canvas.getContext('2d');
         var rect = cropBox[0].getBoundingClientRect();
-        var x = rect.left - canvas.getBoundingClientRect().left;
-        var y = rect.top - canvas.getBoundingClientRect().top;
+        var left = rect.left - canvas.getBoundingClientRect().left;
+        var top = rect.top - canvas.getBoundingClientRect().top;
         var width = rect.width;
         var height = rect.height;
-        var croppedimgData = ctx.getImageData(x, y, width, height);
-        this.tempCanvas = document.createElement('canvas');
-        var croppedCtx = this.tempCanvas.getContext('2d');
-        this.tempCanvas.width = width;
-        this.tempCanvas.height = height;
+        var croppedimgData = ctx.getImageData(left, top, width, height);
+        var tempCanvas = document.createElement('canvas');
+        var croppedCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
         croppedCtx.putImageData(croppedimgData, 0, 0);
+        return tempCanvas;
     };
     SignatureDialog.prototype.drawLine = function (x1, y1, x2, y2) {
         var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
@@ -311,6 +314,7 @@ var SignatureDialog = (function () {
             this.onMouseMoveCrop(e);
             return;
         }
+        e.preventDefault();
         if (this.isDrawing && this.isMouseDown) {
             var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
             var rect = canvas.getBoundingClientRect();
@@ -334,6 +338,7 @@ var SignatureDialog = (function () {
             this.onMouseUpCrop(e);
             return;
         }
+        e.preventDefault();
         this.isDrawing = false;
         this.isMouseDown = false;
     };
@@ -379,7 +384,6 @@ var SignatureDialog = (function () {
         }
         e.preventDefault();
         this.isCropping = false;
-        this.cropSelectedRegion();
         this.isMouseDown = false;
     };
     SignatureDialog.prototype.onMouseMoveCrop = function (e) {
@@ -419,8 +423,9 @@ var SignatureDialog = (function () {
         var canvasContDiv = this.container.find('.e-signDialog-canvasDiv');
         var imgData = null;
         if (canvasContDiv) {
-            if (this.tempCanvas) {
-                imgData = this.tempCanvas.toDataURL('image/png');
+            if (this.hasCropBox()) {
+                var tempCanvas = this.cropSelectedRegion();
+                imgData = tempCanvas.toDataURL('image/png');
             }
             else {
                 var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
@@ -588,7 +593,6 @@ var SignatureDialog = (function () {
             }
             this.dlgInstance.destroy();
             this.container = null;
-            this.tempCanvas = null;
             this.canvasElement = null;
             this.instance = null;
             this.isDrawing = false;
@@ -608,7 +612,6 @@ var SignatureDialog = (function () {
         this.lastX = null;
         this.lastY = null;
         this.isMouseDown = false;
-        this.tempCanvas = null;
         this.dlgInstance = null;
         this.container = null;
     };

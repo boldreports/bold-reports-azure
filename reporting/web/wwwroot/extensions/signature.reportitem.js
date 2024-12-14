@@ -130,11 +130,11 @@ var EJSignature = (function () {
             if (imgData) {
                 var image = new Image();
                 image.src = imgData;
-                image.onload = $.proxy(this.drawImage, this, image, canvas, bgColor);
+                image.onload = $.proxy(this.drawImage, this, image, canvas);
             }
         }
     };
-    EJSignature.prototype.drawImage = function (image, canvas, bgColor) {
+    EJSignature.prototype.drawImage = function (image, canvas) {
         var ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
@@ -199,8 +199,7 @@ var EJSignature = (function () {
             this.customItemInstance.addCustomAction(CommandAction, [{ method: 'saveSign', imageData: prevVal, propertyName: 'signature', undoRedo: false }], [{ method: 'saveSign', imageData: imgData, propertyName: 'signature', undoRedo: true }]);
         }
     };
-    EJSignature.prototype.undoRedoAction = function (newValue) {
-        var canvasInfo = newValue;
+    EJSignature.prototype.undoRedoAction = function (canvasInfo) {
         if (canvasInfo) {
             if (canvasInfo.propertyName && canvasInfo.propertyName.toLowerCase() === 'signature') {
                 ej.ReportUtil.invokeMethod(this, canvasInfo.method, [canvasInfo.undoRedo, { imageData: canvasInfo.imageData }]);
