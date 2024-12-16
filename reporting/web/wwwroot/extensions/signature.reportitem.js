@@ -44,7 +44,7 @@ var EJSignature = (function () {
         }
     };
     EJSignature.prototype.updatePropertyUIValue = function (name, value) {
-        if (this.instance instanceof boldReportDesigner) {
+        if (this.hasDesignerInstance(this.instance)) {
             switch (name.toLowerCase()) {
                 case 'backgroundcolor':
                     this.instance.propertyPanel.updatePropertyUIValue('backgroundcolor', value, this.customJSON.UniqueId);
@@ -94,7 +94,7 @@ var EJSignature = (function () {
             imageData: imgData,
             canvas: null
         };
-        if (this.instance instanceof boldReportDesigner) {
+        if (this.hasDesignerInstance(this.instance)) {
             var dlgInstance = window['SignatureDialog'].Instance;
             dlgInstance.openDialog(this.instance, dlgData);
         }
@@ -114,7 +114,7 @@ var EJSignature = (function () {
                             ItemId: 'signature',
                             Name: 'signature',
                             DisplayName: 'signature',
-                            ItemType: EJReportEnum.ItemType.CustomBtn,
+                            ItemType: 'CustomBtn',
                             IsVisible: true
                         }]
                 }],
@@ -196,7 +196,7 @@ var EJSignature = (function () {
             this.updatePropertyVal('SignatureValue', '');
         }
         if (!isUndoRedo) {
-            this.customItemInstance.addCustomAction(CommandAction, [{ method: 'saveSign', imageData: prevVal, propertyName: 'signature', undoRedo: false }], [{ method: 'saveSign', imageData: imgData, propertyName: 'signature', undoRedo: true }]);
+            this.customItemInstance.addCustomAction('CommandAction', [{ method: 'saveSign', imageData: prevVal, propertyName: 'signature', undoRedo: false }], [{ method: 'saveSign', imageData: imgData, propertyName: 'signature', undoRedo: true }]);
         }
     };
     EJSignature.prototype.undoRedoAction = function (canvasInfo) {
@@ -206,11 +206,16 @@ var EJSignature = (function () {
             }
         }
     };
+    EJSignature.prototype.hasDesignerInstance = function (instance) {
+        return instance && instance.pluginName && instance.pluginName.toLowerCase() === 'boldreportdesigner';
+    };
+    EJSignature.prototype.hasViewerInstance = function (instance) {
+        return instance && instance.pluginName && instance.pluginName.toLowerCase() === 'boldreportviewer';
+    };
     EJSignature.prototype.getLocale = function (text) {
         var signatureLocale;
         var defaultLocale = EJSignature.Locale['en-US'];
-        if (this.instance && this.instance instanceof boldReportDesigner && !ej.isNullOrUndefined(this.instance.model) &&
-            !ej.isNullOrUndefined(EJSignature.Locale[this.instance.model.locale])) {
+        if (this.instance && this.hasDesignerInstance(this.instance) && !ej.isNullOrUndefined(this.instance.model) && !ej.isNullOrUndefined(EJSignature.Locale[this.instance.model.locale])) {
             signatureLocale = EJSignature.Locale[this.instance.model.locale];
         }
         switch (text.toLowerCase()) {
@@ -286,7 +291,7 @@ var EJSignature = (function () {
         editIcon.bind('click', $.proxy(this.invokeDialog, this, canvas, dataInfo));
     };
     EJSignature.prototype.updateSignature = function (imageDetails, reportItemName) {
-        if (this.instance instanceof ej.ReportViewer && imageDetails.imageData && imageDetails.imageData.length > 0) {
+        if (this.hasViewerInstance(this.instance) && imageDetails.imageData && imageDetails.imageData.length > 0) {
             (this.instance).doAjaxPost('POST', (this.instance)._actionUrl, JSON.stringify({
                 'reportAction': 'UpdateValue',
                 'modelType': 'CustomReportItemModel',
@@ -309,7 +314,7 @@ var EJSignature = (function () {
             imageData: canvas.attr('imageString'),
             canvas: canvas
         };
-        if (this.instance instanceof ej.ReportViewer && dlgInstance) {
+        if (this.hasViewerInstance(this.instance) && dlgInstance) {
             dlgInstance.openDialog(this.instance, dlgData);
         }
     };

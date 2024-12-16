@@ -73,10 +73,10 @@ var SignatureDialog = (function () {
         this.locale = dialogInfo.locale;
         this.callBackfn = dialogInfo.callBackFn;
         this.instance = instance;
-        if (ej.ReportViewer && this.instance instanceof ej.ReportViewer) {
+        if (this.hasViewerInstance(this.instance)) {
             this.id = this.instance._id;
         }
-        else if (boldReportDesigner && this.instance instanceof boldReportDesigner) {
+        else if (this.hasDesignerInstance(this.instance)) {
             this.id = this.instance._id + '_reportviewer';
         }
         this.renderDialog();
@@ -441,7 +441,7 @@ var SignatureDialog = (function () {
     };
     SignatureDialog.prototype.resetValues = function () {
         this.unwiredDesignerEvents();
-        if (this.instance instanceof ej.ReportViewer) {
+        if (this.hasViewerInstance(this.instance)) {
             this.instance._destroyEJ2Objects(this.container.find('.e-dlg-content .e-signDialog-root-container'));
         }
         else {
@@ -544,6 +544,12 @@ var SignatureDialog = (function () {
             args.element.offsetParent.style.top = '0px';
         }
     };
+    SignatureDialog.prototype.hasDesignerInstance = function (instance) {
+        return instance && instance.pluginName && instance.pluginName.toLowerCase() === 'boldreportdesigner';
+    };
+    SignatureDialog.prototype.hasViewerInstance = function (instance) {
+        return instance && instance.pluginName && instance.pluginName.toLowerCase() === 'boldreportviewer';
+    };
     SignatureDialog.prototype.invokeCallBack = function (fnction, args) {
         if (fnction) {
             if (typeof fnction === 'function') {
@@ -585,7 +591,7 @@ var SignatureDialog = (function () {
     SignatureDialog.prototype.dispose = function () {
         if (!ej.isNullOrUndefined(this.container) && this.container.length > 0
             && !ej.isNullOrUndefined(this.dlgInstance)) {
-            if (this.instance instanceof ej.ReportViewer) {
+            if (this.hasViewerInstance(this.instance)) {
                 this.instance._destroyEJ2Objects(this.container.find('.e-dlg-content .e-signDialog-root-container'));
             }
             else {
