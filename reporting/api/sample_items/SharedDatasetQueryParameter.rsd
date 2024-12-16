@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="SharedDatasetQueryParameter">
+    <Query>
+      <DataSourceReference>AdventureWorks/6e9e2ae2-5324-4fe9-93ed-cd2d2c260464</DataSourceReference>
+      <CommandText>SELECT  Top(50)  SOD.SalesOrderDetailID, SOD.OrderQty, SOD.UnitPrice, 
+            CASE WHEN SOD.UnitPriceDiscount IS NULL THEN 0 ELSE SOD.UnitPriceDiscount END AS UnitPriceDiscount, 
+            SOD.LineTotal, SOD.CarrierTrackingNumber, SOD.SalesOrderID, P.Name, P.ProductNumber, SOH.SalesOrderNumber,
+			 SOH.PurchaseOrderNumber, SM.Name AS ShipMethod
+FROM        Sales.SalesOrderDetail SOD INNER JOIN
+            Production.Product P ON SOD.ProductID = P.ProductID INNER JOIN
+            Sales.SalesOrderHeader SOH ON SOD.SalesOrderID = SOH.SalesOrderID LEFT OUTER JOIN 
+			Purchasing.ShipMethod SM ON SOH.ShipMethodID = SM.ShipMethodID
+WHERE  (SOH.OrderDate &gt; @StartDate) AND (SOH.OrderDate &lt; @EndDate)
+ORDER BY    SOD.SalesOrderDetailID
+
+</CommandText>
+      <CommandType>Text</CommandType>
+      <DataSetParameters>
+        <DataSetParameter Name="@StartDate">
+          <DefaultValue>=Parameters!StartDate.Value</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@EndDate">
+          <DefaultValue>=Parameters!EndDate.Value</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+    </Query>
+    <Fields>
+      <Field Name="SalesOrderDetailID">
+        <DataField>SalesOrderDetailID</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="OrderQty">
+        <DataField>OrderQty</DataField>
+        <rd:TypeName>System.Int16</rd:TypeName>
+      </Field>
+      <Field Name="UnitPrice">
+        <DataField>UnitPrice</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="UnitPriceDiscount">
+        <DataField>UnitPriceDiscount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="LineTotal">
+        <DataField>LineTotal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="CarrierTrackingNumber">
+        <DataField>CarrierTrackingNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SalesOrderID">
+        <DataField>SalesOrderID</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ProductNumber">
+        <DataField>ProductNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SalesOrderNumber">
+        <DataField>SalesOrderNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PurchaseOrderNumber">
+        <DataField>PurchaseOrderNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ShipMethod">
+        <DataField>ShipMethod</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

@@ -426,6 +426,11 @@ function databaseConfiguration(clickedButton) {
             }
         }
 
+        var tenantTypeDetails = isBoldBI ? "BoldBIOnPremise" : "BoldReportsOnPremise";
+        if (IsBiPrefixSchema && isBoldBI){
+            saveDefaultAttributes(databaseType, tenantTypeDetails);
+        }
+
         if (!isNewDatabaseTab) {
             var tenantype = $("#tenant-type").val() === "" ? getTenantType() : $("#tenant-type").val();
         }
@@ -544,14 +549,16 @@ function registerApplication(isSimpleMode) {
     $(".e-text").append('<span class="configuration-status"></span>');
     $("#progress-parent-container").show();
     var globalAdminDetails = $("#global-admin-details").val();
-    var systemSettingsData = $("#system-settings-data").val();
+    var systemSettingsData = JSON.parse($("#system-settings-data").val());
     var azureData = $("#azure-data").val();
     var tenantInfo = $("#tenant-info").val();
+    systemSettingsData.CustomAttribute = addSiteAttribute;
+    var systemSettingsDataString = JSON.stringify(systemSettingsData);
     $.ajax({
         url: setSystemSettingsUrl,
         type: "POST",
         data: {
-            systemSettingsData: systemSettingsData,
+            systemSettingsData: systemSettingsDataString,
             azureData: azureData,
             tenantInfo: tenantInfo,
             globalAdminDetails: globalAdminDetails,

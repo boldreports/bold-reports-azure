@@ -6,6 +6,7 @@
     Layout = null;
     var globalAppSettings = _globalAppSettings;
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var reportServerApiUrlForServerEmbed = new ReportServerApiEndPoints(globalAppSettings, true).ReportServerApiUrl();
     var language = CultureInfo.CurrentCulture.Name;
     var isUserAuthenticatedInCurrentTenant = ViewBag.IsUserAuthenticatedInCurrentTenant;
     var itemDetail = ViewBag.itemDetail as ItemDetail;
@@ -32,6 +33,7 @@
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
     var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var isHideReportViewerHeader = ServerAppConfig.IsHideReportViewerHeader;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
     {
@@ -105,6 +107,7 @@
         var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
         var reportServerApiUrl = "@reportServerApiUrl";
+        var reportServerApiUrlForServerEmbed = "@reportServerApiUrlForServerEmbed";
         var filterQuery = "@filterQuery";
         var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
         var pageurl = "@requestUrl.LocalPath";
@@ -164,30 +167,33 @@
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 </head>
 <body>
-    <div id="report_viewer_v2_header">
-        @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
-        {
-            <div id="report_viewer_v2_backarrow_div">
-                <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]"></span>
+    @if (!isHideReportViewerHeader)
+    {
+        <div id="report_viewer_v2_header">
+            @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
+            {
+                <div id="report_viewer_v2_backarrow_div">
+                    <span class="su-arrow-back" id="report_viewer_v2_backarrow" title="[[[Back to All Reports]]]"></span>
+                </div>
+            }
+            <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
+                <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
             </div>
-        }
-        <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
-            <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
+            @if(canEdit){
+                <div id="report_viewer_v2_toolbar">
+                    <span class="su-edit-tailwind" id="report_viewer_v2_edit"></span>
+                </div>
+            }
+            @if (isCommonCacheEnabled){
+                <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_refresh_icon_div">
+                    <span class="su-cache-refresh" id="report_viewer_v2_cache_refresh"></span>
+                </div>
+                <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_reresh_time_div">
+                    <span id="report_viewer_v2_show_time"></span>
+                </div>
+            }
         </div>
-        @if(canEdit){
-            <div id="report_viewer_v2_toolbar">
-                <span class="su-edit-tailwind" id="report_viewer_v2_edit"></span>
-            </div>
-        }
-        @if (isCommonCacheEnabled){
-            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_refresh_icon_div">
-                <span class="su-cache-refresh" id="report_viewer_v2_cache_refresh"></span>
-            </div>
-            <div class="report_viewer_v2_cache_options_div" id="report_viewer_v2_cache_reresh_time_div">
-                <span id="report_viewer_v2_show_time"></span>
-            </div>
-        }
-    </div>
+    }
 
     <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">
     <input id="dashboard_Comment" type="hidden" data-item-id="@ViewBag.ItemId" data-category-name="@categoryName" data-item-name="@itemName">
@@ -214,15 +220,25 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-viewer-utilities.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-v2.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-viewer-v2.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/signature.reportitem.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/signature.dialog.css" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-viewer-ej-dependencies.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-v2.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-viewer-v2.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/signature.reportitem.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/signature.dialog.js"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-viewer-utilities.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-v2.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-viewer-v2.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/signature.reportitem.css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/extensions/signature.dialog.css" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-viewer-ej-dependencies.min.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-v2.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-viewer-v2.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/extension.config.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/signature.reportitem.js"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/extensions/signature.dialog.js"></script>
     </environment>
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     @if (ServerAppConfig.IsSelfHosted)

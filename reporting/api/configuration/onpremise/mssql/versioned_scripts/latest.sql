@@ -1,4 +1,6 @@
-INSERT into [BOLDRS_LogField] (ModuleId,Field,Description,ModifiedDate,IsActive) VALUES (10,N'ReportDesignerSettings.ImportSampleData',N'ReportDesignerSettings.ImportSampleData',GETDATE(),1)
+INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,5,1)
 ;
-ALTER TABLE [BOLDRS_ScheduleDetail] ADD [ScheduleBucketExportInfo] [nvarchar](4000) NULL
+INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,5,1)
+;
+INSERT INTO [BOLDRS_GroupPermission] ([PermissionAccessId],[PermissionEntityId],[ItemId],[SettingsTypeId],[ItemTypeId],[ScopeGroupId],[GroupId],[IsActive]) VALUES (16,17,NULL,NULL,NULL,NULL,1,N'True')
 ;

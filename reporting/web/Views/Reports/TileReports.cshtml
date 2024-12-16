@@ -73,7 +73,7 @@
         var isMarkItemsPublic = @Json.Serialize(globalAppSettings.SystemSettings.IsMarkItemsPublic);
         var isAdmin = @Json.Serialize(Convert.ToBoolean(Context.Session.GetString("IsAdmin")));
         var designerInstallationHelpUrl = "@(ServerAppConfig.AppSettings.Documentation.BaseUri + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DesignerInstallation))";
-        var downloadReportUrl = "@downloadUrl" + "/items/download/report";
+        var downloadReportUrl = "@downloadUrl" + "/items/download";
         var saveSortUrl = "@Url.Action("SaveSort", "Reports")";
         var saveCategorySortUrl = "@Url.Action("SaveCategorySort", "Reports")";
         var sortlabel = "@sortLabel";
@@ -456,7 +456,7 @@
                                                         </span>
                                                     </li>
                                                     <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanDownload && !dashboardItem.IsLocked" ng-hide="isHideIconBasedOnDnsName">
-                                                        <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
+                                                        <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.ItemType, dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
                                                             <i class="su su-download"></i>
                                                             <span>[[[Download Report]]]</span>
                                                         </span>

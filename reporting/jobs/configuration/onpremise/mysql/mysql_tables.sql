@@ -691,7 +691,7 @@ CREATE TABLE  {database_name}.BOLDRS_DataSourceDetail(
 CREATE TABLE  {database_name}.BOLDRS_ScheduleParameter(
 	Id int NOT NULL AUTO_INCREMENT,
     ScheduleId char(38) NOT NULL,
-    Parameter varchar(4000) NOT NULL,
+    Parameter text NOT NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))
 ;
@@ -1210,6 +1210,10 @@ INSERT into  {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Per
 INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(2,5,1)
 ;
 INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(3,5,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(17,5,1)
+;
+INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES(18,5,1)
 ;
 
 INSERT into  {database_name}.BOLDRS_PermissionLogType (Name,IsActive) VALUES ( 'PermissionAdded',1)
