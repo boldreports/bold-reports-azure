@@ -1,0 +1,85 @@
+@{
+    var globalAppSettings = _globalAppSettings;
+    var RuleData = (globalAppSettings.SystemSettings.NetworkSettings != null && globalAppSettings.SystemSettings.NetworkSettings.IPWhitelistingRules != null) ? globalAppSettings.SystemSettings.NetworkSettings.IPWhitelistingRules : new List<IPWhitelistingRules>();
+    var currentUserIP = Context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+    var networkSettingsIsEnabled = globalAppSettings.SystemSettings.NetworkSettings != null && globalAppSettings.SystemSettings.NetworkSettings.IsEnabled != null ? globalAppSettings.SystemSettings.NetworkSettings.IsEnabled : false;
+}
+
+<script>
+    var dataSourceRule = @(RuleData != null ? Html.Raw(Json.Serialize(RuleData)) : "[]");
+</script>
+<script type="text/x-jsrender" id="application-edit">
+    <div class="item-header">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="edit">
+            <i class="su su-edit"></i>
+        </a>
+    </div>
+</script>
+<script type="text/x-jsrender" id="application-delete">
+    <div class="item-header">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="delete">
+            <i class="su su-delete"></i>
+        </a>
+    </div>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#rulesgrid").ejGrid({
+            gridLines: ej.Grid.GridLines.None,
+            dataSource: dataSourceRule,
+            allowSorting: true,
+            allowSearching: false,
+            allowPaging: true,
+            enableAltRow: false,
+            allowFiltering: false,
+            pageSettings: { pageSize: 10 },
+            enableHover: true,
+            rowDataBound: function () {
+                $('[data-toggle="tooltip"]').tooltip({ container: $('body') });
+            },
+            dataBound: function () {
+                $('[data-toggle="tooltip"]').tooltip({ container: $('body') });
+            },
+            columns: [
+                { field: 'RuleName', headerText: '[[[Name]]]', width: 90, allowSorting: true, allowFiltering: false },
+                { field: 'IPAddress', headerText: '[[[IP Address]]]', width: 70, allowSorting: true, allowFiltering: false },
+                { field: 'IPAddressType', headerText: '[[[Type]]]', width: 60, allowSorting: true, allowFiltering: false },
+                { headerText: '', width: 10, template: true, templateID: "#application-edit" },
+                { headerText: '', width: 15, template: true, templateID: "#application-delete" },
+            ]
+        });
+    });
+</script>
+
+<div id="network-settings-body" class="admin-page-body">
+    <div class="col-xs-12 no-padding field-container-dashboard">
+        <div class="network-authentication col-xs-12 no-padding">
+            <div class="material-switch rule-info inline-align">
+                <div class="info-label">
+                    @Html.CheckBox("restrict-ipwhitelist-enabled", (bool)@networkSettingsIsEnabled, new { @class = "material-checkbox" })
+                    <label for="restrict-ipwhitelist-enabled" id="restrict-ipwhitelist-label">
+                        [[[Enable IP Whitelisting]]]
+                    </label>
+                </div>
+            </div>
+            <div class="info-message">
+                <span>[[[Enabling this option will permit requests from whitelisted IP addresses. However, activating this feature won't immediately enforce IP whitelisting. Please specify the necessary IP address to be whitelisted and click on the save option to apply the changes.]]]</span>
+            </div>
+            <div class="whitelisting-info">
+                <div class="ipaddress-info pull-left">
+                    <span>@string.Format("[[[Please add your current IP address {0} to the whitelisting. Once added all required IP address please save this changes]]]", currentUserIP)</span>
+                </div>
+                <div id="create-rule" class="pull-right">
+                    <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="tooltip" id="add-rule-btn" data-placement="top" title="Add new Rule">
+                        <span>[[[Add IP Address]]]</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 no-padding dialog-override">
+        <div id="rulesgrid">
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("_AddRulesDialog")
