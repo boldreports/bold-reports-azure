@@ -2,6 +2,7 @@
     Layout = null;
     var displayName = GlobalAppSettings.BrandingDisplayName;
     var isBoldBI = GlobalAppSettings.BrandingDisplayName == AppBranding.Bold.DisplayName;
+    var configurationMode = GlobalAppSettings.SystemSettings.UseSingleTenantDb != null && (bool)GlobalAppSettings.SystemSettings.UseSingleTenantDb ? (int)ConfigurationMode.SingleDatabaseForAllTenants : (int)ConfigurationMode.DatabasePerTenant;
 }
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,7 @@
         var validateAutoDeploymentUrl = "@Url.Action("ValidateAutoDeployment", "ServerConfiguration")";
         var setSystemSettingsUrl = "@Url.Action("SetSystemSettings", "ServerConfiguration")";
         var startUpUrl = "@Url.Action("Startup", "ServerConfiguration")";
+        var configurationMode = "@configurationMode";
     </script>
     <style>
         #loader {

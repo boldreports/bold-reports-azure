@@ -19,6 +19,8 @@
     var productBrandingName = isBoldBI ? CloudAppConfig.Branding.ProductSpecificBranding.BrandingBIName : CloudAppConfig.Branding.ProductSpecificBranding.BrandingReportsName;
     var welcomeMessageTemplate = CloudAppConfig.Branding.IsWhiteLabelling ? T["Welcome to {0}"].Value : T["Welcome to {0} Enterprise Server"].Value;
     var welcomeMessage = string.Format(welcomeMessageTemplate, $"<span>{productBrandingName}</span>");
+    var useSingleTenantDb = GlobalAppSettings.SystemSettings.UseSingleTenantDb != null && (bool)GlobalAppSettings.SystemSettings.UseSingleTenantDb;
+    var tenantSchema = GlobalAppSettings.SystemSettings.SchemaName ?? string.Empty;
 }
 <!DOCTYPE html>
 <html>
@@ -63,7 +65,7 @@
         var updateLicenseKeyUrl = "@Url.Action("ApplyLicenseKey", "ServerConfiguration")";
         var validateLicenseKeyUrl = "@Url.Action("ValidateLicenseKey", "ServerConfiguration")";
         var validateStartupUrl = "@Url.Action("ValidateStartup", "ServerConfiguration")";
-
+        var useSingleTenantDb = "@useSingleTenantDb".toLowerCase() === "true";
         var storageType = "@ViewBag.StorageType";
 
         var serverSetupImageUrl = "@Url.Content("~/images/" + GlobalAppSettings.Branding + "/application/server-startup-image.svg")";
@@ -77,6 +79,7 @@
         var isBoldReports = "@(GlobalAppSettings.BrandingDisplayName == AppBranding.BoldReports.DisplayName)".toLowerCase() == "true";
         var connectionType = "@connectionType";
         var storageAccountName = "@storageAccountName";
+        var tenantSchema = "@tenantSchema";
         // Removing Html.Raw may lead to encoded value for access key in Azure App Service.
         var accessKey = "@Html.Raw(accessKey)";
         var blobServiceEndpoint = "@blobServiceEndpoint";
@@ -237,6 +240,7 @@
                     </div>
                     @await Html.PartialAsync("_DatabaseConfiguration")
                     @await Html.PartialAsync("_FileStorage")
+                    @await Html.PartialAsync("_ConfigurationMode")
                     @await Html.PartialAsync("_UserAccount")
                     
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 display-none" id="progress-parent-container">

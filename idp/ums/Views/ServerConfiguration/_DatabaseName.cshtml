@@ -45,7 +45,7 @@ $(document).on("keyup", "#txt-dbname,#server-dbname,#imdbname", function () {
 </div>
 
 <div id="simple_tab_db_name" class="">
-    <div class="txt-holder database-name center-align">
+    <div class="txt-holder database-name center-align" id="id-database-name">
         <input type="text" id="txt-dbname" name="dbname" class="" placeholder="@T["Database name"]" />
         <span class="startup-validation validation-txt-errors"></span>
             <div class="info-content txt-box-info db-name-info">@dbnameHelp</div>
@@ -89,7 +89,7 @@ $(document).on("keyup", "#txt-dbname,#server-dbname,#imdbname", function () {
 </div>
 
 <div id="advanced_tab_db_name">
-    <div class="txt-holder database-name center-align">
+    <div class="txt-holder database-name center-align" id="server-database-name">
         <input type="text" id="server-dbname" name="serverdbname" class="" placeholder="@T["Server database name"]" />
         <span class="startup-validation validation-txt-errors"></span>
         <div class="info-content txt-box-info server-db-info">@Html.Raw(string.Format(T["This is where we store the {0}{1}{2}, users, and their resource access permissions."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
@@ -103,7 +103,7 @@ $(document).on("keyup", "#txt-dbname,#server-dbname,#imdbname", function () {
         </div>
     </div>
     <div class="sql-server-existing-db center-align">
-        <div class="txt-holder  text-wrap database-dropdown-margin center-align">
+        <div class="txt-holder  text-wrap database-dropdown-margin center-align" id="sql-server-database-name">
             <input type="text" id="server-existing-dbname" name="serverexistingdbname" class="" placeholder="@T["Server database name"]" />
             <span class="startup-validation validation-txt-errors"></span>
             <div class="info-content txt-box-info server-db-info">@Html.Raw(string.Format(T["This is where we store the {0}{1}{2}, users, and their resource access permissions."].Value, "<span class='tenant-content'>", helpLinkData, "</span>"))
@@ -123,7 +123,7 @@ $(document).on("keyup", "#txt-dbname,#server-dbname,#imdbname", function () {
         <span class="startup-validation validation-txt-errors"></span>
         <div class="info-content txt-box-info imdb-info">@T["This is where we store the authentication information and data extracted from REST data sources."]</div>
     </div>
-    <div class="sql-server-existing-db center-align data-store-existing-db-hide">
+    <div class="sql-server-existing-db center-align data-store-existing-db-hide" id="sql-datastore-database-name">
         <div class="txt-holder  text-wrap database-dropdown-margin center-align">
             <input type="text" id="imdb-existing-dbname" name="designerexistingdbname" class="" placeholder="@T["Datastore database name"]" />
             <span class="startup-validation validation-txt-errors"></span>

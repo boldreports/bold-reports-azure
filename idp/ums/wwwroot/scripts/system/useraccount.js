@@ -141,44 +141,53 @@
             else {
                 if ($(".admin-account-fields-container").valid()) {
                     $(".startup-waiting-popup").removeClass("storage-page-content");
-                    $("#system-settings-user-account-container").hide();
+                    $("#system-settings-user-account-container").hide(); 
                     $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
-                    $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourSite).slideDown();
-                    $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourSite2 + displayName + " " + window.Server.App.LocalizationContent.SiteLetter).slideDown();
-                    $("#help-link").attr("href", databaseConfigurationUrl);
-                    $("#system-settings-db-selection-container").show();
-                    $("#db-content-holder,#db-config-submit").show();
-                    $("#sql-existing-db-submit, .sql-server-existing-db").hide();
-                    autoFocus("txt-servername");
-                    $("#advanced_tab_db_name").hide();
-                    prefillDbNames();
-                    if (!isBoldBI) {
-                        hideDataStore();
-                    }
+                    if (useSingleTenantDb) {
+                        $(".startup-waiting-popup").addClass("storage-page-content");
+                        $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration).slideDown();
+                        $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration2 + displayName + ".").slideDown();
+                        $("#help-link").attr("href", databaseConfigurationUrl);
 
-                    $(".schema-prefix-hide").removeClass("hide").addClass("show");
-                    if (!IsBiPrefixSchema) {
-                        $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                        $("#system-settings-configuration-mode-container").show();
+                        $(".report-content").hide();
                     }
+                    else {
+                        $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourSite).slideDown();
+                        $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourSite2 + displayName + " " + window.Server.App.LocalizationContent.SiteLetter).slideDown();
+                        $("#help-link").attr("href", databaseConfigurationUrl);
+                        $("#system-settings-db-selection-container").show();
+                        $("#db-content-holder,#db-config-submit").show();
+                        $("#sql-existing-db-submit, .sql-server-existing-db").hide();
+                        autoFocus("txt-servername");
+                        $("#advanced_tab_db_name").hide();
+                        prefillDbNames();
+                        if (!isBoldBI) {
+                            hideDataStore();
+                        }
 
-                    if (IsReportsPrefixSchema && !isBoldBI) {
                         $(".schema-prefix-hide").removeClass("hide").addClass("show");
-                    }
+                        if (!IsBiPrefixSchema) {
+                            $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                        }
 
-                    var obj = document.getElementById("database-type");
-                    var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
-                    if (isBoldReports && !IsOracleSupportReports) {
-                        itemsList[3].style.display = "none";
-                    }
-                    else if (isBoldReports && IsOracleSupportReports) {
-                        itemsList[3].style.display = "";
-                    }
+                        if (IsReportsPrefixSchema && !isBoldBI) {
+                            $(".schema-prefix-hide").removeClass("hide").addClass("show");
+                        }
 
-                    if (isBoldBI && !IsOracleSupportBi) {
-                        itemsList[3].style.display = "none";
-                    }
-                    else if (isBoldBI && IsOracleSupportBi) {
-                        itemsList[3].style.display = "";
+                        var obj = document.getElementById("database-type");
+                        var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
+                        if (isBoldReports && !IsOracleSupportReports) {
+                            itemsList[3].style.display = "none";
+                        } else if (isBoldReports && IsOracleSupportReports) {
+                            itemsList[3].style.display = "";
+                        }
+
+                        if (isBoldBI && !IsOracleSupportBi) {
+                            itemsList[3].style.display = "none";
+                        } else if (isBoldBI && IsOracleSupportBi) {
+                            itemsList[3].style.display = "";
+                        }
                     }
                 }
                 $('.popover').hide();

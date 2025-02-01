@@ -64,7 +64,7 @@ $(document).ready(function () {
                 $(".schema-prefix-hide").removeClass("hide").addClass("show");
             }
         }
-
+        var configurationModeType = getRadioButtonValue('ConfigurationMode');
         if ($(this).attr("id") == "advanced-tab") {
             var databaseType = getDropDownValue("database-type");
             if (databaseType === "Oracle") {
@@ -79,6 +79,11 @@ $(document).ready(function () {
                 if (!isSiteCreation) {
                     $("#label_txt-dbname").html(window.Server.App.LocalizationContent.IDDatabaseName);
                     $("#label_database-name").html(window.Server.App.LocalizationContent.IDDatabaseName);
+                    if (configurationModeType !== undefined && configurationModeType === "0")
+                    {
+                        $("#label_txt-dbname").html(window.Server.App.LocalizationContent.DatabaseName);
+                        $("#label_database-name").html(window.Server.App.LocalizationContent.DatabaseName);
+                    }
                 }
 
                 $("#simple_tab_db_name").hide();
@@ -87,7 +92,11 @@ $(document).ready(function () {
                 if (!isBoldBI && isSiteCreation && isBoldReportsTenantType() || !isBoldBI && !isSiteCreation) {
                     hideDataStore();
                 }
-                else {
+                else if (configurationModeType !== undefined && configurationModeType === "0"){
+                    hideDataStore();
+                }
+                else
+                {
                     showDataStore();
                 }
 
@@ -127,11 +136,40 @@ $(document).ready(function () {
                     $(".ser-schema-prefix-hide").removeClass("hidden").addClass("show");
                 }
 
-                itemsList[3].style.display = "none";
+                if (!(configurationModeType !== undefined && configurationModeType === "0")) {
+                    itemsList[3].style.display = "none";
+                }
                 isSimpleModeValue = "false";
-            }   
+            }
 
-            itemsList[3].style.display = "none";
+            if (!(configurationModeType !== undefined && configurationModeType === "0")) {
+                itemsList[3].style.display = "none";
+            }
+            if (configurationModeType !== undefined && configurationModeType === "0")
+            {
+                $("#server-database-name").hide();
+            }
+            if (isSiteCreation) {
+                ResizeHeightForDOM();
+            }
+            if (isSiteCreation) {
+                if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
+
+                if (isBoldReportsTenantType() && (!IsReportsPrefixSchema)) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
+            }
+            else {
+                if (!IsBiPrefixSchema) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
+
+                if (IsReportsPrefixSchema && !isBoldBI) {
+                    $(".schema-prefix-hide").removeClass("hide").addClass("show");
+                }
+            }
         }
         else {
             $("#default-tab").addClass("active");
@@ -213,28 +251,37 @@ $(document).ready(function () {
                     }
                 }
             }
-        }
-        if (isSiteCreation) {
-            ResizeHeightForDOM();
-        }
+            
+            if (isSiteCreation) {
+                ResizeHeightForDOM();
+            }
+            if (isSiteCreation) {
+                if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
 
-        if (isSiteCreation) {
-            if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
+                if (isBoldReportsTenantType() && (!IsReportsPrefixSchema)) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
+            }
+            else {
+                if (!IsBiPrefixSchema) {
+                    $(".schema-prefix-hide").removeClass("show").addClass("hide");
+                }
+
+                if (IsReportsPrefixSchema && !isBoldBI) {
+                    $(".schema-prefix-hide").removeClass("hide").addClass("show");
+                }
+            }
+
+            if (configurationModeType !== undefined && configurationModeType === "0")
+            {
                 $(".schema-prefix-hide").removeClass("show").addClass("hide");
             }
-
-            if (isBoldReportsTenantType() && (!IsReportsPrefixSchema)) {
-                $(".schema-prefix-hide").removeClass("show").addClass("hide");
-            }
         }
-        else {
-            if (!IsBiPrefixSchema) {
-                $(".schema-prefix-hide").removeClass("show").addClass("hide");
-            }
 
-            if (IsReportsPrefixSchema && !isBoldBI) {
-                $(".schema-prefix-hide").removeClass("hide").addClass("show");
-            }
+        if ((configurationModeType !== undefined && configurationModeType === "0")) {
+            itemsList[3].style.display = "none";
         }
     });
 

@@ -81,7 +81,7 @@ var SignatureDialog = (function () {
         }
         this.renderDialog();
         this.renderBody();
-        this.wiredDesignerEvents();
+        this.wiredEvents();
         this.dlgInstance.show();
         this.setSign(dialogInfo.imageData);
     };
@@ -109,18 +109,14 @@ var SignatureDialog = (function () {
         target.append(labelDiv);
     };
     SignatureDialog.prototype.appendCropButton = function (target) {
-        var cropBtn = this.buildElement('div', 'e-signDialog-cropIconDiv', '', {}, {});
-        var cropDiv = this.buildElement('div', 'e-signDialog-cropIconChildDiv e-signDialog-cropIcon-disable', '', {}, {});
-        var cropText = this.buildElement('span', 'e-signDialog-cropIcon', '', {}, { 'title': this.getLocale('crop') });
-        cropDiv.append(cropText);
-        cropBtn.append(cropDiv);
+        var cropBtn = this.buildElement('div', 'e-signDialog-cropIconDiv e-signDialog-cropIcon-disable', '', {}, { 'title': this.getLocale('crop'), 'aria-label': this.getLocale('arialabelcrop'), 'tabindex': '0', 'role': 'button', 'aria-disabled': 'true' });
         cropBtn.bind('click', $.proxy(this.updateCropState, this));
         target.append(cropBtn);
     };
     SignatureDialog.prototype.appendStrokeColor = function (target) {
         var strokeColorDiv = this.buildElement('div', 'e-signDialog-strokeColorDiv', '', {}, {});
-        var strokeColorLabel = this.buildElement('span', 'e-rptdesigner-add-label e-signDialog-text-span', this.getLocale('strokeColor'), {}, { type: 'label', 'title': this.getLocale('strokeColor') });
-        var strokeColorTag = this.buildElement('div', 'e-signDialog-strokeColorTag', '', {}, {});
+        var strokeColorLabel = this.buildElement('span', 'e-rptdesigner-add-label e-signDialog-text-span', this.getLocale('strokeColor'), {}, { 'id': this.id + '_stroke_color_label', type: 'label', 'title': this.getLocale('strokeColor'), 'aria-label': this.getLocale('strokeColor') });
+        var strokeColorTag = this.buildElement('div', 'e-signDialog-strokeColorTag', '', {}, { 'aria-labelledby': this.id + '_stroke_color_label', 'tabindex': '0' });
         var strokeColor = this.buildElement('input', 'e-signDialog-strokeColor', '', null, {});
         this.strokeColorObj = new ejs.inputs.ColorPicker({
             value: '#000000',
@@ -138,7 +134,7 @@ var SignatureDialog = (function () {
     };
     SignatureDialog.prototype.appendStrokeWidth = function (target) {
         var strokeWidth = this.buildElement('div', 'e-signDialog-strokeWidthDiv', '', {}, {});
-        var drpdwnLbl = this.buildElement('span', 'e-rptdesigner-add-label e-signDialog-text-span', this.getLocale('strokeWidth'), {}, { type: 'label', 'title': this.getLocale('strokeWidth') });
+        var drpdwnLbl = this.buildElement('span', 'e-rptdesigner-add-label e-signDialog-text-span', this.getLocale('strokeWidth'), {}, { 'id': this.id + '_stroke_width_label', type: 'label', 'title': this.getLocale('strokeWidth'), 'aria-label': this.getLocale('strokeWidth') });
         var drpdwnTag = this.buildElement('div', 'e-signDialog-drpDwnTag', '', {}, {});
         var dropDown = this.buildElement('input', 'e-field', '', {}, { type: 'text' });
         this.dropDownObj = new ejs.dropdowns.DropDownList({
@@ -148,10 +144,10 @@ var SignatureDialog = (function () {
             value: 2,
             enabled: true,
             placeHolder: '2',
-            cssClass: 'e-rptdesigner-param-assign e-designer-ejwidgets e-rptdesigner-filter e-designer-dropdownlist e-standard',
-            allowFiltering: true,
+            cssClass: 'e-rptdesigner-param-assign e-designer-ejwidgets e-designer-dropdownlist',
             popupHeight: '180px',
-            change: $.proxy(this.onLineWidthChange, this)
+            change: $.proxy(this.onLineWidthChange, this),
+            htmlAttributes: { 'aria-labelledby': this.id + '_stroke_width_label' }
         });
         drpdwnTag.append(dropDown);
         strokeWidth.append(drpdwnLbl, drpdwnTag);
@@ -159,9 +155,7 @@ var SignatureDialog = (function () {
         target.append(strokeWidth);
     };
     SignatureDialog.prototype.appendClearBtn = function (target) {
-        var clearBtn = this.buildElement('div', 'e-signDialog-btn-clear', '', {}, {});
-        var textSpan = this.buildElement('span', 'e-btntxt e-rptdesigner-add-btn e-signDialog-text-span', this.getLocale('clear'), {}, { 'title': this.getLocale('clear') });
-        clearBtn.append(textSpan);
+        var clearBtn = this.buildElement('div', 'e-rptdesigner-add-btn e-signDialog-btn-clear e-signDialog-text-span', this.getLocale('clear'), {}, { 'title': this.getLocale('clear'), 'aria-label': this.getLocale('arialabelclear'), 'tabindex': '0', 'role': 'button' });
         clearBtn.bind('click', $.proxy(this.clearSignature, this));
         target.append(clearBtn);
     };
@@ -178,6 +172,8 @@ var SignatureDialog = (function () {
         canvas.className = 'e-signDialog-canvas';
         canvas.width = this.initialWdth;
         canvas.height = this.initialHgt;
+        canvas.setAttribute('tabindex', '0');
+        canvas.setAttribute('aria-label', this.getLocale('arialabelcanvas'));
         context.lineWidth = 2;
         context.strokeStyle = '#000000';
         canvasContDiv.append(canvas, cropBox);
@@ -237,11 +233,12 @@ var SignatureDialog = (function () {
     };
     SignatureDialog.prototype.enableCropIcon = function () {
         var cropBox = this.container.find('.e-signDialog-cropBox');
-        var cropDiv = this.container.find('.e-signDialog-cropIconChildDiv');
+        var cropDiv = this.container.find('.e-signDialog-cropIconDiv');
         if (cropBox.hasClass('crop-disable')) {
             cropBox.removeClass('crop-disable');
             cropBox.addClass('crop-enable');
             cropDiv.removeClass('e-signDialog-cropIcon-disable');
+            cropDiv.attr('aria-disabled', 'false');
             cropDiv.addClass('e-signDialog-cropIcon-enable');
             var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
             if (canvas) {
@@ -252,13 +249,14 @@ var SignatureDialog = (function () {
     };
     SignatureDialog.prototype.disableCropIcon = function () {
         var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
-        var cropDiv = this.container.find('.e-signDialog-cropIconChildDiv');
+        var cropDiv = this.container.find('.e-signDialog-cropIconDiv');
         var cropBox = this.container.find('.e-signDialog-cropBox');
         if (cropBox.hasClass('crop-enable')) {
             cropBox.removeClass('crop-enable');
             cropBox.addClass('crop-disable');
             cropDiv.addClass('e-signDialog-cropIcon-disable');
             cropDiv.removeClass('e-signDialog-cropIcon-enable');
+            cropDiv.attr('aria-disabled', 'true');
         }
         cropBox.css({ width: '0px', height: '0px', display: 'none' });
         canvas.style.cursor = 'default';
@@ -374,7 +372,8 @@ var SignatureDialog = (function () {
                 width: '0px',
                 height: '0px',
                 left: this.cropStartX + "px",
-                top: this.cropStartY + "px"
+                top: this.cropStartY + "px",
+                pointerEvents: 'none'
             });
         }
     };
@@ -408,7 +407,8 @@ var SignatureDialog = (function () {
             width: Math.abs(currentX - this.cropStartX) + "px",
             height: Math.abs(currentY - this.cropStartY) + "px",
             left: Math.min(this.cropStartX, currentX) + "px",
-            top: Math.min(this.cropStartY, currentY) + "px"
+            top: Math.min(this.cropStartY, currentY) + "px",
+            pointerEvents: 'none'
         });
     };
     SignatureDialog.prototype.clearSignature = function () {
@@ -440,7 +440,7 @@ var SignatureDialog = (function () {
         this.dlgInstance.hide();
     };
     SignatureDialog.prototype.resetValues = function () {
-        this.unwiredDesignerEvents();
+        this.unwiredEvents();
         if (this.hasViewerInstance(this.instance)) {
             this.instance._destroyEJ2Objects(this.container.find('.e-dlg-content .e-signDialog-root-container'));
         }
@@ -458,7 +458,7 @@ var SignatureDialog = (function () {
     };
     SignatureDialog.prototype.updateSize = function () {
     };
-    SignatureDialog.prototype.wiredDesignerEvents = function () {
+    SignatureDialog.prototype.wiredEvents = function () {
         var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
         canvas.addEventListener('mousedown', $.proxy(this.onMouseDown, this));
         canvas.addEventListener('mousemove', $.proxy(this.onMouseMove, this));
@@ -469,7 +469,7 @@ var SignatureDialog = (function () {
         canvas.addEventListener('touchmove', $.proxy(this.onMouseMove, this));
         canvas.addEventListener('touchend', $.proxy(this.onMouseUp, this));
     };
-    SignatureDialog.prototype.unwiredDesignerEvents = function () {
+    SignatureDialog.prototype.unwiredEvents = function () {
         var canvas = this.container.find('#' + this.id + '_signDialog_canvas')[0];
         canvas.removeEventListener('mousedown', $.proxy(this.onMouseDown, this));
         canvas.removeEventListener('mousemove', $.proxy(this.onMouseMove, this));
@@ -527,6 +527,21 @@ var SignatureDialog = (function () {
                     return locale.crop;
                 }
                 return defaultLocale.crop;
+            case 'arialabelcanvas':
+                if (locale && locale.ariaLabelCanvas) {
+                    return locale.ariaLabelCanvas;
+                }
+                return defaultLocale.ariaLabelCanvas;
+            case 'arialabelcrop':
+                if (locale && locale.ariaLabelCrop) {
+                    return locale.ariaLabelCrop;
+                }
+                return defaultLocale.ariaLabelCrop;
+            case 'arialabelclear':
+                if (locale && locale.ariaLabelClear) {
+                    return locale.ariaLabelClear;
+                }
+                return defaultLocale.ariaLabelClear;
         }
         return text;
     };
@@ -633,7 +648,10 @@ SignatureDialog.Locale['en-US'] = {
     title: 'Signature',
     strokeColor: 'Stroke Color',
     strokeWidth: 'Stroke Width',
-    crop: 'Crop'
+    crop: 'Crop',
+    ariaLabelCanvas: 'Canvas area to draw your signature',
+    ariaLabelCrop: 'Crop the signature',
+    ariaLabelClear: 'Clear the signature'
 };
 SignatureDialog.Locale['ar-AE'] = {
     cancel: 'إلغاء',
@@ -643,7 +661,10 @@ SignatureDialog.Locale['ar-AE'] = {
     title: 'التوقيع',
     strokeColor: 'لون الخط',
     strokeWidth: 'عرض الخط',
-    crop: 'اقتصاص'
+    crop: 'اقتصاص',
+    ariaLabelCanvas: 'منطقة اللوحة لرسم توقيعك',
+    ariaLabelCrop: 'قص التوقيع',
+    ariaLabelClear: 'مسح التوقيع'
 };
 SignatureDialog.Locale['fr-FR'] = {
     cancel: 'Annuler',
@@ -653,7 +674,10 @@ SignatureDialog.Locale['fr-FR'] = {
     clear: 'Effacer',
     strokeColor: 'Couleur du trait',
     strokeWidth: 'Épaisseur du trait',
-    crop: 'Recadrer'
+    crop: 'Recadrer',
+    ariaLabelCanvas: 'Zone de toile pour dessiner votre signature',
+    ariaLabelCrop: 'Rogner la signature',
+    ariaLabelClear: 'Effacer la signature'
 };
 SignatureDialog.Locale['de-DE'] = {
     cancel: 'Abbrechen',
@@ -663,7 +687,10 @@ SignatureDialog.Locale['de-DE'] = {
     clear: 'Löschen',
     strokeColor: 'Strichfarbe',
     strokeWidth: 'Strichstärke',
-    crop: 'Zuschneiden'
+    crop: 'Zuschneiden',
+    ariaLabelCanvas: 'Leinwandbereich zum Zeichnen Ihrer Unterschrift',
+    ariaLabelCrop: 'Unterschrift zuschneiden',
+    ariaLabelClear: 'Unterschrift löschen'
 };
 SignatureDialog.Locale['en-AU'] = {
     cancel: 'Cancel',
@@ -673,7 +700,10 @@ SignatureDialog.Locale['en-AU'] = {
     title: 'Signature',
     strokeColor: 'Stroke Color',
     strokeWidth: 'Stroke Width',
-    crop: 'Crop'
+    crop: 'Crop',
+    ariaLabelCanvas: 'Canvas area to draw your signature',
+    ariaLabelCrop: 'Crop the signature',
+    ariaLabelClear: 'Clear the signature'
 };
 SignatureDialog.Locale['en-CA'] = {
     cancel: 'Cancel',
@@ -683,7 +713,10 @@ SignatureDialog.Locale['en-CA'] = {
     title: 'Signature',
     strokeColor: 'Stroke Color',
     strokeWidth: 'Stroke Width',
-    crop: 'Crop'
+    crop: 'Crop',
+    ariaLabelCanvas: 'Canvas area to draw your signature',
+    ariaLabelCrop: 'Crop the signature',
+    ariaLabelClear: 'Clear the signature'
 };
 SignatureDialog.Locale['it-IT'] = {
     cancel: 'Annulla',
@@ -693,7 +726,10 @@ SignatureDialog.Locale['it-IT'] = {
     clear: 'Cancella',
     strokeColor: 'Colore tratto',
     strokeWidth: 'Spessore tratto',
-    crop: 'Ritaglia'
+    crop: 'Ritaglia',
+    ariaLabelCanvas: 'Area della tela per disegnare la tua firma',
+    ariaLabelCrop: 'Ritaglia la firma',
+    ariaLabelClear: 'Cancella la firma'
 };
 SignatureDialog.Locale['es-ES'] = {
     cancel: 'Cancelar',
@@ -703,7 +739,10 @@ SignatureDialog.Locale['es-ES'] = {
     clear: 'Borrar',
     strokeColor: 'Color del trazo',
     strokeWidth: 'Ancho del trazo',
-    crop: 'Recortar'
+    crop: 'Recortar',
+    ariaLabelCanvas: 'Área de lienzo para dibujar tu firma',
+    ariaLabelCrop: 'Recortar la firma',
+    ariaLabelClear: 'Borrar la firma'
 };
 SignatureDialog.Locale['fr-CA'] = {
     cancel: 'Annuler',
@@ -713,7 +752,10 @@ SignatureDialog.Locale['fr-CA'] = {
     clear: 'Effacer',
     strokeColor: 'Couleur du trait',
     strokeWidth: 'Épaisseur du trait',
-    crop: 'Recadrer'
+    crop: 'Recadrer',
+    ariaLabelCanvas: 'Zone de canevas pour dessiner votre signature',
+    ariaLabelCrop: 'Recadrer la signature',
+    ariaLabelClear: 'Effacer la signature'
 };
 SignatureDialog.Locale['tr-TR'] = {
     cancel: 'İptal',
@@ -723,7 +765,10 @@ SignatureDialog.Locale['tr-TR'] = {
     clear: 'Temizle',
     strokeColor: 'Çizgi Rengi',
     strokeWidth: 'Çizgi Kalınlığı',
-    crop: 'Kırp'
+    crop: 'Kırp',
+    ariaLabelCanvas: 'İmzanızı çizmek için tuval alanı',
+    ariaLabelCrop: 'İmzayı kırp',
+    ariaLabelClear: 'İmzayı temizle'
 };
 SignatureDialog.Locale['zh-CN'] = {
     cancel: '取消',
@@ -733,5 +778,8 @@ SignatureDialog.Locale['zh-CN'] = {
     clear: '清除',
     strokeColor: '笔触颜色',
     strokeWidth: '笔触宽度',
-    crop: '裁剪'
+    crop: '裁剪',
+    ariaLabelCanvas: '签名绘制区域',
+    ariaLabelCrop: '裁剪签名',
+    ariaLabelClear: '清除签名'
 };
