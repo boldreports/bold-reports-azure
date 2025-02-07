@@ -31,6 +31,7 @@
     var canShowSession = ServerAppConfig.IsSelfHosted && (ViewBag.CanHideSessionInEmbed == null ? true : ViewBag.CanHideSessionInEmbed != true);
     var categoryName = HttpUtility.HtmlDecode(ViewBag.itemDetail.CategoryName);
     var itemName = HttpUtility.HtmlDecode(ViewBag.itemDetail.Name);
+    var toolBarRenderMode = ServerAppConfig.ToolBarRenderMode.ToLower();
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
 
     if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
@@ -693,6 +694,13 @@
             loadReportView();
         } else {
             filterParameters = removeLabels(filterParameters);
+            var _popupHeight = '250px';
+            var _itemWidth = '320px';
+            if('@toolBarRenderMode' == "classic")
+            {
+                _popupHeight = '152px';
+                _itemWidth = '185px';
+            }
                 $("#sync_report_viewer")
                 .boldReportViewer(
                     {
@@ -714,8 +722,8 @@
                         fontNames: customFontsName,
 					    parameterSettings: {
                               labelWidth: 'auto',
-                              popupHeight: '250px',
-                              itemWidth: '320px'
+                              popupHeight: _popupHeight,
+                              itemWidth: _itemWidth
                         },
                         toolbarSettings: {
                             items: ej.ReportViewer.ToolbarItems.All & ~ej.ReportViewer.ToolbarItems.Find & ~ej.ReportViewer.ToolbarItems.Analytics
@@ -763,6 +771,13 @@
                 } else {
                     window.location.href = ((window.location.origin + window.location.pathname));
                 }
+                var _popupHeight = '250px';
+                var _itemWidth = '320px';
+                if('@toolBarRenderMode' == "classic")
+                {
+                    _popupHeight = '152px';
+                    _itemWidth = '185px';
+                }
                 $("#sync_report_viewer")
                     .boldReportViewer({
                         reportServiceUrl: "@viewerUrl",
@@ -782,8 +797,8 @@
                         parameters: parameter,
 						 parameterSettings: {
                                labelWidth: 'auto',
-                               popupHeight: '250px',
-                               itemWidth: '320px'
+                               popupHeight: _popupHeight,
+                               itemWidth: _itemWidth
                         },
                         toolbarSettings: {
                             items: ej.ReportViewer.ToolbarItems.All & ~ej.ReportViewer.ToolbarItems.Find & ~ej.ReportViewer.ToolbarItems.Analytics

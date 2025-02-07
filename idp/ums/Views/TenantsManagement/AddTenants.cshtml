@@ -15,13 +15,15 @@
     var reportScheme = baseUri.Scheme;
     var biDomain = baseUri.Authority;
     var reportDomain = baseUri.Authority;
+    var useSingleTenantDb = GlobalAppSettings.SystemSettings.UseSingleTenantDb != null && (bool)GlobalAppSettings.SystemSettings.UseSingleTenantDb;
+    var tenantSchema = GlobalAppSettings.SystemSettings.SchemaName ?? string.Empty;
     var canDisableEmailSettingsOption = 
         ViewBag.MailSettings == null || 
         string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsHost) || 
         ViewBag.MailSettings.MailSettingsPort <= 0 ||
-        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsSenderName) || 
-        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsAddress) || 
-        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsUserName) || 
+        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsSenderName) ||
+        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsAddress) ||
+        string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsUserName) ||
         string.IsNullOrWhiteSpace(ViewBag.MailSettings.MailSettingsPassword);
     if (ViewBag.IsBoldBIMultiTenant && !ViewBag.IsBoldReportsMultiTenant)
     {
@@ -48,8 +50,9 @@
         boldBIPath = biUrl.LocalPath.ToString();
         boldReportPath = reportUrl.LocalPath.ToString();
     }
+
     var protocolTypes = new List<SelectListItem>
-{
+    {
         new SelectListItem { Text = "http", Value = "http", Selected = siteProtocol == "http" },
         new SelectListItem { Text = "https", Value = "https", Selected = siteProtocol == "https" }
     };
@@ -65,13 +68,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>@T["Add Tenants"]</title>
 
     @await Html.PartialAsync("../Shared/_FontReference")
     @await Html.PartialAsync("../Shared/_ThemeReference")
 
-    <link rel="stylesheet" href="~/bundles/css/addtenantiframe.css" integrity="@IntegrityTagHelper.GetIntegrity("bundles/css/addtenantiframe.css")" crossorigin="anonymous" asp-append-version="true" />
+    <link rel="stylesheet" href="~/bundles/css/addtenantiframe.css" integrity="@IntegrityTagHelper.GetIntegrity("bundles/css/addtenantiframe.css")" crossorigin="anonymous" asp-append-version="true"/>
     <script nonce="@Context.Items["ScriptNonce"]" src="~/js/onpremiselocalizationcontent.js" asp-append-version="true"></script>
     <script nonce="@Context.Items["ScriptNonce"]" src="~/bundles/js/addtenantiframe.js" integrity="@IntegrityTagHelper.GetIntegrity("bundles/js/addtenantiframe.js")" crossorigin="anonymous" asp-append-version="true"></script>
     <script nonce="@Context.Items["ScriptNonce"]" src="~/bundles/js/ej2.js" integrity="@IntegrityTagHelper.GetIntegrity("bundles/js/ej2.js")" crossorigin="anonymous" asp-append-version="true"></script>
@@ -83,6 +86,7 @@
         var boldBIUrl = "@boldBIPath/@CloudAppConfig.TenantIdentifierPrefix/";
         var authorityUrl = "@url";
         var item = "@item";
+        var useSingleTenantDb = "@useSingleTenantDb".toLowerCase() === "true";
         var actionType = "@Context.Request.Query["actionType"].ToString()";
         var tenantId = "@Context.Request.Query["tenantId"].ToString()";
         var setSystemSettingsUrl = "@Url.Action("AddTenant", "ServerConfiguration")";
@@ -136,52 +140,55 @@
         var BIUmsPrefixSchema = ("@ViewBag.BIUmsPrefixSchema".toLowerCase() === "true");
         var isUmsStartupWithOracle = ("@ViewBag.IsUmsStartupWithOracle".toLowerCase() === "true");
         var canDisableEmailSettingsOption =  "@canDisableEmailSettingsOption".toLowerCase() === "true";
+        var tenantSchema = "@tenantSchema";
     </script>
 </head>
 <body>
-    <div class="add-tenant-dialog-wrapper">
-        <div class="col-lg-12 no-padding" id="popup-container" data-spy="scroll">
-            <div class="modal-header no-margin col-sm-12 no-padding">
-                <div class="add-tenant-popup-title">
-                    <label>@T["Create new site"]</label>
-                </div>
-                <div class="title icons">
-                    <a href="#" class="popup-close" title="@T["Close"]">
-                        <span id="add-tenant-close" class="su su-close pull-right"></span>
-                    </a>
-                </div>
-                <div class="another-div">
-                    <div class="selector no-padding">
-                        <div class="selector-icons">
-                            <div class="selector-panel" id="creationsite">
-                                <div class="circle selectedClass">
-                                </div>
-                                <div class="hr-tag"> </div>
-                            </div>
-                            <div class="selector-panel" id="selectiondb">
-                                <div class="circle"></div>
-                                <div class="hr-tag"> </div>
-                            </div>
-                            <div class="selector-panel" id="selection-storage">
-                                <div class="circle"></div>
-                                <div class="hr-tag"> </div>
-                            </div>
-                            <div class="selector-panel" id="selection-data-security">
-                                <div class="circle"></div>
-                                <div class="hr-tag"> </div>
-                            </div>
-                            <div class="selector-panel" id="selectionadmin">
-                                <div class="circle"></div>
-                            </div>
+<div class="add-tenant-dialog-wrapper">
+<div class="col-lg-12 no-padding" id="popup-container" data-spy="scroll">
+    <div class="modal-header no-margin col-sm-12 no-padding">
+        <div class="add-tenant-popup-title">
+            <label>@T["Create new site"]</label>
+        </div>
+        <div class="title icons">
+            <a href="#" class="popup-close" title="@T["Close"]">
+                <span id="add-tenant-close" class="su su-close pull-right"></span>
+            </a>
+        </div>
+        <div class="another-div">
+            <div class="selector no-padding">
+                <div class="selector-icons">
+                    <div class="selector-panel" id="creationsite">
+                        <div class="circle selectedClass">
                         </div>
-                        <div class="selector-content">
-                            <span class="site-creation selectedContent">@T["SITE CREATION"]</span>
-                            <span class="select-database">@T["SELECT DATABASE"]</span>
-                            <span class="select-storage">@T["SELECT STORAGE"]</span>
-                            <span class="get-data-security">@T["DATA SECURITY"]</span>
-                            <span class="administrator">@T["ADMINISTRATOR"]</span>
-                        </div>
+                        <div class="hr-tag"> </div>
                     </div>
+                    @if (!useSingleTenantDb)
+                    {
+                        <div class="selector-panel" id="selectiondb">
+                            <div class="circle"></div>
+                            <div class="hr-tag"> </div>
+                        </div>
+                    }
+
+                    <div class="selector-panel" id="selection-data-security">
+                        <div class="circle"></div>
+                        <div class="hr-tag"> </div>
+                    </div>
+                    <div class="selector-panel" id="selectionadmin">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="selector-content">
+                    <span class="site-creation selectedContent">@T["SITE CREATION"]</span>
+                    @if (!useSingleTenantDb)
+                    {
+                        <span class="select-database">@T["SELECT DATABASE"]</span>
+                    }
+                    <span class="get-data-security">@T["DATA SECURITY"]</span>
+                    <span class="administrator">@T["ADMINISTRATOR"]</span>
+                </div>
+            </div>
                 </div>
             </div>
             <div class="modal-tenant-body col-xs-12 no-padding tenant-body">

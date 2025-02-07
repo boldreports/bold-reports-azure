@@ -8,7 +8,10 @@ $(document).ready(function () {
 
     radioButtonInitialization("#file-storage", "File Storage", "IsBlobStorage", true, "0");
     radioButtonInitialization("#blob-storage", "Azure Blob Storage", "IsBlobStorage", false, "1");
-
+    
+    radioButtonInitialization("#single-database", "Shared Database", "ConfigurationMode", true, "0");
+    radioButtonInitialization("#database-per-tenant", "Separate Database", "ConfigurationMode", false, "1")
+    
     radioButtonInitialization("#https", "Use HTTPS (Recommended)", "Connection", true, "https");
     radioButtonInitialization("#http", "Use HTTP", "Connection", false, "http");
     radioButtonInitialization("#custom-endpoint", "Specify custom endpoints", "Connection", false, "customendpoint");

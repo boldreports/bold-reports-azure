@@ -33,5 +33,5 @@ var itemExtensions = [{
             requirements: 'Add a report item to the designer area.',
             description: 'This report item is used to add a graphic signature.',
             title: 'Signature'
-        }
+        },
     }];

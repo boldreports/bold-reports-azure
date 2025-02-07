@@ -925,8 +925,13 @@ $(document).on("click", ".tenant-action", function (e) {
         headerIcon = "delete";
         headerText = window.Server.App.LocalizationContent.Delete;
         actionUrl = deleteTenantUrl;
-        messageContent += "<br/><br/><div><span><input type='checkbox' class='material-checkbox' id='delete-database-checkbox' /><input id='delete-database-checkbox' type='hidden'/><label for='delete-database-checkbox' class='label-database'>" + window.Server.App.LocalizationContent.DeleteDatabase + "</label></span ></div><div class='tenant-delete-warning'> <span>" + window.Server.App.LocalizationContent.Warning + ":" + "</span><div class = 'warning-content'> " + window.Server.App.LocalizationContent.DeleteAllResourceWithoutDataBase + "</div></div>";
-
+        if (useSingleTenantDb)
+        {
+            messageContent += "<br/><br/>";
+        }
+        else {
+            messageContent += "<br/><br/><div><span><input type='checkbox' class='material-checkbox' id='delete-database-checkbox' /><input id='delete-database-checkbox' type='hidden'/><label for='delete-database-checkbox' class='label-database'>" + window.Server.App.LocalizationContent.DeleteDatabase + "</label></span ></div><div class='tenant-delete-warning'> <span>" + window.Server.App.LocalizationContent.Warning + ":" + "</span><div class = 'warning-content'> " + window.Server.App.LocalizationContent.DeleteAllResourceWithoutDataBase + "</div></div>";
+        }
     }
     else if (action === "make-master") {
         UpdateTenantId = tenantId;

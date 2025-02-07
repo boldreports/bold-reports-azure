@@ -895,12 +895,6 @@ body {
                 .database-types {
                     padding-top: 24px;
                     position: relative;
-
-                    .file-storage-align, .blob-storage-align {
-                        display: inline-block;
-                        margin-bottom: 24px;
-                        margin-left: 90px;
-                    }
                 }
 
                 .content-value {
@@ -967,6 +961,27 @@ body {
                     }
                 }
 
+                @extend %button-holder-style;
+            }
+
+            #system-settings-configuration-mode-container {
+                display: none;
+                @extend %form-field-container;
+                padding-top: 20px;
+                .configuration-mode-box{
+                    border: 1px solid gainsboro;
+                    padding: 20px;
+                    border-radius: 4px;
+                }
+                .configuration-mode-description{
+                    display: block;
+                    margin-left: 28px;
+                }
+                .configuration-mode-box-distance
+                {
+                    margin-top: 10px;
+                }
+                
                 @extend %button-holder-style;
             }
 

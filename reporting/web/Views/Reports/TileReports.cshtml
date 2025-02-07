@@ -427,7 +427,7 @@
                                             <div class="no-padding options context-menu">
                                                 <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown"></span>
                                                 <ul class="dropdown-menu dashboard-options" role="menu">
-                                                    @if (!ServerAppConfig.EnablePublic)
+                                                    @if (ServerAppConfig.IsSelfHosted && !ServerAppConfig.EnablePublic)
                                                     {
                                                         <li ng-if="dashboardItem.IsPublic && (dashboardItem.CreatedById == currentUserId || isAdmin)">
                                                             <span title="" class="remove-public option-click" ng-click="makePrivate()">

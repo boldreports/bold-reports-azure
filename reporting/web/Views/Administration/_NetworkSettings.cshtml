@@ -58,16 +58,16 @@
                 <div class="info-label">
                     @Html.CheckBox("restrict-ipwhitelist-enabled", (bool)@networkSettingsIsEnabled, new { @class = "material-checkbox" })
                     <label for="restrict-ipwhitelist-enabled" id="restrict-ipwhitelist-label">
-                        [[[Enable IP Whitelisting]]]
+                        [[[Enable IP Allowlisting]]]
                     </label>
                 </div>
             </div>
             <div class="info-message">
-                <span>[[[Enabling this option will permit requests from whitelisted IP addresses. However, activating this feature won't immediately enforce IP whitelisting. Please specify the necessary IP address to be whitelisted and click on the save option to apply the changes.]]]</span>
+                <span>[[[Enabling this option will permit requests from allowlisted IP addresses. However, activating this feature won't immediately enforce the IP allowlist. Please specify the IP addresses to be allowlisted and then click <b>Save</b> to apply the changes.]]]</span>
             </div>
             <div class="whitelisting-info">
                 <div class="ipaddress-info pull-left">
-                    <span>@string.Format("[[[Please add your current IP address {0} to the whitelisting. Once added all required IP address please save this changes]]]", currentUserIP)</span>
+                    <span>@string.Format("[[[Please add your current IP address, {0}, to the allowlist. After adding all required IP addresses, save these changes.]]]", currentUserIP)</span>
                 </div>
                 <div id="create-rule" class="pull-right">
                     <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="tooltip" id="add-rule-btn" data-placement="top" title="Add new Rule">

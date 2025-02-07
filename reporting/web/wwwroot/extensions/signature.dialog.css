@@ -7,7 +7,7 @@
         font-family: var(--designer-font-family);
     }
 
-    .e-signDialog-strokeColorDiv, .e-signDialog-strokeWidthDiv, .e-signDialog-cropIconDiv {
+    .e-signDialog-strokeColorDiv, .e-signDialog-strokeWidthDiv {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -44,12 +44,14 @@
         border: 2px dashed #f00;
     }
 
-    .e-signDialog-cropIcon {
+    .e-signDialog-cropIconDiv {
         background-image: url('images/cropicon.svg');
         background-repeat: no-repeat;
         background-position: 50% 50%;
-        height: 100%;
-        width: 100%;
+        border: 1px solid dodgerblue;
+        border-radius: 3px;
+        height: 29px;
+        width: 42px;
     }
 
     .e-signDialog-canvas {
@@ -61,20 +63,9 @@
     .e-signDialog-cropIcon-enable {
         cursor: pointer;
         background-color: lightblue;
-        pointer-events: none;
     }
 
     .e-signDialog-cropIcon-disable {
         background-color: transparent;
         cursor: default;
-        pointer-events: none;
-    }
-
-    .e-signDialog-cropIconChildDiv {
-        border: 1px solid dodgerblue;
-        border-radius: 3px;
-        height: 29px;
-        width: 42px;
-        display: flex;
-        align-items: center;
     }
