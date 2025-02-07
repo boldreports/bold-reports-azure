@@ -13,13 +13,13 @@ var useSingleTenantDb = GlobalAppSettings.SystemSettings.UseSingleTenantDb != nu
                 <div class="configuration-mode-box col-xs-12">
                     <div class="second-radio-align radio-padding col-xs-12">
                         <input type="radio" id="single-database" class="radio-button" name="ConfigurationMode"/>
-                        <span class="configuration-mode-description">All tenants share the same database, with tenant-specific data separated logically.</span>
+                        <span class="configuration-mode-description">@T["All tenants share a single database, with data isolated using a tenant ID."]</span>
                     </div>
                 </div>
                 <div class="configuration-mode-box configuration-mode-box-distance col-xs-12">
                     <div class="first-radio-align col-xs-12 radio-padding">
                         <input type="radio" id="database-per-tenant" class="radio-button" name="ConfigurationMode"/>
-                        <span class="configuration-mode-description">Each tenant requires its own separate database.</span>
+                        <span class="configuration-mode-description">@T["Each tenant has its own dedicated database."]</span>
                     </div>
                 </div>
             </div>
