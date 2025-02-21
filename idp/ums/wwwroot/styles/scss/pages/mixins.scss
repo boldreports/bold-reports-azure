@@ -347,7 +347,7 @@
         }
 
         .form-input-field {
-            button[data-toggle="dropdown"] {
+            button[data-bs-toggle="dropdown"] {
                 font-size: $app-text-size - 1;
             }
         }
@@ -770,6 +770,7 @@
 @mixin admin-page-template_header() {
     .admin-header-width {
         width: 100% !important;
+        display: grid;
     }
 
     .width-alignment {
@@ -797,6 +798,12 @@
 
                 .dropdown-alignment {
                     padding: 5px;
+
+                    .dropdown-toggle {
+                        &::after {
+                            visibility: hidden;
+                        }
+                    }
                 }
 
                 .page-title {
@@ -848,7 +855,7 @@
             border-bottom: 1px solid var(--header-separator-color);
         }
 
-        .auth-page-nav-bar, .lic-page-nav-bar, .site-nav-bar, .email-page-nav-bar, .security-page-nav-bar {
+        .auth-page-nav-bar, .lic-page-nav-bar, .site-nav-bar, .email-page-nav-bar, .security-page-nav-bar, .ai-page-nav-bar {
             background: $tab-bg-normal-color;
 
             .nav {
@@ -868,6 +875,10 @@
                         padding-bottom: 8px;
                     }
                 }
+
+                .active::after {
+                    position: relative;
+                }
             }
         }
 
@@ -877,6 +888,10 @@
 
             .admin-header-btn {
                 margin-top: 0px;
+
+                .dropdown-menu li > a {
+                    display: flex;
+                }
             }
         }
     }
@@ -1068,6 +1083,10 @@
 
         #oauth-client-secret, #mail-password, #openid-client-secret {
             padding-right: 30px;
+
+            &::placeholder {
+                color: #555 !important;
+            }
         }
 
         #oauth-callback-link-copy, #openid-callback-link-copy, #oauth-mobile-callback-link-copy, #openid-mobile-callback-link-copy, #api-copy-client-id, #api-copy-client-secret, #show-api-client-secret, #copy-client-id, #copy-client-secret, #show-secret {
@@ -1236,8 +1255,10 @@
         position: absolute;
     }
 
-    .file-upload-btn{
+    .file-upload-btn {
         display: inline-block;
+        position: relative;
+        bottom: 4px;
     }
 }
 
@@ -1301,12 +1322,12 @@
         opacity: 0.8;
         width: 180px;
 
-        .arrow::after {
-            border-left-color: $black;
-            border-right-color: $black;
+        .popover-arrow::after {
+            border-left-color: $black !important;
+            border-right-color: $black !important;
         }
 
-        .popover-title {
+        .popover-header {
             background: $black;
             opacity: 0.8;
             color: $white;
@@ -1317,7 +1338,7 @@
             border: none;
         }
 
-        .popover-content {
+        .popover-body {
             padding-top: 0px;
             height: auto;
 

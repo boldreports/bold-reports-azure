@@ -49,6 +49,7 @@
 
 .modal-dialog {
     width: 400px !important;
+    pointer-events: auto !important;
 
     .e-dlg-header {
         overflow: visible;
@@ -76,6 +77,17 @@
         margin-top: 8px;
         font-weight: 400;
         padding-right: 45px;
+        margin-bottom: 5px;
+    }
+
+    .upload-box {
+        .input-group-addon {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            font-weight: 400;
+        }
     }
 
     .dialog-info {
@@ -146,8 +158,16 @@
     }
 
     .modal-footer {
+        padding: 15px;
+        text-align: right;
+
         .secondary-button {
             margin-right: 10px;
         }
     }
+}
+
+.padding-container {
+    padding-left: 15px;
+    padding-right: 15px;
 }

@@ -2,6 +2,7 @@
     Layout = null;
     var displayName = GlobalAppSettings.BrandingDisplayName;
     var isBoldBI = GlobalAppSettings.BrandingDisplayName == AppBranding.Bold.DisplayName;
+    var configurationMode = GlobalAppSettings.SystemSettings.UseSingleTenantDb != null && (bool)GlobalAppSettings.SystemSettings.UseSingleTenantDb ? (int)ConfigurationMode.SingleDatabaseForAllTenants : (int)ConfigurationMode.DatabasePerTenant;
 }
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,7 @@
         var validateAutoDeploymentUrl = "@Url.Action("ValidateAutoDeployment", "ServerConfiguration")";
         var setSystemSettingsUrl = "@Url.Action("SetSystemSettings", "ServerConfiguration")";
         var startUpUrl = "@Url.Action("Startup", "ServerConfiguration")";
+        var configurationMode = "@configurationMode";
     </script>
     <style>
         #loader {
@@ -42,13 +44,13 @@
             <img class="deployment-image" src="@Url.Content("~/images/static/error-pages/v1/deployment-error.png")" />
             <div id="auto-deployment-response">
                 <div class="response-message-header">@T["Deployment Error"]!</div>
-                <div>@T["We are unable to deploy the site using the values configured from the environment variables."] <span><a class="help-link">@T["Need help?"]</a></span></div>
+                <div>@T["We are unable to deploy the site using the values configured from the environment variables."] <span><a class="help-link text-decoration-none">@T["Need help?"]</a></span></div>
                 <div id="deploy-message-container">
                     <textarea type="text" id="deploy-error-box" disabled></textarea>
-                    <span class="su su-copy text focus" id="deploy-error-copy" data-toggle="tooltip" title="Click to copy"></span>
+                    <span class="su su-copy text focus" id="deploy-error-copy" data-bs-toggle="tooltip" title="Click to copy"></span>
                 </div>
                 <div class="link-section">
-                    <span><a href="@Url.Action("Startup", "ServerConfiguration")?skipAutoDeploy=true">@T["Proceed to the application startup page"]</a></span>
+                    <span><a class="text-decoration-none" href="@Url.Action("Startup", "ServerConfiguration")?skipAutoDeploy=true">@T["Proceed to the application startup page"]</a></span>
                 </div>
             </div>
         </div>

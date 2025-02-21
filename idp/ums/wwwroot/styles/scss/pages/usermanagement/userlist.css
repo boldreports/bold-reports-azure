@@ -205,7 +205,7 @@
           #add-tenants-dialog_wrapper .e-dialog-scroller #add-tenants-dialog .modal-dialog .modal-content .modal-body #add_tenants_grid .e-gridheader .material-checkbox:checked + input + label::before {
             bottom: 11.2px;
             color: var(--checkbox-text-active-color);
-            content: "";
+            content: "";
             font-family: "Server";
             left: 1px;
             font-size: 14px;
@@ -280,7 +280,7 @@
             #add-tenants-dialog_wrapper .e-dialog-scroller #add-tenants-dialog .modal-dialog .modal-content .modal-body #add_tenants_grid .e-gridcontent .material-checkbox:checked + input + label::before {
               bottom: 11.2px;
               color: var(--checkbox-text-active-color);
-              content: "";
+              content: "";
               font-family: "Server";
               left: 1px;
               font-size: 14px;
@@ -482,12 +482,10 @@
     right: 15px;
     top: 8px;
     font-size: 16px; }
-  .e-dialog .modal-body .form-padding.password .tooltip {
-    left: 264px !important; }
-    .e-dialog .modal-body .form-padding.password .tooltip .tooltip-inner {
-      word-break: normal !important; }
-    .e-dialog .modal-body .form-padding.password .tooltip .tooltip-arrow {
-      top: auto !important; }
+  .e-dialog .modal-body .form-padding.password .tooltip .tooltip-inner {
+    word-break: normal !important; }
+  .e-dialog .modal-body .form-padding.password .tooltip .tooltip-arrow {
+    top: auto !important; }
 .e-dialog .modal-body .password {
   margin-bottom: 10px; }
 .e-dialog .modal-body .useradd-validation-messages {
@@ -579,14 +577,14 @@
   #base-container .admin-page-header #user-title .dropdown .sync-user-dropdown {
     left: -126px;
     width: 235px !important; } }
-#new-password + .popover {
+.popover {
   background: var(--grey-black);
   opacity: 0.8;
   width: 180px; }
-  #new-password + .popover .arrow::after {
-    border-left-color: var(--grey-black);
-    border-right-color: var(--grey-black); }
-  #new-password + .popover .popover-title {
+  .popover .popover-arrow::after {
+    border-left-color: var(--grey-black) !important;
+    border-right-color: var(--grey-black) !important; }
+  .popover .popover-header {
     background: var(--grey-black);
     opacity: 0.8;
     color: var(--grey-white);
@@ -595,16 +593,16 @@
     line-height: 18px;
     padding-bottom: 0px;
     border: none; }
-  #new-password + .popover .popover-content {
+  .popover .popover-body {
     padding-top: 0px;
     height: auto; }
-    #new-password + .popover .popover-content ul {
+    .popover .popover-body ul {
       list-style: none;
       padding: 0px; }
-      #new-password + .popover .popover-content ul li {
+      .popover .popover-body ul li {
         height: 20px;
         margin: 15px 5px 15px 10px; }
-        #new-password + .popover .popover-content ul li span.icon {
+        .popover .popover-body ul li span.icon {
           height: 15px;
           width: 15px;
           margin: 0 auto;
@@ -612,7 +610,7 @@
           border: 2px solid var(--grey-white);
           display: inline-block;
           float: left; }
-        #new-password + .popover .popover-content ul li span.content {
+        .popover .popover-body ul li span.content {
           color: var(--grey-white);
           display: inline;
           margin-left: 10px; }

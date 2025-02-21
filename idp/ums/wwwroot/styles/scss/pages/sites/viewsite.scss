@@ -12,8 +12,32 @@
             font-size: 14px;
         }
 
+        .form-group {
+            margin-bottom: 15px;
+            .form-input-field {
+                padding-left: 15px;
+                padding-right: 6px;
+            }
+        }
+
         .search-margin{
             margin-bottom: 15px !important;
+        }
+        
+        .ai-padding{
+            padding-bottom: 20px;
+        }
+
+        
+        .ai-service-note{
+            width: 584px;
+            border-radius: 4px;
+            margin-top: 0;
+            margin-bottom: 32px;
+            padding: 12px;
+            letter-spacing: .26px;
+            background-color: $warning-bg-normal-color;
+            border: 1px solid $warning-border-normal-color;
         }
     }
 
@@ -99,6 +123,10 @@
 
             #remove-users-button {
                 margin-right: 50px;
+
+                .button {
+                    height: 32px;
+                }
             }
         }
     }
@@ -192,4 +220,8 @@
     height: 32px !important;
     font-family: var(--font-family) !important;
     font-size: 14px !important;
+}
+
+#cancel-isolation-code, #cancel-enable-aiservice, #cancel-tenant-settings {
+    margin-right: 24px;
 }

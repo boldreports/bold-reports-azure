@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = T["User Settings"].Value + " - " + GlobalAppSettings.SystemSettings.OrganizationName;
     ViewBag.MessageBox = false;
+    var isSystemUserEnabled = GlobalAppSettings.SystemSettings.IsSystemUserEnabled;
 }
 
 @section styles{
@@ -19,23 +20,23 @@
 
 @await Html.PartialAsync("_AdminMenu")
 
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment">
-    <div id="user-settings-header" class="col-xs-12 admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment">
+    <div id="user-settings-header" class="col-12 float-start admin-page-header">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">@T["USER SETTINGS"]</h1>
                 <h5 class="page-description">@T["Configuration for activating user accounts"]</h5>
             </hgroup>
         </div>
-        <div class="col-xs-4 top-nav-sec no-padding">
+        <div class="col-4 top-nav-sec no-padding">
                 @await Html.PartialAsync("../Shared/_TopMenu")
         </div>
             </div>
-        <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
-                    <button class="secondary-button pull-right" id="cancel-settings">@T["Cancel"]</button>
-                        <button type="button" id="update-user-settings" name="UpdateUserSettings" class="primary-button pull-right">
+        <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div class="col-6 no-padding admin-header-btn float-end" id="user-management-options">
+                    <button class="secondary-button float-end" id="cancel-settings">@T["Cancel"]</button>
+                        <button type="button" id="update-user-settings" name="UpdateUserSettings" class="primary-button float-end">
                             <span>@T["Save"]</span>
                         </button>
                 </div>
@@ -43,11 +44,11 @@
         </div>
 </div>
 
-<div id="user-settings-container" class="col-xs-12 admin-page-content-container">
-    <div class="admin-page-content col-xs-12 no-padding">  
-        <div id="user-settings-body" class="col-xs-12 admin-page-body">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-12 no-padding">
+<div id="user-settings-container" class="col-12 float-start admin-page-content-container">
+    <div class="admin-page-content col-12 float-start no-padding">  
+        <div id="user-settings-body" class="col-12 float-start admin-page-body">
+            <div class="col-12 float-start no-padding">
+                <div class="col-12 float-start no-padding">
                     <label class="app-textbox-label activation">@T["Account Activation Mode"]</label>
                 </div>
                 <div class="radio-button-section" id="automatic">
@@ -61,14 +62,14 @@
                 @if (!@ViewBag.IsEmailSettingsConfigured)
                 {
                     <div class="col-lg-12 no-padding">
-                        <div class="bg-danger email-settings-validation">
+                        <div class="email-settings-validation">
                             @T["Activation emails cannot be sent until the email settings are configured. You can select 'Automatic Activation' to activate the user without configuring email settings."]
                         </div>
                     </div>
                 }
             </div>
-            <div class="col-xs-12 no-padding email-container">
-                <div class="col-xs-12 no-padding email-required-header">
+            <div class="col-12 float-start no-padding email-container">
+                <div class="col-12 float-start no-padding email-required-header">
                     <label class="app-textbox-label is-email-required">
                         User Email
                     </label>
@@ -82,13 +83,21 @@
                     <input type="radio" id="email-required" name="email-required" class="css-radio" value="Required" @(((int)ViewBag.UserSettings == (int)ActivationType.EmailActivation || GlobalAppSettings.SystemSettings.EmailRequired == EmailRequired.Required) ? "checked" : string.Empty) />
                     <label for="email-required" class="app-textbox-label radio-btn-label notransition" id="label-email-required">@T["Required"]</label>
 
-                    <div class="col-lg-12 bg-danger email-settings-validation hide"></div>
+                    <div class="col-lg-12 email-settings-validation d-none"></div>
                 </div>
                 <div class="col-lg-12 no-padding">
-                    <div id="email-required-warning" class="bg-warning email-settings-validation @(GlobalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? string.Empty : "hide")">
+                    <div id="email-required-warning" class="email-settings-validation @(GlobalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? string.Empty : "d-none")">
                         @T["When the account activation preference is email, email address is mandatory for activating the account."]
                     </div>
                 </div>
+            </div>
+            <div class="col-12 float-start no-padding anonymous-section">
+                <div class="material-switch inline-align" id="">
+                    <input type="checkbox" id="system-user-switch" @(isSystemUserEnabled ? "checked" : string.Empty)>
+                    <label for="system-user-switch" class="label-primary"></label>
+                </div>
+                <label class="app-textbox-label inline-align anonymous-label">@T["Enable System User"]</label>
+                <div class="section-info-message">@T["Empower your system users with seamless authentication and global access tokens while enabling anonymous users to view embedded dashboards effortlessly."]</div>
             </div>
         </div>
         

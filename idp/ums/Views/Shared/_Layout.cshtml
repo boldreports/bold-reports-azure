@@ -65,7 +65,7 @@
             }, 5000);
     </script>
 </head>
-<body ng-app="serverApp" class="clearfix col-xs-12 no-padding" id="body">
+<body ng-app="serverApp" class="clearfix col-12 float-start no-padding" id="body">
     <div class="loader-blue loader-icon" id="layout-body-loader-icon">
         <svg class="circular">
             <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
@@ -75,10 +75,10 @@
         @if (CloudAppConfig.IsSelfHosted)
         {
             <section id="header-area" class="mobile-visible">
-                <div class="header-bar col-lg-12 col-md-12 col-sm-12">
+                <div class="header-bar col-lg-12 col-md-12 col-sm-12 float-start">
                     @if (showMenuBar)
                     {
-                        <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+                        <div class="mobile-menu-icon text-center mobile-visible collapsed" data-bs-toggle="collapse" aria-expanded="false" data-target="#menu-area">
                             <span>
                                 <i class="su su-mobile-menu-icon"></i>
                             </span>
@@ -112,7 +112,7 @@
             </section>
         }
 
-        <div id="content-area" class="clearfix col-xs-12">
+        <div id="content-area" class="clearfix col-12 float-start">
             @RenderSection("MainSection", true)
             <div id="success-alert">
                 <div id="image-container">
@@ -135,7 +135,7 @@
                     <span id="message-content"></span><span id="view" class="view-more">@T["View more"]</span>
                     <div id="container">
                         <textarea id="text-error-area" class="scroller" name="text" value=""></textarea>
-                        <span id="copy-error-area" class="pull-right app-hyperlink" data-toggle="tooltip" title="@T["Click to copy"]"<span class="su su-copy"></span></span>
+                        <span id="copy-error-area" class="float-end app-hyperlink" data-bs-toggle="tooltip" title="@T["Click to copy"]"<span class="su su-copy"></span></span>
                     </div>
                 </div>
                 <div class="close-div">

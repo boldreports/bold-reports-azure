@@ -234,13 +234,13 @@ function IsValidCustomEndPoint(fieldValue, element) {
 
 $(document).on("focus", "input[type=text],input[type=password]", function () {
     if (regexIe8.test(userAgent)) {
-        $(this).next(".placeholder").removeClass("show").addClass("hide");
+        $(this).next(".placeholder").removeClass("d-block").addClass("d-none");
     }
 });
 
 $(document).on("focusout", "input[type=text],input[type=password]", function () {
     if (regexIe8.test(userAgent) && $(this).val() === "") {
-        $(this).next(".placeholder").removeClass("hide").addClass("show");
+        $(this).next(".placeholder").removeClass("d-none").addClass("d-block");
     }
 });
 

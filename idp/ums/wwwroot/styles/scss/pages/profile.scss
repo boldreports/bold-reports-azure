@@ -19,6 +19,7 @@ body {
     //padding: 10px;
     float: right;
     margin-right:13px;
+    padding-right: 2px;
 }
 
 .icon-container {
@@ -29,6 +30,7 @@ body {
     border-radius: 50%;
     color: $primary-text-color;
     cursor: pointer;
+    position: relative;
 
     i {
         font-size: 20px;
@@ -42,6 +44,13 @@ body {
         height: 40px !important;
         line-height: 40px !important;
 
+        .img {
+            top: 0px !important;
+            left: 0px !important;
+            height: 40px;
+            width: 40px;
+        }
+
         #default-profile-image {
             right: 10px !important;
             left: 0 !important;
@@ -50,6 +59,11 @@ body {
         #first-letter {
             font-size: 13px !important;
         }
+    }
+    
+    .homepage-profile {
+        position: relative;
+        top: 12px;
     }
 }
 
@@ -112,6 +126,7 @@ body {
 
     .help-icon-item .top-menu {
         padding: 5px;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     }
 
     .top-menu-item-title {
@@ -206,6 +221,12 @@ body {
 
     li.profile-section {
 
+        .dropdown-toggle {
+            &::after {
+                visibility: hidden;
+            }
+        }
+
         .top-menu {
             font-size: 14px;
             width: 240px;
@@ -249,6 +270,7 @@ body {
                     font-weight: normal;
                     //line-height: 20px;
                     letter-spacing: 0.3px;
+                    display: contents;
 
                     .top-menu-profile-hover {
                         display: inline-block;
@@ -275,6 +297,7 @@ body {
                                 font-size: 12px;
                                 // color: rgba(52, 64, 84, 1);
                                 color: $primary-text-color;
+                                height: 20px;
                             }
 
 

@@ -76,13 +76,19 @@ $(document).ready(function () {
     createWaitingPopup('startup-page-container-waiting-element');
     createWaitingPopup('messageBox');
 
-    $('[data-toggle="popover"]').popover();
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    });
     $("body, .login-main, #server-app-container").removeAttr("style");
     $("#layout-body-loader-icon").css("display", "none");
 
     $("form").attr("autocomplete", "off");
     $("input[type=text], input[type=password]").attr("autocomplete", "off");
-    $("[data-toggle='tooltip']").tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     $(document).on("click", ".dropdown-menu #notify_header", function (e) {
         e.stopPropagation();
     });
@@ -247,7 +253,7 @@ $(document).ready(function () {
     var UserNameElement = $(".top-menu-user-name .top-menu-user-name-style:first").text();
     var UserEmailElement = $(".top-menu-user-name .top-menu-user-email-style:first").text();
     if (UserNameElement.length > 21 || UserEmailElement.length > 25) {
-        $(".top-menu-profile-hover").attr("title", "<span class='tooltip-row'>" + UserNameElement + "</span><span class='tooltip-row'>" + UserEmailElement + "</span>");
+        $(".top-menu-profile-hover").attr("title", "<span class='tooltip-row'>" + UserNameElement + "</span><br><span class='tooltip-row'>" + UserEmailElement + "</span>");
         $(".top-menu-profile-hover").tooltip({
             html: true,
         });
@@ -292,6 +298,12 @@ $(document).on("click", "#account-profile .dropdown-menu", function (e) {
     e.stopPropagation();
 });
 
+$(document).on("click", ".mobile-menu-icon", function () {
+    $(".mobile-menu-icon").removeClass("collapsed");
+    $("#menu-area").removeClass("collapse");
+    $("#menu-area").toggleClass("d-block");
+});
+
 $(document).on("keyup", "textarea", function (event) {
     if (event.keyCode != 8 && event.keyCode != 46) {
         var max = $(this).attr("maxlength");
@@ -319,13 +331,13 @@ $(document).on("keyup", "textarea", function (event) {
 
 $(document).on("focus", "input[type=text],input[type=password],textarea", function () {
     if (regexIe8.test(userAgent)) {
-        $(this).next(".placeholder").removeClass("show").addClass("hide");
+        $(this).next(".placeholder").removeClass("d-block").addClass("d-none");
     }
 });
 
 $(document).on("focusout", "input[type=text],input[type=password],textarea", function () {
     if (regexIe8.test(userAgent) && $(this).val() === "") {
-        $(this).next(".placeholder").removeClass("hide").addClass("show");
+        $(this).next(".placeholder").removeClass("d-none").addClass("d-block");
     }
 });
 $(document).on("focus", ".placeholder", function () {
@@ -397,12 +409,12 @@ $(document).on("click", "#clear-search,.clear-search,#add-user-clear-search,#add
             $(".search-area").removeClass("add-background");
             $(".placeholder, #clear-search").hide();
             if ($(".all-items").hasClass("active") && !$("#category-list").is(":visible")) {
-                setTimeout(function () { $(".search-area").prevAll().show().parent().removeClass("pull-right"); $("#category-section-name").show(); }, 300);
+                setTimeout(function () { $(".search-area").prevAll().show().parent().removeClass("float-end"); $("#category-section-name").show(); }, 300);
             }
             else {
-                setTimeout(function () { $(".search-area").prevAll(":not(#back-icon)").show().parent().removeClass("pull-right"); $("#category-section-name").show(); }, 300);
+                setTimeout(function () { $(".search-area").prevAll(":not(#back-icon)").show().parent().removeClass("float-end"); $("#category-section-name").show(); }, 300);
             }
-            setTimeout(function () { $(".search-home-section:visible").removeClass("show"); }, 300);
+            setTimeout(function () { $(".search-home-section:visible").removeClass("d-block"); }, 300);
         }
         else {
             $("#clear-search").siblings("span.su-search").css("display", "block");
@@ -888,25 +900,25 @@ function messageBox(messageIcon, messageHeader, messageText, type, successCallba
     $("#messageBox").find(".message-content").text("");
     $("#messageBox").find(".e-footer-content").html("");
     $(".message-box-close").html("");
-    $("#messageBox").find(".e-dlg-header").html("<span class='su " + messageIcon + "'></span> <span class='modal-title' data-toggle='tooltip' data-placement='bottom' data-container='body' title='" + messageHeader + "'  >" + messageHeader + "</h2>");
+    $("#messageBox").find(".e-dlg-header").html("<span class='su " + messageIcon + "'></span> <span class='modal-title' data-bs-toggle='tooltip' data-bs-placement='bottom' data-bs-container='body' title='" + messageHeader + "'  >" + messageHeader + "</h2>");
     $("#messageBox").find(".message-content").html(messageText);
-    $("#messageBox").find(".message-content").removeClass("text-left");
+    $("#messageBox").find(".message-content").removeClass("text-start");
     if (type == "error") {
         var successButton;
         var closeIcon;
         var errorButton;
         if (successCallback != undefined) {
-            successButton = $("<input type='button' class='critical-action-button pull-right' value='" + window.Server.App.LocalizationContent.YesButton + "'></input>");
+            successButton = $("<input type='button' class='critical-action-button float-end' value='" + window.Server.App.LocalizationContent.YesButton + "'></input>");
             successButton.bind("click", $.proxy(getFnObj(successCallback), window));
         }
         if (errorCallback != undefined) {
-            errorButton = $("<input type='button' class='secondary-button pull-right' value='" + window.Server.App.LocalizationContent.NoButton + "'></input>");
+            errorButton = $("<input type='button' class='secondary-button float-end' value='" + window.Server.App.LocalizationContent.NoButton + "'></input>");
             errorButton.bind("click", $.proxy(getFnObj(errorCallback), window));
             closeIcon = $('<span class="su su-close"></span>');
             closeIcon.bind("click", $.proxy(getFnObj(errorCallback), window));
         }
         else {
-            errorButton = $("<input type='button' class='secondary-button pull-right' value='" + window.Server.App.LocalizationContent.NoButton + "'></input>");
+            errorButton = $("<input type='button' class='secondary-button float-end' value='" + window.Server.App.LocalizationContent.NoButton + "'></input>");
             closeIcon = $('<span class="su su-close"></span>');
             errorButton.click(function () {
                 onCloseMessageBox();
@@ -949,7 +961,10 @@ function messageBox(messageIcon, messageHeader, messageText, type, successCallba
         });
     }
 
-    $('[data-toggle="tooltip"]').tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     document.getElementById("messageBox").ej2_instances[0].show();
     $("#messageBox").focus();
     var sizeobj = document.getElementById("messageBox").ej2_instances[0];
@@ -1229,11 +1244,11 @@ function copyToClipboard(inputId, buttonId) {
         }
     }
     setTimeout(function () {
-        $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.Copied);
+        $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.Copied);
         $(buttonId).tooltip('show');
     }, 200);
     setTimeout(function () {
-        $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.ClickToCopy);
+        $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.ClickToCopy);
         $(buttonId).tooltip();
     }, 3000);
 }
@@ -1301,13 +1316,22 @@ $(document).on("click", ".view-less", function () {
     $("#view").html(window.Server.App.LocalizationContent.ViewMore);
 });
 
-$('[data-toggle="tooltip"]').tooltip();
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 $(document).on("click", "#copy-error-area", function (e) {
     $("#text-error-area").select();
     document.execCommand('copy');
-    $("#copy-error-area").attr("data-original-title", window.Server.App.LocalizationContent.Copied);
-    $("#copy-error-area").tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.Copied).tooltip("fixTitle").tooltip("show");
-    setTimeout(function () { $("#copy-error-area").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy); $("#copy-error-area").tooltip(); }, 3000);
+    $("#copy-error-area").attr("data-bs-original-title", window.Server.App.LocalizationContent.Copied);
+    var oldTooltip = bootstrap.Tooltip.getInstance($("#copy-error-area"));
+    oldTooltip.dispose();
+    var tooltip = new bootstrap.Tooltip($("#copy-error-area"));
+    setTimeout(function () {
+        $("#copy-error-area").attr("data-bs-original-title", window.Server.App.LocalizationContent.LinkCopy);
+        tooltip.dispose();
+        var newTooltip = new bootstrap.Tooltip($("#copy-error-area"));
+    }, 3000);
 });
 
 $('body').on('click', 'a', function () {

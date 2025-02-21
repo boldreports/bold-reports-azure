@@ -72,10 +72,10 @@
     <div id="server-app-container" style="opacity: 0">
         @await Html.PartialAsync("~/Views/Shared/_LocalizationContent.cshtml")
         <section id="header-area" class="mobile-visible">
-            <div class="header-bar col-lg-12 col-md-12 col-sm-12">
+            <div class="header-bar col-lg-12 col-md-12 col-sm-12 float-start">
                 @if (!isWelcomePage)
                 {
-                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-bs-toggle="collapse" aria-expanded="false" data-target="#menu-area">
                         <span>
                             <i class="su su-mobile-menu-icon"></i>
                         </span>
@@ -85,8 +85,8 @@
                     <h5 class="header-org-name">@headerTitle</h5>
                 </div>
 
-                <div class="pull-right" id="notification-section">
-                    <a id="notification-link" class="notification-mobile-link no-padding" href="@Url.Action("getusernotifications", "notification")">
+                <div class="float-end" id="notification-section">
+                    <a id="notification-link" class="notification-mobile-link no-padding text-decoration-none" href="@Url.Action("getusernotifications", "notification")">
                     </a>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                     <span id="message-content"></span><span id="view" class="view-more">@T["View more"]</span>
                     <div id="container">
                         <textarea id="text-error-area" class="scroller" name="text" value=""></textarea>
-                        <span id="copy-error-area" class="pull-right app-hyperlink" data-toggle="tooltip" title="@T["Click to copy"]"><span class="su su-copy"></span></span>
+                        <span id="copy-error-area" class="float-end app-hyperlink" data-bs-toggle="tooltip" title="@T["Click to copy"]"><span class="su su-copy"></span></span>
                     </div>
                 </div>
                 <div class="close-div">
@@ -162,10 +162,10 @@
         <div id="menu-list">
         </div>
 
-        <div id="notification" class="pull-right hidden">
+        <div id="notification" class="float-end hidden">
             <div id="notification_area_link">
-                <a href="@Url.Action("getusernotifications", "notification")">
-                    <span id="notification_area_icon" class="su su-notification-alert pull-left">
+                <a href="@Url.Action("getusernotifications", "notification")" class="text-decoration-none">
+                    <span id="notification_area_icon" class="su su-notification-alert float-start">
                     </span>
                 </a>
             </div>

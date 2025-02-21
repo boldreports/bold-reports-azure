@@ -26,10 +26,10 @@
 @section MainSection{
 
     @await Html.PartialAsync("_AdminMenu")
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment">
-        <div id="embed-settings-header" class="col-xs-12 admin-page-header header-without-button">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment">
+        <div id="embed-settings-header" class="col-12 float-start admin-page-header header-without-button">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">
                             @T["EMBED SETTINGS"]
                         </h1>
@@ -38,15 +38,15 @@
                         </h5>
                     </hgroup>
                 </div>
-                <div class="col-xs-4 top-nav-sec no-padding">
+                <div class="col-4 top-nav-sec no-padding">
                     @await Html.PartialAsync("../Shared/_TopMenu")
                 </div>
              </div>
     </div>
-    <div id="embed-settings-container" class="col-xs-12 admin-page-content-container">
-        <div class="admin-page-content col-xs-12 no-padding">
-            <div id="embed-settings-body" class="admin-page-body col-xs-12">
-                <div class="embed-authentication col-xs-12 no-padding">
+    <div id="embed-settings-container" class="col-12 float-start admin-page-content-container">
+        <div class="admin-page-content col-12 float-start no-padding">
+            <div id="embed-settings-body" class="admin-page-body col-12 float-start">
+                <div class="embed-authentication col-12 float-start no-padding">
                     <div class="material-switch inline-align">
                         <input type="checkbox" id="restrict-embed-enabled" @(embedEnabled ? "checked" : string.Empty) />
                         <label for="restrict-embed-enabled" class="label-primary"></label>
@@ -65,13 +65,13 @@
 
                 <form action="@Url.Action("PostEmbedSettings", "Administration")" method="post" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
-                    <div class="col-xs-12 no-padding import-file">
+                    <div class="col-12 float-start no-padding import-file">
                         <label class="app-textbox-label activation embed-enabled">
                             @T["Embed Configuration"]
                         </label>
                         <div class="no-padding">
                             <div class="upload-box">
-                                <input type="text" class="form-control col-md-6 no-margin @(embedEnabled ? string.Empty : "disabled")" id="filename" value="@(embedEnabled ? fileName : T["Browse file path (.json)"].Value)">
+                                <input type="text" class="form-control col-md-6 float-start no-margin @(embedEnabled ? string.Empty : "disabled")" id="filename" value="@(embedEnabled ? fileName : T["Browse file path (.json)"].Value)">
                                 <span id="trigger-file" class="input-group-addon btn popup no-left-border @(embedEnabled ? string.Empty : "disabled")">
                                     ...
                                 </span>
@@ -80,7 +80,7 @@
                             <input type="submit" class="primary-button" title="@T["Upload embed configuration file here"]" id="cs-upload" disabled="" value="@T["Upload"]"/>
 
                             <p>
-                                <a href="@Url.Action("DownloadTemplate", "Administration")" class="download-template" title="@T["Download sample template"]" style="@showDownloadLink">@T["Download Template"]</a>
+                                <a href="@Url.Action("DownloadTemplate", "Administration")" class="download-template text-decoration-none" title="@T["Download sample template"]" style="@showDownloadLink">@T["Download Template"]</a>
                                 @if (ViewBag.result.ToLower() == "error")
                                 {
                                     <span id="import-validation-msg">@T["Please upload a valid json file."]</span>
@@ -98,14 +98,14 @@
 
                     </div>
                 </form>
-                <div id="get-secret-code" class="col-xs-12 no-padding input-field-margin">
+                <div id="get-secret-code" class="col-12 float-start no-padding input-field-margin">
                     <label class="app-textbox-label activation">
                         @T["Embed secret"]
                     </label>
                     <div class="secret-code-container">
                         <div id="secret-code-link">
                             <input type="text" id="secret-code" name="" class="form-control" placeholder="@T["Embed secret"]" autocomplete="off" disabled="disabled" readonly>
-                            <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="@T["Click to copy"]"></div>
+                            <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-bs-original-title="@T["Click to copy"]"></div>
                         </div>
                         <button type="button" title="" id="get-embed-code" class="primary-button" @(embedEnabled ? string.Empty : "disabled")>
                             @if (string.IsNullOrWhiteSpace(embedSecretCode))
@@ -118,7 +118,7 @@
                             }
                         </button>
                         <div class="info-message">@T["Anyone with access to the secret key can impersonate and create a URL to access the dashboard. So, keep the embed authentication disabled when not in use."]</div>
-                        <div class="bg-warning secret-code-notification">
+                        <div class="secret-code-notification">
                             @T["Store the secret key somewhere safe. As soon as you navigate away from this page, you will not be able to retrieve or restore the generated secret key."]
                         </div>
                     </div>

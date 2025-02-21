@@ -1175,6 +1175,17 @@ CREATE TABLE [BOLDTC_CustomEmailTemplate](
 [ModifiedBy][uniqueidentifier] NOT NULL,
 [TemplateLocalizationKey][nvarchar](255) NULL);
 
+CREATE TABLE [BoldTC_AICredentials](
+    [Id] uniqueidentifier NOT NULL,
+    [AIModel] [int] NOT NULL,
+    [AIConfiguration] [nvarchar](4000) NULL,
+    [CreatedById] [uniqueidentifier] NULL,
+    [ModifiedById] [uniqueidentifier] NULL,
+    [CreatedDate] [datetime] NOT NULL,
+    [ModifiedDate] [datetime] NOT NULL,
+    [IsActive] [bit] NOT NULL)
+;
+
 INSERT [BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'Registration', 1)
 INSERT [BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'StatusUpdated', 1)
 INSERT [BOLDTC_TenantLogType] ([Name], [IsActive]) VALUES (N'PaymentUpdated', 1)

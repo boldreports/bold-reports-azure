@@ -111,6 +111,7 @@
                     position: absolute;
                     top: -12px !important;
                     left: 5px;
+                    width: 20px;
                 }
 
                 .grid-directory-icon {
@@ -153,10 +154,8 @@
                         color: $grid-content-text-normal-color;
                     }
 
-                    .dropdown.open, .dropup.open {
-                        .option-icon {
-                            border: 1px solid $black;
-                        }
+                    .option-icon {
+                        border: 1px solid $black;
                     }
                 }
             }
@@ -193,8 +192,16 @@
             position: absolute;
             right: 35px;
 
+            .dropdown-toggle {
+                &::after {
+                    visibility: hidden;
+                }
+            }
+
             .dropdown-menu {
-                left: -172px;
+                left: -172px !important;
+                top: 10px !important;
+                transform: none !important;
                 width: 190px;
 
                 .view-user {

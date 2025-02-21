@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
       <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="application-name-template">
-        <a class="item-name grid-content" title="${TenantName}" data-toggle="tooltip" href="@Url.Action("ViewSite","TenantsManagement")/${Id}">${TenantName}</a>
+        <a class="item-name grid-content text-decoration-none" title="${TenantName}" data-bs-toggle="tooltip" href="@Url.Action("ViewSite", "TenantsManagement")/${Id}">${TenantName}</a>
     </script>
       <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="application-url-template">
-        <a class="grid-content" title="${SiteUrl}" data-toggle="tooltip" href="${SiteUrl}">${SiteUrl}</a>
+        <a class="grid-content text-decoration-none" title="${SiteUrl}" data-bs-toggle="tooltip" href="${SiteUrl}">${SiteUrl}</a>
     </script>
       <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="application-tenant-template">
         ${if (TenantType == "@((int)TenantType.BoldBIOnPremise)")}
@@ -38,17 +38,17 @@
         @Html.Label("admin-checkbox-header", " ", new { @class = "admin-checkbox-header-label" })
     </script>
 </head>
-<div id="add-tenants-dialog-content" class="modal-body col-xs-12">
-    <div id="add-user-search-area" class="pull-left no-margin">
-        <input type="text" class="pull-left" id="add-tenant-search" placeholder="@T["Search sites"]" />
-        <span class="su su-inner-close close-icon pull-left" id="add-tenant-clear-search" title="@T["Clear search"]"></span>
-        <span class="su su-search search-icon pull-left" title="@T["Search"]"></span>
+<div id="add-tenants-dialog-content" class="modal-body col-12 float-start">
+    <div id="add-user-search-area" class="float-start no-margin">
+        <input type="text" class="float-start" id="add-tenant-search" placeholder="@T["Search sites"]" />
+        <span class="su su-inner-close close-icon float-start" id="add-tenant-clear-search" title="@T["Clear search"]"></span>
+        <span class="su su-search search-icon float-start" title="@T["Search"]"></span>
     </div>
-    <div class="col-xs-12 no-padding">
+    <div class="col-12 float-start no-padding">
         <div id="add_tenants_grid">
         </div>
     </div>
-    <div class="col-xs-12 no-padding">
+    <div class="col-12 float-start no-padding">
         <div class="note-info"><span class="note-text">@T["Note"]: </span><span>@T["The users who were selected in the previous screen will have access to the sites that were selected."]</span></div>
     </div>
 </div>

@@ -53,6 +53,7 @@
                 text-align: center;
                 padding-right: 40px;
                 width: 120px;
+                position: relative;
 
                 .profile-pic-tag {
                     color: $primary-text-color;
@@ -105,6 +106,7 @@
                 margin-top: 20px;
                 margin-left: 10px;
                 width: 750px;
+                position: relative;
 
                 form {
                     display: table;
@@ -116,6 +118,7 @@
 
                         .tooltip {
                             left: auto !important;
+
                             .tooltip-inner {
                                 max-width: unset;
                             }
@@ -157,6 +160,10 @@
                             display: inline-block;
                         }
 
+                        .edit-profile-field::placeholder {
+                            color: #555 !important;
+                        }
+
                         .validation-message {
                             padding-top: 6px;
                         }
@@ -190,7 +197,7 @@
     }
 
     .height-without-button {
-        height: calc(100% - 58px)!important;
+        height: calc(100% - 58px) !important;
     }
 }
 

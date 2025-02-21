@@ -116,7 +116,8 @@ html {
           color: var(--dialog-content-text-normal-color);
           height: 50px;
           padding: 0 !important;
-          border: none; }
+          border: none;
+          display: block; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .add-tenant-popup-title {
             padding: 18px 0 0 18px;
             line-height: 0;
@@ -192,14 +193,23 @@ html {
               background: transparent; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .icon-alignment {
             margin-left: 265px !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .icon-alignment-for-single-database {
+            margin-left: 300px !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .icon-alignment-for-database-per-tenant {
+            margin-left: 250px !important; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .content-alignment {
+            margin-left: 230px !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .content-alignment-for-single-database {
+            margin-left: 260px !important; }
+          html body .add-tenant-dialog-wrapper #popup-container .modal-header .content-alignment-for-database-per-tenant {
             margin-left: 230px !important; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-header .selector-alignment {
             width: 870px !important; }
         html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body {
           background-color: var(--dialog-content-bg-normal-color);
           color: var(--dialog-content-text-normal-color);
-          padding: 0 24px !important; }
+          padding: 0 24px !important;
+          height: 628.8px; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body .inline-align {
             display: inline-block; }
           html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #search-area input[type="text"] {
@@ -317,7 +327,8 @@ html {
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .input-group-addon {
                       border: 0;
                       padding: 0 !important;
-                      background-color: transparent; }
+                      background-color: transparent;
+                      font-size: 14px; }
                       html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .input-group-addon #enable-ssl {
                         height: 40px !important;
                         margin-bottom: 5px;
@@ -328,7 +339,7 @@ html {
                         background-color: var(--drop-down-menu-bg-normal-color);
                         text-align: center; }
                     html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .domain-text {
-                      width: 340px; }
+                      width: 336px; }
                       html body .add-tenant-dialog-wrapper #popup-container .modal-tenant-body #dialog-body .dialog-body-div #dialog-body-container .tenant-registration-form .domain #ssl-selectpicker .domain-text .e-custom {
                         border-top-left-radius: 0px;
                         border-bottom-left-radius: 0px; }
@@ -517,7 +528,8 @@ html {
           padding: 16px 23px;
           text-align: center;
           float: left;
-          z-index: 1; }
+          z-index: 1;
+          display: block; }
           html body .add-tenant-dialog-wrapper #popup-container #dialog-body-footer #details-back {
             height: 32px;
             width: 162px;
@@ -770,3 +782,6 @@ e-filter-parent {
 
 .e-multiselect.e-outline .e-multi-select-wrapper .e-delim-values {
   padding: 0px 0px 0px 15px !important; }
+
+.popover-body {
+  color: var(--primary-text-color); }

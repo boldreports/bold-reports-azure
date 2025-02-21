@@ -34,6 +34,8 @@ function onDropDownListChange(args) {
         onApplicationThemeChange();
     if (args.element.id == 'mail-account')
         emailConfiguration();
+    if (args.element.id == 'ai-providers')
+        aiConfiguration();
 }
 
 function groupImportDropDownListInitialization(id, placeHolder) {

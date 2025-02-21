@@ -8,8 +8,20 @@
   right: 90px; }
 #look-and-feel-container .admin-page-body .sub-section div.form-group:last-child {
   margin: 0 0 32px 0; }
+#look-and-feel-container .admin-page-body .sub-section .label-default-width {
+  width: 450px !important; }
+  #look-and-feel-container .admin-page-body .sub-section .label-default-width .app-textbox-label {
+    width: 125px;
+    display: inline-block; }
 #look-and-feel-container .admin-page-body .sub-section .form-group {
   margin: 0 0 16px 0; }
+  #look-and-feel-container .admin-page-body .sub-section .form-group:after {
+    clear: both;
+    display: table;
+    content: ""; }
+  #look-and-feel-container .admin-page-body .sub-section .form-group:before {
+    display: table;
+    content: ""; }
 #look-and-feel-container .admin-page-body .last-sub-section .branding-logo {
   border: 1px solid var(--logo-section-border-color);
   border-radius: 4px;
@@ -22,15 +34,18 @@
   margin: 0 0 32px 0 !important; }
 #look-and-feel-container .admin-page-body .last-sub-section .header-logo {
   margin: 0 0 32px 32px !important; }
+#look-and-feel-container .admin-page-body .last-sub-section .favicon {
+  margin: 0 0 32px 0 !important; }
 #look-and-feel-container .admin-page-body .last-sub-section .email-logo {
-  margin: 0 0 0 32px !important; }
+  margin: 0 0 32px 32px !important; }
 #look-and-feel-container .admin-page-body .last-sub-section .logo-section {
   border: 1px solid var(--logo-section-border-color) !important;
   border-radius: 4px;
   height: 80px;
   margin: 10px 2px 10px 8px;
   padding: 5px;
-  width: 80px; }
+  width: 80px;
+  position: relative; }
   #look-and-feel-container .admin-page-body .last-sub-section .logo-section img {
     bottom: 0;
     margin: auto;
@@ -160,8 +175,8 @@
   text-align: center;
   font-size: 16px; }
 #look-and-feel-container .manage-link-btn {
-  position: absolute;
-  left: 400px; }
+  float: right;
+  margin: 0px !important; }
 
 #active-directory-container #synchronization-options {
   margin-right: 175px; }

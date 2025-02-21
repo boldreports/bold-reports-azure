@@ -34,15 +34,15 @@
 <nav id="top-nav" class="sf-nav-group mobile-hidden">
     <ul class="icon-list">
         <li class="profile-section dropup">
-            <a class="dropdown-toggle" data-toggle="dropdown">
+            <a class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
                 <span class="icon-container">
-                    <span class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="32" data-toggle="tooltip" title="@displayName" data-placement="bottom" data-url="@imageUrl" style="border-radius:50%"></span>
+                    <span class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="32" data-bs-toggle="tooltip" title="@displayName" data-bs-placement="bottom" data-url="@imageUrl" style="border-radius:50%"></span>
                 </span>
             </a>
             <ul class="dropdown-menu top-menu" role="menu">
                 <li class="top-menu-item top-menu-profile">
                     <div class="top-menu-profile-text-padding">@T["Profile"]</div>
-                    <a href="/user/profile">
+                    <a href="/user/profile" class="top-menu-profile-height text-decoration-none">
                         <div class="top-menu-profile-hover">
                             <div class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="40" data-url="@imageUrl" style="border-radius:50%"></div>
                             <div class="top-menu-user-name">
@@ -61,7 +61,7 @@
                 </li>
                 <li class="sf-top-menu-separator"></li>
                 <li class="top-menu-item">
-                    <a href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath">
+                    <a href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath" class="text-decoration-none">
                         @T["Sign out"]
                     </a>
                 </li>
@@ -74,9 +74,12 @@
     var UserNameElementLength = $(".top-menu-user-name").find(".top-menu-user-name-style").text().length;
     var UserEmailElementLength = $(".top-menu-user-name").find(".top-menu-user-email-style").text().length;
     if (UserNameElementLength > 21 || UserEmailElementLength > 25) {
-        $(".top-menu-profile-hover").attr("title", "<span class='tooltip-row'>@displayName</span><span class='tooltip-row'>@emailAddress</span>");
-        $(".top-menu-profile-hover").tooltip({
-            html: true,
+        $(".top-menu-profile-hover").attr("title", "<span class='tooltip-row'>@displayName</span><br><span class='tooltip-row'>@emailAddress</span>");
+        var tooltipTriggers = document.querySelectorAll('.top-menu-profile-hover');
+        tooltipTriggers.forEach(function (tooltipTrigger) {
+            new bootstrap.Tooltip(tooltipTrigger, {
+                html: true
+            });
         });
     }
 </script>

@@ -927,6 +927,17 @@ CREATE TABLE BOLDTC_CustomEmailTemplate (
 	TemplateLocalizationKey VARCHAR(255) NULL
 );
 
+CREATE TABLE BoldTC_AICredentials(
+    Id uuid NOT NULL,
+    AIModel INTEGER NOT NULL,
+    AIConfiguration varchar(4000) NULL,
+    CreatedById uuid NULL,
+    ModifiedById uuid NULL,
+    CreatedDate timestamp NOT NULL,
+    ModifiedDate timestamp NOT NULL,
+    IsActive smallint NOT NULL)
+;
+
 INSERT into BOLDTC_TenantLogType  ( Name , IsActive ) VALUES (N'Registration', 1);
 INSERT into BOLDTC_TenantLogType  ( Name ,  IsActive ) VALUES (N'StatusUpdated', 1);
 INSERT into BOLDTC_TenantLogType  ( Name ,  IsActive ) VALUES (N'PaymentUpdated', 1);

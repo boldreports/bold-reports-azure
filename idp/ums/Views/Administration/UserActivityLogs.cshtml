@@ -33,10 +33,10 @@
 {
     @await Html.PartialAsync("_AdminMenu")
 
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment">
-        <div id="activity-setting" class="col-xs-12 admin-page-header header-without-button">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment">
+        <div id="activity-setting" class="col-12 admin-page-header header-without-button">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 header-group">
                     <h1 class="page-title">
                         @T["Audit Logs"]
                     </h1>
@@ -45,31 +45,31 @@
                     </h5>
                 </hgroup>
             </div>
-            <div class="col-xs-4 top-nav-sec no-padding">
+            <div class="col-4 float-end top-nav-sec no-padding">
                 @await Html.PartialAsync("../Shared/_TopMenu")
             </div>
         </div>
     </div>
 
-    <div id="activity-log-container" class="col-xs-12 admin-page-content-container">
-        <div class="admin-page-content col-xs-12 no-padding">
+    <div id="activity-log-container" class="col-12 float-end admin-page-content-container">
+        <div class="admin-page-content col-12 float-end no-padding">
             <div class="filter-section">
-                <div class="pull-right filter-alignment">
-                    <div class="col-sm-3 col-xs-3 date-picker no-padding">
+                <div class="float-end filter-alignment">
+                    <div class="col-sm-3 col-3 float-start date-picker no-padding">
                         <input type="text" name="email-log-filter-date-range" class="form-control full-width" id="datePicker">
                     </div>
-                    <div class="dropdown activity-settings-drop-down-category  pull-left col-xs-12">
+                    <div class="dropdown activity-settings-drop-down-category  float-start col-12">
                         <input id="user-event-category"/>
                     </div>
-                    <div class="dropdown activity-settings-drop-down-type pull-left col-xs-12">
+                    <div class="dropdown activity-settings-drop-down-type float-start col-12">
                         <input id="user-event-type"/>
                     </div>
                     <span>
-                        <button type="button" id="apply-button" class="link-button btn pull-left">@T["Apply"]</button>
+                        <button type="button" id="apply-button" class="link-button btn float-start">@T["Apply"]</button>
                     </span>
                     <span id="reset">@T["Clear"]</span>
-                    <span class="separator pull-left"></span>
-                    <span class="su su-sync pull-left" id="refresh"></span>
+                    <span class="separator float-start"></span>
+                    <span class="su su-sync float-start" id="refresh"></span>
                 </div>
             </div>
             <div id="userActivityLogGrid" class="col-lg-8 no-padding dialog-override">
@@ -96,8 +96,8 @@
             <span class="grid-content initiate-display-name" title="${Summary}">${Summary}</span>
         </script>
             <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="activity-user-log-options">
-            <span title="View" data-toggle="dropdown">
-                <a href="#" class="activity-log-info" data-email>
+            <span title="View" data-bs-toggle="dropdown">
+                <a href="#" class="text-decoration-none activity-log-info" data-email>
                     <span>@T["View"]</span>
                 </a>
             </span>

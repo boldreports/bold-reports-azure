@@ -8,6 +8,7 @@ body {
         float: right;
         margin-left: 20px;
         width: 88px;
+        height:52px;
     }
 }
 
@@ -18,6 +19,7 @@ body {
     list-style: none;
     padding: 0;
     float: right;
+    padding-right: 2px;
 }
 
 .icon-container {
@@ -78,6 +80,19 @@ body {
 }
 
 #top-nav {
+    .dropdown-toggle {
+        &::after {
+            visibility: hidden;
+        }
+    }
+
+    .icon-list {
+        .profile-section, .dropdown-toggle {
+            display: block;
+            height: 42px;
+        }
+    }
+
     .top-menu {
         width: 194px;
         border: 0;
@@ -95,7 +110,15 @@ body {
             background: $drop-down-menu-bg-normal-color !important;
 
             li.top-menu-item {
+                .top-menu-profile-height {
+                    height: 48px !important;
+                    display: flex;
+                }
+
                 a {
+                    height: 30px !important;
+                    display: flex;
+
                     &:hover {
                         background: $drop-down-menu-bg-hover-color !important;
                     }
@@ -106,6 +129,7 @@ body {
 
     .help-icon-item .top-menu {
         padding: 5px;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     }
 
     .top-menu-item-title {
@@ -163,6 +187,7 @@ body {
             left: -200px;
             bottom: auto;
             top: auto;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 
             .top-menu-profile {
                 height: auto !important;
@@ -197,6 +222,7 @@ body {
                     font-weight: normal;
                     line-height: 20px;
                     letter-spacing: 0.3px;
+                    height: 42px;
 
                     .top-menu-profile-hover {
                         display: inline-block;
@@ -217,6 +243,7 @@ body {
 
                             .top-menu-user-name-style {
                                 font-size: 12px;
+                                height: 20px;
                             }
 
 
@@ -244,4 +271,8 @@ body {
             max-width: none !important;
         }
     }
+}
+
+.tooltip .tooltip-inner {
+    font-size: 12px;
 }

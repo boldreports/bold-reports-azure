@@ -28,19 +28,19 @@
                     </div>
                     <div class="login-page-content">@T["Sorry, we are having trouble logging you in."]</div>
                     <div class="support-div">
-                        <a href="@Url.Action("Login", "Accounts")" class="login-button">
+                        <a href="@Url.Action("Login", "Accounts")" class="login-button text-decoration-none">
                             @T["Retry"]
                         </a>
                     </div>
                     <div class="external-container">
-                        <div class="divider-container col-xs-12">
-                            <div class="line col-xs-4"></div>
+                        <div class="divider-container col-12 float-start">
+                            <div class="line col-4 float-start"></div>
                         </div>
                         <div class="alternative-login">
                             <div class="page-wrapper">
                                 <span style="float:left">@T["Still having trouble?"]</span>
                                 <span class="hoverlink" style="float:right">
-                                    <a href="@CloudAppConfig.ContactUsUrl(TenantType.BoldBI)">
+                                    <a href="@CloudAppConfig.ContactUsUrl(TenantType.BoldBI)" class="text-decoration-none">
                                         @T["Contact Support"]
                                     </a>
                                 </span>

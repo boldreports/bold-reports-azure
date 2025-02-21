@@ -57,10 +57,12 @@ function listUsersForAdminSelection() {
                 }
             },
             dataBound: function (args) {
-                $('[data-toggle="tooltip"]').tooltip(
-                    {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl, {
                         container: 'body'
                     });
+                });
             },
             columns: [
                 {
@@ -185,7 +187,10 @@ function fnOnAddAdminGridActionComplete(args) {
     }
 
     enableAccessButtonForAdmin();
-    $("[data-toggle='tooltip']").tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     window.setTimeout('hideWaitingPopup("add-admin-element");', 500);
 }
 
@@ -254,7 +259,7 @@ $(document).on("click", ".su-search", function () {
     $("#search-tenant-users").addClass("search-width");
     $(".close-icon").css("display", "block");
     $(".su-search").css("display", "none");
-    $(".placeholder").removeClass("hide").addClass("show");
+    $(".placeholder").removeClass("d-none").addClass("d-block");
 });
 
 $(document).on("click", "#clear-search", function () {
@@ -263,7 +268,7 @@ $(document).on("click", "#clear-search", function () {
     $("#search-tenant-users").removeClass("search-width");
     $(".close-icon").css("display", "none");
     $(".su-search").css("display", "block");
-    $(".placeholder").removeClass("show").addClass("hide");
+    $(".placeholder").removeClass("d-block").addClass("d-none");
     var gridObj = document.getElementById("add_admins_grid").ej2_instances[0];
     gridObj.clearSelection();
     selectedAdmins = [];
@@ -273,7 +278,7 @@ $(document).on("click", "#clear-search", function () {
 });
 
 $(document).on("click", ".e-filtericon", function () {
-    $(".e-caption").addClass("pull-left");
+    $(".e-caption").addClass("float-start");
 });
 
 $(document).on("click", ".sort", function () {
@@ -285,10 +290,10 @@ $(document).on("click", ".sort", function () {
         gridObj.refresh();
         if (sorting == "ascending") {
             $("#order").attr("data-value", "descending");
-            $("#order").attr("data-original-title", "Sort by descending");
+            $("#order").attr("data-bs-original-title", "Sort by descending");
         } else {
             $("#order").attr("data-value", "ascending");
-            $("#order").attr("data-original-title", "Sort by ascending");
+            $("#order").attr("data-bs-original-title", "Sort by ascending");
         }
 
         //changes the tooltip value dynamically

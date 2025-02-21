@@ -11,10 +11,10 @@
     var currentUserId = Context.User.GetUserId();
 }
 
-<div class="header-bar col-lg-12 col-md-12 col-sm-12">
+<div class="header-bar col-lg-12 col-md-12 col-sm-12 float-start">
     <div class="main-screen-logo mobile-hidden">
-        <a href="/" class="home-link" data-container="body">
-            <img alt="@T["Application Logo"]" id="application-logo" src="@GlobalAppSettings.CdnDomain/static/company/@(GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? "boldid" : GlobalAppSettings.Branding)/logo/v1/@CloudAppConfig.Branding.BrandingImages.MainLogo" />
+        <a href="/" class="home-link text-decoration-none" data-bs-container="body">
+            <img alt="@T["Application Logo"]" id="application-logo" src="@GlobalAppSettings.CdnDomain/static/company/@(GlobalAppSettings.Branding == AppBranding.Bold.Identifier ? "boldid" : GlobalAppSettings.Branding)/logo/v1/@IconFileNames.MainLogo" />
         </a>
     </div>
     @if (!isToRemoveUserProfile)
@@ -23,7 +23,7 @@
         {
             <div class="user-account">
                 <div id="account-profile" class="dropdown no-padding">
-                    <span class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-toggle" data-bs-toggle="dropdown">
                         <span class="profile-picture">
                             <img alt="@T["Profile Picture"]" src="@Url.Content("~/User/Avatar?id=" + currentUserId + "&ImageSize=64")" />
                         </span>
@@ -47,10 +47,10 @@
                             </table>
                         </div>
                         <div class="profile-buttons">
-                            <a href="@Url.Action("Profilepage", "User")" class="profile-menu-action col-lg-6" data-toggle="tooltip" data-placement="top" data-container="body" title="View my profile">
+                            <a href="@Url.Action("Profilepage", "User")" class="profile-menu-action col-lg-6 text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-container="body" title="View my profile">
                                 @T["Profile"]
                             </a>
-                            <a href="@Url.Action("logout", "accounts")" class="profile-menu-action col-lg-6" data-toggle="tooltip" data-placement="top" data-container="body" title="Sign Out">
+                            <a href="@Url.Action("logout", "accounts")" class="profile-menu-action col-lg-6 text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-container="body" title="Sign Out">
                                 @T["Sign out"]
                             </a>
                         </div>
@@ -61,7 +61,7 @@
         else
         {
             <div class="login-account">
-                <a href="@Url.Action("Login", "Accounts")">@T["Sign in"]</a>
+                <a href="@Url.Action("Login", "Accounts")" class="text-decoration-none">@T["Sign in"]</a>
             </div>
         }
     }

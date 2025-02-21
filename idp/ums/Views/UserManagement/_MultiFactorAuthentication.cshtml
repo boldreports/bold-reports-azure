@@ -8,10 +8,10 @@
 }
 
 
-<div role="tabpanel" class="tab-pane col-xs-12 no-padding twofa-tab" id="2fa-tab">
-    <div id="2fa" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 admin-page-body">
+<div role="tabpanel" class="tab-pane col-12 float-start no-padding twofa-tab" id="2fa-tab">
+    <div id="2fa" class="col-lg-12 col-md-12 col-sm-12 col-12 float-start admin-page-body">
         <input type="hidden" id="user-id" value="@userDetail.UserId" />
-        <div class="col-xs-12 no-padding">
+        <div class="col-12 float-start no-padding">
         </div>
         <div class="twofa-container">
             @if (!isMfaEnabled)
@@ -24,7 +24,7 @@
             @Html.Label("configure-2FA", T["Two factor authentication is enabled for this user account."].Value, new { @class = "app-textbox-label" })
             <div class="mfa-disable">
                 <button type="button" class="secondary-button" id="generate-recovery-code">@T["Regenerate Recovery Code"]</button>
-                <div class="mfa-button"><a href="" id="mfa-disable-button" class="mfa-disable-button">@T["Remove Two Factor Authentication"]</a></div>
+                <div class="mfa-button"><a href="" id="mfa-disable-button" class="mfa-disable-button text-decoration-none">@T["Remove Two Factor Authentication"]</a></div>
             </div>
             }
         </div>

@@ -5,9 +5,9 @@
 
   <script nonce="@Context.Items["ScriptNonce"]">
         var displayName = "@displayName";
-    </script>
-<div class="col-md-12 system-settings-page-container " id="system-settings-user-account-container" >
-    <form id="admin-account-fields-container" class="admin-account-fields-container" autocomplete="off">
+  </script>
+<div class="col-md-12 float-start system-settings-page-container " id="system-settings-user-account-container">
+    <form id="admin-account-fields-container" class="admin-account-fields-container" autocomplete="off" >
         @Html.AntiForgeryToken()
         <div class="form-div form-group input-alignment form-group-top">
             <input type="text" tabindex="1" id="txt-firstname" name="firstname" class="" placeholder="@T["First name"]" maxlength="254"/>
@@ -40,15 +40,15 @@
         <div class="form-div form-group input-alignment">
             <input type="text" class="display-none">
             <input type="password" class="fake-password" name="fake_passwordfield_to_turnoff_autocomplete">
-            <input type="password" tabindex="5" id="new-password" class="" placeholder="@T["Password"]" name="password" autocomplete="off" maxlength="85" data-toggle="popover" data-title="@T["Password must contain:"]" data-trigger="focus" data-html="true" data-content="@passwordRules" data-placement="left"/>
-            <span class="su su-show show-hide-password show-hide-password-ej2" data-toggle="tooltip" data-original-title="@T["Click to view"]"></span>
+            <input type="password" tabindex="5" id="new-password" class="" placeholder="@T["Password"]" name="password" autocomplete="off" maxlength="85" data-bs-toggle="popover" data-bs-original-title="@T["Password must contain:"]" data-bs-trigger="focus" data-bs-html="true" data-bs-content="@passwordRules" data-bs-container="#admin-account-fields-container" data-bs-placement="left" />
+            <span class="su su-show show-hide-password show-hide-password-ej2" data-bs-toggle="tooltip" data-bs-original-title="@T["Click to view"]"></span>
             <div class="startup-validation validation-txt-errors" id="new-password"></div>
         </div>
 
         <div id="confirm-password-section" class="form-div form-group input-alignment">
             <input type="text" class="display-none">
-            <input type="password" tabindex="6" id="txt-confirm-password" class="" placeholder="@T["Confirm Password"]" name="confirm" autocomplete="off" maxlength="85"/>
-            <span class="su su-show show-hide-password show-hide-password-ej2" data-toggle="tooltip" data-original-title="@T["Click to view"]"></span>
+            <input type="password" tabindex="6" id="txt-confirm-password" class="" placeholder="@T["Confirm Password"]" name="confirm" autocomplete="off" maxlength="85" />
+            <span class="su su-show show-hide-password show-hide-password-ej2" data-bs-toggle="tooltip" data-bs-original-title="@T["Click to view"]"></span>
             <div class="startup-validation validation-txt-errors" id="confirm-password"></div>
         </div>
         <div class="btn-holder" id="admin-account-submit-container">

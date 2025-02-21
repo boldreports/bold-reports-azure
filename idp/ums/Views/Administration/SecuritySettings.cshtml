@@ -46,56 +46,56 @@
 @section MainSection {
 
     @await Html.PartialAsync("_AdminMenu")
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment">
-        <div class="col-md-12 admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment">
+        <div class="col-md-12 float-start admin-page-header">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">@T["Security"]</h1>
                     <h5 class="page-description">@T["Configure application and user account security policies."]</h5>
                 </hgroup>
             </div>
-            <div class="col-xs-4 top-nav-sec no-padding">
+            <div class="col-4 top-nav-sec no-padding">
                 @await Html.PartialAsync("../Shared/_TopMenu")
             </div>
         </div>
-        <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
-                    <button class="secondary-button pull-right" id="cancel-settings">@T["Cancel"]</button>
-                    <button type="button" title="" id="update-password-settings" class="primary-button pull-right">@T["Save"]</button>
-                    <button type="button" title="" id="update-cookie-settings" class="primary-button pull-right">@T["Save"]</button>
-                    <button type="button" title="" id="update-csp-settings" class="primary-button pull-right">@T["Save"]</button>
-                    <button type="button" title="" id="update-x-frame-options-settings" class="primary-button pull-right">@T["Save"]</button>
-                    <button type="button" title="" id="update-network-settings" class="primary-button pull-right">@T["Save"]</button>
+        <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div class="col-6 no-padding admin-header-btn float-end" id="user-management-options">
+                    <button class="secondary-button float-end" id="cancel-settings">@T["Cancel"]</button>
+                    <button type="button" title="" id="update-password-settings" class="primary-button float-end">@T["Save"]</button>
+                    <button type="button" title="" id="update-cookie-settings" class="primary-button float-end">@T["Save"]</button>
+                    <button type="button" title="" id="update-csp-settings" class="primary-button float-end">@T["Save"]</button>
+                    <button type="button" title="" id="update-x-frame-options-settings" class="primary-button float-end">@T["Save"]</button>
+                    <button type="button" title="" id="update-network-settings" class="primary-button float-end">@T["Save"]</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-xs-12 no-padding security-page-nav-bar">
+        <div class="col-12 float-start no-padding security-page-nav-bar">
             <ul id="security-settings-tab-nav" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="@isPasswordPolicyTab">
-                    <a href="#password-policy" id="password-policy-tab" aria-controls="password-policy-tab" role="tab" data-toggle="tab">@T["User Account"]</a>
+                    <a href="#password-policy" class="text-decoration-none" id="password-policy-tab" aria-controls="password-policy-tab" role="tab" data-bs-toggle="tab">@T["User Account"]</a>
                 </li>
                 <li role="presentation" class="@isCookiesTab">
-                    <a href="#cookie-options" id="cookie-options-tab" aria-controls="cookie-options-tab" role="tab" data-toggle="tab">@T["Authentication Cookie Options"]</a>
+                    <a href="#cookie-options" class="text-decoration-none" id="cookie-options-tab" aria-controls="cookie-options-tab" role="tab" data-bs-toggle="tab">@T["Authentication Cookie Options"]</a>
                 </li>
                 <li role="presentation" class="@isCSPTab">
-                    <a href="#csp" id="csp-tab" aria-controls="csp-tab" role="tab" data-toggle="tab">@T["Content Security Policy"]</a>
+                    <a href="#csp" class="text-decoration-none" id="csp-tab" aria-controls="csp-tab" role="tab" data-bs-toggle="tab">@T["Content Security Policy"]</a>
                 </li>
                 <li role="presentation" class="@isXFrameTab">
-                    <a href="#x-frame-options" id="x-frame-options-tab" aria-controls="x-frame-options-tab" role="tab" data-toggle="tab">@T["X-Frame-Options"]</a>
+                    <a href="#x-frame-options" class="text-decoration-none" id="x-frame-options-tab" aria-controls="x-frame-options-tab" role="tab" data-bs-toggle="tab">@T["X-Frame-Options"]</a>
                 </li>
                 <li role="presentation" class="@isNetworkTab">
-                    <a href="#network-settings" id="network-settings-tab" aria-controls="network-settings-tab" role="tab" data-toggle="tab">@T["IP Whitelisting"]</a>
+                    <a href="#network-settings" class="text-decoration-none" id="network-settings-tab" aria-controls="network-settings-tab" role="tab" data-bs-toggle="tab">@T["IP Whitelisting"]</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div id="security-settings-container" role="tabpanel" class="col-xs-12 admin-page-content-container admin-page-container-with-tab">
-        <div class="admin-page-content col-xs-12 no-padding">
-            <div class="tab-content col-xs-12 no-padding">
+    <div id="security-settings-container" role="tabpanel" class="col-12 float-start admin-page-content-container admin-page-container-with-tab">
+        <div class="admin-page-content col-12 float-start no-padding">
+            <div class="tab-content col-12 float-start no-padding">
                 <div role="tabpanel" class="tab-pane security-page-body @isPasswordPolicyTab" id="password-policy">
-                    <div class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
+                    <div class="col-lg-12 col-md-12 col-sm-12 float-start admin-page-body">
                         @await Html.PartialAsync("_PasswordPolicy")
                         @await Html.PartialAsync("_LockAccount")
                     </div>

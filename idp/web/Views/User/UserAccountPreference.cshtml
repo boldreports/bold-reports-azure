@@ -31,42 +31,42 @@
     @await Html.PartialAsync("_UserProfileMenu")
     @await Html.PartialAsync("_UserTokenForm")
 
-    <div id="site-settings-header" class="col-xs-12 header-section no-padding no-margin width-alignment">
-        <div class="col-md-12 import-area admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div id="site-settings-header" class="col-12 float-start header-section no-padding no-margin width-alignment">
+        <div class="col-md-12 float-start import-area admin-page-header">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">
                         @T["Account Preferences"]
                     </h1>
                 </hgroup>
             </div>
-            <div class="col-xs-4 top-nav-sec no-padding">
+            <div class="col-4 top-nav-sec no-padding">
                 @await Html.PartialAsync("../Shared/_TopMenu")
             </div>
         </div>
-        <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
+        <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div class="col-6 no-padding admin-header-btn float-end" id="user-management-options">
                     @if (!string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        <a href="@returnUrl" class="secondary-button pull-right margin10" id="language-cancel-link-button">@T["Cancel"]</a>
-                        <input id="hidden-return-url" class="hidden" value="@returnUrl" />
+                        <a href="@returnUrl" class="secondary-button float-end margin10 text-decoration-none" id="language-cancel-link-button">@T["Cancel"]</a>
+                        <input id="hidden-return-url" class="visually-hidden" value="@returnUrl" />
                     }
                     else
                     {
-                        <button type="button" class="secondary-button pull-right" title="" id="language-cancel-button">@T["Cancel"]</button>
+                        <button type="button" class="secondary-button float-end" title="" id="language-cancel-button">@T["Cancel"]</button>
                     }
 
-                    <input type="button" class="primary-button pull-right inactive-content" id="language-save-button" title="" value="@T["Save"]">
+                    <input type="button" class="primary-button float-end inactive-content" id="language-save-button" title="" value="@T["Save"]">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 admin-page-content-container">
-        <div class="admin-page-content col-xs-12 no-padding">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 admin-page-body">
-                <div class="col-xs-12 no-padding">
+    <div class="col-md-12 col-sm-12 col-12 col-lg-12 float-start admin-page-content-container">
+        <div class="admin-page-content col-12 float-start no-padding">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 float-start admin-page-body">
+                <div class="col-12 float-start no-padding">
                     @Html.Label("language", T["Application Language"].Value, new { @class = "app-textbox-label" })
                     <div class="admin-settings-drop-down">
                         @Html.DropDownList("language", ViewBag.languageList as IEnumerable<SelectListItem>, new { id = "language", @class = "form-control" })
@@ -76,7 +76,7 @@
                 </div>
                 @if (ViewBag.HaveBILicense)
                 {
-                    <div class="col-xs-12 no-padding language-label input-field-margin">
+                    <div class="col-12 float-start no-padding language-label input-field-margin">
                         @Html.Label("model-language", T["Data Language"].Value, new { @class = "app-textbox-label" })
                         <div class="admin-settings-drop-down" id="model-language-conainer">
                             @Html.DropDownList("model-language", ViewBag.UserModelLanguages as IEnumerable<SelectListItem>, new { id = "model-language", @class = "form-control", data_live_search = "true", data_size = 10 })
@@ -95,7 +95,7 @@
 
                 }
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-3 float-start no-padding" id="message">
                 <h5 id="success-message"></h5>
             </div>
 

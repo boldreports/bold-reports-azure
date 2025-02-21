@@ -92,13 +92,23 @@
   #admin-menu-nav-bar #tenant-activity-log .audit-log {
     font-size: 16px !important;
     margin: 0 -2px; }
+  #admin-menu-nav-bar .beta-icon {
+    font-size: 10px !important;
+    margin-bottom: -1px;
+    margin-left: 16px;
+    background-color: var(--primary-button-bg-normal-color) !important;
+    color: var(--primary-button-text-normal-color) !important;
+    width: 38px !important;
+    line-height: 13px !important;
+    padding: 1px 4px !important; }
 
 #server-app-container {
   overflow: hidden; }
   #server-app-container #content-area {
     height: 100%; }
   #server-app-container .admin-header-width {
-    width: 100% !important; }
+    width: 100% !important;
+    display: grid; }
   #server-app-container .width-alignment {
     background: var(--top-header-bg-color);
     width: calc(100% - 230px);
@@ -115,6 +125,8 @@
         width: auto; }
       #server-app-container .width-alignment .admin-page-header .admin-page-header-description .dropdown-alignment {
         padding: 5px; }
+        #server-app-container .width-alignment .admin-page-header .admin-page-header-description .dropdown-alignment .dropdown-toggle::after {
+          visibility: hidden; }
       #server-app-container .width-alignment .admin-page-header .admin-page-header-description .page-title {
         margin: 0;
         font-size: 16px;
@@ -148,22 +160,26 @@
         color: var(--icon-text-normal-color); }
     #server-app-container .width-alignment .auth-page-border {
       border-bottom: 1px solid var(--header-separator-color); }
-    #server-app-container .width-alignment .auth-page-nav-bar, #server-app-container .width-alignment .lic-page-nav-bar, #server-app-container .width-alignment .site-nav-bar, #server-app-container .width-alignment .email-page-nav-bar, #server-app-container .width-alignment .security-page-nav-bar {
+    #server-app-container .width-alignment .auth-page-nav-bar, #server-app-container .width-alignment .lic-page-nav-bar, #server-app-container .width-alignment .site-nav-bar, #server-app-container .width-alignment .email-page-nav-bar, #server-app-container .width-alignment .security-page-nav-bar, #server-app-container .width-alignment .ai-page-nav-bar {
       background: var(--tab-bg-normal-color); }
-      #server-app-container .width-alignment .auth-page-nav-bar .nav, #server-app-container .width-alignment .lic-page-nav-bar .nav, #server-app-container .width-alignment .site-nav-bar .nav, #server-app-container .width-alignment .email-page-nav-bar .nav, #server-app-container .width-alignment .security-page-nav-bar .nav {
+      #server-app-container .width-alignment .auth-page-nav-bar .nav, #server-app-container .width-alignment .lic-page-nav-bar .nav, #server-app-container .width-alignment .site-nav-bar .nav, #server-app-container .width-alignment .email-page-nav-bar .nav, #server-app-container .width-alignment .security-page-nav-bar .nav, #server-app-container .width-alignment .ai-page-nav-bar .nav {
         padding-left: 24px; }
-        #server-app-container .width-alignment .auth-page-nav-bar .nav > li > a, #server-app-container .width-alignment .lic-page-nav-bar .nav > li > a, #server-app-container .width-alignment .site-nav-bar .nav > li > a, #server-app-container .width-alignment .email-page-nav-bar .nav > li > a, #server-app-container .width-alignment .security-page-nav-bar .nav > li > a {
+        #server-app-container .width-alignment .auth-page-nav-bar .nav > li > a, #server-app-container .width-alignment .lic-page-nav-bar .nav > li > a, #server-app-container .width-alignment .site-nav-bar .nav > li > a, #server-app-container .width-alignment .email-page-nav-bar .nav > li > a, #server-app-container .width-alignment .security-page-nav-bar .nav > li > a, #server-app-container .width-alignment .ai-page-nav-bar .nav > li > a {
           position: relative;
           display: block;
           padding: 0px 12px 10px 12px;
           line-height: 14px; }
-        #server-app-container .width-alignment .auth-page-nav-bar .nav .active a, #server-app-container .width-alignment .lic-page-nav-bar .nav .active a, #server-app-container .width-alignment .site-nav-bar .nav .active a, #server-app-container .width-alignment .email-page-nav-bar .nav .active a, #server-app-container .width-alignment .security-page-nav-bar .nav .active a {
+        #server-app-container .width-alignment .auth-page-nav-bar .nav .active a, #server-app-container .width-alignment .lic-page-nav-bar .nav .active a, #server-app-container .width-alignment .site-nav-bar .nav .active a, #server-app-container .width-alignment .email-page-nav-bar .nav .active a, #server-app-container .width-alignment .security-page-nav-bar .nav .active a, #server-app-container .width-alignment .ai-page-nav-bar .nav .active a {
           padding-bottom: 8px; }
+        #server-app-container .width-alignment .auth-page-nav-bar .nav .active::after, #server-app-container .width-alignment .lic-page-nav-bar .nav .active::after, #server-app-container .width-alignment .site-nav-bar .nav .active::after, #server-app-container .width-alignment .email-page-nav-bar .nav .active::after, #server-app-container .width-alignment .security-page-nav-bar .nav .active::after, #server-app-container .width-alignment .ai-page-nav-bar .nav .active::after {
+          position: relative; }
     #server-app-container .width-alignment .admin-page-icon {
       height: 64px;
       padding: 20px 40px 0 0; }
       #server-app-container .width-alignment .admin-page-icon .admin-header-btn {
         margin-top: 0px; }
+        #server-app-container .width-alignment .admin-page-icon .admin-header-btn .dropdown-menu li > a {
+          display: flex; }
   #server-app-container body .bi-page-header #user-management-options {
     list-style: none;
     margin-bottom: 0;
@@ -297,6 +313,8 @@
           padding-left: 26px !important; }
       #server-app-container .admin-page-content-container .admin-page-content #oauth-client-secret, #server-app-container .admin-page-content-container .admin-page-content #mail-password, #server-app-container .admin-page-content-container .admin-page-content #openid-client-secret {
         padding-right: 30px; }
+        #server-app-container .admin-page-content-container .admin-page-content #oauth-client-secret::placeholder, #server-app-container .admin-page-content-container .admin-page-content #mail-password::placeholder, #server-app-container .admin-page-content-container .admin-page-content #openid-client-secret::placeholder {
+          color: #555 !important; }
       #server-app-container .admin-page-content-container .admin-page-content #oauth-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #openid-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #oauth-mobile-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #openid-mobile-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #api-copy-client-id, #server-app-container .admin-page-content-container .admin-page-content #api-copy-client-secret, #server-app-container .admin-page-content-container .admin-page-content #show-api-client-secret, #server-app-container .admin-page-content-container .admin-page-content #copy-client-id, #server-app-container .admin-page-content-container .admin-page-content #copy-client-secret, #server-app-container .admin-page-content-container .admin-page-content #show-secret {
         border-radius: 0 4px 4px 0;
         float: left;
@@ -409,7 +427,9 @@
       color: var(--global-link-text-normal-color);
       position: absolute; }
     #server-app-container .admin-page-content-container .import-file .file-upload-btn {
-      display: inline-block; }
+      display: inline-block;
+      position: relative;
+      bottom: 4px; }
     #server-app-container .admin-page-content-container .separator-margin .method-type {
       float: left; }
       #server-app-container .admin-page-content-container .separator-margin .method-type button {

@@ -89,10 +89,10 @@ function userActivityLogGrid()
                 this.multiSelectCtrlRequest = true;
             },
             dataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip(
-                    {
-                        container: 'body'
-                    });
+                var tooltipTriggerEl = document.querySelector('[data-bs-toggle="tooltip"]');
+                var tooltip = new bootstrap.Tooltip(tooltipTriggerEl, {
+                    container: 'body'
+                });
             },
 
             columns: [

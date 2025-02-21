@@ -103,7 +103,7 @@ body {
                 display: block;
                 height: 5px;
                 z-index: 1;
-                position: inherit;
+                position: relative;
                 -webkit-transition-property: left, right;
                 transition-property: left, right;
                 -webkit-transition-duration: 0.3s;
@@ -669,7 +669,7 @@ input::-ms-clear, input::-ms-reveal {
     .message-content {
         padding: 10px;
         font-size: $app-text-size;
-        text-align: left;
+        text-align: left !important;
         line-height: 1.5;
 
         .list-area {
@@ -1060,6 +1060,17 @@ input::-ms-clear, input::-ms-reveal {
     #server-app-container {
         #header-area {
             .header-bar {
+                padding-left: 15px;
+                padding-right: 15px;
+
+                .org-name-wrapper {
+                    .header-org-name {
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        font-size: 14px;
+                    }
+                }
+
                 .user-account {
                     .dropdown-menu {
                         margin-top: 0px;

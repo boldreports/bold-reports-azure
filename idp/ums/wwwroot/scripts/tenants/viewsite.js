@@ -30,7 +30,10 @@ $(document).ready(function () {
     addPlacehoder("#search-app-admins");
     addPlacehoder("#add-admin-search");
     addPlacehoder("#add-user-search-area");
-    $("[data-toggle='tooltip']").tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     createWaitingPopup('user-remove-confirmation-dialog');
     createWaitingPopup('add-tenant-popup');
     createWaitingPopup('grant-users-access-dialog');
@@ -42,6 +45,54 @@ $(document).ready(function () {
         isolationSwitchContainer.on("click", function () {
             enableIsolationCode();
         });
+    }
+
+    if (enableAIFeature != undefined && enableAIFeature)
+    {
+        var widget = document.getElementById("widgetsummarization-enable-switch");
+        var aiservice = document.getElementById("aiservice-enable-switch");
+        var dashboard = document.getElementById("dashboardinsight-enable-switch");
+        var updateai = document.getElementById("update-enable-aiservice");
+
+        if (widget)
+        {
+            widget.disabled = false;
+        }
+        if (aiservice)
+        {
+            aiservice.disabled = false;
+        }
+        if (dashboard)
+        {
+            dashboard.disabled = false;
+        }
+        if (updateai)
+        {
+            updateai.disabled = false;
+        }
+    }
+    else
+    {
+        var widget = document.getElementById("widgetsummarization-enable-switch");
+        var aiservice = document.getElementById("aiservice-enable-switch");
+        var dashboard = document.getElementById("dashboardinsight-enable-switch");
+        var updateai = document.getElementById("update-enable-aiservice");
+        if (widget)
+        {
+            widget.disabled = true;
+        }
+        if (aiservice)
+        {
+            aiservice.disabled = true;
+        }
+        if (dashboard)
+        {
+            dashboard.disabled = true;
+        }
+        if (updateai)
+        {
+            updateai.disabled = true;
+        }
     }
 
     var grantUserAccessDialog = new ej.popups.Dialog({
@@ -65,7 +116,7 @@ $(document).ready(function () {
     $("#add-users-button").on("click", function () {
         var gridObj = document.getElementById('users_grid').ej2_instances[0];
         gridObj.clearSelection();
-        $("#remove-users-button").addClass("hide").removeClass("show");
+        $("#remove-users-button").addClass("d-none").removeClass("d-block");
         document.getElementById("grant-users-access-dialog").ej2_instances[0].show();
         onAddUsersDialogOpen();
     });
@@ -145,6 +196,7 @@ $(document).ready(function () {
     window.addEventListener("popstate", function (e) {
         needPush = false;
         var tab = e.state;
+        $("li").removeClass("active");
         if (tab === "general") {
             $("#application a").attr("href", "#application-tab");
             $('a[href="#application-tab"]').tab('show');
@@ -158,11 +210,11 @@ $(document).ready(function () {
             $('a[href="#data-security-tab"]').tab('show');
         }
         else if (tab === "ai-service" && isActiveSite) {
-            $("#data-security a").attr("href", "#ai-serviceKey-tab");
+            $("#ai-service a").attr("href", "#ai-serviceKey-tab");
             $('a[href="#ai-serviceKey-tab"]').tab('show');
         }
         else if (tab === "resource-limitation" && isActiveSite) {
-            $("#data-security a").attr("href", "#resource-limitation-tab");
+            $("#resource-limitation a").attr("href", "#resource-limitation-tab");
             $('a[href="#resource-limitation-tab"]').tab('show');
         }
         else if (tab === "attributes" && isActiveSite) {
@@ -222,7 +274,7 @@ $(document).ready(function () {
                                 if (data.Data) {
                                     hideWaitingPopup('user-add-dialog');
                                     $("#add-user").attr("disabled", "disabled");
-                                    $("#create-new-user").removeClass("hide").addClass("show");
+                                    $("#create-new-user").removeClass("d-none").addClass("d-block");
                                     $(".form input[type='text']").val('');
                                     onUserAddDialogClose();
                                     $.ajax({
@@ -263,15 +315,18 @@ $(document).ready(function () {
 
 });
 
-$(document).on("shown.bs.tab", 'a[data-toggle="tab"]', function (e) {
+$(document).on("shown.bs.tab", 'a[data-bs-toggle="tab"]', function (e) {
+    $("li").removeClass("active");
     var target = $(e.target).attr("href"); // activated tab
     var data;
 
     if (target.indexOf("#application-tab") !== -1) {
+        $("#application").closest("li").addClass("active");
         data = "general";
     }
 
     else if (target.indexOf("#users-tab") !== -1) {
+        $("#users").closest("li").addClass("active");
         data = "users";
         if (!isUserTabLoaded) {
             getAppUsers();
@@ -280,16 +335,20 @@ $(document).on("shown.bs.tab", 'a[data-toggle="tab"]', function (e) {
     }
 
     else if (target.indexOf("#data-security-tab") !== -1) {
+        $("#data-security").closest("li").addClass("active");
         data = "isolation-code";
     }
 
     else if (target.indexOf("#ai-serviceKey-tab") !== -1) {
+        $("#ai-service").closest("li").addClass("active");
         data = "ai-service";
     }
     else if (target.indexOf("#resource-limitation-tab") !== -1) {
+        $("#resource-limitation").closest("li").addClass("active");
         data = "resource-limitation";
     }
     else if (target.indexOf("#custom-attribute-tab") !== -1) {
+        $("#custom-attribute").closest("li").addClass("active");
         data = "attributes";
         if (!isAttributeTabLoaded) {
             getAttributes();
@@ -297,6 +356,7 @@ $(document).on("shown.bs.tab", 'a[data-toggle="tab"]', function (e) {
         }
     }
     else if (target.indexOf("#site-settings-tab") !== -1) {
+        $("#site-settings").closest("li").addClass("active");
         data = "site-settings";
     }
     pushUrl(data);
@@ -374,9 +434,13 @@ function fnOnAddUserGridActionBegin(args) {
 }
 
 function fnOnApplicationGridActionComplete(args) {
-    $('[data-toggle="tooltip"]').tooltip({
-        container: 'body'
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            container: 'body'
+        });
     });
+    
     if (this.properties.pageSettings.totalRecordsCount != null) {
         $("#application-count").text(this.properties.pageSettings.totalRecordsCount);
     }
@@ -394,7 +458,10 @@ function fnOnApplicationGridActionComplete(args) {
 }
 
 function fnOnUserGridActionComplete(args) {
-    $('[data-toggle="tooltip"]').tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     var usergrid = document.getElementById('users_grid').ej2_instances[0];
     if (args.requestType == "paging" || args.requestType == "sorting") {
         if (typeof usergrid.currentViewData != 'undefined') {
@@ -413,10 +480,10 @@ function fnOnUserGridActionComplete(args) {
     }
 
     if (usergrid.getSelectedRecords().length != 0) {
-        $("#remove-users-button").removeClass("hide").addClass("show");
+        $("#remove-users-button").removeClass("d-none").addClass("d-block");
     }
     else {
-        $("#remove-users-button").removeClass("show").addClass("hide");
+        $("#remove-users-button").removeClass("d-block").addClass("d-none");
     }
 }
 
@@ -468,10 +535,12 @@ function getAppUsers() {
             })
         },
         dataBound: function (args) {
-            $('[data-toggle="tooltip"]').tooltip(
-                {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
                     container: 'body'
                 });
+            });
         },
         load: fnOnUserGridActionBegin,
         actionBegin: fnOnUserGridActionBegin,
@@ -613,10 +682,12 @@ function getUsersWithoutAccess() {
                 }
             },
             dataBound: function (args) {
-                $('[data-toggle="tooltip"]').tooltip(
-                    {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl, {
                         container: 'body'
                     });
+                });
             },
             columns: [
                 {
@@ -689,7 +760,10 @@ function fnOnAddUserGridActionComplete(args) {
     }
 
     enableAccessButton();
-    $('[data-toggle="tooltip"]').tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
 }
 
 $(document).on("change", ".checkbox-row", function (args) {
@@ -849,7 +923,7 @@ function removeUserAccess(users) {
                 userGridObj.pageSettings.currentPage = getCurrentPageNumber(userGridObj.pageSettings.pageSize, selectedUsers.length, userGridObj.pageSettings.totalRecordsCount, userGridObj.pageSettings.currentPage);
                 selectedUsers = [];
                 userGridObj.refresh();
-                $("#remove-users-button").removeClass("show").addClass("hide");
+                $("#remove-users-button").removeClass("d-block").addClass("d-none");
                 document.getElementById("user-remove-confirmation-dialog").ej2_instances[0].hide();
                 if (result.status) {
                     var content = window.Server.App.LocalizationContent.RevokedAccessFor.format(result.count);
@@ -878,10 +952,10 @@ function onUserRecordSelect(args) {
     selectedRecords = usergrid.getSelectedRecords();
     selectedUsersArrayPushPopAllowed = true;
     if (selectedRecords.length >= 1) {
-        $("#remove-users-button").removeClass("hide").addClass("show");
+        $("#remove-users-button").removeClass("d-none").addClass("d-block");
     }
     else {
-        $("#remove-users-button").addClass("hide").removeClass("show");
+        $("#remove-users-button").addClass("d-none").removeClass("d-block");
     }
 }
 
@@ -925,8 +999,13 @@ $(document).on("click", ".tenant-action", function (e) {
         headerIcon = "delete";
         headerText = window.Server.App.LocalizationContent.Delete;
         actionUrl = deleteTenantUrl;
-        messageContent += "<br/><br/><div><span><input type='checkbox' class='material-checkbox' id='delete-database-checkbox' /><input id='delete-database-checkbox' type='hidden'/><label for='delete-database-checkbox' class='label-database'>" + window.Server.App.LocalizationContent.DeleteDatabase + "</label></span ></div><div class='tenant-delete-warning'> <span>" + window.Server.App.LocalizationContent.Warning + ":" + "</span><div class = 'warning-content'> " + window.Server.App.LocalizationContent.DeleteAllResourceWithoutDataBase + "</div></div>";
-
+        if (useSingleTenantDb)
+        {
+            messageContent += "<br/><br/>";
+        }
+        else {
+            messageContent += "<br/><br/><div><span><input type='checkbox' class='material-checkbox' id='delete-database-checkbox' /><input id='delete-database-checkbox' type='hidden'/><label for='delete-database-checkbox' class='label-database'>" + window.Server.App.LocalizationContent.DeleteDatabase + "</label></span ></div><div class='tenant-delete-warning'> <span>" + window.Server.App.LocalizationContent.Warning + ":" + "</span><div class = 'warning-content'> " + window.Server.App.LocalizationContent.DeleteAllResourceWithoutDataBase + "</div></div>";
+        }
     }
     else if (action === "make-master") {
         UpdateTenantId = tenantId;
@@ -1130,11 +1209,13 @@ function updateInfoMessage() {
     
 $(document).on("click", "#update-enable-aiservice", function () {
    var isAiServiceKeyEnabled= $("#aiservice-enable-switch").is(":checked");
+   var isWidgetSummarizationEnabled= $("#widgetsummarization-enable-switch").is(":checked");
+   var isDashboardInsightEnabled= $("#dashboardinsight-enable-switch").is(":checked");
    var tenantInfoId =  $("#aiservice-enable-switch").attr("data-tenant-id");
     showWaitingPopup("content-area");
     $.ajax({
         type: "POST",
-        data: { tenantInfoId: tenantInfoId, isAIServiceEnabled: isAiServiceKeyEnabled },
+        data: { tenantInfoId: tenantInfoId, isAIServiceEnabled: isAiServiceKeyEnabled, isWidgetSummarizationEnabled: isWidgetSummarizationEnabled, isDashboardInsightEnabled: isDashboardInsightEnabled },
         url: addIsAIServiceKeyEnableUrl,
         success: function (result) {
             if (result.Status) {
