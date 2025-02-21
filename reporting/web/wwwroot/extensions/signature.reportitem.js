@@ -22,12 +22,12 @@ var EJSignature = (function () {
         this.renderSignature();
     };
     EJSignature.prototype.renderSignature = function () {
-        this.customItemDiv = this.buildElement('div', 'customitem e-rptdesigner-customItem-sign', '', {}, {});
-        this.canvasTag = this.buildElement('canvas', '', '', { id: this.customJSON.Name + '_customItem_canvas' }, { width: '100%', height: '100%' });
-        this.customItemDiv.append(this.canvasTag);
-        this.rootElement.append(this.customItemDiv);
         var bgColor = (this.customJSON && this.customJSON.Style) ? (this.customJSON.Style.BackgroundColor === 'Transparent' ?
             'white' : this.customJSON.Style.BackgroundColor) : 'white';
+        this.customItemDiv = this.buildElement('div', 'customitem e-rptdesigner-customItem-sign', '', { 'id': this.customJSON.Name + '_customItem' }, { 'background-color': bgColor });
+        this.canvasTag = this.buildElement('canvas', '', '', { 'id': this.customJSON.Name + '_customItem_canvas' }, { width: '100%', height: '100%' });
+        this.customItemDiv.append(this.canvasTag);
+        this.rootElement.append(this.customItemDiv);
         var imgData = this.getPropertyVal('SignatureValue');
         imgData = imgData && imgData.length > 0 ? 'data:image/png;base64,' + imgData : imgData;
         this.setSign(imgData, document.getElementById(this.customJSON.Name + '_customItem_canvas'), bgColor);
@@ -39,7 +39,9 @@ var EJSignature = (function () {
         }
         switch (name.toLowerCase()) {
             case 'backgroundcolor':
-                this.canvasTag.css('background-color', newValue === 'Transparent' ? 'white' : newValue);
+                var bgColor = newValue === 'Transparent' ? 'white' : newValue;
+                this.customItemDiv.css('background-color', bgColor);
+                this.canvasTag.css('background-color', bgColor);
                 break;
         }
     };
@@ -62,24 +64,14 @@ var EJSignature = (function () {
                 width: width,
                 height: height
             });
-            this.canvasTag.css({
-                width: width,
-                height: height
-            });
         }
         else if (!ej.isNullOrUndefined(height) && ej.isNullOrUndefined(width)) {
             this.customItemDiv.css({
                 height: height
             });
-            this.canvasTag.css({
-                height: height
-            });
         }
         else if (ej.isNullOrUndefined(height) && !ej.isNullOrUndefined(width)) {
             this.customItemDiv.css({
-                width: width
-            });
-            this.canvasTag.css({
                 width: width
             });
         }
@@ -152,7 +144,7 @@ var EJSignature = (function () {
         this.customJSON.CustomProperties.push(new ej.ReportModel.CustomProperty(name, val));
     };
     EJSignature.prototype.getPropertyVal = function (name) {
-        if (this.customJSON.CustomProperties && this.customJSON.CustomProperties.length > 0) {
+        if (this.customJSON && this.customJSON.CustomProperties && this.customJSON.CustomProperties.length > 0) {
             for (var index = 0; index < this.customJSON.CustomProperties.length; index++) {
                 if (this.customJSON.CustomProperties[index].Name === name) {
                     return this.customJSON.CustomProperties[index].Value;
@@ -162,7 +154,7 @@ var EJSignature = (function () {
         return null;
     };
     EJSignature.prototype.updatePropertyVal = function (propertyName, value) {
-        if (this.customJSON.CustomProperties && this.customJSON.CustomProperties.length > 0) {
+        if (this.customJSON && this.customJSON.CustomProperties && this.customJSON.CustomProperties.length > 0) {
             for (var index = 0; index < this.customJSON.CustomProperties.length; index++) {
                 if (this.customJSON.CustomProperties[index].Name === propertyName) {
                     this.customJSON.CustomProperties[index].Value = value;

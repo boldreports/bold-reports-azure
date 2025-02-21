@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = T["Sites"].Value + " - " + GlobalAppSettings.SystemSettings.OrganizationName;
     var adminType = (AdminType)Enum.Parse(typeof(AdminType), Context.Session.GetString("AdminType"));
+    var useSingleTenantDb = GlobalAppSettings.SystemSettings.UseSingleTenantDb != null && (bool)GlobalAppSettings.SystemSettings.UseSingleTenantDb;
 }
 
 @section styles{
@@ -120,6 +121,7 @@
     var deleteTenantUrl = "@Url.Action("DeleteTenant", "TenantsManagement")";
     var updateMasterTenantUrl = "@Url.Action("UpdateMasterTenant", "TenantsManagement")";
     var masterSite = "@Url.Action("GetIsMasterSite", "TenantsManagement")";
+    var useSingleTenantDb = "@useSingleTenantDb".toLowerCase() === "true";
     var tenantName = "";
     $(function () {
         var searchQuery = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=');
