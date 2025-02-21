@@ -857,7 +857,7 @@ CREATE TABLE BOLDTC_QueryMetrics (
     QueryExecutionTime NVARCHAR2(100),
     DashboardName NVARCHAR2(100),
     UserName NVARCHAR2(100),
-    TenantId VARCHAR2(16),
+    TenantId VARCHAR2(36),
     UserId NVARCHAR2(100),
     DataSourceID NVARCHAR2(100),
     DataSourceName NVARCHAR2(100),
@@ -909,6 +909,18 @@ CREATE TABLE BOLDTC_UserAttributes (
     ModifiedDate TIMESTAMP NOT NULL,
     IsActive NUMBER(1) NOT NULL,
     CONSTRAINT PK_BOLDTC_USERATTRIBUTES PRIMARY KEY (Id)
+);
+
+CREATE TABLE BoldTC_AICredentials (
+    Id VARCHAR2(36) NOT NULL,
+    AIModel NUMBER NOT NULL,
+    AIConfiguration VARCHAR2(4000) NULL,
+    CreatedById CHAR(38),
+    ModifiedById CHAR(38),
+    CreatedDate TIMESTAMP NOT NULL,
+    ModifiedDate TIMESTAMP NOT NULL,
+    IsActive NUMBER(1) NOT NULL,
+    CONSTRAINT PK_BOLDTC_AICREDENTIALS PRIMARY KEY (Id)
 );
 
 

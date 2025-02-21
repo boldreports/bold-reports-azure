@@ -4,10 +4,12 @@ $(document).ready(function () {
     if (isShow2FA) {
         if ($("#security-setting-container").is(":visible")) {
             if (location.href.match(/2fa/)) {
+                $("#2fa").closest("li").addClass("active");
                 $("#2fa").tab("show");
                 $("#user-management-options").hide();
             }
             else {
+                $("#change-password").closest("li").addClass("active");
                 $("#change-password").tab("show");
                 $("#user-management-options").show();
                 var query = (window.location.search).toString();
@@ -19,6 +21,7 @@ $(document).ready(function () {
     }
     else {
         if ($("#security-setting-container").is(":visible")) {
+            $("#2fa").closest("li").addClass("active");
             $("#2fa").tab("show");
             $("#user-management-options").hide();
                 var query = (window.location.search).toString();
@@ -31,8 +34,10 @@ $(document).ready(function () {
 
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         if ($(this).attr("id") == "change-password") {
+            $(this).closest("li").addClass("active");
             $("#user-management-options").show();
             var query = (window.location.search).toString();
             if (query != "?view=change-password") {
@@ -40,6 +45,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "2fa") {
+            $(this).closest("li").addClass("active");
             $("#user-management-options").hide();
             var query = (window.location.search).toString();
             if (query != "?view=2fa") {
@@ -49,7 +55,10 @@ $(document).ready(function () {
         $(".success-message, .error-message").hide();
     });
 
-    $('[data-toggle="popover"]').popover();
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    });
     var outlineEditPassword = new ejs.inputs.TextBox({
         cssClass: 'e-outline e-custom e-non-float',
         floatLabelType: 'Never',
@@ -399,11 +408,11 @@ function copyToClipboard(inputId, buttonId) {
         }
     }
     setTimeout(function () {
-        $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.Copied);
+        $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.Copied);
         $(buttonId).tooltip('show');
     }, 200);
     setTimeout(function () {
-        $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.ClickToCopy);
+        $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.ClickToCopy);
         $(buttonId).tooltip();
     }, 3000);
 }

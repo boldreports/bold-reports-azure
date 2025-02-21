@@ -387,6 +387,17 @@
         }
     </style>
 
+    @if (ServerAppConfig.ToolBarRenderMode.ToLower() == "classic")
+    {
+        <style>
+            .e-rptviewer-tooltip {
+                background-color: #333 !important;
+                border-radius: 5px !important;
+                border: none !important;
+            }
+        </style>
+    }
+
     @if (!ServerAppConfig.IsCustomThemeForMenu)
     {
         <style>

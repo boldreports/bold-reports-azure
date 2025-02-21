@@ -44,7 +44,7 @@
                 @if (CloudAppConfig.IsSelfHosted && (adminType == AdminType.SuperAdmin || adminType == AdminType.AppAdmin))
                 {
                 <li class="icon-item help-icon-item">
-                        <a class="dropdown-toggle" data-toggle="dropdown">
+                        <a class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
                         <span class="icon-container">
                                 <i class="su su-help"></i>
                             </span>
@@ -54,12 +54,12 @@
                                 <div>@T["Help"]</div>
                             </li>
                             <li class="top-menu-item">
-                                <a id="download-log">
+                                <a id="download-log" class="text-decoration-none">
                                     @T["Get diagnostic logs"]
                                 </a>
                             </li>
                             <li class="top-menu-item">
-                                <a href="@healthCheckUrl">
+                                <a href="@healthCheckUrl" class="text-decoration-none">
                                     @T["Health check"]
                                 </a>
                             </li>
@@ -67,7 +67,7 @@
                                 <div>@T["About"]</div>
                             </li>
                             <li class="top-menu-item">
-                                <a href="@Url.Action("DisplayBoldServiceVersion", "Administration")">
+                                <a href="@Url.Action("DisplayBoldServiceVersion", "Administration")" class="text-decoration-none">
                                     @T["Product version"]
                                 </a>
                             </li>
@@ -75,15 +75,15 @@
                     </li>
                 }
                 <li class="profile-section dropup">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
+                    <a class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
                         <span class="icon-container">
-                        <span class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="32" data-toggle="tooltip" title="@displayName" data-placement="bottom" data-url="@imageUrl" style="border-radius:50%"></span>
+                        <span class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="32" data-bs-toggle="tooltip" title="@displayName" data-bs-placement="bottom" data-url="@imageUrl" style="border-radius:50%"></span>
                         </span>
                     </a>
                     <ul class="dropdown-menu top-menu" role="menu">
                         <li class="top-menu-item top-menu-profile">
                             <div class="top-menu-profile-text-padding">@T["Profile"]</div>
-                            <a rel="alternate" hreflang="en" href="@idPUrl/user/profile">
+                            <a rel="alternate" hreflang="en" href="@idPUrl/user/profile" class="top-menu-profile-height text-decoration-none">
                                 <div class="top-menu-profile-hover">
                                 <div class="profile-pic-tag" data-id="@userId" data-type="user" data-display-name="@displayName" data-image-size="40" data-url="@imageUrl" style="border-radius:50%"></div>
                                     <div class="top-menu-user-name">
@@ -102,7 +102,7 @@
                         </li>
                         <li class="sf-top-menu-separator"></li>
                         <li class="top-menu-item">
-                            <a href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath">
+                        <a href="@Url.Action("logout", "accounts")?returnUrl=@currentUrlLocalPath" class="text-decoration-none">
                                 @T["Sign out"]
                             </a>
                         </li>

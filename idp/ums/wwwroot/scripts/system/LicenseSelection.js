@@ -31,7 +31,10 @@ $(document).ready(function () {
         $("#getFile").click();
     });
 
-    $('[data-toggle="popover"]').popover();
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    });
 
     $('input[type="file"]').change(function (event) {
         $(".validation-error-message").html('');
@@ -109,7 +112,7 @@ function handleApplyLicense(addButtonObj, evt) {
                         $("#system-settings-welcome-container").hide();
                         $(".welcome-content").addClass("display-none");
                         $("#system-settings-offline-license-container").hide();
-                        $('#auth-type-dropdown').removeClass("hide").addClass("show");
+                        $('#auth-type-dropdown').removeClass("d-none").addClass("d-block");
                         $("#system-settings-user-account-container").slideDown("slow");
 
                         if (evt.originalEvent.data.userInfo != undefined && evt.originalEvent.data.userInfo != null) {
@@ -267,7 +270,7 @@ function confirmLicenseUpdate() {
                     $("#system-settings-welcome-container").hide();
                     $(".welcome-content").addClass("display-none");
                     $("#system-settings-offline-license-container").hide();
-                    $('#auth-type-dropdown').removeClass("hide").addClass("show");
+                    $('#auth-type-dropdown').removeClass("d-none").addClass("d-block");
                     $("#system-settings-user-account-container").slideDown("slow");
                     autoFocus("txt-firstname");
                 }

@@ -12,8 +12,10 @@ var onScroll= true;
 var innerCard;
 var fetchCard= false;
 $(document).ready(function () {
-    
-    $('[data-toggle="tooltip"]').tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     $("#card-loading").hide();
     $(".inner-card ").hide();
     $(".close-icon").css("display", "none");
@@ -236,10 +238,14 @@ function showSiteDownAlert() {
     }
 }
 $(document).on('click', '.search-allsites', function () {
+    $("ul.nav.nav-tabs li").removeClass("active");
+    $("#search-tenants-allsites").closest("li").addClass("active");
     $("#search-tenants-allsites").show();
     $(".search-icon").addClass("no-border");
 });
 $(document).on('click', '.search-favorite', function () {
+    $("ul.nav.nav-tabs li").removeClass("active");
+    $("#search-tenants-favorite").closest("li").addClass("active");
     $("#search-tenants-favorite").show();
     $(".search-icon").addClass("no-border");
 
@@ -389,10 +395,12 @@ function createAndAppendAttributeGrid() {
             }
         },
         dataBound: function (args) {
-            $('[data-toggle="tooltip"]').tooltip(
-                {
-                    container: '#AllSitesGrid'
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    boundary: document.getElementById('AllSitesGrid')
                 });
+            });
         },
         columns: [
             { width: 5, template: '${favoriteButtonTemplate(IsFavorite, Id, UserId)}', clipMode: 'Clip' },
@@ -488,10 +496,12 @@ function initializeFavoriteGrid() {
             actionBegin: fnOnSitesGridActionBegin,
             pageSettings: { pageSize: 10 },
             dataBound: function (args) {
-                $('[data-toggle="tooltip"]').tooltip(
-                    {
-                        container: '#FavoriteGrid'
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl, {
+                        boundary: document.getElementById('FavoriteGrid')
                     });
+                });
             },
             columns: [
 
@@ -549,7 +559,7 @@ function loadTenantCards(baseUrl, skip, take) {
                                            <div class="icon-container">${brandingHtml}</div>
                                                     <div class="tenant-card-header card-header">
                                                         <div class="card-header-title">${tenant.TenantName}</div>
-                                                         <div class="sites-card card-sub-title"> <a href="${tenant.SiteUrl}" target="_blank" data-toggle="tooltip" title="${tenant.SiteUrl}">${tenant.SiteUrl}</a></div>
+                                                         <div class="sites-card card-sub-title"> <a class="text-decoration-none" href="${tenant.SiteUrl}" target="_blank" data-toggle="tooltip" title="${tenant.SiteUrl}">${tenant.SiteUrl}</a></div>
                                                            <div class="data-card card-content"> ${tenant.CreatedDateString}</div>
                                                     </div> 
                                                       <div class="fav-card-icon"> ${favoriteButtonTemplate(tenant.IsFavorite, tenant.Id, tenant.UserId)}</div>
@@ -611,7 +621,7 @@ function loadFavoriteCards(baseUrl, skip, take) {
                                            <div class="icon-container">${brandingHtml}</div>
                                                     <div class="tenant-card-header card-header">
                                                         <div class="card-header-title">${tenant.TenantName}</div>
-                                                         <div class="sites-card card-sub-title"> <a href="${tenant.SiteUrl}" target="_blank">${tenant.SiteUrl}</a></div>
+                                                         <div class="sites-card card-sub-title"> <a class="text-decoration-none" href="${tenant.SiteUrl}" target="_blank">${tenant.SiteUrl}</a></div>
                                                            <div class="data-card card-content"> ${tenant.CreatedDateString}</div>
                                                     </div> 
                                                       <div class="fav-card-icon"> ${favoriteButtonTemplate(tenant.IsFavorite, tenant.Id, tenant.UserId)}</div>
@@ -643,7 +653,7 @@ function initializeTooltip() {
         tooltip.content = args.target.closest("td").innerText;
     }
 }
-$(document).on('click',"[data-toggle='tab']", function(){
+$(document).on('click',"[data-bs-toggle='tab']", function(){
     var currentUrl = (window.location.search).toString();
     var isFavoriteTab= ($(this).attr("id") == "favorite-sites-tab");
     handleTabClicks(isFavoriteTab);
@@ -651,7 +661,9 @@ $(document).on('click',"[data-toggle='tab']", function(){
 function handleTabClicks(isFavoriteTab) {
     onScroll=false;
     var currentUrl = (window.location.search).toString();
+    $("ul.nav.nav-tabs li").removeClass("active");
     if (isFavoriteTab ) {
+        $("#favorite-sites-tab").closest("li").addClass("active");
         $("#favorites").show();
         $("#all-sites").hide();
         $(".inner-card ").hide();
@@ -694,7 +706,7 @@ function handleTabClicks(isFavoriteTab) {
         $("#search-tenants-favorite").hide();
     }
     else {
-
+        $("#all-sites-tab").closest("li").addClass("active");
         $("#all-sites").show();
         $("#favorites").hide();
         $(".inner-card ").hide();

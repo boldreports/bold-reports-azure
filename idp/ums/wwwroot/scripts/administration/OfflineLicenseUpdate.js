@@ -52,7 +52,10 @@ $(document).ready(function () {
         $("#getFile").click();
     });
 
-    $('[data-toggle="popover"]').popover();
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    });
 
     $(document).on("change", "#getFile", function (event) {
         $(".validation-error-message").html('');
@@ -224,7 +227,7 @@ function confirmLicenseUpdate() {
                         $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
                         $(".startup-content").fadeIn();
                         $("#license-selection-container").hide();
-                        $('#auth-type-dropdown').removeClass("hide").addClass("show");
+                        $('#auth-type-dropdown').removeClass("d-none").addClass("d-block");
                         $("#system-settings-db-selection-container").slideDown("slow");
                         uploadLicenseDialogClose();
                     }

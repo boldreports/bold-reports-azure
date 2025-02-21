@@ -85,7 +85,8 @@
   #server-app-container #content-area {
     height: 100%; }
   #server-app-container .admin-header-width {
-    width: 100% !important; }
+    width: 100% !important;
+    display: grid; }
   #server-app-container .width-alignment {
     background: var(--top-header-bg-color);
     width: calc(100% - 230px);
@@ -102,6 +103,8 @@
         width: auto; }
       #server-app-container .width-alignment .admin-page-header .admin-page-header-description .dropdown-alignment {
         padding: 5px; }
+        #server-app-container .width-alignment .admin-page-header .admin-page-header-description .dropdown-alignment .dropdown-toggle::after {
+          visibility: hidden; }
       #server-app-container .width-alignment .admin-page-header .admin-page-header-description .page-title {
         margin: 0;
         font-size: 16px;
@@ -135,22 +138,26 @@
         color: var(--icon-text-normal-color); }
     #server-app-container .width-alignment .auth-page-border {
       border-bottom: 1px solid var(--header-separator-color); }
-    #server-app-container .width-alignment .auth-page-nav-bar, #server-app-container .width-alignment .lic-page-nav-bar, #server-app-container .width-alignment .site-nav-bar, #server-app-container .width-alignment .email-page-nav-bar, #server-app-container .width-alignment .security-page-nav-bar {
+    #server-app-container .width-alignment .auth-page-nav-bar, #server-app-container .width-alignment .lic-page-nav-bar, #server-app-container .width-alignment .site-nav-bar, #server-app-container .width-alignment .email-page-nav-bar, #server-app-container .width-alignment .security-page-nav-bar, #server-app-container .width-alignment .ai-page-nav-bar {
       background: var(--tab-bg-normal-color); }
-      #server-app-container .width-alignment .auth-page-nav-bar .nav, #server-app-container .width-alignment .lic-page-nav-bar .nav, #server-app-container .width-alignment .site-nav-bar .nav, #server-app-container .width-alignment .email-page-nav-bar .nav, #server-app-container .width-alignment .security-page-nav-bar .nav {
+      #server-app-container .width-alignment .auth-page-nav-bar .nav, #server-app-container .width-alignment .lic-page-nav-bar .nav, #server-app-container .width-alignment .site-nav-bar .nav, #server-app-container .width-alignment .email-page-nav-bar .nav, #server-app-container .width-alignment .security-page-nav-bar .nav, #server-app-container .width-alignment .ai-page-nav-bar .nav {
         padding-left: 24px; }
-        #server-app-container .width-alignment .auth-page-nav-bar .nav > li > a, #server-app-container .width-alignment .lic-page-nav-bar .nav > li > a, #server-app-container .width-alignment .site-nav-bar .nav > li > a, #server-app-container .width-alignment .email-page-nav-bar .nav > li > a, #server-app-container .width-alignment .security-page-nav-bar .nav > li > a {
+        #server-app-container .width-alignment .auth-page-nav-bar .nav > li > a, #server-app-container .width-alignment .lic-page-nav-bar .nav > li > a, #server-app-container .width-alignment .site-nav-bar .nav > li > a, #server-app-container .width-alignment .email-page-nav-bar .nav > li > a, #server-app-container .width-alignment .security-page-nav-bar .nav > li > a, #server-app-container .width-alignment .ai-page-nav-bar .nav > li > a {
           position: relative;
           display: block;
           padding: 0px 12px 10px 12px;
           line-height: 14px; }
-        #server-app-container .width-alignment .auth-page-nav-bar .nav .active a, #server-app-container .width-alignment .lic-page-nav-bar .nav .active a, #server-app-container .width-alignment .site-nav-bar .nav .active a, #server-app-container .width-alignment .email-page-nav-bar .nav .active a, #server-app-container .width-alignment .security-page-nav-bar .nav .active a {
+        #server-app-container .width-alignment .auth-page-nav-bar .nav .active a, #server-app-container .width-alignment .lic-page-nav-bar .nav .active a, #server-app-container .width-alignment .site-nav-bar .nav .active a, #server-app-container .width-alignment .email-page-nav-bar .nav .active a, #server-app-container .width-alignment .security-page-nav-bar .nav .active a, #server-app-container .width-alignment .ai-page-nav-bar .nav .active a {
           padding-bottom: 8px; }
+        #server-app-container .width-alignment .auth-page-nav-bar .nav .active::after, #server-app-container .width-alignment .lic-page-nav-bar .nav .active::after, #server-app-container .width-alignment .site-nav-bar .nav .active::after, #server-app-container .width-alignment .email-page-nav-bar .nav .active::after, #server-app-container .width-alignment .security-page-nav-bar .nav .active::after, #server-app-container .width-alignment .ai-page-nav-bar .nav .active::after {
+          position: relative; }
     #server-app-container .width-alignment .admin-page-icon {
       height: 64px;
       padding: 20px 40px 0 0; }
       #server-app-container .width-alignment .admin-page-icon .admin-header-btn {
         margin-top: 0px; }
+        #server-app-container .width-alignment .admin-page-icon .admin-header-btn .dropdown-menu li > a {
+          display: flex; }
   #server-app-container body .bi-page-header #user-management-options {
     list-style: none;
     margin-bottom: 0;
@@ -283,6 +290,8 @@
           padding-left: 26px !important; }
       #server-app-container .admin-page-content-container .admin-page-content #oauth-client-secret, #server-app-container .admin-page-content-container .admin-page-content #mail-password, #server-app-container .admin-page-content-container .admin-page-content #openid-client-secret {
         padding-right: 30px; }
+        #server-app-container .admin-page-content-container .admin-page-content #oauth-client-secret::placeholder, #server-app-container .admin-page-content-container .admin-page-content #mail-password::placeholder, #server-app-container .admin-page-content-container .admin-page-content #openid-client-secret::placeholder {
+          color: #555 !important; }
       #server-app-container .admin-page-content-container .admin-page-content #oauth-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #openid-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #oauth-mobile-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #openid-mobile-callback-link-copy, #server-app-container .admin-page-content-container .admin-page-content #api-copy-client-id, #server-app-container .admin-page-content-container .admin-page-content #api-copy-client-secret, #server-app-container .admin-page-content-container .admin-page-content #show-api-client-secret, #server-app-container .admin-page-content-container .admin-page-content #copy-client-id, #server-app-container .admin-page-content-container .admin-page-content #copy-client-secret, #server-app-container .admin-page-content-container .admin-page-content #show-secret {
         border-radius: 0 4px 4px 0;
         float: left;
@@ -325,71 +334,75 @@
       #server-app-container .admin-page-content-container.full-page-container #base-footer-div {
         margin-top: 0px;
         padding: 37px 27px 16px 24px; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .form-control, #server-app-container .admin-page-content-container .admin-page-body .import-file #filename {
-      border-radius: 4px 0 0 4px;
-      box-shadow: none;
-      display: inline-block;
-      font-size: 12px;
-      height: 28px;
-      float: left;
-      overflow: hidden;
-      resize: none;
-      width: 393px;
-      cursor: default;
-      border-right: 0px !important; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .input-group-addon {
-      border-radius: 0 4px 4px 0;
-      box-shadow: none;
-      border-left: none;
-      cursor: pointer;
-      display: inline-block;
-      float: left;
-      font-size: 16px;
-      height: 28px;
-      width: 38px;
-      color: var(--input-box-text-normal-color);
-      background-color: var(--input-box-bg-normal-color);
-      border: 1px solid var(--input-box-border-normal-color);
-      line-height: 1;
-      padding: 1px 1px 7px 1px; }
-      #server-app-container .admin-page-content-container .admin-page-body .import-file .input-group-addon.validation-message {
-        border-color: var(--red) !important;
-        color: var(--red) !important; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file input.upload-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin: 0;
-      padding: 0;
-      font-size: 20px;
-      cursor: pointer;
-      opacity: 0;
-      filter: alpha(opacity=0);
-      width: 0; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .primary-button {
-      min-width: 133px;
-      height: 28px;
-      line-height: 26px;
-      width: 120px;
-      padding: 0px; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .upload-box {
-      width: 431px;
-      float: left;
-      margin-right: 20px; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .download-template {
-      color: var(--global-link-text-normal-color);
-      position: absolute; }
-    #server-app-container .admin-page-content-container .admin-page-body .import-file .file-upload-btn {
-      display: inline-block; }
+    #server-app-container .admin-page-content-container .admin-page-body .import-file {
+      position: relative; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .form-control, #server-app-container .admin-page-content-container .admin-page-body .import-file #filename {
+        border-radius: 4px 0 0 4px;
+        box-shadow: none;
+        display: inline-block;
+        font-size: 12px;
+        height: 28px;
+        float: left;
+        overflow: hidden;
+        resize: none;
+        width: 393px;
+        cursor: default;
+        border-right: 0px !important; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .input-group-addon {
+        border-radius: 0 4px 4px 0;
+        box-shadow: none;
+        border-left: none;
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        font-size: 16px;
+        height: 28px;
+        width: 38px;
+        color: var(--input-box-text-normal-color);
+        background-color: var(--input-box-bg-normal-color);
+        border: 1px solid var(--input-box-border-normal-color);
+        line-height: 1;
+        padding: 1px 1px 7px 1px; }
+        #server-app-container .admin-page-content-container .admin-page-body .import-file .input-group-addon.validation-message {
+          border-color: var(--red) !important;
+          color: var(--red) !important; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file input.upload-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        width: 0; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .primary-button {
+        min-width: 133px;
+        height: 28px;
+        line-height: 26px;
+        width: 120px;
+        padding: 0px; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .upload-box {
+        width: 431px;
+        float: left;
+        margin-right: 20px; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .download-template {
+        color: var(--global-link-text-normal-color);
+        position: absolute; }
+      #server-app-container .admin-page-content-container .admin-page-body .import-file .file-upload-btn {
+        display: inline-block;
+        position: relative;
+        bottom: 4px; }
 
-#new-password + .popover {
+.popover {
   background: var(--grey-black);
   opacity: 0.8;
   width: 180px; }
-  #new-password + .popover .arrow::after {
-    border-left-color: var(--grey-black);
-    border-right-color: var(--grey-black); }
-  #new-password + .popover .popover-title {
+  .popover .popover-arrow::after {
+    border-left-color: var(--grey-black) !important;
+    border-right-color: var(--grey-black) !important; }
+  .popover .popover-header {
     background: var(--grey-black);
     opacity: 0.8;
     color: var(--grey-white);
@@ -398,16 +411,16 @@
     line-height: 18px;
     padding-bottom: 0px;
     border: none; }
-  #new-password + .popover .popover-content {
+  .popover .popover-body {
     padding-top: 0px;
     height: auto; }
-    #new-password + .popover .popover-content ul {
+    .popover .popover-body ul {
       list-style: none;
       padding: 0px; }
-      #new-password + .popover .popover-content ul li {
+      .popover .popover-body ul li {
         height: 20px;
         margin: 15px 5px 15px 10px; }
-        #new-password + .popover .popover-content ul li span.icon {
+        .popover .popover-body ul li span.icon {
           height: 15px;
           width: 15px;
           margin: 0 auto;
@@ -415,7 +428,7 @@
           border: 2px solid var(--grey-white);
           display: inline-block;
           float: left; }
-        #new-password + .popover .popover-content ul li span.content {
+        .popover .popover-body ul li span.content {
           color: var(--grey-white);
           display: inline;
           margin-left: 10px; }

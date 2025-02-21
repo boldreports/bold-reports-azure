@@ -53,35 +53,35 @@
 
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment">
-    <div class="col-md-12 admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment">
+    <div class="col-md-12 float-start admin-page-header">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">@T["Configuration"]</h1>
                 <h5 class="page-description">@T["Update the configuration of the application."]</h5>
             </hgroup>
         </div>
-                <div class="col-xs-4 top-nav-sec no-padding">
+                <div class="col-4 top-nav-sec no-padding">
                     @await Html.PartialAsync("../Shared/_TopMenu")
                 </div>
             </div>
-            <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
-                    <a href="@Url.Content("~/administration/config-editor")" class="secondary-button pull-right">@T["Cancel"]</a>
-                    <button type="submit" class="primary-button pull-right update-system-setting" form="look-and-feel-form" id="save-files">@T["Save"]</button>
+            <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div class="col-6 float-start no-padding admin-header-btn float-end" id="user-management-options">
+                    <a href="@Url.Content("~/administration/config-editor")" class="secondary-button float-end text-decoration-none">@T["Cancel"]</a>
+                    <button type="submit" class="primary-button float-end update-system-setting" form="look-and-feel-form" id="save-files">@T["Save"]</button>
                 </div>
             </div>
         </div>
 </div>
 <div id="look-and-feel-container" class="admin-page-content-container">
-    <div class="admin-page-content col-xs-12 no-padding">  
-        <div class="admin-page-body col-xs-12">
+    <div class="admin-page-content col-12 float-start no-padding">  
+        <div class="admin-page-body col-12 float-start">
             <form id="look-and-feel-form" class="form-horizontal" method="post" action="config-editor" autocomplete="off">
                 @Html.AntiForgeryToken()
                 <input type="hidden" class="file-name" value="@ViewBag.FileName" name="fileName" />
-                <div class="col-xs-12 no-padding">
-                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-padding edit-files">
+                <div class="col-12 float-start no-padding">
+                    <div class="col-lg-12 col-sm-12 col-12 col-md-12 float-start no-padding edit-files">
                         @Html.Label("search-files", T["Search your files"].Value, new { @class = "app-textbox-label col-lg-12" })
                         @Html.DropDownList("editfiles", values, new
                         {

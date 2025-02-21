@@ -413,7 +413,7 @@
             color: var(--grid-link-text-normal-color); }
           .e-grid:not(.item-grid) .e-gridcontent tr td.e-active .grid-directory-icon {
             color: var(--grid-content-text-normal-color); }
-          .e-grid:not(.item-grid) .e-gridcontent tr td.e-active .dropdown.open .option-icon, .e-grid:not(.item-grid) .e-gridcontent tr td.e-active .dropup.open .option-icon {
+          .e-grid:not(.item-grid) .e-gridcontent tr td.e-active .option-icon {
             border: 1px solid var(--grey-black); }
     .e-grid:not(.item-grid) .e-gridcontent tr a.delete-user, .e-grid:not(.item-grid) .e-gridcontent tr .delete-group-permission, .e-grid:not(.item-grid) .e-gridcontent tr .permission-delete {
       display: none !important; }
@@ -432,7 +432,9 @@
       position: absolute;
       right: 35px; }
       .e-grid:not(.item-grid) .e-gridcontent .dropdown .dropdown-menu {
-        left: -172px;
+        left: -172px !important;
+        top: 10px !important;
+        transform: none !important;
         width: 190px; }
         .e-grid:not(.item-grid) .e-gridcontent .dropdown .dropdown-menu .view-user .e-focus {
           background-color: transparent; }

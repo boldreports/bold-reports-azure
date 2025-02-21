@@ -2,9 +2,9 @@
 @{
     var activeTab = (!string.IsNullOrWhiteSpace(Context.Request.Query["tab"]) && Context.Request.Query["tab"] == "isolation-code") ? "active" : string.Empty;
 }
-<div role="tabpanel" class="col-xs-12 no-padding tab-pane @activeTab" id="data-security-tab">
-    <div class="admin-page-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="isolation-enabled col-xs-12 no-padding">
+<div role="tabpanel" class="col-12 float-start no-padding tab-pane @activeTab" id="data-security-tab">
+    <div class="admin-page-body col-lg-12 col-md-12 col-sm-12 col-12 float-start">
+        <div class="isolation-enabled col-12 float-start no-padding">
             <div class="material-switch inline-align" id="isolation-switch-container">
                 <input type="checkbox" id="isolation-enable-switch" @((bool)Model.TenantIsolation.IsEnabled ? "checked" : string.Empty) />
                 <label for="isolation-enable-switch" class="label-primary"></label>
@@ -13,7 +13,7 @@
                 @T["Enable Isolation Code"]
             </div>
         </div>
-        <div class="col-xs-12 no-padding input-field-margin">
+        <div class="col-12 float-start no-padding input-field-margin">
             <div class="col-md-12 no-padding">
                 @Html.Label("application-isolation-code", T["Isolation Code"].Value, new { @class = "app-textbox-label col-md-4" })
             </div>
@@ -24,10 +24,10 @@
             </div>
         </div>
     </div>
-    <div class="admin-page-footer col-xs-12">
-        <div class="admin-page-actions col-xs-12 col-md-12">
-            <a href="@Url.Action("Sites", "TenantsManagement")" class="secondary-button pull-right" id="cancel-isolation-code" title="">@T["Cancel"]</a>
-            <button disabled type="button" title="" id="update-isolation-code" class="primary-button pull-right">
+    <div class="admin-page-footer col-12 float-start">
+        <div class="admin-page-actions col-12 col-md-12 float-start">
+            <a href="@Url.Action("Sites", "TenantsManagement")" class="secondary-button float-end text-decoration-none" id="cancel-isolation-code" title="">@T["Cancel"]</a>
+            <button disabled type="button" title="" id="update-isolation-code" class="primary-button float-end">
                 @T["Save"]
             </button>
         </div>

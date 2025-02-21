@@ -47,6 +47,7 @@ html {
                     height: 50px;
                     padding: 0 !important;
                     border: none;
+                    display: block;
 
                     .add-tenant-popup-title {
                         padding: 18px 0 0 18px;
@@ -173,7 +174,23 @@ html {
                         margin-left: 265px !important;
                     }
 
+                    .icon-alignment-for-single-database {
+                        margin-left: 300px !important;
+                    }
+
+                    .icon-alignment-for-database-per-tenant {
+                        margin-left: 250px !important;
+                    }
+
                     .content-alignment {
+                        margin-left: 230px !important;
+                    }
+
+                    .content-alignment-for-single-database {
+                        margin-left: 260px !important;
+                    }
+
+                    .content-alignment-for-database-per-tenant {
                         margin-left: 230px !important;
                     }
 
@@ -186,6 +203,7 @@ html {
                     background-color: $dialog-content-bg-normal-color;
                     color: $dialog-content-text-normal-color;
                     padding: 0 24px !important;
+                    height: 628.8px;
 
                     .inline-align {
                         display: inline-block;
@@ -373,6 +391,7 @@ html {
                                                 border: 0;
                                                 padding: 0 !important;
                                                 background-color: transparent;
+                                                font-size: 14px;
 
                                                 #enable-ssl {
                                                     height: 40px !important;
@@ -387,7 +406,7 @@ html {
                                             }
 
                                             .domain-text {
-                                                width: 340px;
+                                                width: 336px;
 
                                                 .e-custom {
                                                     border-top-left-radius: 0px;
@@ -743,6 +762,7 @@ html {
                     text-align: center;
                     float: left;
                     z-index: 1;
+                    display: block;
 
                     #details-back {
                         @extend %text-style-decoration;
@@ -1163,4 +1183,8 @@ e-filter-parent {
 
 .e-multiselect.e-outline .e-multi-select-wrapper .e-delim-values {
     padding: 0px 0px 0px 15px !important;
+}
+
+.popover-body {
+    color: $primary-text-color;
 }

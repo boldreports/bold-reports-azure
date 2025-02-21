@@ -29,13 +29,15 @@
 
         .admin-page-body {
             .import-file {
+                position: relative;
+
                 @include uploadInput();
             }
         }
     }
 }
 
-#new-password + .popover {
+.popover {
     @include passwordPolicyPopOver();
 }
 

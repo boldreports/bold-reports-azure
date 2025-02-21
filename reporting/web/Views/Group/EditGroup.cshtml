@@ -12,6 +12,7 @@
     var isEmailRequired = globalAppSettings.SystemSettings.IsEmailRequired;
     var passwordPolicy = ServerAppConfig.PasswordPolicy;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    bool isSingleDB = ViewBag.IsSingleDB;
 }
 
 @section scripts{
@@ -49,6 +50,7 @@
         var isUsernameExistsUrl = "@Url.Action("IsUsernameExists", "UserManagement")";
         var isEmailRequired = "@isEmailRequired";
         var groupPageNonce = "@Context.Items["ScriptNonce"]";
+        var isSingleDB = @isSingleDB.ToString().ToLower();
         serverApp.controller("GroupEditController", function ($scope) {
             $scope.selectedRow = 1;
             $scope.page = 0;
@@ -56,6 +58,11 @@
             $scope.allUsers = allUsers;
         });
         $(document).ready(function () {
+            var groupNameInput = document.getElementById('group-info-name');
+            // Add the 'disabled' attribute if the condition is true
+            if (isSingleDB && groupNameInput.value === "System Administrator") {
+                groupNameInput.setAttribute('disabled', 'disabled');
+            }
             GridLocalization();
             $("#group-info-name").removeAttr("placeholder");
             $("#Grid").ejGrid({

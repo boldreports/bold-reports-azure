@@ -110,7 +110,7 @@ body #ad-tab-nav, body .nav-tabs:not(#startup-tab-nav) {
     display: block;
     height: 5px;
     z-index: 1;
-    position: inherit;
+    position: relative;
     -webkit-transition-property: left, right;
     transition-property: left, right;
     -webkit-transition-duration: 0.3s;
@@ -175,7 +175,7 @@ input::-ms-clear, input::-ms-reveal {
   cursor: default !important; }
 
 .glyphicon-ok::before {
-  content: "" !important;
+  content: "" !important;
   font-family: "Server" !important;
   float: right; }
 
@@ -672,7 +672,7 @@ input::-ms-clear, input::-ms-reveal {
 .material-checkbox:checked + input + label::before {
   bottom: 11.2px;
   color: var(--checkbox-text-active-color);
-  content: "";
+  content: "";
   font-family: "Server";
   left: 1px;
   font-size: 14px;
@@ -721,7 +721,7 @@ input::-ms-clear, input::-ms-reveal {
   #messageBox .message-content {
     padding: 10px;
     font-size: 12px;
-    text-align: left;
+    text-align: left !important;
     line-height: 1.5; }
     #messageBox .message-content .list-area {
       padding: 10px 0 0 50px;
@@ -760,7 +760,9 @@ input::-ms-clear, input::-ms-reveal {
     margin: 0;
     padding: 16px 16px 20px 16px; }
   #download-logs-dialog-content_dialog-content #download-logs-dialog #download-logs-dialog-dropdown-container {
-    width: 218px; }
+    width: 218px;
+    padding-right: 15px;
+    padding-left: 15px; }
     #download-logs-dialog-content_dialog-content #download-logs-dialog #download-logs-dialog-dropdown-container .download-logs-dialog-dropdown-label {
       font-style: normal;
       font-weight: 400;
@@ -789,7 +791,9 @@ input::-ms-clear, input::-ms-reveal {
     height: 48px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: 1px solid var(--grey-400); }
+    border-top: 1px solid var(--grey-400);
+    padding-left: 15px;
+    padding-right: 15px; }
     #download-logs-dialog-content_dialog-content #download-logs-dialog #download-logs-dialog-buttons #download-logs-dialog-cancel {
       width: 100px; }
     #download-logs-dialog-content_dialog-content #download-logs-dialog #download-logs-dialog-buttons #download-logs-dialog-proceed {
@@ -1043,7 +1047,7 @@ input::-ms-clear, input::-ms-reveal {
   #search-area .placeholder, #user-search-area .placeholder, #group-search-area .placeholder, #search-items .placeholder, #add-user-search-area .placeholder, #add-group-search-area .placeholder, #add-admin-search-area .placeholder {
     padding-top: 2px; } }
 .glyphicon-ok::before {
-  content: "" !important;
+  content: "" !important;
   font-family: "Server" !important; }
 
 @media screen and (min-width: 1400px) {
@@ -1055,8 +1059,15 @@ input::-ms-clear, input::-ms-reveal {
     height: 50px;
     padding: 7.5px 10px; } }
 @media screen and (max-width: 1400px) {
-  #server-app-container #header-area .header-bar .user-account .dropdown-menu {
-    margin-top: 0px; } }
+  #server-app-container #header-area .header-bar {
+    padding-left: 15px;
+    padding-right: 15px; }
+    #server-app-container #header-area .header-bar .org-name-wrapper .header-org-name {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 14px; }
+    #server-app-container #header-area .header-bar .user-account .dropdown-menu {
+      margin-top: 0px; } }
 select.selectpicker + .btn-group .btn-default:focus, select.select-picker + .btn-group .btn-default:focus, .btn-group.bootstrap-select .btn-default:focus {
   background-color: var(--drop-down-menu-btn-bg-normal-color);
   color: var(--drop-down-menu-btn-text-normal-color);

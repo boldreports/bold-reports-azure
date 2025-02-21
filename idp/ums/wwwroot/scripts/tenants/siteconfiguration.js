@@ -365,10 +365,10 @@ function changeTenantType(args) {
             }
 
             document.getElementById("branding-type").ej2_instances[0].value = reportsProductname;
-            $(".isolation-part").addClass("hide");
+            $(".isolation-part").addClass("d-none");
             if (isBoldReportsTenantType()) {
-                $(".attribute-part-bi").addClass("hide");
-                $(".attribute-part-report").removeClass("hide");
+                $(".attribute-part-bi").addClass("d-none");
+                $(".attribute-part-report").removeClass("d-none");
             }
             $(".data-security-note").html(window.Server.App.LocalizationContent.BoldReportsDataSecurityNote);
             document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
@@ -407,10 +407,10 @@ function changeTenantType(args) {
                 document.getElementById("branding-type").ej2_instances[0].list.querySelectorAll('li')[1].style.display = "none";
             }
             document.getElementById("branding-type").ej2_instances[0].value = biProductname;
-            $(".isolation-part").removeClass("hide");
+            $(".isolation-part").removeClass("d-none");
             if (isBoldReportsTenantType()) {
-                $(".attribute-part-bi").removeClass("hide");
-                $(".attribute-part-report").addClass("hide");
+                $(".attribute-part-bi").removeClass("d-none");
+                $(".attribute-part-report").addClass("d-none");
             }
             $(".data-security-note").html(window.Server.App.LocalizationContent.BoldBIDataSecurityNote);
             document.getElementById("tenant-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;

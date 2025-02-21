@@ -3,17 +3,17 @@
     var isOpenIdSettings = ViewData["AuthType"] != null && ViewData["AuthType"].ToString() == AuthType.OIDC.ToString();
     var providerCount = isOauthSettings ? 4 : 3;
 }
-    <div class="col-md-12 no-padding auth-sub-title">
+    <div class="col-md-12 float-start no-padding auth-sub-title">
         <div class="section-title">
             <span>@T["Group Import Settings"]</span>
         </div>
-        <div class="col-md-12 no-padding section-info-message">
+    <div class="col-md-12 float-start no-padding section-info-message">
             @Html.Raw(string.Format(T["This settings will be used for importing groups from the above configured authentication provider. We have {0} known authentication providers where we know how to import groups from them. Select any of the applicable provider from the dropdown."].Value, providerCount))
         </div>
     </div>
 
-<div class="col-md-12 no-padding input-field-margin">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["Provider"]</label>
     </div>
     @if (isOauthSettings)
@@ -44,8 +44,8 @@
 @if (ViewBag.AuthType != null && ViewBag.AuthType == AuthType.OAuth)
 {
     @*Cognito AWS*@
-    <div class="col-md-12 no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
-        <div class="col-md-12 no-padding">
+    <div class="col-md-12 float-start no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
+        <div class="col-md-12 float-start no-padding">
             <label class="app-textbox-label">@T["User Pool Id"]</label>
         </div>
         <div>
@@ -54,8 +54,8 @@
         </div>
     </div>
 
-    <div class="col-md-12 no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
-        <div class="col-md-12 no-padding">
+    <div class="col-md-12 float-start no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
+        <div class="col-md-12 float-start no-padding">
             <label class="app-textbox-label">@T["AWS Accesskey Id"]</label>
         </div>
         <div>
@@ -64,9 +64,9 @@
         </div>
     </div>
 
-    <div class="col-md-12 no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
-        <div class="col-md-12 no-padding">
-            <label class="app-textbox-label col-md-3 no-margin">@T["AWS Accesskey Secret"]</label>
+    <div class="col-md-12 float-start no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
+        <div class="col-md-12 float-start no-padding">
+            <label class="app-textbox-label col-md-3 float-start no-margin">@T["AWS Accesskey Secret"]</label>
         </div>
         <div>
             <input type="text" class="form-control no-margin" name="awsAccesskeySecret" placeholder="@T["AWS Accesskey Secret"]" id="aws-accesskey-secret" value="@(Model != null && Model.Cognito != null && !string.IsNullOrWhiteSpace(Model.Cognito.AwsAccesskeySecret) ? Model.Cognito.AwsAccesskeySecret : string.Empty)" @(ViewBag.AuthType != null && ViewBag.AuthType == AuthType.OAuth ? "data-ng-disabled=!oauthIsEnabled" : "data-ng-disabled=!openidIsEnabled") />
@@ -74,8 +74,8 @@
         </div>
     </div>
 
-    <div class="col-md-12 no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
-        <div class="col-md-12 no-padding">
+    <div class="col-md-12 float-start no-padding input-field-margin cognito-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.CognitoAWS ? string.Empty : "display-none")">
+        <div class="col-md-12 float-start no-padding">
             <label class="app-textbox-label">@T["Region"]</label>
         </div>
         <div>
@@ -86,8 +86,8 @@
 }
 
 @*Auth0*@
-<div class="col-md-12 no-padding input-field-margin auth0-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Auth0 ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin auth0-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Auth0 ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["Audience"]</label>
     </div>
     <div>
@@ -96,8 +96,8 @@
     </div>
 </div>
 
-<div class="col-md-12 no-padding input-field-margin auth0-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Auth0 ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin auth0-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Auth0 ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["Extension URL"]</label>
     </div>
     <div>
@@ -107,8 +107,8 @@
 </div>
 
 @*Okta*@
-<div class="col-md-12 no-padding input-field-margin okta-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Okta ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin okta-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.Okta ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["API Token"]</label>
     </div>
     <div>
@@ -118,8 +118,8 @@
 </div>
 
 @*OneLogin*@
-<div class="col-md-12 no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["API Client ID"]</label>
     </div>
     <div>
@@ -128,8 +128,8 @@
     </div>
 </div>
 
-<div class="col-md-12 no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["API Client Secret"]</label>
     </div>
     <div>
@@ -138,8 +138,8 @@
     </div>
 </div>
 
-<div class="col-md-12 no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
-    <div class="col-md-12 no-padding">
+<div class="col-md-12 float-start no-padding input-field-margin onelogin-fields @(Model != null && Model.KnownProviderType == KnownAuthProviders.OneLogin ? string.Empty : "display-none")">
+    <div class="col-md-12 float-start no-padding">
         <label class="app-textbox-label">@T["Region"]</label>
     </div>
     <div>

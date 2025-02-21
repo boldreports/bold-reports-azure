@@ -31,7 +31,7 @@
 };
 
 function passwordPolicyPopover(element, value) {
-    var newPassword = $(element);
+    var newPassword = $(".popover #password_policy_rules");
     newPassword.popover("show");
     var validateMethods = new Array();
     validateMethods.push(validateUserpassword.p_policy_uppercase);
@@ -43,14 +43,14 @@ function passwordPolicyPopover(element, value) {
         var currentMethodName = validateMethods[i];
         ruleName = currentMethodName(value);
         if (ruleName != undefined && ruleName != "") {
-            if (!newPassword.next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
-                newPassword.next().find("#password_policy_rules").find("li#" + ruleName + " span:first").addClass("su-password-tick").removeClass("icon");
+            if (!newPassword.find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
+                newPassword.find("li#" + ruleName + " span:first").addClass("su-password-tick").removeClass("icon");
             }
         }
         else {
             ruleName = name;
-            if (newPassword.next().find("#password_policy_rules").find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
-                newPassword.next().find("#password_policy_rules").find("li#" + ruleName + " span:first").removeClass("su-password-tick").addClass("icon");
+            if (newPassword.find("li#" + ruleName + " span:first").hasClass("su-password-tick")) {
+                newPassword.find("li#" + ruleName + " span:first").removeClass("su-password-tick").addClass("icon");
             }
         }
 
@@ -61,7 +61,7 @@ function passwordPolicyPopover(element, value) {
 function passwordBoxUnhightlight(element) {
     var rules = "";
     $(element).closest('div').removeClass('e-error');
-    var isPopoverPasswordPolicy = $("#new-password").data("toggle") === "popover";
+    var isPopoverPasswordPolicy = $("#new-password").attr("data-bs-toggle") === "popover";
     var passwordPolicyElement = !isPopoverPasswordPolicy ? $('#password_policy_rules').find('li>span') : $('#password_policy_rules').find('li>span:not(.content)');
     var passwordPolicyClass = !isPopoverPasswordPolicy ? "su-tick" : "su-password-tick";
 
@@ -83,7 +83,7 @@ function passwordBoxUnhightlight(element) {
 function passwordBoxHightlight(element) {
     var rules = "";
     $(element).closest('div').addClass("e-error");
-    var isPopoverPasswordPolicy = $("#new-password").data("toggle") === "popover";
+    var isPopoverPasswordPolicy = $("#new-password").attr("data-bs-toggle") === "popover";
     var passwordPolicyElement = !isPopoverPasswordPolicy ? $('#password_policy_rules').find('li>span') : $('#password_policy_rules').find('li>span:not(.content)');
     var passwordPolicyClass = !isPopoverPasswordPolicy ? "su-tick" : "su-password-tick";
     if ($(element).attr('id') == "new-password") {

@@ -210,8 +210,10 @@ $(document).ready(function () {
 
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         if ($(this).attr("id") == "x-frame-options-tab") {
+            $(this).closest("li").addClass("active");
             $("#x-frame-options").show();
             $("#csp").hide();
             $("#cookie-options").hide();
@@ -229,6 +231,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "csp-tab") {
+            $(this).closest("li").addClass("active");
             $("#csp").show();
             $("#cookie-options").hide();
             $("#x-frame-options").hide();
@@ -246,6 +249,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "network-settings-tab") {
+            $(this).closest("li").addClass("active");
             $("#network-settings").show();
             $("#csp").hide();
             $("#cookie-options").hide();
@@ -263,6 +267,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "cookie-options-tab") {
+            $(this).closest("li").addClass("active");
             $("#cookie-options").show();
             $("#csp").hide();
             $("#x-frame-options").hide();
@@ -280,6 +285,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "password-policy-tab") {
+            $(this).closest("li").addClass("active");
             $("#password-policy").show();
             $("#csp").hide();
             $("#cookie-options").hide();

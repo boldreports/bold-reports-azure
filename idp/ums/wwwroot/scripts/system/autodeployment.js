@@ -14,7 +14,8 @@ function proceedAutoDeployment(result) {
             systemSettingsData: result.systemSettingsData,
             azureData: result.azureData,
             tenantInfo: result.tenantInfo,
-            globalAdminDetails: result.globalAdminDetails
+            globalAdminDetails: result.globalAdminDetails,
+            configurationMode : configurationMode
         },
         success: function (setSystemSettingsResponse) {
             window.location = setSystemSettingsResponse.redirectUrl;

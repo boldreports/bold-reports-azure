@@ -638,8 +638,8 @@ function GetCustomEmailTemplateList() {
             rowSelecting: function (e) {
                 this.multiSelectCtrlRequest = true;
             },
-            dataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip(
+            dataBound: function (args) {
+                $('[data-bs-toggle="tooltip"]').tooltip(
                     {
                         container: 'body'
                     });

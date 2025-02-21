@@ -14,8 +14,28 @@
                 margin: 0 0 32px 0;
             }
 
+            .label-default-width {
+                width: 450px !important;
+
+                .app-textbox-label {
+                    width: 125px;
+                    display: inline-block;
+                }
+            }
+
             .form-group {
                 margin: 0 0 16px 0;
+
+                &:after {
+                    clear: both;
+                    display: table;
+                    content: "";
+                }
+
+                &:before {
+                    display: table;
+                    content: "";
+                }
             }
         }
 
@@ -39,9 +59,13 @@
             .header-logo {
                 margin: 0 0 32px 32px !important;
             }
+            
+            .favicon {
+                margin: 0 0 32px 0 !important;
+            }
 
             .email-logo {
-                margin: 0 0 0 32px !important;
+                margin: 0 0 32px 32px !important;
             }
 
             .logo-section {
@@ -51,6 +75,7 @@
                 margin: 10px 2px 10px 8px;
                 padding: 5px;
                 width: 80px;
+                position: relative;
 
                 img {
                     bottom: 0;
@@ -255,8 +280,8 @@
     }
 
     .manage-link-btn {
-        position: absolute;
-        left: 400px;
+        float: right;
+        margin: 0px !important;
     }
 }
 

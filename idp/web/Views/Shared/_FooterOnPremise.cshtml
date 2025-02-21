@@ -3,11 +3,12 @@
 @using Syncfusion.Server.Base.DataClasses
 @{
     var poweredByImageSrc = $"{CloudAppConfig.TenantManagementUrl(Context).TrimEnd('/')}/logos?type=poweredby";
-    var poweredbyClass = GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion ? "show" : "hide";
-    var copyrightClass = GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo ? "show" : "hide";
-    var separatorparagraphClass = (GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion && GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "show" : "hide";
-    var separatorFooterClass = (GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion || GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "show" : "hide";
+    var poweredbyClass = GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion ? "d-block" : "d-none";
+    var copyrightClass = GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo ? "d-block" : "d-none";
+    var separatorparagraphClass = (GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion && GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "d-block" : "d-none";
+    var separatorFooterClass = (GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion || GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "d-block" : "d-none";
     var copyrightInformation = HttpUtility.HtmlDecode(GlobalAppSettings.SystemSettings.CopyrightInformation);
+
 }   
 
 <div id="base-footer-div">
@@ -26,17 +27,17 @@
 
     </script>
     <footer>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding layout-footer no-margin">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 float-start no-padding layout-footer no-margin">
             <div class="copyright-poweredby">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 dropup no-padding language-area pull-left no-padding ">
-                    <div class="col-xs-12 col-lg-12 no-padding pull-left" id="lang_menu">
-                        <p class="pull-left @copyrightClass" id="copyrightinfo"> @(copyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))</p>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 dropup no-padding language-area float-start no-padding ">
+                    <div class="col-12 col-lg-12 no-padding float-start" id="lang_menu">
+                        <p class="float-start @copyrightClass" id="copyrightinfo"> @(copyrightInformation.Replace("$$CurrentYear$$", DateTime.UtcNow.Year.ToString()))</p>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 no-padding pull-right" id="enablefooter">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 no-padding float-end" id="enablefooter">
                     @if (GlobalAppSettings.SystemSettings.IsShowPoweredBySyncfusion)
                     {
-                        <p class="no-margin pull-right pow @poweredbyClass" id="poweredbysyncfusion">
+                        <p class="no-margin float-end pow @poweredbyClass" id="poweredbysyncfusion">
                             @T["Powered by"]
                             <img id="poweredByImage" alt="Syncfusion" width="110" height="25" src="@poweredByImageSrc">
 

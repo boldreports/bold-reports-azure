@@ -16,7 +16,7 @@ $(function () {
     }
 
     $(document).ready(function () {
-        getLinkCopyLinkobj.tooltip("enable").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("fixTitle").tooltip("enable");
+        getLinkCopyLinkobj.tooltip("enable").attr("data-bs-original-title", window.Server.App.LocalizationContent.LinkCopy$).attr("title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("enable");
     })
 
     $(document).on('click', '#restrict-embed-enabled', function () {
@@ -30,10 +30,10 @@ $(function () {
             }
             var isEmbed = "true";
             $(".download-template").show();
-            $("#trigger-file").removeAttr("disabled");
+            $("#trigger-file").removeClass("disabled");
             $("#filename").removeAttr("disabled");
             getLinkCopyLinkobj.css("cursor", "pointer");
-            getLinkCopyLinkobj.tooltip("enable").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("fixTitle").tooltip("enable");
+            getLinkCopyLinkobj.tooltip("enable").attr("data-bs-original-title", window.Server.App.LocalizationContent.LinkCopy$).attr("title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("enable");
         } else {
             $("#get-embed-code").attr("disabled", "disabled");
             $("#filename").val(window.Server.App.LocalizationContent.BrowseJsonFilePath);
@@ -41,7 +41,7 @@ $(function () {
             $(".secret-code-notification").hide();
             getLinkInputObj.attr("disabled", "disabled");
             getLinkCopyLinkobj.attr("disabled", "disabled");
-            getLinkCopyLinkobj.tooltip("disable").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("fixTitle").tooltip("disable");
+            getLinkCopyLinkobj.tooltip("disable").attr("data-bs-original-title", window.Server.App.LocalizationContent.LinkCopy$).attr("title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("enable");
             getLinkCopyLinkobj.css("cursor", "default");
             $(".download-template").hide();
             $("#trigger-file").attr("disabled", "disabled");
@@ -139,7 +139,7 @@ function resetEmbedSecret() {
 }
 
 function secretCodeChange(data) {
-    $("#secret-code-copy").tooltip("hide").attr("data-original-title", window.Server.App.LocalizationContent.LinkCopy$).tooltip("fixTitle");
+    $("#secret-code-copy").tooltip("dispose").attr("data-bs-original-title", window.Server.App.LocalizationContent.LinkCopy$).attr("title", window.Server.App.LocalizationContent.LinkCopy$);
     $("#secret-code").removeAttr("disabled");
     $("#secret-code-copy").removeAttr("disabled");
     $("#secret-code").val(data.resetEmbedSecret);

@@ -24,13 +24,13 @@
                     <div class="page-title">
                         @T["Login Error"]
                     </div>
-                    <div class="page-content text-left">
+                    <div class="page-content text-start">
                         <span>@T["Error in establishing a connection to our login service."]</span><br />
                         <br />
                         <span>@authMessage</span>
                     </div>
                     <div>
-                        <span><a href="@Url.Action("Login", "Accounts")">@T["Return to Sign in"]</a></span>
+                        <span><a href="@Url.Action("Login", "Accounts")" class="text-decoration-none">@T["Return to Sign in"]</a></span>
                     </div>
                 </div>
             </div>

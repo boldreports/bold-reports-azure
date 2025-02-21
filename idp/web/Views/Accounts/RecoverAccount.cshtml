@@ -92,6 +92,6 @@
             }
         }
 
-        <div class="back-button text-body"> <a href="@(Url.Action("login","accounts") + (string.IsNullOrWhiteSpace(returnUrl) ? string.Empty : "?returnUrl=" + returnUrl))"><span>@T["Return to login"]</span></a></div>
+        <div class="back-button text-body"> <a href="@(Url.Action("login","accounts") + (string.IsNullOrWhiteSpace(returnUrl) ? string.Empty : "?returnUrl=" + returnUrl))" class="text-decoration-none"><span>@T["Return to login"]</span></a></div>
     </form>  
 }

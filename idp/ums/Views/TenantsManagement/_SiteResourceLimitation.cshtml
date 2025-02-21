@@ -8,9 +8,9 @@
     };
 }
 
-<div role="tabpanel" class="col-xs-12 no-padding tab-pane @activeTab" id="resource-limitation-tab">
-    <div class="admin-page-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="resource-limitation-enabled col-xs-12 no-padding">
+<div role="tabpanel" class="col-12 float-start no-padding tab-pane @activeTab" id="resource-limitation-tab">
+    <div class="admin-page-body col-lg-12 col-md-12 col-sm-12 col-12 float-start">
+        <div class="resource-limitation-enabled col-12 float-start no-padding">
             <div class="material-switch inline-align" id="resource-limitation-container" >
                 <input type="checkbox" data-tenant-id="@Model.TenantInfoId" id="resource-limitation-enable-switch" @(resourceLimitationDetails.IsEnabled ? "checked" : string.Empty)/>
                 <label for="resource-limitation-enable-switch" class="label-primary"></label>
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="info-message" id="tenant-info-message"></div>
-        <div class="col-xs-12 no-padding input-field-margin">
+        <div class="col-12 float-start no-padding input-field-margin">
             <div class="col-md-12 no-padding">
                 @Html.Label("dashboards-limitation", T["Number of Dashboards"].Value, new { @class = "app-textbox-label col-md-4" })
             </div>
@@ -30,7 +30,7 @@
                 <span id="dashboards-limitation-validation" class="validation-message"></span>
             </div>
         </div>
-        <div class="col-xs-12 no-padding input-field-margin">
+        <div class="col-12 float-start no-padding input-field-margin">
             <div class="col-md-12 no-padding">
                 @Html.Label("data-source-limitation", T["Number of Data Sources"].Value, new { @class = "app-textbox-label col-md-4" })
             </div>
@@ -40,7 +40,7 @@
                 <span id="data-source-limitation-validation" class="validation-message"></span>
             </div>
         </div>
-        <div class="col-xs-12 no-padding input-field-margin">
+        <div class="col-12 float-start no-padding input-field-margin">
             <div class="col-md-12 no-padding">
                 @Html.Label("slideshow-limitation", T["Number of Slideshows"].Value, new { @class = "app-textbox-label col-md-4" })
             </div>
@@ -50,7 +50,7 @@
                 <span id="slideshow-limitation-validation" class="validation-message"></span>
             </div>
         </div>
-        <div class="col-xs-12 no-padding input-field-margin">
+        <div class="col-12 float-start no-padding input-field-margin">
             <div class="col-md-12 no-padding">
                 @Html.Label("schedule-limitation", T["Number of Schedules"].Value, new { @class = "app-textbox-label col-md-4" })
             </div>
@@ -61,10 +61,10 @@
             </div>
         </div>
     </div>
-    <div class="admin-page-footer col-xs-12">
-        <div class="admin-page-actions col-xs-12 col-md-12">
-            <a href="@Url.Action("Sites", "TenantsManagement")" class="secondary-button pull-right" id="cancel-resource-limitation" title="">@T["Cancel"]</a>
-            <button type="button" title="" id="update-resource-limitation" class="primary-button pull-right">
+    <div class="admin-page-footer col-12 float-start">
+        <div class="admin-page-actions col-12 col-md-12 float-start">
+            <a href="@Url.Action("Sites", "TenantsManagement")" class="secondary-button text-decoration-none float-end" id="cancel-resource-limitation" title="">@T["Cancel"]</a>
+            <button type="button" title="" id="update-resource-limitation" class="primary-button float-end">
                 @T["Save"]
             </button>
         </div>

@@ -121,6 +121,7 @@ $(document).ready(function () {
 
     if ($("#auth-settings-container").is(":visible")) {
         if (location.href.match(/openid-settings/)) {
+            $("#openid-settings").closest("li").addClass("active");
             $("#openid-settings").tab("show");
             $("#update-oauth-settings").hide();
             $("#update-windowsad-settings").hide();
@@ -130,6 +131,7 @@ $(document).ready(function () {
             $("#update-azure-b2c-settings").hide();
         }
         else if (location.href.match(/oauth-settings/)) {
+            $("#oauth-settings").closest("li").addClass("active");
             $("#oauth-settings").tab("show");
             $("#update-openid-settings").hide();
             $("#update-windowsad-settings").hide();
@@ -139,6 +141,7 @@ $(document).ready(function () {
             $("#update-azure-b2c-settings").hide();
         }
         else if (location.href.match(/jwt-settings/)) {
+            $("#jwt-settings").closest("li").addClass("active");
             $("#jwt-settings").tab("show");
             $("#update-saml-settings").hide();
             $("#update-windowsad-settings").hide();
@@ -148,6 +151,7 @@ $(document).ready(function () {
             $("#update-oauth-settings").hide();
         }
         else if (location.href.match(/azure-ad-settings/)) {
+            $("#azure-ad-settings").closest("li").addClass("active");
             $("#azure-ad-settings").tab("show");
             $("#update-azure-b2c-settings").hide();
             $("#update-jwt-settings").hide();
@@ -157,6 +161,7 @@ $(document).ready(function () {
             $("#update-oauth-settings").hide();
         }
         else if (location.href.match(/azure-ad-b2c-settings/)) {
+            $("#azure-ad-b2c-settings").closest("li").addClass("active");
             $("#azure-ad-b2c-settings").tab("show");
             $("#update-saml-settings").hide();
             $("#update-jwt-settings").hide();
@@ -166,6 +171,7 @@ $(document).ready(function () {
             $("#update-oauth-settings").hide();
         }
         else if (location.href.match(/windows-ad-settings/)) {
+            $("#windows-ad-settings").closest("li").addClass("active");
             $("#windows-ad-settings").tab("show");
             $("#update-jwt-settings").hide();
             $("#update-saml-settings").hide();
@@ -175,6 +181,7 @@ $(document).ready(function () {
             $("#update-oauth-settings").hide();
         }
         else {
+            $("#default-authentication-settings").closest("li").addClass("active");
             $("#default-authentication-settings").tab("show");
             $("#update-oauth-settings").hide();
             $("#update-openid-settings").hide();
@@ -189,8 +196,10 @@ $(document).ready(function () {
         }
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         if ($(this).attr("id") == "oauth-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-oauth-settings").show();
             $("#update-openid-settings").hide();
             $("#update-windowsad-settings").hide();
@@ -204,6 +213,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "openid-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-openid-settings").show();
             $("#update-oauth-settings").hide();
             $("#update-windowsad-settings").hide();
@@ -217,6 +227,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "default-authentication-settings") {
+            $(this).closest("li").addClass("active");
             if (providerNameCount == 0) {
                 $("#update-defaultauthlogin-settings").hide();
             }
@@ -235,6 +246,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "default-authentication-settings-info") {
+            $(this).closest("li").addClass("active");
             $("#update-defaultauthlogin-settings").hide();
             $("#update-windowsad-settings").hide();
             $("#update-oauth-settings").hide();
@@ -248,6 +260,7 @@ $(document).ready(function () {
             } updateauthsettingsUrl
         }
         else if ($(this).attr("id") == "jwt-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-jwt-settings").show();
             $("#update-saml-settings").hide();
             $("#update-azure-b2c-settings").hide();
@@ -261,6 +274,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "azure-ad-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-saml-settings").show();
             $("#update-azure-b2c-settings").hide();
             $("#update-jwt-settings").hide();
@@ -274,6 +288,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "azure-ad-b2c-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-saml-settings").hide();
             $("#update-azure-b2c-settings").show();
             $("#update-jwt-settings").hide();
@@ -287,6 +302,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "windows-ad-settings") {
+            $(this).closest("li").addClass("active");
             $("#update-windowsad-settings").show();
             $("#update-saml-settings").hide();
             $("#update-azure-b2c-settings").hide();
@@ -1015,11 +1031,11 @@ function fnCopySigningKey(inputId, buttonId) {
         }
 
         setTimeout(function () {
-            $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.Copied);
+            $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.Copied);
             $(buttonId).tooltip('show');
         }, 200);
         setTimeout(function () {
-            $(buttonId).attr("data-original-title", window.Server.App.LocalizationContent.ClickToCopy);
+            $(buttonId).attr("data-bs-original-title", window.Server.App.LocalizationContent.ClickToCopy);
             $(buttonId).tooltip();
         }, 3000);
     }

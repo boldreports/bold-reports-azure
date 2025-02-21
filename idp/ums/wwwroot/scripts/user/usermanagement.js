@@ -25,6 +25,15 @@ $(document).ready(function () {
     createWaitingPopup('remove-admin-confirmation');
     createWaitingPopup('singleuser-delete-confirmation');
 
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        if (tooltipTriggerEl.matches('i.su.su-show.view-green.show-hide-password')) {
+            return true;
+        } else {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        }
+    });
+
     var singleUserDeleteDialog = new ej.popups.Dialog({
         header: window.Server.App.LocalizationContent.DeleteUser,
         content: document.getElementById("singleuser-delete-confirmation-dialog-content"),
@@ -139,6 +148,22 @@ $(document).ready(function () {
         }
     });
 
+    $('.show-hide-password').on("mouseenter", function () {
+        var tooltip = bootstrap.Tooltip.getInstance(this);
+        if (tooltip) {
+            tooltip.dispose();
+        }
+        tooltip = new bootstrap.Tooltip(this, {
+            container: '#show-hide-password'
+        });
+        tooltip.show();
+    });
+
+    $('.show-hide-password').on("mouseleave", function () {
+        var tooltip = bootstrap.Tooltip.getInstance(this);
+        tooltip.hide();
+    });
+
     $(".user-delete-button").on("click", function () {
         $("#user-delete-confirmation").ejDialog("open");
     });
@@ -186,7 +211,7 @@ $(document).ready(function () {
                                     if (data.Data.result == "success") {
                                         hideWaitingPopup('user-add-dialog');
                                         $("#add-user").attr("disabled", "disabled");
-                                        $("#create-user").removeClass("hide").addClass("show");
+                                        $("#create-user").removeClass("d-none").addClass("d-block");
                                         $(".form input[type='text']").val('');
                                         var count = parent.$("#user-count-text").val();
                                         var currentVal = parseInt(count) + 1;
@@ -273,13 +298,13 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#role-filter-option", function () {
-        $(".role-filter").removeClass("hide");
-        $(".role-filter").addClass("show");
+        $(".role-filter").removeClass("d-none");
+        $(".role-filter").addClass("d-block");
     });
 
     $(document).on("click", "div.e-filterset", function () {
-        $(".role-filter").removeClass("show");
-        $(".role-filter").addClass("hide");
+        $(".role-filter").removeClass("d-block");
+        $(".role-filter").addClass("d-none");
     });
 
     $(document).on("click", ".make-admin-button", function () {
@@ -401,7 +426,6 @@ function fnOnUserGridActionBegin(args) {
 }
 
 function fnOnUserGridActionComplete(args) {
-    $('[data-toggle="tooltip"]').tooltip();
     if (args.currentViewData.length == 0) {
         rowBound();
     }
@@ -524,10 +548,12 @@ function onAddTenantsDialogOpen() {
                 }
             },
             dataBound: function (args) {
-                $('[data-toggle="tooltip"]').tooltip(
-                    {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl, {
                         container: '#grant-access-dialog'
                     });
+                });
             },
             columns: [
                 {
@@ -669,7 +695,6 @@ function fnOnApplicationGridActionComplete(args) {
     }
 
     enableAccessButton();
-    $('[data-toggle="tooltip"]').tooltip();
 }
 
 $(document).on("change", ".checkbox-row", function () {
@@ -868,7 +893,6 @@ function SaveUserListFromCSV() {
                             obj.html("<ol>" + result.Data[i].DisplayMessage + "</ol>");
                         }
                     }
-                    $('[data-toggle="tooltip"]').tooltip();
                     hideWaitingPopup('content-area');
                     $("#messageBox_wrapper, .e-dialog-scroller, #messageBox").removeClass("failed-msg-box-height").addClass("msg-box-height");//Message box height adjustment
                     $(".message-content").addClass("text-center");
@@ -1134,8 +1158,8 @@ function roleFilter() {
     }
     showWaitingPopup('user_grid');
     var userGrid = document.getElementById('user_grid').ej2_instances[0];
-    $(".role-filter").removeClass("show");
-    $(".role-filter").addClass("hide");
+    $(".role-filter").removeClass("d-block");
+    $(".role-filter").addClass("d-none");
     $("#role-filter-option").closest("span").children(".e-filtericon").addClass("e-filteredicon").addClass("e-filternone");
     userGrid.refresh();
     hideWaitingPopup('user_grid');
@@ -1146,8 +1170,8 @@ function resetFilter() {
     role = "";
     var userGrid = document.getElementById('user_grid').ej2_instances[0];
     $('input[name=filter]').attr('checked', false);
-    $(".role-filter").removeClass("show");
-    $(".role-filter").addClass("hide");
+    $(".role-filter").removeClass("d-block");
+    $(".role-filter").addClass("d-none");
     $("#role-filter-option").closest("span").children(".e-filtericon").removeClass("e-filteredicon").removeClass("e-filternone");
     userGrid.refresh();
     hideWaitingPopup("user_grid");

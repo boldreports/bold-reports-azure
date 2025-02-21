@@ -66,7 +66,6 @@ $(document).ready(function () {
                 isRequired: true,
                 isValidUsername: true,
                 isValidUsernameLength: true
-                
             },
             "email-address": {
                 isRequired: {
@@ -156,6 +155,22 @@ $(document).ready(function () {
     $(document).on("keyup", "#new-password", function () {
         passwordPolicyPopover("#new-password", $("#new-password").val());
         $("#new-password").valid();
+    });
+
+    $('.show-hide-password').on("mouseenter", function () {
+        var tooltip = bootstrap.Tooltip.getInstance(this);
+        if (tooltip) {
+            tooltip.dispose();
+        }
+        tooltip = new bootstrap.Tooltip(this, {
+            container: '#show-hide-password'
+        });
+        tooltip.show();
+    });
+
+    $('.show-hide-password').on("mouseleave", function () {
+        var tooltip = bootstrap.Tooltip.getInstance(this);
+        tooltip.hide();
     });
 
     function hasWhiteSpace(value) {

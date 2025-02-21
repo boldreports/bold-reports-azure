@@ -67,6 +67,12 @@
         }
     }
 
+    .style-src-content {
+        &::placeholder {
+            color: #555 !important;
+        }
+    }
+
     .validation-errors {
         color: $danger;
         font-size: 12px;
@@ -156,11 +162,6 @@
         line-height: 18px;
     }
 
-    .bg-warning {
-        background-color: $warning-bg-normal-color;
-        border: 1px solid $warning-border-normal-color;
-    }
-
     .x-frame-notification {
         width: 584px;
         border-radius: 4px;
@@ -169,6 +170,8 @@
         margin-bottom: 32px;
         padding: 12px;
         letter-spacing: 0.26px;
+        background-color: $warning-bg-normal-color;
+        border: 1px solid $warning-border-normal-color;
     }
 }
 
@@ -188,11 +191,6 @@
         margin-bottom: 32px;
     }
 
-    .bg-warning {
-        background-color: $warning-bg-normal-color;
-        border: 1px solid $warning-border-normal-color;
-    }
-
     .cookie-notification {
         width: 584px;
         border-radius: 4px;
@@ -201,6 +199,8 @@
         margin-bottom: 32px;
         padding: 12px;
         letter-spacing: 0.26px;
+        background-color: $warning-bg-normal-color;
+        border: 1px solid $warning-border-normal-color;
     }
 }
 
@@ -231,6 +231,15 @@
         border-top: 2px solid var(--nav-menu-separtor-icon-color);
         padding-top: 20px;
         justify-content: space-between;
+
+        #create-rule button {
+            width: 103px;
+        }
+        .dropdown-toggle {
+            &::after {
+                visibility: hidden;
+            }
+        }
     }
 
     .ipaddress-info {
@@ -281,13 +290,13 @@
     margin-bottom: -16px;
     padding-top: 5px !important;
 }
-.col-xs-4{
+.col-4{
     padding-left: 0 !important;
 }
 .modal-body {
     padding: 0 15px 15px 15px !important;
 }
-.col-xs-8 {
+.col-8 {
     width: 100% !important;
 }
 .e-dlg-header{
@@ -306,3 +315,9 @@
     width:200px !important;
 }
 
+input#rulename {
+    width: 370px;
+}
+input#ipaddress {
+    width: 370px;
+}

@@ -17,14 +17,17 @@
                             users += "<img width='32' height='32' src='/user/avatar?ImageSize=64&Username=" +
                                 response.data[i].UserName +
                                 "'/>";
-                            users += "<span class='user-display-name' title='" + response.data[i].DisplayName + "' data-toggle='tooltip' data-placement='top'>" + response.data[i].DisplayName + "</span>";
+                            users += "<span class='user-display-name' title='" + response.data[i].DisplayName + "' data-bs-toggle='tooltip' data-bs-placement='top'>" + response.data[i].DisplayName + "</span>";
                             users += "</a>";
                             users += "</li>";
                         }
                     }
 
                     $(".recent-users-list").html(users);
-                    $("[data-toggle='tooltip']").tooltip();
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl);
+                    });
                 } else {
                     WarningAlert("Server Error", "Unable to retrieve the recently logged in users.", null, 7000);
                 }
@@ -66,13 +69,21 @@ $(document).ready(function () {
         } else {
             e.stopPropagation();
             $('.popover').not($(this).children(".popover")).popover('hide');
-            $('[data-toggle="tooltip"]').tooltip();
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         }
 
         return false;
     });
 
-    $('[data-toggle="popover"]').popover({ html: true });
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl, {
+            html: true
+        });
+    });
 });
 
 $(document).on('click', function (e) {

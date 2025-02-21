@@ -2,12 +2,12 @@
     var WindowsADRegEx = @"/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}$/i";
     var domain = ViewBag.WindowsAdSettings != null && ViewBag.WindowsAdSettings.WindowsADSettings != null && ViewBag.WindowsAdSettings.WindowsADSettings.Domain != null ? ViewBag.WindowsAdSettings.WindowsADSettings.Domain : string.Empty;
 }
-<div role="tabpanel" class="tab-pane col-xs-12 no-padding" id="windows-ad-settings-tab">
-    <div id="oauth-page-body" class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
-        <form id="windows-ad" name="windowsadSettingsForm" class="auth-settings-form col-lg-12 col-md-12 col-sm-12 no-padding" method="post" autocomplete="off">
+<div role="tabpanel" class="tab-pane col-12 float-start no-padding" id="windows-ad-settings-tab">
+    <div id="oauth-page-body" class="col-lg-12 col-md-12 col-sm-12 float-start admin-page-body">
+        <form id="windows-ad" name="windowsadSettingsForm" class="auth-settings-form col-lg-12 col-md-12 col-sm-12 float-start no-padding" method="post" autocomplete="off">
             @Html.AntiForgeryToken()
             <input type="hidden" name="windowsAuthenticationProvider" value="@ViewBag.WindowsAdSettings.AuthProvider">
-            <div class="col-xs-12 no-padding margin-bottom">
+            <div class="col-12 float-start no-padding margin-bottom">
                 <div class="material-switch inline-align">
                     <input type="checkbox" id="enable-windows-ad" ng-model="windowsAdEnabled" ng_change="hideValidationMessage(IsEnabled, 'windowsad')" />
                     <label for="enable-windows-ad" class="label-primary"></label>
@@ -18,8 +18,8 @@
                 <div class="info-message">
                     @T["Show or hide Windows Authentication option from Login screen."]
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Domain"]</label>
                     </div>
                     <div ng-class="(windowsadSettingsForm.windowsadSettingsDomain.$dirty && windowsadSettingsForm.windowsadSettingsDomain.$invalid) ? 'has-error' : ''">

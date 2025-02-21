@@ -30,6 +30,7 @@ $(document).ready(function () {
 
     if ($(".security-setting-container").is(":visible")) {
         if (location.href.match(/2fa/) || isShow2fa) {
+            $("#2fa").closest("li").addClass("active");
             $("#2fa").tab("show");
             $("#user-management-options").hide();
             var query = (window.location.search).toString();
@@ -38,6 +39,7 @@ $(document).ready(function () {
             }
         }
         else {
+            $("#change-password").closest("li").addClass("active");
             $("#change-password").tab("show");
             $("#user-management-options").show();
             var query = (window.location.search).toString();
@@ -47,8 +49,10 @@ $(document).ready(function () {
         }
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         if ($(this).attr("id") == "change-password") {
+            $(this).closest("li").addClass("active");
             $("#user-management-options").show();
             var query = (window.location.search).toString();
             if (query.includes("&view=2fa")) {
@@ -60,6 +64,7 @@ $(document).ready(function () {
             }
         }
         else if ($(this).attr("id") == "2fa") {
+            $(this).closest("li").addClass("active");
             $("#user-management-options").hide();
             var query = (window.location.search).toString();
             if (query.includes("&view=change-password")) {
@@ -210,7 +215,7 @@ $(document).ready(function () {
             passwordBoxHightlight(element);
         },
         unhighlight: function (element) {
-            $(element).closest('div').removeClass('has-error');
+            $(element).closest('div').removeClass("has-error");
             passwordBoxUnhightlight(element);
             $(element).closest('div').find(".validation-message").html("");
         },
@@ -704,11 +709,11 @@ function SaveUserdetails() {
     if (isValid) {
         $(".userprofile-validation-messages").css("display", "none");
         var userStatus = $("#user-status").val();
-        if ($("#show-active").hasClass("show")) {
+        if ($("#show-active").hasClass("d-block")) {
             isActive = true;
         }
         else {
-            isActive = $("#container-select").hasClass("show") ? userStatus : false;
+            isActive = $("#container-select").hasClass("d-block") ? userStatus : false;
         }
         showWaitingPopup('content-area');
         doAjaxPost('POST',
@@ -787,7 +792,7 @@ $(document).on("click", "#edit", function (e) {
     $("#save-button,#status-dom").show();
     $("#cancel-button").css("display", "inline");
     $("#group-div,#status-show,#edit,#activation-div").hide();
-    $("#resend-button-click").removeClass("show");
+    $("#resend-button-click").removeClass("d-block");
     $("#status-div").addClass("top-margin");
     $("#show-active,#show-inactive,#show-active-user").find("span").addClass("margin-top");
     $(".edit-user-profile-field").attr("disabled", false).addClass("enable");
@@ -817,7 +822,7 @@ $(document).on("click", "#cancel-button", function (e) {
 });
 
 if ($("#status-user").val == "InActive") {
-    $("#activate-button-click").removeClass("hide");
+    $("#activate-button-click").removeClass("d-none");
 }
 
 $(document).on("click", ".delete-class", function () {

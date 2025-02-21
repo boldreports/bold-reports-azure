@@ -44,9 +44,9 @@
 
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="user-profile-template">
         ${if (Email != "")}
-        <a class="item-name grid-content" title="${DisplayName}" data-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}&email=${Email}">${DisplayName}</a>
+        <a class="item-name grid-content text-decoration-none" title="${DisplayName}" data-bs-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}&email=${Email}">${DisplayName}</a>
         ${else}
-        <a class="item-name grid-content" title="${DisplayName}" data-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}">${DisplayName}</a>
+        <a class="item-name grid-content text-decoration-none" title="${DisplayName}" data-bs-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}">${DisplayName}</a>
         ${/if}
         ${if (DirectoryType.Id == @((int)DirectoryType.AzureAD))}
         <span class="su su-azure-ad grid-directory-icon"> </span>
@@ -65,10 +65,10 @@
         ${/if}
     </script>
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="user-username-template">
-        <span class="grid-content" title="${Username}" data-toggle="tooltip">${Username}</span>
+        <span class="grid-content" title="${Username}" data-bs-toggle="tooltip">${Username}</span>
     </script>
-    <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="user-email-template">
-        <span class="grid-content" title="${Email}" data-toggle="tooltip">${Email}</span>
+      <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="user-email-template">
+        <span class="grid-content" title="${Email}" data-bs-toggle="tooltip">${Email}</span>
     </script>
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="activation-method-template">
         ${if (ActivationMethod == null || ActivationMethod == "" || ActivationMethod == " ")}
@@ -82,7 +82,7 @@
     </script>
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="filter-template">
         <span>
-            <a class="e-filtericon e-icon e-filterset" href="">
+            <a class="e-filtericon e-icon e-filterset text-decoration-none" href="">
             </a>
         </span>
     </script>
@@ -110,13 +110,13 @@
 
     <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="options">
         <div class="dropdown">
-            <span class="dropdown-toggle option-icon" data-toggle="dropdown" data-placement="top" data-content="${UserName}">
+            <span class="dropdown-toggle option-icon" data-bs-toggle="dropdown" data-bs-placement="top" data-bs-content="${UserName}">
                 <span class="su su-options"> </span>
             </span>
             <ul class="dropdown-menu" role="menu">
                 ${if (UserStatus == "@UserLockedStatus.Locked")}
                 <li class="unlock-user" data-content="${UserId}">
-                    <a class="unlock-user-class">
+                    <a class="unlock-user-class text-decoration-none">
                         <i class="su su-unlock-user"></i>
                         <span>@T["Unlock User"]</span>
                     </a>
@@ -125,12 +125,12 @@
                 ${/if}
                 <li class="view-user">
                     ${if ((Email != ""))}
-                    <a href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}&email=${Email}" title="">
+                    <a class="text-decoration-none" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}&email=${Email}" title="">
                         <i class="su su-eye"></i>
                         <span>@T["View"]</span>
                     </a>
                     ${else}
-                    <a href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}" title="">
+                    <a class="text-decoration-none" href="@Url.Action("ViewProfile", "UserManagement")?userid=${UserId}" title="">
                         <i class="su su-eye"></i>
                         <span>@T["View"]</span>
                     </a>
@@ -139,7 +139,7 @@
                 ${if (UserId != "@ViewBag.LoggedUser")}
                 ${if (Role == "")}
                 <li class="assign-role" data-content="${UserId}">
-                    <a class="make-admin-class">
+                    <a class="make-admin-class text-decoration-none">
                         <i class="su su-user-settings"></i>
                         <span>@T["Make Admin"]</span>
                     </a>
@@ -147,14 +147,14 @@
                 ${/if}
                 ${if (Role == "@Role.Admin")}
                 <li class="assign-role" data-content="${UserId}">
-                    <a class="remove-admin-class" title="">
+                    <a class="remove-admin-class text-decoration-none" title="">
                         <i class="su su-user-settings"></i>
                         <span>@T["Remove Admin"]</span>
                     </a>
                 </li>
                 ${/if}
                 <li class="delete-user" data-content="${UserId}">
-                    <a class="delete-class" title="">
+                    <a class="delete-class text-decoration-none" title="">
                         <i class="su su-delete"></i>
                         <span>@T["Delete"]</span>
                     </a>
@@ -187,11 +187,13 @@
                 },
                 beforeDataBound: fnbeforeDataBound,
                 dataBound: function (args) {
-                    $('[data-toggle="tooltip"]').tooltip(
-                        {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl, {
                             container: 'body'
                         });
-                        fnOnUserRowSelected();
+                    });
+                    fnOnUserRowSelected();
                 },
                 rowSelected: fnOnUserRowSelected,
                 rowDeselected: fnOnUserRowSelected,
@@ -276,10 +278,10 @@
 }
 
 @section MainSection{
-    <div class="col-xs-12 header-section no-padding no-margin width-alignment admin-header-width">
-        <div class="col-xs-12 admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+    <div class="col-12 float-start header-section no-padding no-margin width-alignment admin-header-width">
+        <div class="col-12 float-start admin-page-header">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="h2 page-title">
                         <input type="hidden" id="user-count-text" value="@ViewBag.UserCount">
                         @T["USERS"] (<span id="user-count" value="@ViewBag.UserCount">@ViewBag.UserCount</span>)
@@ -287,50 +289,50 @@
                     <h5 class="page-description">@T["Add and manage your users."]</h5>
                 </hgroup>                
             </div>
-            <div class="col-xs-4 top-nav-sec no-padding">
+            <div class="col-4 top-nav-sec no-padding">
                 @await Html.PartialAsync("../Shared/_TopMenu")
             </div>
         </div>
 
-        <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div id="search-area" class="pull-left">
-                    <input type="text" class="pull-left" id="search-users" placeholder="@T["Search users"]" />
-                    <span class="su su-inner-close close-icon pull-left" id="clear-search" title="@T["Clear search"]"></span>
-                    <span class="su su-search search-user pull-left" title="@T["Search"]"></span>
+        <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div id="search-area" class="float-start">
+                    <input type="text" class="float-start" id="search-users" placeholder="@T["Search users"]" />
+                    <span class="su su-inner-close close-icon float-start" id="clear-search" title="@T["Clear search"]"></span>
+                    <span class="su su-search search-user float-start" title="@T["Search"]"></span>
                 </div>
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
+                <div class="col-6 no-padding admin-header-btn float-end" id="user-management-options">
                     @if (isMobile)
                     {
-                        <button class="primary-button pull-right" id="new-user-dropdown" title="@T["Add new user"]" data-toggle="tooltip">
+                        <button class="primary-button float-end" id="new-user-dropdown" title="@T["Add new user"]" data-bs-toggle="tooltip">
                             @T["New User"]
                         </button>                       
                     }
                     else
                     {
-                        <button class="dropdown-toggle primary-button pull-right" data-toggle="dropdown" data-placement="top"  title="@T["Add new user"]">
+                        <button class="dropdown-toggle primary-button float-end" data-bs-toggle="dropdown" data-bs-placement="top"  title="@T["Add new user"]">
                             <span>@T["New User"] </span>
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu add-user-dropdown multi-level pull-right" role="menu" id="dropdown-options">
+                        <ul class="dropdown-menu add-user-dropdown multi-level float-end" role="menu" id="dropdown-options">
                             <li id="create-user" title="@T["Add new user"]">
-                                <a href="#" title="@T["Add user"]" data-toggle="tooltip" id="new-user-dropdown" data-placement="top">
+                                <a href="#" title="@T["Add user"]" class="text-decoration-none" data-bs-toggle="tooltip" id="new-user-dropdown" data-bs-placement="top">
                                     <i class="su su-user-add"> </i>
                                     <span>@T["Add User"]</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("UploadFileFormAction", "UserManagement")" title="@T["Import users from CSV"]" data-toggle="tooltip" data-placement="bottom">
+                                <a class="text-decoration-none" href="@Url.Action("UploadFileFormAction", "UserManagement")" title="@T["Import users from CSV"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                     <i class="su su-download"> </i>
                                     <span>@T["Import from CSV"]</span>
                                 </a>
                             </li>
                         </ul>
                     }
-                    <button class="primary-button pull-right" id="assign-user-role-button"  disabled>
+                    <button class="primary-button float-end" id="assign-user-role-button"  disabled>
                         @T["Make Admin"]
                     </button>
-                    <button class="secondary-button pull-right" id="grant-user-button" disabled>
+                    <button class="secondary-button float-end" id="grant-user-button" disabled>
                         @T["Grant Site Access"]
                     </button>
                 </div>
@@ -338,9 +340,9 @@
         </div>
     </div>
     <div id="base-container" class="admin-page-content-container full-page-container">
-        <div class="admin-page-content col-md-12 no-padding">
-            <div id="user-list-container" class="list col-xs-12 admin-page-body">
-                <div class="col-xs-12 no-padding ">
+        <div class="admin-page-content col-md-12 float-start no-padding">
+            <div id="user-list-container" class="list col-12 float-start admin-page-body">
+                <div class="col-12 float-start no-padding ">
                     <div id="user_grid">
                     </div>
                 </div>

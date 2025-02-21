@@ -30,7 +30,10 @@ $(document).ready(function () {
     createWaitingPopup('avatar-upload-box');
     createWaitingPopup('content-area');
 
-    $('[data-toggle="popover"]').popover();
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    });
     $.validator.addMethod("isValidEmail", function (value, element) {
         return IsEmail(value);
     }, window.Server.App.LocalizationContent.EnterValidEmail);

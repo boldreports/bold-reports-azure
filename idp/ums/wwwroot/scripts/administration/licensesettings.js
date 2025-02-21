@@ -39,17 +39,20 @@ $(document).ready(function () {
         }
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         var query = (window.location.search).toString();
 
         switch ($(this).attr("id")) {
             case "bold-bi":
+                $(this).closest("li").addClass("active");
                 if (query !== "?product=embedded-bi" || query !== "?product=boldbi") {
                     history.pushState(null, '', '?product=embedded-bi');
                 }
                 break;
 
             case "bold-reports":
+                $(this).closest("li").addClass("active");
                 if (query !== "?product=enterprise-reporting" || query !== "?product=boldreports") {
                     history.pushState(null, '', '?product=enterprise-reporting');
                 }
@@ -72,7 +75,10 @@ $(document).ready(function () {
 
     changeSubscriptionDialog.appendTo('#change-subscription-content');
 
-    $('[data-toggle="tooltip"]').tooltip();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
 
     if (isBoldBILicenseExpired) {
         $("#bold-bi-tab #details-information").css('padding-top', '20px');

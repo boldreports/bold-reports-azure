@@ -5,6 +5,10 @@ var grid = "";
 var templateGrid = ";"
 var isCreateNewTemplateDialogAdded = false;
 $(document).ready(function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
     addPlacehoder("#search-area");
     dropDownListInitialization('#email-event', window.Server.App.LocalizationContent.EmailEvent, true);
     document.getElementById("email-event").ej2_instances[0].value = selectedEventValue;
@@ -77,8 +81,10 @@ $(document).ready(function () {
         }
     }
 
-    $("a[data-toggle='tab']").on('click', function (e) {
+    $("a[data-bs-toggle='tab']").on('click', function (e) {
+        $("ul.nav.nav-tabs li").removeClass("active");
         if ($(this).attr("id") == "email-logs-tab") {
+            $(this).closest("li").addClass("active");
             $("#logs").show();
             $("#email-settings").hide();
             $(".email-settings-option").hide();
@@ -90,6 +96,7 @@ $(document).ready(function () {
             emailActivityLogGrid();
         }
         else if ($(this).attr("id") == "email-template-tab") {
+            $(this).closest("li").addClass("active");
             $("#templates").show();
             $("#logs").hide();
             $("#email-settings").hide();
@@ -102,6 +109,7 @@ $(document).ready(function () {
             GetCustomEmailTemplateList();
         }
         else if ($(this).attr("id") == "email-settings-tab") {
+            $(this).closest("li").addClass("active");
             $("#email-settings").show();
             $("#logs").hide();
             $("#templates").hide();
@@ -143,8 +151,8 @@ function GetCustomEmailTemplateList() {
         rowSelecting: function (e) {
             this.multiSelectCtrlRequest = true;
         },
-        dataBound: function () {
-            $('[data-toggle="tooltip"]').tooltip(
+        dataBound: function (args) {
+            $('[data-bs-toggle="tooltip"]').tooltip(
                 {
                     container: 'body'
                 });
@@ -305,13 +313,12 @@ function emailActivityLogGrid() {
             rowSelecting: function (e) {
                 this.multiSelectCtrlRequest = true;
             },
-            dataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip(
+            dataBound: function (args) {
+                $('[data-bs-toggle="tooltip"]').tooltip(
                     {
                         container: 'body'
                     });
             },
-
             columns: [
                 { field: 'Event', headerText: window.Server.App.LocalizationContent.Event, type: "string", width: 55, allowFiltering: false, allowSorting: true },
                 { field: 'ModifiedDateString', headerText: window.Server.App.LocalizationContent.Date, type: "string", width: 55, allowFiltering: false, allowSorting: true },

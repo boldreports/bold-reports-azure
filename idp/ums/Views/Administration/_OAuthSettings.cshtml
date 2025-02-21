@@ -1,14 +1,14 @@
 ﻿@{
     var oauthRegEx = @"/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/";
 }
-<div role="tabpanel" class="tab-pane active col-xs-12 no-padding" id="oauth-settings-tab">
-    <div id="oauth-page-body" class="col-xs-12 col-md-12 col-sm-12 admin-page-body">
-        <form id="oauth-setting" name="oauthSettingsForm" class="auth-settings-form col-xs-12 col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+<div role="tabpanel" class="tab-pane col-12 float-start no-padding" id="oauth-settings-tab">
+    <div id="oauth-page-body" class="col-12 float-start col-md-12 col-sm-12 admin-page-body">
+        <form id="oauth-setting" name="oauthSettingsForm" class="auth-settings-form col-12 float-start col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
             @Html.AntiForgeryToken()
             <input type="hidden" name="oauthAuthenticationProvider" value="@ViewBag.OAuthDetails.AuthProvider">
             <input type="hidden" name="oauthLogo" value="@ViewBag.OAuthDetails.OAuthAuthSettings.Logo">
-            <div class="col-xs-12 separator-margin">
-                <div class="col-md-12 no-padding">
+            <div class="col-12 float-start separator-margin">
+                <div class="col-md-12 float-start no-padding">
                     <div class="material-switch inline-align">
                         <input type="checkbox" id="oauthIsEnabled" ng-model="oauthIsEnabled" ng_change="hideValidationMessage(oauthIsEnabled, 'oauth')" />
                         <label for="oauthIsEnabled" class="label-primary"></label>
@@ -17,8 +17,8 @@
                         @T["Enable OAuth 2.0"]
                     </div>
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Provider Name"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.oauthProviderName.$dirty && oauthSettingsForm.oauthProviderName.$invalid) ? 'has-error' : ''">
@@ -29,11 +29,11 @@
                     <div class="info-message no-padding">@T["Name of the authentication provider to be displayed in the login page."]</div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Provider Logo"]</label>
                     </div>
-                    <div class="col-md-12 no-padding logo-container">
+                    <div class="col-md-12 float-start no-padding logo-container">
                         <div id="oauth-image-upload-box" class="auth-image-upload-box">
                             <div class="js-image-preview" style="background-image:{{oauthLogoUrl}}"></div>
                             <div class="upload-options">
@@ -48,8 +48,8 @@
                     </div>
                     <div class="info-message no-padding">@T["Logo of the authentication provider to be displayed in the login page."]</div>
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Authorization Endpoint"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.oauthAuthorizationEP.$dirty && oauthSettingsForm.oauthAuthorizationEP.$invalid) ? 'has-error' : ''">
@@ -60,11 +60,11 @@
                     <div class="info-message no-padding">@T["An authorization URL where the resource owner grants authorization to the OAuth client to access protected resources."]</div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Token Endpoint"]</label>
                     </div>
-                    <div class="col-md-12 no-padding method" ng-class="(oauthSettingsForm.oauthTokenEP.$dirty && oauthSettingsForm.oauthTokenEP.$invalid) ? 'has-error' : ''">
+                    <div class="col-md-12 float-start no-padding method" ng-class="(oauthSettingsForm.oauthTokenEP.$dirty && oauthSettingsForm.oauthTokenEP.$invalid) ? 'has-error' : ''">
                         <select id="token-method-type" class="method-type" data-ng-disabled="!oauthIsEnabled">
                             <option class="no-margin-dropdown-ul" value="POST" selected="@(ViewBag.OAuthDetails.OAuthAuthSettings.TokenEndPointMethod == "POST")">@T["POST"]</option>
                             <option class="no-margin-dropdown-ul" value="GET" selected="@(ViewBag.OAuthDetails.OAuthAuthSettings.TokenEndPointMethod == "GET")">@T["GET"]</option>
@@ -76,11 +76,11 @@
                     <div class="info-message no-padding">@T["A token request URL where the OAuth client exchanges an authorization grant for an access token."]</div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding no-margin">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding no-margin">
                         <label class="app-textbox-label">@T["User Information Endpoint"]</label>
                     </div>
-                    <div class="col-xs-12 no-padding method" ng-class="(oauthSettingsForm.oauthUserInfoEP.$dirty && oauthSettingsForm.oauthUserInfoEP.$invalid) ? 'has-error' : ''">
+                    <div class="col-12 float-start no-padding method" ng-class="(oauthSettingsForm.oauthUserInfoEP.$dirty && oauthSettingsForm.oauthUserInfoEP.$invalid) ? 'has-error' : ''">
                         <select id="user-info-method-type" class="selectpicker method-type" data-ng-disabled="!oauthIsEnabled">
                             <option class="no-margin-dropdown-ul" value="GET" selected="@(ViewBag.OAuthDetails.OAuthAuthSettings.UserInfoEndPointMethod == "GET")">@T["GET"]</option>
                             <option class="no-margin-dropdown-ul" value="POST" selected="@(ViewBag.OAuthDetails.OAuthAuthSettings.UserInfoEndPointMethod == "POST")">@T["POST"]</option>
@@ -93,29 +93,29 @@
 
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Client Id"]</label>
                     </div>
-                    <div class="col-md-12 no-padding" ng-class="(oauthSettingsForm.oauthClientId.$dirty && oauthSettingsForm.oauthClientId.$invalid) ? 'has-error' : ''">
+                    <div class="col-md-12 float-start no-padding" ng-class="(oauthSettingsForm.oauthClientId.$dirty && oauthSettingsForm.oauthClientId.$invalid) ? 'has-error' : ''">
                         <input type="text" class="form-control no-margin" ng-model="oauthClientId" ng-init="oauthClientId='@ViewBag.OAuthDetails.OAuthAuthSettings.ClientId'" name="oauthClientId" placeholder="@T["Client Id"]" id="oauth-client-id" data-ng-disabled="!oauthIsEnabled" required />
                         <span class="validation-message" ng-show="oauthSettingsForm.oauthClientId.$error.required && oauthSettingsForm.oauthClientId.$dirty && oauthIsEnabled">@T["Please enter the client ID."]</span>
                     </div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Client Secret"]</label>
                     </div>
-                    <div class="col-md-12 no-padding" ng-class="(oauthSettingsForm.oauthClientSecret.$dirty && oauthSettingsForm.oauthClientSecret.$invalid) ? 'has-error' : ''">
+                    <div class="col-md-12 float-start no-padding" ng-class="(oauthSettingsForm.oauthClientSecret.$dirty && oauthSettingsForm.oauthClientSecret.$invalid) ? 'has-error' : ''" style="position:relative">
                         <input type="password" class="form-control no-margin" ng-model="oauthClientSecret" ng-init="oauthClientSecret" name="oauthClientSecret" placeholder="@T["Client Secret"]" id="oauth-client-secret" data-ng-disabled="!oauthIsEnabled" required />
                         <span class="validation-message" ng-show="oauthSettingsForm.oauthClientSecret.$error.required && oauthSettingsForm.oauthClientSecret.$dirty && oauthIsEnabled">@T["Please enter the client secret."]</span>
-                        <span class="show-hide-password su su-show" data-toggle="tooltip" data-original-title="@T["Click to view"]"></span>
+                        <span class="show-hide-password su su-show" data-bs-toggle="tooltip" data-bs-original-title="@T["Click to view"]"></span>
                     </div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Scopes"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.oauthScopes.$dirty && oauthSettingsForm.oauthScopes.$invalid) ? 'has-error' : ''">
@@ -125,8 +125,8 @@
                     <div class="info-message no-padding">@T["Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes. This information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted."]</div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Logout Endpoint"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.oauthLogoutEndpoint.$dirty && oauthSettingsForm.oauthLogoutEndpoint.$invalid) ? 'has-error' : ''">
@@ -136,29 +136,29 @@
                     <div class="info-message no-padding">@T["We support logout endpoints that have static request parameters."]</div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Redirect URI"]</label>
                     </div>
                     <div class="col-md-12 no-padding">
                         <input id="oauth-callback-link" value="@(GlobalAppSettings.SystemSettings.BaseUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
-                        <div class="form-control su su-copy text focus" id="oauth-callback-link-copy" readonly="" data-toggle="tooltip" data-original-title="@T["Click to copy"]"></div>
+                        <div class="form-control su su-copy text focus" id="oauth-callback-link-copy" readonly="" data-bs-toggle="tooltip" data-bs-original-title="@T["Click to copy"]"></div>
                     </div>
                     <div class="info-message col-md-12 no-padding">@T["This URI is used to receive the response from the authorization server. When setting up your OAuth 2.0 application, it's essential to register the redirect URI using only lowercase characters."]</div>
                 </div>
                 @if (!GlobalAppSettings.SystemSettings.HideMobileAppRedirectURI)
                 {
-                    <div class="col-md-12 no-padding input-field-margin">
-                        <div class="col-md-12 no-padding">
+                    <div class="col-md-12 float-start no-padding input-field-margin">
+                        <div class="col-md-12 float-start no-padding">
                             <label class="app-textbox-label">@T["Mobile App Redirect URI"]</label>
                         </div>
                         <div>
                             <input id="oauth-mobile-callback-link" value="com.boldbi.dashboard://auth" class="form-control col-md-6 no-margin" readonly />
-                            <div class="form-control su su-copy text focus" id="oauth-mobile-callback-link-copy" readonly="" data-toggle="tooltip" data-original-title="@T["Click to copy"]"></div>
+                            <div class="form-control su su-copy text focus" id="oauth-mobile-callback-link-copy" readonly="" data-bs-toggle="tooltip" data-bs-original-title="@T["Click to copy"]"></div>
                         </div>
                     </div>
                 }
-                <div class="col-md-12 no-padding switch-margin">
+                <div class="col-md-12 float-start no-padding switch-margin">
                     <div class="material-switch inline-align">
                         <input type="checkbox" id="enable-oauth-account-creation" data-ng-disabled="!oauthIsEnabled" ng-model="oAuthUserCreationEnabled" />
                         <label for="enable-oauth-account-creation" class="label-primary"></label>
@@ -169,9 +169,9 @@
                     <div class="info-message no-padding">@T["Create a new user account if doesn't exist."]</div>
                 </div>
             </div>
-            <div class="col-xs-12 separator-margin">
-                <div class="col-md-12 no-padding auth-sub-title">
-                    <div class="col-md-12 no-padding section-title">
+            <div class="col-12 float-start separator-margin">
+                <div class="col-md-12 float-start no-padding auth-sub-title">
+                    <div class="col-md-12 float-start no-padding section-title">
                         <span>@T["User data"]</span>
                     </div>
                     <div class="section-info-message">
@@ -179,8 +179,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding no-margin">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding no-margin">
                         <label class="app-textbox-label">@T["Email"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.userInfoEmail.$dirty && oauthSettingsForm.userInfoEmail.$invalid) ? 'has-error' : ''">
@@ -189,8 +189,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding no-margin">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding no-margin">
                         <label class="app-textbox-label">@T["First Name"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.userInfoFirstname.$dirty && oauthSettingsForm.userInfoFirstname.$invalid) ? 'has-error' : ''">
@@ -198,8 +198,8 @@
                     </div>
 
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding no-margin">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding no-margin">
                         <label class="app-textbox-label">@T["Last Name"]</label>
                     </div>
                     <div ng-class="(oauthSettingsForm.userInfoLastname.$dirty && oauthSettingsForm.userInfoLastname.$invalid) ? 'has-error' : ''">
@@ -207,7 +207,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 separator-margin">
+            <div class="col-12 float-start separator-margin">
                 <div id="oauth-group-import" class="group-import">
                     @await Html.PartialAsync("_AuthenticationGroupImportSettings", (AuthGroupImportSettings)ViewBag.OAuthDetails.OAuthAuthSettings.GroupImportSettings, new ViewDataDictionary(ViewData) { { "AuthType", AuthType.OAuth } })
                 </div>

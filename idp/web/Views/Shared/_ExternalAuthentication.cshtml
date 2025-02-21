@@ -22,7 +22,7 @@
     var syncfusionLogin = ViewBag.ReturnURL != null ? Url.Action("SyncfusionLogin", "Accounts") + "?returnUrl=" + WebUtility.UrlEncode(ViewBag.ReturnURL.ToString()) : Url.Action("SyncfusionLogin", "Accounts");
     var microsoftLogoLink = !CloudAppConfig.IsSelfHosted ? GlobalAppSettings.CdnDomain + "/static/logos/v1/" + IconFileNames.Microsoft : GlobalAppSettings.SystemSettings.CDNLink + "/images/common/application/azuread.png";
     var windowsADLogoLink = GlobalAppSettings.SystemSettings.CDNLink + "/images/common/application/windows-ad.svg";
-    var windowsADclass = showExternalAuthentication ? "col-xs-6 no-padding " : string.Empty;
+    var windowsADclass = showExternalAuthentication ? "col-6 float-start no-padding " : string.Empty;
     var authSettings = ViewBag.AuthSettings as List<AuthSettings>;
     var showAuthLogin = authSettings != null && authSettings.Count > 0;
     string openidLoginUrl = Url.Action("OpenIdLogin", "accounts");
@@ -58,7 +58,7 @@
 {
     <meta name="base_url" content="@baseURL" />
     <div class="external-container">
-        <div class="divider-container col-xs-12">
+        <div class="divider-container col-12 float-start">
             <hr class="connect-line-left"><div class="content text-body">@T["or"]</div><hr class="connect-line-right">
         </div>
         <div id="alternative-login">
@@ -68,13 +68,13 @@
                     <input id="external-authentication-client-id" type="hidden" name="clientId" value="@ViewBag.ClientId" />
                 }
 
-            <div class="col-xs-12 no-padding">
+            <div class="col-12 float-start no-padding">
                 @if (showExternalAuthentication)
                 {
                     @foreach (var item in orderedProviders)
                     {
                         <form method="post" action="@loginAction" class="external-login-buttons">
-                            <button class="col-xs-6 no-padding login-provider link-button button-style" type="submit" id="@item.Name.Replace(" ", "").ToLower()-login">
+                            <button class="col-6 float-start no-padding login-provider link-button button-style" type="submit" id="@item.Name.Replace(" ", "").ToLower()-login">
                                 @Html.AntiForgeryToken()
                                 @Html.Hidden("provider", item.DisplayName)
                                 <input type="hidden" id="azure-email" name="email" />

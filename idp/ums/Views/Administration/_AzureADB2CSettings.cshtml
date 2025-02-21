@@ -1,14 +1,14 @@
 ﻿@{
     var appBranding = GlobalAppSettings.Branding;
 }
-<div role="tabpanel" class="tab-pane col-xs-12 no-padding" id="azure-ad-b2c-settings-tab">
-    <div id="azure-ad-b2c-page-body" class="col-lg-12 col-md-12 col-sm-12 admin-page-body">
-        <form id="saml-b2c-setting" name="ssoSettingsb2cForm" class="saml-form auth-settings-form col-lg-12 col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+<div role="tabpanel" class="tab-pane col-12 float-start no-padding" id="azure-ad-b2c-settings-tab">
+    <div id="azure-ad-b2c-page-body" class="col-lg-12 col-md-12 col-sm-12 float-start admin-page-body">
+        <form id="saml-b2c-setting" name="ssoSettingsb2cForm" class="saml-form auth-settings-form col-lg-12 col-md-12 col-sm-12 float-start no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
             @Html.AntiForgeryToken()
             <input type="hidden" name="azureADB2CAuthenticationProvider" value="@ViewBag.AzureADB2CSettings.AuthProvider">
             <input type="hidden" name="azureB2CLogo" value="@ViewBag.AzureADB2CSettings.AzureADB2CSettings.Logo">
-            <div class="col-xs-12 separator-margin">
-                <div class="col-xs-12 no-padding">
+            <div class="col-12 float-start separator-margin">
+                <div class="col-12 float-start no-padding">
                     <div class="material-switch inline-align">
                         <input type="checkbox" id="enable-sso-b2c" ng-model="isB2CEnabled" ng_change="hideValidationMessage(isB2CEnabled, 'azureadb2c')"/>
                         <label for="enable-sso-b2c" class="label-primary"></label>
@@ -17,8 +17,8 @@
                         @T["Enable Azure AD B2C"]
                     </div>
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Organization Name"]</label>
                     </div>
                     <div ng-class="(ssoSettingsb2cForm.AzureB2CProviderName.$dirty && ssoSettingsb2cForm.AzureB2CProviderName.$invalid) ? 'has-error' : ''">
@@ -28,11 +28,11 @@
                     </div>
                     <div class="info-message no-padding">@T["Name of the organization to be displayed in the login page."]</div>
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-md-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-md-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Organization Logo"]</label>
                     </div>
-                    <div class="col-xs-12 no-padding logo-container">
+                    <div class="col-12 float-start no-padding logo-container">
                         <div id="azure-b2c-image-upload-box" class="auth-image-upload-box">
                             <div class="js-image-preview" style="background-image:{{azureB2CLogoUrl}}"></div>
                             <div class="upload-options">
@@ -46,8 +46,8 @@
                     </div>
                     <div class="info-message no-padding">@T["Logo of the organization to be displayed in the login page."]</div>
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-xs-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Application Id"]</label>
                     </div>
                     <div>
@@ -67,8 +67,8 @@
                         </div>
                     }
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-xs-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Tenant Name"]</label>
                     </div>
                     <div>
@@ -79,8 +79,8 @@
                     <div class="info-message no-padding">@T["A dedicated instance of the Azure AD B2C service."]</div>
 
                 </div>
-                <div class="col-md-12 no-padding input-field-margin">
-                    <div class="col-xs-12 no-padding">
+                <div class="col-md-12 float-start no-padding input-field-margin">
+                    <div class="col-12 float-start no-padding">
                         <label class="app-textbox-label">@T["Sign in Policy"]</label>
                     </div>
                     <div>
@@ -89,15 +89,15 @@
                     </div>
                     <div class="info-message no-padding">@T["The name of the Sign in/Sign up user flow created in Azure AD B2C."]</div>
                 </div>
-                @*<div class="col-md-12 no-padding input-field-margin">
-                        <div class="col-xs-12 no-padding">
+                @*<div class="col-md-12 float-start no-padding input-field-margin">
+                        <div class="col-12 float-start no-padding">
                             <label class="app-textbox-label">@T["Reset Password Policy"]</label>
                         </div>
                         <div>
                             <input type="text" class="form-control no-margin" ng-model="PasswordPolicyB2C" ng-init="PasswordPolicyB2C='@ViewBag.AzureADB2CSettings.AzureADB2CSettings.PasswordResetPolicy'" name="PasswordPolicyB2C" placeholder="@T["Reset Password Policy (Optional)"]" id="Password-policy-b2c" data-ng-disabled="!isB2CEnabled"/>
                         </div>
                     </div>*@
-                <div class="col-xs-12 no-padding input-field-margin">
+                <div class="col-12 float-start no-padding input-field-margin">
                     <div class="material-switch inline-align">
                         <input type="checkbox" id="enable-slo-b2c" ng-model="IsB2CSloEnabled" data-ng-disabled="!isB2CEnabled"/>
                         <label for="enable-slo-b2c" class="label-primary"></label>

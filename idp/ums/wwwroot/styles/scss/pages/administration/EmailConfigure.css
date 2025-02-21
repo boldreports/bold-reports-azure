@@ -49,7 +49,7 @@
 .material-checkbox:checked + input + label::before {
   bottom: 11.2px;
   color: var(--checkbox-text-active-color);
-  content: "";
+  content: "";
   font-family: "Server";
   left: 1px;
   font-size: 14px;
@@ -85,6 +85,17 @@
 
 #template-add-dialog_dialog-content {
   padding: 0px !important; }
+  #template-add-dialog_dialog-content #default {
+    margin-left: 73px; }
+
+.modal-body {
+  padding: 15px; }
+  .modal-body .form-padding {
+    height: 22px; }
+  .modal-body #templateName {
+    width: 321px !important;
+    height: 34px;
+    font-size: 14px; }
 
 .add-template-dialog-form {
   border: none !important; }
@@ -111,7 +122,7 @@
 
 .input-style {
   position: absolute !important;
-  top: 9px !important;
+  top: 36px !important;
   width: 100% !important; }
 
 #specific-grid-container {
@@ -127,13 +138,11 @@
   font-weight: 200 !important; }
 
 .copy-from-lable {
-  right: 20px;
-  bottom: 3px;
+  margin-bottom: 5px;
   font-weight: 200 !important; }
 
 .choose-from-lable {
-  right: 33px;
-  bottom: 5px;
+  margin-bottom: 5px;
   font-weight: 200 !important; }
 
 .send-html-email {
@@ -166,7 +175,8 @@
     overflow: hidden; }
   .emailtemplatefield .badge {
     border-radius: 6px;
-    padding: 5px 7px !important; }
+    padding: 5px 7px !important;
+    background-color: #777; }
 
 .button-align {
   margin-top: 20px !important;
@@ -213,7 +223,7 @@
   color: var(--red); }
 .input-container .templateAdd-validation-messages {
   position: absolute;
-  top: 44px; }
+  top: 73px; }
 
 #email-configure .bi-page-content {
   padding: 24px 34px 0px 32px !important; }
@@ -320,7 +330,7 @@
       #email-configure .email-configure-container .email-configure-listCollection .email-configure-list .material-checkbox:checked + input + label::before {
         bottom: 11.2px;
         color: var(--checkbox-text-active-color);
-        content: "";
+        content: "";
         font-family: "Server";
         left: 1px;
         font-size: 14px;
@@ -366,14 +376,15 @@
 #email-configure #email-content-container #email-body-container_editable-content {
   font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.3px; }
+  letter-spacing: 0.3px;
+  color: var(--primary-text-color); }
 #email-configure #email-content-container #email-body-container {
   height: 263px !important;
   width: 530px !important;
   float: none;
   border-color: #CCCCCC;
   border-radius: 4px;
-  margin: 38px 0 12px 0 !important; }
+  margin: 14px 0 12px 0 !important; }
   #email-configure #email-content-container #email-body-container #email-body-container_toolbar_wrapper {
     height: 42px !important; }
     #email-configure #email-content-container #email-body-container #email-body-container_toolbar_wrapper #email-body-container_toolbar {

@@ -52,7 +52,7 @@
             <input type="submit" class="btn-holder proceed-button" value="@T["Proceed to log in"]">
         </form>
         <div class="divider-light"></div>
-        <div class="forget-password-align"><a href="@Url.Action("RecoverAccount", "Accounts")" class="forgot-pwd-link" tabindex="6">@T["Cannot access your account?"]</a></div>
+        <div class="forget-password-align"><a href="@Url.Action("RecoverAccount", "Accounts")" class="forgot-pwd-link text-decoration-none" tabindex="6">@T["Cannot access your account?"]</a></div>
     }
     else if (linkExpired)
     {
@@ -76,7 +76,7 @@
         </div>
         <div class="text-body resend-verification">@T["If you have not received it or the link has already expired, please click the following link to get a new activation link."]</div>
         <div class="divider-light"></div>
-        <a id="resend-activation-link" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=true&callbackuri=@ViewBag.UserLoginValidator.CallBackUri">
+        <a id="resend-activation-link" class="text-decoration-none" href="@Url.Action("RecoverAccount","Accounts")?isaccountactivation=true&callbackuri=@ViewBag.UserLoginValidator.CallBackUri">
             <input type="submit" class="btn-holder proceed-button" value="@T["Resend activation link"]">
         </a>
     }

@@ -76,61 +76,61 @@
     @await Html.PartialAsync("_AdminMenu")
     @await Html.PartialAsync("_DiologBox")
 
-    <div ng-controller="adSettingsController" class="col-xs-12 no-padding no-margin auth-page-height width-alignment">
+    <div ng-controller="adSettingsController" class="col-12 float-start no-padding no-margin auth-page-height width-alignment">
         <div class="col-md-12 admin-page-header">
-            <div class="admin-page-header-description col-xs-6 no-padding" id="application-title">
-                <hgroup class="col-xs-12 header-group">
+            <div class="admin-page-header-description col-6 float-start no-padding" id="application-title">
+                <hgroup class="col-12 float-start header-group">
                     <h1 class="page-title">@T["Authentication Settings"]</h1>
                 <h5 class="page-description">@T["Configure authentication/authorization providers’ information."]</h5>
             </hgroup>
         </div>
-                <div class="col-xs-4 top-nav-sec no-padding">
+                <div class="col-4 top-nav-sec no-padding">
                     @await Html.PartialAsync("../Shared/_TopMenu")
                 </div>
             </div>
-        <div class="col-md-12 import-area bi-page-header admin-page-icon">
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-6 no-padding admin-header-btn pull-right" id="user-management-options">
-                <button class="secondary-button pull-right" id="cancel-settings" title="">@T["Cancel"]</button>
-                <button type="submit" id="update-saml-settings" class="primary-button pull-right update-auth-settings" ng-disabled="ssoSettingsForm.$invalid">@T["Save"]</button>
-                <button type="submit" id="update-azure-b2c-settings" class="primary-button pull-right update-auth-settings" ng-disabled="ssoSettingsb2cForm.$invalid">@T["Save"]</button>
-                <button type="submit" id="update-jwt-settings" class="primary-button pull-right update-auth-settings" ng-disabled="jwtSettingsForm.$invalid">@T["Save"]</button>
-                <button type="submit" id="update-defaultauthlogin-settings" class="primary-button pull-right update-defaultauth-settings @(ViewBag.DefaultAuthenticationSettings.ProviderName.Count == 0 ? "display-none" : string.Empty)" ng-disabled>@T["Save"]</button>
-                <button type="submit" id="update-oauth-settings" class="primary-button pull-right update-auth-settings" ng-disabled="oauthSettingsForm.$invalid">@T["Save"]</button>
-                <button type="submit" id="update-openid-settings" class="primary-button pull-right update-auth-settings" ng-disabled="openidSettingsForm.$invalid">@T["Save"]</button>
-                <button type="submit" id="update-windowsad-settings" class="primary-button pull-right update-auth-settings" ng-disabled="windowsadSettingsForm.$invalid">@T["Save"]</button>
+        <div class="col-md-12 float-start import-area bi-page-header admin-page-icon">
+            <div class="col-12 float-start no-padding">
+                <div class="col-6 no-padding admin-header-btn float-end" id="user-management-options">
+                <button class="secondary-button float-end" id="cancel-settings" title="">@T["Cancel"]</button>
+                <button type="submit" id="update-saml-settings" class="primary-button float-end update-auth-settings" ng-disabled="ssoSettingsForm.$invalid">@T["Save"]</button>
+                <button type="submit" id="update-azure-b2c-settings" class="primary-button float-end update-auth-settings" ng-disabled="ssoSettingsb2cForm.$invalid">@T["Save"]</button>
+                <button type="submit" id="update-jwt-settings" class="primary-button float-end update-auth-settings" ng-disabled="jwtSettingsForm.$invalid">@T["Save"]</button>
+                <button type="submit" id="update-defaultauthlogin-settings" class="primary-button float-end update-defaultauth-settings @(ViewBag.DefaultAuthenticationSettings.ProviderName.Count == 0 ? "display-none" : string.Empty)" ng-disabled>@T["Save"]</button>
+                <button type="submit" id="update-oauth-settings" class="primary-button float-end update-auth-settings" ng-disabled="oauthSettingsForm.$invalid">@T["Save"]</button>
+                <button type="submit" id="update-openid-settings" class="primary-button float-end update-auth-settings" ng-disabled="openidSettingsForm.$invalid">@T["Save"]</button>
+                <button type="submit" id="update-windowsad-settings" class="primary-button float-end update-auth-settings" ng-disabled="windowsadSettingsForm.$invalid">@T["Save"]</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-xs-12 no-padding auth-page-border auth-page-nav-bar">
+        <div class="col-12 float-start no-padding auth-page-border auth-page-nav-bar">
             <ul id="ad-tab-nav" class="nav nav-tabs" role="tablist">
                 <li role="presentation">
-                    <a href="#default-authentication-settings-tab" id="default-authentication-settings" aria-controls="default-authentication-settings" role="tab" data-toggle="tab">@T["General"]</a>
+                    <a href="#default-authentication-settings-tab" class="text-decoration-none" id="default-authentication-settings" aria-controls="default-authentication-settings" role="tab" data-bs-toggle="tab">@T["General"]</a>
                 </li>
                 <li role="presentation">
-                    <a href="#windows-ad-settings-tab" id="windows-ad-settings" class="@((CloudAppConfig.IsSelfHosted && !GlobalAppSettings.IsAzureApplication && EnvironmentHelper.IsWindows()) ? string.Empty : "hide")" aria-controls="windows-ad-settings-tab" role="tab" data-toggle="tab">Windows AD</a>
+                    <a href="#windows-ad-settings-tab" id="windows-ad-settings" class="@((CloudAppConfig.IsSelfHosted && !GlobalAppSettings.IsAzureApplication && EnvironmentHelper.IsWindows()) ? string.Empty : "d-none") text-decoration-none" aria-controls="windows-ad-settings-tab" role="tab" data-bs-toggle="tab">Windows AD</a>
                 </li>
                 <li role="presentation">
-                    <a href="#azure-ad-settings-tab" id="azure-ad-settings" aria-controls="azure-ad-settings-tab" role="tab" data-toggle="tab">Azure AD</a>
+                    <a href="#azure-ad-settings-tab" id="azure-ad-settings" class="text-decoration-none" aria-controls="azure-ad-settings-tab" role="tab" data-bs-toggle="tab">Azure AD</a>
                 </li>
                 <li role="presentation">
-                    <a href="#azure-ad-b2c-settings-tab" id="azure-ad-b2c-settings" aria-controls="azure-ad-b2c-settings-tab" role="tab" data-toggle="tab">Azure AD B2C</a>
+                    <a href="#azure-ad-b2c-settings-tab" id="azure-ad-b2c-settings" class="text-decoration-none" aria-controls="azure-ad-b2c-settings-tab" role="tab" data-bs-toggle="tab">Azure AD B2C</a>
                 </li>
                 <li role="presentation">
-                    <a href="#oauth-settings-tab" id="oauth-settings" aria-controls="oauth-settings-tab" role="tab" data-toggle="tab">OAuth 2.0</a>
+                    <a href="#oauth-settings-tab" id="oauth-settings" class="text-decoration-none" aria-controls="oauth-settings-tab" role="tab" data-bs-toggle="tab">OAuth 2.0</a>
                 </li>
                 <li role="presentation">
-                    <a href="#openid-settings-tab" id="openid-settings" aria-controls="openid-settings-tab" role="tab" data-toggle="tab">OpenID Connect</a>
+                    <a href="#openid-settings-tab" id="openid-settings" class="text-decoration-none" aria-controls="openid-settings-tab" role="tab" data-bs-toggle="tab">OpenID Connect</a>
                 </li>
                 <li role="presentation">
-                    <a href="#jwt-settings-tab" id="jwt-settings" aria-controls="jwt-settings-tab" role="tab" data-toggle="tab">JWT</a>
+                    <a href="#jwt-settings-tab" id="jwt-settings" class="text-decoration-none" aria-controls="jwt-settings-tab" role="tab" data-bs-toggle="tab">JWT</a>
                 </li>
             </ul>
         </div>
-        <div id="auth-settings-container" role="tabpanel" class="col-xs-12 admin-page-content-container auth-page-width" aria-labelledby="active-directory-settings-link">
-            <div id="authentication-block" class="admin-page-content col-xs-12 no-padding">
-                <div class="tab-content col-xs-12 no-padding">
+        <div id="auth-settings-container" role="tabpanel" class="col-12 float-start admin-page-content-container auth-page-width" aria-labelledby="active-directory-settings-link">
+            <div id="authentication-block" class="admin-page-content col-12 float-start no-padding">
+                <div class="tab-content col-12 float-start no-padding">
                     @await Html.PartialAsync("_DefaultAuthentication")
                     @await Html.PartialAsync("_WindowsADSettings")
                     @await Html.PartialAsync("_AzureADSettings")

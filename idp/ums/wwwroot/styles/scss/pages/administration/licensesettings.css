@@ -32,9 +32,12 @@
   line-height: 30px; }
 
 #offline-license-update-dialog {
-  width: 424px; }
+  width: 424px;
+  height: auto; }
   #offline-license-update-dialog .e-btn.e-primary {
     width: 120px; }
+  #offline-license-update-dialog .e-dlg-content {
+    overflow: hidden; }
   #offline-license-update-dialog #popup-container .upload-header {
     height: 44px;
     padding: 11.5px 0 11.5px 12px;
@@ -125,7 +128,9 @@
         color: var(--global-link-text-normal-color);
         position: absolute; }
       #offline-license-update-dialog #popup-container .upload-content #upload-section .upload-btn-wrapper .file-upload-btn {
-        display: inline-block; }
+        display: inline-block;
+        position: relative;
+        bottom: 4px; }
       #offline-license-update-dialog #popup-container .upload-content #upload-section .upload-btn-wrapper #file-name {
         width: 375px;
         border-top-left-radius: 4px;
@@ -147,7 +152,8 @@
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
         margin-left: -1px;
-        cursor: pointer; }
+        cursor: pointer;
+        padding: 7px; }
       #offline-license-update-dialog #popup-container .upload-content #upload-section .upload-btn-wrapper input[type="file"] {
         -webkit-appearance: none;
         text-align: left; }
@@ -223,9 +229,10 @@
       border-bottom: 1px solid var(--section-separator-color); }
     #license-settings-container #license-settings-form .active-subscription-table-section td {
       border: none;
-      padding: 10px; }
-    #license-settings-container #license-settings-form .active-subscription-table-section tr td:first-child {
+      padding: 10px;
       background-color: var(--surface);
+      color: var(--primary-text-color); }
+    #license-settings-container #license-settings-form .active-subscription-table-section tr td:first-child {
       font-size: 13px;
       display: table-cell;
       padding: 8px 0px 0px 16px;
@@ -398,7 +405,6 @@
   height: 24px;
   line-height: 2px;
   position: absolute;
-  top: 30px;
   font-weight: 400;
   padding: 0px 8px; }
 #license-settings-container .edit-link {

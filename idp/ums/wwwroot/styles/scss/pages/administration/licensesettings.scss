@@ -36,9 +36,14 @@
 
 #offline-license-update-dialog {
     width: 424px;
+    height: auto;
 
     .e-btn.e-primary {
         width: 120px;
+    }
+
+    .e-dlg-content {
+        overflow: hidden;
     }
 
     #popup-container {
@@ -123,6 +128,7 @@
                         border-bottom-right-radius: 4px;
                         margin-left: -1px;
                         cursor: pointer;
+                        padding: 7px;
                     }
 
                     input[type="file"] {
@@ -238,10 +244,11 @@
             td {
                 border: none;
                 padding: 10px;
+                background-color: $surface;
+                color: $primary-text-color;
             }
 
             tr td:first-child {
-                background-color: $surface;
                 font-size: 13px;
                 display: table-cell;
                 padding: 8px 0px 0px 16px;
@@ -508,7 +515,6 @@
         height: 24px;
         line-height: 2px;
         position: absolute;
-        top: 30px;
         font-weight: 400;
         padding: 0px 8px;
     }
