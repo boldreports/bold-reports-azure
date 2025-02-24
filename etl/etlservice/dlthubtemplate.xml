@@ -26,6 +26,28 @@ plugins:
     </yaml>
   </extractor>
   <extractor>
+    <name>MongoDBSSH</name>
+    <yaml>
+      <![CDATA[
+version: 1.0.1
+destination: 
+plugins:
+  extractors:
+    - name: MongoDBSSH
+      connectorname: MongoDB
+      config:
+        connection_url: mongodb://dbuser:passwd@host:port
+        database: databasename
+        ssh_host: ssh_hostname
+        ssh_port: ssh_port
+        ssh_user: ssh_username
+        ssh_private_key_path: privatekey
+      select:
+        - tablename
+      ]]>
+    </yaml>
+  </extractor>
+  <extractor>
     <name>MongoDBINC</name>
     <yaml>
       <![CDATA[
@@ -171,6 +193,32 @@ plugins:
         database: database
         password: password
         drivername: mysql+pymysql
+      select:
+        - tablename
+      ]]>
+    </yaml>
+  </extractor>
+  <extractor>
+    <name>MySQLSSH</name>
+    <yaml>
+      <![CDATA[
+version: 1.0.1
+destination: 
+plugins:
+  extractors:
+    - name: MySQL
+      connectorname: MySQL
+      config:
+        host: hostname
+        port: 3306
+        username: user
+        database: database
+        password: password
+        drivername: mysql+pymysql
+        ssh_host: ssh_hostname
+        ssh_port: ssh_port
+        ssh_user: ssh_username
+        ssh_private_key_path: privatekey
       select:
         - tablename
       ]]>
