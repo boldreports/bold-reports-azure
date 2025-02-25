@@ -6,3 +6,8 @@ INSERT into {database_name}.BOLDRS_PermissionAccEntity (PermissionEntityId, Perm
 ;
 INSERT INTO {database_name}.BOLDRS_GroupPermission (PermissionAccessId, PermissionEntityId, ItemId, GroupId, IsActive) VALUES (16,17,NULL,1,1)
 ;
+
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsEmailAttachment tinyint NOT NULL DEFAULT 1
+;
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsInsertReportInMailBody tinyint NOT NULL DEFAULT 0
+;
