@@ -121,19 +121,6 @@
                                         </td>
                                         <td align='left' valign='top'>
                                         <![endif]-->
-                                        <div class='' style='display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; ' width='50'>
-                                            <table style='border-collapse: separate;width: 100%;' class='' align='left' border='0' cellpadding='0' cellspacing='0'>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style='font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right; height: 40px;vertical-align:bottom;'>
-                                                            <span>
-                                                                <a href="@Model.BaseUrl/login" target='' style="text-decoration: none; color: #3f3f3f; font-weight: normal;">Sign in</a>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
                                         <!--[if (gte mso 9)|(lte ie 8)]>
                                                 </td>
                                             </tr>
@@ -187,11 +174,34 @@
 
                                     <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                                         <tbody>
-                                            <tr>
-                                                <td style='font-size: 1px;' height='30'>&nbsp;</td>
-                                            </tr>
+                                        <tr>
+                                            <td style='font-size: 1px;' height='30'>&nbsp;</td>
+                                        </tr>
                                         </tbody>
                                     </table>
+                                    
+                                    @if (Model.IsInsertReportInMailBody)
+                                    {
+                                        <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table style='text-align:left;width:100%;' cellpadding='0' cellspacing='0'>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style='padding-left:20px;padding-right:20px;font-size: 14px;color: #3f3f3f;font-weight: normal;font-family:Arial, Helvetica, sans-serif;'>
+                                                                <span>
+                                                                    @Html.Raw(@Model.ReportImage)
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    }
 
                                     <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                                         <tbody>
