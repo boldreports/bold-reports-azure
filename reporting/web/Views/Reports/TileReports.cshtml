@@ -69,6 +69,7 @@
         var getViewsByItemIdUrl = "@Url.Action("GetViewsByItemId","Items")";
         var dashboardsUrl = "@Url.Action("reports", "reports")";
         var editreportviewUrl = "@Url.Action("editreportview", "reports")";
+        var copyMultipleReportIframeUrl = "@Url.Action("copymultipleitem", "items")";
         var currentUserId = @currentUserId;
         var isMarkItemsPublic = @Json.Serialize(globalAppSettings.SystemSettings.IsMarkItemsPublic);
         var isAdmin = @Json.Serialize(Convert.ToBoolean(Context.Session.GetString("IsAdmin")));
@@ -326,6 +327,13 @@
                             </div>
                         </div>
                         <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet">
+                            
+                            <div id="dashboard-bulk-action-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
+                                <select id="report-bulk-action" class="selectpicker no-padding" title="[[[Bulk Actions]]]" multiple>
+                                    <option data-hidden="true">[[[Bulk Actions]]]</option>
+                                    <option value="Copy to categories">[[[Copy to categories]]]</option>
+                                </select>
+                            </div>
                             <span class="dashboard-dropdown-label">[[[Sort]]]</span>
                             <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
                                 <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
