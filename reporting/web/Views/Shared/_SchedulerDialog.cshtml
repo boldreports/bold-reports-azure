@@ -374,6 +374,10 @@
                         $("#enable-burst-report").prop("disabled", true);
                         $("#enable-burst-report").prop("checked", false);
                         $(".burstreport-tag").css("display", "block");
+                     burstReport = false;
+                    $("#export-filename").val("{:ScheduleName}-{:ReportName}-{:Timestamp}");
+                    $("#export-filename").prop("disabled", false);
+                    $("#file-template-variable-drop-box").prop("disabled", false);
                     }
                 }
             });
