@@ -201,8 +201,7 @@
             </div>
         </div>
         <div class="col-sm-6 col-xs-6" id="checkbox-validation" style="visibility: hidden">[[[Please select at least one option to schedule a report ]]]</div>
-        
-        <div class="col-sm-12 col-xs-12 send-mail-block">
+        <div class="col-sm-12 col-xs-12 send-mail-block" id="export-user-select-box"> 
             <div class="col-sm-12 col-xs-12 send-mail-align">
                 <label class="col-sm-12 col-xs-12 clspadleft app-checkbox-label normal-font sendmail-label no-padding">Select Recipients</label>
             </div>
@@ -229,7 +228,7 @@
         </div>
         <div id="selected-users-validation">[[[Select a user, group, or type an email address in the external recipient to schedule]]]</div>
         <div id="selected-users-info" class="col-sm-5 col-xs-5 no-margin i-search-fields"></div>
-        @if(isSelfHosted)
+        @if (isSelfHosted)
         {
             <div id="failure-notification" class="col-sm-12 col-xs-12  no-margin">
                 <div id="enable-checkbox">
@@ -250,7 +249,7 @@
                 }
             </div>
         }
-    </div>
+        </div>
 </body>
 </html>
 <script nonce="@Model">
@@ -261,4 +260,32 @@
            var validateS3BucketCredentialsUrl = "@Url.Action("ValidateS3Credentials", "Scheduler")";
            var isAzureApplication = @Json.Serialize(isAzureApplication);
            var isSelfHosted = @Json.Serialize(isSelfHosted);
+           $(document).ready(function () {
+                   if (burstReport) {
+                       $('#user-search-container .dropdown-toggle').prop('disabled', true);
+                       $('#group-search-container .dropdown-toggle').prop('disabled', true);
+                       $('#external-email').prop('disabled', true);
+                       $('#save-as-file').prop('disabled', true);
+                       $('#enable-send-mail').prop('checked', true);
+                       $('#xml-export').prop('disabled', true);
+                       $('#csv-export').prop('disabled', true);
+                       $('#ppt-export').prop('disabled', true);
+                       $('#html-export').prop('disabled', true);
+                       $('#word-export').prop('disabled', true);
+                       $('#excel-export').prop('disabled', true);
+                       
+                   } else {
+                       $('#user-search-container .dropdown-toggle').prop('disabled', false);
+                       $('#group-search-container .dropdown-toggle').prop('disabled', false);
+                       $('#external-email').prop('disabled', false);
+                       $('#save-as-file').prop('disabled', false);
+                       $('#enable-send-mail').prop('checked', false);
+                       $('#xml-export').prop('disabled', false);
+                       $('#csv-export').prop('disabled', false);
+                       $('#ppt-export').prop('disabled', false);
+                       $('#html-export').prop('disabled', false);
+                       $('#word-export').prop('disabled', false);
+                       $('#excel-export').prop('disabled', false);
+                   }
+           });
 </script>

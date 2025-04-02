@@ -249,6 +249,7 @@ CREATE TABLE [BOLDRS_ScheduleDetail](
 	[IsNoDataEnabled] [bit] NULL,
 	[IsParameterEnabled] [bit] NOT NULL,
 	[IsSaveAsFile] [bit] NOT NULL,
+    [IsBurstReport] [bit] NOT NULL DEFAULT 0,
     [IsSendAsMail] [bit] NOT NULL DEFAULT 1,
     [ReportCount] [int] NOT NULL DEFAULT 0,
     [ExportPath] [nvarchar](4000) NULL,

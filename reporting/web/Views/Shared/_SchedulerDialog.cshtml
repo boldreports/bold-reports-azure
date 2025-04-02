@@ -196,7 +196,24 @@
                                 <span class="validation-message"></span>
                             </div>
                         </div>
-
+                            <div class="col-sm-12 col-xs-12 no-padding burst-report-option" style="height: 44px;">
+                                <div class="col-sm-2 col-xs-2 no-padding  align-center">
+                                    @Html.Label("enable-burst-report", "[[[Report Bursting]]]", new { @class = "" })
+                                </div>
+                                <div class="col-sm-5 col-xs-5 pull-left">
+                                    <span class="material-switch text-left">
+                                        <input type="checkbox" name="Enabled" id="enable-burst-report"/>
+                                        <label class="label-primary" for="enable-burst-report"></label>
+                                    </span>
+                                    <div class="burstreport-tag label-align-center no-margin" style="display: none;">
+                                        <span class="dropdown-toggle cursor-type" id="burst-report-info" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                        <div class="col-xs-2 dropdown-menu" id="burstreport-help-message" role="menu">
+                                            [[[The selected report does not have burst report option.]]]
+                                        </div>
+                                    </div>
+                                    <span class="validation-message"></span>
+                                </div>
+                            </div>
                         <div class="col-sm-12 col-xs-12 no-padding nodatadisabled-div">
                             <div class="col-sm-2 col-xs-2 no-padding  align-center">
                                 @Html.Label("nodata-disable", "[[[Disable Attachments with No Data]]]", new { @class = "" })
@@ -289,6 +306,7 @@
     var getScheduleFileSettingTypeUrl = "@Url.Action("GetScheduleFileSettingType", "Scheduler")";
     var getSchedulerParameter = "@Url.Action("SchedulerParameter", "scheduler")";
     var reportHasParameterUrl = "@Url.Action("CheckReportHasParameter", "scheduler")";
+    var reportHasBurstReportUrl = "@Url.Action("CheckReportHasBurstReportOption", "scheduler")";
     var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
     var exportPathExistUrl = "@Url.Action("CheckExportPathExist", "scheduler")";
     var editSchedulerParameter = "@Url.Action("EditSchedulerParameter", "scheduler")";
@@ -300,6 +318,7 @@
     var parameterObj;
     var reportparameterObj;
     checkReportHasParameter();
+    reportHasBurstReport();
     if (actionType == "Create") {
         createSchedule(itemId, itemName, categoryName)
     }
@@ -335,6 +354,26 @@
                         $("#enable-parameter").prop("disabled", true);
                         $("#enable-parameter").prop("checked", false);
                         $(".reportparameter-tag").css("display", "block");
+                    }
+                }
+            });
+        }
+    }
+
+    function reportHasBurstReport() {
+        if (itemId !== 'undefined' && itemId !== "") {
+            $.ajax({
+                type: "POST",
+                url: reportHasBurstReportUrl,
+                async: false,
+                data: { itemId: itemId },
+                success: function (data) {
+                    if (data.Result) {
+                        $(".burstreport-tag").css("display", "none");
+                    } else {
+                        $("#enable-burst-report").prop("disabled", true);
+                        $("#enable-burst-report").prop("checked", false);
+                        $(".burstreport-tag").css("display", "block");
                     }
                 }
             });
