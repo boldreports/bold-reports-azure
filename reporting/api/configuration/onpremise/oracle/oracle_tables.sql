@@ -244,6 +244,7 @@ CREATE TABLE BOLDRS_ScheduleDetail (
     IsNoDataEnabled NUMBER(1),
     IsParameterEnabled NUMBER(1) NOT NULL,
     IsSaveAsFile NUMBER(1) NOT NULL,
+    IsBurstReport NUMBER(1) DEFAULT 0 NOT NULL,
     IsSendAsMail NUMBER(1) DEFAULT 1 NOT NULL,
     ReportCount NUMBER DEFAULT 0 NOT NULL,
     ExportPath CLOB, -- Changed to CLOB

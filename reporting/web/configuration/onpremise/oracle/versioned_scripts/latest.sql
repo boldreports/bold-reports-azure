@@ -1,1 +1,1 @@
-INSERT INTO BOLDRS_GroupPermission (PermissionAccessId,PermissionEntityId,ItemId,GroupId,IsActive) VALUES (16,'17',NULL,'1','1')
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsBurstReport NUMBER(1) DEFAULT 0 NOT NULL;

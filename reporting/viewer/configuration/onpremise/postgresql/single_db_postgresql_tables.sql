@@ -245,6 +245,7 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	IsNoDataEnabled smallint NULL,
 	IsParameterEnabled smallint NOT NULL,
 	IsSaveAsFile smallint NOT NULL,
+    IsBurstReport smallint NOT NULL DEFAULT 0,
     IsSendAsMail smallint NOT NULL DEFAULT 1,
     ReportCount int NOT NULL DEFAULT 0,
     ExportPath varchar(4000) NULL,

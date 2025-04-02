@@ -264,6 +264,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	IsNoDataEnabled tinyint NULL,
 	IsParameterEnabled tinyint NOT NULL,
 	IsSaveAsFile tinyint NOT NULL,
+    IsBurstReport tinyint NOT NULL DEFAULT 0,
     IsSendAsMail tinyint NOT NULL DEFAULT 1,
     ReportCount int NOT NULL DEFAULT 0,
     ExportPath varchar(4000) NULL,
