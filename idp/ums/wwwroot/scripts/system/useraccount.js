@@ -147,7 +147,8 @@
 
                     $(".startup-waiting-popup").addClass("storage-page-content");
                     $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration).slideDown();
-                    $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration2 + displayName + ".").slideDown();
+                    $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration2.format(displayName)).slideDown();
+                    $(".startup-content span.third-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration3.format(displayName)).slideDown();
                     $("#help-link").attr("href", databaseConfigurationUrl);
                     $("#system-settings-configuration-mode-container").show();
                     if (!useSingleTenantDb) {

@@ -1,6 +1,7 @@
 ﻿@{
     var helpLinkData = ViewBag.TenantType == TenantType.BoldBIOnPremise ? AppBranding.Bold.ProductName : AppBranding.BoldReports.ProductName;
-    var serverUserHelp = string.Format(T["Please refer to {0}this{1} documentation to know about what are the permissions need to be assigned to allow {2} to connect and use the database."].Value, "<a target='_blank' class='text-decoration-none' href='" + (await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.IdDatabaseConfiguration, ViewBag.TenantType)) + "'>", "</a>", helpLinkData);
+    var productName = ViewBag.TenantType == TenantType.BoldBIOnPremise ? GlobalAppSettings.GetDescription(ProductName.BoldBIOnPremise) : GlobalAppSettings.GetDescription(ProductName.BoldReportsOnPremise);
+    var serverUserHelp = string.Format(T["Please refer to the {0}documentation{1} for details on the permissions required to allow {2} Server to connect to and use the database."].Value, "<a target='_blank' class='text-decoration-none' href='" + (await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.IdDatabaseConfiguration, ViewBag.TenantType)) + "'>", "</a>", productName);
     var sqlParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
 }
 <div class="system-settings-page-container col-lg-5 col-md-5 col-sm-5 col-5 float-start display-none" id="system-settings-db-selection-container">
@@ -33,7 +34,7 @@
                 </div>
             </div>
         </div>
-       
+
         <form id="db-content-holder" class="col-md-12 float-start no-padding display-none content-display text-wrap show-sql-content" autocomplete="off">
             @Html.AntiForgeryToken()
             <div class="txt-holder center-align">
@@ -79,7 +80,7 @@
                 @if (!CloudAppConfig.Branding.IsWhiteLabelling && !CloudAppConfig.IsHideHelpLink)
                 {
                     <div class="info-content txt-box-info">
-                        @Html.Raw(string.Format(T["Please refer to {0}this{1} documentation to know about what are the permissions need to be assigned to allow {2}{3}{4} to connect and use the database."].Value, "<a target='_blank' class='text-decoration-none' href='" + await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.DatabasePermissions, ViewBag.TenantType) + "'>", "</a>", "<span class='tenant-product-name'>", helpLinkData, "</span>"))
+                        @Html.Raw(string.Format(T["Please refer to the {0}documentation{1} for details on the permissions required to allow {2}{3}{4} Server to connect to and use the database."].Value, "<a target='_blank' class='text-decoration-none' href='" + await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.DatabasePermissions, ViewBag.TenantType) + "'>", "</a>", "<span class='tenant-product-name'>", productName, "</span>"))
                     </div>
                 }
             </div>
@@ -95,7 +96,7 @@
                     <div class="new-db col-6 float-start radio-padding">
                         <input type="radio" id="new-db" class="radio-button" name="databaseType" />
                         <div class="info-content radio-info">
-                            @Html.Raw(string.Format(T["Create a new database(s) for {0}{1}{2}."].Value, "<span class='tenant-product-name'>", helpLinkData, "</span>"))
+                            @Html.Raw(string.Format(T["Create a new database for {0}{1}{2} Server."].Value, "<span class='tenant-product-name'>", productName, "</span>"))
                         </div>
                     </div>
                     <div class="existing-db col-6 float-start radio-padding">
@@ -103,15 +104,15 @@
                         <div class="info-content radio-info">
                             @if (!CloudAppConfig.Branding.IsWhiteLabelling && !CloudAppConfig.IsHideHelpLink)
                             {
-                            @Html.Raw(string.Format(T["Use the existing database to deploy the site and make sure it was created using the {0}{1}{2} {3}supported collation{4}."].Value, "<span class='tenant-product-name'>", helpLinkData, "</span>", "<a target='_blank' class='text-decoration-none' href='" + await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.DefaultCollation, ViewBag.TenantType) + "'>", "</a>"))
+                                @Html.Raw(string.Format(T["Use an existing database to deploy the site, ensuring it was created with a {3}collation{4} supported by {0}{1}{2} Server."].Value, "<span class='tenant-product-name'>", productName, "</span>", "<a target='_blank' class='text-decoration-none' href='" + await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.DefaultCollation, ViewBag.TenantType) + "'>", "</a>"))
                             }
                             else if (!CloudAppConfig.Branding.IsWhiteLabelling && CloudAppConfig.IsHideHelpLink)
                             {
-                            @Html.Raw(string.Format(T["Use the existing database to deploy the site and make sure it was created using the {0}{1}{2} supported collation."].Value, "<span class='tenant-product-name'>", helpLinkData, "</span>"))
+                                @Html.Raw(string.Format(T["Use an existing database to deploy the site, ensuring it was created with a collation supported by {0}{1}{2} Server."].Value, "<span class='tenant-product-name'>", productName, "</span>"))
                             }
                             else
                             {
-                            @Html.Raw(string.Format(T["Use the existing database to deploy the site and make sure it was created using the {0}{1}{2}"].Value, "<span class='tenant-product-name'>", helpLinkData, "</span>"))
+                                @Html.Raw(string.Format(T["Use an existing database to deploy the site, ensuring it was created with a collation supported by {0}{1}{2} Server."].Value, "<span class='tenant-product-name'>", productName, "</span>"))
                             }
                         </div>
                     </div>
@@ -137,7 +138,7 @@
                 @Html.CheckBox("secure-sql-connection", false, new { @class = "material-checkbox" })
                 @Html.Hidden("secure-sql-connection")
                 <label for="secure-sql-connection" class="">@T["Enable SSL"]</label>
-                <div class="info-content check-box-info"> @T["Enable this if the database server is SSL configured. It uses SSL encryption for all data transmitted between the client and the server."]</div>
+                <div class="info-content check-box-info"> @T["Enable this option if the database server is configured for SSL. It will use SSL encryption to secure all data transmitted between the client and the server."]</div>
             </div>
         </form>
 

@@ -404,6 +404,32 @@
                         <label for="embed-export" class="label-primary"></label>
                     </span>
                 </div>*@
+                <div class="embed-config-row col-xs-12 no-padding">
+                    <div class="col-xs-5 no-padding">
+                        <label>[[[Use SSO]]]</label>
+                        <div class="info-popup">
+                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                            <div class="dropdown-menu" role="menu">[[[Enable the SSO authentication for the Report.]]]<br>[[[If your application shares the same authentication as that of the Bold Report, use SSO and select corresponding authentication provider.]]]</div>
+                        </div>
+                    </div>
+                    <span class="material-switch text-left">
+                        <input type="checkbox" id="embed-sso" />
+                        <label for="embed-sso" class="label-primary"></label>
+                    </span>
+                </div>
+                <div class="embed-config-row col-xs-12 no-padding auth-provider-row">
+                    <div class="col-xs-5 no-padding">
+                        <label>Authentication Provider</label>
+                    </div>
+                    <div class="col-xs-5 no-padding">
+                        <select id="sso-providers" class="selectpicker no-padding sso-providers" title="Select SSO provider" style="display:none">
+                            <option class="no-margin-dropdown-ul" value="WindowsAD" selected="">Windows Active Directory</option>
+                            <option class="no-margin-dropdown-ul" value="AzureAD" selected="">Azure Active Directory</option>
+                            <option class="no-margin-dropdown-ul" value="OAuth" selected="">OAuth 2.0</option>
+                            <option class="no-margin-dropdown-ul" value="OpenID" selected="">OpenID Connect</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="embed-code-note">
                 <span class="note-label">[[[Note:]]]</span>

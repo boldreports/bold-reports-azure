@@ -44,13 +44,30 @@
     var userPermissionItem = ViewBag.ItemAddOptions;
     var hasOwnedReport = ViewBag.HasOwnedReport;
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
-    var etlEndpointPrefix = ServerAppConfig.IsSelfHosted ? ServerAppConfig.InternalAppIdpUrl : ServerAppConfig.AppSettings.EndPoints.ETLSiteURL;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var etlEndpointPrefix = isSelfHosted ? ServerAppConfig.InternalAppIdpUrl : ServerAppConfig.AppSettings.EndPoints.ETLSiteURL;
     var navigateETLUrl = etlEndpointPrefix + (ServerAppConfig.IsSelfHosted ? $"/{ServerAppConfig.ETLHostName}/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
     var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
-    if (allItemsCount == null && ServerAppConfig.IsUserBasedMenu)
+
+    var showLicenseWarningIcon = ServerAppConfig.ShowLicenseWarning;
+    var customUI = globalAppSettings.SystemSettings.CustomUI;
+    var profile = customUI?.Profiles?.FirstOrDefault();
+    var showNotifications = isSelfHosted && (profile?.Notifications?.ShowMenu ?? true);
+    var showHelp = isSelfHosted && (profile?.Help?.ShowMenu ?? true);
+    var showProfile = isSelfHosted && (profile?.Profile?.ShowMenu ?? true);
+    var showManageSite = profile?.Profile?.ShowManageSite ?? true;
+    var showYourSites = profile?.Profile?.ShowYourSites ?? true;
+    var showMyProfile = isSelfHosted && (profile?.Profile?.ShowMyProfile ?? true);
+    var showLogout = isSelfHosted && (profile?.Profile?.ShowLogout ?? true);
+    showProfile = showProfile && (showYourSites || showManageSite || showMyProfile || showLogout);
+    var iscustomUIProfile = customUI?.Profiles != null && customUI.Profiles[0].Reports != null;
+    var isAdmin = _identityResponse.IsAdmin;
+    var hideMenusAndOptions = iscustomUIProfile && !isAdmin && customUI.Profiles[0].Reports.HideMenusAndOptions;
+    
+    if (allItemsCount == null && ServerAppConfig.IsUserBasedMenu && hideMenusAndOptions)
     {
         var itemtypeList = new List<ItemType>
-{
+        {
             ItemType.Report,
             ItemType.Datasource,
             ItemType.Schedule,
@@ -194,12 +211,25 @@
     {
         <nav id="sub-nav" class="sf-nav-group mobile-hidden">
             <ul>
-                <li class="sub-menu-action">
-                    <span id="user-system-notification" class="menu-icon-container">
-                        <i class="su su-notification-alert"></i>
-                    </span>
+				@if (showLicenseWarningIcon)
+                {
+                <li class="sub-menu-action help-icon-list-item" id="license-warning">
+                        <span class="menu-icon-container">
+                            <i class="su su-warning-alt warning-icon-color"></i>
+                        </span>
                 </li>
-                   <li class="sub-menu-action dropup">
+                }
+                @if (showNotifications)
+                {
+                    <li class="sub-menu-action">
+                        <span id="user-system-notification" class="menu-icon-container">
+                            <i class="su su-notification-alert"></i>
+                        </span>
+                    </li>
+                }
+                @if (showHelp)
+                {
+                    <li class="sub-menu-action dropup">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <span class="menu-icon-container">
                                 <i class="su su-help"></i>
@@ -214,7 +244,7 @@
                                         <div>[[[Explore]]]</div>
                                     </li>
                                     <li class="sub-menu-item">
-                                    <a class="add-sample-button prevent-default-action" href="#">
+                                        <a class="add-sample-button prevent-default-action" href="#">
                                             [[[Sample Reports]]]
                                         </a>
                                     </li>
@@ -266,6 +296,7 @@
                                 {
                                     <li class="sf-sub-menu-separator"></li>
                                 }
+
                                 <li class="sub-menu-item-title">
                                     <div>[[[Version]]]</div>
                                 </li>
@@ -275,104 +306,131 @@
                             }
                         </ul>
                     </li>
-                
-                <li class="profile-section dropup" id="dropdown-profile">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="profile-container">
-                            <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@displayName" data-image-size="40" data-toggle="tooltip" title="@displayName" data-placement="top"></div>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu sub-menu" role="menu">
-                        @if (ServerAppConfig.IsSelfHosted)
-                        {
-                            <li class="sub-menu-item sub-menu-profile" id="user-sites">
-                                <div class="sub-menu-profile-text-padding">[[[Your Sites]]]</div>
-                                <img class='loader-sites-gif' src="@dashboardServerResourceUrl/images/waitingpopup.gif" style="display:block; margin: auto; height:30px; width:30px;" />
-                            </li>
-                            <li id="more-sites-id">
-                            </li>
-                            <li class="sf-sub-menu-separator admin-privilege" style="display: none;"></li>
-                            <li class="sub-menu-item sub-menu-profile admin-privilege" style="display: none;">
-                                <a href="@manageSitesUrl" target="_blank">
-                                    <div class="manage-site">[[[Manage sites (Admin access)]]]</div>
-                                </a>
-                            </li>
-                            <li class="sf-sub-menu-separator"></li>
-                        }
-                        <li class="sub-menu-item sub-menu-profile">
-                            <div class="sub-menu-profile-text-padding">[[[Profile]]]</div>
-                            <a href="@Url.Action("ProfilePage", "User" )">
-                                <div class="sub-menu-profile-hover">
-                                    <div class="sub-menu-user-name"><div class="sub-menu-user-name-style">@displayName</div><div class="sub-menu-user-email-style">@(ServerAppConfig.IsAutoGeneratedMail(emailAddress) ? userName : emailAddress)</div></div>
-                                    <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@displayName" data-image-size="40" data-toggle="tooltip" title="@displayName" data-placement="top"></div>
-                                </div>
-                            </a>
-                        </li>
-                        @if (!ServerAppConfig.IsSelfHosted)
-                        {
-                            <li class="sf-sub-menu-separator"></li>
-                            <li class="sub-menu-item">
-                                <a class="request-concierge-support" href="@ServerAppConfig.AppSettings.Syncfusion.Support.CreateTicket" target="_blank">
-                                    [[[Create Ticket]]]
-                                </a>
-                            </li>
-                            <li class="sub-menu-item">
-                                <a href="@ServerAppConfig.AppSettings.Syncfusion.Support.ListTicket" target="_blank">
-                                    [[[My Tickets]]]
-                                </a>
-                            </li>
-                            if (Convert.ToBoolean(Context.Session.GetString("IsAdmin")))
+                }
+                @if (showProfile)
+                {
+                    <li class="profile-section dropup" id="dropdown-profile">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="profile-container">
+                                <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@displayName" data-image-size="40" data-toggle="tooltip" title="@displayName" data-placement="top"></div>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu sub-menu" role="menu">
+                            @if (ServerAppConfig.IsSelfHosted)
                             {
-                                <li class="sf-sub-menu-separator"></li>
-                                <li class="sub-menu-item">
-                                    <a href="@(ServerAppConfig.AppSettings.EndPoints.TenantAppUrl.TrimEnd('/') + "/sites/" + globalAppSettings.SystemSettings.TenantId + "/subscription")" target="_blank">
-                                        [[[Subscription and Billing]]]
+                                @if (showYourSites)
+                                {
+                                    <li class="sub-menu-item sub-menu-profile" id="user-sites">
+                                        <div class="sub-menu-profile-text-padding">[[[Your Sites]]]</div>
+                                        <img class='loader-sites-gif' src="@dashboardServerResourceUrl/images/waitingpopup.gif" style="display:block; margin: auto; height:30px; width:30px;"/>
+                                    </li>
+                                    <li id="more-sites-id">
+                                    </li>
+                                }
+                                @if (showManageSite)
+                                {
+                                    @if (showYourSites)
+                                    {
+                                        <li class="sf-sub-menu-separator admin-privilege" style="display: none;"></li>
+                                    }
+                                    <li class="sub-menu-item sub-menu-profile admin-privilege" style="display: none;">
+                                        <a href="@manageSitesUrl" target="_blank">
+                                            <div class="manage-site">[[[Manage sites (Admin access)]]]</div>
+                                        </a>
+                                    </li>
+                                }
+                                @if (showMyProfile)
+                                {
+                                    <li class="sf-sub-menu-separator"></li>
+                                }
+                            }
+                            @if (showMyProfile)
+                            {
+                                <li class="sub-menu-item sub-menu-profile">
+                                    <div class="sub-menu-profile-text-padding">[[[Profile]]]</div>
+                                    <a href="@Url.Action("ProfilePage", "User")">
+                                        <div class="sub-menu-profile-hover">
+                                            <div class="sub-menu-user-name">
+                                                <div class="sub-menu-user-name-style">@displayName</div>
+                                                <div class="sub-menu-user-email-style">@(ServerAppConfig.IsAutoGeneratedMail(emailAddress) ? userName : emailAddress)</div></div>
+                                            <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@displayName" data-image-size="40" data-toggle="tooltip" title="@displayName" data-placement="top"></div>
+                                        </div>
                                     </a>
                                 </li>
                             }
-                        }
-                        <li class="sf-sub-menu-separator"></li>
-                        <li class="sub-menu-item">
-                            <a href="@Url.Action("logout", "accounts" )">
-                                [[[Sign out]]]
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            @if (!ServerAppConfig.IsSelfHosted)
+                            {
+                                <li class="sf-sub-menu-separator"></li>
+                                <li class="sub-menu-item">
+                                    <a class="request-concierge-support" href="@ServerAppConfig.AppSettings.Syncfusion.Support.CreateTicket" target="_blank">
+                                        [[[Create Ticket]]]
+                                    </a>
+                                </li>
+                                <li class="sub-menu-item">
+                                    <a href="@ServerAppConfig.AppSettings.Syncfusion.Support.ListTicket" target="_blank">
+                                        [[[My Tickets]]]
+                                    </a>
+                                </li>
+                                if (Convert.ToBoolean(Context.Session.GetString("IsAdmin")))
+                                {
+                                    <li class="sf-sub-menu-separator"></li>
+                                    <li class="sub-menu-item">
+                                        <a href="@(ServerAppConfig.AppSettings.EndPoints.TenantAppUrl.TrimEnd('/') + "/sites/" + globalAppSettings.SystemSettings.TenantId + "/subscription")" target="_blank">
+                                            [[[Subscription and Billing]]]
+                                        </a>
+                                    </li>
+                                }
+                            }
+                            @if (showLogout)
+                            {
+                                @if (!ServerAppConfig.IsSelfHosted || (showManageSite || showMyProfile || showYourSites))
+                                {
+                                    <li class="sf-sub-menu-separator"></li>
+                                }
+                                <li class="sub-menu-item">
+                                    <a href="@Url.Action("logout", "accounts")">
+                                        [[[Sign out]]]
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
             </ul>
         </nav>
     }
-
 </aside>
 <script nonce="@Context.Items["ScriptNonce"]">
-        var userTenantsUrl = "@Url.Action("GetUserTenants", "User")";
-        var tenantIdentifierPrefix = "@ServerAppConfig.TenantIdentifierPrefix";
-        var idpUrl = "@idPUrl";
-        var dashboardPageUrl = "@Url.Action("Reports", "Reports")";
-        var dataSourcesPageUrl = "@Url.Action("DataSources", "DataSources")";
-        var datasetPageUrl = "@Url.Action("Datasets", "Datasets")";
-        var schedulePageUrl = "@Url.Action("Schedules", "Scheduler")";
-        var PublishPageUrl = "@Url.Action("GetPublishedItems", "Publish")";
-        var profilePageUrl = "@Url.Action("Profilepage", "User")";
-        var homepagePageUrl = "@System.Net.WebUtility.UrlDecode(Url.Action("Homepages", "Boards"))";
-        var slideshowPageUrl = "@Url.Action("Slideshows", "Slideshow")";
-        var adminPageUrl = "@Url.Action("Administration", "Administration")";
-        var userPageurl = "@Url.Action("Index", "UserManagement")";
-        var groupPageurl = "@Url.Action("Group", "Group")";
-        var groupPermissionUrl = "@Url.Action("grouppermission", "permission")";
-        var userPermissionUrl = "@Url.Action("userpermission", "permission")";
-        var currentUrlLocalPath = "@requestUrl.LocalPath.ToLower()";
-        var boldETLUrl = @Json.Serialize(navigateETLUrl);
-        var isAzureApplication = @Json.Serialize(ServerAppConfig.IsAzureApplication);
-        var isMobile = @Json.Serialize(isMobile);
-        var isImageRequest = @Json.Serialize(isImageRequest);
-        var isAdmin = @Json.Serialize(Convert.ToBoolean(Context.Session.GetString("IsAdmin")));
-        var isMasterTenant = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
-        var userPermissionItem = @Json.Serialize(userPermissionItem);
-        var isUserBasedMenu = @Json.Serialize(ServerAppConfig.IsUserBasedMenu);
-        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
-        var allItemsCount = @Json.Serialize(allItemsCount);
-        var hasOwnedReport = @Json.Serialize(hasOwnedReport);
-        var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
-        var isHideETLOption = @Json.Serialize(ServerAppConfig.IsHideETLOption);
+    var userTenantsUrl = "@Url.Action("GetUserTenants", "User")";
+    var tenantIdentifierPrefix = "@ServerAppConfig.TenantIdentifierPrefix";
+    var idpUrl = "@idPUrl";
+    var dashboardPageUrl = "@Url.Action("Reports", "Reports")";
+    var dataSourcesPageUrl = "@Url.Action("DataSources", "DataSources")";
+    var datasetPageUrl = "@Url.Action("Datasets", "Datasets")";
+    var schedulePageUrl = "@Url.Action("Schedules", "Scheduler")";
+    var PublishPageUrl = "@Url.Action("GetPublishedItems", "Publish")";
+    var profilePageUrl = "@Url.Action("Profilepage", "User")";
+    var homepagePageUrl = "@System.Net.WebUtility.UrlDecode(Url.Action("Homepages", "Boards"))";
+    var slideshowPageUrl = "@Url.Action("Slideshows", "Slideshow")";
+    var adminPageUrl = "@Url.Action("Administration", "Administration")";
+    var userPageurl = "@Url.Action("Index", "UserManagement")";
+    var groupPageurl = "@Url.Action("Group", "Group")";
+    var groupPermissionUrl = "@Url.Action("grouppermission", "permission")";
+    var userPermissionUrl = "@Url.Action("userpermission", "permission")";
+    var currentUrlLocalPath = "@requestUrl.LocalPath.ToLower()";
+    var boldETLUrl = @Json.Serialize(navigateETLUrl);
+    var isAzureApplication = @Json.Serialize(ServerAppConfig.IsAzureApplication);
+    var isMobile = @Json.Serialize(isMobile);
+    var isImageRequest = @Json.Serialize(isImageRequest);
+    var isAdmin = @Json.Serialize(Convert.ToBoolean(Context.Session.GetString("IsAdmin")));
+    var isMasterTenant = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
+    var userPermissionItem = @Json.Serialize(userPermissionItem);
+    var isUserBasedMenu = @Json.Serialize(ServerAppConfig.IsUserBasedMenu);
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var allItemsCount = @Json.Serialize(allItemsCount);
+    var hasOwnedReport = @Json.Serialize(hasOwnedReport);
+    var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
+    var isHideETLOption = @Json.Serialize(ServerAppConfig.IsHideETLOption);
+    var customUI = @Html.Raw(Json.Serialize(globalAppSettings.SystemSettings.CustomUI));
+    var hideMenusAndOptions = @Json.Serialize(hideMenusAndOptions);
 </script>

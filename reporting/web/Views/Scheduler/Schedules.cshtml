@@ -9,6 +9,16 @@
     var itemPermissions = ViewBag.ItemAddOptions as Dictionary<ItemType, bool>;
     var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var customUI = globalAppSettings.SystemSettings.CustomUI;
+    var schemes = customUI?.Profiles != null && customUI.Profiles[0].Schedules != null ? customUI.Schemes.Where(x => x.Name == customUI.Profiles[0].Schedules.Scheme).FirstOrDefault() : null;
+    var showRunNow = schemes?.RunNow ?? true;
+    var showRunHistory = schemes?.RunHistory ?? true;
+    var showEdit = schemes?.Edit ?? true;
+    var showEnable = schemes?.Enable ?? true;
+    var showDisable = schemes?.Disable ?? true;
+    var showDownload = schemes?.Download ?? true;
+    var showDelete = schemes?.Delete ?? true;
+    var showContextMenu = (schemes?.ContextMenu ?? true) && (showRunNow || showRunHistory || showEdit || showEnable || showDisable || showDownload || showDelete);
 }
 @model List<ScheduleViewModel>
 
@@ -259,10 +269,13 @@
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
                 <div class="dropdown">
+                    {{if @(Convert.ToBoolean(showContextMenu).ToString().ToLower()) == true }}
                     <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
                         <span class="su su-options"> </span>
                     </span>
+                    {{/if}}
                     <ul class="dropdown-menu" role="menu">
+                        {{if @(Convert.ToBoolean(showRunNow).ToString().ToLower()) == true }}
                         <li class="menu-group">
                             <a href="#" title="[[[Run now]]]" class="on-demand-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-category-name="{{:ItemCategoryName}}" data-multiitem-name="{{:MultiDashboardName}}">
                                 <i class="su su-play" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
@@ -270,7 +283,9 @@
                             </a>
                         </li>
                         <li class="divider"></li>
+                        {{/if}}
                         {{if ExportPath!==""}}
+                        {{if @(Convert.ToBoolean(showDownload).ToString().ToLower()) == true }}
                         <li class="menu-group">
                             <a href="#" title="" class="report-export option-click" data-scheduleid="{{:Id}}" id="download-scheduled-report">
                                 <i class="su su-download"></i>
@@ -279,21 +294,26 @@
                         </li>
                         <li class="divider"></li>
                         {{/if}}
-                        @*<li class="menu-group">
-                            <a href="#" title="[[[Schedule-History]]]" class="schedule-history" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" onclick='manageSchedule("{{:Name}}", "{{:Id}}", "{{:ItemName}}", "{{:ItemCategoryName}}", "{{:ItemId}}", this.className, "{{:MultiDashboardName}}")'>
+                        {{/if}}
+                        {{if @(Convert.ToBoolean(showRunHistory).ToString().ToLower()) == true }}
+                        <li class="menu-group">
+                            <a href="#" title="[[[Schedule-History]]]" class="schedule-history" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-multiitem-name="{{:MultiDashboardName}}">
                                 <i class="su su-run-history" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
                                 <span class="menu-text">[[[Run History]]]</span>
                             </a>
-                        </li>*@
+                        </li>
+                        {{/if}}
                         {{if Status=="Active"}}
+                        {{if @(Convert.ToBoolean(showDisable).ToString().ToLower()) == true }}
                         <li class="menu-group">
                             <a href="#" title="[[[Disable]]]" class="disable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-category-name="{{:ItemCategoryName}}" data-multiitem-name="{{:MultiDashboardName}}">
                                 <i class="su su-disable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
                                 <span class="menu-text">[[[Disable]]]</span>
                             </a>
                         </li>
-
+                        {{/if}}
                         {{else Status=="Inactive"}}
+                        {{if @(Convert.ToBoolean(showEnable).ToString().ToLower()) == true }}
                         <li class="menu-group">
                             <a href="#" title="[[[Enable]]]" class="enable-schedule" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-category-name="{{:ItemCategoryName}}" data-multiitem-name="{{:MultiDashboardName}}">
                                 <i class="su su-enable" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
@@ -301,9 +321,11 @@
                             </a>
                         </li>
                         {{/if}}
+                        {{/if}}
 
                         {{if ~checkMobile()}}
                         {{if CanWrite}}
+                        {{if @(Convert.ToBoolean(showEdit).ToString().ToLower()) == true }}
                         <li title="[[[Edit]]]">
 
                             <a href="#" title="[[[Edit]]]" class="edit-schedule" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-multiitem-name="{{:MultiDashboardName}}">
@@ -313,15 +335,18 @@
                         </li>
                         {{/if}}
                         {{/if}}
+                        {{/if}}
 
                         {{if ~checkMobile()}}
                         {{if CanDelete}}
+                        {{if @(Convert.ToBoolean(showDelete).ToString().ToLower()) == true }}
                         <li title="[[[Delete]]]">
                             <a href="#" title="[[[Delete]]]" class="remove-schedule" data-category-name="{{:ItemCategoryName}}" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}" data-name="{{:Name}}" data-multiitem-name="{{:MultiDashboardName}}">
                                 <i class="su su-delete" data-scheduleid="{{:Id}}" data-itemname="{{:ItemName}}" data-itemid="{{:ItemId}}"></i>
                                 <span class="menu-text">[[[Delete]]]</span>
                             </a>
                         </li>
+                        {{/if}}
                         {{/if}}
                         {{/if}}
                     </ul>
@@ -340,7 +365,7 @@
 
                 <div id="schedules-grid-container" class="col-lg-12 admin-page-body  @(isMobile ? "mobile" : "desktop")">
                     <div id="search-area" class="pull-right">
-                        <input type="text" id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]" />
+                        <input type="text" id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]"/>
                         <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
                         <span class="su su-search search-schedule pull-left no-margin" title="[[[Search schedules]]]"></span>
                     </div>

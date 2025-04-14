@@ -328,6 +328,10 @@ $(document).ready(function () {
         return IsEmail(value) && !/^\s/.test(value);
     }, window.Server.App.LocalizationContent.InvalidEmailAddress);
 
+    $.validator.addMethod("isValidCopyRightInfo", function (value, element) {
+        return IsValideCopyRightInfo(value);
+    }, window.Server.App.LocalizationContent.AvoidInvalidCharacters);
+
     $(document).on("click", "#UpdateAiSettings", function () {
         var aiModel = document.getElementById("ai-providers").ej2_instances[0].value;
         var modelName= (aiModel == "Azure AI" ? $("#azure-model-name").val().trim() : "");
@@ -358,6 +362,12 @@ $(document).ready(function () {
                 AzureAiApiKey: $("#azureai-apikey").val().trim()
             };
 
+            var licenseValidationMessage = window.Server.App.LocalizationContent.BoldAIserviceLicenseError
+                + "<div class='license-warning-content'>"
+                + window.Server.App.LocalizationContent.LicenseWarningContent3 + "<a class='text-decoration-none' href='" + idpUrl + "/ums/administration/license-settings'>" + window.Server.App.LocalizationContent.LicenseWarningContent4 + "</a>" + window.Server.App.LocalizationContent.LicenseWarningContent5
+                + "</div>";
+
+
             $.ajax({
                 type: "POST",
                 url: window.updateAISettingsUrl,
@@ -369,7 +379,13 @@ $(document).ready(function () {
                         $(".error-message, .success-message").css("display", "none");
                         hideWaitingPopup('server-app-container');
                         window.location.reload();
-                    } else {
+                    } else if (!(result.Status) && result.HasLicenseError !== undefined && result.HasLicenseError) {
+                        hideWaitingPopup('server-app-container');
+                        messageBox("", window.Server.App.LocalizationContent.AiConnectionFailed, licenseValidationMessage, "success", function () {
+                            onCloseMessageBox();
+                        });
+                    }
+                    else {
                         hideWaitingPopup('server-app-container');
                         messageBox("", window.Server.App.LocalizationContent.AiConnectionFailed, result.Message, "success", function () {
                             onCloseMessageBox();
@@ -425,6 +441,7 @@ $(document).ready(function () {
             },
             "copy_right_info": {
                 isRequired: true,
+                isValidCopyRightInfo: true,
                 maxlength: 255
             }
         },

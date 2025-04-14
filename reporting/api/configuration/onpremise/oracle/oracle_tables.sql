@@ -175,7 +175,7 @@ CREATE TABLE BOLDRS_ItemLog (
     FromCategoryId VARCHAR2(36),
     ToCategoryId VARCHAR2(36),
     UpdatedUserId NUMBER NOT NULL,
-    AdditionalLogInfo NVARCHAR2(100),
+    AdditionalLogInfo CLOB,
     ModifiedDate TIMESTAMP NOT NULL,
     IsActive NUMBER(5) NOT NULL
 );

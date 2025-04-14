@@ -9,6 +9,35 @@
     var downloadReportUrl = downloadUrl + "/items/download";
     var isBlob = globalAppSettings.SystemSettings.StorageType;
     var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
+    var customUI = globalAppSettings.SystemSettings.CustomUI;
+    var iscustomUIProfile = customUI?.Profiles != null && customUI.Profiles[0].Reports != null;
+    var schemes = iscustomUIProfile ? customUI.Schemes.Where(x => x.Name == customUI.Profiles[0].Reports.Scheme).FirstOrDefault() : null;
+    var hideMenusAndOptions = iscustomUIProfile && !isAdmin && customUI.Profiles[0].Reports.HideMenusAndOptions;
+    var hideDownload = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideDownload || !(schemes?.Download ?? true));
+    var hideEdit = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideEdit || !(schemes?.Edit ?? true));
+    var hideMakePublic = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMakePublic || !(schemes?.MakePublic ?? true));
+    var hideMakePrivate = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMakePrivate || !(schemes?.MakePrivate ?? true));
+    var hideGetLink = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideGetLink || !(schemes?.GetLink ?? true));
+    var hideViews = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViews || !(schemes?.Views ?? true));
+    var hideViewSchedules = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViewSchedules || !(schemes?.ViewSchedules ?? true));
+    var hideInfo = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideInfo || !(schemes?.Info ?? true));
+    var hideProcessingOptions = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideProcessingOptions || !(schemes?.ProcessingOptions ?? true));
+    var hideMove = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMove || !(schemes?.Move ?? true));
+    var hideCopy = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCopy || !(schemes?.Copy ?? true));
+    var hideClone = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideClone || !(schemes?.Clone ?? true));
+    var hideCreateSchedule = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCreateSchedule || !(schemes?.CreateSchedule ?? true));
+    var hideVersionHistory = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideVersionHistory || !(schemes?.VersionHistory ?? true));
+    var hideUpdate = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideUpdate || !(schemes?.Update ?? true));
+    var hideEditAsXml = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideEditAsXml || !(schemes?.EditAsXml ?? true));
+    var hideDelete = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideDelete || !(schemes?.Delete ?? true));
+    var hideExport = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideExport || !(schemes?.Export ?? true));
+    var hideShare = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideShare || !(schemes?.Share ?? true));
+    var hideOpen = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideOpen || !(schemes?.Open ?? true));
+    var hidePublish = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HidePublish || !(schemes?.Publish ?? true));
+    var hideContextMenu = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideContextMenu || !(schemes?.ContextMenu ?? true));
+    var hideMoveBlockSeparator = hideMove && hideCopy && hideClone;
+    var hideEditBlockSeparator = hideEditAsXml && hideUpdate && hideDelete && hideExport;
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var dashboardGrid;
@@ -44,23 +73,23 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="gridhoveroptions">
     <div class="grid-hover" data-toggle="tooltip" data-placement="top">
-        {{if !IsDraft}}
+        {{if !IsDraft && @(Convert.ToBoolean(hideOpen).ToString().ToLower()) == false }}
             <a class="dashboard-open grid-hover-options " title="[[[Open]]]" href="@dashboardUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}?showmyreports=1" target="_blank">
                 <i class="su su-external-link"></i>
             </a>
         {{/if}}
-       {{if CanWrite &&  !IsDraft}}
+       {{if CanWrite && !IsDraft && @(Convert.ToBoolean(hideEdit).ToString().ToLower()) == false }}
            <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" id="edit-report">
              <i class="su su-edit"></i>
            </span>
        {{/if}}
-       {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet() && IsDraft }}
+       {{if ((CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet() && IsDraft) && @(Convert.ToBoolean(hideEdit).ToString().ToLower()) == false }}
            <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" id="edit-draft-report">
              <i class="su su-edit"></i>
            </span>
        {{/if}}
-       {{if !IsDraft}}
-       {{if @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true || hasDashboardSharePermission || CreatedById == @(userId)}}
+       {{if !IsDraft && @(Convert.ToBoolean(hideShare).ToString().ToLower()) == false }}
+       {{if @(Convert.ToBoolean(isHideIconBasedOnDnsName).ToString().ToLower()) == false && (@(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true || hasDashboardSharePermission || CreatedById == @(userId))}}
            <span class="item-permissions grid-hover-options" title="[[[Share]]]" data-created-by-id="{{:CreatedById}}" data-extension="{{:Extension}}" data-is-public="{{:IsPublic}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" data-item-type="{{:ItemType}}" id="share-report-permission">
                 <i class="su su-share"></i>
            </span>
@@ -72,7 +101,7 @@
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemname">
     <div class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
         {{if !IsDraft}}
-                <a href="@Url.Action("Reports", "Reports")/{{:Id}}/{{:CategoryName}}/{{:Name}}" style="max-width: 100%;vertical-align: middle;" target="_blank">
+            <a href="@Url.Action("Reports", "Reports")/{{:Id}}/{{:CategoryName}}/{{:Name}}" style="max-width: 100%;vertical-align: middle;" target="_blank">
                 <span>
                     {{>Name}}
                 </span>
@@ -89,13 +118,15 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
     <div class="dropdown context-menu">
+        {{if @(Convert.ToBoolean(hideContextMenu).ToString().ToLower()) == false }}
         <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
             <i class="su su-options"></i>
         </span>
+        {{/if}}
         <ul class="dropdown-menu dashboard-options" role="menu">
             {{if !IsDraft}}
             {{if CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true}}
-            {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == false && IsPublic}}
+            {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true && @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == false && IsPublic && @(Convert.ToBoolean(hideMakePrivate).ToString().ToLower()) == false }}
             <li>
                 <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" id="remove-public-grid">
                 <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
@@ -103,15 +134,16 @@
                 </a>
             </li>
             {{/if}}
-            {{if @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == true}}
+            {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == false || @(Convert.ToBoolean(ServerAppConfig.EnablePublic).ToString().ToLower()) == true}}
+            {{if @(Convert.ToBoolean(hideMakePublic).ToString().ToLower()) == false || @(Convert.ToBoolean(hideMakePrivate).ToString().ToLower()) == false }}
             <li>
-                {{if !IsPublic}}
+                {{if !IsPublic && @(Convert.ToBoolean(hideMakePublic).ToString().ToLower()) == false }}
                 <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-url="{{:~fileUrlEncode(Id)}}" class="make-public option-click" id="make-public-grid">
                     <i class="su su-public"></i>
                     <span>[[[Make Public]]]</span>
                 </a>
                 {{/if}}
-                {{if IsPublic}}
+                {{if IsPublic && @(Convert.ToBoolean(hideMakePrivate).ToString().ToLower()) == false }}
                 <a href="#" ispublic="{{:IsPublic}}" data-item-type="{{:ItemType}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" class="remove-public option-click" id="remove-public-grid">
                 <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
                 <span>[[[Make Private]]]</span>
@@ -120,13 +152,16 @@
             </li>
             {{/if}}
             {{/if}}
+            {{/if}}
+            {{if @(Convert.ToBoolean(hideGetLink).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" class="option-click" id="get-item-link">
                     <i class="su su-link"></i>
                     <span>[[[Get Link]]]</span>
                 </a>
             </li>
-            {{if CanDownload && !IsLocked}}
+            {{/if}}
+            {{if CanDownload && !IsLocked && @(Convert.ToBoolean(hideDownload).ToString().ToLower()) == false }}
             <li>
                 <a href="@downloadReportUrl/{{:ItemType}}/{{:Id}}/{{:CategoryName}}/{{:Name}}" id="download-report">
                     <i class="su su-download"></i>
@@ -135,36 +170,42 @@
             </li>
             {{/if}}
             {{if ~checkTablet()}}
-                {{if (@(Convert.ToBoolean(ServerAppConfig.EnableViewsInReportsMenu).ToString().ToLower()) == true)}}
-                    <li class="dropdown dashboard-views" data-load="true" >
-                        <a href="#" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" class="dropdown-toggle views" data-toggle="dropdown" id="report-views">
-                            <i class="su su-filter"></i>
-                            <span>[[[Views]]]</span>
-                        </a>
-                        <ul class="dropdown-menu item-views no-padding" role="menu">
-                            <li>
-                                <span class="view-name" href="#">
-                                    [[[Loading...]]]
-                                </span>
-                            </li>
-                        </ul>
-                    </li>
-                {{/if}}
-            <li>
-                <a class="view-scheduless option-click" href="@Url.Action("Schedules", "Scheduler")?report={{:Name}}" data-item-name="{{:Name}}" target="_blank" id="view-schedules">
-                    <i class="su su-nav-schedule"></i>
-                    <span>[[[View Schedules]]]</span>
-                </a>
-            </li>
+            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableViewsInReportsMenu).ToString().ToLower()) == true) && @(Convert.ToBoolean(hideViews).ToString().ToLower()) == false }}
+                <li class="dropdown dashboard-views" data-load="true" >
+                    <a href="#" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" class="dropdown-toggle views" data-toggle="dropdown" id="report-views">
+                        <i class="su su-filter"></i>
+                        <span>[[[Views]]]</span>
+                    </a>
+                    <ul class="dropdown-menu item-views no-padding" role="menu">
+                        <li>
+                            <span class="view-name" href="#">
+                                [[[Loading...]]]
+                            </span>
+                        </li>
+                    </ul>
+                </li>
             {{/if}}
+            {{if @(Convert.ToBoolean(hideViewSchedules).ToString().ToLower()) == false }}    
+                {{if (@(Convert.ToBoolean(isHideIconBasedOnDnsName).ToString().ToLower()) == false)}}
+                <li>
+                    <a class="view-scheduless option-click" href="@Url.Action("Schedules", "Scheduler")?report={{:Name}}" data-item-name="{{:Name}}" target="_blank" id="view-schedules">
+                        <i class="su su-nav-schedule"></i>
+                        <span>[[[View Schedules]]]</span>
+                    </a>
+                </li>
+                {{/if}}
+            {{/if}}
+            {{/if}}
+            {{if @(Convert.ToBoolean(hideInfo).ToString().ToLower()) == false }}
             <li>
                 <a href="#" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}">
                     <i class="su su-info"></i>
                     <span>[[[Info]]]</span>
                 </a>
             </li>
+            {{/if}}
             {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
-            {{if CanWrite && ~checkTablet() && !IsLocked}}
+            {{if CanWrite && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideProcessingOptions).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             <li>
                 <a href="#" class="ProcessOption option-click" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" id="report-processing-option">
@@ -174,10 +215,10 @@
             </li>
             {{/if}}
             {{/if}}
-            {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked}}
+            {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideMoveBlockSeparator).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanMove && ~checkTablet() && !IsLocked}}
+            {{if CanMove && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideMove).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Move" class="option-click" id="move-report">
                     <i class="su su-move"></i>
@@ -185,7 +226,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanCopy && ~checkTablet() && !IsLocked}}
+            {{if CanCopy && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideCopy).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Copy" class="option-click" id="copy-report">
                     <i class="su su-copy"></i>
@@ -193,7 +234,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && CanClone && ~checkTablet() && !IsLocked}}
+            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && CanClone && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideClone).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Clone" class="option-click" id="clone-report">
                     <i class="su su-clone"></i>
@@ -201,7 +242,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if @(Convert.ToBoolean(isMasterTenant).ToString().ToLower()) == true }}
+            {{if @(Convert.ToBoolean(isMasterTenant).ToString().ToLower()) == true && @(Convert.ToBoolean(hidePublish).ToString().ToLower()) == false }}
             {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
             {{if ~checkTablet() }}
             {{if (CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true)}}
@@ -220,7 +261,7 @@
             {{if (CanSchedule || CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanSchedule && ~checkTablet()}}
+            {{if CanSchedule && ~checkTablet() && @(Convert.ToBoolean(hideCreateSchedule).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" data-IsMulti-Dashboard="{{:IsMultiDashboard}}" class="option-click" id="create-report-schedule">
                     <i class="su su-nav-schedule"></i>
@@ -228,7 +269,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if ~checkTablet()}}
+            {{if ~checkTablet() && @(Convert.ToBoolean(hideVersionHistory).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             <li>
                 <a href="#" class="version" data-item-name="{{:Name}}" data-item-id="{{:Id}}" id="report-version-history">
@@ -237,10 +278,10 @@
                 </a>
             </li>
             {{/if}}
-            {{if (CanWrite || CanDelete) && ~checkTablet()}}
+            {{if ((CanWrite || CanDelete) && ~checkTablet()) && @(Convert.ToBoolean(hideEditBlockSeparator).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanWrite && ~checkTablet() && !IsDraft}}
+            {{if CanWrite && ~checkTablet() && !IsDraft && @(Convert.ToBoolean(hideEditAsXml).ToString().ToLower()) == false }}
             <li>
                 <a class="option-click" title="" data-category-name="{{:CategoryName}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" id="edit-report-as-xml">
                     <i class="su su-embed"></i>
@@ -248,7 +289,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanWrite && ~checkTablet() && !IsLocked}}
+            {{if CanWrite && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideUpdate).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" id="update-report">
                     <i class="su su-edit"></i>
@@ -256,7 +297,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanDelete && ~checkTablet()}}
+            {{if CanDelete && ~checkTablet() && @(Convert.ToBoolean(hideDelete).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" class="delete-report">
                     <i class="su su-delete"></i>
@@ -264,26 +305,32 @@
                 </a>
             </li>
             {{/if}}
+            {{if @(Convert.ToBoolean(hideExport).ToString().ToLower()) == false }}
             <li>
                 <a class="option-click" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" id="export-report">
                     <i class="su su-upload"></i>
                     <span>[[[Export]]]</span>
                 </a>
             </li>
+            {{/if}}
             {{else}}
             {{if (CreatedById==@(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
+            {{if @(Convert.ToBoolean(hideInfo).ToString().ToLower()) == false }}
             <li>
                 <a href="#" class="openInfo option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}">
                     <i class="su su-info"></i>
                     <span>[[[Info]]]</span>
                 </a>
             </li>
+            {{/if}}
+            {{if @(Convert.ToBoolean(hideDelete).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" class="delete-report">
                     <i class="su su-delete"></i>
                     <span>[[[Delete]]]</span>
                 </a>
             </li>
+            {{/if}}
             {{/if}}
             {{/if}}
         </ul>
@@ -374,7 +421,7 @@
                     width: 13,
                     allowFiltering: false,
                     allowSorting: false,
-                    visible: filter.displayCategory != displayCategory.DraftItems
+                    visible: (filter.displayCategory != displayCategory.DraftItems && !hideFavorite)
                 },
                 {
                     headerText: "[[[Name]]]",
@@ -395,14 +442,14 @@
                     templateID: "#description",
                     type: "string",
                     allowFiltering: true,
-                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1040) && filter.displayCategory != displayCategory.DraftItems)
+                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1040) && filter.displayCategory != displayCategory.DraftItems && !hideDescription)
                 },
                 {
                     headerText: "[[[Category]]]",
                     width: (window.innerWidth > 1200) ? 40 : 50,
                     field: "CategoryName",
                     headerTemplateID: "#categoryheader",
-                    visible: (("@isMobile.ToString().ToLower()" == "false") && (window.innerWidth > 1040) && (filter.filterCollection == 0 && filter.displayCategory != displayCategory.DraftItems)),
+                    visible: (("@isMobile.ToString().ToLower()" == "false") && (window.innerWidth > 1040) && (filter.filterCollection == 0 && filter.displayCategory != displayCategory.DraftItems) && !hideCategoryName),
                     allowFiltering: true,
                     template: true,
                     templateID: "#category",
@@ -413,7 +460,7 @@
                     width: (window.innerWidth > 1200) ? 40 : 50,
                     headerTemplateID: "#ownerheader",
                     field: "CreatedByDisplayName",
-                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1200)),
+                    visible: ("@isMobile.ToString().ToLower()" == "false" && (window.innerWidth > 1200) && !hideAuthorName),
                     allowFiltering: true,
                     template: true,
                     templateID: "#createdbydisplayname",

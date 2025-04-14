@@ -7,6 +7,8 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var defaultAppLogo = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.LoginLogo;
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var showContainer = (ViewBag.HasSSO ?? ViewBag.HasSSO == true && !string.IsNullOrWhiteSpace(ViewBag.ExternalLogin)) ? "none" : "block";
+    var loginProvider = (ViewBag.HasSSO ?? ViewBag.HasSSO == true && !string.IsNullOrWhiteSpace(ViewBag.ExternalLogin)) ? ViewBag.ExternalLogin : "";
 }
 <!DOCTYPE html>
 
@@ -18,6 +20,8 @@
     <script nonce="@Context.Items["ScriptNonce"]">
         var idLogin = '@globalAppSettings.SystemSettings.IDPUrl';
         var serverUrl = '@globalAppSettings.SystemSettings.BaseUrl';
+        var showContainer = '@showContainer';
+        var loginProvider = '@loginProvider';
     </script>
 
     <environment include="Development,CloudDevelopment">
@@ -47,7 +51,7 @@
     </script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="display: @showContainer">
         <div class="content">
             <div class="embed-login-image">
                 <img data-alt="@globalAppSettings.SystemSettings.OrganizationName" data-id="application-logo" data-src="@appLogo" data-default="@defaultAppLogo" class="lazyload img-loader"/>

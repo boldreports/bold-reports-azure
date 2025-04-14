@@ -53,54 +53,54 @@
         </div>
     </div>
     <div class="modal-body share-popup col-xs-12" id = "export-dialog" style = "overflow-x:hidden;margin:10px 0 10px 0">
-        <div class="col-sm-12 col-xs-12 no-padding parameter-popup-body" id="parameters-panel">
-            <div class="col-sm-12 col-xs-12 export-format" id="export-format-container" style="margin-top:20px;margin-left:-10px">
-                <div class="col-sm-2 col-xs-2 export-format format-align-header" id="export-header"><label class="clslab">[[[Export Format]]]</label></div>
-                <div class="col-sm-2 col-xs-2 export-format format-align" id="pdfFormat" style="margin-left:20px">
-                    <div>
-                        <input type="radio" id="pdf-export" class="css-radio" value="PDF" name="exportFormats" checked="checked" />
-                        <label for="pdf-export" class="pointer normal-font notransition">PDF</label>
-                    </div>
+    <div class="col-sm-12 col-xs-12 no-padding parameter-popup-body" id="parameters-panel">
+
+        <div class="col-sm-12 col-xs-12 export-format" id="export-format-container" style="margin-top:20px;margin-left:-10px">
+            <div class="col-sm-2 col-xs-2 export-format format-align-header" id="export-header"><label class="clslab">[[[Export Format]]]</label></div>
+            <div class="col-sm-2 col-xs-2 export-format format-align" id="pdfFormat" style="margin-left:20px">
+                <div>
+                    <input type="radio" id="pdf-export" class="css-radio" value="PDF" name="exportFormats" checked="checked" />
+                    <label for="pdf-export" class="pointer normal-font notransition">PDF</label>
                 </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="excelFormat">
-                    <div>
-                        <input type="radio" id="excel-export" class="css-radio" value="Excel" name="exportFormats" />
-                        <label for="excel-export" class="pointer normal-font notransition">Excel</label>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="wordFormat">
-                    <div>
-                        <input type="radio" id="word-export" class="css-radio" value="Word" name="exportFormats" />
-                        <label for="word-export" class="pointer normal-font notransition">Word</label>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="htmlFormat">
-                    <div>
-                        <input type="radio" id="html-export" class="css-radio" value="HTML" name="exportFormats" />
-                        <label for="html-export" class="pointer normal-font notransition">HTML</label>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="pptFormat">
-                        <div>
-                            <input type="radio" id="ppt-export" class="css-radio" value="PPT" name="exportFormats" />
-                            <label for="ppt-export" class="pointer normal-font notransition">PPT</label>
-                        </div>
-                    </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="csvFormat">
-                    <div>
-                        <input type="radio" id="csv-export" class="css-radio" value="CSV" name="exportFormats" />
-                        <label for="csv-export" class="pointer normal-font notransition">CSV</label>
-                    </div>
-                    <input type="text" class="form-control" id="csv-delimiter" maxlength="1" style="display: none;position:absolute;margin-left: 60px;margin-top:-32px">
-                </div>
-                <div class="col-sm-2 col-xs-2 export-format format-align-export" id="xmlFormat">
-                    <div>
-                        <input type="radio" id="xml-export" class="css-radio" value="XML" name="exportFormats" />
-                        <label for="xml-export" class="pointer normal-font notransition">XML</label>
-                    </div>
-                </div>
-                <div id="csv-delimiter-validation" style="display: none;margin-top: 29px; position:absolute;right:26px;">[[[Please enter a valid delimiter value]]]</div>
             </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="excelFormat">
+                <div>
+                    <input type="radio" id="excel-export" class="css-radio" value="Excel" name="exportFormats" />
+                    <label for="excel-export" class="pointer normal-font notransition">Excel</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="wordFormat">
+                <div>
+                    <input type="radio" id="word-export" class="css-radio" value="Word" name="exportFormats" />
+                    <label for="word-export" class="pointer normal-font notransition">Word</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="htmlFormat">
+                <div>
+                    <input type="radio" id="html-export" class="css-radio" value="HTML" name="exportFormats" />
+                    <label for="html-export" class="pointer normal-font notransition">HTML</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="pptFormat">
+                <div>
+                    <input type="radio" id="ppt-export" class="css-radio" value="PPT" name="exportFormats" />
+                    <label for="ppt-export" class="pointer normal-font notransition">PPT</label>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="csvFormat">
+                <div>
+                    <input type="radio" id="csv-export" class="css-radio" value="CSV" name="exportFormats" />
+                    <label for="csv-export" class="pointer normal-font notransition">CSV</label>
+                </div>
+                <input type="text" class="form-control" id="csv-delimiter" maxlength="1" style="display: none;position:absolute;margin-left: 60px;margin-top:-32px">
+            </div>
+            <div class="col-sm-2 col-xs-2 export-format format-align-export" id="xmlFormat">
+                <div>
+                    <input type="radio" id="xml-export" class="css-radio" value="XML" name="exportFormats" />
+                    <label for="xml-export" class="pointer normal-font notransition">XML</label>
+                </div>
+            </div>
+            <div id="csv-delimiter-validation" style="display: none;margin-top: 29px; position:absolute;right:26px;">[[[Please enter a valid delimiter value]]]</div>
             @if (Model.Count > 0)
             {
                 <div class="col-sm-2 col-xs-2 export-format format-align-header" id="export-header" style="margin-top:30px;margin-left:5px"><label class="clslab">[[[Filter Parameters]]]</label></div>
@@ -194,6 +194,10 @@
         <div id="error-message" style="display:none;margin-left:200px;color:#a94442">
             <span>Please select parameter</span>
         </div>
+    </div>
+    </div>
+    <div id="error-message" style="display:none;margin-left:200px;color:#a94442">
+        <span>Please select parameter</span>
     </div>
 
     <div class="modal-footer col-xs-12" style="position:fixed;bottom:0px">

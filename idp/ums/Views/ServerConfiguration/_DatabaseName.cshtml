@@ -1,6 +1,7 @@
 ﻿@{
     var helpLinkData = ViewBag.TenantType == TenantType.BoldBIOnPremise ? "dashboards" : "reports";
-    var dbnameHelp = ViewBag.TenantType == TenantType.BoldBIOnPremise ? T["This is where we store the BI tenants, dashboard resources, and data store configuration."] : T["This is where we store the Bold Reports tenants, reports resources and their access permissions."];
+    var productName = ViewBag.TenantType == TenantType.BoldBIOnPremise ? GlobalAppSettings.GetDescription(ProductName.BoldBIOnPremise) : GlobalAppSettings.GetDescription(ProductName.BoldReportsOnPremise);    
+    var dbnameHelp = ViewBag.TenantType == TenantType.BoldBIOnPremise ? T["This is where Bold BI sites, dashboard resources, and data store configurations are stored."] : T["This is where Bold Reports sites, reports resources and their access permissions are stored."];
     var sqlParameter = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.MSSQL_Connection_Parameters);
     var serviceNameHelp = T["The Oracle Service Name is key for client-database communication. It lets clients connect and access the database.The default Service Name is ORCL"];
 }
