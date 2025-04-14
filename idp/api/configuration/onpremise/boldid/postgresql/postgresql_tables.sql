@@ -364,6 +364,7 @@ CREATE TABLE BOLDTC_TenantInfo (
 	IsMaster smallint NOT NULL,
 	IsolationCode varchar(4000),
 	IsTenantIsolationCodeEnabled smallint NOT NULL DEFAULT '0',
+	IsRowLevelSecurityEnabled smallint NOT NULL DEFAULT '1',
     ResourceLimitationSettings varchar(4000),
 	UseCustomBranding smallint NOT NULL,
 	IsNewImDbDatabase smallint NOT NULL,
@@ -731,6 +732,7 @@ CREATE TABLE BOLDTC_AuthSettings (
     TenantInfoId uuid NULL,
     AuthProviderId int NOT NULL,
     Settings varchar(1026),
+    EncryptionValues text,
     IsEnabled smallint NOT NULL,
     CreatedBy uuid NULL,
     ModifiedBy uuid NULL,
@@ -906,6 +908,14 @@ CREATE TABLE BOLDTC_UserAttributes(
 	IsActive smallint NOT NULL)
 ;
 
+CREATE TABLE BOLDTC_BackUp (
+    Id SERIAL primary key NOT NULL,
+    ConfigurationData text NOT NULL,
+    PrivateKey text NOT NULL,
+    ModifiedDate timestamp NOT NULL,
+    IsActive smallint NOT NULL
+);
+
 CREATE TABLE BOLDTC_CustomEmailTemplate (
     Id SERIAL PRIMARY KEY,
     IsEnabled smallint,
@@ -927,7 +937,7 @@ CREATE TABLE BOLDTC_CustomEmailTemplate (
 	TemplateLocalizationKey VARCHAR(255) NULL
 );
 
-CREATE TABLE BoldTC_AICredentials(
+CREATE TABLE BOLDTC_AICredentials(
     Id uuid NOT NULL,
     AIModel INTEGER NOT NULL,
     AIConfiguration varchar(4000) NULL,

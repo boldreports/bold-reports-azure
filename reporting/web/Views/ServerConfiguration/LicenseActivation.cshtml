@@ -1,0 +1,167 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Syncfusion.Server.Base.Environment;
+@using Syncfusion.Server.Base.Helpers
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var redirectUrl = ServerAppConfig.InternalAppIdpUrl;
+    var faviconLogo = string.Empty;
+    var cdnLink = @GlobalAppSettings.CdnDomain;
+    var reportServerResourceUrl = _globalAppSettings.HttpPathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+    cdnLink = (_globalAppSettings.HttpPathBase.ToString().Equals("/") ? string.Empty : _globalAppSettings.HttpPathBase.ToString()) + ServerAppConfig.AppSettings.EndPoints.CdnLink + "/cdn/images";
+    faviconLogo = reportServerResourceUrl + "/cdn/images/application/boldreports/favicon.ico";
+    }
+    else
+    {
+    cdnLink = @GlobalAppSettings.CdnDomain;
+    faviconLogo = reportServerResourceUrl + "/cdn/images/application/boldreports/favicon.ico";
+    }
+    reportServerResourceUrl = reportServerResourceUrl.TrimEnd('/');
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="@faviconLogo" id="favicon-link"/>
+    <title>[[[License Activation]]] - @GlobalAppSettings.BrandingDisplayName</title>
+    <script asp-append-version="true" src="~/js/localizationcontent.js?v=@ServerAppConfig.ProductVersion&c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/license-activation.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.css")" crossorigin="anonymous"/>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/license-activation.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/license-activation.css")" crossorigin="anonymous"/>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/license-activation.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/license-activation.min.js")" crossorigin="anonymous"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.min.css")" crossorigin="anonymous"/>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/license-activation.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/license-activation.min.css")" crossorigin="anonymous"/>
+    </environment>
+    <script>
+        var redirectUrl = "@redirectUrl";
+        var lisenceValidationUrl = "@Url.Action("LicenseValidation", "ServerConfiguration")";
+        var lisenceActivationUrl = "@Url.Action("ActivateLicense", "ServerConfiguration")";
+        var offlineSetupImageUrl = "@Url.Content("~/cdn/images/static/default-pages/v1/offline-setup.png")";
+        var startupHome = "@Url.Content("~/cdn/images/static/default-pages/v1/login-to-activate.png")";
+
+    </script>
+</head>
+
+<body id="license-activation-waiting-element" class="license-activation-content">
+    <div class="loader-blue loader-icon display-none" id="layout-body-loader-icon">
+        <svg class="circular">
+            <circle class="path" cx="27" cy="27" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
+    <div id="startup-waiting-element" class="startup-waiting-popup storage-page-content">
+        @await Html.PartialAsync("_LicenseActivationFooter")
+        <div class="system-startUp-settings-bg">
+            <div class="startup-page-conatiner" id="startup-page-conatiner">
+                <div id="system-settings-general" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="image-parent-container">
+                        <div class="image-container">
+                            <img class="startup-image" src="@reportServerResourceUrl/cdn/images/static/default-pages/v1/login-to-activate.png" />
+                            <div class="welcome-content">
+                                <span class="first-content">[[[See Clearly. Act Boldly.]]]</span>
+                                @if (!ServerAppConfig.IsHideHelpLink)
+                                {
+                                <a href="https://help.boldreports.com/enterprise-reporting/administrator-guide/application-startup/" target="_blank">[[[Need setup help?]]]</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" id="system-settings-welcome-container">
+                        <div class="welcome-content">
+                            <span class="first-content align-center">
+                                [[[Complete Your Setup]]]
+                            </span>
+
+                            <span class="second-content">
+                                [[[Complete setup with online activation or license upload, or skip to use trial mode for 30 days.]]]
+                            </span>
+
+                            <div class="btn-holder">
+                                <button type="button" id="online-license" license-service-url="@ViewBag.SubscriptionUrl" class="proceed-button content-display">[[[Login to activate]]]</button>
+                                <button type="button" id="offline-license" license-service-url="@ViewBag.SubscriptionUrl" class="proceed-button content-display">[[[Upload license file]]]</button>
+                            </div>
+                            <div class="col-xs-12  align-center">
+                                <span class="link-header">[[[Don’t have an account?]]] <a class="link-decoration" target="_blank" href="https://www.boldreports.com/pricing">[[[Sign Up]]]</a></span>
+                            </div>
+                            <div class="divider-container col-xs-12">
+                                <hr class="connect-line-left"><div class="content text-body">[[[or]]]</div><hr class="connect-line-right">
+                            </div>
+                            <div class="col-xs-12 align-center">
+                                <a id="skip-license-activation" class="link-decoration" href="@ServerAppConfig.InternalAppIdpUrl">[[[Proceed with 30 days trail]]]</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="system-settings-offline-license col-lg-5 col-md-5 col-sm-5 col-xs-5" id="system-settings-offline-license-container">
+                        <div id="popup-container" class="col-xs-12 no-padding">
+                            <div class="col-xs-12 upload-header no-padding">
+                                <div class="col-xs-12 no-padding">
+                                    <span class="popup-title">[[[Offline Setup]]]</span>
+                                    <p class="title-description">
+                                        Provide the unlock key file for Offline Installation. If you do not have an unlock key file, you can download it <a target="_blank" href="https://www.boldreports.com/account/downloads">here</a>.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 upload-content no-padding">
+                                <div id="upload-section" class="col-xs-12 no-padding">
+                                    <div id="file-lable" class="col-xs-12">
+                                        <label id="upload-lable">[[[Select the unlock key file]]]</label>
+                                    </div>
+                                    <div class="upload-btn-wrapper col-xs-12 no-padding">
+                                        <input type="text" id="file-name" class="col-xs-8" placeholder="[[[choose file]]]" readonly="readonly" />
+                                        <img id="browse-lic" class="col-xs-4" src="~/images/folder.svg" />
+                                        <input type='file' id="getFile" accept=".lic" class="display-none">
+                                        <div id="tenant-type" class="display-none"></div>
+                                        <div class="validation-error-message col-xs-12 display-none"></div>
+                                    </div>
+                                    <div id="license-details" class="col-xs-12">
+                                        <div id="customer-email-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding license-detail-lable">[[[Email]]]</label>
+                                            <p id="customer-email" class="col-xs-8 no-padding"></p>
+                                        </div>
+                                        <div id="subscription-id-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Subscription Id]]]</label>
+                                            <p id="subscription-id" class="col-xs-8 no-padding"></p>
+                                        </div>
+                                        <div id="subscription-name-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Subscription Name]]]</label>
+                                            <p id="subscription-name" class="col-xs-8 no-padding"></p>
+                                        </div>
+
+                                        <div id="plan-name-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Plan Name]]]</label>
+                                            <p id="plan-name" class="col-xs-8 no-padding"></p>
+                                        </div>
+
+                                        <div id="tenant-status-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Tenant Status]]]</label>
+                                            <p id="tenant-status" class="col-xs-8 no-padding">Licensed</p>
+                                        </div>
+                                        <div id="expiry-date-container" class="col-xs-12 no-padding display-none">
+                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Expiry Date]]]</label>
+                                            <p id="expiry-date" class="col-xs-8 no-padding"></p>
+                                        </div>
+                                        <div id="error-message-container" class="col-xs-12 no-padding display-none">
+                                            <p id="error-message" class="col-xs-8 no-padding"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 upload-footer btn-holder">
+                                <input id="return-startup-home" type="button" value="[[[Back]]]" class="col-xs-6 remove-margin-left secondary-button">
+                                <input disabled id="confirm-license" type="button" value="[[[Proceed]]]" class="col-xs-6 proceed-button">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

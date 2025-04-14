@@ -19,7 +19,8 @@
     var createNewDatasourceUrl = "@Url.Action("CreateDataSource", "DataSources")";
     var addReportIframeUrl = "@Url.Action("addreport", "reports")";
     var addDatasetUrl = "@Url.Action("AddDataset", "DataSets")";
-     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var addFileUrl = "@Url.Action("AddFiles", "Files")";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
 </script>
 
 <div id="create-item-container">
@@ -192,6 +193,22 @@
                             </div>
                         </li>
                     }
+                    @*@if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report])
+                    {
+                        <li id="upload-file" data-action="Upload">
+                            <div class="create-item-list-section">
+                                <div class="create-item-list-icon" style="float: left;">
+                                    <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/add-file.svg">
+                                </div>
+                                <div class="create-item-list-title">
+                                    <label>[[[Upload Files]]]</label><br>
+                                    <span>
+                                        [[[Upload your files to the server.]]]
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    }*@
                     @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Schedule) && itemPermissions[ItemType.Schedule] && itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && itemsCount[ItemType.Report] > 0)
                     {
                         <li id="create_schedule">
@@ -251,4 +268,7 @@
 </div>
 <div id="select_datasource_popup" class="col-md-12" style="display:none">
     <iframe id="datasource_iframe" class="EditIframe"></iframe>
+</div>
+<div id="addFileDom" style="display:none">
+    <iframe id="file_popup" class="fileDialog"></iframe>
 </div>

@@ -11,6 +11,12 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var isAdmin = _identityResponse.IsAdmin;
+    var customUI = _globalAppSettings.SystemSettings.CustomUI;
+    var groupImport = new GroupImport();
+    if (customUI?.Profiles != null)
+    {
+        groupImport = customUI?.Profiles[0]?.GroupImport != null ? customUI?.Profiles[0]?.GroupImport[0] : new GroupImport();
+    }
 }
 
 @section scripts{
@@ -254,42 +260,48 @@
             </hgroup>
             <div id="group-header" class="col-lg-8 col-md-8 col-sm-6 col-xs-12 no-padding">
                 <ul class="pull-right col-lg-12 no-padding no-margin groups-menu">
-                    <li class="dropdown">
-                        @if (isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || ViewBag.IsUserHasCreateGroupPermission)
-                        {
-                            <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new group]]]">
-                                <span>[[[New Group]]] </span>
-                                <span class="caret"></span>
-                            </button>
-                        }
+                    @if (!(groupImport.HideCreateGroup && groupImport.HideAzureAD && groupImport.HideWindowsAD))
+                    {
+                        <li class="dropdown">
+                            @if (isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || ViewBag.IsUserHasCreateGroupPermission)
+                            {
+                                <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new group]]]">
+                                    <span>[[[New Group]]] </span>
+                                    <span class="caret"></span>
+                                </button>
+                            }
 
-                        <ul class="dropdown-menu" role="menu" id="dropdown-options">
-                            <li id="new-group-button" title="Add new group">
-                                <a href="#" class="prevent-default-action" title="[[[Add new group]]]" data-toggle="tooltip" data-placement="top">
-                                    <i class="su su-group-1"></i>
-                                    <span>[[[Create Group]]]</span>
-                                </a>
-                            </li>
-                            @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD && (isAdmin || granularPermissions[PermissionEntity.UsersandGroups]))
-                            {
-                                <li>
-                                    <a href="@Url.Action("ActiveDirectoryGroupImport", "group")" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Active Directory]]]">
-                                        <i class="su su-windows-ad"></i>
-                                        <span>[[[Import from Active Directory]]]</span>
-                                    </a>
-                                </li>
-                            }                            
-                            @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]))
-                            {
-                                <li>
-                                    <a href="@Url.Action("AzureADGroupImport", "group")" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Azure AD]]]">
-                                        <i class="su su-azure-ad"></i>
-                                        <span>[[[Import from Azure AD]]]</span>
-                                    </a>
-                                </li>
-                            }                            
-                        </ul>
-                    </li>
+                            <ul class="dropdown-menu" role="menu" id="dropdown-options">
+                                @if (!groupImport.HideCreateGroup)
+                                {
+                                    <li id="new-group-button" title="Add new group">
+                                        <a href="#" class="prevent-default-action" title="[[[Add new group]]]" data-toggle="tooltip" data-placement="top">
+                                            <i class="su su-group-1"></i>
+                                            <span>[[[Create Group]]]</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD && !groupImport.HideWindowsAD && (isAdmin || granularPermissions[PermissionEntity.UsersandGroups]))
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ActiveDirectoryGroupImport", "group")" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Active Directory]]]">
+                                            <i class="su su-windows-ad"></i>
+                                            <span>[[[Import from Active Directory]]]</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if ((isAdmin && !groupImport.HideAzureAD || granularPermissions[PermissionEntity.UsersandGroups]))
+                                {
+                                    <li>
+                                        <a href="@Url.Action("AzureADGroupImport", "group")" data-toggle="tooltip" data-placement="top" title="[[[Import groups from Azure AD]]]">
+                                            <i class="su su-azure-ad"></i>
+                                            <span>[[[Import from Azure AD]]]</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
 
                     @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && (ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.AzureAD != null)
                     {

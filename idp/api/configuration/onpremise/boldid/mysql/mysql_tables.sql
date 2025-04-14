@@ -379,6 +379,7 @@ CREATE TABLE {database_name}.BOLDTC_TenantInfo (
 	IsMaster tinyint(1) NOT NULL,
 	IsolationCode nvarchar(4000),
 	IsTenantIsolationCodeEnabled tinyint(1) NOT NULL DEFAULT '0',
+	IsRowLevelSecurityEnabled tinyint(1) NOT NULL DEFAULT '1',
     ResourceLimitationSettings longtext,
 	UseCustomBranding tinyint(1) NOT NULL,
 	IsNewImDbDatabase tinyint(1) NOT NULL,
@@ -738,6 +739,7 @@ CREATE TABLE {database_name}.BOLDTC_AuthSettings (
     TenantInfoId char(38) NULL,
     AuthProviderId int NOT NULL,
     Settings longtext,
+    EncryptionValues longtext,
     IsEnabled tinyint(1) NOT NULL,
     CreatedBy char(38) NULL,
     ModifiedBy char(38) NULL,
@@ -914,6 +916,15 @@ CREATE TABLE {database_name}.BOLDTC_UserAttributes(
 	PRIMARY KEY (Id)) ROW_FORMAT=DYNAMIC
 ;
 
+CREATE TABLE {database_name}.BOLDTC_BackUp(
+    Id int NOT NULL AUTO_INCREMENT,
+    ConfigurationData longtext NOT NULL,
+    PrivateKey longtext NOT NULL,
+    ModifiedDate datetime NOT NULL,
+    IsActive tinyint NOT NULL,
+    PRIMARY KEY (Id ASC)
+);
+
 CREATE TABLE {database_name}.BOLDTC_CustomEmailTemplate (
 Id INT AUTO_INCREMENT PRIMARY KEY,
     IsEnabled BIT,
@@ -935,7 +946,7 @@ Id INT AUTO_INCREMENT PRIMARY KEY,
 	TemplateLocalizationKey VARCHAR(255) NULL
 );
 
-CREATE TABLE {database_name}.BoldTC_AICredentials(
+CREATE TABLE {database_name}.BOLDTC_AICredentials(
     Id char(38) NOT NULL,
     AIModel INT NOT NULL,
     AIConfiguration varchar(4000) NULL,

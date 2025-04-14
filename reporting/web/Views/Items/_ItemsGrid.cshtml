@@ -11,6 +11,29 @@
     var reportUrl = Url.Action("Reports", "Reports");
     var downloadUrl = reportUrl.TrimEnd('/').Remove(reportUrl.LastIndexOf('/'));
     var downloadDatasetUrl = downloadUrl + "/items/download";
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
+    var customUI = globalAppSettings.SystemSettings.CustomUI;
+    var profile = customUI?.Profiles?.FirstOrDefault();
+    var datasourceSchemes = profile?.DataSources?.Scheme != null ? customUI?.Schemes?.FirstOrDefault(x => x.Name == profile.DataSources.Scheme) : null;
+    var datasetSchemes = profile?.Dataset?.Scheme != null ? customUI?.Schemes?.FirstOrDefault(x => x.Name == profile.Dataset.Scheme) : null;
+    var showDatasourceShare = datasourceSchemes?.Share ?? true;
+    var showDatasourceInfo = datasourceSchemes?.Info ?? true;
+    var showDatasourceEditAsXml = datasourceSchemes?.EditAsXml ?? true;
+    var showDatasourceUpdate = datasourceSchemes?.Update ?? true;
+    var showDatasourceDelete = datasourceSchemes?.Delete ?? true;
+    var showDatasourceContextMenu = (datasourceSchemes?.ContextMenu ?? true) && (showDatasourceShare || showDatasourceInfo || showDatasourceEditAsXml || showDatasourceUpdate || showDatasourceDelete);
+    var showDatasetCreateReport = datasetSchemes?.CreateReport ?? true;
+    var showDatasetCreateReportPart = datasetSchemes?.CreateReportPart ?? true;
+    var showDatasetDownload = datasetSchemes?.Download ?? true;
+    var showDatasetEdit = datasetSchemes?.Edit ?? true;
+    var showDatasetChangeDatasource = datasetSchemes?.ChangeDatasource ?? true;
+    var showDatasetShare = datasetSchemes?.Share ?? true;
+    var showDatasetVersionHistory = datasetSchemes?.VersionHistory ?? true;
+    var showDatasetInfo = datasetSchemes?.Info ?? true;
+    var showDatasetEditAsXml = datasetSchemes?.EditAsXml ?? true;
+    var showDatasetUpdate = datasetSchemes?.Update ?? true;
+    var showDatasetDelete = datasetSchemes?.Delete ?? true;
+    var showDatasetContextMenu = (datasetSchemes?.ContextMenu ?? true) && (showDatasetCreateReport || showDatasetCreateReportPart || showDatasetDownload || showDatasetEdit || showDatasetChangeDatasource || showDatasetShare || showDatasetVersionHistory || showDatasetInfo || showDatasetEditAsXml || showDatasetUpdate || showDatasetDelete);
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
@@ -37,6 +60,8 @@
     var viewDashboardUrlAction = "@Url.Action("Reports", "Reports")";
     var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
     var itemsGrid;
+    var datasourceSchemesDetails = @Html.Raw(Json.Serialize(datasourceSchemes));
+    var datasetSchemesDetails = @Html.Raw(Json.Serialize(datasetSchemes));
 </script>
 <!--[if LT IE  10]>
         <script nonce="@Context.Items["ScriptNonce"]">
@@ -129,11 +154,14 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
     <div class="dropdown">
+        {{if ItemType != "@((int)ItemType.Datasource)" || (@(Convert.ToBoolean(showDatasourceContextMenu).ToString().ToLower()) == true)}}
+        {{if ItemType != "@((int)ItemType.Dataset)" || (@(Convert.ToBoolean(showDatasetContextMenu).ToString().ToLower()) == true)}}
         <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
             <i class="su su-options"></i>
         </span>
+        {{/if}}
+        {{/if}}
         <ul class="dropdown-menu" role="menu">
-
         {{if CanDownload}}
         {{if ~checkMobile()}}
         {{if ItemType=="@((int)ItemType.File)"}}
@@ -168,6 +196,7 @@
 
         {{if ~checkMobile()}}
         {{if (@(permissionData[ItemType.Report].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
+        {{if @(Convert.ToBoolean(showDatasetCreateReport).ToString().ToLower()) == true }}
         <li>
             <a href="@Url.Action("ReportDesigner","Designer")?datasetId={{:Id}}" target="_blank" class="create-dashboard-using-datasource" title="[[[Create report using this Dataset]]]" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
                 <i class="su su-nav-report"></i>
@@ -175,6 +204,8 @@
             </a>
         </li>
         <li role="separator" class="divider"></li>
+        {{/if}}
+        {{if @(Convert.ToBoolean(showDatasetCreateReportPart).ToString().ToLower()) == true }}
         <li>
             <a href="@Url.Action("ReportPart","Designer")?datasetId={{:Id}}" target="_blank" class="create-report-part-using-dataset" title="[[[Create report part using this Dataset]]]" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
                 <i class="su su-report-part"></i>
@@ -184,10 +215,12 @@
         <li role="separator" class="divider"></li>
         {{/if}}
         {{/if}}
+        {{/if}}
 
         {{if CanDownload}}
         {{if ~checkMobile()}}
         {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(Convert.ToBoolean(showDatasetDownload).ToString().ToLower()) == true)}}
         <li>
             <a href="@downloadDatasetUrl/{{:ItemType}}/{{:Id}}/{{:Name}}" id="download-dataset">
                 <i class="su su-download"></i>
@@ -197,10 +230,12 @@
         {{/if}}
         {{/if}}
         {{/if}}
+        {{/if}}
 
         {{if CanWrite}}
         {{if ~checkMobile()}}
         {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(Convert.ToBoolean(showDatasetEdit).ToString().ToLower()) == true)}}
         <li>
             <a href="@Url.Action("DatasetDesigner","Reports")/{{:Name}}" title="" target="_blank">
                 <i class="su su-edit"></i>
@@ -208,6 +243,7 @@
             </a>
         </li>
         <li role="separator" class="divider"></li>
+        {{/if}}
         {{/if}}
         {{/if}}
         {{/if}}
@@ -231,6 +267,7 @@
         {{if !IsLocked}}
         {{if ~checkMobile()}}
         {{if (@(permissionData[ItemType.Dataset].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
+        {{if (@(Convert.ToBoolean(showDatasetChangeDatasource).ToString().ToLower()) == true)}}
         <li>
             <a href="#" title="" class="change-datasource prevent-default-action" data-itemname="{{:Name}}" data-item-id="{{:Id}}" data-action="ChangeDataSource">
                 <i class="su su-copy"></i>
@@ -241,12 +278,16 @@
         {{/if}}
         {{/if}}
         {{/if}}
+        {{/if}}
 
         {{if ~checkMobile()}}
+        {{if @(Convert.ToBoolean(isHideIconBasedOnDnsName).ToString().ToLower()) == false }}
         {{if CreatedById==@(userId) || @(isAdmin)== true  || (@(granularPermissions[ItemType.Datasource].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Datasource)") || (@(granularPermissions[ItemType.Dataset].ToString().ToLower()) == true && ItemType == "@((int)ItemType.Dataset)")}}
         {{if ItemType=="@((int)ItemType.File)"}}
         <li role="separator" class="divider"></li>
         {{/if}}
+        {{if ItemType != "@((int)ItemType.Datasource)" || (@(Convert.ToBoolean(showDatasourceShare).ToString().ToLower()) == true)}}
+        {{if ItemType != "@((int)ItemType.Dataset)" || (@(Convert.ToBoolean(showDatasetShare).ToString().ToLower()) == true)}}
         <li>
             <a href="#" class="item-permissions prevent-default-action" title="" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
                 <i class="su su-manage-permission"></i>
@@ -258,8 +299,12 @@
         {{/if}}
         {{/if}}
         {{/if}}
+        {{/if}}        
+        {{/if}}
+        {{/if}}
 
         {{if (~checkMobile() && ItemType!="@((int)ItemType.Datasource)")}}
+        {{if (@(Convert.ToBoolean(showDatasetVersionHistory).ToString().ToLower()) == true)}}
         <li>
             <a href="#" class="version-button prevent-default-action" title="" data-itemname="{{:Name}}" data-item-id="{{:Id}}">
                 <i class="su su-versions"></i>
@@ -267,12 +312,15 @@
             </a>
         </li>
         {{/if}}
+        {{/if}}
 
         {{if ~checkMobile()}}
         {{if ItemType == "@((int)ItemType.Dataset)" || ItemType == "@((int)ItemType.Datasource)"}}
         {{if ItemType == "@((int)ItemType.Dataset)"}}
              <li role="separator" class="divider"></li>
         {{/if}}
+        {{if ItemType != "@((int)ItemType.Datasource)" || (@(Convert.ToBoolean(showDatasourceInfo).ToString().ToLower()) == true)}}
+        {{if ItemType != "@((int)ItemType.Dataset)" || (@(Convert.ToBoolean(showDatasetInfo).ToString().ToLower()) == true)}}
         <li>
             <a href="#" class="open-info option-click" data-item-name="{{:Name}}" data-description="{{:~renderDoubleQuotes(Description)}}" data-item-id="{{:Id}}" data-createdByDisplayName="{{:CreatedByDisplayName}}" data-createdDate="{{:CreatedDate}}" data-modifiedByFullName="{{:ModifiedByFullName}}" data-modifiedDate="{{:ModifiedDate}}" data-categoryName="{{:CategoryName}}" data-isDraft="{{:IsDraft}}" data-itemType="{{:ItemType}}" id="item-info-option">
                 <i class="su su-info"></i>
@@ -281,10 +329,13 @@
         </li>
         {{/if}}
         {{/if}}
+        {{/if}}
+        {{/if}}
 
         {{if CanWrite}}
         {{if ~checkMobile()}}
         {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(Convert.ToBoolean(showDatasetEditAsXml).ToString().ToLower()) == true)}}
         <li role="separator" class="divider"></li>
         <li>
             <a href="@Url.Action("EditDataSetAsXML","Reports")/{{:Name}}" title="" target="_blank">
@@ -292,6 +343,7 @@
                 <span>[[[Edit as XML]]]</span>
             </a>
         </li>
+        {{/if}}
         {{/if}}
         {{/if}}
         {{/if}}
@@ -337,6 +389,7 @@
         {{if ~checkMobile()}}
         {{if CanWrite}}
         {{if ItemType=="@((int)ItemType.Datasource)"}}
+        {{if (@(Convert.ToBoolean(showDatasourceEditAsXml).ToString().ToLower()) == true)}}
         <li>
             <a href="@Url.Action("EditDataSourceAsXML","DataSources")/{{:Name}}" title="" target="_blank">
                 <i class="su su-embed"></i>
@@ -347,9 +400,11 @@
         {{/if}}
         {{/if}}
         {{/if}}
+        {{/if}}
 
         {{if !IsLocked}}
         {{if (~checkMobile() && CanWrite && ItemType!="@((int)ItemType.Datasource)")}}
+        {{if (@(Convert.ToBoolean(showDatasetUpdate).ToString().ToLower()) == true)}}
         <li role="separator" class="divider"></li>
         <li>
             <a href="#" title="" class="item-edit prevent-default-action" data-item-id="{{:Id}}">
@@ -359,10 +414,12 @@
         </li>
         {{/if}}
         {{/if}}
+        {{/if}}
         {{if !IsLocked}}
         {{if ~checkMobile()}}
         {{if CanWrite}}
         {{if ItemType=="@((int)ItemType.Datasource)"}}
+        {{if (@(Convert.ToBoolean(showDatasourceUpdate).ToString().ToLower()) == true)}}
         <li>
             <a href="#" title="" class="item-edit-datasource prevent-default-action" data-item-id="{{:Id}}">
                 <i class="su su-edit"></i>
@@ -373,24 +430,33 @@
         {{/if}}
         {{/if}}
         {{/if}}
+        {{/if}}
         {{if ~checkMobile()}}
         {{if CanDelete}}
         {{if ItemType == "@((int)ItemType.Dataset)"}}
+        {{if (@(Convert.ToBoolean(showDatasetDelete).ToString().ToLower()) == true)}}
                  <li role="separator" class="divider"></li>
         {{/if}}
+        {{/if}}
+        {{if (@(Convert.ToBoolean(showDatasourceDelete).ToString().ToLower()) == true || @(Convert.ToBoolean(showDatasetDelete).ToString().ToLower()) == true)}}
         <li>
             {{if ItemType=="@((int)ItemType.Datasource)"}}
+            {{if (@(Convert.ToBoolean(showDatasourceDelete).ToString().ToLower()) == true)}}
             <a href="#" title="" class="item-delete prevent-default-action" data-itemtype="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}" data-datasource-type="{{:DatasourceType}}">
                 <i class="su su-delete"></i>
                 <span>[[[Delete]]]</span>
             </a>
+            {{/if}}
             {{else}}
+            {{if (@(Convert.ToBoolean(showDatasetDelete).ToString().ToLower()) == true)}}
             <a href="#" title="" class="item-delete prevent-default-action" data-itemtype="{{:ItemType}}" data-item-id="{{:Id}}" data-name="{{:Name}}">
                 <i class="su su-delete"></i>
                 <span>[[[Delete]]]</span>
             </a>
             {{/if}}
+            {{/if}}
         </li>
+        {{/if}}
         {{/if}}
         {{/if}}
     </ul>
@@ -462,9 +528,9 @@
         var filters = { filterType: "menu", "filteredColumns": [{ field: "CategoryName", operator: "equal", value: categoryName }] };
     }
 
-     if ("@query" != "") {
-         var gridObj = $("#items").data("ejGrid");
-         var filters = { filterType: "menu", "filteredColumns": [{ field: "Name", operator: "equal", value: "@query" }] };
+    if ("@query" != "") {
+        var gridObj = $("#items").data("ejGrid");
+        var filters = { filterType: "menu", "filteredColumns": [{ field: "Name", operator: "equal", value: "@query" }] };
     }
 
     $(document).ready(function () {

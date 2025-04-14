@@ -83,10 +83,22 @@ Copy-Item -Path $clientlibraryextractpath/Google.Apis.Core.dll -Destination $des
 }
 echo "googlebigquery libraries are installed"
 }
+"mongodb"{
+$mongodbassemblies="${name}=BoldReports.Data.MongoDB;"
+Foreach ($dirname in $pluginDirectories)
+{
+$destination="$rootPath/$dirname"
+Copy-Item -Path $clientlibraryextractpath/BoldReports.Data.MongoDB.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/MongoDB.Bson.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/MongoDB.Driver.dll -Destination $destination
+Copy-Item -Path $clientlibraryextractpath/DnsClient.dll -Destination $destination
+}
+echo "mongodb libraries are installed"
+}
 }
 }
 
-$clientLibraries="$mysqlassemblies$oracleassemblies$postgresqlassemblies$snowflakeassemblies$googlebigqueryassemblies"
+$clientLibraries="$mysqlassemblies$oracleassemblies$postgresqlassemblies$snowflakeassemblies$googlebigqueryassemblies$mongodbassemblies"
 dotnet clientlibraryutility/ClientLibraryUtil.dll $clientLibraries $jsonfiles
 echo "client libraries are updated"
 }

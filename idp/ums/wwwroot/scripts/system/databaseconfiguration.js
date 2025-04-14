@@ -631,6 +631,7 @@ function advancedThirdStep() {
     $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
     $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourStorage).slideDown();
     $(".startup-content span.second-content").hide().text(isBoldBI ? window.Server.App.LocalizationContent.StorageBIMsg.format(biProductname) : window.Server.App.LocalizationContent.StorageReportsMsg.format(reportsProductname)).slideDown();
+    $(".startup-content span.third-content").hide().text("").slideDown();
     $(".startup-content a#help-link").attr("href", idStorageConfiguration);
     $(".startup-waiting-popup").addClass("storage-page-content");
     $("#system-settings-filestorage-container").slideDown("slow");

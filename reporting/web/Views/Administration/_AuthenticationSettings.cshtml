@@ -45,10 +45,12 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
     var userInfoEmail = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoEmail);
     var userInfoFirstname = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoFirstname);
     var userInfoLastname = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoLastname);
+    var logoutEndPoint = HttpUtility.HtmlDecode((ViewBag.OAuthSettings.OAuthAuthSettings.LogoutEndPoint));
     var OpenIDProviderName = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.ProviderName);
     var authority = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.Authority);
     var openIDClientId = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.ClientId);
     var identifier = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.Identifier);
+    var logoutUrl = HttpUtility.HtmlDecode((ViewBag.OpenIDSettings.OIDCAuthSettings.LogoutUrl));
 }
 @section styles{
     <environment include="Development,CloudDevelopment">
@@ -383,6 +385,16 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Logout URI]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field" ng-class="(oauthSettingsForm.oauthLogoutEndpoint.$dirty && oauthSettingsForm.oauthLogoutEndpoint.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthLogoutEndpoint" ng-init="oauthLogoutEndpoint='@logoutEndPoint'" name="oauthLogoutEndpoint" placeholder="[[[Logout Endpoint (Optional)]]]" id="oauth-logout-endpoint" ng-pattern="@oauthRegEx" data-ng-disabled="!oauthIsEnabled">
+                                                <span class="validation-message" ng-show="oauthSettingsForm.oauthLogoutEndpoint.$error.pattern && oauthSettingsForm.oauthLogoutEndpoint.$dirty && oauthIsEnabled">[[[Please enter a valid logout endpoint.]]]</span>
+                                            </div>
+                                            <span id="oauth-logoutendpoint-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[We support logout endpoints that have static request parameters.]]]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Redirect URI]]]</label>
                                             <div class="col-md-8 no-margin form-input-field">
                                                 <input id="oauth-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
@@ -587,6 +599,16 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                                 <span class="validation-message" ng-show="openidSettingsForm.openidIdentifier.$error.required && openidSettingsForm.openidIdentifier.$dirty && openidIsEnabled">[[[Please enter the Identifier.]]]</span>
                                             </div>
                                             <span id="openid-identifier-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[These claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Provide the JSON key to identify the unique identity (email) of the user.]]]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Logout Endpoint]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field" ng-class="(openidSettingsForm.openidLogoutUrl.$dirty && openidSettingsForm.openidLogoutUrl.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="openidLogoutUrl" ng-init="openidLogoutUrl='@logoutUrl'" name="openidLogoutUrl" placeholder="[[[Logout Endpoint (Optional)]]]" id="openid-logout url" ng-pattern="@oauthRegEx" data-ng-disabled="!openidIsEnabled">
+                                                <span class="validation-message" ng-show="openidSettingsForm.openidLogoutUrl.$error.pattern && openidSettingsForm.openidLogoutUrl.$dirty && openidIsEnabled">[[[Please enter a valid logout endpoint.]]]</span>
+                                            </div>
+                                            <span id="openid-logouturl-info" class="su su-info info-popup" data-toggle="popover" data-placement="bottom" data-html="true" data-content="[[[We support logout endpoints that have static request parameters.]]]"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">

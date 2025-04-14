@@ -5,6 +5,8 @@ from typing import Any
 
 import dlt
 from google_analytics import google_analytics
+from dlt.sources.credentials import GcpServiceAccountCredentials
+from dlt.sources.credentials import GcpOAuthCredentials
 
 
 # this can also be filled in config.toml and be left empty as a parameter.
@@ -28,7 +30,8 @@ def simple_load() -> Any:
     )
     # Google Analytics source function - taking data from QUERIES defined locally instead of config
     # TODO: pass your google analytics property id
-    data_analytics = google_analytics(property_id={1}, queries={2}, {3})
+    credentials = {6}
+    data_analytics = google_analytics(credentials= credentials,property_id={1}, queries={2}, {3})
     info = pipeline.run(data=data_analytics)
     print(info)
     return info

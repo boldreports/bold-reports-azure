@@ -187,7 +187,7 @@ CREATE TABLE  {database_name}.BOLDRS_ItemLog(
 	FromCategoryId char(38) NULL,
 	ToCategoryId char(38) NULL,
 	UpdatedUserId int NOT NULL,	
-	AdditionalLogInfo varchar(4000) NULL,
+	AdditionalLogInfo text NULL,
 	ModifiedDate datetime NOT NULL,
 	IsActive tinyint NOT NULL,
 	PRIMARY KEY (Id))

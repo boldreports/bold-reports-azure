@@ -366,6 +366,7 @@ CREATE TABLE BOLDTC_TenantInfo (
     IsMaster NUMBER(1) NOT NULL,
     IsolationCode NVARCHAR2(2000),
     IsTenantIsolationCodeEnabled NUMBER(1) DEFAULT 0 NOT NULL,
+    IsRowLevelSecurityEnabled NUMBER(1) DEFAULT 1 NOT NULL,
     ResourceLimitationSettings CLOB,
     UseCustomBranding NUMBER(1) NOT NULL,
     IsNewImDbDatabase NUMBER(1) NOT NULL,
@@ -725,6 +726,7 @@ CREATE TABLE BOLDTC_AuthSettings (
     TenantInfoId VARCHAR2(36) NULL,
     AuthProviderId NUMBER NOT NULL,
     Settings NCLOB,
+    EncryptionValues NCLOB,
     IsEnabled NUMBER(1) NOT NULL,
     CreatedBy VARCHAR2(36) NULL,
     ModifiedBy VARCHAR2(36) NULL,
@@ -911,7 +913,7 @@ CREATE TABLE BOLDTC_UserAttributes (
     CONSTRAINT PK_BOLDTC_USERATTRIBUTES PRIMARY KEY (Id)
 );
 
-CREATE TABLE BoldTC_AICredentials (
+CREATE TABLE BOLDTC_AICredentials (
     Id VARCHAR2(36) NOT NULL,
     AIModel NUMBER NOT NULL,
     AIConfiguration VARCHAR2(4000) NULL,

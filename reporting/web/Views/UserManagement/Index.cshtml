@@ -13,15 +13,21 @@
     var permissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
     var passwordPolicy = ServerAppConfig.PasswordPolicy;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var customUI = _globalAppSettings.SystemSettings.CustomUI;
+    var userImport = new UserImport();
+    if (customUI?.Profiles != null)
+    {
+        userImport = customUI?.Profiles[0]?.UserImport != null ? customUI?.Profiles[0]?.UserImport[0] : new UserImport();
+    }
 }
 
 @section scripts{
- <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-management-module.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-management-module.css")" crossorigin="anonymous" />
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-management-module.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-management-module.css")" crossorigin="anonymous"/>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/user-management.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/user-management.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-management-module.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-management-module.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-management-module.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-management-module.min.css")" crossorigin="anonymous"/>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/user-management.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/user-management.min.js")" crossorigin="anonymous"></script>
     </environment>
 
@@ -128,6 +134,9 @@
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
         <div class="user-hover-options" data-content="{{:Email}}">
+            <a href="#" class="add-user-to-group" title="[[[Assign Group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-toggle="tooltip">
+                <i class="su su-group-1"></i>
+            </a>
             @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
             {
                 <a href="@Url.Action("userpermission", "permission")?userId={{:UserId}}" title="[[[Manage Permissions]]]" data-toggle="tooltip">
@@ -242,7 +251,7 @@
                         allowSorting: false,
                         headerText: "[[[Actions]]]",
                         templateID: "#options",
-                        width: 75,
+                        width: 105,
                         allowFiltering: false
                     }
                 ]
@@ -282,63 +291,78 @@
                         }
                         else
                         {
-                            <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
-                                <span>[[[New User]]] </span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu add-user-dropdown multi-level" role="menu" id="dropdown-options">
-                                <li id="create-user" title="[[[Add new user]]]">
-                                    <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
-                                        <i class="su su-user-add"> </i>
-                                        <span>[[[Add User]]]</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("UploadFileFormAction", "UserManagement")" title="[[[Import users from CSV]]]" data-toggle="tooltip" data-placement="top">
-                                        <i class="su su-download"> </i>
-                                        <span>[[[Import from CSV]]]</span>
-                                    </a>
-                                </li>
-                                @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD)
-                                {
-                                    <li>
-                                        <a class="dropdown-toggle" href="@Url.Action("ActiveDirectoryUserImport", "UserManagement")" title="[[[Import users from Active Directory]]]" data-toggle="tooltip" data-placement="top">
-                                            <i class="su su-windows-ad"> </i>
-                                            <span>[[[Import from Active Directory]]]</span>
-                                        </a>
-                                    </li>
-                                }
-                                <li>
-                                    <a class="dropdown-toggle" href="@Url.Action("azureaduserimport", "usermanagement")" title="[[[Import users from Azure AD]]]" data-toggle="tooltip" data-placement="top">
-                                        <i class="su su-azure-ad"> </i>
-                                        <span>[[[Import from Azure AD]]]</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-toggle" href="@Url.Action("GetUserDataForImportFromDatabase", "usermanagement")" title="[[[Import users from Database]]]" data-toggle="tooltip" data-placement="top">
-                                        <i class="su su-datasource"> </i>
-                                        <span>[[[Import from Database]]]</span>
-                                    </a>
-                                </li>
-                                @*@if (ViewBag.OAuthdIdentityProviderInfo != null && ViewBag.OAuthdIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
-                                {
-                                    <li>
-                                        <a class="dropdown-toggle" href="@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
-                                            <i class="su su-oauth path1"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></i>
-                                            <span>[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (ViewBag.OpendIdentityProviderInfo != null && ViewBag.OpendIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
-                                {
-                                    <li>
-                                        <a class="dropdown-toggle" href="@ViewBag.OpendIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
-                                            <i class="su su-openid"></i>
-                                            <span>[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]</span>
-                                        </a>
-                                    </li>
-                                }*@
-                            </ul>
+                            @if (!(userImport.HideAddUser && userImport.HideAzureAD && userImport.HideCSVImport && userImport.HideDatabase && userImport.HideWindowsAD))
+                            {
+                                <button class="dropdown-toggle primary-button app-btn-primary" data-toggle="dropdown" id="new-user-dropdown" title="[[[Add new user]]]">
+                                    <span>[[[New User]]] </span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu add-user-dropdown multi-level" role="menu" id="dropdown-options">
+                                    @if (!userImport.HideAddUser)
+                                    {
+                                        <li id="create-user" title="[[[Add new user]]]">
+                                            <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-user-add"> </i>
+                                                <span>[[[Add User]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (!userImport.HideCSVImport)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("UploadFileFormAction", "UserManagement")" title="[[[Import users from CSV]]]" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-download"> </i>
+                                                <span>[[[Import from CSV]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD && !userImport.HideWindowsAD)
+                                    {
+                                        <li>
+                                            <a class="dropdown-toggle" href="@Url.Action("ActiveDirectoryUserImport", "UserManagement")" title="[[[Import users from Active Directory]]]" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-windows-ad"> </i>
+                                                <span>[[[Import from Active Directory]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (!userImport.HideAzureAD)
+                                    {
+                                        <li>
+                                            <a class="dropdown-toggle" href="@Url.Action("azureaduserimport", "usermanagement")" title="[[[Import users from Azure AD]]]" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-azure-ad"> </i>
+                                                <span>[[[Import from Azure AD]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (!userImport.HideCSVImport)
+                                    {
+                                        <li>
+                                            <a class="dropdown-toggle" href="@Url.Action("GetUserDataForImportFromDatabase", "usermanagement")" title="[[[Import users from Database]]]" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-datasource"> </i>
+                                                <span>[[[Import from Database]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @*@if (ViewBag.OAuthdIdentityProviderInfo != null && ViewBag.OAuthdIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
+                                    {
+                                        <li>
+                                            <a class="dropdown-toggle" href="@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-oauth path1"><span class="su su-oauth path1"></span><span class="su su-oauth path2"></span><span class="su su-oauth path3"></span></i>
+                                                <span>[[[@ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName]]]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (ViewBag.OpendIdentityProviderInfo != null && ViewBag.OpendIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled)
+                                    {
+                                        <li>
+                                            <a class="dropdown-toggle" href="@ViewBag.OpendIdentityProviderInfo.IdentityProviderURL" title="[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]" target="_blank" data-toggle="tooltip" data-placement="top">
+                                                <i class="su su-openid"></i>
+                                                <span>[[[@ViewBag.OpendIdentityProviderInfo.IdentityProviderName]]]</span>
+                                            </a>
+                                        </li>
+                                    }*@
+                                </ul>
+                            }
                         }
                     </li>
 

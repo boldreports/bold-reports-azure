@@ -3,6 +3,8 @@ from typing import Sequence
 import dlt
 
 from google_sheets import google_spreadsheet
+from dlt.sources.credentials import GcpServiceAccountCredentials
+from dlt.sources.credentials import GcpOAuthCredentials
 
 
 def load_pipeline_with_ranges(
