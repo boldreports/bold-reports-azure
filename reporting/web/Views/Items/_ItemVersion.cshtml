@@ -109,7 +109,7 @@
                     {{/if}}
                     {{if CanDownload}}
                     <li>
-                        <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/report/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" id="download-versioned-report">
+                        <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/{{:ItemTypeId}}/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" id="download-versioned-report">
                             <i class="su su-download"></i>
                             <span>[[[Download Report]]]</span>
                         </a>

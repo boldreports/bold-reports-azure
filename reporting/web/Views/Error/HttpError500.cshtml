@@ -11,8 +11,8 @@
     var homePageUrl = Url.Action("Reports", "Reports");
     if (ServerAppConfig.IsSelfHosted)
     {
-        cdnLink = (Context.Request.PathBase.ToString().Equals("/") ? string.Empty : Context.Request.PathBase.ToString()) + ServerAppConfig.AppSettings.EndPoints.CdnLink + "/cdn/images";
-        reportServerResourceUrl = (Context.Request.PathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink).TrimEnd('/');
+        cdnLink = (Context.Request.PathBase.ToString().Equals("/") ? string.Empty : !string.IsNullOrWhiteSpace(Context.Request.PathBase) ? Context.Request.PathBase.ToString() : new Uri(ServerAppConfig.InternalAppReportUrl).AbsolutePath.TrimEnd('/') + "/") + ServerAppConfig.AppSettings.EndPoints.CdnLink + "/cdn/images";
+        reportServerResourceUrl = ((!string.IsNullOrWhiteSpace(Context.Request.PathBase) ? Context.Request.PathBase : new Uri(ServerAppConfig.InternalAppReportUrl).AbsolutePath.TrimEnd('/') + "/") + ServerAppConfig.AppSettings.EndPoints.CdnLink).TrimEnd('/');
         faviconLogo = ServerAppConfig.InternalAppIdpUrl + "/ums/logos?type=favicon";
     }
     else

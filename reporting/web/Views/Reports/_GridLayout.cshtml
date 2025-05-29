@@ -6,7 +6,7 @@
     var isMobile = new DeviceDetection(Context).IsMobile;
     var dashboardUrl = Url.Action("Reports", "Reports");
     var downloadUrl = dashboardUrl.TrimEnd('/').Remove(dashboardUrl.LastIndexOf('/'));
-    var downloadReportUrl = downloadUrl + "/items/download/report";
+    var downloadReportUrl = downloadUrl + "/items/download";
     var isBlob = globalAppSettings.SystemSettings.StorageType;
     var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
 }
@@ -128,7 +128,7 @@
             </li>
             {{if CanDownload && !IsLocked}}
             <li>
-                <a href="@downloadReportUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}" id="download-report">
+                <a href="@downloadReportUrl/{{:ItemType}}/{{:Id}}/{{:CategoryName}}/{{:Name}}" id="download-report">
                     <i class="su su-download"></i>
                     <span>[[[Download Report]]]</span>
                 </a>
