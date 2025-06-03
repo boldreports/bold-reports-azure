@@ -1141,10 +1141,6 @@ INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId
 ;
 INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES(3,5,1)
 ;
-INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,5,1)
-;
-INSERT INTO [BOLDRS_PermissionAccEntity] (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,5,1)
-;
 
 INSERT into [BOLDRS_PermissionLogType] (Name,IsActive) VALUES ( N'PermissionAdded',1)
 ;

@@ -379,8 +379,6 @@ var EJQRBarcode = (function () {
     EJQRBarcode.prototype.isDisplayText = function () {
         return (this.getPropertyVal('DisplayBarcodeText').toLowerCase()) === 'true';
     };
-    EJQRBarcode.prototype.undoRedoAction = function (args) {
-    };
     EJQRBarcode.prototype.getLocale = function (text) {
         var barcodeLocale;
         var defaultLocale = EJQRBarcode.Locale['en-US'];
