@@ -283,12 +283,7 @@ function FormValidate() {
         if ($("#login-form").valid()) {
             $("#password-field, .login-options").slideDown();
             $("#password-field").children(".e-float-input").removeClass("e-error");
-            if (loginContent.toString().trim() !== ""){
-                $("#login-button").html(loginContent);
-            }
-            else{
-                $("#login-button").html(window.Server.App.LocalizationContent.LoginButton);
-            }
+            $("#login-button").html(window.Server.App.LocalizationContent.LoginButton);
             $("#current-password").focus();
             if (showBoldSignUp.toLowerCase() === "true") {
                 $(".account-bg").css("height", "710px");
