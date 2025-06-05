@@ -2,6 +2,7 @@ import dlt
 import pandas as pd
 import yaml
 import urllib.request
+import json
 
 filePath = ("{1}")
 if({5}):
@@ -11,6 +12,13 @@ if({5}):
         df = pd.DataFrame(loaded_data)
     elif isinstance(loaded_data, dict):
         df = pd.json_normalize(loaded_data)
+elif({8}):
+    with open("{1}") as f:
+        json_data = json.load(f)
+    if isinstance(json_data, list):
+        df = pd.DataFrame(json_data)
+    else:
+        df = pd.DataFrame.from_dict(json_data, orient='index')
 else:
     df = pd.{2}(filePath{4})
 data = df.to_dict(orient="records")
