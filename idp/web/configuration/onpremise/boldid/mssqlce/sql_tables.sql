@@ -759,7 +759,6 @@ CREATE TABLE [BOLDTC_AuthSettings] (
     TenantInfoId uniqueidentifier NULL,
     AuthProviderId int NOT NULL,
     Settings nvarchar(max),
-    EncryptionValues nvarchar(max),
     IsEnabled bit NOT NULL,
     CreatedBy uniqueidentifier NOT NULL,
     ModifiedBy uniqueidentifier NOT NULL,
