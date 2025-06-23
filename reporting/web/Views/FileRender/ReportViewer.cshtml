@@ -22,6 +22,8 @@
     var enableExport = "true";
     var canSaveView = "true";
     var embedSignature = ViewBag.EmbedSignature;
+    var dateformat = ViewBag.Dateformat;
+    var timeformat = ViewBag.Timeformat;
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
     var isMobile = new DeviceDetection(Context).IsMobile;
     var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
@@ -448,6 +450,8 @@
     var reportItemDetail = @Json.Serialize(itemDetail);
     var isAdmin = "@isAdmin";
     var ItemType = "@ViewBag.ItemType";
+    var dateformat = "@dateformat";
+    var timeformat = "@timeformat";
     var customFontsName = [];
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
     var isViewerV2Enabled = @Json.Serialize(ViewBag.IsViewerV2Enabled);
@@ -720,6 +724,10 @@
                         parameters: filterParameters,
                         locale: '@language',
                         fontNames: customFontsName,
+                        localeSettings: {
+                            dateFormat: dateformat,
+                            timeFormat: timeformat
+                        },
 					    parameterSettings: {
                               labelWidth: 'auto',
                               popupHeight: _popupHeight,
@@ -794,6 +802,10 @@
                         parameterChange: 'onParameterValueChange',
                         locale: '@language',
                         fontNames: customFontsName,
+                        localeSettings: {
+                            dateFormat: dateformat,
+                            timeFormat: timeformat
+                        },
                         parameters: parameter,
 						 parameterSettings: {
                                labelWidth: 'auto',
