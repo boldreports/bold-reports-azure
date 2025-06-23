@@ -13,14 +13,14 @@
 @if (isReportDesigner)
 {
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-category.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-category.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <script nonce="@Context.Items["ScriptNonce"]">
         isCategoryPopupInReportDesigner = @Json.Serialize(isReportDesigner);
@@ -39,7 +39,7 @@
                 <table>
                     <tbody>
                         <tr class="bottomPadding5">
-                            <td class="text-right padding-right-15"><div class="bottom-margin30">[[[Category Name]]]<span class="mandatory">*</span></div></td>
+                            <td class="text-end padding-right-15"><div class="bottom-margin30">[[[Category Name]]]<span class="mandatory">*</span></div></td>
                             <td>
                                 <span>
                                     <input type="text" id="add_category_name" autofocus class="popup form-control bottom-margin30 text" name="categoryName" maxlength="255" tabindex="1">
@@ -49,7 +49,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right padding-right-15"><div class="bottom-margin30">[[[Description]]]</div></td>
+                            <td class="text-end padding-right-15"><div class="bottom-margin30">[[[Description]]]</div></td>
                             <td>
                                 <textarea name="description" class="form-control bottom-margin30 text" maxlength="1024" id="category_description" tabindex="2"></textarea>
                                 <span class="notification help-text">
@@ -63,7 +63,7 @@
             </div>
         </form>
         <div class="category-btns dialog-footer">
-            <div class="pull-right">
+            <div class="float-end">
                 <input type="button" title="" class="app-button app-primary-button app-btn-primary" id="validate-add-item" value="[[[Add]]]" tabindex="3">
                 <input type="button" title="" class="app-button app-secondary-button app-btn-secondary" id="cancel-add-item-popup" value="[[[Cancel]]]" tabindex="4">
             </div>

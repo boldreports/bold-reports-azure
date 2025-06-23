@@ -26,7 +26,11 @@
         tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
     }
     var showTour = !new DeviceDetection(Context).IsMobile && ((tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")));
+#if (BoldReportsCloud)
+    var designerServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
+#else
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+#endif
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     if (!string.IsNullOrWhiteSpace(ViewBag.categoryName) && !string.IsNullOrWhiteSpace(ViewBag.reportName))
     {
@@ -476,6 +480,7 @@
         var description = decodeHtmlAsString("@description");
         var isPublic = "@ViewBag.isPublic";
         isPublic = isPublic.toLowerCase();
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
         var tags = @Json.Serialize(ViewBag.tags);
         var selectedTags = @Json.Serialize(ViewBag.selectedTags);
         var isDraft = "@ViewBag.isDraft";
@@ -503,10 +508,11 @@
         var isHideHelpLink = isHideHelpLinks.toLowerCase() == "true" ? true : false;
         var customFontsName = [];
         var _CryptoAES = window['CryptoJS'];
-        var _keyCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
-        var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
+        var _keyCode = "@ViewBag.KeyCode";
+        var _ivCode = "@ViewBag.IvCode";
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
+        var encryptionKey = "@ViewBag.EncryptionKey";
         var isDesignerV2Enabled = @Json.Serialize(isDesignerV2Enabled);
         var canCheckSession = @Json.Serialize(canShowSession);
         var isSessionActiveUrl = "@Url.Action("IsSessionActive", "Accounts")";
@@ -767,8 +773,7 @@
 
         function _injectKeys(args) {
             if (args && args.headers) {
-                args.headers.push({ 'Key': 'keyCode', 'Value': _keyCode });
-                args.headers.push({ 'Key': 'ivCode', 'Value': _ivCode });
+                args.headers.push({ 'Key': 'encryptionKey', 'Value': encryptionKey });
             }
         }
 
@@ -1085,7 +1090,7 @@
                 click: $.proxy(browseReport, this, true),
                 itemSelected: $.proxy(browseReport, this, false)
             });
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
         }
 
         function designViewChange(args) {
@@ -1244,6 +1249,15 @@
                 $('#' + controlId + '_design_header_publish_div').css('opacity', '1');
                 $('#' + controlId + '_design_header_publish_btn').data('ejSplitButton').enable();
             }
+        }
+
+        if (!isSelfHosted) {
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $.ajax({
+                    type: "Get",
+                    url: "/robots.txt",
+                });
+            })
         }
     </script>
 </head>

@@ -5,30 +5,30 @@
 </script>
 <div class="white-bg" id="resolution-fix">
     <form class="col-lg-12 no-padding group-form" id="popup-container" autocomplete="off">
-        <div class="col-md-12 header-menu pull-left no-margin">
-            <div class="col-xs-6 no-padding">
+        <div class="col-md-12 header-menu float-end no-margin">
+            <div class="col-6 no-padding">
                 <span class="su su-group-1 head-icon"></span>
                 <span class="popup-title no-padding">[[[Add Group]]]</span>
             </div>
-            <div class="col-xs-6 no-padding">
-                <a href="#" class="popup-close close-dialog pull-right prevent-default-action" title="[[[Close]]]"><span class="su su-close pull-right"></span></a>
+            <div class="col-6 no-padding">
+                <a href="#" class="popup-close close-dialog float-end prevent-default-action" title="[[[Close]]]"><span class="su su-close float-end"></span></a>
                 <div id="folder-setting-arrow" class="down-arrow"></div>
             </div>
         </div>
 
-        <div class="dialog-body col-xs-12 no-padding">
-            <div class="col-xs-12 namepad">
-                <div class="col-xs-3 text-right no-padding top-margin">[[[Name]]]<span class="mandatory">*</span></div>
-                <div class="col-xs-1"></div>
-                <div class="col-xs-8 grouppad" id="group-name">
+        <div class="dialog-body col-12 no-padding">
+            <div class="col-12 namepad">
+                <div class="col-3 text-right no-padding top-margin">[[[Name]]]<span class="mandatory">*</span></div>
+                <div class="col-1"></div>
+                <div class="col-8 grouppad" id="group-name">
                     <input type="text" id="GroupName" class="form-control has-error" placeholder="[[[Group name]]]" name="groupname" tabindex="1" maxlength="60">
-                    <span id="invalid-groupname" class="error-message pull-left" title="[[[Please enter group name]]]" data-content=""></span>
+                    <span id="invalid-groupname" class="error-message float-start" title="[[[Please enter group name]]]" data-content=""></span>
                 </div>
             </div>
-            <div class="col-xs-12 namepad">
-                <div class="col-xs-3 text-right no-padding top-margin">[[[Description]]]</div>
-                <div class="col-xs-1"></div>
-                <div class="col-xs-8 grouppad">
+            <div class="col-12 namepad">
+                <div class="col-3 text-right no-padding top-margin">[[[Description]]]</div>
+                <div class="col-1"></div>
+                <div class="col-8 grouppad">
                     <textarea class="form-control has-error" maxlength="1024" id="group-description" tabindex="2"></textarea>
                     <div class="help-text">
                         *[[[1024 characters maximum]]]
@@ -36,13 +36,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 dialog-footer text-right">
-            <div class="col-xs-6">
-                <div class="col-md-12 success-message pull-left no-padding"></div>
+        <div class="col-12 dialog-footer text-right">
+            <div class="col-6">
+                <div class="col-md-12 success-message float-end no-padding"></div>
             </div>
-            <div class="col-xs-6 no-padding text-right">
+            <div class="col-6 no-padding text-right">
                 <input type="button" id="add-group" class="primary-button app-btn-primary" value="[[[Add]]]" tabindex="3" />
-                <input type="button" id="cancel-group" class="secondary-button app-btn-secondary pull-right text-right close-dialog" value="[[[Cancel]]]" tabindex="4" />
+                <input type="button" id="cancel-group" class="secondary-button app-btn-secondary float-end text-right close-dialog" value="[[[Cancel]]]" tabindex="4" />
             </div>
         </div>
     </form>

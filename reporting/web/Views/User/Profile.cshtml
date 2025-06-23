@@ -73,7 +73,12 @@
             if(@ViewBag.EditNotification > 0){
                 $("#edit-settings").trigger("click");
             }
-            $('[data-toggle="tooltip"]').tooltip();
+
+            if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
             var fulldata = JSON.parse(@Json.Serialize(ViewBag.ProfileDetail));
             window.dateFormat = "@globalAppSettings.SystemSettings.DateFormat";
             editUser(fulldata, "@globalAppSettings.SystemSettings.DateFormat");
@@ -99,80 +104,80 @@
                 });
                 eDialog = $("#avatar-upload-box").data("ejDialog");
                 eDialog.close();
-            });            
+            });
         });
     </script>
 }
 @section MainSection{
     @await Html.PartialAsync("_ProfileMenu")
-    <div id="edit-profile-base-div" class="col-lg-12 col-sm-12 col-md-12 col-xs-12 ">
+    <div id="edit-profile-base-div" class="col-lg-12 col-sm-12 col-md-12 col-12 ">
         <input type="hidden" class="page-name" data-content="[[[USER PROFILE]]]">
         <input type="hidden" id="user-id" value="@identityResponse.User.Email;" />
         <span id="is-aduser">@ViewBag.IsAdUser</span>
         <span id="logged-user">@ViewBag.LoggedUser</span>
-        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 no-padding admin-page-container" id="user-profile-master">
-            <div id="edit-profile-heading-div" class="col-lg-12 col-md-12 co-sm-12 col-xs-12 admin-page-header">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-12 no-padding admin-page-container" id="user-profile-master">
+            <div id="edit-profile-heading-div" class="d-flex justify-content-between admin-page-header">
                 <hgroup>
-                    <h1 class="col-xs-3 col-sm-4 col-md-4 col-lg-4 section-heading page-title header">[[[MY PROFILE]]]</h1>
+                    <h1 class="section-heading page-title header mb-0 ">[[[MY PROFILE]]]</h1>
                 </hgroup>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 button-section">
+                <div class="button-section">
                     @if (!ViewBag.IsAdUser)
                     {
-                        <a href="@idpChangePasswordUrl" class="link-button app-btn-link pull-right edit-password" title="">[[[Change Password]]]</a>
+                        <a href="@idpChangePasswordUrl" class="link-button app-btn-link float-end edit-password" title="">[[[Change Password]]]</a>
                     }
                 </div>
             </div>
-            <div class="profile-section profile-section-first-div col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding admin-page-body">
-                <div class="img-view-holder col-lg-12 col-md-12 col-sm-10 col-xs-12" style="border: 0px">
-                    <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@userDetail.DisplayName" data-image-size="120" data-toggle="tooltip" title="@userDetail.DisplayName" data-placement="top"></div>
+            <div class="profile-section profile-section-first-div col-lg-12 col-md-12 col-sm-12 col-12 no-padding admin-page-body">
+                <div class="img-view-holder col-lg-12 col-md-12 col-sm-10 col-12" style="border: 0px">
+                    <div class="profile-pic-tag" data-id="@idpreferenceId" data-type="user" data-display-name="@userDetail.DisplayName" data-image-size="120" data-bs-toggle="tooltip" title="@userDetail.DisplayName" data-bs-placement="top"></div>
                 </div>
-                <div id="edit-profile-form-div" class="col-sm-6 col-xs-12 no-padding margin-top10">
+                <div id="edit-profile-form-div" class="col-sm-6 margin-top10">
 
                     <form class="form-horizontal edit-profile-form" autocomplete="off">
                         @if (ServerAppConfig.IsSelfHosted)
                         {
-                            <div class="form-group no-padding">
+                            <div class="row form-group no-padding">
                                 <label class="label-panel text-right app-textbox-label">[[[Username]]]</label>
-                                <div class="col-sm-5 col-xs-12 group-list">
+                                <div class="col-sm-5 col-12 group-list">
                                     <input class="form-control disable-content" disabled="disabled" id="user-username" name="user-username" type="text" value="@userDetail.Username" autocomplete="off">
                                 </div>
                             </div>
                         }
-                        <div class="form-group no-padding line-spacing">
+                        <div class="row form-group no-padding line-spacing">
                             <label class="label-panel text-right app-textbox-label">[[[First Name]]]</label>
-                            <div class="col-sm-5 col-xs-12 group-list">
+                            <div class="col-sm-5 col-12 group-list">
                                 <input class="form-control disable-content" disabled="disabled" id="user-firstname" name="user-firstname" type="text" value="@userDetail.FirstName" autocomplete="off">
                             </div>
                         </div>
-                        <div class="form-group no-padding line-spacing">
+                        <div class="row form-group no-padding line-spacing">
                             <label class="label-panel text-right app-textbox-label">
                                 [[[Last name]]]
                             </label>
-                            <div class="col-sm-5 col-xs-12 group-list">
+                            <div class="col-sm-5 col-12 group-list">
                                 <input class="form-control disable-content" disabled="disabled" id="user-lastname" name="user-lastname" type="text" value="@userDetail.LastName" autocomplete="off">
                             </div>
                         </div>
-                        <div class="form-group no-padding line-spacing">
+                        <div class="row form-group no-padding line-spacing">
                             <label class="label-panel text-right app-textbox-label">[[[Email]]] </label>
-                            <div class="col-sm-5 col-xs-12 group-list">
+                            <div class="col-sm-5 col-12 group-list">
                                 <input class="form-control disable-content" disabled="disabled" id="user-email" name="user-email" type="text" value="@(userDetail.CanShowEmail ? userDetail.Email : string.Empty)" autocomplete="off">
                             </div>
                         </div>
-                        <div class="form-group no-padding line-spacing">
-                            <label class="label-panel text-right app-textbox-label">[[[Phone]]]</label>
-                            <div class="col-sm-5 col-xs-12 group-list">
+                        <div class="row form-group no-padding line-spacing">
+                            <label class="label-panel text-right app-textbox-label mb-3">[[[Phone]]]</label>
+                            <div class="col-sm-5 col-12 group-list mb-3">
                                 <input class="form-control disable-content" disabled="disabled" id="user-phonenumber" name="user-phonenumber" type="text" value="@userDetail.ContactNumber" autocomplete="off">
                             </div>
                         </div>
                     </form>
                 </div>
-                <div id="edit-button" class="col-sm-4 col-xs-12 no-padding">
+                <div id="edit-button" class="col-sm-4 col-12 no-padding">
                     <span class="bg-info" id="id-account-link">
                         [[[Update these details through your]]]
                         <a href="@idpProfileUrl" id="edit-link"> @GlobalAppSettings.BrandingDisplayName [[[Account]]]</a>
                     </span>
                 </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
+                <div class="col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                     <h5 id="success-message"></h5>
                 </div>
             </div>
@@ -180,25 +185,25 @@
             {
                 if (ServerAppConfig.IsSelfHosted)
                 {
-                    <div id="azure-user-info" class="col-xs-12 no-padding">*[[[ Editing user profile except the picture is not currently supported for]]] Azure Active Directory, Windows Active Directory, Office 365, database, OAuth [[[and]]] OpenID Connect [[[accounts]]]</div>
+                    <div id="azure-user-info" class="col-12 no-padding">*[[[ Editing user profile except the picture is not currently supported for]]] Azure Active Directory, Windows Active Directory, Office 365, database, OAuth [[[and]]] OpenID Connect [[[accounts]]]</div>
                 }
                 else
                 {
-                    <div id="azure-user-info" class="col-xs-12 no-padding">*[[[ Editing user profile except the picture is not currently supported for]]] Azure Active Directory, Office 365 [[[and]]] database [[[accounts.]]]</div>
+                    <div id="azure-user-info" class="col-12 no-padding">*[[[ Editing user profile except the picture is not currently supported for]]] Azure Active Directory, Office 365 [[[and]]] database [[[accounts.]]]</div>
                 }
             }
-            <div class="profile-section profile-section-second-div col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding admin-page-body">
-                <div id="edit-profile-form-div" class="col-sm-6 col-xs-12 no-padding margin-top10">
+            <div class="profile-section profile-section-second-div col-lg-12 col-md-12 col-sm-12 col-12 no-padding admin-page-body">
+                <div id="edit-profile-form-div" class="col-sm-6 margin-top10">
                     <form class="form-horizontal edit-profile-form" autocomplete="off">
                         <div class="form-group no-padding line-spacing" id="group-div">
                             <label class="label-panel text-right app-textbox-label">
                                 [[[Groups]]]
                             </label>
-                            <div class="col-sm-5 col-xs-12 group-list">
+                            <div class="col-sm-5 col-12 group-list">
                                 @{
                                     for (var group = 0; group < ViewBag.GroupList.Count; group++)
                                     {
-                                        <div id="groups" class="content-size" title="@ViewBag.GroupList[group].Name" data-html="false" data-container="body" data-toggle="tooltip" data-placement="auto top">
+                                        <div id="groups" class="content-size" title="@ViewBag.GroupList[group].Name" data-html="false" data-container="body" data-bs-toggle="tooltip" data-bs-placement="auto top">
                                             @ViewBag.GroupList[group].Name
                                         </div>
                                     }
@@ -207,7 +212,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
+                <div class="col-sm-4 col-md-4 col-lg-3 no-padding" id="message">
                     <h5 id="success-message"></h5>
                 </div>
             </div>

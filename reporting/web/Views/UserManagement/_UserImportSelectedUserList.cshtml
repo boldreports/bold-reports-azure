@@ -1,28 +1,28 @@
-﻿<div id="selected-join-query" class="col-xs-12">
-    <div class="pull-left connection-str-holder">
-        <label class="app-textbox-label pull-left">[[[Query to pull users :]]]</label>
+﻿<div id="selected-join-query" class="col-12">
+    <div class="float-end connection-str-holder">
+        <label class="app-textbox-label float-end">[[[Query to pull users :]]]</label>
         <div id="join-query">@ViewBag.JoinQuery </div>
     </div>
-    <div class="pull-left change-connection-btn">
+    <div class="float-end change-connection-btn">
         <button type="button" id="change-selected-column" class="primary-button app-btn-primary">[[[Change Query]]]</button>
     </div>
 </div>
-<div class="col-xs-12">
-    <div id="grid-info-content" class="pull-left">
+<div class="col-12">
+    <div id="grid-info-content" class="float-end">
         <span>[[[Please search and select the users from the following list to import]]] </span>
     </div>
-    <div class="pull-right search-user-holder">
+    <div class="float-end search-user-holder">
         <input id="search-database-users" type="text" autocomplete="off" placeholder="[[[Search users]]]" class="form-control">
-        <span id="clear-search" class="su su-inner-close close-icon" data-toggle="tooltip" data-placement="bottom" title="[[[Clear search]]]"></span>
-        <span class="su su-search search-user" data-toggle="tooltip" data-placement="bottom" title="[[[Search user]]]"></span>
+        <span id="clear-search" class="su su-inner-close close-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Clear search]]]"></span>
+        <span class="su su-search search-user" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Search user]]]"></span>
     </div>
 </div>
-<div id="error-value" class="col-xs-12">
+<div id="error-value" class="col-12">
     <span class="error-message"></span>
 </div>
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="user-detail-validation">
     {{if IsDuplicated}}
-    <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-toggle="tooltip" data-placement="left"></span>
+    <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-bs-toggle="tooltip" data-bs-placement="left"></span>
     {{/if}}
 </script>
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="checkbox-row-template">
@@ -62,8 +62,8 @@
     var gridData = @Json.Serialize(ViewBag.ExternalDatabaseUsers);
 </script>
 
-<div id="grid-container" class="col-xs-12">
-    <div class="col-xs-12 container-fluid page-inner-padding no-padding ">
+<div id="grid-container" class="col-12">
+    <div class="col-12 container-fluid page-inner-padding no-padding ">
         <div id="Grid">
         </div>
     </div>

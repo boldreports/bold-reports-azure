@@ -11,9 +11,9 @@
     @ServerAppConfig.AppSettings.Subscription.StripeKey
 </div>
 <div id="subscription-plan-container" class="admin-page-container">
-    <div id="subscription-plan-block" class="col-xs-12 no-padding">
+    <div id="subscription-plan-block" class="col-12 no-padding">
         <div class="col-md-12 import-area admin-page-header">
-            <hgroup class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+            <hgroup class="col-lg-6 col-md-6 col-sm-6 col-12 no-padding">
                 <h1 class="h2 page-title">[[[SUBSCRIPTION]]]</h1>
                 <h5 class="page-description">[[[Manage the subscription and plan for the]]] @GlobalAppSettings.BrandingDisplayName</h5>
             </hgroup>
@@ -22,7 +22,7 @@
         @*@if (!licenseSettings.IsKcBenefit && GlobalAppSettings.Branding == AppBranding.BoldBI.Identifier)
             {
                 <div class="admin-page-body free-plan-container">
-                    <h3 class="title free-plan-title col-xs-12">
+                    <h3 class="title free-plan-title col-12">
                         Get Free Subscription
                     </h3>
                     <p>
@@ -40,15 +40,15 @@
         @*@if (licenseSettings.IsKcBenefit)
             {
                 <div class="admin-page-body free-plan-container">
-                    <p class="title free-plan-active col-xs-12 no-padding">
+                    <p class="title free-plan-active col-12 no-padding">
                         <img class="success-image" src="@HttpRuntime.AppDomainAppVirtualPath/Content/Images/success.png" />
                         [[[Your free subscription through Syncfusion.com account is active!]]]
                     </p>
                     <span class="benefit-label"><b>@PlanDetails["Users"]</b> [[[Users]]]</span>
                     <span class="vertical-divider"></span>
                     <span class="benefit-label"><b>@(PlanDetails["Storage"])[[[GB]]]</b> [[[Storage]]]</span>
-                    <span class="col-xs-12 horizontal-divider"></span>
-                    <div class="col-xs-12 no-padding">
+                    <span class="col-12 horizontal-divider"></span>
+                    <div class="col-12 no-padding">
                         @if (isadditionalStoragePresent == null)
                         {
                             <div class="buy-additional-storage no-padding"><span id="add-my-storage" onclick="openBuyAdditionalStoragePartial();">[[[BUY ADDITIONAL STORAGE]]]</span></div>
@@ -59,7 +59,7 @@
 
                             <span class="storage-quantity"><b>@quantity GB</b> [[[Storage]]]</span>
 
-                            <span class="col-xs-12 horizontal-divider"></span>
+                            <span class="col-12 horizontal-divider"></span>
 
                             <div class="buy-additional-storage no-padding"><span id="upgrade-my-storage" onclick="openBuyAdditionalStoragePartial();">[[[UPGRADE MY STORAGE]]]</span></div>
                         }
@@ -72,8 +72,8 @@
             <div id="issubscriptioncancel" style="display:none">@ViewBag.IsSubscriptionCancel</div>
             <div id="currentPlanId" style="display: none">@Model.PlanId</div>
             <div class="admin-page-body">
-                <h3 class="title col-xs-12 sub-section-heading">[[[Plan Details]]]</h3>
-                <div class="col-xs-6 no-margin no-padding" id="plan-details-contianer">
+                <h3 class="title col-12 sub-section-heading">[[[Plan Details]]]</h3>
+                <div class="col-6 no-margin no-padding" id="plan-details-contianer">
                     <table class="table table-section">
                         <tr>
                             <th>[[[Particulars]]]</th>
@@ -115,7 +115,7 @@
                     {
                         if (!licenseSettings.IsKcBenefit && !ServerAppConfig.IsCustomPlan((SaaSPlan)(int.Parse(Model.PlanId))))
                         {
-                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" class="primary-button app-btn-primary pull-right">
+                            <button type="button" title="" id="change-plan-settings" name="ChangePlanSettings" class="primary-button app-btn-primary float-end">
                                 [[[Change Plan]]]
                             </button>
                         }
@@ -126,9 +126,9 @@
                     }
                 </div>
             </div>
-            <div class="col-xs-12 admin-page-body">
-                <h3 class="title col-xs-12 sub-section-heading">[[[Subscription Information]]]</h3>
-                <div class="col-xs-6 no-margin no-padding" id="subscription-information">
+            <div class="col-12 admin-page-body">
+                <h3 class="title col-12 sub-section-heading">[[[Subscription Information]]]</h3>
+                <div class="col-6 no-margin no-padding" id="subscription-information">
                     <table class="table table-section">
                         <tr>
                             <td>[[[Price]]]</td>
@@ -214,7 +214,7 @@
                     </table>
                 </div>
                 <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
+                    <button type="button" title="" id="change-subscription-settings" name="ChangeSubscriptionSettings" class="secondary-button app-btn-secondary cancel-subscription-button float-end disable-subscription">
                         [[[Cancel my subscription]]]
                     </button>
                 </div>
@@ -224,9 +224,9 @@
 </div>
 <div id="subscription-settings-container">
     <div id="cancel-subscription-container" class="admin-page-container hide-block">
-        <div id="cancel-subscription-block" class="col-xs-12 no-padding">
+        <div id="cancel-subscription-block" class="col-12 no-padding">
             <div class="col-md-12 import-area admin-page-header">
-                <hgroup class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+                <hgroup class="col-lg-6 col-md-6 col-sm-6 col-12 no-padding">
                     <h1 class="h2 page-title">[[[CANCEL MY SUBSCRIPTION]]]</h1>
                     <h5 class="page-description">[[[Cancel your subscription to]]] @GlobalAppSettings.BrandingDisplayName</h5>
                 </hgroup>
@@ -241,14 +241,14 @@
                         <div id="cancelsubscription-group-button">
                             <div class="col-lg-12 col-md-12 no-margin">
                                 @Html.CheckBox("deactivesubscription", new { @class = "material-checkbox" })
-                                @Html.Label("deactivesubscription", "[[[I choose to cancel my subscription]]]", new { @class = "pull-right toggle-space" })
+                                @Html.Label("deactivesubscription", "[[[I choose to cancel my subscription]]]", new { @class = "float-end toggle-space" })
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 no-margin">
-                            <button type="button" title="" name="ChangeSubscriptionSettings" class="primary-button app-btn-primary pull-right redirect-to-subscription-plan">
+                            <button type="button" title="" name="ChangeSubscriptionSettings" class="primary-button app-btn-primary float-end redirect-to-subscription-plan">
                                 [[[Go back]]]
                             </button>
-                            <button type="button" title="" id="enable-cancelsubscription" class="secondary-button app-btn-secondary cancel-subscription-button pull-right disable-subscription">
+                            <button type="button" title="" id="enable-cancelsubscription" class="secondary-button app-btn-secondary cancel-subscription-button float-end disable-subscription">
                                 [[[Cancel my subscription]]]
                             </button>
                         </div>
@@ -258,9 +258,9 @@
         </div>
     </div>
     <div id="reactivate-subscription-container" class="admin-page-container hide-block">
-        <div id="reactivate-subscription-block" class="col-xs-12 no-padding">
+        <div id="reactivate-subscription-block" class="col-12 no-padding">
             <div class="col-md-12 import-area admin-page-header">
-                <hgroup class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+                <hgroup class="col-lg-6 col-md-6 col-sm-6 col-12 no-padding">
                     <h1 class="h2 page-title">[[[REACTIVATE MY SUBSCRIPTION]]]</h1>
                     <h5 class="page-description">[[[Continue the subscription for]]] @GlobalAppSettings.BrandingDisplayName</h5>
                 </hgroup>
@@ -277,10 +277,10 @@
                         <span>[[[Your billing period and billed amount is not affected by this action if you have already paid for the current billing cycle. Click]]] <b>[[[Reactivate my subscription]]]</b> [[[to continue using reports.]]] </span>
                     }
                     <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-                        <button type="button" title="" class="secondary-button app-btn-secondary pull-right redirect-to-subscription-plan">
+                        <button type="button" title="" class="secondary-button app-btn-secondary float-end redirect-to-subscription-plan">
                             [[[Go back]]]
                         </button>
-                        <button type="button" title="" id="reactivate-subscription-button" class="primary-button app-btn-primary reactivate-subscription-button pull-right">
+                        <button type="button" title="" id="reactivate-subscription-button" class="primary-button app-btn-primary reactivate-subscription-button float-end">
                             [[[Reactivate my subscription]]]
                         </button>
                     </div>
@@ -293,15 +293,15 @@
 @*<div id="kc-link-popup" class="fluent-popup custom-bootstrap-styles custom-server-style">
         <div class="fluent-popup-header">
         <h4 class="popup-title">
-            <button id="close-kclink-popup" type="button" title="[[[Close]]]" class="close popup-close" aria-label="Close">
+            <button id="close-kclink-popup" type="button" title="[[[Close]]]" class="btn-close popup-close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </h4>
         </div>
         <div class="fluent-popup-body">
-            <div class="apply-coupon-section col-xs-12 no-padding">
+            <div class="apply-coupon-section col-12 no-padding">
                 <img class="syncfusion-logo" src="@(_globalAppSettings.SystemSettings.CDNLink + "/images/application/" + @ServerAppConfig.AppBranding + "/footer_logo.svg")" />
-                <label class="heading col-xs-12">[[[Connect your Syncfusion account]]]</label>
+                <label class="heading col-12">[[[Connect your Syncfusion account]]]</label>
                 <div class="fluent-popup-content">
                     <p>
                         [[[Get your code ]]]<a class="app-hyperlink" href="https://www.syncfusion.com/support/directtrac/incidents" target="_blank">[[[here]]]</a>.
@@ -311,7 +311,7 @@
                     <input class="form-control" maxlength="255" id="kc-coupon-code" placeholder="[[[Enter code here]]]" />
                 </div>
             </div>
-            <div class="coupon-error-section col-xs-12 no-padding" style="display:none">
+            <div class="coupon-error-section col-12 no-padding" style="display:none">
                 <h1 class="no-margin">[[[Oops!]]]</h1>
                 <p class="coupon-error-message">[[[Coupon code is not valid.]]]</p>
             </div>
@@ -328,7 +328,7 @@
     @*<div class="fluent-popup-header">
             <h4 class="popup-title">
                 <span id="additional-storage-dialog-header">[[[Buy additional storage]]]</span>
-                <button id="storage-close-popup" type="button" title="[[[Close]]]" class="close popup-close" aria-label="Close">
+                <button id="storage-close-popup" type="button" title="[[[Close]]]" class="btn-close popup-close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </h4>
@@ -377,13 +377,13 @@
             </div>*@
 
         <div id="billing-address-container" style="display: none;">
-            <form class="card-form no-padding col-xs-12" id="card-form-id">
+            <form class="card-form no-padding col-12" id="card-form-id">
                 <span>
                     <label id="billing-address-label" class="popup-label">[[[Billing Address]]]</label>
                 </span>
                 @await Html.PartialAsync("../Payment/_BillingAddressInputElements", (List<Country>)ViewBag.CountryList, new ViewDataDictionary(ViewData) { { "CardDetail", new CardDetail() } })
-                <div class="col-xs-12 col-md-12 no-padding">
-                    <div class="col-xs-5 col-md-5 no-padding" id="validation-detail">
+                <div class="col-12 col-md-12 no-padding">
+                    <div class="col-5 col-md-5 no-padding" id="validation-detail">
                         <span class="validation-error text"></span>
                     </div>
                 </div>
@@ -394,7 +394,7 @@
                 <div id="upgradecard-details">
                     @await Html.PartialAsync("../Payment/_CardInputElements")
                 </div>
-                <span class="col-xs-12 horizontal-divider"></span>
+                <span class="col-12 horizontal-divider"></span>
                 <div class="payment-summary">
                     <label class="storage-payment-label">[[[Total Payment]]]</label>
                     <span class="storage-total-price">${{storageSelectionSize*10}} / Mo</span>
@@ -404,17 +404,17 @@
     </div>
     @*<div id="additional-storage-button" class="fluent-popup-footer">
             <div id="button-container" class="col-lg-12 col-md-12">
-                <button type="button" id="storage-close-popup-button" class="app-button app-secondary-button app-btn-secondary pull-right">[[[Close]]]</button>
+                <button type="button" id="storage-close-popup-button" class="app-button app-secondary-button app-btn-secondary float-end">[[[Close]]]</button>
                 @if (isCardExist)
                 {
-                    <button type="button" id="storage-pay-now-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Pay Now]]]</button>
+                    <button type="button" id="storage-pay-now-button" class="app-button app-primary-button app-btn-primary float-end">[[[Pay Now]]]</button>
                 }
                 else
                 {
-                    <button type="button" id="billing-address-proceed-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Next]]]</button>
-                    <button type="button" id="card-detail-proceed-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Next]]]</button>
-                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button app-btn-primary pull-right" style="display: none;">[[[Pay Now]]]</button>
-                    <button type="button" id="storage-back-popup-button" class="app-button app-secondary-button app-btn-secondary pull-left" style="display: none;">[[[Back]]]</button>
+                    <button type="button" id="billing-address-proceed-button" class="app-button app-primary-button app-btn-primary float-end">[[[Next]]]</button>
+                    <button type="button" id="card-detail-proceed-button" class="app-button app-primary-button app-btn-primary float-end" style="display: none;">[[[Next]]]</button>
+                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button app-btn-primary float-end" style="display: none;">[[[Pay Now]]]</button>
+                    <button type="button" id="storage-back-popup-button" class="app-button app-secondary-button app-btn-secondary float-end" style="display: none;">[[[Back]]]</button>
                 }
             </div>
         </div>*@

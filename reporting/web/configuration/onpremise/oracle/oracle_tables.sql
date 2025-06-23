@@ -643,6 +643,7 @@ CREATE TABLE BOLDRS_DeploymentReports (
     IsReportLocked NUMBER(5) NOT NULL,
     IsDatasourceLocked NUMBER(5) NOT NULL,
     IsDatasetLocked NUMBER(5) NOT NULL,
+    IsMakeReportPublic NUMBER(5) NOT NULL,
     Description VARCHAR2(1026),
     CreatedById NUMBER NOT NULL,
     CreatedDate TIMESTAMP NOT NULL,

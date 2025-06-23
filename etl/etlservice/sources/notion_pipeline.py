@@ -9,12 +9,12 @@ def load_databases() -> None:
     """
     pipeline = dlt.pipeline(
         pipeline_name="{0}_pipeline",
-        destination='{1}',
-        staging = {2},
+        destination='{2}',
+        staging = {3},
         dataset_name="{0}",
-    )
-
-    data = {0}
+     )
+ 
+    data = {1}
 
     info = pipeline.run(data)
     print(info)

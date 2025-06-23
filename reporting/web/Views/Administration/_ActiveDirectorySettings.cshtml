@@ -111,7 +111,7 @@
                     addUserDirectoryLog("site");
                 }
                 if (!section.includes('?')) {
-                    var defaultVisibleTab = $("#ad-tab-nav li.active a").attr("id");
+                    var defaultVisibleTab = $("#ad-tab-nav li a.active").attr("id");
 
                     if (defaultVisibleTab == ("windows-ad")) {
                         history.pushState(null, '', '?tab=windows-ad');
@@ -158,60 +158,63 @@
 
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
-    <div id="active-directory-container" role="tabpanel" class="col-xs-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
+    <div id="active-directory-container" role="tabpanel" class="col-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
 
         <div class="col-md-12 import-area admin-page-header">
-            <hgroup class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
-                <h1 class="h2 page-title">[[[USER DIRECTORIES]]]</h1>
-                <h5 class="page-description">[[[Configure external user directories.]]]</h5>
-            </hgroup>
-            @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.UserDirectorySettings])))
-            {
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
-                    <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" id="schedule-synchronization" title="[[[Synchronize schedules]]]">
-                        <span>[[[Synchronization]]] </span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu multi-level pull-right" role="menu" id="synchronization-options">
-                        @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD)
-                        {
+            <div class="d-flex justify-content-between align-items-start flex-wrap">
+                <hgroup class="no-padding">
+                    <h1 class="h2 page-title mb-1">[[[USER DIRECTORIES]]]</h1>
+                    <h5 class="page-description">[[[Configure external user directories.]]]</h5>
+                </hgroup>
+
+                @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.UserDirectorySettings])))
+                {
+                    <div class="dropdown mt-2 mt-md-0">
+                        <button class="btn btn-primary dropdown-toggle primary-button app-btn-primary" data-bs-toggle="dropdown" id="schedule-synchronization" title="[[[Synchronize schedules]]]">
+                            <span>[[[Synchronization]]]</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="synchronization-options">
+                            @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD)
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("ScheduleSynchronization", "Administration")" data-bs-toggle="tooltip" data-bs-placement="left" data-container="body" title="[[[Synchronize Active Directory users and groups on a regular schedule]]]">
+                                        [[[AD Schedule Synchronization]]]
+                                    </a>
+                                </li>
+                            }
                             <li>
-                                <a href="@Url.Action("ScheduleSynchronization", "Administration")" data-toggle="tooltip" data-placement="left" data-container="body" title="[[[Synchronize Active Directory users and groups on a regular schedule]]]">
-                                    <span>[[[AD Schedule Synchronization]]]</span>
+                                <a class="dropdown-item" href="@Url.Action("ScheduleAzureSynchronization", "Administration")" data-bs-toggle="tooltip" data-bs-placement="left" title="[[[Synchronize Azure AD users and groups on a regular schedule]]]">
+                                    [[[Azure AD Schedule Synchronization]]]
                                 </a>
                             </li>
-                        }
-                        <li>
-                            <a href="@Url.Action("ScheduleAzureSynchronization", "Administration")" data-toggle="tooltip" data-placement="left" title="[[[Synchronize Azure AD users and groups on a regular schedule]]]">
-                                <span>[[[Azure AD Schedule Synchronization]]]</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("ScheduleDatabaseSynchronization", "Administration")" data-toggle="tooltip" data-placement="left" title="[[[Synchronize users and groups from database on a regular schedule]]]">
-                                <span>[[[Database Schedule Synchronization]]]</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            }
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("ScheduleDatabaseSynchronization", "Administration")" data-bs-toggle="tooltip" data-bs-placement="left" title="[[[Synchronize users and groups from database on a regular schedule]]]">
+                                    [[[Database Schedule Synchronization]]]
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
 
+            </div>
         </div>
 
         <div>
             <ul id="ad-tab-nav" class="nav nav-tabs" role="tablist">
                 @if (ServerAppConfig.IsSelfHosted && !isAzureApplication && enableWindowsAD && (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.UserDirectorySettings]))))
                 {
-                    <li role="presentation" class="active">
-                        <a href="#windows-ad-tab" id="windows-ad" aria-controls="windows-ad-tab" role="tab" data-toggle="tab">[[[Windows Active Directory]]]</a>
+                    <li role="presentation" class="nav-item">
+                        <a href="#windows-ad-tab" id="windows-ad" class="nav-link @(!isAzureApplication && enableWindowsAD ? "active" : "")" aria-controls="windows-ad-tab" role="tab" data-bs-toggle="tab">[[[Windows Active Directory]]]</a>
                     </li>
                 }
                 @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.UserDirectorySettings])))
                 {
-                    <li role="presentation" class="@(!ServerAppConfig.IsSelfHosted ? "active" : ServerAppConfig.IsSelfHosted && isAzureApplication ? "active" : !enableWindowsAD ? "active" : string.Empty )">
-                        <a href="#azure-ad-tab" id="azure-ad" aria-controls="azure-ad-tab" role="tab" data-toggle="tab">[[[Azure Active Directory]]]</a>
+                    <li role="presentation" class="nav-item">
+                        <a href="#azure-ad-tab" id="azure-ad" class="nav-link @((!ServerAppConfig.IsSelfHosted || (ServerAppConfig.IsSelfHosted && isAzureApplication) || !enableWindowsAD) ? "active" : "")" aria-controls="azure-ad-tab" role="tab" data-bs-toggle="tab">[[[Azure Active Directory]]]</a>
                     </li>
-                    <li role="presentation">
-                        <a href="#database-settings-tab" id="database-settings" aria-controls="database-settings-tab" role="tab" data-toggle="tab">[[[Database]]]</a>
+                    <li role="presentation" class="nav-item">
+                        <a href="#database-settings-tab" id="database-settings" class="nav-link" aria-controls="database-settings-tab" role="tab" data-bs-toggle="tab">[[[Database]]]</a>
                     </li>
                 }
             </ul>
@@ -225,7 +228,7 @@
                                 <div class="col-md-6 no-padding no-margin">
                                     @Html.Label("username", "[[[Username]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
 
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(windowsAdSettingsForm.userName.$dirty && windowsAdSettingsForm.userName.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(windowsAdSettingsForm.userName.$dirty && windowsAdSettingsForm.userName.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" name="userName" placeholder="[[[Username]]]" id="username" ng-model="windowsAduserName" ng-init="windowsAduserName='@activeDirectoryUserName'" required />
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.userName.$dirty && windowsAdSettingsForm.userName.$invalid">[[[Please enter username]]]</span>
                                     </div>
@@ -234,7 +237,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     @Html.Label("password", "[[[Password]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(windowsAdSettingsForm.passWord.$dirty && windowsAdSettingsForm.passWord.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(windowsAdSettingsForm.passWord.$dirty && windowsAdSettingsForm.passWord.$invalid) ? 'has-error' : ''">
                                         <input type="text" style="display: none;">
                                         <input style="visibility: hidden; position: absolute; left: -99999px" type="password" name="fake_passwordfield_to_turnoff_autocomplete">
                                         <input type="password" class="form-control col-md-6 no-margin" value="" name="passWord" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="password" ng-model="passWord" required />
@@ -246,7 +249,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     @Html.Label("ldapurl", "[[[LDAP URL]]](LDAP://)", new { @class = "app-textbox-label col-md-4 no-margin" })
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(windowsAdSettingsForm.ldapUrl.$dirty && windowsAdSettingsForm.ldapUrl.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(windowsAdSettingsForm.ldapUrl.$dirty && windowsAdSettingsForm.ldapUrl.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" name="ldapUrl" placeholder="[[[LDAP URL]]]" id="ldapurl" ng-model="windowsLdapUrl" ng-init="windowsLdapUrl='@ldapUrl'" ng-pattern="@ldapRegEx" required />
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.ldapUrl.$error.required && windowsAdSettingsForm.ldapUrl.$dirty ">[[[Please enter LDAP URL]]]</span>
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.ldapUrl.$error.pattern ">[[[Invalid LDAP URL]]]</span>
@@ -256,7 +259,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     @Html.Label("distinguished-name", "[[[Distinguished Name]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(windowsAdSettingsForm.distinguishedName.$dirty && windowsAdSettingsForm.distinguishedName.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(windowsAdSettingsForm.distinguishedName.$dirty && windowsAdSettingsForm.distinguishedName.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" name="distinguishedName" placeholder="[[[DC=example,DC=com]]]" id="distinguished-name" ng-model="windowsDistinguishedName" ng-init="windowsDistinguishedName='@distinguishedName'" ng-pattern="distinguishedNameRegex" required />
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.distinguishedName.$error.required && windowsAdSettingsForm.distinguishedName.$dirty ">[[[Please enter Distinguished Name]]]</span>
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.distinguishedName.$error.pattern ">[[[Invalid Distinguished Name]]]</span>
@@ -267,7 +270,7 @@
                                 <div class="col-md-6 no-padding no-margin enablesslcontainer">
                                     @Html.Label("enable-ldap-ssl", "[[[Enable SSL]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
 
-                                    <div class="col-md-8 form-input-field pull-left switch-align">
+                                    <div class="col-md-8 form-input-field float-end switch-align">
                                         <span class="material-switch text-left">
                                             <input type="checkbox" id="enable-ldap-ssl" name="enablessl" @((bool)ViewBag.SystemSettings.EnableSsl ? "checked" : string.Empty) />
                                             <label for="enable-ldap-ssl" class="label-primary"></label>
@@ -280,7 +283,7 @@
                                 <div class="col-md-6 no-padding no-margin">
                                     @Html.Label("ldap-port-number", "[[[Port Number]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
 
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(windowsAdSettingsForm.portNo.$dirty && windowsAdSettingsForm.portNo.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(windowsAdSettingsForm.portNo.$dirty && windowsAdSettingsForm.portNo.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" name="portNo" placeholder="[[[Port Number]]]" id="ldap-port-number" ng-model="windowsPortNo" ng-init="windowsPortNo='@ViewBag.SystemSettings.PortNo'" required />
                                         <span class="port-number-info">(Default: SSL: 636, Non-SSL: 389)</span>
                                         <span class="validation-message" ng-show="windowsAdSettingsForm.portNo.$dirty && windowsAdSettingsForm.portNo.$invalid">[[[Please enter Port Number]]]</span>
@@ -288,11 +291,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
+                                <div class="col-md-6 error-message" style="display: none; float:right"></div>
+                                <div class="col-md-6 success-message" style="display: none; float:right;"></div>
                                 <div class="col-md-6 no-margin no-padding">
-                                    <input type="button" id="test-windows-ad-connection" class="primary-button app-btn-primary pull-right test-connection" data-toggle="tooltip" data-placement="top" data-container="body" title="[[[Test Active Directory Connection]]]" value="[[[Test Connection]]]" ng-disabled="windowsAdSettingsForm.$invalid" />
+                                    <input type="button" id="test-windows-ad-connection" class="primary-button app-btn-primary float-end test-connection" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" title="[[[Test Active Directory Connection]]]" value="[[[Test Connection]]]" ng-disabled="windowsAdSettingsForm.$invalid" />
                                 </div>
-                                <div class="col-md-6 error-message" style="display: none"></div>
-                                <div class="col-md-6 success-message" style="display: none"></div>
                             </div>
                         </form>
                     </div>
@@ -304,7 +307,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     <label class="app-textbox-label col-md-4 no-margin">[[[Tenant Name]]]</label>
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(azureAdSettingsForm.tenantName.$dirty && azureAdSettingsForm.tenantName.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(azureAdSettingsForm.tenantName.$dirty && azureAdSettingsForm.tenantName.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" ng-model="azureTenantName" ng-init="azureTenantName='@ViewBag.AzureADSetting.TenantName'" name="tenantName" placeholder="example.onmicrosoft.com" id="tenantName" ng-pattern="regex" required />
                                         <span class="validation-message" ng-show="azureAdSettingsForm.tenantName.$error.required && azureAdSettingsForm.tenantName.$dirty ">[[[Please enter tenant name]]]</span>
                                         <span class="validation-message" ng-show="azureAdSettingsForm.tenantName.$error.pattern ">[[[Please enter valid URL]]]</span>
@@ -314,7 +317,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     <label class="app-textbox-label col-md-4 no-margin">[[[Client Id]]]</label>
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid) ? 'has-error' : ''">
                                         <input type="text" class="form-control col-md-6 no-margin" ng-model="azureClientId" name="clientId" ng-init="azureClientId='@ViewBag.AzureADSetting.ClientId'" placeholder="[[[Client Id]]]" id="clientId" required />
                                         <span class="validation-message" ng-show="azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid">[[[Please enter client id]]]</span>
                                     </div>
@@ -323,7 +326,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret Code]]]</label>
-                                    <div class="col-md-8 no-margin form-input-field" ng-class="(azureAdSettingsForm.clientKey.$dirty && azureAdSettingsForm.clientKey.$invalid) ? 'has-error' : ''">
+                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(azureAdSettingsForm.clientKey.$dirty && azureAdSettingsForm.clientKey.$invalid) ? 'has-error' : ''">
                                         <input type="text" style="display: none;">
                                         <input style="visibility: hidden; position: absolute; left: -99999px" type="password" name="fake_passwordfield_to_turnoff_autocomplete">
                                         <input type="password" class="form-control col-md-6 no-margin" value="" ng-model="azureClientKey" name="clientKey" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="clientKey" required />
@@ -337,7 +340,7 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin enablesslcontainer">
                                     <label class="app-textbox-label col-md-4 no-margin">[[[Delete Group Users]]]</label>
-                                    <div class="col-md-8 form-input-field pull-left switch-align">
+                                    <div class="col-md-8 form-input-field float-end switch-align float-end">
                                         <span class="material-switch text-left">
                                             <input type="checkbox" id="delete-group-users" name="deletegroupusers" @((bool)ViewBag.AzureADSetting.DeleteGroupUsers ? "checked" : string.Empty) />
                                             <label for="delete-group-users" class="label-primary"></label>
@@ -350,11 +353,11 @@
                             @if (ViewBag.ThirdPartyLogins)
                             {
                                 <div class="col-md-12">
+                                    <div class="col-md-6 error-message" style="display: none; float:right;"></div>
+                                    <div class="col-md-6 success-message" style="display: none; float:right;"></div>
                                     <div class="col-md-6 no-padding no-margin">
-                                        <input type="button" id="testAzureConnection" ng-disabled="azureAdSettingsForm.$invalid" class="primary-button app-btn-primary test-connection pull-right" title="[[[Test Azure Active Directory Connection]]]" value="[[[Test Connection]]]" />
+                                        <input type="button" id="testAzureConnection" ng-disabled="azureAdSettingsForm.$invalid" class="primary-button app-btn-primary test-connection float-end" title="[[[Test Azure Active Directory Connection]]]" value="[[[Test Connection]]]" />
                                     </div>
-                                    <div class="col-md-6 error-message" style="display: none"></div>
-                                    <div class="col-md-6 success-message" style="display: none"></div>
                                 </div>
                             }
                         </form>
@@ -373,7 +376,7 @@
                                                     <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                         [[[Database type]]]
                                                     </label>
-                                                    <div class="col-md-8 connect-database-padding txt-holder">
+                                                    <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                         <select id="database-type" class="selectpicker">
                                                             @if (ViewBag.DbSettings.DatabaseName != null)
                                                             {
@@ -412,7 +415,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Server name]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="txt-servername" name="servername" class="form-control" placeholder="[[[Server name]]]" value="@serverName" />
                                                     <span class="validation-txt-errors"></span>
                                                 </div>
@@ -423,7 +426,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Authentication]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <select id="check-windows" class="selectpicker">
                                                         @if (ViewBag.DbSettings.AuthenticationType == AuthenticationType.SqlServer)
                                                         {
@@ -442,7 +445,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Username]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="txt-login" name="username" class="form-control" placeholder="[[[Username]]]" value="@userName" />
                                                     <span class="validation-txt-errors"></span>
                                                 </div>
@@ -453,7 +456,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Password]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" style="display: none;">
                                                     <input type="password" id="txt-password-db" name="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" />
                                                     <span id="password-field" class="validation-txt-errors"></span>
@@ -466,7 +469,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Database name]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="txt-dbname" name="dbname" class="form-control system-settings-startup-page-fields dbname-fields db-fields" value="@databaseName" placeholder="[[[Existing Database name]]]" autocomplete="off">
                                                     <div class="loader-blue loader-icon database-select-loader-icon display-none " id="sql-loader-icon">
                                                         <svg class="circular">
@@ -477,13 +480,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 form-group">
-                                            @Html.Label("secure-sql-connection", "[[[Enable SSL]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4" })
-                                            <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 switch-align">
-                                                <span class="material-switch text-left">
-                                                    <input type="checkbox" id="secure-sql-connection" name="secure-sql-connection" @((bool)@ViewBag.DbSettings.SslEnabled ? "checked" : string.Empty) />
-                                                    <label for="secure-sql-connection" class="label-primary"></label>
-                                                </span>
+                                        <div class="col-md-12 form-group">
+                                              <div class="col-md-6 no-padding no-margin">
+                                                @Html.Label("secure-sql-connection", "[[[Enable SSL]]]", new { @class = "app-textbox-label col-md-4 txt-holder" })
+                                                <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-8 switch-align float-end">
+                                                    <span class="material-switch text-left">
+                                                        <input type="checkbox" id="secure-sql-connection" name="secure-sql-connection" @((bool)@ViewBag.DbSettings.SslEnabled ? "checked" : string.Empty) />
+                                                        <label for="secure-sql-connection" class="label-primary"></label>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -493,7 +498,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Server name]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="postgresql-servername" name="servername" class="form-control" placeholder="[[[Server name]]]" value="@ViewBag.DbSettings.ServerName" />
                                                     <span class="validation-txt-errors"></span>
                                                 </div>
@@ -504,7 +509,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Port]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="postgresql-port" name="port" class="form-control" placeholder="[[[Port]]]" value="@ViewBag.DbSettings.Port" />
                                                     <span class="validation-txt-errors"></span>
                                                 </div>
@@ -515,7 +520,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Username]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="postgresql-login" name="username" class="form-control" placeholder="[[[Username]]]" value="@userName" />
                                                     <span class="validation-txt-errors"></span>
                                                 </div>
@@ -526,7 +531,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Password]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" style="display: none;">
                                                     <input type="password" id="postgresql-password-db" name="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off" />
                                                     <span id="password-field" class="validation-txt-errors"></span>
@@ -539,7 +544,7 @@
                                                 <label class="col-md-4 connect-database-padding txt-holder app-textbox-label">
                                                     [[[Database name]]]
                                                 </label>
-                                                <div class="col-md-8 connect-database-padding txt-holder">
+                                                <div class="col-md-8 connect-database-padding txt-holder float-end">
                                                     <input type="text" id="postgresql-dbname" name="dbname" class="form-control system-settings-startup-page-fields dbname-fields db-fields" value="@databaseName" placeholder="[[[Existing Database name]]]" autocomplete="off">
                                                     <div class="loader-blue loader-icon database-select-loader-icon display-none " id="postgresql-loader-icon">
                                                         <svg class="circular">
@@ -550,9 +555,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                            @Html.Label("secure-postgresql-connection", "[[[Enable SSL]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-xs-4" })
-                                            <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-xs-8 switch-align">
+                                        <div class="col-md-6 form-group">
+                                            @Html.Label("secure-postgresql-connection", "[[[Enable SSL]]]", new { @class = "app-textbox-label col-lg-2 col-md-2 col-sm-3 col-4" })
+                                            <div class="form-input-field col-lg-4 col-md-5 col-sm-6 col-8 switch-align">
                                                 <span class="material-switch text-left">
                                                     <input type="checkbox" id="secure-postgresql-connection" name="secure-postgresql-connection" @((bool)@ViewBag.DbSettings.SslEnabled ? "checked" : string.Empty) />
                                                     <label for="secure-postgresql-connection" class="label-primary"></label>
@@ -565,7 +570,7 @@
                                 {
                                     <div class="col-md-12 connection-properties-form">
                                         <div class="col-md-6">
-                                            <button type="button" id="test-connection" class="primary-button app-btn-primary pull-right" disabled="disabled">[[[Test Connection]]]</button>
+                                            <button type="button" id="test-connection" class="primary-button app-btn-primary float-end" disabled="disabled">[[[Test Connection]]]</button>
                                         </div>
                                         <div class="col-md-6 text-left connection-validation">
                                             <span id="test-connection-validation"></span>
@@ -573,7 +578,7 @@
                                     </div>
                                 }
                             </div>
-                            <div id="selected-schema-container" class="col-xs-12 selected-schema-container admin-page-body" style="display: none">
+                            <div id="selected-schema-container" class="col-12 selected-schema-container admin-page-body" style="display: none">
                             </div>
                         </div>
                     </div>
@@ -581,26 +586,26 @@
                 }
 
                 <div id="select-existing-join" style="display:none">
-                    <div class="col-xs-12 no-padding">
-                        <div class="col-xs-12 no-padding table-content">
+                    <div class="col-12 no-padding">
+                        <div class="col-12 no-padding table-content">
                             <table class="relation-list"></table>
                         </div>
                     </div>
                 </div>
 
                 <div id="get-join-details" style="display:none">
-                    <div class="col-xs-12 no-padding">
-                        <div class="col-xs-12 no-padding relation-select-content">
-                            <div class="col-xs-5 no-padding">
+                    <div class="col-12 no-padding">
+                        <div class="row col-12 no-padding relation-select-content">
+                            <div class="col-5 no-padding">
                                 <h5>[[[Left table]]]</h5>
-                                <div class="col-xs-12 no-padding">
+                                <div class="col-12 no-padding">
                                     <select id="left-table-selection" class="selectpicker"></select>
                                 </div>
-                                <div id="left-table-columnlist" class="col-xs-12 no-padding column-list">
+                                <div id="left-table-columnlist" class="col-12 no-padding column-list">
                                     <ul></ul>
                                 </div>
                             </div>
-                            <div class="col-xs-2 no-padding">
+                            <div class="col-2 no-padding">
                                 <div id="join-type-holder">
                                     <select id="join-type" class="selectpicker">
                                         <option value="inner join">[[[Inner Join]]]</option>
@@ -608,12 +613,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-5 no-padding">
+                            <div class="col-5 no-padding">
                                 <h5>[[[Right table]]]</h5>
-                                <div class="col-xs-12 no-padding">
+                                <div class="col-12 no-padding">
                                     <select id="right-table-selection" class="selectpicker" disabled="disabled"></select>
                                 </div>
-                                <div id="right-table-columnlist" class="col-xs-12 no-padding column-list">
+                                <div id="right-table-columnlist" class="col-12 no-padding column-list">
                                     <ul></ul>
                                 </div>
                             </div>
@@ -627,15 +632,15 @@
         @if (ViewBag.ThirdPartyLogins)
         {
             <div class="admin-page-actions col-lg-12 col-md-12">
-                <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-active-dir-settings" title="">[[[Cancel]]]</a>
+                <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary float-end" id="cancel-active-dir-settings" title="">[[[Cancel]]]</a>
                 @if (!isAzureApplication && enableWindowsAD)
                 {
-                    <button type="button" title="" id="update-active-dir-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right update-system-settings  @(!ServerAppConfig.IsSelfHosted ? " hidden" : string.Empty )" ng-disabled="windowsAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
+                    <button type="button" title="" id="update-active-dir-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end update-system-settings  @(!ServerAppConfig.IsSelfHosted ? " d-none" : string.Empty)" ng-disabled="windowsAdSettingsForm.$invalid" ng-click="">[[[Save]]]</button>
                 }
-                <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right @(ServerAppConfig.IsSelfHosted ? " hidden" : string.Empty)" ng-disabled="azureAdSettingsForm.$invalid" ng-click="" style="display:none">[[[Save]]]</button>
-                <button type="button" title="" id="save-db-settings" disabled="disabled" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right" style="display:none">[[[Save]]]</button>
-                <button type="button" id="connect-database" class="primary-button app-btn-primary pull-right connect-database-button" disabled="disabled" style="display:none">[[[Next]]]</button>
-                <button type="button" id="change-connection" class="primary-button app-btn-primary  pull-right" style="display:none">[[[Back]]]</button>
+                <button type="button" title="" id="UpdateAzureADSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end @(ServerAppConfig.IsSelfHosted ? " d-none" : string.Empty)" ng-disabled="azureAdSettingsForm.$invalid" ng-click="" style="display:none">[[[Save]]]</button>
+                <button type="button" title="" id="save-db-settings" disabled="disabled" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end" style="display:none">[[[Save]]]</button>
+                <button type="button" id="connect-database" class="primary-button app-btn-primary float-end connect-database-button" disabled="disabled" style="display:none">[[[Next]]]</button>
+                <button type="button" id="change-connection" class="primary-button app-btn-primary  float-end" style="display:none">[[[Back]]]</button>
             </div>
         }
 

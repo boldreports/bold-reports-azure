@@ -138,8 +138,8 @@
 
 @await Html.PartialAsync("_ProfileMenu")
 
-    <div id="embed-settings-container" class="col-xs-12 admin-page-container">
-        <div id="embed-settings-header" class="col-xs-12 admin-page-header">
+    <div id="embed-settings-container" class="col-12 admin-page-container">
+        <div id="embed-settings-header" class="col-12 admin-page-header">
             <hgroup>
                 <h1 class="h2 page-title">
                     [[[PERSONAL ACCESS TOKEN]]]
@@ -148,7 +148,7 @@
         </div>
         <div id="embed-settings-body" class="admin-page-body">
             <div id="get-secret-code" class="row input-field-wrapper">
-                <div class="col-xs-8 form-group expiry-dropdown">
+                <div class="row col-8 form-group expiry-dropdown mb-3">
                     @Html.Label("expiration", "[[[Expiration]]]", new { @class = "app-textbox-label col-md-4" })
                     <div class="form-input-field col-md-2" style="width: 110px;">
                         @Html.DropDownList("expiry", ViewBag.ExpirationDays as IEnumerable<SelectListItem>, new { @class = "selectpicker form-control", id = "expiration-days" })
@@ -158,20 +158,20 @@
                     </div>
 
                 </div>
-                <div class="col-xs-8 field-container-dashboard">
+                <div class="row col-8 field-container-dashboard">
                     <label class="col-md-4 app-textbox-label activation">
                         [[[Authentication token]]]
                     </label>
                     <div class="col-md-7 secret-code-container">
-                        <div id="secret-code-link" class="col-xs-6" style="display:none">
+                        <div id="secret-code-link" class="col-6" style="display:none">
                             <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Authentication token]]]" autocomplete="off" disabled="disabled">
                             <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
                         </div>
                         <button type="button" title="" id="generate-token" class="primary-button app-btn-primary">
                             [[[Generate Token]]]
                         </button>
-                        <div class="tool-tip col-xs-1">
-                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                        <div class="tool-tip col-1 no-caret">
+                            <span class="dropdown-toggle" data-bs-toggle="dropdown"><span class="su su-info" title=""></span></span>
                             <div class="dropdown-menu" role="menu">[[[With this Access token, reporting controls can be securely embedded in your application. It is also used to access all the Report Server REST APIs.]]]</div>
                         </div>
                         <div class="col-lg-5 bg-warning secret-code-notification">

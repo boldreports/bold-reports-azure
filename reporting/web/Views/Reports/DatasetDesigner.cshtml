@@ -20,7 +20,11 @@
     var language = CultureInfo.CurrentCulture.Name;
     var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var faviconLogo = globalAppSettings.SystemSettings.FavIcon;
-    var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+#if (BoldReportsCloud)
+    var reportServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint;
+#else
+     var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+#endif
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;
@@ -190,10 +194,11 @@
         var isEdit = "@ViewBag.isEdit";
         var datasource = decodeHtmlAsString("@datasourceName");
         var _CryptoAES = window['CryptoJS'];
-        var _keyCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
-        var _ivCode = (Math.random() + ' ').substring(2, 10) + (Math.random() + ' ').substring(2, 10);
+        var _keyCode = "@ViewBag.KeyCode";
+        var _ivCode = "@ViewBag.IvCode";
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
+        var encryptionKey = "@ViewBag.EncryptionKey";
         isEdit = isEdit.toLowerCase();
 
 		if(isEdit === "true"){
@@ -351,8 +356,7 @@
 
         function _injectKeys(args) {
             if (args && args.headers) {
-                args.headers.push({ 'Key': 'keyCode', 'Value': _keyCode });
-                args.headers.push({ 'Key': 'ivCode', 'Value': _ivCode });
+                args.headers.push({ 'Key': 'encryptionKey', 'Value': encryptionKey });
             }
         }
 
@@ -519,8 +523,7 @@
 
         function _setRequestHeader(req) {
             if (req) {
-                req.setRequestHeader('keyCode', _keyCode);
-                req.setRequestHeader('ivCode', _ivCode);
+                req.setRequestHeader('encryptionKey', encryptionKey);
             }
         }
 

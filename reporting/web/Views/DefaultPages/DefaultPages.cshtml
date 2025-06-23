@@ -11,6 +11,23 @@
     var activeDraftsCount = ViewBag.ActiveDraftsCount;
     var hasDashboards = (itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && (itemsCount[ItemType.Report] > 0) && (itemsCount[ItemType.Report] > activeDraftsCount));
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var pageHeader = string.Empty;
+    if (itemType.ToString() == ItemType.Schedule.ToString())
+    {
+        pageHeader = "[[[SCHEDULES]]]";
+    }
+    else if (itemType.ToString() == ItemType.Dataset.ToString())
+    {
+        pageHeader = "[[[DATASETS]]]";
+    }
+    else if (itemType.ToString() == ItemType.Datasource.ToString())
+    {
+        pageHeader = "[[[DATA SOURCES]]]";
+    }
+    else if (itemType.ToString() == ItemType.Report.ToString())
+    {
+        pageHeader = "[[[REPORTS]]]";
+    }
 }
 
 <environment include="Development,CloudDevelopment">
@@ -22,8 +39,12 @@
 <script nonce="@Context.Items["ScriptNonce"]">
     var dashboardItemCount = "@itemsCount[ItemType.Report]";
     var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
+    $(document).ready(function () {
+        $('#content-area').css('overflow', 'hidden');
+    });
 </script>
-<div class="col-xs-12 defafult-pages-container no-padding">
+@await Html.PartialAsync("../Shared/_TopHeaderSection", new ViewDataDictionary(ViewData) { { "PageHeader", pageHeader } })
+<div class="col-12 defafult-pages-container no-padding">
     <div class="default-pages">
         <img class="default-pages-dashboard-image" src="@(GlobalAppSettings.CdnDomain)/static/default-pages/v1/@fileName">
         <h1 class="default-pages-header">@(itemType == ItemType.Report ? "[[[Reports]]]" : itemType == ItemType.Schedule ? "[[[Schedules]]]" : itemType == ItemType.Datasource ? "[[[Data Sources]]]" : "[[[Datasets]]]")</h1>

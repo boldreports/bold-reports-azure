@@ -538,7 +538,7 @@ html {
                                         padding: 0;
                                         width: 400px !important;
 
-                                        #blob-storage-form {
+                                        #blob-storage-form, #oci-object-storage-form, #amazon-s3-storage-form {
                                             margin-top: 20px;
                                         }
 
@@ -567,6 +567,10 @@ html {
                                                     bottom: 10px;
                                                 }
                                             }
+                                        }
+
+                                        .amazon-s3-storage {
+                                            padding-top: 24px;
                                         }
 
                                         .database-types {
@@ -811,7 +815,7 @@ html {
 
             .isolation-code-container {
                 margin-top: 20px;
-                margin-bottom: 10%;
+                margin-bottom: 3%;
 
                 .isolation-code-value {
                     .e-disabled {
@@ -833,6 +837,15 @@ html {
                     color: $danger;
                     font-size: map-get($app-text-size, md);
                 }
+            }
+
+            .site-row-security-enabled {
+                margin-bottom: 5%;
+            }
+
+            .site-row-security-content {
+                color: $grey-600;
+                margin-top: 10px;
             }
 
             .attribute-header {

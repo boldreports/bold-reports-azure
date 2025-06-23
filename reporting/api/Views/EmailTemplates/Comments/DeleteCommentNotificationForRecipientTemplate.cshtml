@@ -229,7 +229,13 @@
                                                 <tr>
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;'>
                                                         <span>
+                                                            @{
+                                                                #pragma warning disable SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            }
                                                             @Html.Raw(Model.MailHeaderContent)
+                                                            @{
+                                                                #pragma warning restore SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            }
                                                         </span>
                                                     </td>
                                                 </tr>

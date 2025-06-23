@@ -25,8 +25,8 @@
 
 <div id="create-item-container">
     <aside class="create-menu create-menu-effect">
-        <div class="create-dashboard-section col-xs-12">
-            <div class="create-dashboard-header-section col-xs-12 no-padding">
+        <div class="create-dashboard-section col-12">
+            <div class="create-dashboard-header-section col-12 no-padding">
                 <div class="create-dashboard-header-title">
                     @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report] || (itemPermissions.ContainsKey(ItemType.Dataset) && (itemPermissions[ItemType.Dataset])) || (itemPermissions.ContainsKey(ItemType.Datasource) && (itemPermissions[ItemType.Datasource])) || (itemPermissions.ContainsKey(ItemType.Schedule) && (itemPermissions[ItemType.Schedule])))
                     {
@@ -38,8 +38,8 @@
                     }
                 </div>
             </div>
-            <div class="create-item-body-section col-xs-12 no-padding">
-                <ul class="col-xs-12 no-padding">
+            <div class="create-item-body-section col-12 no-padding">
+                <ul class="col-12 no-padding">
                     @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Report) && itemPermissions[ItemType.Report])
                     {
                         <li class="create-dashboard-scratch">
@@ -113,9 +113,9 @@
                 </ul>
             </div>
         </div>
-        <div class="create-item-section col-xs-12">
-            <div class="create-item-body-section col-xs-12 no-padding">
-                <ul class="col-xs-12 no-padding">
+        <div class="create-item-section col-12">
+            <div class="create-item-body-section col-12 no-padding">
+                <ul class="col-12 no-padding">
                     @if (isItemPageRequested && itemPermissions != null && itemPermissions.ContainsKey(ItemType.Category) && itemPermissions[ItemType.Category] && showImport)
                     {
                 <li id="add-new-category">
@@ -236,7 +236,7 @@
         <div class="save-draft-content-section">
             <div class="save-draft-title"></div>
             <div class="row save-draft-input-section">
-                <div class="col-xs-12 save-draft-input-segment">
+                <div class="col-12 save-draft-input-segment">
                     <span>
                         <input class="save-draft-input" id="save-draft-input" name="dashboardName" maxlength="255" tabindex="1" data-msg-containerid="plugin_validation" />
                     </span>

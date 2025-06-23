@@ -170,7 +170,13 @@
                                                 <tr>
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif;'>
                                                         <span>
+                                                            @{
+                                                                #pragma warning disable SCS0029 //There is no direct user input process for this issue. it will process from server end.
+                                                            }
                                                             @Html.Raw(Model.AlertHtmlMessage)
+                                                            @{
+                                                                #pragma warning restore SCS0029 //There is no direct user input process for this issue. it will process from server end.
+                                                            }
                                                         </span>
                                                     </td>
                                                 </tr>

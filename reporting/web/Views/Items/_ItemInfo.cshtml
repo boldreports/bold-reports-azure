@@ -3,7 +3,7 @@
         <h4 class="popup-title">
             <span class="su su-info"></span>
             <span id="info-dialog-header">[[[Info]]]</span>
-            <button id="close-info-dialog" type="button" title="[[[Close]]]" data-toggle="tool-tip" data-container="body" class="close popup-close" ng-click="closeItemInfo()" aria-label="Close">
+            <button id="close-info-dialog" type="button" title="[[[Close]]]" data-bs-toggle="tool-tip" data-container="body" class="btn-close popup-close" ng-click="closeItemInfo()" aria-label="Close">
                 <span class="su su-close"></span>
             </button>
         </h4>
@@ -51,10 +51,10 @@
 
     </div>
     <div class="fluent-popup-footer">
-        <div class="col-xs-12" ng-show="showDashboardLinkButton" ng-if="ItemDetail.ItemType != ItemType.Dataset && ItemDetail.ItemType != ItemType.DataSource">
+        <div class="col-12" ng-show="showDashboardLinkButton" ng-if="ItemDetail.ItemType != ItemType.Dataset && ItemDetail.ItemType != ItemType.DataSource">
             <a href="{{ItemDetail.ItemType == ItemType.Report ? viewDashboardUrl(ItemDetail.Id, ItemDetail.CategoryName, ItemDetail.Name, ItemDetail.IsDraft) : editReportPartUrl(ItemDetail.Id, ItemDetail.Name)}}" class="link-button app-btn-link" target="_blank" title="">{{GetInfoButtonText(ItemDetail.ItemType, ItemDetail.IsDraft)}}</a>
         </div>
-        <div class="col-xs-12 ng-hide" ng-show="!showDashboardLinkButton">
+        <div class="col-12 ng-hide" ng-show="!showDashboardLinkButton">
             <button class="secondary-button app-btn-secondary" ng-click="closeItemInfo()" title="">[[[Close]]]</button>
         </div>
     </div>

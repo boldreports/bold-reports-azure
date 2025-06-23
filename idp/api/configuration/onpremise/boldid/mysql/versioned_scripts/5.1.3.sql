@@ -1,4 +1,4 @@
-CREATE TABLE {database_name}.BoldTC_AICredentials(
+CREATE TABLE {database_name}.BOLDTC_AICredentials(
     Id char(38) NOT NULL,
     AIModel INT NOT NULL,
     AIConfiguration varchar(4000) NULL,

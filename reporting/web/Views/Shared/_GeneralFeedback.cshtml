@@ -20,20 +20,20 @@
         <div class="general-feedback-smiley">
             <label class="popup-label">[[[How was your]]] @GlobalAppSettings.BrandingDisplayName [[[experience?]]]</label>
             <div id="feedback-smiley">
-                <button class="terrible-smiley smiley-button smiley-change" data-toggle="tooltip" data-placement="bottom" title="[[[Terrible]]]" data-smiley-val="@CloudExperience.Terrible" >
+                <button class="terrible-smiley smiley-button smiley-change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Terrible]]]" data-smiley-val="@CloudExperience.Terrible" >
                     <img id="terrible_smiley_img" class="smiley" src="@cdnLink/cdn/images/terrible.svg" />
                 </button>
-                <button class="ok-smiley smiley-button smiley-change" data-toggle="tooltip" data-placement="bottom" title="[[[Okay]]]"  data-smiley-val="@CloudExperience.Okay">
+                <button class="ok-smiley smiley-button smiley-change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Okay]]]"  data-smiley-val="@CloudExperience.Okay">
                     <img id="ok_smiley_img" class="smiley" src="@cdnLink/cdn/images/okay.svg" />
                 </button>
-                <button class="good-smiley smiley-button smiley-change" data-toggle="tooltip" data-placement="bottom" title="[[[Amazing]]]" data-smiley-val="@CloudExperience.Amazing">
+                <button class="good-smiley smiley-button smiley-change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Amazing]]]" data-smiley-val="@CloudExperience.Amazing">
                     <img id="good_smiley_img" class="smiley" src="@cdnLink/cdn/images/amazing.svg" />
                 </button>
             </div>
         </div>
         <div class="general-feedback-subject">
             <label class="popup-label">[[[Select a subject:]]]</label>
-            <div class="col-xs-12 no-padding btn-group">
+            <div class="col-12 no-padding btn-group">
                 <button id="sub1" class="button sub-button first-subject" value="@FeedbackSubject.Problem">[[[Problem]]]</button>
                 <button id="sub2" class="button sub-button" value="@FeedbackSubject.Suggestion">[[[Suggestion]]]</button>
                 <button id="sub3" class="button sub-button" value="@FeedbackSubject.Compliment">[[[Compliment]]]</button>
@@ -52,10 +52,10 @@
     </div>
     <div id="general-feedback-button" class="fluent-popup-footer">
         <div id="button-container" class="col-lg-12 col-md-12">
-            <button type="button" id="cancel-button" class="app-button app-secondary-button app-btn-secondary cookie-button pull-right">[[[Cancel]]]</button>
-            <button type="button" id="do-not-show-button" data-cookie="Do-Not-Show" class="app-button app-secondary-button app-btn-secondary cookie-button pull-right">[[[Do not show]]]</button>
-            <button type="button" id="show-later-button" data-cookie="Show-Later" class="app-button app-secondary-button app-btn-secondary cookie-button pull-right">[[[Show Later]]]</button>
-            <button type="button" id="submit-button" data-cookie="Send-Cookie" class="app-button app-primary-button app-btn-primary pull-right" disabled="disabled">[[[Submit]]]</button>
+            <button type="button" id="cancel-button" class="app-button app-secondary-button app-btn-secondary cookie-button float-end">[[[Cancel]]]</button>
+            <button type="button" id="do-not-show-button" data-cookie="Do-Not-Show" class="app-button app-secondary-button app-btn-secondary cookie-button float-end">[[[Do not show]]]</button>
+            <button type="button" id="show-later-button" data-cookie="Show-Later" class="app-button app-secondary-button app-btn-secondary cookie-button float-end">[[[Show Later]]]</button>
+            <button type="button" id="submit-button" data-cookie="Send-Cookie" class="app-button app-primary-button app-btn-primary float-end" disabled="disabled">[[[Submit]]]</button>
         </div>
     </div>
     </div>

@@ -1,1 +1,3 @@
 ALTER TABLE BOLDRS_ItemLog MODIFY AdditionalLogInfo VARCHAR2(4000);
+ALTER TABLE BOLDRS_DeploymentReports ADD IsMakeReportPublic NUMBER(5) NOT NULL
+;

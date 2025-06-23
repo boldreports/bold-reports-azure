@@ -19,16 +19,16 @@
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/editdelete.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/editdelete.css")" crossorigin="anonymous" />
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/groups.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/groups.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/editgroup.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/editgroup.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/editdelete.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/editdelete.min.css")" crossorigin="anonymous" />
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/groups.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/groups.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/editgroup.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/editgroup.min.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     </environment>
@@ -81,7 +81,7 @@
                     if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length-1].toLowerCase() == "dashboards") {
                         refreshScroller();
                     }
-                    $('[data-toggle="tooltip"]').tooltip();
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 },
                 enableRowHover: true,
                 columns: [
@@ -141,7 +141,8 @@
             var deleteGroupWaitingPopupTemplateId = createLoader("delete-group-area_wrapper");
 			$("#delete-group-area_wrapper").ejWaitingPopup({ template:$("#" + deleteGroupWaitingPopupTemplateId) });
         });
-        $("#user-list").selectpicker("refresh");
+        $("#user-list").selectpicker('destroy');
+        $("#user-list").selectpicker();
         $(document).ready(function(){
             for(var i=0;i<$(".dropdown-menu .selectpicker li").length;i++)
             {
@@ -166,19 +167,19 @@
     @await Html.PartialAsync("../UserManagement/_UserMenu")
     <feature name=@FeatureManagement.Yokogawa>
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="nametemplate">
-            <a class="item-name grid-content" title="{{:DisplayName}}" data-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?id={{:UserId}}">{{:DisplayName}}</a>
+            <a class="item-name grid-content" title="{{:DisplayName}}" data-bs-toggle="tooltip" href="@Url.Action("ViewProfile", "UserManagement")?id={{:UserId}}">{{:DisplayName}}</a>
         </script>
     </feature>
     <feature name=@FeatureManagement.Yokogawa negate="true">
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="nametemplate">
-            <span class="item-name grid-content" title="{{:DisplayName}}" data-toggle="tooltip">{{:DisplayName}}</span>
+            <span class="item-name grid-content" title="{{:DisplayName}}" data-bs-toggle="tooltip">{{:DisplayName}}</span>
         </script>
     </feature>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="UsernameTemplate">
-        <span class="grid-content" title="{{:Username}}" data-toggle="tooltip">{{:Username}}</span>
+        <span class="grid-content" title="{{:Username}}" data-bs-toggle="tooltip">{{:Username}}</span>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="emailtemplate">
-        <span class="grid-content" title="{{:Email}}" data-toggle="tooltip">{{:CanShowEmail ? Email : ""}}</span>
+        <span class="grid-content" title="{{:Email}}" data-bs-toggle="tooltip">{{:CanShowEmail ? Email : ""}}</span>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="nameheader">
         <div class="item-name">[[[Name]]]</div>
@@ -201,102 +202,137 @@
         {{/if}}
     </script>
 
-    <div id="base-container" role="tabpanel" class="admin-page-container pull-left col-lg-12" ng-app="serverApp" ng-controller="GroupEditController">
-        <div id="group-header" class="import-area admin-page-header col-xs-12">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
-                <a class="back-button pull-left" href="@Url.Action("viewgroup","group")/@Context.Request.Query["groupId"]" data-toggle="tooltip" data-placement="top" title="[[[View Group]]]">
-                    <i class="su su-arrow-back back-navigaion img-size"> </i>
+    <div id="base-container" role="tabpanel" class="admin-page-container float-end col-lg-12" ng-app="serverApp" ng-controller="GroupEditController">
+        <div id="group-header" class="row align-items-center admin-page-header import-area">
+            <!-- Left Side: Back Arrow + Group Name -->
+            <div class="col-md-6 d-flex align-items-center p-0 flex-wrap">
+                <a class="back-button d-flex align-items-center me-2"
+                   href="@Url.Action("viewgroup", "group")/@Context.Request.Query["groupId"]"
+                   data-bs-toggle="tooltip" data-bs-placement="top" title="[[[View Group]]]">
+                    <i class="su su-arrow-back back-navigaion img-size"></i>
                 </a>
-                <h2 class="page-title adjust-style-for-backarrow header no-margin" ng-bind="allGroupDetails.GroupName" title="{{allGroupDetails.GroupName}}" maxlength="60"></h2>
+                <h2 class="page-title adjust-style-for-backarrow header m-0"
+                    ng-bind="allGroupDetails.GroupName"
+                    title="{{allGroupDetails.GroupName}}"
+                    maxlength="60">
+                </h2>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding pull-right">
-                <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="dropdown" title="[[[Manage]]]">
-                    <span>[[[Manage]]] </span>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu manage-group-dropdown multi-level" role="menu" id="dropdown-options">
-                    @if (ViewBag.IsLocalDirectory)
-                    {
-                        <feature name=@FeatureManagement.Yokogawa>
-                            <li id="add-user-button" title="[[[Add user]]]">
-                                <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
-                                    <i class="su su-user-add"> </i>
-                                    <span>[[[Add User]]]</span>
-                                </a>
-                            </li>
+
+            <!-- Right Side: Manage Dropdown -->
+            <div class="col-md-6 text-end p-0">
+                <div class="dropdown d-inline-block">
+                    <button class="btn dropdown-toggle primary-button app-btn-primary"
+                            data-bs-toggle="dropdown"
+                            title="[[[Manage]]]">
+                        <span>[[[Manage]]]</span>
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu manage-group-dropdown multi-level" role="menu" id="dropdown-options">
+                        @if (ViewBag.IsLocalDirectory)
+                        {
+                            <feature name=@FeatureManagement.Yokogawa>
+                                <li id="add-user-button" title="[[[Add user]]]">
+                                    <a href="#" class="dropdown-item prevent-default-action"
+                                       data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="[[[Add user]]]">
+                                        <i class="su su-user-add me-2"></i>
+                                        <span>[[[Add User]]]</span>
+                                    </a>
+                                </li>
+                            </feature>
+                        }
+
+                        <feature name=@FeatureManagement.Yokogawa negate="true">
+                            @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && ViewBag.IsLocalDirectory)
+                            {
+                                <li id="add-user-button" title="[[[Add user]]]">
+                                    <a href="#" class="dropdown-item prevent-default-action"
+                                       data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="[[[Add user]]]">
+                                        <i class="su su-user-add me-2"></i>
+                                        <span>[[[Add User]]]</span>
+                                    </a>
+                                </li>
+                            }
                         </feature>
-                    }
-                    <feature name=@FeatureManagement.Yokogawa negate="true">
-                        @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && ViewBag.IsLocalDirectory)
+
+                        <feature name=@FeatureManagement.Yokogawa>
+                            @if (ViewBag.IsLocalDirectory && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
+                            {
+                                <li id="add-owner-button"
+                                    title="[[[Add Owner]]]"
+                                    data-groupid="@Context.Request.Query["groupId"]"
+                                    data-groupname="{{allGroupDetails.GroupName}}">
+                                    <a href="#" class="dropdown-item prevent-default-action"
+                                       data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="[[[Add Owner]]]">
+                                        <i class="su su-add-owner me-2"></i>
+                                        <span>[[[Add Owner]]]</span>
+                                    </a>
+                                </li>
+                            }
+                        </feature>
+
+                        @if (isAdmin || granularPermissions[PermissionEntity.AllPermissions] || granularPermissions[PermissionEntity.SpecificPermissions])
                         {
-                            <li id="add-user-button" title="[[[Add user]]]">
-                                <a href="#" class="prevent-default-action" title="[[[Add user]]]" data-toggle="tooltip" data-placement="top">
-                                    <i class="su su-user-add"> </i>
-                                    <span>[[[Add User]]]</span>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="@Url.Action("grouppermission", "permission")?groupId=@Context.Request.Query["groupId"]"
+                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                   title="[[[Manage Permissions]]]">
+                                    <i class="su su-manage-permission me-2"></i>
+                                    <span>[[[Manage Permissions]]]</span>
                                 </a>
                             </li>
                         }
-                    </feature>
-                    <feature name=@FeatureManagement.Yokogawa>
-                        @if (ViewBag.IsLocalDirectory && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
+
+                        @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || granularPermissions[PermissionEntity.SpecificGroup]) && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
                         {
-                            <li id="add-owner-button" title="[[[Add Owner]]]" data-groupid="@Context.Request.Query["groupId"]" data-groupname="{{allGroupDetails.GroupName}}">
-                                <a href="#" class="prevent-default-action" title="[[[Add Owner]]]" data-toggle="tooltip" data-placement="top">
-                                    <i class="su su-add-owner"> </i>
-                                    <span>[[[Add Owner]]]</span>
+                            <li id="delete-button" class="delete"
+                                title="[[[Delete Group]]]"
+                                data-groupid="@Context.Request.Query["groupId"]"
+                                data-groupname="{{allGroupDetails.GroupName}}">
+                                <a href="#" class="dropdown-item prevent-default-action"
+                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                   title="[[[Delete Group]]]">
+                                    <i class="su su-delete me-2"></i>
+                                    <span>[[[Delete Group]]]</span>
                                 </a>
                             </li>
                         }
-                    </feature>
-                    @if (isAdmin || granularPermissions[PermissionEntity.AllPermissions] || granularPermissions[PermissionEntity.SpecificPermissions])
-                    {
-                        <li>
-                            <a href="@Url.Action("grouppermission", "permission")?groupId=@Context.Request.Query["groupId"]" title="[[[Manage Permissions]]]" data-toggle="tooltip" data-placement="top">
-                                <i class="su su-manage-permission"></i>
-                                <span>[[[Manage Permissions]]]</span>
-                            </a>
-                        </li>
-                    }
-                    @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups] || granularPermissions[PermissionEntity.SpecificGroup]) && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)
-                    {
-                        <li id="delete-button" class="delete" title="[[[Delete Group]]]" data-groupid="@Context.Request.Query["groupId"]" data-groupname="{{allGroupDetails.GroupName}}">
-                            <a href="#" class="prevent-default-action" title="[[[Delete Group]]]" data-toggle="tooltip" data-placement="top">
-                                <i class="su su-delete"></i>
-                                <span>[[[Delete Group]]]</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="active-directory-form col-lg-12 admin-page-body">
-            <form class="tab-content col-xs-12 group-form" id="info-container" autocomplete="off">
+            <form class="tab-content col-12 group-form" id="info-container" autocomplete="off">
                 <div class="row">
-                    <div class="group-info-label col-xs-2 pull-left text-right">[[[Name]]]<span class="mandatory">*</span></div>
-                    <div class="group-info-text col-md-6 col-xs-8 pull-left" id="group-name">
+                    <div class="group-info-label col-2 float-end text-right">[[[Name]]]<span class="mandatory">*</span></div>
+                    <div class="group-info-text col-md-6 float-end" id="group-name">
                         <input type="text" autocomplete="off" placeholder="[[[Group name]]]" name="groupname" ng-bind="allGroupDetails.GroupName" ng-value="allGroupDetails.GroupName" class="form-control NotificationContent" maxlength="60" id="group-info-name" />
                         <span id="invalid-groupname" class="error-message" title="[[[Please enter group name]]]" data-content=""></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="group-info-label col-md-2 col-xs-2 pull-left text-right ">[[[Description]]]</div>
-                    <div class="group-info-text col-md-6 col-xs-8 pull-left">
+                    <div class="group-info-label col-md-2 col-2 float-end text-right ">[[[Description]]]</div>
+                    <div class="group-info-text col-md-6 float-end">
                         <textarea class="form-control notification-content" maxlength="1024" id="group-info-description" ng-bind="allGroupDetails.GroupDescription"></textarea>
                         <div id="required-content">
                             [[[*1024 characters maximum]]]
                         </div>
                     </div>
                 </div>
-                <div class="group-info-label col-md-4 col-xs-6 pull-left"></div>
-                <div class="col-md-4 col-xs-5 pull-left pull-right padding-right margin-left">
+                <div class="group-info-label col-md-4 col-4 float-end"></div>
+                <div class="col-md-4 col-5 float-end margin-left">
                     <span id="group-edit-confirmation"></span>
-                    <input id="group-title-container-save-button" title="" class="group-save-button pull-right primary-button app-btn-primary small-inner-margin no-margin" type="button" value="[[[Save]]]" name="save">
+                    <input id="group-title-container-save-button" title="" class="group-save-button float-end primary-button app-btn-primary small-inner-margin no-margin" type="button" value="[[[Save]]]" name="save">
                 </div>
             </form>
             <input type="hidden" name="hiddengroupId" id="hidden-group-id" value="@Context.Request.Query["groupId"]" />
-            <div id="people-container" class="tab-content col-md-12 col-xs-12 page-inner-small-padding droppable">
-                <div class="col-xs-12 pull-right user-content">
+            <div id="people-container" class="tab-content col-md-12 col-12 page-inner-small-padding droppable">
+                <div class="col-12 float-end user-content">
                     <span style="" class="user-list-text">[[[Add user]]] :</span>
                     <div id="user-list-container">
                         <select class="selectpicker" multiple autofocus="" data-size="8" data-none-results-text="[[[No results match]]]" data-live-search="true" data-actions-box="true" title='[[[Select user(s)]]]' id="user-list" style="float: right;">
@@ -304,10 +340,10 @@
                         </select>
                     </div>
                     <input id="user-save-button" disabled="" title="[[[Add selected user(s) to the group]]]" class="group-save-button primary-button app-btn-primary" type="button" value="[[[Add]]]" name="save" />
-                    <div id="search-area">
-                        <input type="text" id="search-group-users" placeholder="[[[Search users]]]" autocomplete="off" />
-                        <span class="su su-inner-close close-icon" id="clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-group-users" title="[[[Search users]]]"></span>
+                    <div id="search-area" class="float-end">
+                        <input type="text" id="search-group-users" class="float-start no-margin" placeholder="[[[Search users]]]" autocomplete="off" />
+                        <span class="su su-inner-close close-icon float-end no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-group-users float-end no-margin" title="[[[Search users]]]"></span>
                     </div>
                 </div>
                 <div id="Grid" data-gridname="EditGroup" class="grid">

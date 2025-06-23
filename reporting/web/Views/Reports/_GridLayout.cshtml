@@ -52,7 +52,7 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="description">
-    <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-bs-toggle="tooltip" data-bs-placement="top">
         <span>
             {{>Description}}
         </span>
@@ -60,25 +60,25 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="category">
-    <span title="{{:CategoryName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CategoryName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{>CategoryName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="createdbydisplayname">
-    <span title="{{:CreatedByDisplayName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CreatedByDisplayName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{>CreatedByDisplayName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="gridhoveroptions">
-    <div class="grid-hover" data-toggle="tooltip" data-placement="top">
+    <div class="grid-hover" data-bs-toggle="tooltip" data-bs-placement="top">
         {{if !IsDraft && @(Convert.ToBoolean(hideOpen).ToString().ToLower()) == false }}
             <a class="dashboard-open grid-hover-options " title="[[[Open]]]" href="@dashboardUrl/{{:Id}}/{{:CategoryName}}/{{:Name}}?showmyreports=1" target="_blank">
                 <i class="su su-external-link"></i>
             </a>
         {{/if}}
-       {{if CanWrite && !IsDraft && @(Convert.ToBoolean(hideEdit).ToString().ToLower()) == false }}
+       {{if (CanWrite || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && !IsDraft && @(Convert.ToBoolean(hideEdit).ToString().ToLower()) == false }}
            <span class="grid-hover-options" title="[[[Edit]]]" data-item-id="{{:Id}}" data-item-name="{{:Name}}" data-category-name="{{:CategoryName}}" id="edit-report">
              <i class="su su-edit"></i>
            </span>
@@ -99,7 +99,7 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemname">
-    <div class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-name grid-content" title="{{:Name}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{if !IsDraft}}
             <a href="@Url.Action("Reports", "Reports")/{{:Id}}/{{:CategoryName}}/{{:Name}}" style="max-width: 100%;vertical-align: middle;" target="_blank">
                 <span>
@@ -119,7 +119,7 @@
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
     <div class="dropdown context-menu">
         {{if @(Convert.ToBoolean(hideContextMenu).ToString().ToLower()) == false }}
-        <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
+        <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-bs-toggle="dropdown">
             <i class="su su-options"></i>
         </span>
         {{/if}}
@@ -161,7 +161,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanDownload && !IsLocked && @(Convert.ToBoolean(hideDownload).ToString().ToLower()) == false }}
+            {{if (CanDownload || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && !IsLocked && @(Convert.ToBoolean(hideDownload).ToString().ToLower()) == false }}
             <li>
                 <a href="@downloadReportUrl/{{:ItemType}}/{{:Id}}/{{:CategoryName}}/{{:Name}}" id="download-report">
                     <i class="su su-download"></i>
@@ -172,7 +172,7 @@
             {{if ~checkTablet()}}
             {{if (@(Convert.ToBoolean(ServerAppConfig.EnableViewsInReportsMenu).ToString().ToLower()) == true) && @(Convert.ToBoolean(hideViews).ToString().ToLower()) == false }}
                 <li class="dropdown dashboard-views" data-load="true" >
-                    <a href="#" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" class="dropdown-toggle views" data-toggle="dropdown" id="report-views">
+                    <a href="#" data-item-id="{{:Id}}" child-dashboard="{{:IsChildDashboard}}"  category-id="{{:CategoryId}}" parent-category-name="{{:ParentCategoryName}}" category-name="{{:CategoryName}}" data-item-name="{{:Name}}" class="dropdown-toggle views" data-bs-toggle="dropdown" id="report-views">
                         <i class="su su-filter"></i>
                         <span>[[[Views]]]</span>
                     </a>
@@ -205,7 +205,7 @@
             </li>
             {{/if}}
             {{if @(Convert.ToBoolean(ServerAppConfig.IsSelfHosted).ToString().ToLower()) == true }}
-            {{if CanWrite && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideProcessingOptions).ToString().ToLower()) == false }}
+            {{if (CanWrite || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideProcessingOptions).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             <li>
                 <a href="#" class="ProcessOption option-click" data-item-id="{{:Id}}" data-name="{{:Name}}" data-category="{{:CategoryName}}" id="report-processing-option">
@@ -218,7 +218,7 @@
             {{if (CanMove || CanCopy || CanClone) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideMoveBlockSeparator).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanMove && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideMove).ToString().ToLower()) == false }}
+            {{if (CanMove || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideMove).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Move" class="option-click" id="move-report">
                     <i class="su su-move"></i>
@@ -226,7 +226,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanCopy && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideCopy).ToString().ToLower()) == false }}
+            {{if (CanCopy || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideCopy).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Copy" class="option-click" id="copy-report">
                     <i class="su su-copy"></i>
@@ -234,7 +234,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && CanClone && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideClone).ToString().ToLower()) == false }}
+            {{if (@(Convert.ToBoolean(ServerAppConfig.EnableClone).ToString().ToLower()) == true) && (CanClone || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideClone).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" data-action="Clone" class="option-click" id="clone-report">
                     <i class="su su-clone"></i>
@@ -261,7 +261,7 @@
             {{if (CanSchedule || CreatedById == @(userId) || @(Convert.ToBoolean(isAdmin).ToString().ToLower()) == true) && ~checkTablet()}}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanSchedule && ~checkTablet() && @(Convert.ToBoolean(hideCreateSchedule).ToString().ToLower()) == false }}
+            {{if (CanSchedule || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && @(Convert.ToBoolean(hideCreateSchedule).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-name="{{:Name}}" data-item-id="{{:Id}}" data-category-id="{{:Id}}" data-category-name="{{:CategoryName}}" data-IsMulti-Dashboard="{{:IsMultiDashboard}}" class="option-click" id="create-report-schedule">
                     <i class="su su-nav-schedule"></i>
@@ -278,10 +278,10 @@
                 </a>
             </li>
             {{/if}}
-            {{if ((CanWrite || CanDelete) && ~checkTablet()) && @(Convert.ToBoolean(hideEditBlockSeparator).ToString().ToLower()) == false }}
+            {{if ((CanWrite || CanDelete || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet()) && @(Convert.ToBoolean(hideEditBlockSeparator).ToString().ToLower()) == false }}
             <li role="separator" class="divider"></li>
             {{/if}}
-            {{if CanWrite && ~checkTablet() && !IsDraft && @(Convert.ToBoolean(hideEditAsXml).ToString().ToLower()) == false }}
+            {{if (CanWrite || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsDraft && @(Convert.ToBoolean(hideEditAsXml).ToString().ToLower()) == false }}
             <li>
                 <a class="option-click" title="" data-category-name="{{:CategoryName}}" data-item-name="{{:Name}}" data-item-id="{{:Id}}" id="edit-report-as-xml">
                     <i class="su su-embed"></i>
@@ -289,7 +289,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanWrite && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideUpdate).ToString().ToLower()) == false }}
+            {{if (CanWrite || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && !IsLocked && @(Convert.ToBoolean(hideUpdate).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-id="{{:Id}}" id="update-report">
                     <i class="su su-edit"></i>
@@ -297,7 +297,7 @@
                 </a>
             </li>
             {{/if}}
-            {{if CanDelete && ~checkTablet() && @(Convert.ToBoolean(hideDelete).ToString().ToLower()) == false }}
+            {{if (CanDelete || @(Convert.ToBoolean(isAdmin).ToString().ToLower())) && ~checkTablet() && @(Convert.ToBoolean(hideDelete).ToString().ToLower()) == false }}
             <li>
                 <a href="#" data-item-type="{{:ItemType}}" data-item-id="{{:Id}}" data-item-name="{{:Name}}" class="delete-report">
                     <i class="su su-delete"></i>
@@ -410,7 +410,7 @@
             },
             dataBound: function (args) {
                 if (!navigator.userAgent.match(/Windows Phone/i)) { // To avoid tooltips in windows phone.
-                    $("[data-toggle='tooltip']").tooltip();
+                    $("[ data-bs-toggle='tooltip']").tooltip();
                 }
             },
             enableRowHover: true,
@@ -511,7 +511,7 @@
 
     function fnActionComplete(args) {
         $("#item-list-panel > .item-navigation, #item-list-panel > #category-listing").css("visibility", "visible");
-        $("[data-toggle='tooltip']").tooltip();
+        $("[ data-bs-toggle='tooltip']").tooltip();
         var gridObj = $("#items").data("ejGrid");
         dashboardGrid.totalDashboardCount = gridObj._gridRecordsCount;
         dashboardGrid.doDashboardComplete();
