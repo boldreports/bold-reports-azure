@@ -41,7 +41,7 @@
         });
 
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -52,7 +52,7 @@
         }
 
         $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             $(document).on("click", ".PopupClose", function(e) {
                 closePopup();
             });
@@ -62,20 +62,20 @@
 <body style="background-color:white">
 
     <div id="createReportPopupHolder" class="add-report-processing-module col-lg-12 no-padding dialog">
-        <div class="col-xs-12 dialog-header">
+        <div class="col-12 dialog-header">
             <span class="su su-cache_3 Head-icon"></span>
             <span class="PopupTitle">[[[Processing Options]]]</span>
-            <a href="#" class="PopupClose" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom"><span class="su su-close"></span></a>
+            <a href="#" class="PopupClose" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom"><span class="su su-close"></span></a>
         </div>
-        <div class="col-xs-12">
+        <div class="col-12">
             <span class="caption heading">[[[Determine how the report server will run reports:]]]</span>
         </div>
-        <form id='Report_process_Option_form' class='col-xs-12 no-top-margin add-report-form' autocomplete="off">
-            <div class='dialog-body col-xs-12 no-padding   new-rdl-content-holder' id='Report_process_Option_holder'>
+        <form id='Report_process_Option_form' class='col-12 no-top-margin add-report-form' autocomplete="off">
+            <div class='dialog-body col-12 no-padding   new-rdl-content-holder' id='Report_process_Option_holder'>
                 <table cellspacing='10' cellpadding='0' border='0' width='100%'>
                     <tbody>
                         <tr class="">
-                            <td colspan="2" class="col-xs-2 no-right-padding" style="padding-left:20px;">
+                            <td colspan="2" class="col-2 no-right-padding" style="padding-left:20px;">
                                 <div class="TopOption top-margin15">
                                     @Html.RadioButton("DataRender", "0", new { @class = "css-radio", @id = "RecentData", @checked = ""})
                                     @Html.Label("RecentData", "[[[Always run this report with the most recent data]]]", new { @class = "text notransition" })
@@ -83,10 +83,10 @@
                             </td>
                         </tr>
                         <tr class="recentDataContainer">
-                            <td colspan="2" class="col-xs-2 no-right-padding">
+                            <td colspan="2" class="col-2 no-right-padding">
                                 <div class="bottom-margin30 TopOption1">
                                     <div class="TopOption1Tab1">
-                                        <div class="col-xs-12 column">
+                                        <div class="col-12 column">
                                             @Html.RadioButton("IsNeedCache", "1", new { @class = "css-radio", @id = "CacheWithTime" })
                                             @Html.Label("CacheWithTime", "[[[Cache a temporary copy of the report. The copy should expire after ]]]", new { @class = "text notransition" })
                                             <input type="text" class="minutesInput" disabled="disabled" value="30" name="Minutes" /> [[[minutes]]]
@@ -105,21 +105,21 @@
                 </table>
             </div>
 
-            <div class="col-sm-12 col-xs-12 no-padding subscribe-popup-body" id="SubscribersPanel" style="display: none;">
-                <div class="col-sm-12 col-xs-12 no-padding share-popup">
-                    <div id="category_Container" class="col-sm-5 col-xs-5 no-margin i-search-fields">
+            <div class="col-sm-12 col-12 no-padding subscribe-popup-body" id="SubscribersPanel" style="display: none;">
+                <div class="col-sm-12 col-12 no-padding share-popup">
+                    <div id="category_Container" class="col-sm-5 col-5 no-margin i-search-fields">
                         <select class="selectpicker" id="categoryList" multiple="" data-hide-disabled="true" data-live-search="true" data-actions-box="true" title="[[[Select Categories]]]" data-none-results-text="[[[No results match]]]"></select>
                     </div>
-                    <div id="report_Container" class="col-sm-4 col-xs-4 no-margin i-search-fields">
+                    <div id="report_Container" class="col-sm-4 col-4 no-margin i-search-fields">
                         <select class="selectpicker" id="reportList" multiple="" data-hide-disabled="true" data-live-search="true" data-actions-box="true" title="[[[Select Reports]]]" data-none-results-text="[[[No results match]]]"></select>
                         <span class="error-messages text" id="reportListValidation">[[[Please choose atleast single report from the dropdown list]]]</span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xs-12 no-padding cls-float" id="SelectedUsersContainer">
-                    <div style="width:96% !important; height:304px;" class="col-sm-3 col-xs-3 selected-recipients cls-float" id="SelectedUsers"></div>
+                <div class="col-sm-12 col-12 no-padding cls-float" id="SelectedUsersContainer">
+                    <div style="width:96% !important; height:304px;" class="col-sm-3 col-3 selected-recipients cls-float" id="SelectedUsers"></div>
                 </div>
                 <div id="selectedUsersValidation" class="text">[[[Please select Reports or Categories]]]</div>
-                <div id="selectedReportsInfo" class="col-sm-12 col-xs-12 no-margin i-search-fields" style="display:block"></div>
+                <div id="selectedReportsInfo" class="col-sm-12 col-12 no-margin i-search-fields" style="display:block"></div>
             </div>
         </form>
         <div class='col-md-12 new-report-button-holder dialog-footer' id="saveProcessButton">

@@ -215,15 +215,15 @@
     }
 <environment include="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.css")" crossorigin="anonymous" />
 </environment>
 <environment exclude="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.min.css")" crossorigin="anonymous" />
 </environment>
 
     @RenderSection("styles", false)
@@ -375,7 +375,7 @@
             <div class="header-bar col-lg-12 col-md-12 col-sm-12">
                 @if (!isWelcomePage)
                 {
-                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-bs-toggle="collapse" aria-expanded="false" data-target="#menu-area">
                         <span>
                             <i class="su su-mobile-menu-icon"></i>
                         </span>
@@ -385,7 +385,7 @@
                     <h5 class="header-org-name">@globalAppSettings.SystemSettings.OrganizationName</h5>
                 </div>
 
-                <div class="pull-right" id="notification-section">
+                <div class="float-end" id="notification-section">
                     <a id="notification-link" class="notification-mobile-link no-padding" href="@Url.Action("getusernotifications", "notification" )">
                         <span id="notification-icon" class="su su-notification-alert">
 
@@ -409,7 +409,7 @@
                 </section>
             }
         }
-        <div id="content-area" class="clearfix col-xs-12">
+        <div id="content-area" class="clearfix col-12">
             <div class="suspension-warning" style="display:none">
                 <div class="warning-content"></div>
             </div>

@@ -32,7 +32,7 @@ def load_crm_data() -> None:
 def load_crm_data_with_history() -> None:
     """
     Loads all HubSpot CRM resources and property change history for each entity.
-    The history entries are loaded to a tables per resource `{resource_name}_property_history`, e.g. `contacts_property_history`
+    The history entries are loaded to a tables per resource `resource_name_property_history`, e.g. `contacts_property_history`
 
     Returns:
         None

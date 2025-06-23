@@ -10,16 +10,16 @@
 {
 <div class="modal-content" id="delete-popup-container">
     <div class="modal-header">
-        <div class="col-xs-11 col-sm-11 col-md-11 no-padding">
+        <div class="col-11 col-sm-11 col-md-11 no-padding">
             <span class="su su-delete"></span>
             <span class="modal-title popup-title">[[[Delete]]] @(itemTypeName)</span>
         </div>
-        <div class="col-xs-1 col-sm-1 col-md-1 no-padding">
-            <a href="#" title="[[[Close]]]" class="popup-close pull-right delete-item-dialog-close-link"><span class="su su-close"></span></a>
+        <div class="col-1 col-sm-1 col-md-1 no-padding">
+            <a href="#" title="[[[Close]]]" class="popup-close float-end delete-item-dialog-close-link"><span class="su su-close"></span></a>
         </div>
     </div>
     <div class="modal-body">
-        <div class="col-xs-12">
+        <div class="col-12">
             <div class="delete-item"><span style="white-space:nowrap;float:left">[[[Are you sure you want to delete]]] @(itemTypeName)—</span><span id="delete-item-name" class="delete-item-body highlight-name">@ViewData["ItemName"]</span> ?</div>
 
             @if (itemType == ItemType.Datasource)
@@ -37,8 +37,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <div class="col-xs-4"></div>
-        <div class="col-xs-8 no-padding padding-top validation-area">
+        <div class="col-4"></div>
+        <div class="col-8 no-padding padding-top validation-area">
             @if (itemType == ItemType.Slideshow)
             {
             <input type="button" class="app-button app-critical-action-button app-btn-danger" value="[[[Yes]]]" id="delete-slideshow" data-item-id="@ViewData["ItemId"]" data-datasource-type="@ViewData[" DatasourceType"]" data-itemtype="@(Model.Value)" tabindex="1" autofocus />
@@ -53,7 +53,7 @@
             }
             <input type="button" id="cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[No]]]" tabindex="2" />
         </div>
-        <div class="col-xs-8 padding-top success-area" style="display:none">
+        <div class="col-8 padding-top success-area" style="display:none">
             <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[OK]]]" tabindex="3" autofocus />
         </div>
     </div>
@@ -63,33 +63,33 @@ else
 {
 <div class="modal-content" id="popup-container">
     <div class="modal-header">
-        <div class="col-xs-11 col-sm-11 col-md-11 no-padding">
+        <div class="col-11 col-sm-11 col-md-11 no-padding">
             <span class="su su-delete"></span>
             <span class="modal-title">[[[Delete]]] @(itemTypeName)</span>
         </div>
-        <div class="col-xs-1 col-sm-1 col-md-1 no-padding">
-            <a href="#" title="[[[Close]]]" class="popup-close pull-right delete-item-dialog-close-link"><span class="su su-close"></span></a>
+        <div class="col-1 col-sm-1 col-md-1 no-padding">
+            <a href="#" title="[[[Close]]]" class="popup-close float-end delete-item-dialog-close-link"><span class="su su-close"></span></a>
         </div>
     </div>
     <div class="modal-body text-center">
         @switch ((ItemType)Model.Value)
         {
             case ItemType.Category:
-                <div class="delete-item col-xs-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Category contains reports.]]]</span></div>
+                <div class="delete-item col-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Category contains reports.]]]</span></div>
                 break;
             case ItemType.Report:
-                <div class="delete-item col-xs-12"><span>[[[Unable to delete the report -]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as it has been scheduled to run at certain times.]]]</span></div>
+                <div class="delete-item col-12"><span>[[[Unable to delete the report -]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as it has been scheduled to run at certain times.]]]</span></div>
                 break;
             case ItemType.Datasource:
-                <div class="delete-item col-xs-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Data Source is being used by reports or datasets.]]]</span></div>
+                <div class="delete-item col-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Data Source is being used by reports or datasets.]]]</span></div>
                 break;
             case ItemType.Dataset:
-                <div class="delete-item col-xs-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Dataset is being used by reports.]]]</span></div>
+                <div class="delete-item col-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Dataset is being used by reports.]]]</span></div>
                 break;
         }
     </div>
 
-    <div class="modal-footer text-center">
+    <div class="modal-footer text-center d-flex justify-content-center">
         <input title="" type="button" id="Cancel" class="app-button app-secondary-button app-btn-secondary popup-close delete-item-dialog-close-button" value="[[[OK]]]" tabindex="1" autofocus />
     </div>
 </div>

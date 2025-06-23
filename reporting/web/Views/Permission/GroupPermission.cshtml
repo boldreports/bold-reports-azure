@@ -31,22 +31,22 @@
 @section MainSection {
     @await Html.PartialAsync("../UserManagement/_UserMenu")
     <div id="base-container" role="tabpanel" class="admin-page-container ">
-        <div id="group-header" class="col-lg-12 col-md-12 co-sm-12 col-xs-12 admin-page-header">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding header">
-                <a class="back-button pull-left" href="@Url.Action("group","group")" data-toggle="tooltip" data-placement="top" data-container="body" title="[[[Groups]]]">
+        <div id="group-header" class="row align-items-center admin-page-header import-area">
+            <div class="col-md-6 d-flex align-items-center no-padding header">
+                <a class="back-button d-flex align-items-center me-1" href="@Url.Action("group","group")" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" title="[[[Groups]]]">
                     <i class="su su-arrow-back back-navigaion img-size"> </i>
                 </a>
                 <hgroup>
                     <h2 class="page-title adjust-style-for-backarrow no-margin">[[[Manage Permissions]]] - <span title="@ViewBag.groupName" maxlength="60">@ViewBag.groupName</span></h2>
                 </hgroup>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
-                <input type="button" title="[[[Add Permission to the group]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button app-btn-primary pull-right" />
-                <a type="button" class="link-button app-btn-link pull-right margin-right" id="view-group" title="" href="@Url.Action("viewgroup","group")?groupId=@Context.Request.Query["groupid"]">[[[View Group]]]</a>
+            <div class="col-md-6 text-end no-padding">
+                <input type="button" title="[[[Add Permission to the group]]]" id="add-permission-button-top" value="[[[Add Permission]]]" class="primary-button app-btn-primary float-end" />
+                <a type="button" class="link-button app-btn-link me-2" id="view-group" title="" href="@Url.Action("viewgroup","group")?groupId=@Context.Request.Query["groupid"]">[[[View Group]]]</a>
             </div>
         </div>
         <div class="active-directory-form col-lg-12 admin-page-body">
-            <div class="col-md-12 col-xs-12 col-sm-12 permission-grid">@await Html.PartialAsync("_GroupPermissionGrid", Model)</div>
+            <div class="col-md-12 col-12 col-sm-12 permission-grid">@await Html.PartialAsync("_GroupPermissionGrid", Model)</div>
             <div class="col-md-3">
                 <div id="add-permission" class="no-padding">
                     <iframe src="" id="add-permission-iframe" width="100%" height="100%" style="border:0;"></iframe>
@@ -63,13 +63,13 @@
         </div>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="accessmodetemplate">
-        <div class="item-name" title="{{:PermissionAccessDescription}}" data-toggle="tooltip">{{:PermissionAccessDescription}}</div>
+        <div class="item-name" title="{{:PermissionAccessDescription}}" data-bs-toggle="tooltip">{{:PermissionAccessDescription}}</div>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="scopetemplate">
-        <div class="item-name" title="{{:ItemName}}" data-toggle="tooltip">{{:ItemName}}</div>
+        <div class="item-name" title="{{:ItemName}}" data-bs-toggle="tooltip">{{:ItemName}}</div>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="entitytemplate">
-        <div class="grid-content" title="{{:PermissionEntityDescription}}" data-toggle="tooltip">{{:PermissionEntityDescription}}</div>
+        <div class="grid-content" title="{{:PermissionEntityDescription}}" data-bs-toggle="tooltip">{{:PermissionEntityDescription}}</div>
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="accessmodeheader">
         <div class="item-name">[[[Access Mode]]]</div>
@@ -113,7 +113,7 @@
                     pageSettings: { pageSize: 10 },
                     actionBegin: "fnOnGroupPermissionActionBegin",
                     actionComplete: function (args) {
-                        $('[data-toggle="tooltip"]').tooltip();
+                        $('[data-bs-toggle="tooltip"]').tooltip();
                         if (args.model.currentViewData.length == 0) {
                             rowBound();
                         }
@@ -127,7 +127,7 @@
                         }
                     },
                     dataBound: function (args) {
-                        $('[data-toggle="tooltip"]').tooltip();
+                        $('[data-bs-toggle="tooltip"]').tooltip();
                     },
                     enableRowHover: true,
                     columns: [

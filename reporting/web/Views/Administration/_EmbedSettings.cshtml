@@ -40,8 +40,8 @@
 
     @await Html.PartialAsync("_AdminMenu")
 
-    <div id="embed-settings-container" class="col-xs-12 admin-page-container">
-        <div id="embed-settings-header" class="col-xs-12 admin-page-header">
+    <div id="embed-settings-container" class="col-12 admin-page-container">
+        <div id="embed-settings-header" class="col-12 admin-page-header">
             <hgroup>
                 <h1 class="h2 page-title">
                     [[[EMBED SETTINGS]]]
@@ -52,24 +52,24 @@
             </hgroup>
         </div>
         <div id="embed-settings-body" class="admin-page-body">
-            <div class="col-xs-8 embed-authentication">
-                <label class="col-md-4 app-textbox-label activation embed-enabled">
+            <div class="col-lg-11 row embed-authentication align-items-center">
+                <label class="col-md-3 app-textbox-label activation embed-enabled">
                     [[[Enable embed authentication]]]
                 </label>
-                <div class="col-md-2 text-left switch-align embed-loader">
-                    <span class="material-switch text-left">
+                <div class="col-md-2 switch-align embed-loader">
+                    <span class="material-switch">
                         <input type="checkbox" id="restrict-embed-enabled" @(embedEnabled ? "checked" : string.Empty) />
                         <label for="restrict-embed-enabled" class="label-primary"></label>
                     </span>
                 </div>
             </div>
             <div id="get-secret-code" class="row input-field-wrapper">
-                <div class="col-xs-8 field-container-dashboard">
-                    <label class="col-md-4 app-textbox-label activation">
+                <div class="col-8 field-container-dashboard">
+                    <label class="col-md-4 app-textbox-label activation" style="float:left;">
                         [[[Embed secret]]]
                     </label>
-                    <div class="col-md-7 secret-code-container">
-                        <div id="secret-code-link" class="col-xs-6">
+                    <div class="col-md-7 secret-code-container" style="float:left;">
+                        <div id="secret-code-link" class="col-6">
                             <input type="text" id="secret-code" name="" class="form-control" placeholder="[[[Embed secret]]]" autocomplete="off" disabled="disabled">
                             <div class="form-control su su-copy text focus" id="secret-code-copy" disabled="disabled" data-original-title="[[[Click to copy]]]"></div>
                         </div>
@@ -83,8 +83,8 @@
                                 @resetSecret;
                             }
                         </button>
-                        <div class="tool-tip col-xs-1">
-                            <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                        <div class="tool-tip col-1">
+                            <span class="dropdown-toggle" data-bs-toggle="dropdown"><span class="su su-info" title=""></span></span>
                             <div class="dropdown-menu" role="menu">[[[Anyone with access to the secret key may create a URL to access the report, as any user, with any options. Keep embed authentication disabled if you’re not using it.]]]</div>
                         </div>
                         <div class="col-lg-5 bg-warning secret-code-notification">

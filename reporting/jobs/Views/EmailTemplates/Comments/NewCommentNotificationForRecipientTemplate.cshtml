@@ -2,7 +2,7 @@
 @using System.Web
 @{
     Layout = null;
-    var newComment = HttpUtility.HtmlDecode(Model.NewComment);
+    var newComment = Model.NewComment;
 }
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml'>
@@ -232,7 +232,13 @@
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;'>
                                                         
                                                         <span>
+                                                            @{
+                                                                #pragma warning disable SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            }
                                                             @Html.Raw(Model.MailHeaderContent)
+                                                            @{
+                                                                #pragma warning restore SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            }
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -276,7 +282,15 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="text-align: left; font-size: 13px; font-family: Arial, Helvetica, sans-serif; color: #000000;background-color: #fafafa;border: 0px;line-height: 20px;padding-left: 20px;padding-top: 20px;padding-right: 20px;">
-                                                                                <span>@Html.Raw(newComment)</span>
+                                                                                <span>
+                                                                                    @{
+                                                                                        #pragma warning disable SCS0029 //Already Sanitized the comment.
+                                                                                    }
+                                                                                    @Html.Raw(newComment)
+                                                                                    @{
+                                                                                        #pragma warning restore SCS0029 //Already Sanitized the comment.
+                                                                                    }
+                                                                                </span>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>

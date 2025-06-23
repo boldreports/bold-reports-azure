@@ -37,11 +37,16 @@ def select_resource() -> None:
         pipeline_name="{0}_pipeline", destination='{5}',staging={6}, dataset_name="{0}"
     )
 
-    source = slack_source(
-        page_size={2},
-        start_date=pendulum.parse('{3}'),
-        end_date=pendulum.parse('{4}'),
-    ).with_resources({1})
+    if '{3}' and '{4}':
+        source = slack_source(
+            page_size={2},
+            start_date=pendulum.parse('{3}'),
+            end_date=pendulum.parse('{4}'),
+        ).with_resources({1})
+    else:
+        source = slack_source(
+            page_size={2},
+        ).with_resources({1})
 
     load_info = pipeline.run(
         source,

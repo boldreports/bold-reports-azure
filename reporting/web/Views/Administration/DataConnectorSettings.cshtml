@@ -7,7 +7,11 @@
     var boldReportsApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+#if (BoldReportsCloud)
+    var reportServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
+#else
     var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+#endif
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
 }
 <!DOCTYPE html>
@@ -19,18 +23,18 @@
     <meta name="designer_service:access_token" content="@ViewBag.AccessToken" />
     <meta name="designer_service:isazureapp" content="@isAzureApplication.ToString().ToLower()" />
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/designer.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/dataconnector-settings.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/dataconnector-settings.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/designer.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/designer.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/dataconnector-settings.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/dataconnector-settings.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 
     <environment include="Development,CloudDevelopment">

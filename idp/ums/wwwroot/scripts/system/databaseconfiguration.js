@@ -552,6 +552,7 @@ function registerApplication(isSimpleMode) {
     var systemSettingsData = JSON.parse($("#system-settings-data").val());
     var azureData = $("#azure-data").val();
     var tenantInfo = $("#tenant-info").val();
+    var storage = $("#storage-info").val();
     systemSettingsData.CustomAttribute = addSiteAttribute;
     var systemSettingsDataString = JSON.stringify(systemSettingsData);
     var configurationMode = getRadioButtonValue('ConfigurationMode');
@@ -560,7 +561,7 @@ function registerApplication(isSimpleMode) {
         type: "POST",
         data: {
             systemSettingsData: systemSettingsDataString,
-            azureData: azureData,
+            storage: storage,
             tenantInfo: tenantInfo,
             globalAdminDetails: globalAdminDetails,
             isSimpleMode: isSimpleMode,
@@ -592,19 +593,35 @@ function registration(isSimpleMode) {
     delete window.databaseName;
     delete window.sslEnabled;
     if (isSimpleMode && !isAzureApplication) {
+        if (IsOciObjectStorage) {
+            document.getElementById("storage-type").ej2_instances[0].value = "4";
+        }
+        else if (isAmazonS3) {
+            document.getElementById("storage-type").ej2_instances[0].value = "2";
+        }
+
         registerApplication(isSimpleMode);
     }
     else if (isAzureApplication) {
         azureStep();
     }
     else {
-        advancedThirdStep();
+        if (IsOciObjectStorage) {
+            document.getElementById("storage-type").ej2_instances[0].value = "4";
+            registerApplication(isSimpleMode);
+        }
+        else if (isAmazonS3) {
+            document.getElementById("storage-type").ej2_instances[0].value = "2";
+            registerApplication(isSimpleMode);
+        }
+        else {
+            advancedThirdStep();
+        }
     }
 }
 
 function azureStep() {
-    $("#file-storage").prop("disabled", true);
-    $("#blob-storage").prop("checked", true);
+    document.getElementById("storage-type").ej2_instances[0].value = "1";
     $(".custom-endpoint-form-element, .report-content").hide();
     $("#blob-storage-form").slideDown("slow");
     $("#report-storage").hide();
@@ -631,11 +648,13 @@ function advancedThirdStep() {
     $("#image-parent-container .startup-image").hide().attr("src", storageUrl).fadeIn();
     $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourStorage).slideDown();
     $(".startup-content span.second-content").hide().text(isBoldBI ? window.Server.App.LocalizationContent.StorageBIMsg.format(biProductname) : window.Server.App.LocalizationContent.StorageReportsMsg.format(reportsProductname)).slideDown();
+    $(".startup-content span.third-content").hide().text("").slideDown();
     $(".startup-content a#help-link").attr("href", idStorageConfiguration);
     $(".startup-waiting-popup").addClass("storage-page-content");
     $("#system-settings-filestorage-container").slideDown("slow");
     $(".custom-endpoint-form-element, .report-content").hide();
     $("#blob-storage-form").hide();
+    $("#oci-object-storage-form").hide();
     $("#report-storage").hide();
     storageButtonValue = "tenant";
     $(".storage-checkbox").hide("slow");
@@ -912,6 +931,7 @@ function onDatbaseChange(args) {
             databaseSelectionDiv.classList.remove('d-block');
             databaseSelectionDiv.classList.add('visually-hidden');
 
+            $("#sql-server-database-name").removeClass('show').addClass('hide');
             if (!isSiteCreation) {
                 prefillDbNames();
             }
@@ -992,8 +1012,7 @@ function onDatbaseChange(args) {
             }
             $(".database-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
             var link = document.getElementById("advanced-tab");
-            
-            link.classList.add("disable-adv");
+
             DomResize();
             break;
         case "postgresql":
@@ -1237,6 +1256,13 @@ function onDatbaseChange(args) {
         {
             $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
         }
+    }
+
+    if (!isSiteCreation && isBoldReports) {
+        hideDataStore();
+    }
+    else if (isSiteCreation && isBoldReportsTenantType()) {
+        hideDataStore();
     }
 
     addPlacehoder("#system-settings-db-selection-container");

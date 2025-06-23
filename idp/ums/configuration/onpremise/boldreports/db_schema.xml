@@ -6,6 +6,7 @@
     <ClientId>ClientId</ClientId>
     <ClientSecret>ClientSecret</ClientSecret>
     <IsActive>IsActive</IsActive>
+    <DeleteGroupUsers>DeleteGroupUsers</DeleteGroupUsers>
   </DB_AzureADCredential>
   <DB_AzureADGroup>
     <DB_TableName>AzureADGroup</DB_TableName>
@@ -32,6 +33,7 @@
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <ModifiedById>ModifiedById</ModifiedById>
     <IsActive>IsActive</IsActive>
+    <Comments>Comments</Comments>
   </DB_Comment>
   <DB_DataSourceDetail>
     <DB_TableName>DataSourceDetail</DB_TableName>
@@ -74,6 +76,9 @@
     <ItemId>ItemId</ItemId>
     <GroupId>GroupId</GroupId>
     <IsActive>IsActive</IsActive>
+    <SettingsTypeId>SettingsTypeId</SettingsTypeId>
+    <ScopeGroupId>ScopeGroupId</ScopeGroupId>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
   </DB_GroupPermission>
   <DB_Item>
     <DB_TableName>Item</DB_TableName>
@@ -94,6 +99,8 @@
     <IsDraft>IsDraft</IsDraft>
     <IsActive>IsActive</IsActive>
     <IsUserBased>IsUserBased</IsUserBased>
+    <IsLocked>IsLocked</IsLocked>
+    <ViewerFeatures>ViewerFeatures</ViewerFeatures>
   </DB_Item>
   <DB_ItemCommentLog>
     <DB_TableName>ItemCommentLog</DB_TableName>
@@ -128,6 +135,7 @@
     <ToCategoryId>ToCategoryId</ToCategoryId>
     <UpdatedUserId>UpdatedUserId</UpdatedUserId>
     <SourceTypeId>SourceTypeId</SourceTypeId>
+    <AdditionalLogInfo>AdditionalLogInfo</AdditionalLogInfo>
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
   </DB_ItemLog>
@@ -173,6 +181,7 @@
     <CreatedById>CreatedById</CreatedById>
     <CreatedDate>CreatedDate</CreatedDate>
     <IsActive>IsActive</IsActive>
+    <Comments>Comments</Comments>
   </DB_ItemVersion>
   <DB_ItemView>
     <DB_TableName>ItemView</DB_TableName>
@@ -279,7 +288,11 @@
     <ReportCount>ReportCount</ReportCount>
     <ExportPath>ExportPath</ExportPath>
     <IsOverwrite>IsOverwrite</IsOverwrite>
+    <ExportFileName>ExportFileName</ExportFileName>
     <IsNotifySaveAs>IsNotifySaveAs</IsNotifySaveAs>
+    <ScheduleExportInfo>ScheduleExportInfo</ScheduleExportInfo>
+	<IsNoDataEnabled>IsNoDataEnabled</IsNoDataEnabled>
+    <ScheduleBucketExportInfo>ScheduleBucketExportInfo</ScheduleBucketExportInfo>
   </DB_ScheduleDetail>
   <DB_ScheduleLog>
     <DB_TableName>ScheduleLog</DB_TableName>
@@ -290,6 +303,7 @@
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsOnDemand>IsOnDemand</IsOnDemand>
     <IsActive>IsActive</IsActive>
+    <Message>Message</Message>
   </DB_ScheduleLog>
   <DB_ScheduleLogGroup>
     <DB_TableName>ScheduleLogGroup</DB_TableName>
@@ -448,6 +462,9 @@
     <ItemId>ItemId</ItemId>
     <UserId>UserId</UserId>
     <IsActive>IsActive</IsActive>
+    <SettingsTypeId>SettingsTypeId</SettingsTypeId>
+    <ScopeGroupId>ScopeGroupId</ScopeGroupId>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
   </DB_UserPermission>
   <DB_UserPreference>
     <DB_TableName>UserPreference</DB_TableName>
@@ -459,6 +476,9 @@
     <ItemSort>ItemSort</ItemSort>
     <ItemFilters>ItemFilters</ItemFilters>
     <Notifications>Notifications</Notifications>
+    <ViewerFeatures>ViewerFeatures</ViewerFeatures>
+    <DesignerFeatures>DesignerFeatures</DesignerFeatures>
+    <ServerFeatures>ServerFeatures</ServerFeatures>    
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
   </DB_UserPreference>
@@ -677,7 +697,7 @@
     <Parameter>Parameter</Parameter>
     <IsActive>IsActive</IsActive>
   </DB_ScheduleParameter>
-  <DB_ItemSettings>
+    <DB_ItemSettings>
     <DB_TableName>ItemSettings</DB_TableName>
     <Id>Id</Id>
     <ItemId>ItemId</ItemId>
@@ -685,4 +705,166 @@
     <ModifiedDate>ModifiedDate</ModifiedDate>
     <IsActive>IsActive</IsActive>
   </DB_ItemSettings>
+  <DB_DeploymentReports>
+    <DB_TableName>DeploymentReports</DB_TableName>
+    <ItemId>ItemId</ItemId>
+    <ItemName>ItemName</ItemName>
+    <Description>Description</Description>
+    <CategoryName>CategoryName</CategoryName>
+    <IsReportLocked>IsReportLocked</IsReportLocked>
+    <IsDatasourceLocked>IsDatasourceLocked</IsDatasourceLocked>
+    <IsDatasetLocked>IsDatasetLocked</IsDatasetLocked>
+    <IsMakeReportPublic>IsMakeReportPublic</IsMakeReportPublic>
+    <CreatedById>CreatedById</CreatedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_DeploymentReports>
+  <DB_ExternalSites>
+    <DB_TableName>ExternalSites</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <ClientId>ClientId</ClientId>
+    <ClientSecret>ClientSecret</ClientSecret>
+    <SiteURL>SiteURL</SiteURL>
+    <CreatedById>CreatedById</CreatedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_ExternalSites>
+  <DB_AttributeType>
+    <DB_TableName>AttributeType</DB_TableName>
+    <Id>Id</Id>
+    <Type>Type</Type>
+    <IsActive>IsActive</IsActive>
+  </DB_AttributeType>
+  <DB_ItemAttribute>
+    <DB_TableName>ItemAttribute</DB_TableName>
+    <Id>Id</Id>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
+    <ItemId>ItemId</ItemId>
+    <AttributeType>AttributeType</AttributeType>
+    <Value>Value</Value>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_ItemAttribute>
+  <DB_PublishedItem>
+    <DB_TableName>PublishedItem</DB_TableName>
+    <Id>Id</Id>
+    <TenantId>TenantId</TenantId>
+    <ItemId>ItemId</ItemId>
+    <ItemName>ItemName</ItemName>
+    <Description>Description</Description>
+    <CategoryName>CategoryName</CategoryName>
+    <UserId>UserId</UserId>
+    <DestinationItemId>DestinationItemId</DestinationItemId>
+    <IsLocked>IsLocked</IsLocked>
+    <CreatedById>CreatedById</CreatedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+    <PublishType>PublishType</PublishType>
+  </DB_PublishedItem>
+  <DB_PublishJobs>
+    <DB_TableName>PublishJobs</DB_TableName>
+    <Id>Id</Id>
+    <PublishId>PublishId</PublishId>
+    <UserId>UserId</UserId>
+    <JobDetails>JobDetails</JobDetails>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <CompletedDate>CompletedDate</CompletedDate>
+    <Status>Status</Status>
+    <IsActive>IsActive</IsActive>
+  </DB_PublishJobs>
+  <DB_UserAttributes>
+    <DB_TableName>UserAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <UserId>UserId</UserId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_UserAttributes>
+  <DB_GroupAttributes>
+    <DB_TableName>GroupAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <GroupId>GroupId</GroupId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_GroupAttributes>
+  <DB_SiteAttributes>
+    <DB_TableName>SiteAttributes</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <Value>Value</Value>
+    <Description>Description</Description>
+    <Encrypt>Encrypt</Encrypt>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_SiteAttributes>
+  <DB_SettingsType>
+    <DB_TableName>SettingsType</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <IsActive>IsActive</IsActive>
+  </DB_SettingsType>
+  <DB_ReportPartType>
+    <DB_TableName>ReportPartType</DB_TableName>
+    <Id>Id</Id>
+    <Name>Name</Name>
+    <IsActive>IsActive</IsActive>
+  </DB_ReportPartType>
+  <DB_ReportPartLinkage>
+    <DB_TableName>ReportPartLinkage</DB_TableName>
+    <Id>Id</Id>
+    <ReportPartId>ReportPartId</ReportPartId>
+    <ReportId>ReportId</ReportId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>
+    <IsActive>IsActive</IsActive>
+  </DB_ReportPartLinkage>
+  <DB_ReportPartTypeInfo>
+    <DB_TableName>ReportPartTypeInfo</DB_TableName>
+    <Id>Id</Id>
+    <ReportPartId>ReportPartId</ReportPartId>
+    <ReportPartTypeId>ReportPartTypeId</ReportPartTypeId>
+    <ItemTypeId>ItemTypeId</ItemTypeId>
+    <ItemId>ItemId</ItemId>
+    <CreatedById>CreatedById</CreatedById>
+    <ModifiedById>ModifiedById</ModifiedById>
+    <CreatedDate>CreatedDate</CreatedDate>
+    <ModifiedDate>ModifiedDate</ModifiedDate>  
+    <IsActive>IsActive</IsActive>
+</DB_ReportPartTypeInfo>
+<DB_UserSession>
+    <DB_TableName>UserSession</DB_TableName>
+    <Id>Id</Id>
+    <IdpReferenceId>IdpReferenceId</IdpReferenceId>
+    <DirectoryTypeId>DirectoryTypeId</DirectoryTypeId>
+    <IpAddress>IpAddress</IpAddress>
+    <LoggedInTime>LoggedInTime</LoggedInTime>
+    <IsActive>IsActive</IsActive>
+    <SessionId>SessionId</SessionId>
+    <Browser>Browser</Browser>
+    <LastActive>LastActive</LastActive>
+</DB_UserSession>	
 </DB_SyncUMP>

@@ -70,13 +70,13 @@
             <div class="col-md-12">
                 @if (ViewBag.IsAdmin == true)
                 {
-                    <div class="col-xs-12 text-center" style="color: #ff0000; margin-top: 60px; font-size: 30px">
+                    <div class="col-12 text-center" style="color: #ff0000; margin-top: 60px; font-size: 30px">
                         [[[ Public Reports are disabled in ]]] <a href="@Url.Action("ReportSettings", "Administration")">[[[report settings.]]]</a>
                     </div>
                 }
                 else
                 {
-                    <div class="col-xs-12 text-center" style="color: #ff0000; margin-top: 60px; font-size: 30px">[[[Public Reports are disabled by the system administrator. Please contact your system administrator to enable this.]]]</div>
+                    <div class="col-12 text-center" style="color: #ff0000; margin-top: 60px; font-size: 30px">[[[Public Reports are disabled by the system administrator. Please contact your system administrator to enable this.]]]</div>
                 }
             </div>
         </div>

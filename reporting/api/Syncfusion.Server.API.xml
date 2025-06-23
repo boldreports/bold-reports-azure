@@ -362,7 +362,7 @@
             <param name="apiCategoryUpdate">Details about the category passed will be updated to the specified category id.</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.DeleteItem(System.Guid)">
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.DeleteItem(System.String)">
             <summary>
             Deletes the specified items on the server
             </summary>
@@ -1149,6 +1149,13 @@
             <param name="itemRequest">ItemRequest object which is sent as request</param>
             <returns>The response is sent as ItemResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.AddWebApiDatasource(Syncfusion.Server.Base.DataClasses.ApiReportDataSourceAdd)">
+            <summary>
+            This method is used to add WebApi data source
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource Definition details</param>
+            <returns>ApiItemResponse</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.UpdateReport(Syncfusion.Server.Base.DataClasses.ApiReportUpdate,System.Boolean)">
             <summary>
             Update RDL report in Reports Server
@@ -1163,13 +1170,50 @@
             <param name="itemRequest">ItemRequest object which is sent as request</param>
             <returns>The response is sent as ItemResponse object</returns>
         </member>
-        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.UpdateDataSet(Syncfusion.Server.Base.DataClasses.ApiReportDataSetUpdate)">
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.IsValidWebApiUrl(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
             <summary>
-            Update RSD Dataset in Reports Server
+            This method is used to validate URL for WebApi Datasource
             </summary>
-            <param name="itemRequest">ItemRequest object which is sent as request</param>
-            <returns>The response is sent as ItemResponse object</returns>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource details</param>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.IsValidWebApiDataFormat(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
+            <summary>
+            This method is used to validate dataformat for WebApi Datasource
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource details</param>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.IsValidWebApiMethodType(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
+            <summary>
+            This method is used to validate MethodType for WebApi Datasource
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource details</param>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.IsValidWebApiSecurityType(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
+            <summary>
+            This method is used to validate SecurityType for WebApi Datasource
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource details</param>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.ValidateWebApiDatasourceDetails(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
+            <summary>
+            This method is used to validate the WebApi details for the data source type
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource Definition details</param>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.IsValidWebApiDetails(Syncfusion.Server.Base.DataClasses.ApiReportDataSourceAdd)">
+            <summary>
+            This method is used to validate the WebApi details for the data source
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource Definition details</param>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.MapWebApiDatasourceDetails(Syncfusion.Server.Base.DataClasses.WebApiConnectionString)">
+            <summary>
+            This method is used to Map the values for connection string in WebApi data source
+            </summary>
+            <param name="apiReportDataSourceAddV2">WebApi Datasource Definition details</param>
+            <returns>Object</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Syncfusion.Server.API.Models.ReportServer.Designer.UpdateDataSet(Syncfusion.Server.Base.DataClasses.ApiReportDataSetUpdate)" -->
         <member name="M:Syncfusion.Server.API.Models.ReportServer.Designer.GetDataSourceDefinitionById(Syncfusion.Server.Base.DataClasses.ItemRequest,System.Boolean)">
             <summary>
             Get data source definition by data source guid id

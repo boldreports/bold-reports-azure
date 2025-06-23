@@ -22,7 +22,7 @@
     </div>
     @if (!isWelcomePage)
     {
-        <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+        <div class="mobile-menu-icon text-center mobile-visible collapsed" data-bs-toggle="collapse" aria-expanded="false" data-target="#menu-area">
             <span>
                 <i class="su su-mobile-menu-icon"></i>
             </span>
@@ -38,7 +38,7 @@
 
     <div class="user-account mobile-hidden">
         <div id="account-profile" class="dropdown no-padding">
-            <span class="dropdown-toggle" data-toggle="dropdown">
+            <span class="dropdown-toggle" data-bs-toggle="dropdown">
                 <span class="profile-picture">
                     <div class="lazyload img-loader" data-src="@(idPUrl + Url.Content("/User/Avatar?id=" + idpreferenceId + "&ImageSize=64"))" data-alt="" data-default="" data-id="" style="margin:4px;"></div>
                 </span>
@@ -62,34 +62,34 @@
                     </table>
                 </div>
                 <div class="profile-buttons">
-                    <a class="profile-menu-action col-xs-12 separator top"></a>
-                    <a href="@Url.Action("Dashboards", "Dashboards")?view=owned" class="profile-menu-action col-xs-12">
+                    <a class="profile-menu-action col-12 separator top"></a>
+                    <a href="@Url.Action("Dashboards", "Dashboards")?view=owned" class="profile-menu-action col-12">
                         [[[My Dashboards]]]
                     </a>
-                    <a class="profile-menu-action col-xs-12 separator middle"></a>
-                    <a class="profile-menu-action request-concierge-support col-xs-12 prevent-default-action" href="#">
+                    <a class="profile-menu-action col-12 separator middle"></a>
+                    <a class="profile-menu-action request-concierge-support col-12 prevent-default-action" href="#">
                         [[[New Support Request]]]
                     </a>
-                    <a href="@Url.Action("TicketList", "Support")" class="profile-menu-action col-xs-12">
+                    <a href="@Url.Action("TicketList", "Support")" class="profile-menu-action col-12">
                         [[[Support Incidents]]]
                     </a>
-                    <a class="profile-menu-action col-xs-12 separator middle"></a>
-                    <a href="@Url.Action("ProfilePage", "User")" class="profile-menu-action col-xs-12">
+                    <a class="profile-menu-action col-12 separator middle"></a>
+                    <a href="@Url.Action("ProfilePage", "User")" class="profile-menu-action col-12">
                         [[[Edit Profile]]]
                     </a>
-                    <a href="@Url.Action("logout", "accounts")" class="profile-menu-action col-xs-12">
+                    <a href="@Url.Action("logout", "accounts")" class="profile-menu-action col-12">
                         [[[Sign out]]]
                     </a>
-                    <a class="profile-menu-action col-xs-12 separator bottom"></a>
+                    <a class="profile-menu-action col-12 separator bottom"></a>
                 </div>
             </div>
         </div>
     </div>
     @if (!isMobile)
     {
-        <div class="pull-right" id="notification-section">
+        <div class="float-end" id="notification-section">
             <div id="notification-link" class="dropdown no-padding">
-                <span id="notification-icon" class="su su-notification-alert dropdown-toggle" data-toggle="dropdown">
+                <span id="notification-icon" class="su su-notification-alert dropdown-toggle" data-bs-toggle="dropdown">
 
                 </span>
                 <div id="notification-content-area" class="dropdown-menu notification-content-area" role="menu">
@@ -104,7 +104,7 @@
     }
     else
     {
-        <div class="pull-right" id="notification-section">
+        <div class="float-end" id="notification-section">
             <a id="notification-link" class="notification-mobile-link no-padding" href="@Url.Action("getusernotifications", "notification")">
                 <span id="notification-icon" class="su su-notification-alert">
 
@@ -128,7 +128,7 @@
     }
     @if (!isMobile)
     {
-        <div class="pull-right" id="feedback-section" data-toggle="tooltip" data-placement="bottom" title="[[[Give us feedback]]]">
+        <div class="float-end" id="feedback-section" data-bs-toggle="tooltip" data-bs-placement="bottom" title="[[[Give us feedback]]]">
             <div id="feedback-link" class="dropdown no-padding">
                 <span id="feedback-icon">
                     <span id="bullhorn_img" class="su su-feedback" />
@@ -136,8 +136,8 @@
             </div>
         </div>
        
-        <div class="pull-right" id="concierge-support-request" data-toggle="tooltip" data-placement="bottom">
-            <button class="primary-button app-btn-primary pull-right request-concierge-support" data-toggle="tooltip" title="[[[We answer all your questions.]]]" data-placement="bottom">[[[New Support Request]]]</button>
+        <div class="float-end" id="concierge-support-request" data-bs-toggle="tooltip" data-bs-placement="bottom">
+            <button class="primary-button app-btn-primary float-end request-concierge-support" data-bs-toggle="tooltip" title="[[[We answer all your questions.]]]" data-bs-placement="bottom">[[[New Support Request]]]</button>
         </div>
     }
 

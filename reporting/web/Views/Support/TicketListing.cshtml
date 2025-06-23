@@ -84,7 +84,7 @@
             allowTextWrap: true,
             textWrapSettings: { wrapMode: ej.Grid.WrapMode.Both },
             dataBound: function (args) {
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
             },
             columns: [
                 {
@@ -116,11 +116,11 @@
 
     @await Html.PartialAsync("~/Views/User/_ProfileMenu.cshtml")
     <div id="tickets-container" class="admin-page-container">
-        <div class="admin-page-header col-xs-12">
-            <hgroup class="col-xs-8 no-padding">
+        <div class="admin-page-header col-12">
+            <hgroup class="col-8 no-padding">
                 <h1 class="page-title">[[[SUPPORT INCIDENTS]]]<span id="ticket-count"></span></h1>
             </hgroup>
-            @*<button type="button" id="create-ticket-button" class="ticket-button pull-right" onclick="openSupportDialog(); isToRefreshGrid = true;">[[[Create Incident]]]</button>*@
+            @*<button type="button" id="create-ticket-button" class="ticket-button float-end" onclick="openSupportDialog(); isToRefreshGrid = true;">[[[Create Incident]]]</button>*@
         </div>
         <div class="tickets-grid-container admin-page-body">
             <div id="items" class="item-grid">

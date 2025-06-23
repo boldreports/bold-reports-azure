@@ -14,7 +14,11 @@
     var organizationName = globalAppSettings.SystemSettings.OrganizationName;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#if (BoldReportsCloud)
+    var designerServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
+#else
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+#endif
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
@@ -83,9 +87,11 @@
         </environment>
         <environment include="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-datasource.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-datasource.min.css")" crossorigin="anonymous" />
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
 
         <environment include="Development,CloudDevelopment">
@@ -112,6 +118,9 @@
         var datasource = "@Url.Action("DataSources", "DataSources")";
         var isWindows = @Json.Serialize(@isWindowsPlatform);
         var designerToken = "@ViewBag.AccessToken";
+        var ivCode  = "@ViewBag.IvCode";
+        var keyCode = "@ViewBag.KeyCode";
+        var encryptionKey = "@ViewBag.EncryptionKey";
         var connectionList = null;
         var availableDSList = [];
         var designerInstance;

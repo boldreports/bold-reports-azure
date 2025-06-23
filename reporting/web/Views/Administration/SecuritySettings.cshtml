@@ -58,8 +58,8 @@
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
 
-    <div id="security-page-container" class="col-xs-12 admin-page-container">
-        <div class="col-xs-12 admin-page-header" id="security-settings-page">
+    <div id="security-page-container" class="col-12 admin-page-container">
+        <div class="admin-page-header" id="security-settings-page">
             <hgroup>
                 <h1 class="h2 page-title">
                     [[[Security]]]
@@ -72,21 +72,21 @@
         <div>
             <ul id="cors-tab-nav" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="@isCSPTab">
-                    <a href="#csp-settings" id="csp-settings-tab" aria-controls="csp-settings-tab" role="tab" data-toggle="tab">[[[Content Security Policy]]]</a>
+                    <a href="#csp-settings" id="csp-settings-tab" aria-controls="csp-settings-tab" role="tab" data-bs-toggle="tab">[[[Content Security Policy]]]</a>
                 </li>
                 <li role="presentation" class="@isXFrameTab">
-                    <a href="#x-frame-options" id="x-frame-options-tab" aria-controls="x-frame-options-tab" role="tab" data-toggle="tab">[[[X-Frame-Options]]]</a>
+                    <a href="#x-frame-options" id="x-frame-options-tab" aria-controls="x-frame-options-tab" role="tab" data-bs-toggle="tab">[[[X-Frame-Options]]]</a>
                 </li>
                 <li role="presentation" class="@isNetworkSettingsTab">
-                    <a href="#network-settings" id="network-settings-tab" aria-controls="network-settings-tab" role="tab" data-toggle="tab">[[[IP Allowlisting]]]</a>
+                    <a href="#network-settings" id="network-settings-tab" aria-controls="network-settings-tab" role="tab" data-bs-toggle="tab">[[[IP Allowlisting]]]</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane @isCSPTab" id="csp-settings">
-                    <div id="csp-settings-body" class="admin-page-body">
-                        <form id="csp-settings-form" class="no-padding col-xs-12 no-padding content-display text-wrap" autocomplete="off">
-                            <div class="col-xs-12 no-padding enable-csp settings-page-fields">
-                                <div class="col-xs-12 no-padding">
+                    <div id="csp-settings-body" class="col-12 no-padding admin-page-body">
+                        <form id="csp-settings-form" class="no-padding col-12 no-padding content-display text-wrap" autocomplete="off">
+                            <div class="col-12 no-padding enable-csp settings-page-fields">
+                                <div class="col-12">
                                     <div class="info-label">
                                         @Html.CheckBox("enable-csp", (bool)contentSecurityPolicySettings.IsCSPEnabled, new { @class = "material-checkbox" })
                                         @Html.Hidden("enable-csp")
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
                                 <div class="info-label">
                                     @Html.Label("style-src", "[[[Style Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -112,7 +112,7 @@
                                 </span>
                                 <span class="style-src-validation validation-errors"></span>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
                                 <div class="info-label">
                                     @Html.Label("script-src", "[[[Script Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -125,7 +125,7 @@
                                 </span>
                                 <span class="script-src-validation validation-errors"></span>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
                                 <div class="info-label">
                                     @Html.Label("font-src", "[[[Font Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -138,7 +138,7 @@
                                 </span>
                                 <span class="font-src-validation validation-errors"></span>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
                                 <div class="info-label">
                                     @Html.Label("img-src", "[[[Image Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -151,7 +151,7 @@
                                 </span>
                                 <span class="img-src-validation validation-errors"></span>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list">
                                 <div class="info-label">
                                     @Html.Label("conconnecttent-src", "[[[Connect Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -164,7 +164,7 @@
                                 </span>
                                 <span class="connect-src-validation validation-errors"></span>
                             </div>
-                            <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin src-names-list bottom-src-bottom-margin">
+                            <div class="col-12 no-padding settings-page-fields form-fields-top-margin src-names-list bottom-src-bottom-margin">
                                 <div class="info-label">
                                     @Html.Label("frame-src", "[[[Frame Source]]]", new { @class = "app-textbox-label" })
                                 </div>
@@ -188,15 +188,15 @@
                 </div>
             </div>
         </div>
-        <div class="admin-page-actions col-xs-12">
-            <a href="@Url.Action("reports", "reports")" class="secondary-button app-btn-secondary pull-right" id="cancel-dashboard-settings" title="">[[[Cancel]]]</a>
-            <button type="button" title="" id="update-csp-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">
+        <div class="admin-page-actions col-12">
+            <a href="@Url.Action("reports", "reports")" class="secondary-button app-btn-secondary float-end" id="cancel-dashboard-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-csp-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end">
                 [[[Save]]]
             </button>
-            <button type="button" title="" id="update-x-frame-options-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">
+            <button type="button" title="" id="update-x-frame-options-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end" style="display: none;">
                 [[[Save]]]
             </button>
-            <button type="button" title="" id="update-network-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right" style="display: none;">
+            <button type="button" title="" id="update-network-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end" style="display: none;">
                 [[[Save]]]
             </button>
         </div>

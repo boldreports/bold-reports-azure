@@ -20,7 +20,11 @@
                 <div class="dc-config-container">
                     <div class="dc-config">
                         @{
+#if (BoldReportsCloud)
+                            var serviceURL = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/') + "/api/Designer";
+#else
                             string serviceURL = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/') + "/api/Designer";
+#endif
                             string reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
                             string isAzureApplication = ServerAppConfig.IsAzureApplication.ToString().ToLower();
                         }

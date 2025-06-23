@@ -366,9 +366,11 @@ CREATE TABLE BOLDTC_TenantInfo (
     IsMaster NUMBER(1) NOT NULL,
     IsolationCode NVARCHAR2(2000),
     IsTenantIsolationCodeEnabled NUMBER(1) DEFAULT 0 NOT NULL,
+    IsRowLevelSecurityEnabled NUMBER(1) DEFAULT 1 NOT NULL,
     ResourceLimitationSettings CLOB,
     UseCustomBranding NUMBER(1) NOT NULL,
     IsNewImDbDatabase NUMBER(1) NOT NULL,
+    StorageType NUMBER NOT NULL,
     IsNewDatabase NUMBER(1) NOT NULL,
     CONSTRAINT PK_BOLDTC_TENANTINFO PRIMARY KEY (Id)
 );
@@ -725,6 +727,7 @@ CREATE TABLE BOLDTC_AuthSettings (
     TenantInfoId VARCHAR2(36) NULL,
     AuthProviderId NUMBER NOT NULL,
     Settings NCLOB,
+    EncryptionValues NCLOB,
     IsEnabled NUMBER(1) NOT NULL,
     CreatedBy VARCHAR2(36) NULL,
     ModifiedBy VARCHAR2(36) NULL,
@@ -911,7 +914,15 @@ CREATE TABLE BOLDTC_UserAttributes (
     CONSTRAINT PK_BOLDTC_USERATTRIBUTES PRIMARY KEY (Id)
 );
 
-CREATE TABLE BoldTC_AICredentials (
+CREATE TABLE BOLDTC_BackUp (
+    Id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    ConfigurationData CLOB NOT NULL,
+    PrivateKey CLOB NOT NULL,
+    ModifiedDate TIMESTAMP NOT NULL,
+    IsActive NUMBER(1) NOT NULL
+);
+
+CREATE TABLE BOLDTC_AICredentials (
     Id VARCHAR2(36) NOT NULL,
     AIModel NUMBER NOT NULL,
     AIConfiguration VARCHAR2(4000) NULL,
@@ -921,6 +932,17 @@ CREATE TABLE BoldTC_AICredentials (
     ModifiedDate TIMESTAMP NOT NULL,
     IsActive NUMBER(1) NOT NULL,
     CONSTRAINT PK_BOLDTC_AICREDENTIALS PRIMARY KEY (Id)
+);
+
+CREATE TABLE BOLDTC_TenantStorageDetails (
+    Id VARCHAR2(36) NOT NULL,
+    TenantInfoId VARCHAR2(36) NOT NULL,
+    StorageType NUMBER NOT NULL,
+    ConnectionInfo CLOB,
+    CreatedDate TIMESTAMP NOT NULL,
+    ModifiedDate TIMESTAMP NOT NULL,
+    IsActive NUMBER(1) NOT NULL,
+    CONSTRAINT PK_BOLDTC_TenantStorageDetails PRIMARY KEY (Id)
 );
 
 

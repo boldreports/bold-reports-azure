@@ -62,19 +62,21 @@
         </div>
         <span id="user-name" type="hidden" value="@ViewBag.userName"></span>
         <span id="user-id" type="hidden" value="@ViewBag.userId"></span>
-        <form name="save-view-form" id="save-view-form" class="dialog-body col-xs-12 no-padding">
+        <form name="save-view-form" id="save-view-form" class="dialog-body col-12 no-padding">
             <div>
-                <div class="col-xs-12 padding20 no-bottom-padding" id="item-name-division">
-                    <div class="col-xs-4 no-padding text-right text-label">[[[Name]]]<span class="mandatory">*</span></div>
-                    <div class="col-xs-1 no-padding"></div>
-                    <div class="col-xs-7 no-padding">
+                <div class="col-12 padding20 no-bottom-padding" id="item-name-division">
+                    <div class="col-4 no-padding text-label">
+                        <div class="float-end">[[[Name]]]<span class="mandatory">*</span></div>
+                    </div>
+                    <div class="col-1 no-padding"></div>
+                    <div class="col-7 no-padding">
                         <input type="text" id="view-name" name="viewnewname" maxlength="255" class="form-control site-orgname-fields text" />
                         <span class="validation-errors"></span>
                     </div>
                 </div>
             </div>
         </form>
-        <div class="col-xs-12 dialog-footer no-right-padding no-left-padding" id="action-button-division">
+        <div class="col-12 dialog-footer no-right-padding no-left-padding" id="action-button-division">
             <div class="rightAlign">
                 <input type="button" title="" id="save-button" class="btn primary-button app-btn-primary" value=[[[Save]]] />
                 <input type="button" id="cancel-button" title="" class="btn secondary-button app-btn-secondary" value="[[[Cancel]]]" onclick="closeSaveViewPopup()" />

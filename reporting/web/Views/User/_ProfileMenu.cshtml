@@ -9,6 +9,9 @@
     var supportTicketsUrl = Url.Action("TicketList", "Support");
 }
 
+<div class="top-header-sticky">
+    @await Html.PartialAsync("../Shared/_TopHeaderSection", new ViewDataDictionary(ViewData) { { "PageHeader", "[[[PROFILE]]]" } })
+</div>
 <nav id="admin-nav">
     <ul>
         <li>

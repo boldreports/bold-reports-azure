@@ -260,16 +260,16 @@
     {
         <nav id="server-mobile-navbar" class="navbar navbar-inverse">
             <div class="container-fluid">
-                <ul class="nav navbar-nav col-xs-12 no-padding no-margin">
+                <ul class="nav navbar-nav col-12 no-padding no-margin">
                     @if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated)
                     {
-                        <li class="col-xs-3">
+                        <li class="col-3">
                             <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a>
                         </li>
-                        <li class="col-xs-3">
+                        <li class="col-3">
                             <a href="#" class="su su-report active prevent-default-action"></a>
                         </li>
-                        <li class="col-xs-3">
+                        <li class="col-3">
                             @if (ViewBag.IsReportCommented == "true")
                             {
                                 <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
@@ -279,19 +279,19 @@
                                 <a href="#" class="su su-without-comment server-comment prevent-default-action"></a>
                             }
                         </li>
-                        <li class="col-xs-3">
+                        <li class="col-3">
                             <a href="#" class="su su-view active prevent-default-action"></a>
                         </li>
                     }
                     else
                     {
-                        <li class="col-xs-4">
+                        <li class="col-4">
                             <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a>
                         </li>
-                        <li class="col-xs-4">
+                        <li class="col-4">
                             <a href="#" class="su su-report active prevent-default-action"></a>
                         </li>
-                        <li class="col-xs-4">
+                        <li class="col-4">
                             <a href="#" class="su su-view server-item-view prevent-default-action"></a>
                         </li>
                     }
@@ -328,11 +328,11 @@
     <div id="commentImage_popup" class="col-md-12 no-padding hidden custom-bootstrap-styles" style="display: none;">
         <div class="col-lg-12 no-padding" id="PopupContainer">
             <div class="col-md-12">
-                <div class="col-xs-12 no-padding" style="float:right">
+                <div class="col-12 no-padding" style="float:right">
                     <a href="#" class="PopupClose closePopupImage"><span class="su su-close"></span></a>
                 </div>
             </div>
-            <div class="dialogBody col-xs-12 no-padding">
+            <div class="dialogBody col-12 no-padding">
                 <img id="commentImage_popup_image" src="" style="width: 100%;">
             </div>
         </div>
@@ -491,7 +491,7 @@
     {
         if ($("#is_mobile").val() == "true" && '@isUserAuthenticated' == "true") {
             var reportComment = isReportCommented.toLowerCase() == "true" ? '<a href="#" class="su su-with-comment server-comment prevent-default-action"></a>' : '<a href="#" class="su su-without-comment server-comment prevent-default-action"></a>';
-            var mobileNavBar = '<li class="col-xs-4"> <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a></li><li class="col-xs-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-4">' + reportComment + '</li>';
+            var mobileNavBar = '<li class="col-4"> <a href="@Url.Action("reports", "reports")" class="su su-nav-home load-popup"></a></li><li class="col-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-4">' + reportComment + '</li>';
             if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                 var element = $("#server-mobile-navbar").children().find(".navbar-nav");
                 element.html("");
@@ -620,7 +620,7 @@
         }
 
         $ulContainer.append($divouter);
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="tooltip"]').tooltip();
         if($("#is_mobile").val() == "true")
         {
             if (($(parent.window).width()) < 1400) {
@@ -826,7 +826,7 @@
                     pageurl +
                     '?viewname=' +
                     viewName +
-                    '" target="_blank" data-toggle="tooltip" data-original-title="' + viewName + '">' +
+                    '" target="_blank" data-bs-toggle="tooltip" data-original-title="' + viewName + '">' +
                     viewName +
                     '</a>';
                 $("#save-lable-section label").append(link);

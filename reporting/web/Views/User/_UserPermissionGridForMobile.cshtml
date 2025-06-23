@@ -10,7 +10,7 @@
 }
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="permission-grid-template">
-    <div class="item-name" data-placement="top">
+    <div class="item-name" data-bs-placement="top">
         {{if (PermissionEntity=="@((int)PermissionEntity.SpecificDashboard)" || PermissionEntity=="@((int)PermissionEntity.SpecificCategory)" || PermissionEntity=="@((int)PermissionEntity.SpecificDataSource)" || PermissionEntity=="@((int)PermissionEntity.SpecificDataset)" || PermissionEntity=="@((int)PermissionEntity.SpecificFile)" || PermissionEntity=="@((int)PermissionEntity.SpecificItemView)"||PermissionEntity=="@((int)PermissionEntity.SpecificReports)" || PermissionEntity=="@((int)PermissionEntity.SpecificSchedule)" || PermissionEntity=="@((int)PermissionEntity.SpecificWidget)")}}
             <span>{{:PermissionAccessDescription}} [[[access for the]]] </span>
             {{if ItemType=="@((int)ItemType.Dashboard)" && ItemName!="-"}}
@@ -48,7 +48,7 @@
     });
     function onDataBound(args) {
         $(".e-gdiagonalnext").click();
-        $("[data-toggle=tooltip]").tooltip();
+        $("[data-bs-toggle=tooltip]").tooltip();
     }
 
     $(document)

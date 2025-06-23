@@ -99,7 +99,7 @@
                             searchSettings: { fields: ["Name", "ItemName", "LastRunString", "NextScheduleString", "ExportPath", "ScheduleParameter", "Status"], key: "", ignoreCase: false },
                             actionBegin: "fnActionBegin",
                             actionComplete: function(args) {
-                                $('[data-toggle="tooltip"]').tooltip();
+                                $('[data-bs-toggle="tooltip"]').tooltip();
                                 if (args.model.currentViewData.length === 0) {
                                     this.getContentTable().find("tbody .emptyrecord").html(window.Server.App.LocalizationContent.NoSchedules);
                                     rowBound();
@@ -114,7 +114,7 @@
                                 }
                             },
                             dataBound: function(args) {
-                                $("[data-toggle='tooltip']").tooltip();
+                                $("[ data-bs-toggle='tooltip']").tooltip();
                             },
                             columns: [
                                 {
@@ -230,7 +230,7 @@
                 </div>
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="dashboard-template">
-                <div class="item-dashboard grid-content" title="{{:ItemName}}" data-toggle="tooltip" data-placement="top">
+                <div class="item-dashboard grid-content" title="{{:ItemName}}" data-bs-toggle="tooltip" data-bs-placement="top">
                     <span><a class="grid-content" href="@Url.Action("Reports", "Reports")/{{:ItemId}}/{{:ItemCategoryName}}/{{:ItemName}}" target="_blank">{{:ItemName}}</a></span>
                 </div>
             </script>
@@ -248,7 +248,7 @@
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="schedule-template">
                 <div class="item-name grid-content">
-                    <span title="{{:Name}}" data-toggle="tooltip" data-placement="top">{{:Name}}</span>
+                    <span title="{{:Name}}" data-bs-toggle="tooltip" data-bs-placement="top">{{:Name}}</span>
                 </div>
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="item-name-header">
@@ -258,19 +258,19 @@
                 <div title="[[[Next Scheduled Run]]]">[[[Next Scheduled Run]]]</div>
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="schedule-path-template">
-                <div class="item-name grid-content" title="{{:~renderDoubleQuotes(ExportPath)}}" data-toggle="tooltip" data-placement="top">
+                <div class="item-name grid-content" title="{{:~renderDoubleQuotes(ExportPath)}}" data-bs-toggle="tooltip" data-bs-placement="top">
                     <span>{{:~encodeString(ExportPath)}}</span>
                 </div>
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="schedule-parameter-template">
-                <div class="item-name grid-content" title="{{:ScheduleParameter}}" data-toggle="tooltip" data-placement="top">
+                <div class="item-name grid-content" title="{{:ScheduleParameter}}" data-bs-toggle="tooltip" data-bs-placement="top">
                     <span>{{:ScheduleParameter}}</span>
                 </div>
             </script>
             <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
                 <div class="dropdown">
                     {{if @(Convert.ToBoolean(showContextMenu).ToString().ToLower()) == true }}
-                    <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
+                    <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-bs-toggle="dropdown">
                         <span class="su su-options"> </span>
                     </span>
                     {{/if}}
@@ -352,22 +352,20 @@
                     </ul>
                 </div>
             </script>
-            <div id="item-grid-container" data-grid-name="schedules" class="admin-page-container schedule-listing">
-                <div class="admin-page-header col-lg-12">
-                    <h1 class="page-title col-lg-6 no-margin">
-                        [[[SCHEDULES]]]
-                    </h1>
+            @await Html.PartialAsync("../Shared/_TopHeaderSection", new ViewDataDictionary(ViewData) { { "PageHeader", "[[[SCHEDULES]]]" } })
+            <div id="item-grid-container" data-grid-name="schedules" class="admin-page-container schedule-listing" style="padding: 80px 20px 20px 30px;">
+                <div class="admin-page-header d-flex justify-content-end">
                     @if (itemPermissions[ItemType.Schedule])
                     {
-                        <button type="button" class="create-schedule pull-right primary-button app-btn-primary">[[[Create Schedule]]]</button>
+                        <button type="button" class="create-schedule primary-button app-btn-primary">[[[Create Schedule]]]</button>
                     }
                 </div>
 
                 <div id="schedules-grid-container" class="col-lg-12 admin-page-body  @(isMobile ? "mobile" : "desktop")">
-                    <div id="search-area" class="pull-right">
-                        <input type="text" id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]"/>
-                        <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-schedule pull-left no-margin" title="[[[Search schedules]]]"></span>
+                    <div id="search-area" class="float-end">
+                        <input type="text" id="search-schedules" class="float-start no-margin" placeholder="[[[Search schedules]]]"/>
+                        <span class="su close-icon su-inner-close float-start no-margin" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-schedule float-start no-margin" title="[[[Search schedules]]]"></span>
                     </div>
                     <div id="scheduleGrid" class="schedule-grid">
                     </div>

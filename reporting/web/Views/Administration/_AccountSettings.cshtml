@@ -36,8 +36,8 @@
     
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
-<div id="user-settings-container" class="col-xs-12 admin-page-container">
-    <div id="user-settings-header" class="col-xs-12 admin-page-header">
+<div id="user-settings-container" class="col-12 admin-page-container">
+    <div id="user-settings-header" class="col-12 admin-page-header">
         <hgroup>
             <h1 class="h2 page-title">
                 [[[ACCOUNTS SETTINGS]]]
@@ -51,7 +51,7 @@
         <form id="acc-activate-setting" name="accActivationSettingsForm" class="admin-page-body" method="post" enctype="multipart/form-data" autocomplete="off">
             <div class="field-container col-lg-10">
                 <div class="account-activation-container col-lg-12">
-                    <label class="app-textbox-label col-xs-3 activation">[[[Account Activation Mode]]]</label>
+                    <label class="app-textbox-label col-3 activation">[[[Account Activation Mode]]]</label>
                     <div class="activation-mode col-lg-2" id="automatic">
                         <input type="radio" id="automatic-account-activation" name="activation" class="css-radio" value=@ActivationType.AutomaticActivation @((int)ViewBag.ActivationType == (int)ActivationType.AutomaticActivation ? "checked" : string.Empty) />
                         <label for="automatic-account-activation" class="app-textbox-label notransition" id="labelautomatic">[[[Automatic]]]</label>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                     <div class="email-activation-container col-lg-12" title="[[[This setting controls whether an email address is required for creating new users or not.]]]">
-                    <label class="app-textbox-label col-xs-3  is-email-required">[[[User Email]]]</label>
+                    <label class="app-textbox-label col-3  is-email-required">[[[User Email]]]</label>
                     <div class="email-not-required col-lg-2" id="not-required">
                         <input type="radio" id="email-not-required" name="email-required" class="css-radio" value="false" @(!globalAppSettings.SystemSettings.IsEmailRequired ? "checked" : string.Empty) @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled" : string.Empty) />
                         <label for="email-not-required" class="app-textbox-label notransition @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled-lable-color" : string.Empty)" id="label-email-not-required">Not Required</label>
@@ -76,18 +76,18 @@
                     <div class="email-not-required col-lg-4" id="required">
                         <input type="radio" id="email-required" name="email-required" class="css-radio" value="true" @(((int)ViewBag.ActivationType == (int)ActivationType.EmailActivation || globalAppSettings.SystemSettings.IsEmailRequired) ? "checked" : string.Empty) />
                         <label for="email-required" class="app-textbox-label notransition" id="label-email-required">Required</label>
-                        <div id="email-required-warning" class="col-lg-12 bg-danger email-settings-validation validation-errors hide">
+                        <div id="email-required-warning" class="col-lg-12 bg-danger email-settings-validation validation-errors d-none">
                             [[[When the account activation preference is email, an email address is mandatory for activating the account.]]]
                         </div>
                     </div>
                 </div>
                 <div class="user-default-group col-lg-12">
-                    <label class="app-textbox-label col-xs-3 is-email-required">[[[Default Group for New Users]]]</label>
-                    <div class="col-sm-6 col-xs-6 col-lg-4 filename-dropdown default-group-dropdown">
+                    <label class="app-textbox-label col-3 is-email-required">[[[Default Group for New Users]]]</label>
+                    <div class="col-sm-6 col-6 col-lg-4 filename-dropdown default-group-dropdown">
                         <select id="default-group" data-live-search="true" title="[[[Select groups]]]" name="" class="selectpicker file-template" style="width:183px;" data-size="7" data-none-results-text="[[[No results match]]]">
                             @if (ViewBag.GroupList != null)
                             {
-                                <option value="0">None</option>
+                                <option value="0" selected>None</option>
                                 var selectedGroupId = ViewBag.DefaultGroup != "" ? Convert.ToInt32(ViewBag.DefaultGroup) : 0;
                                 foreach (var group in ViewBag.GroupList)
                                 {
@@ -97,9 +97,11 @@
 
                         </select>
                     </div>
-                    <div class="tool-tip col-xs-1">
-                        <span class="dropdown-toggle" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                        <div class="dropdown-menu" role="menu">[[[Assigns newly created users to this default group.]]]</div>
+                    <div class="tool-tip col-1 no-caret">
+                            <span class="dropdown-toggle no-caret-icon" data-bs-toggle="dropdown">
+                                <span class="su su-info" title=""></span>
+                            </span> 
+                            <div class="dropdown-menu" style = "font-size: 14px;" role="menu">[[[Assigns newly created users to this default group.]]]</div>
                     </div>
                 </div>
             </div>
@@ -107,8 +109,8 @@
     </div>
 
     <div class="admin-page-actions col-lg-12 col-md-12">
-        <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary pull-right" id="UpdateSystemSettingsCancel-bottom" title="">[[[Cancel]]]</a>
-        <button type="button" title="" id="UpdateSystemSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">
+        <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary float-end" id="UpdateSystemSettingsCancel-bottom" title="">[[[Cancel]]]</a>
+        <button type="button" title="" id="UpdateSystemSettings-bottom" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end">
             <span>[[[Save]]]</span>
         </button>
     </div>

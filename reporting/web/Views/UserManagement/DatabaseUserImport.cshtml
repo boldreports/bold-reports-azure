@@ -31,28 +31,28 @@
     {
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="user-detail-validation">
             {{if IsDuplicated}}
-            <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-toggle="tooltip" data-placement="left"></span>
+            <span class="su su-login-error user-import-validation" title="{{:DisplayMessage}}" data-html="true" data-bs-toggle="tooltip" data-bs-placement="left"></span>
             {{/if}}
         </script>
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="user-name-template">
-            <span title="{{:~renderDoubleQuotes(Username)}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:~renderDoubleQuotes(Username)}}" class="grid-content" data-bs-toggle="tooltip">
                 {{:Username}}
             </span>
         </script>
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="first-name-template">
-            <span title="{{:~renderDoubleQuotes(FirstName)}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:~renderDoubleQuotes(FirstName)}}" class="grid-content" data-bs-toggle="tooltip">
                 {{:FirstName}}
             </span>
         </script>
 
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="last-name-template">
-            <span title="{{:~renderDoubleQuotes(LastName)}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:~renderDoubleQuotes(LastName)}}" class="grid-content" data-bs-toggle="tooltip">
                 {{:LastName}}
             </span>
         </script>
 
         <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="email-id-template">
-            <span title="{{:EmailId}}" class="grid-content" data-toggle="tooltip">
+            <span title="{{:EmailId}}" class="grid-content" data-bs-toggle="tooltip">
                 {{:EmailId}}
             </span>
         </script>
@@ -195,15 +195,15 @@
                     }
                 });
                 $("#Grid").data("ejGrid").refreshContent();
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
                 $("#content-area").ejWaitingPopup("hide");
             });
         </script>
 
         <div id="import-database-users" class="col-lg-12 admin-page-container">
-            <div class="col-lg-12 admin-page-header">
-                <div class="col-lg-6 no-padding import-area">
-                    <a href="@Url.Action("Index", "UserManagement")" data-toggle="tooltip" data-placement="top" title="[[[Users]]]" class="back-button pull-left">
+            <div class="d-flex align-items-start justify-content-between admin-page-header">
+                <div class="d-flex align-items-center import-area no-padding">
+                    <a href="@Url.Action("Index", "UserManagement")" data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Users]]]" class="back-button float-end">
                         <i class="su su-arrow-back"> </i>
                     </a>
                     <h2 class="page-title no-margin">
@@ -212,14 +212,14 @@
 
                     </h2>
                 </div>
-                <div class="col-lg-6 no-padding">
-                    <input type="button" value="[[[Import Users]]]" disabled="" title="[[[Import the selected users and activate their accounts]]]" id="import-selected" class="primary-button app-btn-primary pull-right import-button" />
+                <div class="no-padding import">
+                    <input type="button" value="[[[Import Users]]]" disabled="" title="[[[Import the selected users and activate their accounts]]]" id="import-selected" class="primary-button app-btn-primary float-end import-button" />
                 </div>
             </div>
 
             <div class="content-section admin-page-body">
-                <div class="col-md-12 col-xs-12 no-margin no-padding import-user-search">
-                    <div class="col-md-9 col-xs-9 no-padding connection-string-area">
+                <div class="col-md-12 col-12 no-margin no-padding import-user-search">
+                    <div class="col-md-9 col-9 no-padding connection-string-area">
                         <div class="connection-path no-padding">
                             <span id="txt-connection" style="float: left; padding-right: 10px">[[[Connection String]]] : </span>
                             <input type="text" id="txt-connection-string" class="form-control" disabled="disabled" value="@ViewBag.ConnectionString" />
@@ -229,19 +229,19 @@
                         </span>
                         <div class="no-padding error-msg"></div>
                     </div>
-                    <div id="search-area" class="pull-right">
-                        <input type="text" id="search-database-users" class="pull-left" placeholder="[[[Search users]]]" autocomplete="off" />
-                        <span class="su su-inner-close close-icon pull-left" id="clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-user pull-left" title="[[[Search]]]"></span>
+                    <div id="search-area" class="float-end">
+                        <input type="text" id="search-database-users" class="float-start no-margin" placeholder="[[[Search users]]]" autocomplete="off" />
+                        <span class="su close-icon su-inner-close float-end no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-item float-end no-margin" title="[[[Search]]]"></span>
                     </div>
                 </div>
-                <div class="col-xs-12 no-padding no-margin user-data-grid">
-                    <div class="col-xs-12 no-padding">
-                        <div class="col-xs-12 col-md-12 no-padding">
+                <div class="col-12 no-padding no-margin user-data-grid">
+                    <div class="col-12 no-padding">
+                        <div class="col-12 col-md-12 no-padding">
                             <span class="import-message">
                                 [[[Select the users from the following list to import]]]
                             </span>
-                            <div id="error-value" class="col-xs-12">
+                            <div id="error-value" class="col-12">
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -252,8 +252,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-4 no-padding"></div>
-                    <div class="col-xs-8 no-padding"></div>
+                    <div class="col-4 no-padding"></div>
+                    <div class="col-8 no-padding"></div>
                 </div>
             </div>
 
@@ -264,10 +264,10 @@
     else
     {
         <div id="import-database-container" class="container-fluid admin-page-container">
-            <div class="col-lg-12 admin-page-header">
-                <div class="col-md-12 no-padding import-area">
-                    <a href="@Url.Action("Index", "UserManagement")" data-toggle="tooltip" data-placement="top" title="[[[Users]]]" class="back-button pull-left">
-                        <i class="su su-arrow-back"> </i>
+            <div class="import-area d-flex justify-content-start admin-page-header">
+                <div class="d-flex align-items-center">
+                    <a href="@Url.Action("Index", "UserManagement")" data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Users]]]" class="back-button d-flex align-items-center me-2">
+                        <i class="su su-arrow-back back-navigaion img-size"> </i>
                     </a>
                     <h1 class="page-title">
                         <span>[[[IMPORT USERS]]] — [[[From Database ]]]</span>
@@ -277,7 +277,7 @@
             <div class="col-md-12 admin-page-body">
                 @if (globalAppSettings.SystemSettings.ActivationType != ActivationType.EmailActivation)
                 {
-                    <h5>[[[Importing users from existing database is not available in automatic account activation type.]]]</h5>
+                    <h6>[[[Importing users from existing database is not available in automatic account activation type.]]]</h6>
                     <a href="@usersettings" class="admin-page-link">[[[Click here to change the account activation type]]]</a>
                 }
             </div>

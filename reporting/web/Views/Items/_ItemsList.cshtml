@@ -73,7 +73,7 @@
     <div class="item-header">[[[Last Modified]]]</div>
 </script>
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="Description">
-    <div class="item-description" title="{{:~renderDoubleQuotes(Description)}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-description" title="{{:~renderDoubleQuotes(Description)}}" data-bs-toggle="tooltip" data-bs-placement="top">
         <span>
             {{:Description}}
         </span>
@@ -81,19 +81,19 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="Category">
-    <span title="{{:CategoryName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CategoryName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{:CategoryName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="CreatedByDisplayName">
-    <span title="{{:CreatedByDisplayName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CreatedByDisplayName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{:CreatedByDisplayName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="modifiedDate">
-    <div title="{{:ModifiedDate}}" data-toggle="tooltip" data-placement="top">
+    <div title="{{:ModifiedDate}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{:ModifiedDate}}
     </div>
 </script>
@@ -101,10 +101,10 @@
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="favoriteItem">
     {{if ItemType=="@((int)ItemType.Dashboard)"}}
     {{if IsFavorite== true}}
-    <div class="su su-favorite favorite favoriteItem" title="{{:Favorite}}" data-toggle="tooltip" data-placement="top" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
+    <div class="su su-favorite favorite favoriteItem" title="{{:Favorite}}" data-bs-toggle="tooltip" data-bs-placement="top" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
     </div>
     {{else}}
-    <div class="su su-dis-favorite favoriteItem" title="{{:Favorite}}" data-toggle="tooltip" data-placement="top" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
+    <div class="su su-dis-favorite favoriteItem" title="{{:Favorite}}" data-bs-toggle="tooltip" data-bs-placement="top" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
     </div>
     {{/if}}
     {{/if}}
@@ -114,34 +114,34 @@
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemName">
     {{if ItemType == "@((int)ItemType.Dashboard)"}}
     {{if !IsChildDashboard}}
-    <a class="item-link col-lg-12 col-md-12 col-sm-12 col-xs-12 disabled" href="{{if IsDraft}} {{:~draftDesignerEditUrlEncode(Name, Id)}} {{else}} {{:~urlWithSection(CategoryName, Name, Id)}} {{/if}}" data-culture="/@culture" role="tab" data-toggle="tooltip" data-placement="@(!isMobile ? "right" : "auto top")" data-name="{{:Name}}" data-itemid="{{:Id}}" data-category-name="{{:CategoryName}}" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]]: {{:~renderDoubleQuotes(Description)}} <br> {{/if}} {{if CategoryName}} [[[Category]]] : {{:CategoryName}} <br> {{/if}} [[[Added Date]]] : {{:CreatedDate}}">
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 name-and-options" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}">
+    <a class="item-link col-lg-12 col-md-12 col-sm-12 col-12 disabled" href="{{if IsDraft}} {{:~draftDesignerEditUrlEncode(Name, Id)}} {{else}} {{:~urlWithSection(CategoryName, Name, Id)}} {{/if}}" data-culture="/@culture" role="tab" data-bs-toggle="tooltip" data-bs-placement="@(!isMobile ? "right" : "auto top")" data-name="{{:Name}}" data-itemid="{{:Id}}" data-category-name="{{:CategoryName}}" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]]: {{:~renderDoubleQuotes(Description)}} <br> {{/if}} {{if CategoryName}} [[[Category]]] : {{:CategoryName}} <br> {{/if}} [[[Added Date]]] : {{:CreatedDate}}">
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 name-and-options" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}">
             {{if ItemType=="@((int)ItemType.Dashboard)"}}
             {{if IsDraft}}
-            <span class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding"></span>
+            <span class="col-lg-1 col-md-1 col-sm-1 col-1 no-padding"></span>
             {{else}}
             {{if IsFavorite== true}}
-            <span class="su su-favorite favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
+            <span class="su su-favorite favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-1 no-padding" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
             </span>
             {{else}}
-            <span class="su su-dis-favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
+            <span class="su su-dis-favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-1 no-padding" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
             </span>
             {{/if}}
             {{/if}}
             {{/if}}
             {{if !IsMultiDashboard}}
-            <span class="item-name col-lg-9 col-md-9 col-sm-9 col-xs-9 no-padding" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-container="body">{{:Name}}</span>
+            <span class="item-name col-lg-9 col-md-9 col-sm-9 col-9 no-padding" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-container="body">{{:Name}}</span>
             {{else}}
-            <span class="item-name col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-container="body">{{:Name}}</span>
-            <span class="su-multi-tabbed multi-dashboard-icon col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" data-toggle="tooltip" data-container="body" data-placement="bottom" title="[[[Contains multiple dashboards]]]"></span>
+            <span class="item-name col-lg-8 col-md-8 col-sm-8 col-8 no-padding" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-container="body">{{:Name}}</span>
+            <span class="su-multi-tabbed multi-dashboard-icon col-lg-1 col-md-1 col-sm-1 col-1 no-padding" data-bs-toggle="tooltip" data-container="body" data-bs-placement="bottom" title="[[[Contains multiple dashboards]]]"></span>
             {{/if}}
             {{if !IsDraft}}
-            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" id="open-dashboard" data-isdraft="{{:IsDraft}}" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-toggle="tooltip" data-container="body" data-placement="bottom" title="[[[Open Dashboard in new tab]]]"></i>
+            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-1 no-padding" id="open-dashboard" data-isdraft="{{:IsDraft}}" data-href="{{:~urlWithoutSection(CategoryName, Name, Id)}}" data-bs-toggle="tooltip" data-container="body" data-bs-placement="bottom" title="[[[Open Dashboard in new tab]]]"></i>
             {{/if}}
             {{if IsDraft}}
             {{if CreatedById==@(userId) || @(Convert.ToBoolean(Context.Session.GetString("IsAdmin")).ToString().ToLower()) == true}}
-            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding options" id="context-menu">
-                <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown">
+            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-1 no-padding options" id="context-menu">
+                <span class="dropdown-toggle su su-options-menu options-area" data-bs-toggle="dropdown">
                 </span>
                 <ul class="dropdown-menu dashboard-options" role="menu">
                     <li>
@@ -160,8 +160,8 @@
             </span>
             {{/if}}
             {{else}}
-            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding options" id="context-menu">
-                <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown">
+            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-1 no-padding options" id="context-menu">
+                <span class="dropdown-toggle su su-options-menu options-area" data-bs-toggle="dropdown">
                 </span>
                 <ul class="dropdown-menu dashboard-options" role="menu">
                     {{if ~checkMobile()}}
@@ -282,7 +282,7 @@
                     {{if ItemType=="@((int)ItemType.Dashboard)"}}
                     {{if !IsMultiDashboard}}
                     <li class="dropdown dashboard-views" data-load="true">
-                        <span href="#" class="dropdown-toggle views prevent-default-action" data-item-id="{{:Id}}" data-toggle="dropdown">
+                        <span href="#" class="dropdown-toggle views prevent-default-action" data-item-id="{{:Id}}" data-bs-toggle="dropdown">
                             <i class="su su-filter"></i>
                             <span>[[[Views]]]</span>
                         </span>
@@ -413,33 +413,33 @@
             </span>
             {{/if}}
         </span>
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 item-info no-padding">
-            <span class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding"></span>
-            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding">{{:CreatedByDisplayName}}</span>
-            <time class="modified-time pull-right col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">{{:ModifiedDate}}</time>
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 item-info no-padding">
+            <span class="col-lg-1 col-md-1 col-sm-1 col-1 no-padding"></span>
+            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-5 no-padding">{{:CreatedByDisplayName}}</span>
+            <time class="modified-time float-end col-lg-6 col-md-6 col-sm-6 col-6 no-padding">{{:ModifiedDate}}</time>
         </span>
     </a>
     {{else}}
-    <a class="item-link col-lg-12 col-md-12 col-sm-12 col-xs-12 disabled" href="{{:~childUrlWithSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-culture="/@culture" data-toggle="tooltip" data-placement="@(!isMobile ? "right" : "auto top")" data-name="{{:Name}}" data-itemid="{{:Id}}" data-category-name="{{:ParentCategoryName}}" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]]: {{:~renderDoubleQuotes(Description)}} <br> {{/if}} [[[Category]]] : {{:ParentCategoryName}} <br> [[[Added Date]]] : {{:CreatedDate}}">
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 name-and-options" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}">
+    <a class="item-link col-lg-12 col-md-12 col-sm-12 col-12 disabled" href="{{:~childUrlWithSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-culture="/@culture" data-bs-toggle="tooltip" data-bs-placement="@(!isMobile ? "right" : "auto top")" data-name="{{:Name}}" data-itemid="{{:Id}}" data-category-name="{{:ParentCategoryName}}" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]]: {{:~renderDoubleQuotes(Description)}} <br> {{/if}} [[[Category]]] : {{:ParentCategoryName}} <br> [[[Added Date]]] : {{:CreatedDate}}">
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 name-and-options" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}">
             {{if ItemType=="@((int)ItemType.Dashboard)"}}
             {{if IsFavorite== true}}
-            <span class="su su-favorite favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
+            <span class="su su-favorite favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-1 no-padding" data-itemid="{{:Id}}" data-value="False" data-original-title="[[[Remove from favorites]]]">
             </span>
             {{else}}
-            <span class="su su-dis-favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
+            <span class="su su-dis-favorite favorite-item col-lg-1 col-md-1 col-sm-1 col-1 no-padding" data-itemid="{{:Id}}" data-value="True" data-original-title="[[[Mark as favorite]]]">
             </span>
             {{/if}}
             {{/if}}
             {{if !IsMultiDashboard}}
-            <span class="item-name col-lg-9 col-md-9 col-sm-9 col-xs-9 no-padding" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-container="body">{{:Name}}</span>
+            <span class="item-name col-lg-9 col-md-9 col-sm-9 col-9 no-padding" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-container="body">{{:Name}}</span>
             {{else}}
-            <span class="item-name col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-container="body">{{:Name}}</span>
-            <span class="su-calendar-1 multi-dashboard-icon col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding"></span>
+            <span class="item-name col-lg-8 col-md-8 col-sm-8 col-8 no-padding" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-container="body">{{:Name}}</span>
+            <span class="su-calendar-1 multi-dashboard-icon col-lg-1 col-md-1 col-sm-1 col-1 no-padding"></span>
             {{/if}}
-            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" id="open-dashboard" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-toggle="tooltip" data-container="body" data-isdraft="{{:IsDraft}}" data-placement="bottom" title="[[[Open Dashboard in new tab]]]"></i>
-            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding options" id="context-menu">
-                <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown">
+            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-1 no-padding" id="open-dashboard" data-href="{{:~childUrlWithoutSection(ParentCategoryName, CategoryName, Name, CategoryId)}}" data-bs-toggle="tooltip" data-container="body" data-isdraft="{{:IsDraft}}" data-bs-placement="bottom" title="[[[Open Dashboard in new tab]]]"></i>
+            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-1 no-padding options" id="context-menu">
+                <span class="dropdown-toggle su su-options-menu options-area" data-bs-toggle="dropdown">
                 </span>
                 <ul class="dropdown-menu dashboard-options" role="menu">
                     {{if ~checkMobile()}}
@@ -496,7 +496,7 @@
                     {{if ItemType=="@((int)ItemType.Dashboard)"}}
                     {{if !IsMultiDashboard}}
                     <li class="dropdown dashboard-views" data-load="true">
-                        <span href="#" class="dropdown-toggle views prevent-default-action" data-is-childdashboard="{{:IsChildDashboard}}" data-child-dashboard-name="{{:Name}}" data-parent-category-name="{{:ParentCategoryName}}" data-parent-itemname="{{:CategoryName}}" data-item-id="{{:Id}}" data-parent-item-id="{{:CategoryId}}" data-toggle="dropdown">
+                        <span href="#" class="dropdown-toggle views prevent-default-action" data-is-childdashboard="{{:IsChildDashboard}}" data-child-dashboard-name="{{:Name}}" data-parent-category-name="{{:ParentCategoryName}}" data-parent-itemname="{{:CategoryName}}" data-item-id="{{:Id}}" data-parent-item-id="{{:CategoryId}}" data-bs-toggle="dropdown">
                             <i class="su su-filter"></i>
                             <span>[[[Views]]]</span>
                         </span>
@@ -526,20 +526,20 @@
                 </ul>
             </span>
         </span>
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 item-info no-padding">
-            <span class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding"></span>
-            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding">{{:CreatedByDisplayName}}</span>
-            <time class="modified-time pull-right col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">{{:ModifiedDate}}</time>
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 item-info no-padding">
+            <span class="col-lg-1 col-md-1 col-sm-1 col-1 no-padding"></span>
+            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-5 no-padding">{{:CreatedByDisplayName}}</span>
+            <time class="modified-time float-end col-lg-6 col-md-6 col-sm-6 col-6 no-padding">{{:ModifiedDate}}</time>
         </span>
     </a>
     {{/if}}
     {{else ItemType == "@((int)ItemType.Widget)"}}
-    <a class="item-link widgets col-lg-12 col-md-12 col-sm-12 col-xs-12" href="{{:~widgetUrlEncode(Name, Id)}}" data-toggle="tooltip" data-placement="@(!isMobile ? "right" : "auto top")" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]] : {{:~renderDoubleQuotes(Description)}} <br> {{/if}} [[[Added Date]]] : {{:CreatedDate}}">
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 name-and-options" data-href="{{:~widgetUrlEncode(Name, Id)}}">
-            <span class="item-name col-lg-10 col-md-10 col-sm-10 col-xs-10 no-padding" data-href="{{:~widgetUrlEncode(Name, Id)}}">{{:Name}}</span>
-            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" id="open-widget" data-href="{{:~widgetUrlEncode(Name, Id)}}" data-isdraft="{{:IsDraft}}" data-toggle="tooltip" data-placement="bottom" data-container="body" title="[[[Open Widget in new tab]]]"></i>
-            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding options" id="context-menu">
-                <span class="dropdown-toggle su su-options-menu options-area" data-toggle="dropdown">
+    <a class="item-link widgets col-lg-12 col-md-12 col-sm-12 col-12" href="{{:~widgetUrlEncode(Name, Id)}}" data-bs-toggle="tooltip" data-bs-placement="@(!isMobile ? "right" : "auto top")" data-isdraft="{{:IsDraft}}" data-html="true" data-container="body" title="[[[Name]]] : {{:Name}} <br> {{if Description}} [[[Description]]] : {{:~renderDoubleQuotes(Description)}} <br> {{/if}} [[[Added Date]]] : {{:CreatedDate}}">
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 name-and-options" data-href="{{:~widgetUrlEncode(Name, Id)}}">
+            <span class="item-name col-lg-10 col-md-10 col-sm-10 col-10 no-padding" data-href="{{:~widgetUrlEncode(Name, Id)}}">{{:Name}}</span>
+            <i class="su su-open-link-newtab col-lg-1 col-md-1 col-sm-1 col-1 no-padding" id="open-widget" data-href="{{:~widgetUrlEncode(Name, Id)}}" data-isdraft="{{:IsDraft}}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-container="body" title="[[[Open Widget in new tab]]]"></i>
+            <span class="dropdown col-lg-1 col-md-1 col-sm-1 col-1 no-padding options" id="context-menu">
+                <span class="dropdown-toggle su su-options-menu options-area" data-bs-toggle="dropdown">
                 </span>
                 <ul class="dropdown-menu dashboard-options" role="menu">
                     {{if ~checkMobile()}}
@@ -759,9 +759,9 @@
                 </ul>
             </span>
         </span>
-        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 item-info no-padding">
-            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-xs-5 no-padding">{{:CreatedByDisplayName}}</span>
-            <time class="modified-time pull-right col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">{{:ModifiedDate}}</time>
+        <span class="col-lg-12 col-md-12 col-sm-12 col-12 item-info no-padding">
+            <span class="owner-name col-lg-5 col-md-5 col-sm-5 col-5 no-padding">{{:CreatedByDisplayName}}</span>
+            <time class="modified-time float-end col-lg-6 col-md-6 col-sm-6 col-6 no-padding">{{:ModifiedDate}}</time>
         </span>
     </a>
     {{else ItemType == "@((int)ItemType.Category)"}}
@@ -798,7 +798,7 @@
             window.open(url, '_blank');
         });
 
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="tooltip"]').tooltip();
         ej.support.enableLocalizedSort = true;
         $("#items").ejGrid({
             dataSource: ej.DataManager({ url: "@Url.Action("GetItems", (string)gridName)", adaptor: "UrlAdaptor" }),
@@ -823,7 +823,7 @@
             dataBound: function () {
                     if (!navigator.userAgent.match(/Windows Phone/i)) // To avoid tooltips in windows phone.
                     {
-                    $("[data-toggle='tooltip']").tooltip();
+                    $("[ data-bs-toggle='tooltip']").tooltip();
                     }
                     refreshScrollerForCategory();
 

@@ -16,14 +16,14 @@
     </title>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-report.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/upload-report.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-report.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/upload-report.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/upload-report.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/upload-report.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/upload-report.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/upload-report.min.js")" crossorigin="anonymous"></script>
     </environment>
     <script nonce="@Context.Items["ScriptNonce"]">
@@ -97,8 +97,10 @@
         <span>
             <input id='upload_browse_file' class='form-control input-fields text' readonly name='uploadedFileName' type='text' value="@ViewBag.FileName" tabindex="-1">
         </span>
-        <div class='col-xs-1 fileUpload btn btn-default'>
+        <div class="d-flex justify-content-start">
+        <div class='col-12 fileUpload btn btn-default'>
             <span>...</span><input id='browse_file' title="[[[No file selected.]]]" class='browse-button upload-btn' type='file' accept='.rdl' name="file">
+        </div>
         </div>
         @if (isUploaded)
         {

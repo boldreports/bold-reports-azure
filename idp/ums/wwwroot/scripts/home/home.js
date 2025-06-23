@@ -238,13 +238,11 @@ function showSiteDownAlert() {
     }
 }
 $(document).on('click', '.search-allsites', function () {
-    $("ul.nav.nav-tabs li").removeClass("active");
     $("#search-tenants-allsites").closest("li").addClass("active");
     $("#search-tenants-allsites").show();
     $(".search-icon").addClass("no-border");
 });
 $(document).on('click', '.search-favorite', function () {
-    $("ul.nav.nav-tabs li").removeClass("active");
     $("#search-tenants-favorite").closest("li").addClass("active");
     $("#search-tenants-favorite").show();
     $(".search-icon").addClass("no-border");
@@ -344,14 +342,14 @@ $(document).on('click', '.toggle-button-favorite', function (event) {
 });
 
 $(document).on('keyup', '#search-tenants-allsites', function () {
-    if ($('#card-view-button').hasClass('active') && !isNullOrWhitespace($("#search-tenants-allsites").val().trim())) {
+    if ($('#card-view-button').hasClass('active')) {
         skipAll = 0;
         $("#tenant-cards-container-all").empty();
         loadTenantCards(TenantSites + "?userId=" + userId, skipAll, take);
     }
 });
 $(document).on('keyup', '#search-tenants-favorite', function () {
-    if ($('#card-view-button').hasClass('active') && !isNullOrWhitespace($("#search-tenants-favorite").val().trim())) {
+    if ($('#card-view-button').hasClass('active')) {
         skipFavorite = 0;
         $("#tenant-cards-container-favorite").empty();
         loadFavoriteCards(TenantFavoriteListurl + "?userId=" + userId, skipFavorite, take);

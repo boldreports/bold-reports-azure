@@ -94,7 +94,7 @@
         <div class="item-header">[[[Data Refresh Status]]]</div>
     </script>*@
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="description">
-    <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-description grid-content" title="{{:~renderDoubleQuotes(Description)}}" data-bs-toggle="tooltip" data-bs-placement="top">
         <span>
             {{>Description}}
         </span>
@@ -102,19 +102,19 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="category">
-    <span title="{{:CategoryName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CategoryName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{>CategoryName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="createdbydisplayname">
-    <span title="{{:CreatedByDisplayName}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:CreatedByDisplayName}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{>CreatedByDisplayName}}
     </span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="modifieddate">
-    <div title="{{:ModifiedDate}}" data-toggle="tooltip" data-placement="top">
+    <div title="{{:ModifiedDate}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{>ModifiedDate}}
     </div>
 </script>
@@ -122,7 +122,7 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemname">
     {{if ItemType=="2"}}
-    <div class="item-name no-left-margin grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-name no-left-margin grid-content" title="{{:Name}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{if ItemType=="2"}}
         <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="8"}}
@@ -136,7 +136,7 @@
         {{/if}}
     </div>
     {{else}}
-    <div class="item-name grid-content" title="{{:Name}}" data-toggle="tooltip" data-placement="top">
+    <div class="item-name grid-content" title="{{:Name}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{if ItemType=="2"}}
         <span><a href="{{:~urlEncode(CategoryName, Name)}}" target="_blank">{{>Name}}</a></span>
         {{else ItemType=="8"}}
@@ -156,7 +156,7 @@
     <div class="dropdown">
         {{if ItemType != "@((int)ItemType.Datasource)" || (@(Convert.ToBoolean(showDatasourceContextMenu).ToString().ToLower()) == true)}}
         {{if ItemType != "@((int)ItemType.Dataset)" || (@(Convert.ToBoolean(showDatasetContextMenu).ToString().ToLower()) == true)}}
-        <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-toggle="dropdown">
+        <span class="dropdown-toggle option-icon" title="[[[Actions]]]" data-bs-toggle="dropdown">
             <i class="su su-options"></i>
         </span>
         {{/if}}
@@ -465,7 +465,7 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="data-rows">
     {{if DatasourceType=="@((int)ConnectionMode.Extract)"}}
-    <span title="{{:RowCount}}" data-toggle="tooltip" data-placement="top">
+    <span title="{{:RowCount}}" data-bs-toggle="tooltip" data-bs-placement="top">
         {{:RowCount}}
     </span>
     {{else}}
@@ -478,24 +478,24 @@
         <div>
             {{if ScheduleStatus=="@((int)ScheduleStatus.Success)"}}
             <div>
-                <span data-toggle="tooltip" data-placement="top" title="[[[Successful at]]] {{:LastAttemptAt}}">
+                <span data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Successful at]]] {{:LastAttemptAt}}">
                     [[[Successful at]]] {{:LastAttemptAt}}
                 </span>
             </div>
             {{else ScheduleStatus=="@((int)ScheduleStatus.Fail)"}}
             <div>
-                <span data-toggle="tooltip" data-placement="top" title="[[[Failure at]]] {{:LastAttemptAt}}">
+                <span data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Failure at]]] {{:LastAttemptAt}}">
                     [[[Failure at]]] {{:LastAttemptAt}}
                 </span>
                 {{if LastSuccessfulAttemptAt != null}}
                 <div>
-                    <span data-toggle="tooltip" data-placement="top" title="[[[Last successful at]]] {{:LastSuccessfulAttemptAt}}">
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Last successful at]]] {{:LastSuccessfulAttemptAt}}">
                         [[[Last successful at]]] {{:LastSuccessfulAttemptAt}}
                     </span>
                 </div>
                 {{else}}
                 <div>
-                    <span data-toggle="tooltip" data-placement="top" title="[[[No successful refreshes]]]">
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="[[[No successful refreshes]]]">
                         [[[No successful refreshes]]]
                     </span>
                 </div>
@@ -503,7 +503,7 @@
             </div>
             {{else}}
             <div>
-                <span data-toggle="tooltip" data-placement="top" title="[[[Not refreshed yet]]]">
+                <span data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Not refreshed yet]]]">
                     [[[Not refreshed yet]]]
                 </span>
             </div>
@@ -564,7 +564,7 @@
                 if (location.pathname.toLowerCase() === "/" || location.pathname.split("/")[location.pathname.split("/").length - 1].toLowerCase() == "dashboards") {
                     refreshScroller();
                 }
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
             },
             enableRowHover: true,
             columns: [

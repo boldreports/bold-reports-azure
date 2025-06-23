@@ -60,8 +60,8 @@
         @await Html.PartialAsync("_LicenseActivationFooter")
         <div class="system-startUp-settings-bg">
             <div class="startup-page-conatiner" id="startup-page-conatiner">
-                <div id="system-settings-general" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="image-parent-container">
+                <div id="system-settings-general" class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-7" id="image-parent-container">
                         <div class="image-container">
                             <img class="startup-image" src="@reportServerResourceUrl/cdn/images/static/default-pages/v1/login-to-activate.png" />
                             <div class="welcome-content">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" id="system-settings-welcome-container">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-5" id="system-settings-welcome-container">
                         <div class="welcome-content">
                             <span class="first-content align-center">
                                 [[[Complete Your Setup]]]
@@ -87,75 +87,75 @@
                                 <button type="button" id="online-license" license-service-url="@ViewBag.SubscriptionUrl" class="proceed-button content-display">[[[Login to activate]]]</button>
                                 <button type="button" id="offline-license" license-service-url="@ViewBag.SubscriptionUrl" class="proceed-button content-display">[[[Upload license file]]]</button>
                             </div>
-                            <div class="col-xs-12  align-center">
+                            <div class="col-12  align-center">
                                 <span class="link-header">[[[Don’t have an account?]]] <a class="link-decoration" target="_blank" href="https://www.boldreports.com/pricing">[[[Sign Up]]]</a></span>
                             </div>
-                            <div class="divider-container col-xs-12">
+                            <div class="divider-container col-12">
                                 <hr class="connect-line-left"><div class="content text-body">[[[or]]]</div><hr class="connect-line-right">
                             </div>
-                            <div class="col-xs-12 align-center">
+                            <div class="col-12 align-center">
                                 <a id="skip-license-activation" class="link-decoration" href="@ServerAppConfig.InternalAppIdpUrl">[[[Proceed with 30 days trail]]]</a>
                             </div>
                         </div>
                     </div>
-                    <div class="system-settings-offline-license col-lg-5 col-md-5 col-sm-5 col-xs-5" id="system-settings-offline-license-container">
-                        <div id="popup-container" class="col-xs-12 no-padding">
-                            <div class="col-xs-12 upload-header no-padding">
-                                <div class="col-xs-12 no-padding">
+                    <div class="system-settings-offline-license col-lg-5 col-md-5 col-sm-5 col-5" id="system-settings-offline-license-container">
+                        <div id="popup-container" class="col-12 no-padding">
+                            <div class="col-12 upload-header no-padding">
+                                <div class="col-12 no-padding">
                                     <span class="popup-title">[[[Offline Setup]]]</span>
                                     <p class="title-description">
                                         Provide the unlock key file for Offline Installation. If you do not have an unlock key file, you can download it <a target="_blank" href="https://www.boldreports.com/account/downloads">here</a>.
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xs-12 upload-content no-padding">
-                                <div id="upload-section" class="col-xs-12 no-padding">
-                                    <div id="file-lable" class="col-xs-12">
+                            <div class="col-12 upload-content no-padding">
+                                <div id="upload-section" class="col-12 no-padding">
+                                    <div id="file-lable" class="col-12">
                                         <label id="upload-lable">[[[Select the unlock key file]]]</label>
                                     </div>
-                                    <div class="upload-btn-wrapper col-xs-12 no-padding">
-                                        <input type="text" id="file-name" class="col-xs-8" placeholder="[[[choose file]]]" readonly="readonly" />
-                                        <img id="browse-lic" class="col-xs-4" src="~/images/folder.svg" />
+                                    <div class="upload-btn-wrapper col-12 no-padding">
+                                        <input type="text" id="file-name" class="col-8" placeholder="[[[choose file]]]" readonly="readonly" />
+                                        <img id="browse-lic" class="col-4" src="~/images/folder.svg" />
                                         <input type='file' id="getFile" accept=".lic" class="display-none">
                                         <div id="tenant-type" class="display-none"></div>
-                                        <div class="validation-error-message col-xs-12 display-none"></div>
+                                        <div class="validation-error-message col-12 display-none"></div>
                                     </div>
-                                    <div id="license-details" class="col-xs-12">
-                                        <div id="customer-email-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding license-detail-lable">[[[Email]]]</label>
-                                            <p id="customer-email" class="col-xs-8 no-padding"></p>
+                                    <div id="license-details" class="col-12">
+                                        <div id="customer-email-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding license-detail-lable">[[[Email]]]</label>
+                                            <p id="customer-email" class="col-8 no-padding"></p>
                                         </div>
-                                        <div id="subscription-id-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Subscription Id]]]</label>
-                                            <p id="subscription-id" class="col-xs-8 no-padding"></p>
+                                        <div id="subscription-id-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding  license-detail-lable">[[[Subscription Id]]]</label>
+                                            <p id="subscription-id" class="col-8 no-padding"></p>
                                         </div>
-                                        <div id="subscription-name-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Subscription Name]]]</label>
-                                            <p id="subscription-name" class="col-xs-8 no-padding"></p>
-                                        </div>
-
-                                        <div id="plan-name-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Plan Name]]]</label>
-                                            <p id="plan-name" class="col-xs-8 no-padding"></p>
+                                        <div id="subscription-name-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding  license-detail-lable">[[[Subscription Name]]]</label>
+                                            <p id="subscription-name" class="col-8 no-padding"></p>
                                         </div>
 
-                                        <div id="tenant-status-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Tenant Status]]]</label>
-                                            <p id="tenant-status" class="col-xs-8 no-padding">Licensed</p>
+                                        <div id="plan-name-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding  license-detail-lable">[[[Plan Name]]]</label>
+                                            <p id="plan-name" class="col-8 no-padding"></p>
                                         </div>
-                                        <div id="expiry-date-container" class="col-xs-12 no-padding display-none">
-                                            <label class="col-xs-4 no-padding  license-detail-lable">[[[Expiry Date]]]</label>
-                                            <p id="expiry-date" class="col-xs-8 no-padding"></p>
+
+                                        <div id="tenant-status-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding  license-detail-lable">[[[Tenant Status]]]</label>
+                                            <p id="tenant-status" class="col-8 no-padding">Licensed</p>
                                         </div>
-                                        <div id="error-message-container" class="col-xs-12 no-padding display-none">
-                                            <p id="error-message" class="col-xs-8 no-padding"></p>
+                                        <div id="expiry-date-container" class="col-12 no-padding display-none">
+                                            <label class="col-4 no-padding  license-detail-lable">[[[Expiry Date]]]</label>
+                                            <p id="expiry-date" class="col-8 no-padding"></p>
+                                        </div>
+                                        <div id="error-message-container" class="col-12 no-padding display-none">
+                                            <p id="error-message" class="col-8 no-padding"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 upload-footer btn-holder">
-                                <input id="return-startup-home" type="button" value="[[[Back]]]" class="col-xs-6 remove-margin-left secondary-button">
-                                <input disabled id="confirm-license" type="button" value="[[[Proceed]]]" class="col-xs-6 proceed-button">
+                            <div class="col-12 upload-footer btn-holder">
+                                <input id="return-startup-home" type="button" value="[[[Back]]]" class="col-6 remove-margin-left secondary-button">
+                                <input disabled id="confirm-license" type="button" value="[[[Proceed]]]" class="col-6 proceed-button">
                             </div>
                         </div>
                     </div>

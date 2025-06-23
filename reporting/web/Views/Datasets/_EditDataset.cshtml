@@ -48,7 +48,7 @@
         });
 
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -64,18 +64,18 @@
 
             <div id="PopupContainer" class="no-padding dialog edit-dataset">
                 <input type="hidden" id="publishedFileName" value="none">
-                <div class="col-xs-12 dialog-header">
+                <div class="col-12 dialog-header">
                     <span class="su su-dataset Head-icon"></span>
                     <span class="PopupTitle">[[[Update Dataset]]]</span>
-                    <a id="close-update-dataset-popup" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a id="close-update-dataset-popup" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
-                <div class="dialog-body col-xs-12 no-padding file-content-height">
+                <div class="dialog-body col-12 no-padding file-content-height">
                     <div id="general-file-container">
                         <table class="edit-dataset-table">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-2 text-right"><div class="bottom-margin30 dataset-name">[[[Name]]]<span class="mandatory">*</span></div></td>
+                                    <td class="col-md-2 float-end"><div class="bottom-margin30 dataset-name">[[[Name]]]<span class="mandatory">*</span></div></td>
                                     <td class="col-md-10">
                                         <span>
                                             <input type="text" id="file_name" name="Name" class="form-control text-field bottom-margin30  text" maxlength="255" tabindex="1" />
@@ -85,8 +85,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right"><div class="bottom-margin30">[[[Description]]]</div></td>
-                                    <td class="col-xs-10">
+                                    <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
+                                    <td class="col-12">
                                         <textarea style="resize: none;" name="description" class="form-control text-field bottom-margin30 text" maxlength="1024" id="file-description" tabindex="2">@Model.Description</textarea>
                                         <span class="notification help-text">
                                             *[[[1024 characters maximum]]]
@@ -95,18 +95,18 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right"><div class="rsd-file-label bottom-margin35" id="rsd-label">[[[RSD File]]]<span class="mandatory">*</span></div></td>
-                                    <td class="col-xs-10">
+                                    <td class="col-2"><div class="rsd-file-label bottom-margin35 float-end" id="rsd-label">[[[RSD File]]]<span class="mandatory">*</span></div></td>
+                                    <td class="col-12">
                                         <iframe id="dataset_upload_iframe" style="border: none; height: 35px;" src="@Url.Action("UploadDatasetView", "Datasets")" scrolling="no" tabindex="-1"></iframe>
                                         <span id="validate-file" class="validation-message text"></span>
                                         <span id="uploadValidation" class="ErrorMessage text"></span>
                                     </td>
                                 </tr>
                                 <tr id="version_comment">
-                                    <td class="col-xs-2 text-right">
-                                        <div class="bottom-margin30 ">[[[Version comments]]]</div>
+                                    <td class="col-2">
+                                        <div class="bottom-margin30 text-end">[[[Version comments]]]</div>
                                     </td>
-                                    <td class="col-xs-10">
+                                    <td class="col-12">
                                         <textarea id='comment' class='form-control bottom-margin30 text' name="versionComment" readonly="" maxlength="1024" tabindex="3"></textarea>
                                         <span class="notification help-text">
                                             *[[[1024 characters maximum]]]
@@ -122,8 +122,8 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 dataset-dialog-footer rightAlign">
-                    <div class="pull-right">
+                <div class="col-12 dataset-dialog-footer rightAlign">
+                    <div class="float-end">
                         <input type="submit" class="hide-content" style="display: none;" />
                         <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" disabled tabindex="4">
                         <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditDataSet" value="[[[Cancel]]]" tabindex="4">

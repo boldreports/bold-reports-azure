@@ -1,19 +1,19 @@
-﻿@{ 
+﻿@{
     var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
     var localizationHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.Localization);
 }
-<div class="col-lg-12 admin-page-body">
-    <h3 class="title col-lg-12 sub-section-heading">[[[Display]]]</h3>
-    <div class="form-group">
+<div class="col-lg-12 admin-page-body" id="display-sub-section">
+    <h3 class="title col-12 sub-section-heading">[[[Display]]]</h3>
+    <div class="row form-group mb-3 align-items-center">
         @Html.Label("time-zone", "[[[Time Zone]]]", new { @class = "app-textbox-label col-lg-2" })
         <div class="dropdown site-settings-drop-down col-lg-4">
             @Html.DropDownList("timezone", ViewBag.listTimeZone as IEnumerable<SelectListItem>, new { id = "time-zone", @class = "selectpicker form-control", data_none_results_text = "[[[No results match]]]", data_size = "10", title = "[[[Select Timezone]]]", data_live_search = "true", data_live_search_placeholder = "[[[Search]]]" })
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group mb-3">
         @Html.Label("ejMM_DD_YYYY", "[[[Date format]]]", new { @class = "app-textbox-label col-lg-2" })
 
-        <div class="col-lg-10 top-padding">
+        <div class="col-md-10 d-flex flex-wrap align-items-center gap-3">
             <div class="col-sm-2 no-padding">
                 <input type="radio" class="css-radio" id="MM_DD_YYYY" name="date_format" value="MM/dd/yyyy" @(ViewBag.SystemSettings.DateFormat == "MM/dd/yyyy" ? "checked" : string.Empty) />
                 <label for="MM_DD_YYYY">MM/DD/YYYY</label>
@@ -31,62 +31,78 @@
                 <label for="MMM_DD_YYYY">MMM DD YYYY</label>
             </div>
             <div class="col-sm-2 no-padding">
-                <input type="radio" class="css-radio" id="dd_MM_yyyy" name="date_format" value="dd.MM.yyyy" @(ViewBag.SystemSettings.DateFormat == "dd.MM.yyyy" ? "checked" : string.Empty ) />
+                <input type="radio" class="css-radio" id="dd_MM_yyyy" name="date_format" value="dd.MM.yyyy" @(ViewBag.SystemSettings.DateFormat == "dd.MM.yyyy" ? "checked" : string.Empty) />
                 <label for="dd_MM_yyyy">DD.MM.YYYY</label>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        @Html.Label("Use 24-hour format", "[[[Use 24-hour format]]]", new { @class = "app-textbox-label col-xs-2" })
-        <div class="col-xs-4 timeformat switch-align">
+    <div class="row mb-3 align-items-center">
+        @Html.Label("Use 24-hour format", "[[[Use 24-hour format]]]", new { @class = "app-textbox-label col-2" })
+        <div class="col-md-10 d-flex align-items-center gap-3">
             <span class="material-switch text-left">
                 <input type="checkbox" id="time_format" name="enablefooter" @((bool)ViewBag.SystemSettings.TimeFormat ? "checked" : string.Empty) />
                 <label for="time_format" class="label-primary"></label>
             </span>
-            <div class="time">
+            <div class="time" style="margin-right:50px;">
                 13.00
             </div>
-            <div class="col-xs-8 timeformat-message">
-                <span class="dropdown-toggle cursor-type" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                <div class="col-xs-2 dropdown-menu" id="time-dropdown" role="menu">
-                    [[[For the dateformat "DD.MM.YYYY", default time format will be 24 hours.]]]
+            <div class="col-md-1 no-caret" style="padding-left: 80px;">
+                <div class="dropdown">
+                    <span class="dropdown-toggle cursor-type" data-bs-toggle="dropdown">
+                        <span class="su su-info" title=""></span>
+                    </span>
+                    <div class="dropdown-menu" id="time-dropdown" role="menu">
+                        [[[For the dateformat "DD.MM.YYYY", default time format will be 24 hours.]]]
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12 no-padding">
-                <div class="col-xs-2"></div>
-                <span class="validation-message col-xs-4" message=13></span>
-            </div>
-
         </div>
     </div>
+
     @if (ServerAppConfig.IsSelfHosted)
     {
-        <div class="form-group">
-            @Html.Label("application-font", "[[[Application font]]]", new { @class = "app-textbox-label col-xs-2 user-model-language-container" })
-            <div class="dropdown col-xs-4">
-                @Html.DropDownList("application-font", ViewBag.CustomFontList as IEnumerable<SelectListItem>, new { id = "application-font", @class = "selectpicker form-control", data_live_search = "false" })
+        <!-- Application Font -->
+        <div class="row mb-3 align-items-center">
+            @Html.Label("application-font", "[[[Application font]]]", new { @class = "app-textbox-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("application-font", ViewBag.CustomFontList as IEnumerable<SelectListItem>, new
+                    {
+                        id = "application-font",
+                        @class = "selectpicker form-control",
+                        data_live_search = "false"
+                    })
                 <input type="hidden" id="app_font" value="@ViewBag.SystemSettings.FontPreference">
             </div>
         </div>
-        <div class="form-group">
-            @Html.Label("language", "[[[Language]]]", new { @class = "col-xs-2 app-textbox-label" })
-            <div class="dropdown col-xs-4 language-group">
-                @Html.DropDownList("language", ViewBag.languageList as IEnumerable<SelectListItem>, new { id = "language", @class = "selectpicker form-control pull-left", data_live_search = "false" })
+
+        <!-- Language -->
+        <div class="row mb-3 align-items-center">
+            @Html.Label("language", "[[[Language]]]", new { @class = "app-textbox-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("language", ViewBag.languageList as IEnumerable<SelectListItem>, new
+                    {
+                        id = "language",
+                        @class = "selectpicker form-control float-end",
+                        data_live_search = "false"
+                    })
                 <input type="hidden" id="lang_tag" value="@ViewBag.systemLanguage">
                 <input type="hidden" id="return_url" value="@ViewBag.SystemSettings.BaseUrl">
             </div>
-            <div class="lang-ingo-tag col-xs-6">
-                <span class="dropdown-toggle cursor-type" data-toggle="dropdown"><span class="su su-info" title=""></span></span>
-                <div class="col-xs-2 dropdown-menu common-tooltip-info" role="menu">
-                        [[[The language used in the application user interface (such as menu items, dialog boxes, toolboxes, and more).]]]
+            <div class="col-md-6 no-caret no-padding">
+                <span class="dropdown-toggle cursor-type" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="su su-info" title=""></span>
+                </span>
+                <div class="dropdown-menu common-tooltip-info" role="menu">
+                    [[[The language used in the application user interface (such as menu items, dialog boxes, toolboxes, and more).]]]
+                    @if (!@ServerAppConfig.IsHideHelpLink)
+                    {
+                        <br>
 
-                        @if (!@ServerAppConfig.IsHideHelpLink)
-                        {
-                            <br><br>
-                                <span>[[[Click ]]] <a href="@localizationHelpSiteUrl">[[[here]]]</a>[[[ to learn how to add new localizations in Reports.]]]</span>
-                        }
-                    </div>
+                        <br>
+                        <span>[[[Click ]]] <a href="@localizationHelpSiteUrl">[[[here]]]</a>[[[ to learn how to add new localizations in Reports.]]]</span>
+                    }
                 </div>
+            </div>
         </div>
     }
 </div>

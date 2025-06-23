@@ -5,24 +5,24 @@
     var networkSettingsIsEnabled = globalAppSettings.SystemSettings.NetworkSettings != null && globalAppSettings.SystemSettings.NetworkSettings.IsEnabled != null ? globalAppSettings.SystemSettings.NetworkSettings.IsEnabled : false;
 }
 
-<script>
+<script nonce="@Context.Items["ScriptNonce"]">
     var dataSourceRule = @(RuleData != null ? Html.Raw(Json.Serialize(RuleData)) : "[]");
 </script>
-<script type="text/x-jsrender" id="application-edit">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="application-edit">
     <div class="item-header">
-        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="edit">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-bs-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="edit">
             <i class="su su-edit"></i>
         </a>
     </div>
 </script>
-<script type="text/x-jsrender" id="application-delete">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="application-delete">
     <div class="item-header">
-        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="delete">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-bs-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="delete">
             <i class="su su-delete"></i>
         </a>
     </div>
 </script>
-<script type="text/javascript">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
     $(document).ready(function () {
         $("#rulesgrid").ejGrid({
             gridLines: ej.Grid.GridLines.None,
@@ -35,10 +35,10 @@
             pageSettings: { pageSize: 10 },
             enableHover: true,
             rowDataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip({ container: $('body') });
+                $('[data-bs-toggle="tooltip"]').tooltip({ container: $('body') });
             },
             dataBound: function () {
-                $('[data-toggle="tooltip"]').tooltip({ container: $('body') });
+                $('[data-bs-toggle="tooltip"]').tooltip({ container: $('body') });
             },
             columns: [
                 { field: 'RuleName', headerText: '[[[Name]]]', width: 90, allowSorting: true, allowFiltering: false },
@@ -52,8 +52,8 @@
 </script>
 
 <div id="network-settings-body" class="admin-page-body">
-    <div class="col-xs-12 no-padding field-container-dashboard">
-        <div class="network-authentication col-xs-12 no-padding">
+    <div class="col-12 no-padding field-container-dashboard">
+        <div class="network-authentication col-12 no-padding">
             <div class="material-switch rule-info inline-align">
                 <div class="info-label">
                     @Html.CheckBox("restrict-ipwhitelist-enabled", (bool)@networkSettingsIsEnabled, new { @class = "material-checkbox" })
@@ -66,18 +66,18 @@
                 <span>[[[Enabling this option will permit requests from allowlisted IP addresses. However, activating this feature won't immediately enforce the IP allowlist. Please specify the IP addresses to be allowlisted and then click <b>Save</b> to apply the changes.]]]</span>
             </div>
             <div class="whitelisting-info">
-                <div class="ipaddress-info pull-left">
+                <div class="ipaddress-info float-start">
                     <span>@string.Format("[[[Please add your current IP address, {0}, to the allowlist. After adding all required IP addresses, save these changes.]]]", currentUserIP)</span>
                 </div>
-                <div id="create-rule" class="pull-right">
-                    <button class="dropdown-toggle primary-button app-btn-primary pull-right" data-toggle="tooltip" id="add-rule-btn" data-placement="top" title="Add new Rule">
+                <div id="create-rule" class="float-end">
+                    <button class="primary-button app-btn-primary float-end" data-bs-toggle="tooltip" id="add-rule-btn" data-bs-placement="top" title="Add new Rule">
                         <span>[[[Add IP Address]]]</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xs-12 no-padding dialog-override">
+    <div class="col-12 no-padding dialog-override">
         <div id="rulesgrid">
         </div>
     </div>

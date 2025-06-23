@@ -50,7 +50,7 @@
             });
 
             function load() {
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
                 if (($(parent.window).width()) > 1400) {
                     $(".dialog").addClass("iframe");
                 }
@@ -67,21 +67,21 @@
         <div id="createReportPopupHolder" class="col-lg-12 no-padding edit-report-module dialog">
             <input type="hidden" name="selectedFolderId" id="selectedFolderId" value="" />
             <input type="hidden" id="publishedFileName" value="none">
-            <div class="col-xs-12 dialog-header">
+            <div class="col-12 dialog-header">
                 <span class="su su-report Head-icon"></span>
                 <span class="PopupTitle extendedTitle">[[[Update Report]]]</span>
-                <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-rdl-add-popup"><span class="su su-close"></span></a>
+                <a href="#" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose close-new-rdl-add-popup"><span class="su su-close"></span></a>
             </div>
-            <div id="new_rdl_tab_content" class="col-xs-12 no-padding dialog-body">
+            <div id="new_rdl_tab_content" class="col-12 no-padding dialog-body">
                 <div class='col-md-12  new-rdl-content-holder' id='new_rdl_content_holder'>
                     <table cellspacing='10' cellpadding='0' border='0' width='100%'>
                         <tr>
-                            <td class="col-xs-3">
-                                <div class="bottom-margin35 text-right">[[[Category]]]<span class="mandatory">*</span></div>
+                            <td class="col-2">
+                                <div class="bottom-margin35 float-end">[[[Category]]]<span class="mandatory">*</span></div>
                             </td>
-                            <td class="col-xs-9">
+                            <td class="col-12">
                                 <div>
-                                    <select id="selected_category" data-live-search="true" data-none-results-text="[[[No results match]]]" title='[[[Select category]]]' name="categoryId" class="selectpicker form-control bottom-margin30" data-size="5" style="width: 100%; margin-bottom: 15px;" tabindex="1" autofocus>
+                                    <select id="selected_category" data-live-search="true" data-none-results-text="[[[No results match]]]" name="categoryId" class="selectpicker form-control bottom-margin30" data-size="5" style="width: 100%; margin-bottom: 15px;" tabindex="1" autofocus>
                                         @for (var item = 0; item < Model.Count; item++)
                                         {
                                             <option value="@Model[item].Id">@Model[item].Name</option>
@@ -91,8 +91,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="col-xs-3 text-right"><div class="bottom-margin30">[[[Name]]]<span class="mandatory">*</span></div></td>
-                            <td class="col-xs-9">
+                            <td class="col-2"><div class="bottom-margin30 float-end">[[[Name]]]<span class="mandatory">*</span></div></td>
+                            <td class="col-12">
                                 <div>
                                     <input type='text' class='form-control edit-text-fields bottom-margin30 text' name='file_name' id='file_name' maxlength="255" tabindex="2" />
                                     <span id='report_name_validation_error' class='validation-messages text' ></span>
@@ -101,8 +101,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="col-xs-3 text-right"><div class="bottom-margin30">[[[Description]]]</div></td>
-                            <td class="col-xs-9">
+                            <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
+                            <td class="col-12">
                                 <textarea style="resize: none;" id='file-description' class='form-control edit-text-fields bottom-margin35' maxlength="1024" tabindex="3"></textarea>
                                 <span class="notification help-text">
                                     <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
@@ -110,25 +110,25 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="col-xs-3 text-right"><div class="bottom-margin35">[[[RDL File]]]<span class="mandatory">*</span></div></td>
-                            <td class="col-xs-9">
+                            <td class="col-2"><div class="bottom-margin35 float-end">[[[RDL File]]]<span class="mandatory">*</span></div></td>
+                            <td class="col-12">
                                 <input type="hidden" name="rdl_filename" id="rdl_filename" />
                                 <iframe id="report_upload_iframe" style="height:35px" class="bottom-margin30" src="@Url.Action("UploadReportView", "Reports")" scrolling="no" tabindex="-1"></iframe>
                                 <span id="uploadValidation" class="ErrorMessage text"></span>
                             </td>
                         </tr>
                         <tr id="version_comment" class="DisplayNone">
-                            <td class="col-xs-3 text-right"><div class="bottom-margin30">[[[Version comments]]]</div></td>
-                            <td class="col-xs-9">
-                                <textarea id='comment' class='form-control edit-text-fields bottom-margin30 text' maxlength="1024" tabindex="4"></textarea>
+                            <td class="col-2"><div class="bottom-margin30 text-end">[[[Version comments]]]</div></td>
+                            <td class="col-12">
+                                <textarea id='comment' class='form-control edit-text-fields bottom-margin30 text' readonly maxlength="1024" tabindex="4"></textarea>
                                 <span class="notification help-text">
                                     <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                                 </span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="col-xs-3 text-right"><div class="bottom-margin40">[[[Tag Name]]]</div></td>
-                            <td class="col-xs-9">
+                            <td class="col-2"><div class="bottom-margin40 float-end">[[[Tag Name]]]</div></td>
+                            <td class="col-12">
                                 <div id="taginfo" class="edit-report-page-taginfo" style="border-radius:4px;">
                                     <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
                                     <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
@@ -147,8 +147,8 @@
                     <div id="automap-message"></div>
                 </div>
             </div>
-            <div class='col-xs-12 new-report-button-holder rightAlign no-left-padding fixed-footer dialog-footer'>
-                <div class='create-rdl-btns pull-right'>
+            <div class='col-12 new-report-button-holder rightAlign no-left-padding fixed-footer dialog-footer'>
+                <div class='create-rdl-btns'>
                     <input type='button' title="" value='[[[Update]]]' id='publish_report' class='btn primary-button app-btn-primary small-right-margin' disabled tabindex="5">
                     <input type='button' title="" value='[[[Cancel]]]' id="cancel-rdl-add-popup" class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="6">
                 </div>
