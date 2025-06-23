@@ -460,7 +460,6 @@ $(document).ready(function () {
                 {
                     systemSettingsDetails.TenantIsolation.IsEnabled = $("#isolation-enable-switch").is(":checked");
                     systemSettingsDetails.TenantIsolation.IsolationCode = document.getElementById("site-isolation-code").ej2_instances[0].value;
-                    systemSettingsDetails.TenantIsolation.IsRowLevelSecurityEnabled = $("#site-row-security-enable-switch").prop("checked");
                     systemSettingsDetails.CustomAttribute = addSiteAttribute;
 
                     if (systemSettingsDetails.TenantIsolation.IsEnabled) {
@@ -477,7 +476,6 @@ $(document).ready(function () {
                 {
                     systemSettingsDetails.TenantIsolation.IsEnabled = $("#isolation-enable-switch").is(":checked");
                     systemSettingsDetails.TenantIsolation.IsolationCode = document.getElementById("site-isolation-code").ej2_instances[0].value;
-                    systemSettingsDetails.TenantIsolation.IsRowLevelSecurityEnabled = $("#site-row-security-enable-switch").prop("checked");
                     systemSettingsDetails.CustomAttribute = addSiteAttribute;
 
                     if (systemSettingsDetails.TenantIsolation.IsEnabled) {
@@ -1323,7 +1321,6 @@ function enableIsolationCode() {
     if (isEnabled) {
         document.getElementById("site-isolation-code").ej2_instances[0].enabled = true;
         $("#isolation-code").focus();
-        $("#site-row-security-enable-switch").prop("disabled", false);
         if ($(".data-security-form").hasClass("d-block")) {
             $("#details-next").attr("disabled", true);
         }
@@ -1335,7 +1332,6 @@ function enableIsolationCode() {
         $("#isolation-code-validation").html("");
         document.getElementById("site-isolation-code").ej2_instances[0].value = null;
         $("#site-isolation-code").closest('div').removeClass("e-error");
-        $("#site-row-security-enable-switch").prop("disabled", true);
         $("#details-next").removeAttr("disabled");
     }
 }

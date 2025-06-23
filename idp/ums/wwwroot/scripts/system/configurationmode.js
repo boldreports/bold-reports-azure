@@ -14,7 +14,6 @@ function ValidateConfigurationMode() {
         $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
         $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourSite).slideDown();
         $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourSite2 + displayName + " " + window.Server.App.LocalizationContent.SiteLetter).slideDown();
-        $(".startup-content span.third-content").hide().text("").slideDown();
         $("#help-link").attr("href", databaseConfigurationUrl);
         $("#system-settings-db-selection-container").show();
         $("#db-content-holder,#db-config-submit").show();
@@ -38,10 +37,10 @@ function ValidateConfigurationMode() {
         var dropDownList = obj.ej2_instances[0];
         var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
 
-        dropDownList.value = 'MSSQL'; 
-        
+        dropDownList.value = 'PostgreSQL'; // Update the value
         dropDownList.dataBind();
 
+        itemsList[0].style.display = "none";
         itemsList[2].style.display = "none";
         itemsList[3].style.display = "none";
     } else {
@@ -50,7 +49,6 @@ function ValidateConfigurationMode() {
         $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
         $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourSite).slideDown();
         $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourSite2 + displayName + " " + window.Server.App.LocalizationContent.SiteLetter).slideDown();
-        $(".startup-content span.third-content").hide().text("").slideDown();
         $("#help-link").attr("href", databaseConfigurationUrl);
         $("#system-settings-db-selection-container").show();
         $("#db-content-holder,#db-config-submit").show();
