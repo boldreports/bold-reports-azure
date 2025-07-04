@@ -705,6 +705,7 @@ CREATE TABLE {database_name}.BOLDRS_DeploymentReports(
 	IsReportLocked tinyint NOT NULL,
 	IsDatasourceLocked tinyint NOT NULL,
 	IsDatasetLocked tinyint NOT NULL,
+	IsMakeReportPublic tinyint NOT NULL,
 	CreatedById int NOT NULL,
 	CreatedDate datetime NOT NULL,
 	ModifiedDate datetime NOT NULL,

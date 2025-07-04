@@ -33,8 +33,8 @@
             </button>
         </h4>
     </div>
-    <div class="charge-custom-domain-div col-xs-12 no-padding">
-        <div class="fluent-popup-body col-xs-12">
+    <div class="charge-custom-domain-div col-12 no-padding">
+        <div class="fluent-popup-body col-12">
             <div class="custom-domain-logo text-center">
                 <i class="su su-www"></i>
             </div>
@@ -63,45 +63,45 @@
     </div>
 
     <div id="billing-address-container" style="display: none;">
-        <div class="fluent-popup-body col-xs-12">
-            <form class="card-form no-padding col-xs-12" id="card-form-id">
+        <div class="fluent-popup-body col-12">
+            <form class="card-form no-padding col-12" id="card-form-id">
                 <span>
                     <label id="billing-address-label" class="popup-label">[[[Billing Address]]]</label>
                 </span>
                 @await Html.PartialAsync("../Payment/_BillingAddressInputElements", (List<Country>)ViewBag.CountryList, new ViewDataDictionary(ViewData) { { "CardDetail", new CardDetail() } })
-                <div class="col-xs-12 col-md-12 no-padding">
-                    <div class="col-xs-5 col-md-5 no-padding" id="validation-detail">
+                <div class="col-12 col-md-12 no-padding">
+                    <div class="col-5 col-md-5 no-padding" id="validation-detail">
                         <span class="validation-error text"></span>
                     </div>
                 </div>
-                <div class="billing-address-button col-xs-12">
-                    <button type="button" id="billing-address-validate-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Next]]]</button>
+                <div class="billing-address-button col-12">
+                    <button type="button" id="billing-address-validate-button" class="app-button app-primary-button app-btn-primary float-end">[[[Next]]]</button>
                 </div>
             </form>
         </div>
     </div>
 
     <div id="card-payment-container" style="display: none;">
-        <div class="fluent-popup-body col-xs-12">
+        <div class="fluent-popup-body col-12">
             <form id="card-payment-form">
                 <div id="upgradecard-details">
                     @await Html.PartialAsync("../Payment/_CardInputElements")
                 </div>
-                <span class="col-xs-12 horizontal-divider"></span>
+                <span class="col-12 horizontal-divider"></span>
                 <div class="payment-summary">
                     <label class="storage-payment-label">[[[Total Payment]]]</label>
                     <span class="storage-total-price">$100 / Mo</span>
                 </div>
-                <div class="card-pay-button col-xs-12">
-                    <button type="button" id="card-pay-back" class="app-button app-secondary-button app-btn-secondary pull-left">[[[Back]]]</button>
-                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button app-btn-primary pull-right">[[[Pay Now]]]</button>
+                <div class="card-pay-button col-12">
+                    <button type="button" id="card-pay-back" class="app-button app-secondary-button app-btn-secondary float-end">[[[Back]]]</button>
+                    <button type="button" id="card-pay-now-button" class="app-button app-primary-button app-btn-primary float-end">[[[Pay Now]]]</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="validate-custom-domain-div col-xs-12 no-padding" style="display:none">
-        <div class="fluent-popup-body col-xs-12">
+    <div class="validate-custom-domain-div col-12 no-padding" style="display:none">
+        <div class="fluent-popup-body col-12">
             <div class="custom-domain-logo text-center">
                 <i class="su su-www"></i>
             </div>
@@ -120,19 +120,19 @@
                     </span>
                 </div>
 
-                <label class="col-xs-12 popup-label text-center domain-name-warning">[[[Do not include http:// or https://]]]</label>
+                <label class="col-12 popup-label text-center domain-name-warning">[[[Do not include http:// or https://]]]</label>
             </div>
-            <div class="custom-domain-input col-xs-12 no-padding">
+            <div class="custom-domain-input col-12 no-padding">
                 <input id="custom-domain-name" type="text" class="form-control textarea" placeholder="www.myreportsite.com" maxlength="255" />
-                <div id="domain-validation-message" class="col-xs-12 error-message text-center"></div>
+                <div id="domain-validation-message" class="col-12 error-message text-center"></div>
             </div>
             <button type="button" id="custom-domain-validate-button" class="app-button app-primary-button app-btn-primary" disabled="disabled">[[[Validate and proceed]]]</button>
         </div>
     </div>
 
     <form class="upload-ssl-certificate-div" method="post" action="" enctype="multipart/form-data" id="sslform" style="display:none">
-        <div class="col-xs-12 no-padding">
-            <div class="fluent-popup-body col-xs-12">
+        <div class="col-12 no-padding">
+            <div class="fluent-popup-body col-12">
                 <div class="free-ssl-div">
                     <span class="su su-lock"></span>
                     <span class="free-ssl-description">[[[Get your free SSL certificate from us.]]]</span>
@@ -144,7 +144,7 @@
                 <div class="upload-ssl-description text-center">
                     <span class="popup-label">[[[Upload SSL certificate to make your website secure.]]]</span>
                 </div>
-                <div class="ssl-certificate-input col-xs-12 no-padding">
+                <div class="ssl-certificate-input col-12 no-padding">
                     <div class="no-padding ssl-certificate-upload-div">
                         <div class="input-group input-file ssl-certificate-upload" name="ssl-certificate">
                             <input type="text" class="form-control ssl-browsefile-input" placeholder='[[[Browse file path]]]' />
@@ -157,17 +157,17 @@
                         <input id="ssl-certificate-password" type="password" class="form-control textarea" name="sslpassword" placeholder="[[[Password]]]" maxlength="255" />
                     </div>
                 </div>
-                <div id="certificate-upload-validation-message" class="col-xs-12 error-message text-center"></div>
-                <div class="ssl-certificate-button col-xs-8">
-                    <button type="button" id="ssl-certificate-validate-back" class="app-button app-secondary-button app-btn-secondary pull-left">[[[Back]]]</button>
-                    <button type="button" id="ssl-certificate-validate-button" class="app-button app-primary-button app-btn-primary pull-right" disabled="disabled">[[[Validate and proceed]]]</button>
+                <div id="certificate-upload-validation-message" class="col-12 error-message text-center"></div>
+                <div class="ssl-certificate-button col-8">
+                    <button type="button" id="ssl-certificate-validate-back" class="app-button app-secondary-button app-btn-secondary float-end">[[[Back]]]</button>
+                    <button type="button" id="ssl-certificate-validate-button" class="app-button app-primary-button app-btn-primary float-end" disabled="disabled">[[[Validate and proceed]]]</button>
                 </div>
             </div>
         </div>
     </form>
 
-    <div class="domain-registration-success col-xs-12 no-padding" style="display:none">
-        <div class="fluent-popup-body col-xs-12">
+    <div class="domain-registration-success col-12 no-padding" style="display:none">
+        <div class="fluent-popup-body col-12">
             <div class="registration-success-header text-center">
                 <i class="su su-password-tick"></i>
             </div>

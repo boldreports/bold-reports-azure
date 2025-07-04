@@ -20,7 +20,7 @@
         var deletetemporarydatasetUrl = "@Url.Action("DeleteTemporaryDataset", "DataSets")";
 
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -45,17 +45,17 @@
 </head>
 <body style="background-color:white">
     <div id="PopupContainer" class="col-lg-12 no-padding dialog">
-        <div class="col-xs-12 dialog-header">
+        <div class="col-12 dialog-header">
             <span class="su su-dataset Head-icon"></span>
             <span class="PopupTitle">[[[Select Dataset -]]]</span>
             <span class="rdl-dataset-name">@ViewData["sourceName"]</span>
-            <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-dataset-popup"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose close-new-dataset-popup"><span class="su su-close"></span></a>
 </div>
-        <div id="dataset_popup_module" class="dialog-body col-xs-12 no-padding">
+        <div id="dataset_popup_module" class="dialog-body col-12 no-padding">
             <div class='col-md-12 no-padding no-top-margin' id='new_datasetrsd_tab_content'>
                 <div class='new-dataset-popup-btns dataset-btns'>
                     <div id="dataset_validation" style="color: #A94442; display: none; height: 0;"></div>
-                    <div class='create-dataset-btns pull-right'>
+                    <div class='create-dataset-btns float-end'>
                         <input type='button' value='[[[Select]]]' id='publish_dataset' class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
                         <input type='button' value='[[[Cancel]]]' id="cancel-new-dataset-popup" class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="16">
                     </div>

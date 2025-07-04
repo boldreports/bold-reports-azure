@@ -24,7 +24,7 @@
         });
 
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -51,7 +51,7 @@
         <span class="PopupTitle">
             [[[Update Category]]]
         </span>
-        <a href="#" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom" id="close-edit-category-popup"><span class="su su-close"></span></a>
+        <a href="#" class="PopupClose" title="Close" data-bs-toggle="tooltip" data-bs-placement="bottom" id="close-edit-category-popup"><span class="su su-close"></span></a>
     </div>
     <form id="create_category_content" class="col-md-12 dialog-body" method="post" enctype="multipart/form-data" autocomplete="off">
         <table>
@@ -79,7 +79,7 @@
         </table>
     </form>
     <div class="category-btns dialog-footer">
-        <div class="pull-right">
+        <div class="float-end">
             <input type="submit" title="" class="col-md-2 btn primary-button app-btn-primary" value="[[[Update]]]" id="saveEditCategory" disabled="disabled" tabindex="3">
             <input type="button" title="" class="col-md-2 btn secondary-button app-btn-secondary" id="cancel-edit-category-popup" value="[[[Cancel]]]" tabindex="4">
         </div>

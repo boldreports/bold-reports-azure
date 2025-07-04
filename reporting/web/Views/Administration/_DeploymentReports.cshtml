@@ -1,0 +1,90 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+@{
+    ViewBag.Title = "DeploymentReports";
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+}
+
+<script type="text/javascript">
+    var deploymentDashboardsUrl = "@Url.Action("AddDeploymentDashboard", "Publish")";
+    var isDashboardNameExistUrl = "@Url.Action("IsDeploymentDashboardNameExists", "Publish")";
+    var getDeploymentDashboardsUrl = "@Url.Action("GetDeploymentDashboards", "Publish")";
+    var getSelectPickerValuesUrl = "@Url.Action("GetDeploymentReportDetail", "Administration")";
+    var removeDashboardUrl = "@Url.Action("RemoveDeploymentDashboard", "Publish")";
+    var getReportUrl = "@Url.Action("GetItems", "reports")";
+    var getCategories = "@Url.Action("RefreshCategoryList", "Reports")";
+</script>
+
+<script type="text/x-jsrender" id="dashboard-template">
+    <div class="grid-content" title="{{:Name}}" data-bs-toggle="tooltip" data-bs-placement="top">
+        <span><a class="grid-content" href="@Url.Action("Reports", "Reports")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}" target="_blank">{{:Name}}</a></span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="dashboard-name-template">
+    <div class="grid-content" title="{{:DeploymentReportName}}" data-bs-toggle="tooltip" data-bs-placement="top">
+        <span>{{:DeploymentReportName}}</span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="category-template">
+    <div class="grid-content" title="{{:CategoryName}}" data-bs-toggle="tooltip" data-bs-placement="top">
+        <span>{{:CategoryName}}</span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="actionstemplate">
+    <div class="grid-content">
+        <span><a href="javascript:void(0);" class="remove-dashboard grid-content" title="" data-username="{{:DisplayName}}" data-itemId="{{:ItemId}}">[[[Remove]]]</a></span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="locked-template-report">
+    {{if IsReportLocked == true}}
+    [[[Disabled]]]
+    {{else}}
+    [[[Enabled]]]
+    {{/if}}
+</script>
+<script type="text/x-jsrender" id="locked-template-dataset">
+    {{if IsDatasetLocked == true}}
+    [[[Disabled]]]
+    {{else}}
+    [[[Enabled]]]
+    {{/if}}
+</script>
+<script type="text/x-jsrender" id="locked-template-datasource">
+    {{if IsDatasourceLocked == true}}
+    [[[Disabled]]]
+    {{else}}
+    [[[Enabled]]]
+    {{/if}}
+</script>
+<script type="text/x-jsrender" id="make-report-Public">
+    {{if IsMakeReportPublic != true}}
+    [[[Disabled]]]
+    {{else}}
+    [[[Enabled]]]
+    {{/if}}
+</script>
+<div id="deployment-report-body" class="admin-page-body">
+    <div class="col-12" style="padding: 20px 0px 44px 0px !important;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h3 id="deployment-reports-label" style="margin: 0 0 6px 0; font-size: 16px !important; font-weight: 700 !important;">
+                    [[[Deployment Reports]]]
+                </h3>
+                <div class="info-message">
+                    <span>[[[Reports created in this site can be published to other site deployment.]]]</span>
+                </div>
+            </div>
+
+            <div id="deployment-button" class="button-section">
+                <button class="primary-button app-btn-primary" id="add-report" title="Add Report">
+                    <span>[[[Add Report]]]</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportGrid" class="col-12 no-padding dialog-override">
+    </div>
+</div>

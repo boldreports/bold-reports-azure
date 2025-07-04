@@ -161,15 +161,15 @@
     {
         <nav id="server-mobile-navbar" class="navbar navbar-inverse">
             <div class="container-fluid">
-                <ul class="nav navbar-nav col-xs-12 no-padding no-margin">
+                <ul class="nav navbar-nav col-12 no-padding no-margin">
                     @if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && Context.User.Identity.IsAuthenticated)
                     {
                         if (enableComment == "true" && enableView == "true")
                         {
-                            <li class="col-xs-4">
+                            <li class="col-4">
                                 <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
-                            <li class="col-xs-4">
+                            <li class="col-4">
                                 @if (ViewBag.IsReportCommented == "true")
                                 {
                                     <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
@@ -179,26 +179,26 @@
                                     <a href="#" class="su su-without-comment server-comment prevent-default-action"></a>
                                 }
                             </li>
-                            <li class="col-xs-4">
+                            <li class="col-4">
                                 <a href="#" class="su su-filter server-item-view prevent-default-action"></a>
                             </li>
                         }
                         else if (enableComment == "false" && enableView == "true")
                         {
-                            <li class="col-xs-6">
+                            <li class="col-6">
                                 <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
-                            <li class="col-xs-6">
+                            <li class="col-6">
                                 <a href="#" class="su su-filter server-item-view prevent-default-action"></a>
                             </li>
 
                         }
                         else if (enableComment == "true" && enableView == "false")
                         {
-                            <li class="col-xs-6">
+                            <li class="col-6">
                                 <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
-                            <li class="col-xs-6">
+                            <li class="col-6">
                                 @if (ViewBag.IsReportCommented == "true")
                                 {
                                     <a href="#" class="su su-with-comment server-comment prevent-default-action"></a>
@@ -212,7 +212,7 @@
                         }
                         else if (enableComment == "false" && enableView == "false")
                         {
-                            <li class="col-xs-12">
+                            <li class="col-12">
                                 <a href="#" class="su su-report active prevent-default-action"></a>
                             </li>
                         }
@@ -248,11 +248,11 @@
     <div id="commentImage_popup" class="col-md-12 no-padding hidden">
         <div class="col-lg-12 no-padding" id="PopupContainer">
             <div class="col-md-12 header-menu header-popup">
-                <div class="col-xs-12 no-padding" style="float:right">
+                <div class="col-12 no-padding" style="float:right">
                     <a href="#" id="comment-image-dialog-close" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
             </div>
-            <div class="col-xs-12 no-padding">
+            <div class="col-12 no-padding">
                 <img id="commentImage_popup_image" src="" style="width: 100%;">
             </div>
         </div>
@@ -330,7 +330,7 @@
                                         enableView = "true";
                                     }
                                     $("#save-view, #reset-view").attr("disabled", false);
-                                    $("[data-toggle=tooltip]").tooltip("enable");
+                                    $("[data-bs-toggle=tooltip]").tooltip("enable");
 
                                     let hascomments = params.get("hascomments");
                                     if (hascomments.toLowerCase() == "true") {
@@ -748,7 +748,7 @@ else
                     pageurl +
                     '?viewid=' +
                     viewId +
-                    '" target="_blank" data-toggle="tooltip" data-original-title="' + viewName + '">' +
+                    '" target="_blank" data-bs-toggle="tooltip" data-original-title="' + viewName + '">' +
                     viewName +
                     '</a>';
                 $("#save-lable-section label").append(link);
@@ -785,14 +785,14 @@ else
                 : '<a href="#" class="su su-without-comment server-comment prevent-default-action"></a>';
             if ('@enableComment' == "true" && '@enableView' == "true") {
                 var enableCommentSave =
-                    '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6">' + reportComment + '</li>';
+                    '<li class="col-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-6">' + reportComment + '</li>';
                 if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                     var elementCommentSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementCommentSave.html("");
                     elementCommentSave.append(enableCommentSave);
                 } else {
                     var missingCommentSave =
-                        '<li class="col-xs-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-4">' + reportComment + '</li><li class="col-xs-4"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
+                        '<li class="col-4"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-4">' + reportComment + '</li><li class="col-4"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
                     var elementMissingCommentSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementMissingCommentSave.html("");
                     elementMissingCommentSave.append(missingCommentSave);
@@ -801,13 +801,13 @@ else
 
             if ('@enableComment' == "false" && '@enableView' == "true") {
                 var enableSave =
-                    '<li class="col-xs-12"><a href="#" class="su su-report active prevent-default-action"></a></li>';
+                    '<li class="col-12"><a href="#" class="su su-report active prevent-default-action"></a></li>';
                 if (!($(".e-reportviewer-viewer").hasClass("e-reportviewer-parameter"))) {
                     $("#server-mobile-navbar").children().find(".navbar-nav").remove();
                     $("#server-mobile-navbar").remove();
                 } else {
                     var missingSave =
-                        '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
+                        '<li class="col-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-6"><a href="#" class="su su-filter server-item-view prevent-default-action"></a></li>';
                     var elementMissingSave = $("#server-mobile-navbar").children().find(".navbar-nav");
                     elementMissingSave.html("");
                     elementMissingSave.append(missingSave);
@@ -816,7 +816,7 @@ else
 
             if ('@enableComment' == "true" && '@enableView' == "false") {
                 var enableComments =
-                    '<li class="col-xs-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-xs-6">' + reportComment + '</li>';
+                    '<li class="col-6"><a href="#" class="su su-report active prevent-default-action"></a></li><li class="col-6">' + reportComment + '</li>';
                 var elementEnableComment = $("#server-mobile-navbar").children().find(".navbar-nav");
                 elementEnableComment.html("");
                 elementEnableComment.append(enableComments);

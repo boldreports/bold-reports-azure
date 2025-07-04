@@ -47,8 +47,8 @@
 
     @await Html.PartialAsync("_AdminMenu")
 
-    <div class="col-xs-12 admin-page-container">
-        <div class="col-xs-12 admin-page-header" id="security-settings-page">
+    <div class="col-12 admin-page-container">
+        <div class="col-12 admin-page-header" id="security-settings-page">
             <hgroup>
                 <h1 class="h2 page-title">
                     [[[CORS Policy]]]
@@ -58,11 +58,11 @@
                 </h5>
             </hgroup>
         </div>
-        <div class="col-xs-12 " id="cors-settings">
+        <div class="col-12 " id="cors-settings">
             <div id="cors-settings-body" class="admin-page-body">
-                <form id="cors-settings-form" class="no-padding col-xs-12 no-padding content-display text-wrap" autocomplete="off">
-                    <div class="col-xs-12 no-padding enable-cors settings-page-fields form-group">
-                        <div class="col-xs-12 no-padding">
+                <form id="cors-settings-form" class="no-padding col-12 no-padding content-display text-wrap" autocomplete="off">
+                    <div class="col-12 no-padding enable-cors settings-page-fields form-group">
+                        <div class="col-12 no-padding">
                             <div class="info-label">
                                 @Html.CheckBox("enable-cors", (bool)corsSettings.EnableCors, new { @class = "material-checkbox" })
                                 @Html.Hidden("enable-cors")
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin origin-names-list form-group">
+                    <div class="col-12 no-padding settings-page-fields form-fields-top-margin origin-names-list form-group">
                         <div class="info-label">
                             @Html.Label("allowed-origins", "[[[Allowed Origins]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -88,7 +88,7 @@
                         </span>
                         <span class="origin-name-validation validation-errors"></span>
                     </div>
-                    <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin form-group">
+                    <div class="col-12 no-padding settings-page-fields form-fields-top-margin form-group">
                         <div class="info-label">
                             @Html.Label("allowed-methods", "[[[Allowed Methods]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -99,7 +99,7 @@
                             @Html.DropDownList("allowed-methods", ViewBag.AllowedMethods as IEnumerable<SelectListItem>, new { id = "allowed-methods", @class = "selectpicker form-control", @multiple = "", data_none_results_text = "[[[No results match]]]", data_size = "10", title = "[[[Select Method]]]", data_live_search = "true", data_live_search_placeholder = "[[[Search]]]", })
                         </div>
                     </div>
-                    <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin headers-names-list form-group">
+                    <div class="col-12 no-padding settings-page-fields form-fields-top-margin headers-names-list form-group">
                         <div class="info-label">
                             @Html.Label("allowed-headers", "[[[Allowed Headers]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -111,7 +111,7 @@
                             <input id="txt-allowedheaders" autocomplete="off" class="form-control validation-padding txt-holder" placeholder="[[[Enter the list of headers separated by commas]]]" maxlength="253">
                         </span>
                     </div>
-                    <div id="cors-allowed-credentials-dropdown" class="col-xs-12 no-padding settings-page-fields form-fields-top-margin form-group">
+                    <div id="cors-allowed-credentials-dropdown" class="col-12 no-padding settings-page-fields form-fields-top-margin form-group">
                         <div class="info-label">
                             @Html.Label("allowed-credentials", "[[[Allow Credentials]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -126,7 +126,7 @@
                         </div>
                         <span class="credentials-name-validation validation-errors"></span>
                     </div>
-                    <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin expose-headers-names-list form-group">
+                    <div class="col-12 no-padding settings-page-fields form-fields-top-margin expose-headers-names-list form-group">
                         <div class="info-label">
                             @Html.Label("expose-headers", "[[[Expose Headers]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -138,7 +138,7 @@
                             <input id="txt-exposeheaders" autocomplete="off" class="form-control validation-padding txt-holder" placeholder="[[[Enter the list of expose headers separated by commas]]]" maxlength="253">
                         </span>
                     </div>
-                    <div class="col-xs-12 no-padding settings-page-fields form-fields-top-margin pre-flight-bottom-margin form-group">
+                    <div class="col-12 no-padding settings-page-fields form-fields-top-margin pre-flight-bottom-margin form-group">
                         <div class="info-label">
                             @Html.Label("pre-flight-max-age", "[[[Preflight Max-Age]]]", new { @class = "app-textbox-label" })
                         </div>
@@ -150,9 +150,9 @@
                     </div>
                 </form>
             </div>
-            <div class="admin-page-actions col-xs-12 col-md-12">
-                <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-site-settings" title="">[[[Cancel]]]</a>
-                <button type="button" title="" id="update-cors-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary pull-right">
+            <div class="admin-page-actions col-12 col-md-12">
+                <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary float-end" id="cancel-site-settings" title="">[[[Cancel]]]</a>
+                <button type="button" title="" id="update-cors-settings" name="UpdateSystemSettings" class="primary-button app-btn-primary float-end">
                     [[[Save]]]
                 </button>
             </div>

@@ -10,6 +10,9 @@
     var canShowuserMenu = isAdmin || model[PermissionEntity.UsersandGroups];
 }
 
+<div class="top-header-sticky">
+    @await Html.PartialAsync("../Shared/_TopHeaderSection", new ViewDataDictionary(ViewData) { { "PageHeader", "[[[USER MANAGEMENT]]]" } })
+</div>
 <nav id="admin-nav">
     <ul>
         @if (isAdmin || (model != null && model[PermissionEntity.UsersandGroups]))

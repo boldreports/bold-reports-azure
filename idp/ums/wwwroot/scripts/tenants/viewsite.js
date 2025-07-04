@@ -49,15 +49,10 @@ $(document).ready(function () {
 
     if (enableAIFeature != undefined && enableAIFeature)
     {
-        var widget = document.getElementById("widgetsummarization-enable-switch");
         var aiservice = document.getElementById("aiservice-enable-switch");
         var dashboard = document.getElementById("dashboardinsight-enable-switch");
         var updateai = document.getElementById("update-enable-aiservice");
 
-        if (widget)
-        {
-            widget.disabled = false;
-        }
         if (aiservice)
         {
             aiservice.disabled = false;
@@ -70,17 +65,14 @@ $(document).ready(function () {
         {
             updateai.disabled = false;
         }
+        
     }
     else
     {
-        var widget = document.getElementById("widgetsummarization-enable-switch");
         var aiservice = document.getElementById("aiservice-enable-switch");
         var dashboard = document.getElementById("dashboardinsight-enable-switch");
         var updateai = document.getElementById("update-enable-aiservice");
-        if (widget)
-        {
-            widget.disabled = true;
-        }
+       
         if (aiservice)
         {
             aiservice.disabled = true;
@@ -1114,7 +1106,8 @@ var inputFields = [
     "#dashboards-limitation-textbox",
     "#schedule-limitation-textbox",
     "#data-source-limitation-textbox",
-    "#slideshow-limitation-textbox"
+    "#slideshow-limitation-textbox",
+    "#user-limitation-textbox"
 ];
 function validateIntegerInput(inputElement, validationMessageElement) {
     var value = $(inputElement).val().trim();
@@ -1179,6 +1172,7 @@ $("#update-resource-limitation").on("click", function () {
             scheduleLimitation: $("#schedule-limitation-textbox").val() ? $("#schedule-limitation-textbox").val().trim() : "",
             dataSourcesLimitation: $("#data-source-limitation-textbox").val() ? $("#data-source-limitation-textbox").val().trim() : "",
             slideShowLimitation: $("#slideshow-limitation-textbox").val() ? $("#slideshow-limitation-textbox").val().trim() : "",
+            userLimitation: $("#user-limitation-textbox").val() ? $("#user-limitation-textbox").val().trim() : "",
         };
         showWaitingPopup("content-area");
         $.ajax({
@@ -1211,7 +1205,7 @@ function updateInfoMessage() {
     
 $(document).on("click", "#update-enable-aiservice", function () {
    var isAiServiceKeyEnabled= $("#aiservice-enable-switch").is(":checked");
-   var isWidgetSummarizationEnabled= $("#widgetsummarization-enable-switch").is(":checked");
+   var isWidgetSummarizationEnabled=  $("#dashboardinsight-enable-switch").is(":checked");
    var isDashboardInsightEnabled= $("#dashboardinsight-enable-switch").is(":checked");
    var tenantInfoId =  $("#aiservice-enable-switch").attr("data-tenant-id");
     showWaitingPopup("content-area");

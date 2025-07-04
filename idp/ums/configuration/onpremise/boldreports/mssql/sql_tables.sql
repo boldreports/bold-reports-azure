@@ -650,6 +650,7 @@ CREATE TABLE [BOLDRS_DeploymentReports](
 	[IsReportLocked] [bit] NOT NULL,
 	[IsDatasourceLocked] [bit] NOT NULL,
 	[IsDatasetLocked] [bit] NOT NULL,
+	[IsMakeReportPublic] [bit] NOT NULL,
 	[CreatedById] [int] NOT NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[ModifiedDate] [datetime] NOT NULL,

@@ -18,7 +18,11 @@
     var categoryId = itemDetails.CategoryId;
     var isDraft = itemDetails.IsDraft;
     var CanWrite = permissionDetails != null ? permissionDetails[0].CanWrite : false;
+#if (BoldReportsCloud)
+    var designerServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
+#else
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+#endif
     var reportServiceUrl = designerServiceUrl + "/api/Designer/PostDesignerAction";
     var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var xmlContent = ViewBag.xmlContent;

@@ -1,4 +1,4 @@
-﻿window.initializeMonacoEditor = function (elementId, language, initialContent, dotNetHelper) {
+window.initializeMonacoEditor = function (elementId, language, initialContent, dotNetHelper) {
     require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});
     require(['vs/editor/editor.main'], function () {
         window.monacoEditor = monaco.editor.create(document.getElementById(elementId), {

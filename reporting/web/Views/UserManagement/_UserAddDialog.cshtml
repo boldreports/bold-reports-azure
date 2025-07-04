@@ -8,32 +8,32 @@
         <div id="user-add-dialog" class="modal-dialog" role="document">
             <form class="col-lg-12 no-padding add-user-dialog-form modal-content" id="dialog-container" autocomplete="off">
                 <div class="col-md-12 modal-header">
-                    <div class="col-xs-8 no-padding">
+                    <div class="col-8 no-padding">
                         <i class="su su-user-add head-icon"></i>
                         <span class="modal-title">[[[Add User]]]</span>
                     </div>
-                    <div class="col-xs-4 no-padding">
+                    <div class="col-4 no-padding">
                         <a id="user-add-dialog-close-link" class="close" title="[[[Close]]]" href="#">
                             <i class="su su-close"></i>
                         </a>
                     </div>
                 </div>
                 <div id="message" class="validation-message"></div>
-                <div class="modal-body col-xs-12 no-padding form">
+                <div class="modal-body col-12 no-padding form">
                     @if (globalAppSettings.SystemSettings.IsEmailRequired)
                     {
-                        <div class="col-xs-12 form-padding">
-                            <label class="col-xs-4 app-textbox-label text-right">[[[Email address]]]<span class="mandatory">*</span></label>
-                            <div class="col-xs-8 no-left-padding">
+                        <div class="col-12 form-padding">
+                            <label class="col-4 app-textbox-label text-right">[[[Email address]]]<span class="mandatory">*</span></label>
+                            <div class="col-8 no-left-padding">
                                 <input type="text" id="mailid" maxlength="254" placeholder="[[[Email address]]]" class="form-control validation" name="email-address" data-name="email address" />
                                 <span class="useradd-validation-messages" id="invalid-email"></span>
                             </div>
                         </div>
                         @if (ServerAppConfig.IsSelfHosted)
                         {
-                            <div class="col-xs-12 form-padding">
-                                <label class="col-xs-4 app-textbox-label text-right">[[[Username]]]<span class="mandatory">*</span></label>
-                                <div class="col-xs-8 no-left-padding">
+                            <div class="col-12 form-padding">
+                                <label class="col-4 app-textbox-label text-right">[[[Username]]]<span class="mandatory">*</span></label>
+                                <div class="col-8 no-left-padding">
                                     <input type="text" id="username" maxlength="254" placeholder="[[[User name]]]" class="form-control validation" name="user-name" data-name="user name" />
                                     <span class="useradd-validation-messages" id="invalid-username"></span>
                                 </div>
@@ -44,16 +44,16 @@
                     {
                         @if (ServerAppConfig.IsSelfHosted)
                         {
-                            <div class="col-xs-12 form-padding">
-                                <label class="col-xs-4 app-textbox-label text-right">[[[Username]]]<span class="mandatory">*</span></label>
-                                <div class="col-xs-8 no-left-padding">
+                            <div class="col-12 form-padding">
+                                <label class="col-4 app-textbox-label text-right">[[[Username]]]<span class="mandatory">*</span></label>
+                                <div class="col-8 no-left-padding">
                                     <input type="text" id="username" maxlength="254" placeholder="[[[User name]]]" class="form-control validation" name="user-name" data-name="user name" />
                                     <span class="useradd-validation-messages" id="invalid-username"></span>
                                 </div>
                             </div>
-                            <div class="col-xs-12 form-padding">
-                                <label class="col-xs-4 app-textbox-label text-right">[[[Email address]]]</label>
-                                <div class="col-xs-8 no-left-padding">
+                            <div class="col-12 form-padding">
+                                <label class="col-4 app-textbox-label text-right">[[[Email address]]]</label>
+                                <div class="col-8 no-left-padding">
                                     <input type="text" id="mailid" maxlength="254" placeholder="[[[Email address]]]" class="form-control validation" name="email-address" data-name="email address" />
                                     <span class="useradd-validation-messages" id="invalid-email"></span>
                                 </div>
@@ -61,34 +61,34 @@
                         }
                         else
                         {
-                            <div class="col-xs-12 form-padding">
-                                <label class="col-xs-4 app-textbox-label text-right">[[[Email address]]]</label>
-                                <div class="col-xs-8 no-left-padding">
+                            <div class="col-12 form-padding">
+                                <label class="col-4 app-textbox-label text-right">[[[Email address]]]</label>
+                                <div class="col-8 no-left-padding">
                                     <input type="text" id="mailid" maxlength="254" placeholder="[[[Email address]]]" class="form-control validation" name="email-address" data-name="email address" />
                                     <span class="useradd-validation-messages" id="invalid-email"></span>
                                 </div>
                             </div>
                         }
                     }
-                    <div class="col-xs-12 form-padding">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[First name]]]<span class="mandatory">*</span></label>
-                        <div class="col-xs-8 no-left-padding">
+                    <div class="col-12 form-padding">
+                        <label class="col-4 app-textbox-label text-right">[[[First name]]]<span class="mandatory">*</span></label>
+                        <div class="col-8 no-left-padding">
                             <input type="text" id="firstname" maxlength="254" class="form-control  validation" placeholder="[[[First name]]]" name="first-name" data-name="first name">
                             <span class="useradd-validation-messages" id="invalid-firstname"></span>
                         </div>
                     </div>
-                    <div class="col-xs-12 form-padding last-name">
-                        <label class="col-xs-4 app-textbox-label text-right">[[[Last name]]]</label>
-                        <div class="col-xs-8 no-left-padding">
+                    <div class="col-12 form-padding last-name">
+                        <label class="col-4 app-textbox-label text-right">[[[Last name]]]</label>
+                        <div class="col-8 no-left-padding">
                             <input type="text" id="lastname" maxlength="254" class="form-control  validation" placeholder="[[[Last name]]]" name="last-name" data-name="last name">
                             <span class="useradd-validation-messages"></span>
                         </div>
                     </div>
                     @if (globalAppSettings.SystemSettings.ActivationType == ActivationType.AutomaticActivation)
                     {
-                        <div class="col-xs-12 form-padding password" id="user-password-field">
-                            <label class="col-xs-4 app-textbox-label text-right">[[[Password]]]<span class="mandatory">*</span></label>
-                            <div class="col-xs-8 no-left-padding">
+                        <div class="col-12 form-padding password" id="user-password-field">
+                            <label class="col-4 app-textbox-label text-right">[[[Password]]]<span class="mandatory">*</span></label>
+                            <div class="col-8 no-left-padding">
                                 <i class="su su-eye view-green show-hide-password"> </i>
                                 <input type="password" id="user-password" maxlength="85" class="form-control validation" placeholder="[[[Password]]]" name="user-password" data-name="user-password">
                                 <span class="useradd-validation-messages"></span>
@@ -97,17 +97,17 @@
                     }
                     @if (defaultGroupId != 0)
                     {
-                        <div class="col-xs-12 form-padding">
-                            <label class="col-xs-4 app-textbox-label text-right">Add to default group</label>
-                            <div class="col-xs-8 no-left-padding user-default-switch">
+                        <div class="col-12 form-padding">
+                            <label class="col-4 app-textbox-label text-right">Add to default group</label>
+                            <div class="col-8 no-left-padding user-default-switch">
                                 <div class="switch-container">
                                     <label class="switch">
                                         <input type="checkbox" id="add-to-default-group" data-name="add-to-default-group" name="add-to-default-group">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
-                                <div class="tool-tip">
-                                        <span class="dropdown-toggle" data-toggle="dropdown">
+                                <div class="tool-tip no-caret">
+                                        <span class="dropdown-toggle" data-bs-toggle="dropdown">
                                             <span class="su su-info" title=""></span>
                                         </span>
                                     <div class="dropdown-menu" role="menu">
@@ -121,9 +121,9 @@
                     <div id="defaultgroupname" style="display:none;">@defaultGroupName</div>
                     <div id="disable-info" style="padding:10px; display:inline-block;"></div>
                 </div>
-                <div class="col-xs-12 modal-footer">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 no-padding">
+                <div class="col-12 modal-footer">
+                    <div class="col-4"></div>
+                    <div class="col-8 no-padding">
                         <input type="button" id="add-user" class="primary-button app-btn-primary" value="[[[Add]]]" />
                         <input type="button" id="cancel-user" class="secondary-button app-btn-secondary popup-close" value="[[[Cancel]]]" />
                     </div>

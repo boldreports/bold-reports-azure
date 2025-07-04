@@ -157,6 +157,10 @@ $(document).ready(function () {
         $("#new-password").valid();
     });
 
+    $(document).on("click", "#new-password", function () {
+        passwordPolicyPopover("#new-password", $("#new-password").val());
+    });
+
     $('.show-hide-password').on("mouseenter", function () {
         var tooltip = bootstrap.Tooltip.getInstance(this);
         if (tooltip) {

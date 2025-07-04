@@ -60,22 +60,22 @@
 @section MainSection{
     @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Dataset) && itemsCount[ItemType.Dataset] > 0)
     {
-        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container" ng-controller="itemsCtrl" style="padding: 20px 20px 20px 30px;">
+        @await Html.PartialAsync("../Shared/_TopHeaderSection", new ViewDataDictionary(ViewData) { { "PageHeader", "[[[DATASETS]]]" } })
+        <div id="item-grid-container" data-grid-name="datasets" class="admin-page-container" ng-controller="itemsCtrl" style="padding: 80px 20px 20px 30px;">
             <input type="hidden" class="page-name" data-content="[[[DATASETS]]]">
             @if (!isMobile)
             {
-                <div class="import-area col-lg-12 admin-page-header">
-                    <h2 class="page-title col-lg-6">[[[DATASETS]]]</h2>
+                <div class="import-area d-flex justify-content-end admin-page-header">
                     @if (itemPermissions[ItemType.Dataset])
                     {
                         <button type="button" class="cds-btn pull-right primary-button app-btn-primary">[[[Create Dataset]]]</button>
                     }
                 </div>
                 <div class="admin-page-body">
-                    <div id="search-area" class="pull-right">
-                        <input type="text" id="search-items" class="pull-left no-margin" placeholder="[[[Search datasets]]]" />
-                        <span class="su close-icon su-inner-close pull-left no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-item pull-left no-margin" title="[[[Search datasets]]]"></span>
+                    <div id="search-area" class="float-end">
+                        <input type="text" id="search-items" class="float-start no-margin" placeholder="[[[Search datasets]]]" />
+                        <span class="su close-icon su-inner-close float-end no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-item float-end no-margin" title="[[[Search datasets]]]"></span>
                     </div>
 
                     <div class="grid-container grid">

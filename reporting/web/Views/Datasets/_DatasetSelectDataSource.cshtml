@@ -19,7 +19,7 @@
         var testdatasourceconnectionUrl = "@Url.Action("testdatasourceconnection", "datasources")";
 
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -45,17 +45,17 @@
 </head>
 <body style="background-color:white">
     <div id="PopupContainer" class="col-lg-12 no-padding dialog">
-        <div class="col-xs-12 dialog-header">
+        <div class="col-12 dialog-header">
             <span class="su su-datasource Head-icon"></span>
             <span class="PopupTitle">[[[Select Data Source]]]</span>
-            <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose close-new-data-source-popup"><span class="su su-close"></span></a>
+            <a href="#" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose close-new-data-source-popup"><span class="su su-close"></span></a>
         </div>
-        <div id="datasource_popup_module" class="dialog-body col-xs-12 no-padding">
+        <div id="datasource_popup_module" class="dialog-body col-12 no-padding">
 
             <div class='col-md-12 no-padding no-top-margin' id='new_datasourcerdl_tab_content'>
                 <div class='new-datasource-popup-btns datasource-btns'>
                     <div id="datasource_validation" style="color: #A94442; display: none; height: 0;"></div>
-                    <div class='create-datasource-btns pull-right'>
+                    <div class='create-datasource-btns float-end'>
                         <input type='button' value='[[[Select]]]' id='publish_datasource' class='btn primary-button app-btn-primary right-margin10' data-mapid="@ViewData["sourceName"]" tabindex="15">
                         <input type='button' id="cancel-new-data-source-popup" value='[[[Cancel]]]' class='btn secondary-button app-btn-secondary NoStyleCloseClick' tabindex="16">
                     </div>
@@ -94,7 +94,7 @@
             </div>
 
             <form id='new_datasource_tab_content' class='col-lg-12 no-padding dialog rdl-datasource-tab-contents DisplayNone'>
-                <div class='dialog-body col-xs-12 no-padding new-datasource-content-holder' id='new_datasource_content_holder'>
+                <div class='dialog-body col-12 no-padding new-datasource-content-holder' id='new_datasource_content_holder'>
                     <table id='datasource_table'>
                         <tr>
                             <td class="col-md-2 text-right">

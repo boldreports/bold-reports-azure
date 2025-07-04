@@ -41,7 +41,7 @@
             });
 
             function load() {
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
                 if (($(parent.window).width()) > 1400) {
                     $(".dialog").addClass("iframe");
                 }
@@ -59,19 +59,19 @@
         <form id="editItemForm" name="editItemForm" method="post" action="~/files/editfile" enctype="multipart/form-data" autocomplete="off">
             <div id="PopupContainer" class="col-lg-12 no-padding dialog">
 
-                <div class="col-xs-12 dialog-header">
+                <div class="col-12 dialog-header">
                     <span class="su su-document Head-icon"></span>
                     <span class="PopupTitle">[[[Update File]]]</span>
-                    <a href="#" title="[[[Close]]]" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
-                <div class="dialog-body col-xs-12 no-padding file-content-height">
+                <div class="dialog-body col-12 no-padding file-content-height">
                     <div id="general-file-container">
                         <table width="100%" cellspacing="10px" cellpadding="0" border="0">
                             <input type="hidden" name="ItemId" value="@Model.Id" />
                             <tbody>
                                 <tr>
-                                    <td class="col-md-2 text-right"><div class="bottom-margin30 locale-label">[[[Name]]]<span class="mandatory">*</span></div></td>
+                                    <td class="col-md-2 float-end"><div class="bottom-margin30 locale-label">[[[Name]]]<span class="mandatory">*</span></div></td>
                                     <td class="col-md-10 @hasError">
                                         <span>
                                             <input type="text" id="file_name" name="Name" class="form-control text-field bottom-margin30 text" maxlength="255" value="@Model.Name" tabindex="1" autofocus>
@@ -89,8 +89,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right"><div class="bottom-margin30 locale-label">[[[Description]]]</div></td>
-                                    <td class="col-xs-10">
+                                    <td class="col-2"><div class="bottom-margin30 locale-label float-end">[[[Description]]]</div></td>
+                                    <td class="col-10">
                                         <textarea style="resize: none;" name="description" class="form-control text-field bottom-margin30 text" maxlength="1024" id="file-description" tabindex="2">@Model.Description</textarea>
                                         <span class="notification help-text">
                                             <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
@@ -99,8 +99,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right"><div class="bottom-margin30 locale-label">[[[File]]]<span class="mandatory">*</span></div></td>
-                                    <td class="col-xs-10">
+                                    <td class="col-2"><div class="bottom-margin30 locale-label float-end">[[[File]]]<span class="mandatory">*</span></div></td>
+                                    <td class="col-10">
                                         <div class="input-group no-padding imagepath">
                                             <input type="text" id="name" class="form-control upload-file bottom-margin30 text" value="@String.Concat(Model.Name, Model.Extension)" readonly name="uploadedFileName" tabindex="-1">
 											<label for="browse_file" class="trigger-file-input-wrapper"></label>
@@ -115,11 +115,11 @@
                                     </td>
                                 </tr>
                                 <tr id="version_comment">
-                                    <td class="col-xs-2 text-right">
-                                        <div class="bottom-margin30 locale-label">[[[Version comments]]]</div>
+                                    <td class="col-2">
+                                        <div class="bottom-margin30 locale-label text-end">[[[Version comments]]]</div>
                                     </td>
-                                    <td class="col-xs-10">
-                                        <textarea style="resize: none;" id='comment' class='form-control bottom-margin30 text' name="versionComment" readonly="" maxlength="1024" tabindex="3"></textarea>
+                                    <td class="col-10">
+                                        <textarea style="resize: none;" id='comment' class='form-control bottom-margin30 text' readonly="" name="versionComment" maxlength="1024" tabindex="3"></textarea>
                                         <span class="notification help-text">
                                             <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                                         </span>
@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="dialog-footer">
-                    <div class="pull-right">
+                    <div class="float-end">
                         <input type="submit" class="hide-content" style="display: none;" />
                         <input type="button" title="" class="btn primary-button app-btn-primary" value="[[[Update]]]" id="publish_file" disabled tabindex="4">
                         <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelEditFile" value="[[[Cancel]]]" tabindex="4">

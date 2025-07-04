@@ -38,7 +38,7 @@ function ValidateConfigurationMode() {
         var dropDownList = obj.ej2_instances[0];
         var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
 
-        dropDownList.value = 'MSSQL'; 
+        dropDownList.value = 'MSSQL';
         
         dropDownList.dataBind();
 

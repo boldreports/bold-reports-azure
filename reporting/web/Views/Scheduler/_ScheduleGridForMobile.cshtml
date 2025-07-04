@@ -10,7 +10,7 @@
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
     <div class="dropdown">
-        <span class="dropdown-toggle option-icon" data-toggle="dropdown">
+        <span class="dropdown-toggle option-icon" data-bs-toggle="dropdown">
             <span class="su su-options-horizontal"> </span>
         </span>
         <ul class="dropdown-menu" role="menu">
@@ -91,7 +91,7 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" id="expand-template" type="text/x-jsrender">
-    <span class="collapsed su su-angle-right" href="#{{:Id}}" data-toggle="collapse" aria-expanded="false"></span>
+    <span class="collapsed su su-angle-right" href="#{{:Id}}" data-bs-toggle="collapse" aria-expanded="false"></span>
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" id="expand-temp" type="text/x-jsrender">
@@ -99,10 +99,10 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" id="search-temp" type="text/x-jsrender">
-    <div id="search-area" title="[[[Search]]]" class="pull-right no-margin">
-        <input id="search-schedules" class="pull-left no-margin" placeholder="[[[Search schedules]]]" style="display: none;" autocomplete="off" type="text">
-        <span class="su close-icon su-inner-close pull-left no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
-        <span class="su su-search search-item pull-left no-margin remove-background" title="[[[Search schedules]]]"></span>
+    <div id="search-area" title="[[[Search]]]" class="float-end no-margin">
+        <input id="search-schedules" class="float-end no-margin" placeholder="[[[Search schedules]]]" style="display: none;" autocomplete="off" type="text">
+        <span class="su close-icon su-inner-close float-end no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+        <span class="su su-search search-item float-end no-margin remove-background" title="[[[Search schedules]]]"></span>
     </div>
 </script>
 

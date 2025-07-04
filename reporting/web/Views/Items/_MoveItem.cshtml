@@ -44,42 +44,44 @@
     <div id="PopupContainer" class="dialog">
 
         <div class="col-md-12 dialog-header">
-            <div class="col-xs-11 no-padding">
+            <div class="col-11 no-padding">
                 <span class="su su-move Head-icon"></span>
                 <span class="PopupTitle">[[[Move Report]]]</span>
                 <div class="report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
             </div>
-            <div class="col-xs-1 no-padding">
+            <div class="col-1 no-padding">
                 <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
             </div>
         </div>
         @if (TempData["ErrorMessage"] == null)
         {
-            <form class="dialog-body col-xs-12 no-padding copy-move-category" id="move_report_form">
-                <div class="col-xs-12 padding20 no-bottom-padding" id="item-name-division">
-                    <div class="col-xs-3 no-padding text-right text-label">[[[Name]]]<span class="mandatory">*</span></div>
-                    <div class="col-xs-1 no-padding"></div>
-                    <div class="col-xs-8 no-padding">
+            <form class="dialog-body col-12 no-padding copy-move-category" id="move_report_form">
+                <div class="copy-dropdown col-12 padding20 no-bottom-padding" id="item-name-division">
+                    <div class="col-3 no-padding text-label">
+                        <div class="float-end">[[[Name]]]<span class="mandatory">*</span></div>
+                    </div>
+                    <div class="col-1 no-padding"></div>
+                    <div class="col-8 no-padding">
                         <input type="text" id="item_name" name="itemName" maxlength="255" value="@ViewBag.FullItemName" class="form-control site-orgname-fields bottom-margin30 text" />
                         <span class="validation-error text"></span>
                     </div>
                 </div>
-                <div class="col-xs-12 padding20 no-bottom-padding no-top-padding bottom-margin30" id="action-category-division">
-                    <div class="col-xs-3 no-padding text-right text-label">[[[Move to Category]]]</div>
-                    <div class="col-xs-1 no-padding"></div>
+                <div class="copy-dropdown col-12 padding20 no-bottom-padding no-top-padding bottom-margin30" id="action-category-division">
+                    <div class="col-3 no-padding text-label"><div class="float-end">[[[Move to Category]]]</div></div>
+                    <div class="col-1 no-padding"></div>
                     @if (canCreateCategory)
                     {
-                        <div class="col-xs-7 no-padding dropup">
-                            <select id="CategoryList" class="selectpicker" data-live-search="true" title='[[[Select category]]]' data-size="3"></select>
+                        <div class="col-7 no-padding dropup">
+                            <select id="CategoryList" class="selectpicker dropup" data-live-search="true" title="[[[Select category]]]" data-size="3" data-dropup-auto="false"></select>
                             <span class="category-validation-error text"></span>
                         </div>
-                        <span class="col-xs-1 input-group-btn no-padding" id="add-new-category">
-                            <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                        <span class="col-1 input-group-btn no-padding" id="add-new-category">
+                            <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
                         </span>
                     }
                     else
                     {
-                        <div class="col-xs-8 no-padding dropup">
+                        <div class="col-8 no-padding dropup">
                             <select id="CategoryList" class="selectpicker" data-live-search="true" title='[[[Select category]]]' data-size="3"></select>
                         </div>
                     }
@@ -89,13 +91,13 @@
                 <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
             </form>
 
-            <div class="col-xs-4"><input type="hidden" id="ItemIdHidden" value="@Context.Request.Form["itemId"]" /></div>
-            <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
-                <div class="col-xs-6">
+            <div class="col-4"><input type="hidden" id="ItemIdHidden" value="@Context.Request.Form["itemId"]" /></div>
+            <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                <div class="col-6">
                     <span class="ErrorMessage text-left"></span>
                     <span class="SuccessMessage "></span>
                 </div>
-                <div class="col-xs-6 rightAlign">
+                <div class="col-6 rightAlign">
                     @{
                         if (ViewBag.Action == "Move")
                         {
@@ -110,13 +112,13 @@
         }
         else
         {
-            <div class="dialog-body col-xs-12 no-padding">
+            <div class="dialog-body col-12 no-padding">
 
-                <div class="col-xs-12 no-left-padding padding20 no-right-padding bottom-margin30">
+                <div class="col-12 no-left-padding padding20 no-right-padding bottom-margin30">
                     <div class="permission-denied">@TempData["ErrorMessage"]</div>
                 </div>
-                <div class="col-xs-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
-                    <div class="col-xs-12 no-padding text-center">
+                <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                    <div class="col-12 no-padding text-center">
                         <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
                     </div>
                 </div>
@@ -134,13 +136,22 @@
         $(document).ready(function() {
             var categories = @Json.Serialize(ViewBag.CategoryDetails);
             var options = "";
+            var firstOptionSelected = false;
             for (var t = 0; t < categories.length; t++) {
-                if (categories[t].Id != "@ViewBag.ItemId.ToString()")
-                    options += '<option value=' + categories[t].Id + '>' + categories[t].Name + '</option>';
+                if (categories[t].Id != "@ViewBag.ItemId.ToString()") {
+                    var selected = "";
+                    if (!firstOptionSelected) {
+                        selected = " selected";
+                        firstOptionSelected = true;
+                    }
+                    options += '<option value="' + categories[t].Id + '"' + selected + '>' + categories[t].Name + '</option>';
+                }
             }
             $("#CategoryList").html(options);
-            $("#CategoryList").selectpicker("refresh");
-            $("#add-new-category [data-toggle='tooltip']").tooltip();
+            $("#CategoryList").selectpicker('destroy');
+            $("#CategoryList").selectpicker();
+            $("#CategoryList").parent(".dropdown-menu.show").css("max-height", "140px !important");
+            $("#add-new-category [ data-bs-toggle='tooltip']").tooltip();
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
         });
     </script>

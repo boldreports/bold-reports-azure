@@ -15,11 +15,13 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-designer.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/connector-page.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-designer.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-designer.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/connector-page.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/connector-page.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" id="favicon-link" />
 }
@@ -55,8 +57,8 @@
 
 @section MainSection{
     @await Html.PartialAsync("_AdminMenu")
-    <div id="look-and-feel-container" class="col-xs-12 admin-page-container">
-        <div id="dataconnector-settings-header" class="col-xs-12 admin-page-header">
+    <div id="look-and-feel-container" class="col-12 admin-page-container">
+        <div id="dataconnector-settings-header" class="col-12 admin-page-header">
             <hgroup class="col-lg-6">
                 <h1 class="h2 page-title">
                     [[[DATA CONNECTORS CONFIGURATION]]]
@@ -65,8 +67,8 @@
                     [[[Configure any number of connections for your applications by choosing connectors from the list below.]]]
                 </h5>
             </hgroup>
-            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
-            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary float-end" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary float-end update-system-settings">
                 [[[Save]]]
             </button>
         </div>
@@ -75,8 +77,8 @@
             <iframe id="dataConnector_iframe" class="dataConnector-iframe" src="@Url.Action("DataConnectorSettings", "Administration")" style="height: 100%; width: 100%; overflow: hidden;border: none;"></iframe>
         </div>
         <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
-            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary pull-right" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
-            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary pull-right update-system-settings">
+            <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary float-end" id="cancel-connector-settings" title="">[[[Cancel]]]</a>
+            <button type="button" title="" id="update-datasource-settings" name="update-datasources-settings" class="primary-button app-btn-primary float-end update-system-settings">
                 [[[Save]]]
             </button>
         </div>

@@ -28,18 +28,20 @@
 
 </head>
 <body>
-    <div id="publish-site-content" class="col-xs-12 no-padding" style="display:none" ng-controller="PublishCtrl">
+    <div id="publish-site-content" class="col-12 no-padding" style="display:none" ng-controller="PublishCtrl">
         <div id="publish-base-container" style="display:none">
-            <div class="col-xs-6 publish-container">
-                <div>
+            <div class="col-6 publish-container">
+                <div class="external-dropdown-site">
                     <label ng-if="publishType == '@PublishType.Internal.ToString()'">[[[Publish to these sites]]]:</label>
                     <label class="external-dropdown" ng-if="publishType == '@PublishType.External.ToString()'">[[[Publish to external sites]]]:</label>
-                    <div id="active-sites-dropdown" class="selectpicker">
-                        <select id="multiselect-dropdown" class="form-control selectpicker" data-size="5" multiple="" data-actions-box="true" data-live-search="true"></select>
+                    <div id="active-sites-dropdown" class="i-search-fields d-flex align-items-center">
+                        <select id="multiselect-dropdown" class="selectpicker" data-size="5" multiple data-actions-box="true" data-none-results-text="[[[No results match]]]" title="[[[Select Sites]]]" data-hide-disabled="true" data-live-search="true"></select>
+                        <span class="input-group-btn" id="add-external-sites" ng-if="publishType == '@PublishType.External.ToString()'">
+                            <button id="get-external-sites-detail" class="btn btn-default" type="button" data-bs-placement="right" title="[[[Add external sites]]]" data-bs-toggle="tooltip">
+                                <span class="su-add"></span>
+                            </button>
+                        </span>
                     </div>
-                    <span class="col-xs-1 input-group-btn no-padding" id="add-external-sites" ng-if="publishType == '@PublishType.External.ToString()'">
-                        <button id="get-external-sites-detail" class="btn btn-default" type="button" data-placement="right" title="[[[Add external sites]]]" data-toggle="tooltip"><span class="su-add"></span></button>
-                    </span>
                 </div>
                 <span id="active-sites-validation" class="validation-message text"></span>
                 <label>[[[Category name]]]</label>
@@ -51,7 +53,7 @@
                 <div id="use-source-name-checkbox">
                     <input type="checkbox" id="use-source-name" class="material-checkbox" />
                     <input name="use-source-name" type="hidden" value="false">
-                    <label for="use-source-name" data-toggle="tooltip" data-placement="bottom" data-container="#use-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
+                    <label for="use-source-name" data-bs-toggle="tooltip" data-bs-placement="bottom" data-container="#use-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
                 </div>
                 <label>[[[Report description]]]</label>
                 <textarea id="publish-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" ng-model="PublishedItems.Description" maxlength="1024" rows="3"> </textarea>
@@ -68,7 +70,7 @@
                     @Html.Label("publish-dataset-edit", "[[[Lock dataset editing in published site.]]]", new { @class = "toggle-space" })
                 </div>
             </div>
-            <div class="col-xs-6 publish-info">
+            <div class="col-6 publish-info">
                 <h5>[[[Sites:]]]</h5>
                 <p>[[[Choose the sites you want to publish the report to.]]]</p>
                 <h5>[[[Category name:]]]</h5>
@@ -80,15 +82,15 @@
                 </div>
             </div>
         </div>
-        <div id="publish-advanced-container" class="col-xs-12 no-padding" style="display: none">
-            <div class="selected-sites col-xs-6">
-                <ul class="col-xs-11 publish-detail" ng-repeat="sites in selectedSites" ng-class="{active : activeMenu.TenantId === sites.TenantId}">
+        <div id="publish-advanced-container" class="col-12 no-padding" style="display: none">
+            <div class="selected-sites col-6">
+                <ul class="col-11 publish-detail" ng-repeat="sites in selectedSites" ng-class="{active : activeMenu.TenantId === sites.TenantId}">
                     <li class="publish-active-sites" ng-click="setActive(sites, $event)">
                         <span>{{sites.TenantName}}</span>
                     </li>
                 </ul>
             </div>
-            <div class="col-xs-6 advanced-page-container" ng-repeat="p in targetSiteDetail" ng-if="p.TenantId == activeMenu.TenantId">
+            <div class="col-6 advanced-page-container" ng-repeat="p in targetSiteDetail" ng-if="p.TenantId == activeMenu.TenantId">
                 <label>[[[Select the report owner for the destination site.]]]</label>
                 <div class="users-list">
                     <select id="user-selected" name="p.UserId" class="primary-select form-control" ng-model="p.UserId" data-size="5" data-live-search="true"></select>
@@ -102,7 +104,7 @@
                 <div id="advanced-source-name-checkbox">
                     <input type="checkbox" id="advanced-source-name" class="material-checkbox" ng-model="p.UseSourceItemName" />
                     <input name="advanced-source-name" type="hidden" value="false" ng-model="p.UseSourceItemName">
-                    <label for="advanced-source-name" data-toggle="tooltip" data-placement="bottom" data-container="#advanced-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
+                    <label for="advanced-source-name" data-bs-toggle="tooltip" data-bs-placement="bottom" data-container="#advanced-source-name-checkbox" title="[[[On enabling this, if a report, data source, or dataset with the same name exists in the destination site, publishing will fail.]]]">[[[Use source report, data source and dataset name.]]]</label>
                 </div>
                 <label>[[[Report description]]]</label>
                 <textarea ng-model="p.PublishItem.Description" id="advanced-report-descrition" autocomplete="off" class="form-control" placeholder="[[[Write description of report.]]]" maxlength="1024"></textarea>
@@ -123,17 +125,17 @@
                 </div>
             </div>
         </div>
-        <div id="publish-select-site-container" class="col-xs-12" style="display:none">
+        <div id="publish-select-site-container" class="col-12" style="display:none">
           
             <div class="site-content-container first-label">
                 <input type="radio" name="publish-site" class="css-radio" checked="checked" id="internal-site" ng-click="selectPublishType('@PublishType.Internal')" />
-                <label for="internal-site" class="pull-left app-radio-label normal-font">[[[Internal Site]]]</label>
+                <label for="internal-site" class="app-radio-label normal-font">[[[Internal Site]]]</label>
                 <br />
                 <p class="site-content">[[[Allows you to publish the report to the sites created in the same server.]]]</p>
             </div>
             <div class="site-content-container">
                 <input type="radio" name="publish-site" class="css-radio" id="external-site" ng-click="selectPublishType('@PublishType.External')" />
-                <label for="external-site" class="pull-left app-radio-label normal-font">[[[External Site]]]</label>
+                <label for="external-site" class="app-radio-label normal-font">[[[External Site]]]</label>
                 <br />
                 <p class="site-content">[[[Allows you to publish the report to the sites created in other servers.]]]</p>
             </div>

@@ -146,7 +146,8 @@
                     $("#image-parent-container .startup-image").hide().attr("src", serverSetupImageUrl).fadeIn();
 
                     $(".startup-waiting-popup").addClass("storage-page-content");
-                    $(".startup-content span.first-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration).slideDown();
+                    $(".startup-content span.first-content").hide().html(window.Server.App.LocalizationContent.YourDatabaseConfiguration + "<br/>" +
+                        window.Server.App.LocalizationContent.YourDatabaseConfiguration1).slideDown();
                     $(".startup-content span.second-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration2.format(displayName)).slideDown();
                     $(".startup-content span.third-content").hide().text(window.Server.App.LocalizationContent.YourDatabaseConfiguration3.format(displayName)).slideDown();
                     $("#help-link").attr("href", databaseConfigurationUrl);

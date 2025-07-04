@@ -16,7 +16,7 @@
     var description = HttpUtility.HtmlDecode(itemDetails.Description);
     var permissionDetails = ViewBag.permissionDetails;
     var CanWrite = permissionDetails != null ? permissionDetails[0].CanWrite : false;
-    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings,true, true).ReportServerApiUrl();
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var xmlContent = ViewBag.xmlContent;
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;

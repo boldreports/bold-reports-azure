@@ -44,21 +44,21 @@
 
             <div class="modal-content col-lg-12" id="popup-container" data-spy="scroll">
 
-                <div class="col-xs-12 modal-header">
-                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 no-padding">
+                <div class="col-12 modal-header">
+                    <div class="col-lg-11 col-11 col-sm-11 col-md-11 no-padding">
                         <span class="modal-title popup-title schedule-popup-title ellipsis no-padding" title="[[[Sample Reports]]]">[[[Sample Reports]]]</span>
-                        <span id="info-category" role="button" tabindex="0" class="su su-info hide" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="[[[Adding reports from this section will put them under the Sample Reports category.]]]"></span>
+                        <span id="info-category" role="button" tabindex="0" class="su su-info d-none" data-bs-toggle="popover" data-trigger="focus" data-bs-placement="right" data-content="[[[Adding reports from this section will put them under the Sample Reports category.]]]"></span>
                     </div>
-                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1  no-padding pull-right">
-                        <a href="#" title="[[[Close]]]" class="sample-item-popup-close pull-right popup-close prevent-default-action"><span class="su su-close"></span></a>
+                    <div class="col-lg-1 col-1 col-sm-1 col-md-1  no-padding float-end">
+                        <a href="#" title="[[[Close]]]" class="sample-item-popup-close float-end popup-close prevent-default-action"><span class="su su-close"></span></a>
                     </div>
                 </div>
-                <div class="modal-body col-xs-12 no-padding">
-                    <div id="sample-item-container" class="col-xs-12 sample-item-container-padding no-padding">
-                        <div class="col-xs-12 sample-item">
-                            <div class="col-xs-3 sample-category">
+                <div class="modal-body col-12 no-padding">
+                    <div id="sample-item-container" class="col-12 sample-item-container-padding no-padding">
+                        <div class="col-12 sample-item">
+                            <div class="col-3 sample-category">
                                 <h5>[[[Categories]]]</h5>
-                                <div class="col-xs-12 search-found ng-hide" ng-repeat="(key,value) in samples|filter:query| groupBy:'Name' as result">
+                                <div class="col-12 search-found ng-hide" ng-repeat="(key,value) in samples|filter:query| groupBy:'Name' as result">
                                     <span class="badge badge-primary badge-pill">{{createDummyArray(result)}}</span>
                                 </div>
                                 <ul class="list-group">
@@ -72,29 +72,29 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div id="search-area" class="pull-right">
-                                <input type="text" id="search-items" class="pull-left no-margin" ng-model="query" placeholder="[[[Search]]]" />
-                                <span class="su close-icon su-inner-close pull-left no-margin clear-search" ng-click="query = ''" id="clear-search" title="[[[Clear search]]]"></span>
-                                <span class="su su-search search-item pull-left no-margin" title="[[[Search]]]"></span>
+                            <div id="search-area" class="float-end">
+                                <input type="text" id="search-items" class="float-start no-margin" ng-model="query" placeholder="[[[Search]]]" />
+                                <span class="su close-icon su-inner-close float-end no-margin clear-search" ng-click="query = ''" id="clear-search" title="[[[Clear search]]]"></span>
+                                <span class="su su-search search-item float-end no-margin" title="[[[Search]]]"></span>
                             </div>
-                            <div class="col-xs-9 sample-dashboard">
-                                <div class="col-xs-12 search-found ng-hide" id="serch-count" ng-show="countFilterObjects(result, query) >= 1">
+                            <div class="col-9 sample-dashboard">
+                                <div class="col-12 search-found ng-hide" id="serch-count" ng-show="countFilterObjects(result, query) >= 1">
                                     <span class="dashboard-count">{{countFilterObjects(result, query)}} {{"[[[Result(s) found for]]]"}} "{{query}}"</span>
                                 </div>
-                                <div class="col-xs-12 no-padding" ng-repeat="category in filteredSamples =(samples | filter:query | filter: filterByCategory )">
-                                    <div class="col-xs-12 no-padding" ng-repeat="dashboard in category.Reports ">
-                                        <div class="col-xs-3 sample-image">
+                                <div class="col-12 no-padding" ng-repeat="category in filteredSamples =(samples | filter:query | filter: filterByCategory )">
+                                    <div class="col-12 no-padding" ng-repeat="dashboard in category.Reports ">
+                                        <div class="col-3 sample-image">
                                             <img ng-src="@reportServerResourceUrl/cdn/css/sample_items/{{dashboard.ImageName | lowercase}}" />
                                         </div>
-                                        <div class="col-xs-9 sample-content">
+                                        <div class="col-9 sample-content">
                                             <div class="sample-name">{{dashboard.Name}}</div>
                                             <div class="sample-description">{{dashboard.Description}}</div>
                                             <input type="button" class="sample-add-button primary-button app-btn-primary" data-category-name="{{category.Name}}" data-sample-filename="{{dashboard.FileName}}" data-sample-description="{{dashboard.Description}}" data-sample-name="{{dashboard.Name}}" value="[[[Add Report]]]" />
                                         </div>
-                                        <hr class="col-xs-12 sample-separator" />
+                                        <hr class="col-12 sample-separator" />
                                     </div>
                                 </div>
-                                <div class="dashboard-empty-message-div col-xs-12 ng-hide" ng-show="countFilterObjects(result, query) == 0">
+                                <div class="dashboard-empty-message-div col-12 ng-hide" ng-show="countFilterObjects(result, query) == 0">
                                     <div class="empty-dashboard-image-div">
                                         <img class="empty-dashboard-image" src="@reportServerResourceUrl/cdn/css/images/dashboard-empty-state-60x60.svg" style="margin: 0 auto;/*! width: 100%; */">
                                     </div>
@@ -107,9 +107,9 @@
                     </div>
                 </div>
 
-                <div class="modal-footer col-xs-12">
+                <div class="modal-footer col-12">
                     <div class="col-lg-12 margin-top no-padding">
-                        <input type="button" id="close-button" title="[[[Close]]]" class="secondary-button app-btn-secondary pull-right itempermission-popup-close" value="[[[Close]]]" />
+                        <input type="button" id="close-button" title="[[[Close]]]" class="secondary-button app-btn-secondary float-end itempermission-popup-close" value="[[[Close]]]" />
                     </div>
                 </div>
             </div>

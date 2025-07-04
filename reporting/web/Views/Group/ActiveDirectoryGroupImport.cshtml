@@ -41,17 +41,17 @@
 
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="user-detail-validation">
         {{if IsDuplicated}}
-        <span class="su su-login-error group-import-validation" title="{{:DisplayMessage}}" data-html="true" data-toggle="tooltip" data-placement="left"></span>
+        <span class="su su-login-error group-import-validation" title="{{:DisplayMessage}}" data-html="true" data-bs-toggle="tooltip" data-bs-placement="left"></span>
         {{/if}}
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="group-name-template">
-        <span title="{{:~renderDoubleQuotes(GroupName)}}" class="grid-content" data-toggle="tooltip">
+        <span title="{{:~renderDoubleQuotes(GroupName)}}" class="grid-content" data-bs-toggle="tooltip">
             {{:GroupName}}
         </span>
     </script>
 
-    <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" data-toggle="tooltip" id="group-description-template">
-        <span title="{{:~renderDoubleQuotes(GroupDescription)}}" class="grid-content" data-toggle="tooltip">
+    <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" data-bs-toggle="tooltip" id="group-description-template">
+        <span title="{{:~renderDoubleQuotes(GroupDescription)}}" class="grid-content" data-bs-toggle="tooltip">
             {{:GroupDescription}}
         </span>
     </script>
@@ -132,7 +132,7 @@
 
                     dataBound: function (args) {
                         $("#checkbox-header").change(headCheckboxOnChange);
-                        $('[data-toggle="tooltip"]').tooltip();
+                        $('[data-bs-toggle="tooltip"]').tooltip();
                         this.model.indexes = {}; /* Additional property*/
 
                     },
@@ -151,11 +151,11 @@
                 });
             });
     </script>
-    <div class="active-directory-container admin-page-container col-xs-12 @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")">
+    <div class="active-directory-container admin-page-container col-12 @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")">
         <div class="import-active-directory">
-            <div class="col-md-12 col-xs-12 admin-page-header">
-                <div class="col-lg-6 no-padding import-area">
-                    <a href="@Url.Action("group","group")" data-toggle="tooltip" data-placement="top" title="[[[Groups]]]" class="back-button pull-left">
+            <div class="d-flex align-items-start justify-content-between admin-page-header">
+                <div class="d-flex align-items-center import-area no-padding">
+                    <a href="@Url.Action("group","group")" data-bs-toggle="tooltip" data-bs-placement="top" title="[[[Groups]]]" class="back-button d-flex align-items-center me-2">
                         <i class="su su-arrow-back"> </i>
                     </a>
                     @if (ViewBag.AdImportGroup)
@@ -171,13 +171,13 @@
                         </h1>
                     }
                 </div>
-                <div class="col-lg-6 no-padding">
-                    <input type="button" disabled="" value="[[[Import groups]]]" title="[[[Import the selected groups from the list]]]" id="import-button" class="primary-button app-btn-primary pull-right pull-right" />
+                <div class="no-padding import">
+                    <input type="button" disabled="" value="[[[Import groups]]]" title="[[[Import the selected groups from the list]]]" id="import-button" class="primary-button app-btn-primary float-end import-button" />
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12 admin-page-body">
-                <div class="col-md-12 col-xs-12 no-padding no-margin">
-                    <div class="col-md-8 col-xs-8 no-padding">
+            <div class="col-md-12 col-12 admin-page-body">
+                <div class="col-md-12 col-12 no-padding no-margin">
+                    <div class="col-md-8 col-8 no-padding">
                         @if (ViewBag.AdImportGroup)
                         {
                             <span class="directory-path no-padding">
@@ -199,29 +199,29 @@
                         }
                         <div class="error-message no-padding">@TempData["ErrorMessage"]</div>
                     </div>
-                    <div id="search-area" class="pull-right">
-                        <input type="text" id="ad-group-import" class="pull-left no-margin" placeholder="[[[Search groups]]]" autocomplete="off" />
-                        <span class="su close-icon su-inner-close pull-left no-margin" id="clear-search" title="[[[Clear search]]]"></span>
-                        <span class="su su-search search-icon pull-left no-margin " title="[[[Search]]]"></span>
+                    <div id="search-area" class="float-end">
+                        <input type="text" id="ad-group-import" class="float-start no-margin" placeholder="[[[Search groups]]]" autocomplete="off" />
+                        <span class="su close-icon su-inner-close float-end no-margin clear-search" id="clear-search" title="[[[Clear search]]]"></span>
+                        <span class="su su-search search-icon float-end no-margin " title="[[[Search]]]"></span>
                     </div>
                 </div>
 
-                <div class="col-xs-12 no-padding user-data-grid">
+                <div class="col-12 no-padding user-data-grid">
                     <span class="import-message">
                         [[[Please search and select the groups from the following list to import]]]
                     </span>
-                    <div class="col-xs-12 no-padding no-margin">
-                        <div class="list" id="grid-validation-messages pull-left">
-                            <div class="col-xs-12">
+                    <div class="col-12 no-padding no-margin">
+                        <div class="list" id="grid-validation-messages float-end">
+                            <div class="col-12">
                                 <span id="grid-nodata-validation" class="grid-nodata-validation no-padding">[[[There is no data in the uploaded file. Please check and try uploading again.]]]</span>
                                 <span id="grid-validation" class="grid-validation no-padding"><span id="groupcount" class="groupcount">@ViewBag.UserCount</span> [[[group(s) has been imported successfully.]]]</span>
                                 <span id="grid-error-validation" class="grid-error-validation no-padding">[[[Duplicate or Invalid data is found. Please change the data accordingly and re-import.]]] </span>
-                                <span id="empty-validation" class="validation-message pull-right empty-validation no-padding">[[[Please select group(s) to import]]]</span>
+                                <span id="empty-validation" class="validation-message float-end empty-validation no-padding">[[[Please select group(s) to import]]]</span>
                             </div>
                         </div>
                     </div>
 
-                    <div id="grid-container" class="col-xs-12 no-padding">
+                    <div id="grid-container" class="col-12 no-padding">
                         <div class="col-md-12 no-padding ">
                             <div id="Grid" class="grid">
                             </div>
@@ -231,8 +231,8 @@
             </div>
         </div>
 
-        <div class="col-xs-5 no-padding"></div>
-        <div class="col-xs-7 no-padding"></div>
+        <div class="col-5 no-padding"></div>
+        <div class="col-7 no-padding"></div>
     </div>
     <input type="hidden" name="AllUserList" id="all-user-list" value="@ViewBag.Pathname" />
     <input type="hidden" id="user-count" data-value="@ViewBag.UserExists" />

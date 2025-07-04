@@ -14,7 +14,7 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="itemName">
-    <div class="item-name" data-placement="top">
+    <div class="item-name" data-bs-placement="top">
         {{if ItemType=="@((int)ItemType.Report)" && ItemName!="-"}}
             {{if IsDraft}}
                 <span><a href="@Url.Action("ReportDesigner", "Designer")/{{:ItemId}}/draft/{{:ItemName}}" target="_blank">{{:ItemName}}</a></span>
@@ -41,7 +41,7 @@
     function onQueryCellInfo(args) {
         if(args.data[args.column.field] !=="-"){
             $(args.cell).attr({
-                "data-toggle": "tooltip",
+                "data-bs-toggle": "tooltip",
                 "data-container": "body",
                 "title": args.data[args.column.field]
             });
@@ -49,7 +49,7 @@
     }
 
     function refreshTooltipAndPositionForGrid(args) {
-        $("[data-toggle=tooltip]").tooltip();
+        $("[data-bs-toggle=tooltip]").tooltip();
 
     }
 

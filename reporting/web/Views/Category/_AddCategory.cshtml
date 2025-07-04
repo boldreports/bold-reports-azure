@@ -16,13 +16,13 @@
         @ViewBag.Title
     </title>
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-category.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-category.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-category.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-category.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-category.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-category.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-category.min.js")" crossorigin="anonymous"></script>
     </environment>
 
@@ -33,11 +33,11 @@
             $(document).ready(function () {
                 load();
 
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
             });
 
             function load() {
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
                 if (($(parent.window).width()) > 1400) {
                     $(".dialog").addClass("iframe");
                 }
@@ -52,7 +52,7 @@
     <div class="col-md-12 dialog-header">
         <span class="su su-folder Head-icon"></span>
         <span class="PopupTitle">[[[Create Category]]]</span>
-        <a href="#" id="close-add-item-popup" class="PopupClose" title="Close" data-toggle="tooltip" data-placement="bottom"><span class="su su-close"></span></a>
+        <a href="#" id="close-add-item-popup" class="PopupClose" title="Close" data-bs-toggle="tooltip" data-bs-placement="bottom"><span class="su su-close"></span></a>
     </div>
     @if (isSuccess == false)
 {
@@ -85,7 +85,7 @@
         <input type="submit" class="hide-content" />
     </form>
     <div class="category-btns dialog-footer">
-        <div class="pull-right">
+        <div class="float-end">
                 <input type="submit" title="" class="btn primary-button app-btn-primary" id="validate-add-item" value="[[[Add]]]" tabindex="3">
                 <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancel-add-item-popup" value="[[[Cancel]]]" tabindex="4">
         </div>

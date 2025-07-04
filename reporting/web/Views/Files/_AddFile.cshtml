@@ -60,7 +60,7 @@
             });
         });
         function load() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
             if (($(parent.window).width()) > 1400) {
                 $(".dialog").addClass("iframe");
             }
@@ -75,27 +75,27 @@
         <form name="addItemForm" id="addItemForm" enctype="multipart/form-data" autocomplete="off">
             @Html.AntiForgeryToken()
             <div id="PopupContainer" class="col-lg-12 no-padding dialog">
-                <div class="col-xs-12 dialog-header">
+                <div class="col-12 dialog-header">
                     <span class="su su-document Head-icon"></span>
                     <span class="PopupTitle">[[[Upload File]]]</span>
-                    <a href="#" title="Close" data-toggle="tooltip" data-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
+                    <a href="#" title="Close" data-bs-toggle="tooltip" data-bs-placement="bottom" class="PopupClose"><span class="su su-close"></span></a>
                 </div>
 
-                <div class="dialog-body file-content-height col-xs-12 no-padding">
+                <div class="dialog-body file-content-height col-12 no-padding">
                     <div id="general-file-container">
                         <table width="100%" cellspacing="10px" cellpadding="0" border="0">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-2 text-right">
-                                        <div class="bottom-margin30">[[[File Type]]]</div>
+                                    <td class="col-md-2">
+                                        <div class="bottom-margin30 float-end">[[[File Type]]]</div>
                                     </td>
                                     <td class="col-md-10">
                                         @Html.DropDownList("upload_file_type", fileUploadTypes, new { @class = "selectpicker form-control bottom-margin30", id = "upload-file-type" })
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-2 text-right">
-                                        <div class="bottom-margin30">[[[Name]]]<span class="mandatory">*</span></div>
+                                    <td class="col-md-2">
+                                        <div class="bottom-margin30 float-end">[[[Name]]]<span class="mandatory">*</span></div>
                                     </td>
                                     <td class="col-md-10">
                                         <span>
@@ -106,10 +106,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right">
-                                        <div class="bottom-margin30">[[[File]]]<span class="mandatory">*</span></div>
+                                    <td class="col-2">
+                                        <div class="bottom-margin30 float-end">[[[File]]]<span class="mandatory">*</span></div>
                                     </td>
-                                    <td class="col-xs-10">
+                                    <td class="col-10">
                                         <div class="input-group no-padding imagepath" id="file-upload-input-container">
                                             <input type="text" class="form-control text-field upload-file bottom-margin30 text" id="filename" value="[[[Browse file path]]]" name="uploadedFileName" readonly tabindex="-1"/>
                                             <label for="browse_file" class="trigger-file-input-wrapper"></label>
@@ -123,11 +123,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-xs-2 text-right">
-                                        <div class="bottom-margin30 locale-label"></div>
+                                    <td class="col-2">
+                                        <div class="bottom-margin30 locale-label float-end"></div>
                                     </td>
                                     <td>
-                                        <div id="validate-file" class="col-xs-10 validation-message text"></div>
+                                        <div id="validate-file" class="col-10 validation-message text"></div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="dialog-footer">
-                    <div class="pull-right">
+                    <div class="float-end">
                         <input type="button" title="" class="btn primary-button app-btn-primary" id="publish-file" tabindex="4" value="[[[Add]]]" />
                         <input type="button" title="" class="btn secondary-button app-btn-secondary" id="cancelAddFile" value="[[[Cancel]]]" tabindex="5">
                         <input type="submit" class="hide-content" style="display: none;" />

@@ -2,7 +2,7 @@
 let dotnetHelper;
 
 window.registerCurrentSection = function(dotnetObjRef){
-    dotnetHelper = dotnetObjRef;
+        dotnetHelper = dotnetObjRef;
 }
 
 window.clearTokenFromUrl = function (removeText) {
@@ -309,5 +309,5 @@ window.ClosePipelinePanel = () => {
     if (dotnetHelper) {
         dotnetHelper.invokeMethodAsync("UpdateCurrentSection", 'settings-nav');
     }
-    
+
 }
