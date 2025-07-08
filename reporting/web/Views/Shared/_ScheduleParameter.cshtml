@@ -41,9 +41,7 @@
                     }
                     else
                     {
-                        isParameterHidden = param.Hidden == false ? parameter.Values.Count == 0 ? false : param.UseDefault : param.Hidden;
-                        hiddenParameter = param.Hidden == null ? false : param.Hidden;
-                        showHiddenParameter = hiddenParameter ? "none" : "block";
+                        isParameterHidden = param.UseDefault;
 
                     }
                 }
@@ -60,7 +58,7 @@
                     }
                     else
                     {
-                        <div class="col-sm-2 col-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Name</label></div>
+                        <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Name</label></div>
                     }
 
                 }
@@ -72,7 +70,7 @@
                     }
                     else
                     {
-                        <div class="col-sm-2 col-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Prompt</label></div>
+                        <div class="col-sm-2 col-xs-2 no-padding align-center"><label class="parameter-label">@parameter.Prompt</label></div>
                     }
                 }
                 @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
@@ -97,7 +95,7 @@
                     else
                     {
 
-                        <div class="col-sm-4 col-4 parameter-input" style="display:@showHiddenParameter;">
+                        <div class="col-sm-4 col-xs-4 parameter-input">
                             <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
                                 @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
                                 {
@@ -129,7 +127,7 @@
                     }
                     else
                     {
-                        <div class="col-sm-4 col-4 boolean parameter-input parameter-boolean" style="display:@showHiddenParameter;">
+                        <div class="col-sm-4 col-xs-4 boolean parameter-input parameter-boolean">
                             <div class="col-sm-5 col-5">
                                 <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
                                 <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
@@ -170,7 +168,7 @@
                         }
                         else
                         {
-                            <div class="col-sm-4 col-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                            <div class="col-sm-4 col-xs-4 parameter-input parameter-datetime" style="padding-left: 6px;">
                                 <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count> 0? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
                             </div>
                         }
@@ -185,7 +183,7 @@
                         }
                         else
                         {
-                            <div class="col-sm-4 col-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                            <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
                                 <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",",  new List<string>() )" @(isParameterHidden ? "disabled" : "")>
                             </div>
                         }
@@ -212,7 +210,7 @@
                 }
                 else
                 {
-                    <div class="page-indent text" style="display:@showHiddenParameter;">
+                    <div class="col-sm-4 col-xs-4 parameter-input parameter-text">
                         @if (parameter.Values == null || !parameter.Values.Any())
                         {
                             @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default", disabled = "true" })
@@ -240,7 +238,7 @@
                 {
 
 
-                    <div class="col-sm-4 col-4 no-padding validate-error" id="@parameter.Name-error-container" style="display:@showHiddenParameter;">
+                    <div class="col-sm-4 col-xs-4 no-padding validate-error" id="@parameter.Name-error-container">
                         <div id="@parameter.Name-parameter-validator"></div>
                     </div>
                 }
