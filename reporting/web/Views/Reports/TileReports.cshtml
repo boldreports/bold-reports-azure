@@ -71,7 +71,7 @@
 #pragma warning restore SCS0029 //There is no direct user input process for this issue.
 }
 
-@section scripts{
+@section scripts {
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tile-dashboards-page.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/tile-dashboards-page.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tile-dashboards-page.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/tile-dashboards-page.js")" crossorigin="anonymous"></script>
@@ -86,7 +86,7 @@
 }
 
 
-@section MainSection{
+@section MainSection {
     <script nonce="@Context.Items["ScriptNonce"]">
         var getItemUrl = "@Url.Action("GetItems", "Reports")";
         var getItemGridUrl = "@Url.Action("GetItemsGrid", "Reports")";
@@ -109,6 +109,7 @@
         var getViewsByItemIdUrl = "@Url.Action("GetViewsByItemId", "Items")";
         var dashboardsUrl = "@Url.Action("reports", "reports")";
         var editreportviewUrl = "@Url.Action("editreportview", "reports")";
+        var copyMultipleReportIframeUrl = "@Url.Action("copymultipleitem", "items")";
         var currentUserId = @currentUserId;
         var isMarkItemsPublic = @Json.Serialize(globalAppSettings.SystemSettings.IsMarkItemsPublic);
         var isAdmin = @Json.Serialize(isAdmin);
@@ -402,21 +403,27 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
-                                <span class="dashboard-dropdown-label">[[[Sort]]]</span>
-                                <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
-                                    <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
-                                        <optgroup label="[[[Sort By]]]" data-max-options="1">
-                                            <option value="Name">[[[Name]]]</option>
-                                            <option value="Modified" selected>[[[Modified]]]</option>
-                                        </optgroup>
-                                        <optgroup label="[[[Sort Order]]]" data-max-options="1">
-                                            <option value="Ascending">[[[Ascending]]]</option>
-                                            <option value="Descending" selected>[[[Descending]]]</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
+                        <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
+                            <div id="dashboard-bulk-action-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
+                                <select id="report-bulk-action" class="selectpicker no-padding" title="[[[Bulk Actions]]]" multiple>
+                                    <option data-hidden="true">[[[Bulk Actions]]]</option>
+                                    <option value="Copy to categories">[[[Copy to categories]]]</option>
+                                </select>
                             </div>
+                            <span class="dashboard-dropdown-label">[[[Sort]]]</span>
+                            <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
+                                <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
+                                    <optgroup label="[[[Sort By]]]" data-max-options="1">
+                                        <option value="Name">[[[Name]]]</option>
+                                        <option value="Modified" selected>[[[Modified]]]</option>
+                                    </optgroup>
+                                    <optgroup label="[[[Sort Order]]]" data-max-options="1">
+                                        <option value="Ascending">[[[Ascending]]]</option>
+                                        <option value="Descending" selected>[[[Descending]]]</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
                         <span class="text-right ng-hide" id="order" ng-show="isTablet && !showSearch" data-bs-toggle="modal" data-target="#dashboard-sort-modal" data-container="body" ng-class="sortDirection == 'descending' ? 'descending':'ascending'">
                             &nbsp;
                             <span class="su su-sort-left"></span>
@@ -515,17 +522,17 @@
                                                     }
                                                     else
                                                     {
-                                                    <li ng-if="(dashboardItem.CreatedById == currentUserId || isAdmin) && ((!dashboardItem.IsPublic && !hideMakePublic) || (dashboardItem.IsPublic && !hideMakePrivate))">
-                                                        <span ng-if="!dashboardItem.IsPublic && !hideMakePublic" title="" class="make-public option-click" ng-click="makePublic()">
-                                                            <i class="su su-public"></i>
-                                                            <span>[[[Make Public]]]</span>
-                                                        </span>
-                                                        <span ng-if="dashboardItem.IsPublic && !hideMakePrivate" title="" class="remove-public option-click" ng-click="makePrivate()">
-                                                            <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
-                                                            <span>[[[Make Private]]]</span>
-                                                        </span>
-                                                    </li>
-                                                    }                                                    
+                                                        <li ng-if="(dashboardItem.CreatedById == currentUserId || isAdmin) && ((!dashboardItem.IsPublic && !hideMakePublic) || (dashboardItem.IsPublic && !hideMakePrivate))">
+                                                            <span ng-if="!dashboardItem.IsPublic && !hideMakePublic" title="" class="make-public option-click" ng-click="makePublic()">
+                                                                <i class="su su-public"></i>
+                                                                <span>[[[Make Public]]]</span>
+                                                            </span>
+                                                            <span ng-if="dashboardItem.IsPublic && !hideMakePrivate" title="" class="remove-public option-click" ng-click="makePrivate()">
+                                                                <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
+                                                                <span>[[[Make Private]]]</span>
+                                                            </span>
+                                                        </li>
+                                                    }
                                                     <li ng-if="!hideGetLink">
                                                         <span title="" class="get-link option-click" ng-click="getItemLink()">
                                                             <i class="su su-link"></i>
@@ -566,9 +573,9 @@
                                                             <span>[[[Info]]]</span>
                                                         </span>
                                                     </li>
-                                                    @if(ServerAppConfig.IsSelfHosted)
+                                                    @if (ServerAppConfig.IsSelfHosted)
                                                     {
-                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions"></li> 
+                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions"></li>
                                                         <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions">
                                                             <span title="" class="ProcessOption option-click" ng-click="ProcessOption()">
                                                                 <i class="su su-cache_3"></i>
@@ -597,15 +604,15 @@
                                                                 <span>[[[Clone]]]</span>
                                                             </span>
                                                         </li>
-                                                    }                                                    
-                                                    @if(isMasterTenant && ServerAppConfig.IsSelfHosted)
+                                                    }
+                                                    @if (isMasterTenant && ServerAppConfig.IsSelfHosted)
                                                     {
-                                                    <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !hidePublish" ng-hide="schemesDetails != null && !schemesDetails.Publish" ng-hide="isHideIconBasedOnDnsName">
-                                                        <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">
-                                                            <i class="su su-publish"></i>
-                                                            <span>[[[Publish]]]</span>
-                                                        </span>
-                                                    </li>
+                                                        <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !hidePublish" ng-hide="schemesDetails != null && !schemesDetails.Publish" ng-hide="isHideIconBasedOnDnsName">
+                                                            <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">
+                                                                <i class="su su-publish"></i>
+                                                                <span>[[[Publish]]]</span>
+                                                            </span>
+                                                        </li>
                                                     }
                                                     <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin)) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet" role="separator" class="divider"></li>
                                                     <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin) && !isTablet && !hideCreateSchedule" ng-hide="isHideIconBasedOnDnsName">
