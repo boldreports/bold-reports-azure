@@ -10,6 +10,18 @@
         "description": "App name for Bold Reports Server. The name must be between 3 and 24 characters long, and can contain only numbers and lowercase letters."
       }
     },
+    "appServicePlanSize": {
+      "type": "string",
+      "allowedValues": [
+        "P1V3_2Core_8GB_DEV",
+        "P2V3_4Core_16GB_PROD",
+        "P3V3_8Core_32GB_PROD"
+      ],
+      "defaultValue": "P1V3_2Core_8GB_DEV",
+      "metadata": {
+        "description": "The pricing tier size for the App Service Plan."
+      }
+    },
     "storageAccountName": {
       "type": "string",
       "maxLength": 24,
@@ -33,7 +45,7 @@
     }
   },
   "variables": {
-    "templatelink": "https://raw.githubusercontent.com/boldreports/bold-reports-azure/master/armtemplates/v10.1.11/AzureBlobStorage-BoldReports.json"
+    "templatelink": "https://raw.githubusercontent.com/boldreports/bold-reports-azure/master/armtemplates/latest/AzureBlobStorage-BoldReports.json"
   },
   "resources": [
     {
