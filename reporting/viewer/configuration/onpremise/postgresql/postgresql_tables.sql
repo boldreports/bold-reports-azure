@@ -254,6 +254,8 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	IsNotifySaveAs smallint NOT NULL DEFAULT 1,
 	ExportFileName varchar(150) NULL,
 	ScheduleExportInfo varchar(4000) NULL,
+    IsEmailAttachment smallint NOT NULL DEFAULT 1,
+    IsInsertReportInMailBody smallint NOT NULL DEFAULT 0,
 	ScheduleBucketExportInfo varchar(4000) NULL)
 ;
 

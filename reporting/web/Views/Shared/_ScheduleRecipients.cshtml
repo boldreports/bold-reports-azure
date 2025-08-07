@@ -65,10 +65,25 @@
             </div>
         </div>
         <div class="col-sm-12 col-12 send-mail-align">
-            <div id="enable-mail-attachment" class="col-sm-6 col-6 no-padding no-margin">
+            <div id="enable-mail" class="col-sm-6 col-6 no-padding no-margin">
                 @Html.CheckBox("enable-send-mail", false, new { @class = "material-checkbox  enable-sendmail-checkbox" })
-                @Html.Label("enable-send-mail", "[[[Email attachment]]]", new { @class = "clspadleft app-checkbox-label normal-font sendmail-label" })
+                @Html.Label("enable-send-mail", "[[[Send as mail]]]", new { @class = "clspadleft app-checkbox-label normal-font sendmail-label" })
             </div>
+        </div>
+        <div class="col-sm-12 col-12 enable-report-mail-type" style="display: none">
+            <div class="col-sm-12 col-12">
+                <div id="enable-send-attachment" class="col-sm-6 col-6 no-padding no-margin">
+                    <input type="radio" id="enable-mail-attachment" class="css-radio" value="ReporAttachment" name="email-type" />
+                    <label for="enable-mail-attachment" class="pointer normal-font notransition">Attachment</label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-12">
+                <div id="enable-send-insert-report" class="col-sm-6 col-6 no-padding no-margin">
+                    <input type="radio" id="enable-insert-report-mailbody" class="css-radio" value="InsertReportMail" name="email-type" />
+                    <label for="enable-insert-report-mailbody" class="pointer normal-font notransition">Insert report in mail body</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-6" id="mail-checkbox-validation" style="visibility: hidden">[[[Please select at least one option to send mail ]]]</div>
         </div>
         <div class="col-sm-12 col-12 enable-save-block">
             <div id="enable-save-as-file" class="col-sm-2 col-2 no-padding no-margin">

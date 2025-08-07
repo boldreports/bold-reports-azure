@@ -1,2 +1,5 @@
 ALTER TABLE BOLDRS_DeploymentReports ADD IsMakeReportPublic NUMBER(5) NOT NULL
 ;
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsEmailAttachment NUMBER(1) DEFAULT 1 NOT NULL;
+ALTER TABLE BOLDRS_ScheduleDetail ADD IsInsertReportInMailBody NUMBER(1) DEFAULT 0 NOT NULL;
+
