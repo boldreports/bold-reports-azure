@@ -61,6 +61,11 @@
     }
 
     var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+    var isReportPage = requestUrl.ToString().IndexOf("/reports", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var customMenuOptionList = (ServerAppConfig.CustomMenuOptions != null && ServerAppConfig.CustomMenuOptions.Count != 0) ? ServerAppConfig.CustomMenuOptions : null;
+    var downloadOption = (customMenuOptionList != null && customMenuOptionList.Any(item => item.Key == "Downloads")) ? customMenuOptionList.FirstOrDefault(opt => opt.Key == "Downloads" && !string.IsNullOrEmpty(opt.Value)) : null;
+    var customMenusWithoutDownloadsOption = (customMenuOptionList != null && customMenuOptionList.Count != 0) ? customMenuOptionList.Where(x => x.Key != "Downloads").ToList() : null;
 }
 
 <environment include="Development,CloudDevelopment">
@@ -159,6 +164,16 @@
                         <i class="su su-notification-alert"></i>
                     </span>
                 </li>
+                @if (isSandbox && downloadOption != null && (bool)downloadOption.IsEnabled)
+                {
+                    <li class="icon-list-item sub-menu-action">
+                        <span id="accounts-page-download-container" class="menu-icon-container">
+                            <a href="@downloadOption.Value" target="_blank">
+                                <i class="su su-download"></i>
+                            </a>
+                        </span>
+                    </li>
+                }
                 <li class="icon-list-item profile-section dropdown" id="top-menu-dropdown-profile">
                     <a class="dropdown-bs-toggle" data-bs-toggle="dropdown">
                         <span class="profile-container">
@@ -216,6 +231,21 @@
                                 </li>
                             }
                         }
+                        @if (isSandbox && customMenusWithoutDownloadsOption != null && customMenusWithoutDownloadsOption.Count != 0 && customMenusWithoutDownloadsOption.Any(option => option.IsEnabled == true))
+                        {
+                            <li class="sf-sub-menu-separator"></li>
+                            @foreach (var option in (IEnumerable<CustomMenuOption>)customMenusWithoutDownloadsOption)
+                            {
+                                @if (option.IsEnabled == true)
+                                {
+                                    <li class="sub-menu-item">
+                                        <a href="@(option.Value)" target="_blank">
+                                            [[[@(option.Key)]]]
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        }
                         <li class="sf-sub-menu-separator"></li>
                         <li class="sub-menu-item">
                             <a href="@Url.Action("logout", "accounts")">
@@ -225,6 +255,54 @@
                     </ul>
                 </li>
             </ul>
+            @if (isSandbox)
+            {
+                @if (isReportPage)
+                {
+                    <div class="icon-list-item report-server-quick-tour">
+                        <button class="e-control e-btn e-lib e-primary e-flat " id="report-server-tour-button">[[[Quick Tour]]]</button>
+                    </div>
+                }
+                <div class="icon-list-item free-tier" id="free-tier-container">
+                    <button class="e-control e-btn e-lib e-primary e-flat free-tier-button">[[[Free Tier]]]</button>
+                </div>
+                <div id="freeTierDialogTemplate" style="display: none;">
+                    <div class="free-tier-header">[[[Upgrade to a Paid Plan and unlock:]]]</div>
+                    <ul class="free-tier-list">
+                        <li>
+                            <div class="list-item">
+                                <i class="su su-success no-padding"><span class="su-success path1"></span><span class="su-success path2"></span></i>
+                                <span><b>[[[Backup & Disaster Recovery - ]]]</b>[[[Keep your data safe and recover quickly from unexpected issues.]]]</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="list-item">
+                                <i class="su su-success no-padding"><span class="su-success path1"></span><span class="su-success path2"></span></i>
+                                <span><b>[[[Live Chat Support - ]]]</b>[[[Get help in real-time from our expert team, even in WhatsApp.]]]</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="list-item">
+                                <i class="su su-success no-padding"><span class="su-success path1"></span><span class="su-success path2"></span></i>
+                                <span><b>[[[24/5 Assistance - ]]]</b>[[[Access our support team almost anytime during the week.]]]</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="list-item">
+                                <i class="su su-success no-padding"><span class="su-success path1"></span><span class="su-success path2"></span></i>
+                                <span><b>[[[Robust Infrastructure - ]]]</b>[[[Choose between high-performance shared cloud or fully managed dedicated deployments, tailored for scale, security, and performance.]]]</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="list-item">
+                                <i class="su su-success no-padding"><span class="su-success path1"></span><span class="su-success path2"></span></i>
+                                <span><b>[[[On-Premise Edition - ]]]</b>[[[Your Environment, Your Rules - Install Bold Reports on your own servers or private cloud for maximum data control, and customization.]]]</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="freeTierDialog" style="display: none;"></div>
+            }
         </nav>
     </div>
 }

@@ -51,10 +51,20 @@
     }
     var customFontFolderPath = ViewBag.CustomFontFolder;
     var isUseFontsFromDirectory = ViewBag.IsUseFontsFromDirectory;
+    var GoogleTagManagerHeadScript = ServerAppConfig.GoogleTagManagerHeadScript;
+    var GoogleTagManagerBodyScript = ServerAppConfig.GoogleTagManagerBodyScript;
 }
 <!DOCTYPE html>
 <html style="height: 100%">
 <head>
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerHeadScript))
+        {
+            @Html.Raw(GoogleTagManagerHeadScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
 
@@ -185,6 +195,15 @@
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 </head>
 <body>
+    
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerBodyScript))
+        {
+            @Html.Raw(GoogleTagManagerBodyScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
     @if (!isHideReportViewerHeader)
     {
         <div id="report_viewer_v2_header">

@@ -79,7 +79,7 @@ else
         @switch ((ItemType)Model.Value)
         {
             case ItemType.Category:
-                <div class="delete-item col-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Category contains reports.]]]</span></div>
+                    <div class="delete-item col-xs-12"><span>[[[Cannot delete]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as the Category contains reports or subcategories.]]]</span></div>
                 break;
             case ItemType.Report:
                 <div class="delete-item col-12"><span>[[[Unable to delete the report -]]]&nbsp;</span><span class="delete-item-body highlight-name">@ViewData["ItemName"]</span><span>&nbsp;[[[as it has been scheduled to run at certain times.]]]</span></div>

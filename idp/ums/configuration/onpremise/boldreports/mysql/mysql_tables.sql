@@ -266,7 +266,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	IsSaveAsFile tinyint NOT NULL,
     IsSendAsMail tinyint NOT NULL DEFAULT 1,
     ReportCount int NOT NULL DEFAULT 0,
-    ExportPath varchar(4000) NULL,
+    ExportPath varchar(500) NULL,
 	CreatedById int NOT NULL,
 	ModifiedById int NOT NULL,
 	CreatedDate datetime NOT NULL,
@@ -277,6 +277,7 @@ CREATE TABLE  {database_name}.BOLDRS_ScheduleDetail(
 	ExportFileName varchar(130) NULL,
 	ScheduleExportInfo text(500) NULL,
 	ScheduleBucketExportInfo text NULL,
+	ReplytoEmail varchar(640) NULL,
 	PRIMARY KEY (Id)) ROW_FORMAT=DYNAMIC
 ;
 
@@ -518,6 +519,17 @@ CREATE TABLE  {database_name}.BOLDRS_TableRelation(
    RightTableName varchar(255) NOT NULL,
    RightTableSchema varchar(255) NOT NULL,
    PRIMARY KEY (Id)) ROW_FORMAT=DYNAMIC
+;
+
+CREATE TABLE  {database_name}.BOLDRS_MultiTabReport(
+	Id int NOT NULL AUTO_INCREMENT,
+	ParentReportId char(38) NOT NULL,
+	ChildReportId char(38) NOT NULL,
+	OrderNumber int NULL,
+	ModifiedDate datetime NOT NULL,
+	IsActive tinyint NOT NULL,
+	TabName varchar(255) NULL,
+    PRIMARY KEY (Id)) ROW_FORMAT=DYNAMIC
 ;
 
 CREATE TABLE  {database_name}.BOLDRS_Source(
@@ -2125,6 +2137,11 @@ ALTER TABLE {database_name}.BOLDRS_ReportPartLinkage  ADD FOREIGN KEY(ReportId) 
 ALTER TABLE {database_name}.BOLDRS_ReportPartLinkage  ADD FOREIGN KEY(CreatedById) REFERENCES {database_name}.BOLDRS_User (Id)
 ;
 ALTER TABLE {database_name}.BOLDRS_ReportPartLinkage  ADD FOREIGN KEY(ModifiedById) REFERENCES {database_name}.BOLDRS_User (Id)
+;
+
+ALTER TABLE {database_name}.BOLDRS_MultiTabReport  ADD FOREIGN KEY(ParentReportId) REFERENCES {database_name}.BOLDRS_Item (Id)
+;
+ALTER TABLE {database_name}.BOLDRS_MultiTabReport  ADD FOREIGN KEY(ChildReportId) REFERENCES {database_name}.BOLDRS_Item (Id)
 ;
 
 CREATE  INDEX IX_BOLDRS_ScheduleDetail_ScheduleId ON  {database_name}.BOLDRS_ScheduleDetail (ScheduleId);

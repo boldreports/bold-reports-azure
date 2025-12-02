@@ -154,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            <div class="txt-holder  center-alaign  additonal-parameters schema-prefix-hide database-schema-prefix-hide" id="input-schema">
+            <div class="txt-holder  center-alaign  additonal-parameters schema-prefix-hide database-schema-prefix-hide d-none" id="input-schema">
                 <input type="text" id="schema-name" name="schemaName" class="" value="" placeholder="@T["Database schema"]" />
                 <span class="startup-validation validation-txt-errors"></span>
                 <div class="info-content txt-box-info db-schema-info">
@@ -171,7 +171,6 @@
             <div class="txt-holder center-align additonal-parameters">
                 <input type="text" id="additional-parameter" name="additionalparameter" class="" placeholder="@T["Additional Parameters"]" />
                 <span class="startup-validation validation-txt-errors"></span>
-                <span class="database-error validation-txt-errors"></span>
                 <div class="info-content txt-box-info note-additional-parameter">
                     @Html.Raw(string.Format(T["Additional parameters override input values in the above form. Please refer to {0}this{1} documentation for connection string parameters."].Value, "<a target='_blank' class='text-decoration-none' href='" + sqlParameter + "'>", "</a>"))
                 </div>

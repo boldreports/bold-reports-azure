@@ -31,9 +31,19 @@
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
     var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
+    var GoogleTagManagerHeadScript = ServerAppConfig.GoogleTagManagerHeadScript;
+    var GoogleTagManagerBodyScript = ServerAppConfig.GoogleTagManagerBodyScript;
 }
 <html style="height: 100%">
 <head>
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerHeadScript))
+        {
+            @Html.Raw(GoogleTagManagerHeadScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
 
@@ -157,6 +167,14 @@
 
 </head>
 <body style="overflow: hidden; position: static; margin: 0; padding: 0; width: 100%; height: 100%">
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerBodyScript))
+        {
+            @Html.Raw(GoogleTagManagerBodyScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
     <div id="sync_report_viewer" style="height: 100%; width: 100%; padding-right: 26px" class="sync_report"></div>
     <input id="is_mobile" type="hidden" value="@isMobile.ToString().ToLower()">
     @if (isMobile && Context.User.Identity.IsAuthenticated)

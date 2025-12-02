@@ -71,6 +71,7 @@
     var schemesJson = Html.Raw(Json.Serialize(schemes));
 #pragma warning restore SCS0029 //There is no direct user input process for this issue.
     var isHideGuidInUrl = ViewBag.IsHideGuidInUrl;
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 
 @section scripts{
@@ -136,6 +137,7 @@
         var fileDeleteUrl = "@Url.Action("DeleteFile", "Files")";
         var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
         var getReportsLinkedWithReportPartUrl = "@Url.Action("GetReportsLinkedWithReportPart", "ReportPart")";
+        var getPublicStatusUrl = "@Url.Action("GetPublicStatus", "items")";
         var reportLayoutView = @reportLayoutView;
         var categoryList = @Json.Serialize(categories);
         var granularPermissions = @Json.Serialize(granularPermissions);
@@ -177,6 +179,8 @@
         var getFilesUrl = "@Url.Action("GetFiles", "Files")";
         var isHideGuidInUrl = @Json.Serialize(isHideGuidInUrl);
         var bulkDownloadUrl = "@Url.Action("BulkDownloadReportFile", "Items")";
+        var isSandbox = @Json.Serialize(isSandbox);
+        var resourceCreateLimitUrl = "@Url.Action("ResourceCreateLimit", "Items")";
     </script>
     <script nonce="@Context.Items["ScriptNonce"]">
         var dashboardItemCount = "@itemsCount[ItemType.Report]";
@@ -267,30 +271,49 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-12 no-padding ng-hide category-slide" ng-show="(categoryDataBindComplete || categoryList.length == 0)">
+                        <div class="col-xs-12 no-padding ng-hide category-slide" ng-show="(categoryDataBindComplete || categoryList.length == 0)" style="display: none;">
                             <div class="category-search-area float-end">
-                                <input type="text" class="category-search-box float-start no-margin" ng-model="categorySearchQuery" ng-init="categorySearchQuery = ''" ng-change="refreshCategoryScroll()" ng-focus="isCategorySearchFocus = true" ng-blur="isCategorySearchFocus = false" placeholder="[[[Search Categories]]]" />
+                                <input type="text" class="category-search-box float-start no-margin" ng-model="categorySearchQuery" ng-init="categorySearchQuery = ''" ng-change="doCategorySearch()" ng-focus="isCategorySearchFocus = true" ng-blur="isCategorySearchFocus = false" placeholder="[[[Search Categories]]]" />
                                 <span class="su close-icon su-inner-close float-start no-margin ng-hide" ng-show="categorySearchQuery != ''" ng-click="onCategorySearchClear()" ng-class="{focus : isCategorySearchFocus}" data-bs-toggle="tooltip" data-container="body" title="[[[Clear search]]]"></span>
                                 <span class="su su-search float-start no-margin" ng-show="categorySearchQuery == ''" ng-class="{focus : isCategorySearchFocus}" title="[[[Search]]]" data-bs-toggle="tooltip"></span>
                             </div>
                             <div id="parent-category-scroll-element" style="width: 100% !important;">
-                                <div id="category-scroll-element" class="col-12 no-padding" style="width: 100% !important;">
-                                    <div id="category-scroll-content" class="col-12 no-padding">
-                                        <ul ng-repeat="categoryItem in categoryList | filter:{Name: categorySearchQuery} as filteredCategory" class="col-12 no-padding" category-repeat-directive>
-                                            <li class="category-item" ng-class="{active : activeMenu === categoryItem.Id}" ng-click="setActive(categoryItem.Id, categoryItem.Name, $event)">
-                                                <div class="col-12 no-padding" data-bs-toggle="category-list-tooltip" data-bs-placement="right" data-container="body" title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{categoryItem.Name}}</span></span>{{categoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + categoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedDate}}</span></span></span>" data-html="true">
-                                                    <a class="category-name" href="@Html.Encode(dashboardUrl + "?category={{categoryItem.Name}}")" ng-class="categoryItem.IsPinned ? 'col-7' : 'col-8' ">{{categoryItem.Name}}</a>
-                                                    <span class="count-container">
-                                                        <span class="category-count">{{categoryItem.ReportsCount}}</span>
-                                                    </span>
-                                                    <span class="pin-category" data-bs-toggle="category-list-tooltip" data-bs-placement="left" data-bs-original-title="{{categoryItem.IsPinned ? '[[[Pinned]]]' : ''}}" data-html="true" data-favorite="{{categoryItem.IsPinned}}" ng-class="categoryItem.IsPinned ? 'su-pin' : '' "></span>
-                                                    <ul class="category-settings float-start">
-                                                        <li class="dropdown category-context-menu" ng-if="!isTablet">
+                                <div id="category-scroll-element" class="col-xs-12 no-padding" style="width: 100% !important;">
+                                    <div id="category-scroll-content" class="col-xs-12 no-padding">
+                                        <ul ng-repeat="categoryItem in categoryList" class="col-xs-12 no-padding" category-repeat-directive data-dashboard-id="{{categoryItem.Id}}">
+                                            <li class="category-item nested-li">
+                                                <div class="col-xs-12 no-padding category-item" ng-class="{'active': activeMenu === categoryItem.Id}" ng-click="setActive(categoryItem.Id, categoryItem.Name, $event, 0)" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{categoryItem.Name}}</span></span>{{categoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + categoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{categoryItem.Name}}</span></span>{{categoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + categoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedDate}}</span></span></span>">
+                                                    <div class="category-container">
+                                                        <div id="category-name-div">
+                                                            <span ng-class="{'su su-angle-right': categoryItem.SubCategory.length > 0}" class="arrow-icon"></span>
+                                                            <a class="category-name" ng-class="{'category-padding': categoryItem.SubCategory.length <= 0}" id="category-item" href="@Html.Encode(dashboardUrl + "?category={{categoryItem.Name}}")">{{categoryItem.Name}}</a>
+                                                            @* <span class="category-count badge badge-primary badge-pill">{{categoryItem.ReportsCount}}</span> *@
+                                                        </div>
+                                                        <span style="padding-left:10px">
+                                                            <span class="category-count badge badge-primary badge-pill">{{categoryItem.ReportsCount}}</span>
+                                                        </span>
+
+                                                        @* <span class="count-container">
+                                                        <span class="category-count badge badge-primary badge-pill">{{categoryItem.ReportsCount}}</span>
+                                                    </span> *@
+                                                        <span class="pin-category" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="left" data-bs-placement="left" data-html="true" data-bs-html="true" data-original-title="{{categoryItem.IsPinned ? '[[[Pinned]]]' : ''}}" data-bs-original-title="{{categoryItem.IsPinned ? '[[[Pinned]]]' : ''}}" data-favorite="{{categoryItem.IsPinned}}" ng-class="categoryItem.IsPinned ? 'su-pin' : '' "></span>
+                                                        <ul class="category-settings">
+                                                            <li class="dropdown category-context-menu" ng-if="!isTablet">
                                                             <span class="dropdown-bs-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
                                                             </span>
                                                             <ul class="dropdown-menu" role="menu">
+
+                                                                @if (ServerAppConfig.EnableSubCategories)
+                                                                {
+                                                                <li ng-if="categoryItem.CanWrite">
+                                                                    <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(categoryItem.Id, categoryItem.Name, categoryItem.Description)">
+                                                                        <i class="su su-sub-category"></i>
+                                                                        <span>[[[Add Sub Category]]]</span>
+                                                                    </a>
+                                                                </li>
+                                                                }
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
-                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(categoryItem.Id)">
+                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(categoryItem)">
                                                                         <i class="su su-manage-permission"></i>
                                                                         <span>[[[Sharing Permissions]]]</span>
                                                                     </a>
@@ -303,13 +326,13 @@
                                                                     </a>
                                                                 </li>
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
-                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory()">
+                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(categoryItem.Id, categoryItem.Name, categoryItem.Description, categoryItem.Id)">
                                                                         <i class="su su-edit"></i>
                                                                         <span>[[[Update]]]</span>
                                                                     </a>
                                                                 </li>
                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
-                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory()">
+                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(categoryItem)">
                                                                         <i class="su su-delete"></i>
                                                                         <span>[[[Delete]]]</span>
                                                                     </a>
@@ -317,7 +340,147 @@
                                                             </ul>
                                                         </li>
                                                     </ul>
+                                                    </div>
                                                 </div>
+                                                <ul class="nested-li show-sub-category">
+                                                    <li class="category-list-item" ng-repeat="subCategoryItem in categoryItem.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItem.Id}}">
+                                                        <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItem.Id, subCategoryItem.Name, $event, 1)" ng-class="{active : activeMenu === subCategoryItem.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.Name}}</span></span>{{subCategoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.Name}}</span></span>{{subCategoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedDate}}</span></span></span>">
+                                                            <div class="sub-category-align">
+                                                                <span ng-class="{'su su-angle-right': subCategoryItem.SubCategory.length > 0}" class="arrow-icon"></span>
+                                                                <a class="category-name" id="sub-category-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItem.Name}}")">{{subCategoryItem.Name}}</a>
+                                                            </div>
+                                                            <span class="count-container">
+                                                                <span class="category-count badge badge-primary badge-pill">{{subCategoryItem.ReportsCount}}</span>
+                                                            </span>
+                                                            <ul class="category-settings">
+                                                                <li class="dropdown category-context-menu" ng-if="!isTablet">
+                                                                    <span class="dropdown-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                    </span>
+                                                                    <ul class="dropdown-menu" role="menu">
+                                                                       @if (ServerAppConfig.EnableSubCategories)
+                                                                        {
+                                                                            <li ng-if="categoryItem.CanWrite">
+                                                                                <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(subCategoryItem.Id, subCategoryItem.Name, subCategoryItem.Description)">
+                                                                                      <i class="su su-sub-category"></i>
+                                                                                      <span>[[[Add Sub Category]]]</span>
+                                                                                </a>
+                                                                            </li>
+                                                                          }
+                                                                                    <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                            <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItem)">
+                                                                                <i class="su su-manage-permission"></i>
+                                                                                <span>[[[Sharing Permissions]]]</span>
+                                                                            </a>
+                                                                            <hr class="no-margin" />
+                                                                        </li>
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
+                                                                            <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItem.Id, subCategoryItem.Name, subCategoryItem.Description, subCategoryItem.Id)">
+                                                                                <i class="su su-edit"></i>
+                                                                                <span>[[[Update]]]</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
+                                                                            <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItem)">
+                                                                                <i class="su su-delete"></i>
+                                                                                <span>[[[Delete]]]</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <ul class="nested-li show-sub-category">
+                                                            <li class="category-list-item" ng-repeat="subCategoryItemTree in subCategoryItem.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItemTree.Id}}">
+                                                                <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItemTree.Id, subCategoryItemTree.Name, $event, 2)" ng-class="{active : activeMenu === subCategoryItemTree.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.Name}}</span></span>{{subCategoryItemTree.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTree.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.Name}}</span></span>{{subCategoryItemTree.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTree.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedDate}}</span></span></span>">
+                                                                    <div class="sub-categorytree-align">
+                                                                        <span ng-class="{'su su-angle-right': subCategoryItemTree.SubCategory.length > 0}" class="arrow-icon"></span>
+                                                                        <a class="category-name" id="sub-categorytree-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItemTree.Name}}")">{{subCategoryItemTree.Name}}</a>
+                                                                    </div>
+                                                                    <span class="count-container">
+                                                                        <span class="category-count badge badge-primary badge-pill">{{subCategoryItemTree.ReportsCount}}</span>
+                                                                    </span>
+
+                                                                    <ul class="category-settings">
+                                                                        <li class="dropdown category-context-menu" ng-if="!isTablet">
+                                                                            <span class="dropdown-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                            </span>
+                                                                            <ul class="dropdown-menu" role="menu">
+                                                                                @if (ServerAppConfig.EnableSubCategories)
+                                                                                  {
+                                                                                    <li ng-if="categoryItem.CanWrite">
+                                                                                        <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(subCategoryItemTree.Id, subCategoryItemTree.Name, subCategoryItemTree.Description)">
+                                                                                           <i class="su su-sub-category"></i>
+                                                                                           <span>[[[Add Sub Category]]]</span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                   }
+                                                                                            <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItemTree)">
+                                                                                        <i class="su su-manage-permission"></i>
+                                                                                        <span>[[[Sharing Permissions]]]</span>
+                                                                                    </a>
+                                                                                    <hr class="no-margin" />
+                                                                                </li>
+                                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
+                                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItemTree.Id, subCategoryItemTree.Name, subCategoryItemTree.Description, subCategoryItemTree.Id)">
+                                                                                        <i class="su su-edit"></i>
+                                                                                        <span>[[[Update]]]</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
+                                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItemTree)">
+                                                                                        <i class="su su-delete"></i>
+                                                                                        <span>[[[Delete]]]</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <ul class="nested-li show-sub-category">
+                                                                    <li class="category-list-item" ng-repeat="subCategoryItemTreelast in subCategoryItemTree.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItemTreelast.Id}}">
+                                                                        <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItemTreelast.Id, subCategoryItemTreelast.Name, $event, 3)" ng-class="{active : activeMenu === subCategoryItemTreelast.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]] </span><span class='tooltip-description'>{{subCategoryItemTreelast.Name}}</span></span>{{subCategoryItemTreelast.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTreelast.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]] </span><span class='tooltip-description'>{{subCategoryItemTreelast.Name}}</span></span>{{subCategoryItemTreelast.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTreelast.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedDate}}</span></span></span>">
+                                                                            <div class="sub-categorytree-align subcategory-final-level">
+                                                                                <a class="category-name" id="sub-categorytreelast-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItemTreelast.Name}}")">{{subCategoryItemTreelast.Name}}</a>
+                                                                            </div>
+                                                                            <span class="count-container">
+                                                                                <span class="category-count badge badge-primary badge-pill">{{subCategoryItemTreelast.ReportsCount}}</span>
+                                                                            </span>
+                                                                            <ul class="category-settings">
+                                                                                <li class="dropdown category-context-menu" ng-if="!isTablet">
+                                                                                    <span class="dropdown-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                                    </span>
+                                                                                    <ul class="dropdown-menu" role="menu">
+                                                                                        
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                                            <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItemTreelast)">
+                                                                                                <i class="su su-manage-permission"></i>
+                                                                                                <span>[[[Sharing Permissions]]]</span>
+                                                                                            </a>
+                                                                                            <hr class="no-margin" />
+                                                                                        </li>
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
+                                                                                            <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItemTreelast.Id, subCategoryItemTreelast.Name, subCategoryItemTreelast.Description, subCategoryItemTreelast.Id)">
+                                                                                                <i class="su su-edit"></i>
+                                                                                                <span>[[[Update]]]</span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
+                                                                                            <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItemTreelast)">
+                                                                                                <i class="su su-delete"></i>
+                                                                                                <span>[[[Delete]]]</span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
                                             </li>
                                         </ul>
 
@@ -332,10 +495,31 @@
                 </ul>
             </div>
             <div id="dashboard-list-panel" ng-show="!isMobile || !expandCatSec">
+                @if (isSandbox)
+                {
+                    <div class="col-xs-12 recent-content-container" id="recent-content-container" style="display: none">
+                        <h4 class="card-title" id="recent-section-title">Recent</h4>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 recent-items" ng-repeat="item in recentItems">
+                                <a class="recent-item-link" href="{{viewDashboardUrl(item.Id, item.CategoryName, item.Name)}}" target="_blank">
+                                    <div class="recent-card">
+                                        <div class="recent-item-image">
+                                            <img ng-src="@reportServerResourceUrl/cdn/css/sample_items/{{item.ImageName | lowercase}}" />
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-title">[[[{{item.Name}}]]]</p>
+                                            <p class="card-text">[[[{{item.Description}}]]]</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div class="dashboard-action-container col-12 no-padding">
                     <div class="col-5 col-lg-5 col-md-7 col-sm-10 no-padding category-info-container" ng-show="!isMobile">
                         <span class="col-12 no-padding report-filter-module" ng-show="!showSearch">
-                            <ul class="report-filter-module ng-scope" ng-if="activeMenu !== 9 && activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files) && !hideReportsFiltering">
+                            <ul class="report-filter-module ng-scope report-listing-type-list" ng-if="activeMenu !== 9 && activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files) && !hideReportsFiltering">
                                 <div class="dashboard-select-all no-padding no-margin" ng-class="{'grid-check-all-active' : reportLayoutView === @((int)ReportLayoutView.Grid),'card-check-all-active' : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-show="!isTablet && !isMobile && activeMenu !== @((int)DisplayCategory.DraftItems)" style="display:none">
                                     @Html.CheckBox("dashboard-list-select-all", false, new { @class = "material-checkbox", @autocomplete = "off", ng_if = "activeMenu !== 2 || totalDashboardCount != 0", ng_disabled = "totalDashboardCount == 0" })
                                     <label for="dashboard-list-select-all" class="dashboard-select-all-checkbox"></label>
@@ -415,7 +599,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="no-padding item-searchbox-container col-5" ng-class="showSearch ? 'search-active' : ''" ng-show="!hideReportsSearch">
+                        <div id="dashboard-search-div" class="no-padding item-searchbox-container col-5" ng-class="showSearch ? 'search-active' : ''" ng-show="!hideReportsSearch">
                             <span ng-show="isTablet && !showSearch" ng-init="showSearch=false" ng-click="onMobileSearchClicked()" class="su su-search float-end mobile-dashboard-search ng-hide"></span>
                             <div ng-show="!isTablet || showSearch" class="col-3 no-padding item-searchbox-container float-end">
                                 <div class="dashboard-search-area">
@@ -425,7 +609,7 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
+                        <div id="dashboard-sort-div" class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
                                 <span class="dashboard-dropdown-label">[[[Sort]]]</span>
                                 <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
                                     @{
@@ -490,7 +674,7 @@
                                 <ul class="dashboard-list-section col-12 no-padding ng-hide" ng-if="activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files)" ng-show="dashboardDataBindComplete && (reportLayoutView === @((int)ReportLayoutView.Card) || selectedFilter === @((int)DisplayCategory.DraftReportParts))">
                                     <li ng-repeat="dashboardItem in dashboardList" class="col-12 no-padding dashboard-tile" my-post-repeat-directive>
                                         <div ng-if="!dashboardItem.IsDraft" class="col-12 no-padding">
-                                            <div class="dashboard-select-list col-1 no-padding prevent-dashboard-navigation" ng-class="!dashboardItem.IsDraft ? (dashboardItem.CanDownload ? '' : 'disable-download-checkbox') : ''">
+                                            <div class="dashboard-select-list col-1 no-padding prevent-dashboard-navigation" ng-class="!dashboardItem.IsDraft ? ((dashboardItem.CanDownload && !dashboardItem.IsMultiDashboard) ? '' : 'disable-download-checkbox') : ''" ng-attr-title="{{ dashboardItem.IsMultiDashboard ? 'Multi-tabbed report cannot be selected' : undefined }}">
                                                 @Html.CheckBox("{{dashboardItem.Id}}", false, new { @id = "{{dashboardItem.Id}}", @class = "dashboard-select-individual material-checkbox", @autocomplete = "off"})
                                                 <label for="{{dashboardItem.Id}}" ng-if="!isTablet && !isMobile"></label>
                                             <span class="su favorite" data-favorite="{{dashboardItem.IsFavorite}}" ng-click="toggleFavorite($event)" ng-class="!dashboardItem.IsDraft ? (dashboardItem.IsFavorite ? 'su-favorite' : 'su-dis-favorite') : ''" ng-if="!hideFavorite"></span>
@@ -501,6 +685,9 @@
                                                             <span class="dashboard-name no-padding" ng-class="setWidthForDashboardName()">
                                                                 <span>
                                                                     {{dashboardItem.Name}}
+                                                                </span>
+                                                                <span ng-if="dashboardItem.IsMultiDashboard">
+                                                                    <span class="badge badge-secondary1">[[[Multi-Tab]]]</span>
                                                                 </span>
                                                                 <span ng-if="dashboardItem.Description!='' && !hideDescription" class="author-name col-12 no-padding">
                                                                     <span>{{dashboardItem.Description}}</span>
@@ -548,7 +735,7 @@
                                                     }
                                                     else
                                                     {
-                                                    <li ng-if="(dashboardItem.CreatedById == currentUserId || isAdmin) && ((!dashboardItem.IsPublic && !hideMakePublic) || (dashboardItem.IsPublic && !hideMakePrivate))">
+                                                    <li ng-if="(dashboardItem.CreatedById == currentUserId || isAdmin) && ((!dashboardItem.IsPublic && !hideMakePublic) || (dashboardItem.IsPublic && !hideMakePrivate)) && !dashboardItem.IsMultiDashboard">
                                                         <span ng-if="!dashboardItem.IsPublic && !hideMakePublic" title="" class="make-public option-click" ng-click="makePublic()">
                                                             <i class="su su-public"></i>
                                                             <span>[[[Make Public]]]</span>
@@ -558,14 +745,14 @@
                                                             <span>[[[Make Private]]]</span>
                                                         </span>
                                                     </li>
-                                                    }                                                    
-                                                    <li ng-if="!hideGetLink">
+                                                    }
+                                                    <li ng-if="!hideGetLink && !dashboardItem.IsMultiDashboard">
                                                         <span title="" class="get-link option-click" ng-click="getItemLink()">
                                                             <i class="su su-link"></i>
                                                             <span>[[[Get Link]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanDownload || isAdmin) && !dashboardItem.IsLocked && !hideDownload">
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanDownload || isAdmin) && !dashboardItem.IsLocked && !hideDownload && !dashboardItem.IsMultiDashboard">
                                                         <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.ItemType, dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
                                                             <i class="su su-download"></i>
                                                             <span>[[[Download Report]]]</span>
@@ -573,7 +760,7 @@
                                                     </li>
                                                     @if (ServerAppConfig.EnableViewsInReportsMenu)
                                                     {
-                                                        <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && !isTablet && !hideViews" class="dropdown dashboard-views no-padding" data-load="true">
+                                                        <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && !isTablet && !hideViews && !dashboardItem.IsMultiDashboard" class="dropdown dashboard-views no-padding" data-load="true">
                                                             <span href="#" class="dropdown-bs-toggle views prevent-default-action" data-bs-toggle="dropdown" ng-mouseenter="getDashboardViews($event)">
                                                                 <i class="su su-filter"></i>
                                                                 <span>[[[Views]]]</span>
@@ -587,7 +774,7 @@
                                                             </ul>
                                                         </li>
                                                     }
-                                                    <li ng-if="!isTablet && !hideViewSchedules" ng-hide="isHideIconBasedOnDnsName">
+                                                    <li ng-if="!isTablet && !hideViewSchedules && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
                                                         <span class="view-schedule option-click" ng-click="viewSchedules()">
                                                             <i class="su su-nav-schedule"></i>
                                                             <span>[[[View Schedules]]]</span>
@@ -601,22 +788,22 @@
                                                     </li>
                                                     @if(ServerAppConfig.IsSelfHosted)
                                                     {
-                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions"></li> 
-                                                        <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions">
+                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions && !dashboardItem.IsMultiDashboard"></li>
+                                                        <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions && !dashboardItem.IsMultiDashboard">
                                                             <span title="" class="ProcessOption option-click" ng-click="ProcessOption()">
                                                                 <i class="su su-cache_3"></i>
                                                                 <span>[[[Processing Options]]]</span>
                                                             </span>
                                                         </li>
                                                     }
-                                                    <li ng-if="((dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !(hideMove && hideCopy && hideClone))" role="separator" class="divider"></li>
-                                                    <li ng-if="(dashboardItem.CanMove || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideMove">
+                                                    <li ng-if="((dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !dashboardItem.IsMultiDashboard && !(hideMove && hideCopy && hideClone))" role="separator" class="divider"></li>
+                                                    <li ng-if="(dashboardItem.CanMove || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideMove && !dashboardItem.IsMultiDashboard">
                                                         <span title="" class="moveItem option-click" data-action="Move" ng-click="moveDashboard()">
                                                             <i class="su su-move"></i>
                                                             <span>[[[Move]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="(dashboardItem.CanCopy || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideCopy">
+                                                    <li ng-if="(dashboardItem.CanCopy || isAdmin) && !isTablet && !hideCopy && !dashboardItem.IsMultiDashboard">
                                                         <span title="" class="copyItem option-click" data-action="Copy" ng-click="copyDashboard()">
                                                             <i class="su su-copy"></i>
                                                             <span>[[[Copy]]]</span>
@@ -624,7 +811,7 @@
                                                     </li>
                                                     @if (@ServerAppConfig.EnableClone)
                                                     {
-                                                        <li ng-if="(dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideClone" ng-hide="isHideIconBasedOnDnsName">
+                                                        <li ng-if="(dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideClone && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
                                                             <span title="" class="copyItem option-click" data-action="Clone" ng-click="cloneDashboard()">
                                                                 <i class="su su-clone"></i>
                                                                 <span>[[[Clone]]]</span>
@@ -633,29 +820,29 @@
                                                     }                                                    
                                                     @if(isMasterTenant && ServerAppConfig.IsSelfHosted)
                                                     {
-                                                    <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !hidePublish" ng-hide="schemesDetails != null && !schemesDetails.Publish" ng-hide="isHideIconBasedOnDnsName">
+                                                        <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !hidePublish && !dashboardItem.IsMultiDashboard" ng-hide="schemesDetails != null && !schemesDetails.Publish" ng-hide="isHideIconBasedOnDnsName">
                                                         <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">
                                                             <i class="su su-publish"></i>
                                                             <span>[[[Publish]]]</span>
                                                         </span>
                                                     </li>
                                                     }
-                                                    <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin)) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet" role="separator" class="divider"></li>
-                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin) && !isTablet && !hideCreateSchedule" ng-hide="isHideIconBasedOnDnsName">
+                                                    <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin)) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet && !dashboardItem.IsMultiDashboard" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin) && !isTablet && !hideCreateSchedule && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
                                                         <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" ng-click="scheduleDashboard()">
                                                             <i class="su su-nav-schedule"></i>
                                                             <span>[[[Create Schedule]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="!isTablet && !hideVersionHistory" role="separator" class="divider"></li>
-                                                    <li ng-if="!isTablet && !hideVersionHistory">
+                                                    <li ng-if="!isTablet && !hideVersionHistory && !dashboardItem.IsMultiDashboard" role="separator" class="divider"></li>
+                                                    <li ng-if="!isTablet && !hideVersionHistory && !dashboardItem.IsMultiDashboard">
                                                         <span class="version-button option-click" title="" ng-click="versionHistory()">
                                                             <i class="su su-versions"></i>
                                                             <span>[[[Version History]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="((dashboardItem.CanWrite || dashboardItem.CanDelete || isAdmin) && !isTablet && !(hideEditAsXml && hideUpdate && hideDelete))" role="separator" class="divider"></li>
-                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && dashboardItem.Extension =='.sydx' && '@GlobalAppSettings.Branding' == '@AppBranding.Syncfusion.Identifier'">
+                                                    <li ng-if="((dashboardItem.CanWrite || dashboardItem.CanDelete || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !(hideEditAsXml && hideUpdate && hideDelete))" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsMultiDashboard && dashboardItem.Extension =='.sydx' && '@GlobalAppSettings.Branding' == '@AppBranding.Syncfusion.Identifier'">
                                                         <span title="" class="item-edit option-click" ng-click="updateDashboard()">
                                                             <i class="su su-upload"></i>
                                                             <span>[[[Upload Report]]]</span>
@@ -667,13 +854,13 @@
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEditAsXml">
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEditAsXml && !dashboardItem.IsMultiDashboard">
                                                         <span class="option-click" title="" ng-click="editRDLInXML()">
                                                             <i class="su su-embed"></i>
                                                             <span>[[[Edit as XML]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideUpdate">
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideUpdate && !dashboardItem.IsMultiDashboard">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>
                                                             <span>[[[Update]]]</span>
@@ -685,7 +872,7 @@
                                                             <span>[[[Delete]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="!hideExport">
+                                                    <li ng-if="!hideExport && !dashboardItem.IsMultiDashboard">
                                                         <span class="report-export option-click" title="" ng-click="exportReport()">
                                                             <i class="su su-upload"></i>
                                                             <span>[[[Export]]]</span>
@@ -938,7 +1125,7 @@
                         </div>
                         <div ng-show="categoryList.length === 0 && activeMenu !== @((int)DisplayCategory.DraftItems)">
                             <span class="dashboard-empty-message" ng-show="!canCreateDashboard">[[[No reports have been shared with you.]]]</span>
-                            <span class="dashboard-empty-message" ng-show="canCreateDashboard">[[[You don’t have any reports and no reports have been shared with you.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="canCreateDashboard">[[[You don't have any reports and no reports have been shared with you.]]]</span>
                         </div>
                         <div ng-show="categoryList.length !== 0 && activeMenu !== @((int)DisplayCategory.DraftItems) && activeMenu !== @((int)DisplayCategory.ReportParts) && activeMenu !== @((int)DisplayCategory.Files) && activeMenu !== @((int)DisplayCategory.FavouriteItems)">
                             <span class="dashboard-empty-message" ng-show="selectedFilter === @((int)DisplayCategory.AllReports) && dashboardSearchQuery == ''">[[[No reports are available to display.]]]</span>
@@ -968,6 +1155,10 @@
             </div>
         </div>
 
+        <div id="overlay-top" class="custom-overlay"></div>
+        <div id="overlay-bottom" class="custom-overlay"></div>
+        <div id="overlay-left" class="custom-overlay"></div>
+        <div id="overlay-right" class="custom-overlay"></div>
         <!-- Mobile view-->
         <div class="modal fade" id="dashboard-sort-modal" role="dialog" ng-controller="MobileViewSortCtrl">
             <div class="modal-dialog">

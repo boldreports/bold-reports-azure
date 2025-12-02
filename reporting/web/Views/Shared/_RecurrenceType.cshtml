@@ -5,6 +5,7 @@
     Layout = null;
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 <!DOCTYPE html>
 <html class="dashboard-server">
@@ -14,9 +15,16 @@
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerrecurrence.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerrecurrence.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" type="text/css" />
+
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerrecurrence.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerrecurrence.min.css")" crossorigin="anonymous" />
+        @* <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerrecurrence.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerrecurrence.min.css")" crossorigin="anonymous" /> *@
+
+
+<!-- Keep your scheduler CSS AFTER EJ2 so overrides apply -->
+<link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerrecurrence.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerrecurrence.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
 
@@ -26,13 +34,17 @@
     <script nonce="@Model">
          var getRecurrenceTypeUrl = "@Url.Action("GetRecurrenceType", "scheduler")";
          var getNextScheduleUrl = "@Url.Action("GetNextScheduleDate", "scheduler")";
+        var isSandbox = @Json.Serialize(isSandbox);
     </script>
-    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej.editor.min.js"></script>
+    @* <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej.editor.min.js"></script> *@
     <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2.numerictextbox.min.js"></script>
     <environment include="Development,CloudDevelopment">
         <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecurrence.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecurrence.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <script src="//cdn.syncfusion.com/ej2/ej2-base/dist/global/ej2-base.min.js" type="text/javascript"></script>
+        <script src="//cdn.syncfusion.com/ej2/ej2-inputs/dist/global/ej2-inputs.min.js" type="text/javascript"></script>
+
         <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecurrence.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecurrence.min.js")" crossorigin="anonymous"></script>
     </environment>
 
@@ -44,6 +56,10 @@
             <div id="recurrence-type-container" class="col-sm-4 col-4 no-margin i-search-fields">
                 <select id="recurrence-type" class="selectpicker" title=""></select>
             </div>
+            @if (isSandbox)
+            {
+                <div id="hourly-schedule-limit"><span class="su su-info"></span><span class="hourly-schedule-limit-message">[[[Hourly schedule is not supported in Free Tier. Please contact support for this option.]]]</span></div>
+            }
         </div>
         <div class="col-sm-12 col-12 no-padding recurrence-field-row" id="frequency">
 
@@ -221,7 +237,7 @@
 
             <div class="col-sm-1 col-1 no-padding starts-label align-center margin-issue"><label class="end-label">[[[Starts on]]]</label></div>
             <div class="col-sm-3 col-3">
-                <div class="float-start"><input type="text" class="form-control full-width" name="" id="start-date"></div>
+                <div class="float-start"><input type="text" class="form-control full-width" name="" id="start-date" readonly></div>
             </div>
             <input type="hidden" />
             <div class="col-sm-7 col-7 " id="system-time">([[[Your time will be : ]]]<label class="normal-font" id="time"></label> - <label class="normal-font" id="zone"></label>)</div>
@@ -244,13 +260,13 @@
                 <div class="clsend float-start">
                     @Html.RadioButton("end-type", "endafter", new { @class = "css-radio", @id = "end-after" })
                     @Html.Label("end-after", "[[[After]]]", new { @class = "pointer normal-font float-start notransition" })
-                    <div class="float-start leftmargin top-margin"><input type="text" id="occurence-count" class="form-control float-start change-event"></div>
-                    <label for="end-after" class="pointer normal-font button-left float-start">[[[Occurrences]]]</label>
+                    <div class="float-start leftmargin top-margin" style="width:110px;"><input type="text" id="occurence-count" class="form-control float-start change-event"></div>
+                    <label for="end-after" class="pointer normal-font button-left float-start" style="padding-left:10px;">[[[Occurrences]]]</label>
                 </div>
                 <div class="clsend float-start">
                     @Html.RadioButton("end-type", "endBy", new { @class = "css-radio", @id = "endBy" })
                     @Html.Label("endBy", "[[[On]]]", new { @class = "pointer normal-font float-start notransition" })
-                    <div class="monthly-select float-start"><input type="text" class="form-control full-width float-start" name="" id="end-date"></div>
+                    <div class="monthly-select float-start"><input type="text" class="form-control full-width float-start" name="" id="end-date" readonly></div>
                 </div>
                 <div class="clsend float-start validate-error" id="end-date-validator"></div>
             </div>

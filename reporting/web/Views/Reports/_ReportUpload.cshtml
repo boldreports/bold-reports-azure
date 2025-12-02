@@ -28,13 +28,15 @@
     </environment>
     <script nonce="@Context.Items["ScriptNonce"]">
         $(function () {
+          
             var allowSelectMultiple = document.getElementById('multipleUpload').value;
             if ((allowSelectMultiple == "" || allowSelectMultiple == "false") && window.parent.$("#rdl_filename").val() != "" && window.parent.$("#rdl_filename").val() != undefined) {
                 $("#upload_browse_file").val(window.parent.$("#rdl_filename").val());
             }
-
+            $("#publish_report").removeAttr("disabled");
             window.parent.parent.$('#report_popup_wrapper').ejWaitingPopup("hide");
             $(document).on("change", "#browse_file", function () {
+                
                 parent.$("#uploadValidation").html("");
                 parent.$("#publish_report").attr("disabled", true);
                 var filename = $("#browse_file").val();
@@ -71,6 +73,7 @@
                     $("#publish_report").attr("disabled", "disabled");
                     $('#browse_file').attr('title', filename);
                 }
+                $("#publish_report").removeAttr("disabled");
             });
         });
         $(document).on("click", "#browse_file", function () {
@@ -107,6 +110,14 @@
             <input type="hidden" id='tempPath' value='@(ViewBag.TempPath.ToString())' tabindex="-1">
         </div>
         </div>
+        @if (isUploaded && !Model[0].IsMultipleUpload)
+        {
+            <input type="hidden" name="previousFileName" value="@Model[0].UploadedReportName" />
+        }
+        else
+        {
+            <input type="hidden" name="previousFileName" value="none" />
+        }
     </form>
 </body>
 </html>
@@ -159,6 +170,9 @@
 {
     <script nonce="@Context.Items["ScriptNonce"]">
         var isUploaded = @Json.Serialize(isUploaded);
+        if (isUploaded && $("#file_name").val() != "" && parent.$("#CategoryList_tree .e-list-item[aria-selected='true']").length > 0) {
+            parent.$("#publish_report").removeAttr("disabled");
+        }
         $(function () {
             window.parent.reportUploadComplete(@Json.Serialize(Model), isUploaded);
         });

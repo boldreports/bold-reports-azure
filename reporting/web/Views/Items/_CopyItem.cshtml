@@ -19,7 +19,7 @@
     var tenantCopyItemUrl = "@Url.Action("tenantcopy","items")";
     var getItemUrl = "@Url.Action("GetItems", "Reports")";
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
-    var addButton = '<span class="col-1 input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;right:5px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
+    var addButton = '<span class="input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
     var triggeredElementId = '';
      var siteName = @Json.Serialize(siteName);
 
@@ -97,19 +97,21 @@
                             <div class="col-1 no-padding"></div>
                             @if (canCreateCategory)
                             {
-                                <div class="col-6 no-padding first-block copy-dropdown" id="category-list">
-                                    <select id="CategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" style="width:230px;"></select>
-                                    <span class="category-validation-error text"></span>
-                                </div>
-                                <span class="col-1 input-group-btn no-padding" id="add-new-category">
-                                    <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                <div class="col-xs-6 no-padding d-flex first-block copy-report" id="category-list">
+                                    <input id="CategoryList" style="width:230px; height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                    <span class="input-group-btn no-padding" id="add-new-category">
+                                    <button class="btn btn-default" style="padding:4px 10px;margin-left:-5px;margin-top:-3px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
                                 </span>
                                 <div class="second-block"> </div>
+                                </div>
+                                
                             }
                             else
                             {
-                                <div class="col-7 no-padding third-block copy-dropdown">
-                                    <select id="CategoryList" class="selectpicker" data-dropup-auto="false" data-live-search="true" data-size="3" style="width:230px;"></select>
+                                <div class="col-xs-7 no-padding third-block copy-report">
+                                    <input id="CategoryList" style="width:257px;height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
                                 </div>
                                 <div class="fourth-block"></div>
                             }
@@ -135,45 +137,45 @@
                             </div>
                         </div>
                         <div id="copyreport_advance_option">
-                                <div id="copyreport_shared_dataset">
-                                    <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-datasource-label-division">
-                                        <hr id="report_dataset_separator" />
-                                        <div id="dataset_info">[[[This report is designed with shared dataset. You can change the dataset and save the copy of it.]]]</div>
-                                        <label class="col-3 no-padding text-label">[[[Dataset Name]]]</label>
-                                        <label class="col-3 text-label" id="select_dataset_label">[[[Select Dataset]]]</label>
-                                    </div>
-                                    <ul class="list-unstyled" id="shared_dataset_list"></ul>
+                            <div id="copyreport_shared_dataset">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-datasource-label-division">
+                                    <hr id="report_dataset_separator" />
+                                    <div id="dataset_info">[[[This report is designed with shared dataset. You can change the dataset and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-label">[[[Dataset Name]]]</label>
+                                    <label class="col-3 text-label" id="select_dataset_label">[[[Select Dataset]]]</label>
                                 </div>
-                                <div id="copyreport_shared_datasource">
-                                    <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-ds-label-division">
-                                        <hr id="report_datasource_separator" />
-                                        <div id="datasource_info">[[[This report is designed with shared data source. You can change the data source and save the copy of it.]]]</div>
-                                        <label class="col-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
-                                        <label class="col-4 text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
-                                    </div>
-                                    <ul class="list-unstyled" id="shared_datasource_list"></ul>
+                                <ul class="list-unstyled" id="shared_dataset_list"></ul>
+                            </div>
+                            <div id="copyreport_shared_datasource">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-ds-label-division">
+                                    <hr id="report_datasource_separator" />
+                                    <div id="datasource_info">[[[This report is designed with shared data source. You can change the data source and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
+                                    <label class="col-4 text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
                                 </div>
+                                <ul class="list-unstyled" id="shared_datasource_list"></ul>
+                            </div>
                             <div id="copyreport_subreport">
                                 <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappedsubreports-label-divisions">
-                                        <hr id="report_mappedsubreports_separator" />
-                                        <div id="subreport_info">[[[This report is designed with subreport. You can change the subreport and save the copy of it.]]]</div>
-                                        <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped SubReport]]]</label>
-                                        <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_subreports">[[[Category]]]</label>
-                                        <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_subreports">[[[Report]]]</label>
-                                    </div>
-                                    <ul class="list-unstyled" id="change_subreport_list"></ul>
+                                    <hr id="report_mappedsubreports_separator" />
+                                    <div id="subreport_info">[[[This report is designed with subreport. You can change the subreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped SubReport]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_subreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_subreports">[[[Report]]]</label>
                                 </div>
-                                <div id="copyreport_drillthroughreport">
-                                    <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappeddrillthroughreports-label-divisions">
-                                        <hr id="report_mappeddrillthroughreports_separator" />
-                                        <div id="drillthrough_info">[[[This report is designed with drillthroughreport. You can change the drillthroughreport and save the copy of it.]]]</div>
-                                        <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped Drillthrough Report]]]</label>
-                                        <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_drillthroughreports">[[[Category]]]</label>
-                                        <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_drillthroughreports">[[[Report]]]</label>
-                                    </div>
-                                    <ul class="list-unstyled" id="change_drillthroughreport_list"></ul>
-                                </div>
+                                <ul class="list-unstyled" id="change_subreport_list"></ul>
                             </div>
+                            <div id="copyreport_drillthroughreport">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappeddrillthroughreports-label-divisions">
+                                    <hr id="report_mappeddrillthroughreports_separator" />
+                                    <div id="drillthrough_info">[[[This report is designed with drillthroughreport. You can change the drillthroughreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped Drillthrough Report]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_drillthroughreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_drillthroughreports">[[[Report]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="change_drillthroughreport_list"></ul>
+                            </div>
+                        </div>
                         <input type="hidden" id="ItemIdHidden" value="@Context.Request.Form["itemId"]" />
                         <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
                         <input type="hidden" id="tenantHidden" value="@siteName">
@@ -207,17 +209,18 @@
                             @if (canCreateCategory)
                             {
                                 <div class="col-7 no-padding dropup">
-                                    <select id="CategoryList" class="selectpicker" data-live-search="true" data-size="3"  style="width:230px;"></select>
-                                    <span class="category-validation-error text"></span>
+                                    <input id="CategoryList" style="width:230px;height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
                                 </div>
                                 <span class="col-1 input-group-btn no-padding" id="add-new-category">
-                                    <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                    <button class="btn btn-default" style="padding:4px 10px;margin-left:-5px;margin-top:-3px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
                                 </span>
                             }
                             else
                             {
                                 <div class="col-8 no-padding dropup">
-                                    <select id="CategoryList" class="selectpicker" data-live-search="true" data-size="3" tstyle="width:230px;"></select>
+                                    <input id="CategoryList" style="width:257px;height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
                                 </div>
                             }
                         </div>
@@ -327,17 +330,58 @@
 
     <script nonce="@Model">
         $(document).ready(function () {
+           var className = $(".copy-move-category");
             var categories = @Json.Serialize(ViewBag.CategoryDetails);
-            var options = "";
-            for (var t = 0; t < categories.length; t++) {
-                options += '<option value=' + categories[t].Id + '>' + categories[t].Name + '</option>';
+           if (categories.length < 1) {
+               $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
             }
-            $("#CategoryList").html(options);
-            $("#CategoryList").selectpicker('destroy');
-            $("#CategoryList").selectpicker();
-            $("#add-new-category [ data-bs-toggle='tooltip']").tooltip();
+           else {
+               $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+           }
+           var dropDownTreeInstance = document.querySelector('#CategoryList');
+           if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+               dropDownTreeInstance.ej2_instances[0].destroy();
+           }
+           var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+               fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+               select: function () { copyCategoryValueChange(className); },
+               value: [categories[0].Id.toString()],
+               destroyPopupOnHide: false,
+               showClearButton: false,
+               placeholder: 'Select category',
+               allowFiltering: true,
+           });
+
+            DropDownTreeObj.appendTo("#CategoryList");
+
+           $("#CopyButton").show();
+           if (canCreateCategory) {
+               $("#add-new-category").remove();
+               $('#add-new-category').find('button').remove();
+               $(".tenant-parent .first-block:first").removeClass("col-7").addClass("col-6");
+               $(".tenant-parent .second-block:first").append(addButton);
+               if (canCreateCategory.toLowerCase() == "false") {
+                   $(".tenant-parent .third-block:first").removeClass("col-7").addClass("col-6");
+                   $(".tenant-parent .fourth-block:first").append(addButton);
+               }
+           }
+           $("#add-new-category [data-toggle='tooltip']").tooltip();
+           parent.window.IsCopyOrMoveDashboard = true;
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
         });
+        function copyCategoryValueChange(className) {
+            var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+            var selectedElement = $(".e-list-item[aria-selected='true']");
+            var levels = parseInt(selectedElement.attr("aria-level"));
+            var selectedItemsText = [];
+            for (var i = 1; i < levels; i++) {
+                var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+                selectedItemsText.push(text);
+            }
+            selectedItemsText.push(dropDownTreeInstance.currentText)
+            var combinedText = selectedItemsText.join(' / ');
+            className.find("input.e-dropdowntree").val(combinedText);
+        }
     </script>
     <script nonce="@Model">
         $(document).ready(function () {

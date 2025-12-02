@@ -13,6 +13,8 @@
     <title>
         [[[Update Report]]]
     </title>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-dropdowntree.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true"  src="https://cdn.syncfusion.com/ej2/dist/ej2-popups.min.js"></script>
     <script nonce="@Context.Items["ScriptNonce"]">
             var isItemExistinCategoryUrl = "@Url.Action("IsItemExistInSameCategory", "reports")";
             var isItemExistinCategoryForUpdateUrl = "@Url.Action("IsItemExistInSameCategoryForUpdate", "reports")";
@@ -23,6 +25,7 @@
             var reportselectdatasourceUrl = "@Url.Action("reportselectdatasource", "reports")";
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
             var tagList = @Json.Serialize(ViewBag.Tag);
+        var category = @Json.Serialize(ViewBag.selectedCategory);
     </script>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
@@ -38,7 +41,7 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-report.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
-
+    
     <script nonce="@Context.Items["ScriptNonce"]">
             $(function () {
                 createEditRdlPopup(@Json.Serialize(ViewData["reportInfo"]));
@@ -81,12 +84,10 @@
                             </td>
                             <td class="col-12">
                                 <div>
-                                    <select id="selected_category" data-live-search="true" data-none-results-text="[[[No results match]]]" name="categoryId" class="selectpicker form-control bottom-margin30" data-size="5" style="width: 100%; margin-bottom: 15px;" tabindex="1" autofocus>
-                                        @for (var item = 0; item < Model.Count; item++)
-                                        {
-                                            <option value="@Model[item].Id">@Model[item].Name</option>
-                                        }
-                                    </select>
+                                    <div>
+                                        <input id="CategoryList" class='form-control bottom-margin30 edit-field text' />
+                                        <div id="categorylist_validation" class="validation-message text"></div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -156,5 +157,53 @@
             </div>
         </div>
     </form>
+    <script>
+    $(document).ready(function() {
+    var categories = @Json.Serialize(ViewBag.CategoryDetails);
+        var className = $("#edit-report-form");
+    if (categories.length < 1) {
+    $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+    }
+    else {
+    $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+    }
+
+    var dropDownTreeInstance = document.querySelector('#CategoryList');
+    if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+    dropDownTreeInstance.ej2_instances[0].destroy();
+    }
+    var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+    fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+    select: function () { categoryValueChange(className); },
+    placeholder: window.Server.App.LocalizationContent.SelectCategory,
+    value: [category.Id],
+    destroyPopupOnHide: false,
+    showClearButton: false,
+    allowFiltering: true,
+    popupWidth: '320px',
+    });
+    DropDownTreeObj.appendTo("#CategoryList");
+        $("#CreateCategoryPopup_wrapper").ejWaitingPopup("hide");
+    window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+    });
+
+    function categoryValueChange(className) {
+    var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+    var selectedElement = $(".e-list-item[aria-selected='true']");
+    var levels = parseInt(selectedElement.attr("aria-level"));
+    var selectedItemsText = [];
+    for (var i = 1; i < levels; i++) {
+    var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+    selectedItemsText.push(text);
+    }
+    selectedItemsText.push(dropDownTreeInstance.currentText)
+    var combinedText = selectedItemsText.join(' / ');
+    className.find("input.e-dropdowntree").val(combinedText);
+        if(dropDownTreeInstance.currentText != category.Name){
+             window.editReportData.IsCategoryChanged = true;
+                 $("#publish_report").removeAttr("disabled");
+            }
+        }
+    </script>
 </body>
 </html>

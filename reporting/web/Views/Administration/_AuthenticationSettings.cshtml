@@ -51,6 +51,10 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
     var openIDClientId = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.ClientId);
     var identifier = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.Identifier);
     var logoutUrl = HttpUtility.HtmlDecode((ViewBag.OpenIDSettings.OIDCAuthSettings.LogoutUrl));
+    var openIdEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ?ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+    var openIdEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ?ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+    var oauthEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ?ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+    var oauthEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ?ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
 }
 @section styles{
     <environment include="Development,CloudDevelopment">
@@ -69,6 +73,10 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
         serverApp.controller("adSettingsController", ["$scope", function ($scope) {
             $scope.regex = '^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/[a-zA-Z0-9]+[a-zA-Z0-9]*(\.[a-z]{2,8})?)*?$';
             $scope.distinguishedNameRegex = /^(\w+[=]{1}[a-zA-Z0-9-_\s]+)([\,{1}]\w+[=]{1}[a-zA-Z0-9-_\s]+)*$/;
+            $scope.openIdEnableGroupClaim = openIdEnableGroupClaim;
+            $scope.openIdEnableRemoveExistGroupMapping = openIdEnableRemoveExistGroupMapping;
+            $scope.oauthEnableGroupClaim = oauthEnableGroupClaim;
+            $scope.oauthEnableRemoveExistGroupMapping = oauthEnableRemoveExistGroupMapping;
         }]);
 
     </script>
@@ -92,6 +100,10 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
         var isOAuthCustomMailOptionEnabled = @Json.Serialize(isOAuthCustomMailOptionEnabled);
         var openIdCustomMailContent = @Json.Serialize(openIdCustomMailContent);
         var oAuthCustomMailContent = @Json.Serialize(oAuthCustomMailContent);
+        var openIdEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ? ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+        var openIdEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ? ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+        var oauthEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ? ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+        var oauthEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ? ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
 
@@ -376,7 +388,8 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret]]]</label>
                                             <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.oauthClientSecret.$dirty && oauthSettingsForm.oauthClientSecret.$invalid) ? 'has-error' : ''">
-                                                <input type="password" class="form-control col-md-6 no-margin" ng-model="oauthClientSecret" ng-init="oauthClientSecret" name="oauthClientSecret" placeholder="[[[Client Secret]]]" id="oauth-client-secret" data-ng-disabled="!oauthIsEnabled" required />
+                                                <input type="{{showSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="oauthClientSecret" name="oauthClientSecret" id="oauth-client-secret" data-ng-disabled="!oauthIsEnabled" ng-attr-placeholder="{{oauthIsEnabled ? '●●●●●●●●' : 'Client Secret'}}" required />
+                                                <div class="show-hide-password su su-eye"></div>
                                                 <span class="validation-message d-flex" ng-show="oauthSettingsForm.oauthClientSecret.$error.required && oauthSettingsForm.oauthClientSecret.$dirty && oauthIsEnabled">[[[Please enter the client secret.]]]</span>
                                             </div>
                                         </div>
@@ -408,6 +421,64 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                                 <input id="oauth-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
                                                 <div class="form-control su su-copy text focus" id="oauth-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="no-padding no-margin">
+                                            <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
+                                            <div class="col-md-6 section-info-message-container">
+                                                <span class="su su-info"></span>
+                                                <div class="section-info-message">
+                                                    [[[Once passed the group or equivalent claim in the authentication token this settings allow automatic user and group mapping based on the received claim value. The claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Fill JSON keys with respect to the required details to identify the exact values.]]]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-oauth-group-claim">[[[Enable User and Group mapping]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-oauth-group-claim" name="oauthEnableGroupClaim" ng-model="oauthEnableGroupClaim" ng-checked="oauthEnableGroupClaim" data-ng-disabled="!oauthIsEnabled" />
+                                                    <label for="enable-oauth-group-claim" class="label-primary"></label>
+                                                </span>
+                                                <span id="oauth-enable-group-claims-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-html="true" title=""
+                                                      data-bs-content="[[[Fetch group claim value and process the user and multi-group mapping dynamically during login.]]]" tabindex="0" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-oauth-remove-group-mapping">[[[Un-map Existing Groups of User and map to new group]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-oauth-remove-group-mapping" name="oauthEnableRemoveExistGroupMapping" ng-model="oauthEnableRemoveExistGroupMapping" ng-checked="oauthEnableRemoveExistGroupMapping" ng-disabled="!oauthIsEnabled || !oauthEnableGroupClaim" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <label for="enable-oauth-remove-group-mapping" class="label-primary"></label>
+                                                </span>
+                                                <span id="oauth-enable-remove-group-mapping-info" class="su su-info info-popup"
+                                                      data-bs-toggle="popover" data-bs-placement="right" data-html="true"
+                                                      data-bs-content="[[[When enabled, this option clears all previously assigned groups for the user and map to the group which is received in claim.]]]" tabindex="0" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="oauth-group-claim-name">
+                                                [[[Group Claim Name]]]
+                                            </label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon"
+                                                 ng-class="(oauthSettingsForm.oauthgroupclaimname.$dirty && oauthSettingsForm.oauthgroupclaimname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" name="oauthgroupclaimname" placeholder="[[[Group claim name (Optional)]]]" ng-init="oauthgroupclaimname='@((ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings?.GroupClaimName ?? "").ToString())'" id="oauth-group-claim-name" ng-disabled="!oauthIsEnabled || !oauthEnableGroupClaim" ng-model="oauthgroupclaimname" />
+                                                <span id="oauth-group-claim-name-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-html="true"
+                                                      data-bs-content="[[[Specify the claim name that contains group identifiers. User and group will be mapped only if the same group name exists in the site.]]]" tabindex="0">
+                                                </span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center ng-hide"
+                                                  ng-show="oauthSettingsForm.oauthgroupclaimname.$error.pattern && oauthSettingsForm.oauthgroupclaimname.$dirty && oauthIsEnabled">
+                                                [[[Please enter a valid group claim name.]]]
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
@@ -595,7 +666,8 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret]]]</label>
                                             <div class="col-md-8 no-margin form-input-field float-end" ng-class="(openidSettingsForm.openidClientSecret.$dirty && openidSettingsForm.openidClientSecret.$invalid) ? 'has-error' : ''">
-                                                <input type="password" class="form-control col-md-6 no-margin" ng-model="openidClientSecret" ng-init="openidClientSecret" name="openidClientSecret" placeholder="[[[Client Secret]]]" id="openid-client-secret" data-ng-disabled="!openidIsEnabled" required />                                       
+                                                <input type="{{showOpenIdSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="openidClientSecret" ng-init="openidClientSecret" name="openidClientSecret" id="openid-client-secret" data-ng-disabled="!openidIsEnabled" ng-attr-placeholder="{{openidIsEnabled ? '●●●●●●●●' : 'Client Secret'}}" required />
+                                                <div class="show-hide-password su su-eye" ng-click="showOpenIdSecret = !showOpenIdSecret"></div>                           
                                                 <span class="validation-message d-flex" ng-show="openidSettingsForm.openidClientSecret.$error.required && openidSettingsForm.openidClientSecret.$dirty && openidIsEnabled">[[[Please enter the client secret.]]]</span>
                                             </div>
                                         </div>
@@ -608,6 +680,17 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                                 <span id="openid-identifier-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[These claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Provide the JSON key to identify the unique identity (email) of the user.]]]" tabindex="0"></span>
                                             </div>
                                             <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidIdentifier.$error.required && openidSettingsForm.openidIdentifier.$dirty && openidIsEnabled">[[[Please enter the Identifier.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Response Type]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <select id="response-type-dropdown" class="selectpicker form-control" data-ng-disabled="!openidIsEnabled">
+                                                    <option class="no-margin-dropdown-ul" value="id_token" selected="@(ViewBag.OpenIDSettings.OIDCAuthSettings.ResponseType == "id_token")">[[[id_token]]]</option>
+                                                    <option class="no-margin-dropdown-ul" value="code" selected="@(ViewBag.OpenIDSettings.OIDCAuthSettings.ResponseType == "code")">[[[code]]]</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
@@ -626,6 +709,61 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                             <div class="col-md-8 no-margin form-input-field float-end">
                                                 <input id="openid-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OidcCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
                                                 <div class="form-control su su-copy text focus" id="openid-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-8 no-padding no-margin">
+                                            <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
+                                            <div class="section-info-message-container">
+                                                <span class="su su-info"></span>
+                                                <div class="section-info-message">
+                                                    [[[Once passed the group or equivalent claim in the authentication token this settings allow automatic user and group mapping based on the received claim value. The claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Fill JSON keys with respect to the required details to identify the exact values.]]]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-openid-group-claim">[[[Enable User and Group mapping]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-openid-group-claim" name="openIdEnableGroupClaim"
+                                                           ng-model="openIdEnableGroupClaim" ng-checked="openIdEnableGroupClaim"
+                                                           ng-disabled="!openidIsEnabled" />
+                                                    <label for="enable-openid-group-claim" class="label-primary"></label>
+                                                </span>
+                                                <span id="openid-enable-group-claims-info" class="su su-info info-popup"
+                                                      data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"
+                                                      data-bs-content="[[[Fetch group claim value and process the user and multi-group mapping dynamically during login.]]]" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-openid-remove-group-mapping">[[[Un-map Existing Groups of User and map to new group]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-openid-remove-group-mapping" name="openIdEnableRemoveExistGroupMapping"
+                                                           ng-model="openIdEnableRemoveExistGroupMapping" ng-checked="openIdEnableRemoveExistGroupMapping"
+                                                           ng-disabled="!openidIsEnabled || !openIdEnableGroupClaim" />
+                                                    <label for="enable-openid-remove-group-mapping" class="label-primary"></label>
+                                                </span>
+                                                <span id="openid-enable-remove-group-mapping-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"
+                                                      data-bs-content="[[[When enabled, this option clears all previously assigned groups for the user and map to the group which is received in claim.]]]" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="openid-group-claim-name">[[[Group Claim Name]]]</label>
+                                            <div class="col-md-8 form-input-field float-end input-with-icon"
+                                                 ng-class="(oauthSettingsForm.openidgroupclaimname.$dirty && oauthSettingsForm.openidgroupclaimname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" name="openidgroupclaimname" placeholder="[[[Group claim name (Optional)]]]" ng-init="openidgroupclaimname='@((ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings?.GroupClaimName ?? "").ToString())'" id="openid-group-claim-name" ng-disabled="!openidIsEnabled || !openIdEnableGroupClaim" ng-model="openidgroupclaimname" />
+                                                <span id="openid-group-claim-name-info" class="su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true" data-bs-content="[[[Specify the claim name that contains group identifiers. User and group will be mapped only if the same group name exists in the site.]]]">
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

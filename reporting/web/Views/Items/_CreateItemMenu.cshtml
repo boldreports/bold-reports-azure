@@ -11,6 +11,8 @@
     var showImport = requestUrl.LocalPath.ToLower().Contains(Url.Action("Reports", "Reports").ToLower());
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+    var userreportsCount = itemsCount != null ? itemsCount.ContainsKey(ItemType.Report) ? itemsCount[ItemType.Report] : 0 : 0;
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var isDraftExistUrl = "@Url.Action("IsDraftExist", "items")";
@@ -21,6 +23,10 @@
     var addDatasetUrl = "@Url.Action("AddDataset", "DataSets")";
     var addFileUrl = "@Url.Action("AddFileView", "Files")";
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var resourceCreateLimitUrl = "@Url.Action("ResourceCreateLimit", "Items")";
+    var isSandbox = @Json.Serialize(isSandbox);
+    var userreportsCount = "@userreportsCount";
+    var sharableReportssCount = "@ViewBag.SharableReportsCount";
 </script>
 
 <div id="create-item-container">
@@ -53,7 +59,20 @@
                                 </div>
                             </div>
                         </li>
-
+                        if (ServerAppConfig.EnableMultiTabbedReports)
+                        {
+                            <li id="create-multitab-dashboard">
+                                <div class="create-item-list-section">
+                                    <div class="create-item-list-icon" style="float: left;">
+                                        <img id="templates-img" class="smiley" src="@(GlobalAppSettings.CdnDomain)/static/sidebar/v1/create-multitab-dashboard.svg">
+                                    </div>
+                                    <div class="create-item-list-title">
+                                        <label>[[[Multi-Tabbed Report]]]</label><br>
+                                        <span>[[[Create a multi-tabbed report by adding two or more reports]]]</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
                         if (ServerAppConfig.IsSelfHosted && showImport)
                         {
                             if (!ServerAppConfig.IsHideSampleReports)

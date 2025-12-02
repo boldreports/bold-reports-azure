@@ -418,6 +418,7 @@
         var showImportSampleData = @Json.Serialize(isShowImportSampleData);
         var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
         var isHideGuidInUrl = @Json.Serialize(isHideGuidInUrl);
+        var isCloudMode = @Json.Serialize(@ViewBag.IsCloudMode);
 
         if (isEdit === "true") {
             isEditReport = true;
@@ -606,7 +607,7 @@
             var designer = $('#' + controlId).data('boldReportDesigner');
             $('#' + controlId + '_designer_header_reportPartName').val(reportPartName);
             designer.showImportData = showImportSampleData;
-            designer.isOnPremiseMode = @isSelfHosted.ToString().ToLower();
+            designer.isOnPremiseMode = !isCloudMode;
             designer.isReportPart = true;
             var partInfo = {
                 partId: reportPartId,

@@ -261,7 +261,8 @@ CREATE TABLE [BOLDRS_ScheduleDetail](
 	[IsOverwrite] [bit] NOT NULL,
 	[ExportFileName] [nvarchar](150) NULL,
 	[ScheduleExportInfo] [nvarchar](4000) NULL,
-	[ScheduleBucketExportInfo] [nvarchar](4000) NULL)
+	[ScheduleBucketExportInfo] [nvarchar](4000) NULL,
+	[ReplytoEmail] [nvarchar](640) NULL)
 ;
 
 CREATE TABLE [BOLDRS_SubscribedUser](
@@ -482,6 +483,16 @@ CREATE TABLE [BOLDRS_TableRelation](
     [RightTableCondition]  [nvarchar](255) NOT NULL,
     [RightTableName]  [nvarchar](255) NOT NULL,
     [RightTableSchema] [nvarchar](255) NOT NULL)
+;
+
+CREATE TABLE [BOLDRS_MultiTabReport](
+	[Id] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[ParentReportId] [uniqueidentifier] NOT NULL,
+	[ChildReportId] [uniqueidentifier] NOT NULL,
+	[OrderNumber] [int] NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[TabName] [nvarchar](255) NULL)
 ;
 
 CREATE TABLE [BOLDRS_Source](
@@ -2041,6 +2052,11 @@ ALTER TABLE [BOLDRS_ReportPartLinkage]  ADD FOREIGN KEY([ReportId]) REFERENCES [
 ALTER TABLE [BOLDRS_ReportPartLinkage] ADD FOREIGN KEY([CreatedById]) REFERENCES [BOLDRS_User] ([Id])
 ;
 ALTER TABLE [BOLDRS_ReportPartLinkage]  ADD FOREIGN KEY([ModifiedById]) REFERENCES [BOLDRS_User] ([Id])
+;
+
+ALTER TABLE [BOLDRS_MultiTabReport]  ADD FOREIGN KEY([ParentReportId]) REFERENCES [BOLDRS_Item] ([Id])
+;
+ALTER TABLE [BOLDRS_MultiTabReport]  ADD FOREIGN KEY([ChildReportId]) REFERENCES [BOLDRS_Item] ([Id])
 ;
 
 CREATE NONCLUSTERED INDEX [IX_BOLDRS_ScheduleDetail_ScheduleId] ON [BOLDRS_ScheduleDetail]([ScheduleId]) WITH (ONLINE = ON)

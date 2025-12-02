@@ -48,6 +48,19 @@
         var startupHome = "@Url.Content("~/cdn/images/static/default-pages/v1/login-to-activate.png")";
 
     </script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            history.pushState(null, null, location.href);
+            let backNavigationLock = false;
+            window.addEventListener('popstate', function (event) {
+                if (backNavigationLock) return;
+                backNavigationLock = true;
+                history.pushState(null, null, location.href);
+                window.location.replace(location.href);
+                setTimeout(() => backNavigationLock = false, 2000); // Reset after 2s
+            });
+        });
+    </script>
 </head>
 
 <body id="license-activation-waiting-element" class="license-activation-content">

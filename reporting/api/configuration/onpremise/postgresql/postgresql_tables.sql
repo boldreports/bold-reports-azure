@@ -254,7 +254,8 @@ CREATE TABLE BOLDRS_ScheduleDetail(
 	IsNotifySaveAs smallint NOT NULL DEFAULT 1,
 	ExportFileName varchar(150) NULL,
 	ScheduleExportInfo varchar(4000) NULL,
-	ScheduleBucketExportInfo varchar(4000) NULL)
+	ScheduleBucketExportInfo varchar(4000) NULL,
+	ReplytoEmail varchar(640) NULL)
 ;
 
 CREATE TABLE BOLDRS_SubscribedUser(
@@ -475,6 +476,16 @@ CREATE TABLE BOLDRS_TableRelation(
     RightTableCondition  varchar(255) NOT NULL,
     RightTableName  varchar(255) NOT NULL,
     RightTableSchema varchar(255) NOT NULL)
+;
+
+CREATE TABLE BOLDRS_MultiTabReport(
+	Id SERIAL PRIMARY KEY NOT NULL,
+	ParentReportId uuid NOT NULL,
+	ChildReportId uuid NOT NULL,
+	OrderNumber int NULL,
+	ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL,
+	TabName varchar(255) NULL)
 ;
 
 CREATE TABLE BOLDRS_Source(
@@ -2053,6 +2064,11 @@ ALTER TABLE BOLDRS_ReportPartLinkage  ADD FOREIGN KEY(ReportId) REFERENCES BOLDR
 ALTER TABLE BOLDRS_ReportPartLinkage ADD FOREIGN KEY(CreatedById) REFERENCES BOLDRS_User (Id)
 ;
 ALTER TABLE BOLDRS_ReportPartLinkage  ADD FOREIGN KEY(ModifiedById) REFERENCES BOLDRS_User (Id)
+;
+
+ALTER TABLE BOLDRS_MultiTabReport  ADD FOREIGN KEY(ParentReportId) REFERENCES BOLDRS_Item (Id)
+;
+ALTER TABLE BOLDRS_MultiTabReport  ADD FOREIGN KEY(ChildReportId) REFERENCES BOLDRS_Item (Id)
 ;
 
 CREATE INDEX IX_BOLDRS_ScheduleDetail_ScheduleId ON BOLDRS_ScheduleDetail(ScheduleId);

@@ -5,6 +5,7 @@
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isHideGuidInUrl = ServerAppConfig.IsHideGuidInUrl;
+    var targetValue = @ServerAppConfig.SameTabReportRender ? "_self" : "_blank";
 }
 
 <!DOCTYPE html>
@@ -14,12 +15,6 @@
         var itemVersionUrl = "@Url.Action("VersionItems", "items")";
         var itemLogsUrl = "@Url.Action("ItemLogs", "items")";
         var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
-        var targetValue = enableRenderSameTab ? "_self" : "_blank";
-        $.views.helpers({
-            targetValue: function(){
-                return targetValue;
-            }
-        });
     </script>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/itemversion.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/itemversion.css")" crossorigin="anonymous" />
@@ -105,11 +100,11 @@
                     {{if ItemTypeId == "@((int)ItemType.Report)"}}
                         {{if @(Convert.ToBoolean(isHideGuidInUrl).ToString().ToLower()) == true }}
                             <li>
-                                <a title="" href="@Url.Action("Reports", "Reports")/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="{{:~targetValue}}"><i class="su su-open"><i class="su-open path1"></i><i class="su-open path2"></i></i><span>[[[Open]]]</span></a>
+                                <a title="" href="@Url.Action("Reports", "Reports")/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue"><i class="su su-open"><i class="su-open path1"></i><i class="su-open path2"></i></i><span>[[[Open]]]</span></a>
                             </li>
                             {{if CanWrite}}
                             <li>
-                                <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="{{:~targetValue}}">
+                                <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue">
                                     <i class="su su-edit"></i>
                                     <span>[[[Edit]]]</span>
                                 </a>
@@ -117,11 +112,11 @@
  						{{/if}}
                         {{else}}
                         <li>
-                                <a title="" href="@Url.Action("Reports", "Reports")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="{{:~targetValue}}"><i class="su su-open"><i class="su-open path1"></i><i class="su-open path2"></i></i><span>[[[Open]]]</span></a>
+                                <a title="" href="@Url.Action("Reports", "Reports")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue"><i class="su su-open"><i class="su-open path1"></i><i class="su-open path2"></i></i><span>[[[Open]]]</span></a>
                             </li>
                             {{if CanWrite}}
                             <li>
-                                <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="{{:~targetValue}}">
+                                <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue">
                                     <i class="su su-edit"></i>
                                     <span>[[[Edit]]]</span>
                                 </a>

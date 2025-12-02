@@ -31,7 +31,6 @@
         tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
     }
     var isWelcomePage = ViewBag.IsWelcomePage != null && ViewBag.IsWelcomePage;
-    var showTour = (tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")) && !isWelcomePage && !isMobile;
     var appContainerStyle = (ViewBag.HidePageLoader != null && ViewBag.HidePageLoader) ? "" : "opacity:0;";
     var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
     var feedbackCookie = Context.Request.Cookies["feedback.visible"];
@@ -45,10 +44,23 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
     var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+    var showTour = globalAppSettings.SystemSettings.ShowApplicationTour;
+    var isReportPage = requestUrl.ToString().IndexOf("/reports", StringComparison.CurrentCultureIgnoreCase) > 0;
+    var GoogleTagManagerHeadScript = ServerAppConfig.GoogleTagManagerHeadScript;
+    var GoogleTagManagerBodyScript = ServerAppConfig.GoogleTagManagerBodyScript;
 }
 <!DOCTYPE html>
 <html class="dashboard-server" lang="@globalAppSettings.SystemSettings.Language">
 <head>
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerHeadScript))
+        {
+            @Html.Raw(GoogleTagManagerHeadScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     @if (!isSelfHosted && !globalAppSettings.SystemSettings.IsDebug)
@@ -206,6 +218,20 @@
 </head>
 
 <body ng-app="serverApp" class="clearfix" id="body">
+    @{
+        #pragma warning disable SCS0029 // Google tag manager script
+        if (!string.IsNullOrWhiteSpace(GoogleTagManagerBodyScript))
+        {
+            @Html.Raw(GoogleTagManagerBodyScript)
+        }
+        #pragma warning restore SCS0029 // Google tab manager script
+    }
+    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
+        var isSandbox = @Json.Serialize(isSandbox);
+        var showTour = @Json.Serialize(showTour);
+        var isReportPage = @Json.Serialize(isReportPage);
+        var updateSystemSettingsUrl = "@Url.Action("UpdateSystemSettings", "Administration")";
+    </script>
     @if (!(ViewBag.HidePageLoader != null && ViewBag.HidePageLoader))
     {
         <div class="loader-blue loader-icon" id="layout-body-loader-icon">
@@ -218,12 +244,14 @@
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-server-tour.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-server-tour.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
 </environment>
 <environment exclude="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-server-tour.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-server-tour.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
 </environment>
 
@@ -243,9 +271,11 @@
         {
             <environment include="Development,CloudDevelopment">
                 <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/layout.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/layout.js")" crossorigin="anonymous"></script>
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-server-tour.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-server-tour.js")" crossorigin="anonymous"></script>
             </environment>
             <environment exclude="Development,CloudDevelopment">
                 <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/layout.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/layout.min.js")" crossorigin="anonymous"></script>
+                <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-server-tour.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-server-tour.min.js")" crossorigin="anonymous"></script>
             </environment>
         }
 
@@ -260,6 +290,10 @@
             <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/layout-mobile.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/layout-mobile.min.js")" crossorigin="anonymous"></script>
         </environment>
     }
+
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-dropdowntree.min.js"></script>
+
+
     <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
         $.extend(ej, Syncfusion);
         var baseUrl = "@globalAppSettings.SystemSettings.BaseUrl";
@@ -443,7 +477,7 @@
                     <span id="message-content"></span>
                 </div>
                 <div class="close-div">
-                    <span id="close-content">[[[Close]]]</span>
+                    <span id="close-content" class="su su-close"></span>
                 </div>
             </div>
             <div id="mobile-alert">
@@ -515,7 +549,11 @@
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/dashboard-feedback.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/dashboard-feedback.min.css")" crossorigin="anonymous" />
         </environment>
     }
-
+    @if (!isMobile)
+    {
+        @await Html.PartialAsync("~/Views/Items/_CreateItemMenu.cshtml", ViewBag.ItemAddOptions != null ? ViewBag.ItemAddOptions as Dictionary<ItemType, bool> : new Dictionary<ItemType, bool>())
+        @await Html.PartialAsync("~/Views/Notification/_UserNotificationPartial.cshtml")
+    }
     @*@Html.Partial("~/Views/DataSourceDesigner/_Connection.cshtml")*@
     @if ((absolutePath == "/" ||
                                absolutePath == Url.Content("~/") ||
@@ -530,10 +568,6 @@
         await
         Html.RenderPartialAsync("~/Views/Items/_ItemAddOptions.cshtml", ViewBag.ItemAddOptions as Dictionary<ItemType, bool>, new ViewDataDictionary(ViewData) { { "IsDashboardsPage", requestUrl.IndexOf("/reports", StringComparison.CurrentCultureIgnoreCase) > 0 } });
     }
-    @if (!isMobile)
-    {
-        @await Html.PartialAsync("~/Views/Items/_CreateItemMenu.cshtml", ViewBag.ItemAddOptions != null ? ViewBag.ItemAddOptions as Dictionary<ItemType, bool> : new Dictionary<ItemType, bool>())
-        @await Html.PartialAsync("~/Views/Notification/_UserNotificationPartial.cshtml")
-    }
+    
 </body>
 </html>

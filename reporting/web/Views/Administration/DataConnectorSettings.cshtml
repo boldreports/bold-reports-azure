@@ -22,6 +22,7 @@
     <meta name="designer_service:url" content="@reportServiceUrl" />
     <meta name="designer_service:access_token" content="@ViewBag.AccessToken" />
     <meta name="designer_service:isazureapp" content="@isAzureApplication.ToString().ToLower()" />
+    <meta name="designer_service:iscloudmode" content=@Json.Serialize(@ViewBag.IsCloudMode) />
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />

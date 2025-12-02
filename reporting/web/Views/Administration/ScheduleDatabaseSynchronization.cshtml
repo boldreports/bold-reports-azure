@@ -7,13 +7,18 @@
     ViewBag.MessageBox = false;
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DbUsersSyncSchedule);
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 
 @section styles{
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedule-synchronization.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedule-synchronization.css")" crossorigin="anonymous" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" type="text/css" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
+        <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedule-synchronization.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedule-synchronization.min.css")" crossorigin="anonymous" />
     </environment>
 }
@@ -30,6 +35,7 @@
         var getScheduleInfoUrl = "@Url.Action("GetDatabaseScheduleInfo", "Administration")";
         var getRecurrenceTypeUrl = "@Url.Action("GetRecurrenceType", "Administration")";
         var updateAdScheduleUrl = "@Url.Action("UpdateDatabaseSchedule", "Administration")";
+        var isSandbox = @Json.Serialize(isSandbox);
     </script>
 }
 
@@ -82,15 +88,15 @@
                         </div>
                         <div class="col-sm-10 col-10">
                             <div class="d-flex flex-wrap align-items-center">
-                                <div class="d-flex align-items-center col-sm-2 col-xs-2 no-padding no-margin">
+                                <div class="d-flex align-items-center col-sm-2 col--2 no-padding no-margin">
                                     @Html.RadioButton("daily-recurrence-type", " ", new { @class = "css-radio", @checked = "checked", id = "daily-every-x-days" })
                                     @Html.Label("daily-every-x-days", "[[[Every]]]", new { @class = "app-radio-label normal-font ms-2 me-2" })
-                                    <div class="me-2" style="width: 50px;">
+                                    <div class="me-2" style="width: 200px;">
                                         @Html.TextBox("every-x-days", null, new { @class = "form-control numeric-text-box text-center" })
                                     </div>
                                     @Html.Label("daily-week-days", "[[[day(s)]]]", new { @class = "app-textbox-label" })
                                 </div>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center col-2 ms-5">
                                     @Html.RadioButton("daily-recurrence-type", " ", new { @class = "css-radio", id = "daily-week-days" })
                                     @Html.Label("daily-week-days", "[[[Every weekday]]]", new { @class = "app-radio-label normal-font ms-2" })
                                 </div>

@@ -2159,10 +2159,10 @@
                         </GroupExpressions>
                         <Filters>
                           <Filter>
-                            <FilterExpression>=Fields!Item_Return_Reason_Name.Value</FilterExpression>
+                            <FilterExpression>=IsNothing(Fields!Item_Return_Reason_Name.Value)</FilterExpression>
                             <Operator>NotEqual</Operator>
                             <FilterValues>
-                              <FilterValue></FilterValue>
+                              <FilterValue DataType="Boolean">true</FilterValue>
                             </FilterValues>
                           </Filter>
                         </Filters>

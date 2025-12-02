@@ -3,14 +3,8 @@
     document.getElementById("schema-name").ej2_instances[0].value = defaultValues.DefaultSchemaForMSSQL;
 
     if (!isSiteCreation) {
-        $("#table-prefix-name").show();
-        $("#table-prefix-ums").show();
         document.getElementById("ums-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
         document.getElementById("txt-ums-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
-    }
-    else {
-        $("#table-prefix-name").hide();
-        $("#table-prefix-ums").hide();
     }
 
 
@@ -132,13 +126,6 @@
         highlight: function (element) {
             $(element).closest('div').addClass("e-error");
             $(element).closest(".e-outline").siblings(".startup-validation").show();
-            if (element.id === "txt-dbname") {
-                $(".database-error").html("").hide();
-            }
-
-            if (element.id === "database-name") {
-                $(".database-error").html("").hide();
-            }
         },
         unhighlight: function (element) {
             $(element).closest('div').removeClass('e-error');
@@ -391,15 +378,23 @@ function databaseConfiguration(clickedButton) {
         window.schemaName = $("#schema-name").val();
         window.tenantPrefix = isAdvancedTab ? (isNewDatabaseTab ? $("#server-prefix-name").val() : $("#server-table-prefix").val()) : (isNewDatabaseTab ? $("#txt-server-prefix").val() : $("#tenant-table-prefix").val());
 
+        if (window.tenantPrefix !== "" && window.tenantPrefix !== undefined) {
+            if (getTenantType() == "BoldBIOnPremise") {
+                window.boldbiPrefix = window.tenantPrefix;
+            }
+            else {
+                window.boldreportsPrefix = window.tenantPrefix;
+            }
+        }
+
         if (!isSiteCreation) {
             window.prefix = isNewDatabaseTab ? $("#txt-ums-prefix").val() : $("#ums-table-prefix").val();
             if (window.tenantPrefix === "") {
-                if (isBoldBI) {
-                    window.tenantPrefix = defaultValues.DefaultPrefixForBI;
+                if (getTenantType() == "BoldBIOnPremise") {
+                    window.boldbiPrefix = defaultValues.DefaultPrefixForBI;
                 }
                 else {
-                    window.tenantPrefix = defaultValues.DefaultPrefixForReports;
-
+                    window.boldreportsPrefix = defaultValues.DefaultPrefixForReports;
                 }
             }
             if (window.prefix === "") {
@@ -408,12 +403,11 @@ function databaseConfiguration(clickedButton) {
         }
         else {
             if (window.tenantPrefix === "") {
-                if (!isBoldReportsTenantType()) {
-                    window.tenantPrefix = defaultValues.DefaultPrefixForBI;
+                if (getTenantType() == "BoldBIOnPremise") {
+                    window.boldbiPrefix = defaultValues.DefaultPrefixForBI;
                 }
                 else {
-                    window.tenantPrefix = defaultValues.DefaultPrefixForReports;
-
+                    window.boldreportsPrefix = defaultValues.DefaultPrefixForReports;
                 }
             }
         }
@@ -436,7 +430,7 @@ function databaseConfiguration(clickedButton) {
         }
         doAjaxPost("POST", connectDatabaseUrl,
             {
-                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabaseTab, TenantType: getTenantType(), additionalParameters: window.additionalParameters,ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix }),
+                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, IsNewDatabase: isNewDatabaseTab, TenantType: getTenantType(), additionalParameters: window.additionalParameters, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TablePrefix: { BoldBI: window.boldbiPrefix, BoldReports: window.boldreportsPrefix } }),
                 isSimpleMode: isSimpleModeSelction()
             },
             function (result) {
@@ -448,7 +442,7 @@ function databaseConfiguration(clickedButton) {
                     if (isNewDatabaseTab) {
                         doAjaxPost("POST", generateDatabaseUrl,
                             {
-                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true, additionalParameters: window.additionalParameters, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix }),
+                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, sslEnabled: window.sslEnabled, IsNewDatabase: true, additionalParameters: window.additionalParameters, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TablePrefix: { BoldBI: window.boldbiPrefix, BoldReports: window.boldreportsPrefix } }),
                                 isSimpleMode: isSimpleModeSelction()
                             },
                             function (result) {
@@ -459,7 +453,6 @@ function databaseConfiguration(clickedButton) {
                                 else {
                                     $("#db-config-submit").prop("disabled", false);
                                     errorContent = result.Data.value;
-                                    $(".database-error").html(databaseValidationMessage).show();
                                 }
                                 changeFooterPostion();
                             }
@@ -468,7 +461,7 @@ function databaseConfiguration(clickedButton) {
                     else {
                         doAjaxPost("POST", checkTableExistsUrl,
                             {
-                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: tenantype, IsNewDatabase: false, additionalParameters: window.additionalParameters, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix }),
+                                data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, MaintenanceDatabase: window.maintenanceDb, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, ServerDatabaseName: window.serverDatabaseName, IntermediateDatabaseName: window.intermediateDatabaseName, sslEnabled: window.sslEnabled, TenantType: tenantype, IsNewDatabase: false, additionalParameters: window.additionalParameters, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TablePrefix: { BoldBI: window.boldbiPrefix, BoldReports: window.boldreportsPrefix } }),
                                 isSimpleMode: isSimpleModeSelction()
                             },
                             function (result) {
@@ -485,12 +478,11 @@ function databaseConfiguration(clickedButton) {
                                     var id = result.Data.isServerError ? "#server-existing-dbname" : "#database-name";
                                     $(id).closest(".txt-holder").addClass("has-error");
                                     $(id).parent().find(">.startup-validation").html(databaseValidationMessage).show();
-                                    $(".database-error").html(databaseValidationMessage).show();
                                     $("#sql-existing-db-submit").prop("disabled", false);
                                 } else if (!result.Data.key && items.length <= 0) {
                                     doAjaxPost("POST", generateSQLTablesUrl,
                                         {
-                                            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, IsNewDatabase: false, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TenantPrefix: window.tenantPrefix, additionalParameters: window.additionalParameters })
+                                            data: JSON.stringify({ ServerType: databaseType, serverName: window.serverName, Port: window.portNumber, userName: window.login, password: window.password, IsWindowsAuthentication: window.IsWindowsAuthentication, databaseName: window.databaseName, IsNewDatabase: false, ServiceInstance: window.ServiceInstance, SchemaName: window.schemaName, Prefix: window.prefix, TablePrefix: { BoldBI: window.boldbiPrefix, BoldReports: window.boldreportsPrefix }, additionalParameters: window.additionalParameters })
                                         },
                                         function (result) {
                                             hideWaitingPopup('startup-waiting-element');
@@ -501,7 +493,6 @@ function databaseConfiguration(clickedButton) {
                                                 $("#sql-existing-db-submit").prop("disabled", false);
                                                 $("#db_loader").hide();
                                                 errorContent = result.Data.value;
-                                                $(".database-error").html(databaseValidationMessage).show();
                                             }
                                         }
                                     );
@@ -513,7 +504,6 @@ function databaseConfiguration(clickedButton) {
                                     $("#db_config_generate, #db-config-submit").hide();
                                     $("#sql-existing-db-submit").show().prop("disabled", false);
                                     errorContent = result.Data.value;
-                                    $(".database-error").html(databaseValidationMessage).show();
                                 }
                             });
                     }
@@ -532,8 +522,9 @@ function databaseConfiguration(clickedButton) {
                     }
 
                     errorContent = result.Data.value;
-                    $("#additional-parameter").closest('div').addClass("e-error");
-                    $("#additional-parameter").closest(".e-outline").siblings(".startup-validation").html(databaseValidationMessage).show();
+                    messageBox("su-login-error", window.Server.App.LocalizationContent.DatabaseError, errorContent, "success", function () {
+                        onCloseMessageBox();
+                    });
                 }
             }
         );
@@ -687,27 +678,6 @@ function onDatbaseChange(args) {
     else if (isBoldReportsTenantType && isSiteCreation) {
         $("#admin-nav").hide();
     }
-    if (isSiteCreation) {
-        if (!isBoldReportsTenantType() && (IsBiPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-
-        if (isBoldReportsTenantType() && (IsReportsPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-
-        $("#table-prefix-name").hide();
-        $("#table-prefix-ums").hide();
-    }
-    var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-    if (isAdvancedTab) {
-        $("#simple-server-prefix").hide();
-        $("#simple-tenant-prefix").hide();
-    }
-    else {
-        $("#simple-server-prefix").show();
-        $("#simple-tenant-prefix").show();
-    }
 
     showDataStore();
     switch (checkedVal) {
@@ -727,50 +697,24 @@ function onDatbaseChange(args) {
             var databaseSelectionDiv = document.getElementById('database-new-or-existing');
             databaseSelectionDiv.classList.remove('visually-hidden');
             databaseSelectionDiv.classList.add('d-block');
-            if (!isSiteCreation) {
-                $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-            }
             
             if (actionType.toLowerCase() != "edit") {
                 document.getElementById("schema-name").ej2_instances[0].value = defaultValues.DefaultSchemaForMSSQL;
 
                 if (isSiteCreation) {
-                    $("#table-prefix-name").hide();
-                    $("#table-prefix-ums").hide();
                     if (!isBoldReportsTenantType()) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
-                        $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
                     }
                     else {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                        $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block"); 
-                    }
-
-                    if (isAdvancedTab) {
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $('.server-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
                     }
                 }
 
                 if (!isSiteCreation) {
-                    $("#table-prefix-name").show();
-                    $("#table-prefix-ums").show();
                     document.getElementById("ums-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
                     document.getElementById("txt-ums-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
-                    if (isAdvancedTab) {
-                        $("#simple-server-prefix").hide();
-                        $("#simple-tenant-prefix").hide();
-                        $('.new-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $(".new-id-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-                        $(".server-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-                    }
 
                     if (isBoldBI) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
@@ -824,7 +768,6 @@ function onDatbaseChange(args) {
             $("#move-to-next,.sqlce-content").removeClass("d-block").addClass("d-none");
             $(".content-display").hide();
             $(".show-sql-content").slideDown("slow");
-            $("#input-schema").hide();
             var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
             document.getElementById("schema-name").ej2_instances[0].value = "";
 
@@ -835,8 +778,6 @@ function onDatbaseChange(args) {
             if (actionType.toLowerCase() != "edit") {
 
                 if (isSiteCreation) {
-                    $("#table-prefix-name").hide();
-                    $("#table-prefix-ums").hide();
                     if (!isBoldReportsTenantType()) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
@@ -845,28 +786,9 @@ function onDatbaseChange(args) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
                     }
-
-                    if (isAdvancedTab) {
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $('.server-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
                 }
 
                 if (!isSiteCreation) {
-                    $("#table-prefix-name").show();
-                    $("#table-prefix-ums").show();
-                    if (isAdvancedTab) {
-                        $("#simple-server-prefix").hide();
-                        $("#simple-tenant-prefix").hide();
-                        $('.new-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $(".new-id-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-                        $(".server-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-                    }
                     document.getElementById("ums-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
                     document.getElementById("txt-ums-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
 
@@ -895,7 +817,6 @@ function onDatbaseChange(args) {
             }
             $("div.placeholder").remove();
             $(".note-additional-parameter a").attr("href", mySQLParameter);
-            $(".database-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
             var link = document.getElementById("advanced-tab");
             
             link.classList.remove("disable-adv");
@@ -917,7 +838,6 @@ function onDatbaseChange(args) {
             $("#move-to-next,.sqlce-content").removeClass("d-block").addClass("d-none");
             $(".content-display").hide();
             $(".show-sql-content").slideDown("slow");
-            $("#input-schema").hide();
             var sslDiv = document.getElementById("ssl-block");
             var databaseSelectionDiv = document.getElementById('database-new-or-existing');
             $("#existing-db").prop("checked", true).trigger("change");
@@ -943,15 +863,11 @@ function onDatbaseChange(args) {
             }
             $("div.placeholder").remove();
             $(".note-additional-parameter a").attr("href", oracleParameter);
-            $('.new-id-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-            $('.server-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
             $('.exist-database-name').removeClass("d-block").addClass("visually-hidden");
 
             if (actionType.toLowerCase() != "edit") {
 
                 if (isSiteCreation) {
-                    $("#table-prefix-name").hide();
-                    $("#table-prefix-ums").hide();
                     if (!isBoldReportsTenantType()) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
@@ -963,8 +879,6 @@ function onDatbaseChange(args) {
                 }
 
                 if (!isSiteCreation) {
-                    $("#table-prefix-name").show();
-                    $("#table-prefix-ums").show();
                     document.getElementById("ums-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
                     document.getElementById("txt-ums-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
 
@@ -985,34 +899,7 @@ function onDatbaseChange(args) {
                 $(".db-prefix-info").html(window.Server.App.LocalizationContent.PrefixInfo);
             }
 
-            var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-                if (isAdvancedTab) {
-                    if (!isSiteCreation) {
-                        $('.old-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $('.old-id-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                    }
-
-                    $(".advance-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-                    $(".ser-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-                    $('.simple-exist-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                }
-                else {
-                    if (!isSiteCreation) {
-                        $('.old-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $('.old-id-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                    }
-
-                    $(".ser-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-                    $('.advance-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                    $('.simple-exist-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-            }
-            $(".database-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
             var link = document.getElementById("advanced-tab");
-
             DomResize();
             break;
         case "postgresql":
@@ -1029,15 +916,6 @@ function onDatbaseChange(args) {
             var databaseSelectionDiv = document.getElementById('database-new-or-existing');
             databaseSelectionDiv.classList.remove('visually-hidden');
             databaseSelectionDiv.classList.add('d-block');
-            $("#input-schema").show();
-            if (!isSiteCreation) {
-                $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                $('.server-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block"); 
-            }
-            else {
-                $('.database-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                $('.server-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-            }
 
             var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
 
@@ -1045,40 +923,17 @@ function onDatbaseChange(args) {
                 document.getElementById("schema-name").ej2_instances[0].value = defaultValues.DefaultSchemaForPostgres;
 
                 if (isSiteCreation) {
-                    $("#table-prefix-name").hide();
-                    $("#table-prefix-ums").hide();
                     if (!isBoldReportsTenantType()) {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForBI;
-                        $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                        $('.server-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
                     }
                     else {
                         document.getElementById("server-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
                         document.getElementById("server-prefix-name").ej2_instances[0].value = defaultValues.DefaultPrefixForReports;
-                        $('.database-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                        $('.server-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-
-                    if (isAdvancedTab) {
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
                     }
                 }
 
                 if (!isSiteCreation) {
-                    $("#table-prefix-name").show();
-                    $("#table-prefix-ums").show();
-                    if (isAdvancedTab) {
-                        $("#simple-server-prefix").hide();
-                        $("#simple-tenant-prefix").hide();
-                        $('.server-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-                        $('.new-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                        $('.advance-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-                    else {
-                        $('.new-id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-                    }
-
                     document.getElementById("ums-table-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
                     document.getElementById("txt-ums-prefix").ej2_instances[0].value = defaultValues.DefaultPrefixForUMS;
 
@@ -1126,34 +981,10 @@ function onDatbaseChange(args) {
     if (getRadioButtonValue("databaseType") == "1" || checkedVal === "oracle") {
         $("#sql-existing-db-submit, .sql-server-existing-db").show();
         $(".database-name, #db-config-submit").hide();
-        var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-        if (isAdvancedTab) {
-            $("#simple-server-prefix").hide();
-            $("#simple-tenant-prefix").hide();
-        }
-        else {
-            $("#simple-server-prefix").show();
-            $("#simple-tenant-prefix").show();
-        }
     }
     else {
         $("#sql-existing-db-submit, .sql-server-existing-db").hide();
         $(".database-name, #db-config-submit").show();
-        if (isSiteCreation) {
-            $("#table-prefix-name").hide();
-            $("#table-prefix-ums").hide();
-        }
-        else {
-            var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-            if (isAdvancedTab) {
-                $("#simple-server-prefix").hide();
-                $("#simple-tenant-prefix").hide();
-            }
-            else {
-                $("#simple-server-prefix").show();
-                $("#simple-tenant-prefix").show();
-            }
-        }
     }
 
     if (actionType.toLowerCase() != "edit") {
@@ -1161,10 +992,6 @@ function onDatbaseChange(args) {
         document.getElementById("txt-password-db").ej2_instances[0].value = null;
         document.getElementById("txt-servername").ej2_instances[0].value = null;
         document.getElementById("additional-parameter").ej2_instances[0].value = null;
-    }
-    else {
-        $("#table-prefix-name").hide();
-        $("#table-prefix-ums").hide();
     }
 
     if (typeof actionType != 'undefined' && actionType.toLowerCase() != "edit") {
@@ -1182,24 +1009,11 @@ function onDatbaseChange(args) {
                 $('#txt-portnumber-info').html(window.Server.App.LocalizationContent.OraclePortInfo);
                 document.getElementById("txt-portnumber").ej2_instances[0].value = "1521";
                 document.getElementById("txt-servicename").ej2_instances[0].value = "Orcl";
-                $('.database-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
                 break;
         }
     }
 
     if (isSiteCreation) {
-        $(".id-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-    }
-
-    if (isSiteCreation) {
-        if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
-        if (isBoldReportsTenantType() && (!IsReportsPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
         if (!(configurationModeType !== undefined && configurationModeType === "0")) {
             var obj = document.getElementById("database-type");
             var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
@@ -1219,42 +1033,12 @@ function onDatbaseChange(args) {
                 itemsList[3].style.display = "none";
             }
         }
-
-        var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-        if (configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-        
-        if (isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
     }
     else {
-        if (!IsBiPrefixSchema) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
-        if (IsReportsPrefixSchema && !isBoldBI) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-        
         var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-        if (configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-        
         if (!IsBiPrefixSchema && isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
         {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
             $("#server-database-name").removeClass('d-block').addClass('d-none');
-        }
-
-        if (IsReportsPrefixSchema && !isBoldBI && isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
         }
     }
 
@@ -1291,129 +1075,48 @@ function onWindowsChange(args) {
 function onDbSelectChange() {
     removeError();
     var configurationModeType = getRadioButtonValue('ConfigurationMode');
-    if (isSiteCreation) {
-        if (!isBoldReportsTenantType() && (IsBiPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-
-        if (isBoldReportsTenantType() && (IsReportsPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-        
-        if (configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-    }
-
     if ($("input[name='databaseType']:checked").val() === "1") {
         $(".sql-server-existing-db, #sql-existing-db-submit").show();
         $(".database-name, #db-config-submit").hide();
-        if (isSiteCreation) {
-            var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-            if (!isAdvancedTab) {
-                $("#simple-tenant-prefix").show();
-            }
-        }
-
-        if (!isSiteCreation) {
-            $('.id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-        }
-        else {
-            $('.id-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-        }
-
         var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
         if (isAdvancedTab) {
             $(".new-smp-db").removeClass("d-block").addClass("visually-hidden");
             $(".old-db").removeClass("visually-hidden").addClass("d-block");
-            $(".simple-tab").removeClass("d-block").addClass("visually-hidden");
         }
         else
         {
             $(".new-smp-db").removeClass("d-block").addClass("visually-hidden");
             $(".old-db").removeClass("visually-hidden").addClass("d-block");
-            $(".advance-tab").removeClass("d-block").addClass("visually-hidden");
 
-        }
-
-        if (!isSiteCreation) {
-            $(".new-id-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-            $(".old-id-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-        }
-
-        if (!isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
         }
         
         if (isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
         {
             $("#sql-server-database-name").removeClass('d-block').addClass('d-none');
             $("#sql-datastore-database-name").removeClass('d-block').addClass('d-none');
-            $(".schema-prefix-hide").addClass("d-block").removeClass("d-none");
         }
     } else {
         $(".sql-server-existing-db, #sql-existing-db-submit").hide();
         $(".database-name, #db-config-submit").show();
-        if (isSiteCreation) {
-            $("#table-prefix-name").hide();
-            $("#table-prefix-ums").hide();
-        }
-        else {
-            var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-            if (isAdvancedTab) {
-                $("#simple-server-prefix").hide();
-                $("#simple-tenant-prefix").hide();
-            }
-            else {
-                $("#simple-server-prefix").show();
-                $("#simple-tenant-prefix").show();
-            }
-        }
-
         var isAdvancedTab = window.getComputedStyle(document.getElementById("advanced_tab_db_name")).display !== "none";
-        if (!isSiteCreation) {
-            $('.id-schema-prefix-hide').removeClass("visually-hidden").addClass("d-block");
-        }
-        else {
-            $('.id-schema-prefix-hide').removeClass("d-block").addClass("visually-hidden");
-        }
-
         if (isAdvancedTab) {
             $(".old-db").removeClass("d-block").addClass("visually-hidden");
             $(".new-smp-db").removeClass("visually-hidden").addClass("d-block");
-            $(".simple-tab").removeClass("d-block").addClass("visually-hidden");
         }
         else
         {
             $(".old-db").removeClass("d-block").addClass("visually-hidden");
             $(".new-smp-db").removeClass("visually-hidden").addClass("d-block");
-            $(".advance-tab").removeClass("d-block").addClass("visually-hidden");
-        }
-
-        if (!isSiteCreation) {
-            $(".new-id-schema-prefix-hide").removeClass("visually-hidden").addClass("d-block");
-            $(".old-id-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-        }
-        
-        if (configurationModeType !== undefined && configurationModeType === "0")
-        {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
         }
 
         if (isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
         {
             $("#sql-server-database-name").removeClass('d-block').addClass('d-none');
             $("#sql-datastore-database-name").removeClass('d-block').addClass('d-none');
-            $(".schema-prefix-hide").addClass("d-block").removeClass("d-none");
             $("#server-database-name").removeClass('d-block').addClass('d-none');
         }
     }
 
-    if (isSiteCreation) {
-        $(".id-schema-prefix-hide").removeClass("d-block").addClass("visually-hidden");
-    }
     changeFooterPostion();
     DomResize();
     if (!isBoldBI) {
@@ -1421,14 +1124,6 @@ function onDbSelectChange() {
     }
 
     if (isSiteCreation) {
-        if (!isBoldReportsTenantType() && (!IsBiPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
-        if (isBoldReportsTenantType() && (!IsReportsPrefixSchema)) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
         if (!(configurationModeType !== undefined && configurationModeType === "0")) {
             var obj = document.getElementById("database-type");
             var itemsList = obj.ej2_instances[0].list.querySelectorAll('.e-list-item');
@@ -1444,20 +1139,6 @@ function onDbSelectChange() {
                 itemsList[3].style.display = "";
             }
         }
-    }
-    else {
-        if (!IsBiPrefixSchema) {
-            $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
-        }
-
-        if (IsReportsPrefixSchema && !isBoldBI) {
-            $(".schema-prefix-hide").removeClass("d-none").addClass("d-block");
-        }
-    }
-    
-    if (!isAdvancedTab && configurationModeType !== undefined && configurationModeType === "0")
-    {
-        $(".schema-prefix-hide").removeClass("d-block").addClass("d-none");
     }
 
     if (configurationModeType !== undefined && configurationModeType === "0")
@@ -1494,7 +1175,6 @@ function showDataStore() {
 function removeError() {
     $(".e-error").removeClass("e-error");
     $(".validation-txt-errors").hide();
-    $(".database-error").hide();
 }
 
 $(document).on("change", "#existing-db", function () {

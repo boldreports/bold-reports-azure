@@ -1,4 +1,4 @@
-﻿@using System.Globalization;
+@using System.Globalization;
 ﻿@using System.Runtime.InteropServices;
 @using Syncfusion.Server.Base.Helpers
 
@@ -131,6 +131,7 @@
         var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
         var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var isCloudMode = @Json.Serialize(@ViewBag.IsCloudMode);
         var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
         document.addEventListener("DOMContentLoaded", function () {
             var faviconLinkElement = document.getElementById("favicon-link");

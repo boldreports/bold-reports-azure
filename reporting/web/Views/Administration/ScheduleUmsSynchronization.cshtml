@@ -5,6 +5,7 @@
     ViewBag.Title = globalAppSettings.SystemSettings.OrganizationName + " - [[[Schedule Synchronization Page]]]";
     ViewBag.MessageBox = false;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 @section styles{
     <environment include="Development,CloudDevelopment">
@@ -26,6 +27,7 @@
         var getScheduleInfoUrl = "@Url.Action("GetUmsScheduleInfo", "Administration")";
         var getRecurrenceTypeUrl = "@Url.Action("GetRecurrenceType", "Administration")";
         var updateAdScheduleUrl = "@Url.Action("UpdateUmsSchedule", "Administration")";
+        var isSandbox = @Json.Serialize(isSandbox);
     </script>
 }
 @section MainSection{

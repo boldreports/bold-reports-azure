@@ -33,7 +33,9 @@
 
 <div id="create-presentation-popup" class="no-padding" style="display:none">
     <div id="create-presentation-div">
-        @*@{Html.RenderPartial("~/Views/Slideshow/_CreateSlideshow.cshtml");}*@
+        @{
+            await Html.RenderPartialAsync("~/Views/Slideshow/_CreateSlideshow.cshtml");
+        }
     </div>
 </div>
 

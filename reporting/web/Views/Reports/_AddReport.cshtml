@@ -1,4 +1,4 @@
-@using Syncfusion.Server.Base.Helpers
+﻿@using Syncfusion.Server.Base.Helpers
 
 <!DOCTYPE html>
 @{ 
@@ -8,7 +8,7 @@
     var canCreateCategory = ViewData["CanCreateCategory"] != null ? Convert.ToBoolean(ViewData["CanCreateCategory"]) : false;
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
-}
+    }
 <html class="report-server">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,6 +16,7 @@
     <title>
         [[[Add New Report]]]
     </title>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-dropdowntree.min.js"></script>
     <script nonce="@Context.Items["ScriptNonce"]">
             var isItemExistinCategoryUrl = "@Url.Action("IsItemExistInSameCategory", "reports")";
             var editreportUrl = "@Url.Action("editreport", "reports")";
@@ -24,12 +25,15 @@
             var deletetemporaryrdlreportUrl = "@Url.Action("deletetemporaryrdlreport", "reports")";
             var reportselectdatasourceUrl = "@Url.Action("reportselectdatasource", "reports")";
             var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
+            var getCategories = "@Url.Action("RefreshCategoryList", "Reports")";
             var reportDesignerUrl = "@Url.Action("ReportDesigner", "Reports")";
             var canCreateCategory = "@canCreateCategory";
             var tagList = @Json.Serialize(ViewBag.Tag);
-            var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
+            var addCategoryUrl = "@Url.Action("addcategory", "category")";
+            var addSubCategoryUrl = "@Url.Action("addSubCategory", "category")";
+var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
             var dashboardUrl = "@Url.Action("Reports", "Reports")";
-
+            var categoriesList = @Json.Serialize(ViewBag.CategoryDetails);
             function load() {
                 window.parent.parent.$("#report_popup_wrapper").ejWaitingPopup("hide");
                 $('[data-bs-toggle="tooltip"]').tooltip();
@@ -42,6 +46,15 @@
                 }
             }
     </script>
+    <link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" type="text/css" />
+
+    <!-- Essential JS 2 Dialog's global script -->
+    <script src="https://cdn.syncfusion.com/ej2/ej2-base/dist/global/ej2-base.min.js" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/ej2-buttons/dist/global/ej2-buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/ej2-popups/dist/global/ej2-popups.min.js" type="text/javascript"></script>
+
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
@@ -87,35 +100,21 @@
                         </td>
                         <td class="col-12">
                             <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
-                                    <select id="selected_category"
-                                            data-live-search="true"
-                                            title="[[[Select category]]]"
-                                            name="categoryId"
-                                            class="selectpicker form-control bottom-margin30"
-                                            data-none-results-text="[[[No results match]]]"
-                                            data-size="5"
-                                            style="width:100%; margin-bottom:15px;">
-                                        <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
-                                        @for (var item = 0; item < Model.Count; item++)
-                                        {
-                                            <option value="@Model[item].Id">@Model[item].Name</option>
-                                        }
-                                    </select>
+                                <div style="width:565px">
+                                    <input id="CategoryList" class='form-control bottom-margin30 text' />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                </div>
+                                @if (Model.Count == 0)
+                                {
+                                    <span id="emtpyCategoryList" class="validation-messages">* [[[Please create a category to group the report]]]</span>
+                                }
                                 @if (canCreateCategory)
                                 {
-                                    <div class="input-group-btn no-padding" style="vertical-align: top; margin-left: auto" id="add-new-category">
-                                        <button class="btn btn-default"
-                                                type="button"
-                                                data-bs-toggle="tooltip"
-                                                aria-label="Add new Category"
-                                                title="[[[Add new Category]]]">
-                                            <span class="su-add"></span>
-                                        </button>
-                                    </div>
-                                }                                
+                                    <span class="input-group-btn no-padding" style="vertical-align: top" id="add-new-category" data-target=".add-report-form #CategoryList">
+                                        <button class="btn btn-default" style="padding:4px 10px; height:34px" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add"></span></button>
+                                    </span>
+                                }
                             </div>
-                            <span id="CategoryMessage" class="validation-messages d-none">[[[Please select category]]]</span>
-
                             @if (Model.Count == 0)
                             {
                                 <span id="emtpyCategoryList" class="validation-messages">* [[[Please create a category to group the report]]]</span>
@@ -136,7 +135,7 @@
                     <tr>
                         <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
                         <td class="col-12">
-                            <textarea style="resize: none;" id='file-description' class='form-control bottom-margin35' maxlength="1024"></textarea>
+                            <textarea style="resize: none;" id='file-description' class='form-control bottom-margin35 text' maxlength="1024"></textarea>
                             <span class="notification help-text">
                                 <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                             </span>
@@ -215,7 +214,8 @@
                                 </td>
                                 <td class="col-12">
                                     <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
-                                        <select id="report-category-select"
+                                         <input id="report-category-select" class='form-control bottom-margin30 text' />
+                                        @* <select id="report-category-select"
                                                 data-live-search="true"
                                                 title="[[[Select category]]]"
                                                 name="categoryId"
@@ -224,10 +224,10 @@
                                                 data-size="5"
                                                 style="width:100%; margin-bottom:15px;">
                                             <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
-                                        </select>
+                                        </select> *@
                                         @if (canCreateCategory)
                                         {
-                                            <div class="input-group-btn no-padding" style="vertical-align: top; margin-left: auto" id="add-new-category-advanced">
+                                            <div class="input-group-btn no-padding" style="vertical-align: top; margin-left: auto" id="add-new-category-advanced" data-target="#report-category-select">
                                                 <button class="btn btn-default"
                                                         type="button"
                                                         data-bs-toggle="tooltip"
@@ -254,7 +254,7 @@
                             <tr>
                                 <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
                                 <td class="col-12">
-                                    <textarea style="resize: none;" id='report-description-input' class='form-control bottom-margin35' maxlength="1024"></textarea>
+                                    <textarea style="resize: none;" id='report-description-input' class='form-control bottom-margin35 text' maxlength="1024"></textarea>
                                     <span class="notification help-text">
                                         <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                                     </span>
@@ -314,5 +314,46 @@
             </div>
         </div>
     </div>
+    <script nonce="@Model">
+        $(document).ready(function() {
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
+            var className = $(".add-report-form");
+            if (categories.length < 1) {
+            $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+            }
+            else {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+            }
+
+            var dropDownTreeInstance = document.querySelector('#CategoryList');
+            if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                dropDownTreeInstance.ej2_instances[0].destroy();
+            }
+            var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                select: function () { addReportCategoryValueChange(className); },
+                placeholder: window.Server.App.LocalizationContent.SelectCategory,
+                destroyPopupOnHide: false,
+                showClearButton: false,
+                allowFiltering: true,
+                popupWidth: '614px',
+            });
+            DropDownTreeObj.appendTo("#CategoryList");
+            window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+            function addReportCategoryValueChange(className) {
+            var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+            var selectedElement = $(".e-list-item[aria-selected='true']");
+            var levels = parseInt(selectedElement.attr("aria-level"));
+            var selectedItemsText = [];
+            for (var i = 1; i < levels; i++) {
+                var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+                selectedItemsText.push(text);
+            }
+            selectedItemsText.push(dropDownTreeInstance.currentText)
+            var combinedText = selectedItemsText.join(' / ');
+            className.find("input.e-dropdowntree").val(combinedText);
+        }
+    </script>
 </body>
 </html>

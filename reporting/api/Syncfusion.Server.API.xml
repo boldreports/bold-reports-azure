@@ -636,6 +636,12 @@
             <param name="serverPath">Category path</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.AddSampleReportsByNameJson(Syncfusion.Server.Base.DataClasses.ApiSampleReportAdd)">
+            <summary> Add a new sample report to the server </summary>
+            <remarks> Users who have create access for reports, can add a new category to the server by providing respective category details in the request body. </remarks>
+            <param name="apiSampleReportAdd">Details about the sample report passed will be added to the server.</param>
+            <returns>The response is sent as ApiResponse object</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.PermissionController.GetUserPermission(System.Int32)">
             <summary>
             Return list of permissions of user
@@ -1255,6 +1261,13 @@
             
             </summary>
             <param name="apiScheduleRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.GetEnumDescription(System.Enum)">
+            <summary>
+            Checks whether the fields match the custom attribute properties
+            </summary>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.AddScheduleV5(Syncfusion.Server.Base.DataClasses.ApiScheduleRequestV5,System.Boolean,System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.ApiReportParameter})">

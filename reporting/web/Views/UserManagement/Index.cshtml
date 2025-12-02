@@ -19,6 +19,10 @@
     {
         userImport = customUI?.Profiles[0]?.UserImport != null ? customUI?.Profiles[0]?.UserImport[0] : new UserImport();
     }
+
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+    var systemUserEmail = ServerAppConfig.SystemUser;
+    var superAdminUserEmail = ServerAppConfig.Sandbox.Reports.AdminEmail;
 }
 
 @section scripts{
@@ -51,6 +55,9 @@
         var isEmailRequired = "@isEmailRequired";
         var isAdmin = @Json.Serialize(isAdmin);
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var isSandbox = @Json.Serialize(isSandbox);
+        var systemUserEmail = "@systemUserEmail";
+        var superAdminUserEmail = "@superAdminUserEmail";
     </script>
     @if (isSelfHosted)
     {
@@ -134,20 +141,50 @@
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
         <div class="user-hover-options" data-content="{{:Email}}">
-            <a href="#" class="add-user-to-group" title="[[[Assign Group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
-                <i class="su su-group-1"></i>
-            </a>
+            {{if Email == "@systemUserEmail"}}
+                <a href="#" class="add-user-to-group" title="[[[You cannot assign system user to any group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
+                    <i class="su su-group-1 disabled-icon-color"></i>
+                </a>
+            {{else}}
+                <a href="#" class="add-user-to-group" title="[[[Assign Group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
+                    <i class="su su-group-1"></i>
+                </a>
+            {{/if}}
+            {{if Email == "@systemUserEmail"}}
+            @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
+            {
+                <a href="#" class="prevent-default-action" title="[[[You cannot manage system user permissions]]]" data-toggle="tooltip">
+                    <i class="su su-manage-permission disabled-icon-color"></i>
+                </a>
+            }
+            {{else Email == "@superAdminUserEmail"}}
+            @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
+            {
+                <a href="#" class="prevent-default-action" title="[[[You cannot manage super admin user permissions]]]" data-toggle="tooltip">
+                    <i class="su su-manage-permission disabled-icon-color"></i>
+                </a>
+            }
+            {{else}}
             @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
             {
                 <a href="@Url.Action("userpermission", "permission")?userId={{:UserId}}" title="[[[Manage Permissions]]]" data-bs-toggle="tooltip">
                     <i class="su su-manage-permission"></i>
                 </a>
             }
+            {{/if}}
             <a href="@Url.Action("ViewProfile", "UserManagement")?id={{:UserId}}" title="[[[View]]]" data-bs-toggle="tooltip">
                 <i class="su su-eye"></i>
             </a>
             {{if Email == "@ViewBag.LoggedUser"}}
             <a href="#" class="prevent-default-action" title="[[[It's You]]]" data-bs-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                <i class="su su-delete disabled-icon-color"></i>
+            </a>
+            {{else Email == "@systemUserEmail"}}
+            <a href="#" class="prevent-default-action" title="[[[You cannot delete the system user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                <i class="su su-delete disabled-icon-color"></i>
+            </a>
+            {{else Email == "@superAdminUserEmail"}}
+            <a href="#" class="prevent-default-action" title="[[[You cannot delete the super admin user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
                 <i class="su su-delete disabled-icon-color"></i>
             </a>
             {{else IsAdmin && ~isAdmin() == false}}

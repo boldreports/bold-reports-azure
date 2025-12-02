@@ -6,6 +6,7 @@
     Layout = null;
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 <html class="report-server">
 <head>
@@ -18,6 +19,7 @@
     var updateScheduleUrl = "@Url.Action("UpdateSchedule", "scheduler")";
     var addProcessScheduleUrl = "@Url.Action("AddProcessOptionSchedule", "Reports")";
     var rootBaseUrl = '@Url.Content("~/")';
+    var isSandbox = @Json.Serialize(isSandbox);
     </script>
 
     <environment include="Development,CloudDevelopment">

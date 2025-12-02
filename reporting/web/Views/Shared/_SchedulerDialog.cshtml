@@ -14,6 +14,7 @@
 <html class="dashboard-server">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-dropdowntree.min.js"></script>
     <environment include="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleiframe.css")" crossorigin="anonymous" />
@@ -28,7 +29,8 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleemaileditor.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
-    <style>
+   
+        <style>
         body {
             background-color: white !important;
             padding: 0.5em 1em !important;
@@ -39,7 +41,7 @@
 </head>
 <body class="schedule-dialog">
     <script nonce="@Context.Items["ScriptNonce"]">
-        var manageLicenseUrl = "@(isSelfHosted ? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
+        var manageLicenseUrl = "@(isSelfHosted? globalAppSettings.SystemSettings.IDPUrl + "/" + ServerAppConfig.TenantManagementHostName + "/administration/license-settings" : Url.Action("LicenseSettings", "Administration"))";
         var contactUsUrl = "https://www.@(GlobalAppSettings.BrandingDomain)/contact";
     </script>
     <input type="hidden" data-item-type="dashboard" id="itemType" />
@@ -67,27 +69,26 @@
                         <span id="schedule-popup" class="su su-close"></span>
                     </a>
                 </div>
-                <div class="modal-body share-popup col-12" id="schedule-dialog">
-                    <div class="col-sm-12 col-12 no-margin no-padding schedule-popup-body">
-                        <div class="col-sm-12 col-12 no-padding">
+                <div class="modal-body share-popup col-xs-12" id="schedule-dialog">
+                    <div class="col-sm-12 col-xs-12 no-margin no-padding schedule-popup-body">
+                        <div class="col-sm-12 col-xs-12 no-padding">
                             <div class="d-flex align-items-start">
-                                <div class="col-sm-2 col-2 no-padding"><label>[[[Category ]]]<span class="mandatory">*</span></label></div>
-                                <div class="category-dropdown col-sm-4 col-4">
-                                    <select id="selected_category" data-live-search="true" title='[[[Select category]]]' name="categoryId" class="col-sm-4 col-4" data-size="5" data-none-results-text="[[[No results match]]]">
-                                        @if (ViewBag.CategoryId != null)
-                                        {
-                                            <option value="@ViewBag.CategoryId" selected="selected">@Context.Request.Query["categoryName"].ToString()</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="" selected="selected" class="hide-option" disabled="disabled"></option>
-                                        }
+                            <div class="col-sm-2 col-xs-2 no-padding align-center"><label>[[[Category ]]]<span class="mandatory">*</span></label></div>
+                            <div class="category-dropdown col-sm-4 col-xs-4">
 
-                                    </select>
-                                    <span id="category-message" class="ErrorMessage validate-error mt-2">[[[Please select category]]]</span>
-                                    <input type="hidden" id="category_change_validation" name="isCategoryChanged" value="false" />
-                                </div>
+                                @* <input id="schecule_category" style="width:230px; height:10px;" />
+                                <div id="category_change_validation" class="validation-message text"></div>
+                                
+                                @* <input id="selected_category" title='Select category' name="categoryId" class="col-sm-4 col-xs-4" />
+                                <span id="category-message" class="ErrorMessage validate-error">[[[Please select category]]]</span>
+                                <input type="hidden" id="category_change_validation" name="isCategoryChanged" value="false" /> *@
+
+                                <input id="selected_category" style="width:230px; height:10px;" />
+                                <div id="categorylist_validation" class="validation-message text"></div>
+
+                            
                             </div>
+</div>
                         </div>
                         <div class="col-sm-12 col-12 no-padding">
                             <div class="d-flex align-items-start">
@@ -129,7 +130,48 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Modified to address style issues in release 12.1. This code was initially added for the subcategory feature. In the upcoming release, review and resolve style conflicts if the subcategory is enabled.
+                        <div class="col-sm-12 col-12 no-padding">
+                            <div class="row align-items-center">
+                                <div class="col-sm-2 col-2 no padding d-flex align-items-center">
+                                    <label>
+                                        [[[Export FileName ]]]
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-4 col-12" style="padding-left:20px">
+                                    <input type="text" class="form-control cls-schname" name="" id="export-filename"
+                                           maxlength="100"
+                                           value="{:ScheduleName}-{:ReportName}-{:Timestamp}">
+                                    <div class="validate-error" id="export-filename-error-container">
+                                        <div id="schedule-name-validator"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12 filename-dropdown" style="margin-top:15px">
+                                    <select id="file-template-variable-drop-box"
+                                            data-live-search="true"
+                                            title="[[[Select variables]]]"
+                                            name=""
+                                            class="form-control selectpicker file-template"
+                                            data-size="7"
+                                            multiple
+                                            data-none-results-text="[[[No results match]]]">
+                                        @* @if (Enum.GetValues(typeof(CustomFileTemplate)).Length > 0)
+                                        {
+                                            @foreach (CustomFileTemplate val in Enum.GetValues(typeof(CustomFileTemplate)))
+                                            {
+                                                <option value="@val">@GlobalAppSettings.GetDescription(val)</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
+                                        } *@
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        -->
                         <div class="col-sm-12 col-12 no-padding">
                             <div class="d-flex align-items-start">
                                 <div class="col-sm-2 col-2 no-padding"><label>[[[Export FileName ]]]<span class="mandatory">*</span></label></div>
@@ -153,12 +195,10 @@
                                         {
                                             <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select variables]]]</option>
                                         }
-
                                     </select>
                                 </div>
                             </div>
                         </div>
-
                         @*@if (GlobalAppSettings.Branding == AppBranding.Syncfusion.Identifier)
                             {
                                 <div class="col-sm-12 col-12 no-padding alert-type">
@@ -318,15 +358,22 @@
     var getScheduleContentUrl = "@Url.Action("GetScheduleCustomBody", "scheduler")";
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
     var schedulerDialogNonce = "@Context.Items["ScriptNonce"]";
-    $("#selected_dashboard,#selected_category").selectpicker();
+    $("#selected_dashboard").selectpicker();
+    var embedConfig = parent.embedConfig;
     var parameterObj;
     var reportparameterObj;
     checkReportHasParameter();
     if (actionType == "Create") {
         createSchedule(itemId, itemName, categoryName)
+        setTimeout(function () {
+            initializeCategoryDropdown();
+        }, 100);
     }
     else {
         editSchedule(scheduleId, itemId, itemName, categoryName)
+        setTimeout(function () {
+            initializeCategoryDropdown();
+        }, 100);
     }
     if (($(parent.window).width()) > 1400) {
         $(".schedule-dialog").addClass("lg-schedule-flexible");

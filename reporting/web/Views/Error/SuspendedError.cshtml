@@ -20,6 +20,9 @@
         faviconLogo = reportServerResourceUrl + "/cdn/images/application/" + @ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + @IconFileNames.Favicon;
     }
     var faviconFallbackPath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.Favicon;
+    var url = new Uri(Context.Request.GetDisplayUrl());
+    var dns = url.GetLeftPart(UriPartial.Authority);
+    var activateTenantUrl = $"{dns}/reporting/site/{globalAppSettings.SystemSettings.TenantIdentifier}/activate-suspended-tenant";
 }
 <!DOCTYPE html>
 <html>
@@ -48,22 +51,40 @@
                     <img src="@reportServerResourceUrl/cdn/images/static/error-pages/v1/suspended.svg" />
                 </div>
                 <div class="suspended-secondary-div">
-                    <div class="suspended-page-title">
-                        Suspended
-                    </div>
-                    <div class="suspended-page-content">
-                        [[[Subscription to the reports have been suspended.]]]
-                        @if (!ServerAppConfig.IsSelfHosted)
-                        {
-                            <div>
-                                <span>[[[If you are a subscription administrator for ]]]@(globalAppSettings.SystemSettings.OrganizationName)[[[, you can activate your suspended site ]]]<a href='@subscriptionLink' class='redirect-link' target='_blank'>[[[here.]]]</a></span>
-                            </div>
-                        }
-                        else
-                        {
-                            <div>[[[Please contact your System Administrator for more details.]]]</div>
-                        }
-                    </div>
+                    @if (ServerAppConfig.Sandbox.Reports.Enabled)
+                    {
+                        <div class="suspended-page-title">
+                            [[[Your Report Access is Inactive]]]
+                        </div>
+                        <div class="suspended-page-content">
+                            [[[Your subscription was paused due to inactivity. Do not worry, your data is safe and can be restored.]]]
+                        </div>
+                        <div class="suspended-page-content">
+                            [[[To continue using your report, simply reactivate below.]]]
+                        </div>
+                        <div>
+                            <a href="@activateTenantUrl" class="e-control e-btn e-lib e-primary e-flat" id="activate-suspended-tenant">[[[Reactivate My Access]]]</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="suspended-page-title">
+                            Suspended
+                        </div>
+                        <div class="suspended-page-content">
+                            [[[Subscription to the reports have been suspended.]]]
+                            @if (!ServerAppConfig.IsSelfHosted)
+                            {
+                                <div>
+                                    <span>[[[If you are a subscription administrator for ]]]@(globalAppSettings.SystemSettings.OrganizationName)[[[, you can activate your suspended site ]]]<a href='@subscriptionLink' class='redirect-link' target='_blank'>[[[here.]]]</a></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>[[[Please contact your System Administrator for more details.]]]</div>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         </div>

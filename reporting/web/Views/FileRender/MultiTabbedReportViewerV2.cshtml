@@ -1,0 +1,240 @@
+﻿@using System.Globalization;
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+    var language = CultureInfo.CurrentCulture.Name;
+    var isUserAuthenticatedInCurrentTenant = ViewBag.IsUserAuthenticatedInCurrentTenant;
+    var itemDetail = ViewBag.itemDetail as ItemDetail;
+    var isUserAuthenticated = "false";
+    var enableComment = "false";
+    var enableViews = "false";
+    var canEdit = itemDetail.CanWrite;
+    var embedConfig = ViewBag.EmbedConfig as EmbedConfig;
+    var filterQuery = ViewBag.FilterQuery;
+    var userId = ViewBag.UserId;
+    var enableExport = "true";
+    var canSaveView = "true";
+    var embedSignature = ViewBag.EmbedSignature;
+    var requestUrl = new Uri(Context.Request.GetDisplayUrl());
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var emailAddress = Context.Session.GetString("emailaddress") != null ? Context.Session.GetString("emailaddress") : string.Empty;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
+    var canCreateComments = false;
+    var isMultiTab = true;
+    var selectedId = ViewBag.SelectedId == Guid.Empty ? string.Empty : ViewBag.SelectedId;
+    if (embedConfig.IsEmbedReport || embedConfig.IsEmbedCode)
+    {
+        canEdit = false;
+    }
+}
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width" />
+        <link href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-viewer.min.css" rel="stylesheet" type="text/css" />
+        <environment include="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.js"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/jquery-dependencies.min.js"></script>
+        </environment>
+        <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/v2.0/bold.reportviewer.min.js"></script>
+        <script>
+                    @{
+                            var userName = "";
+                            if (Context.User.Identity.IsAuthenticated && Context.User != null && Context.User.Identity != null && isUserAuthenticatedInCurrentTenant || embedConfig.IsEmbedCode)
+                            {
+                                    canCreateComments = true;
+                                    enableComment = (!(embedConfig.HasReportComments)) ? "false" : "true";
+                                    enableViews = (!(embedConfig.HasViews)) ? "false" : "true";
+                                    isUserAuthenticated = embedConfig.IsEmbedCode ? "false" : "true";
+                                    userName = embedConfig.IsEmbedCode ? embedConfig.UserInfo.Email.ToString() : emailAddress.ToLower();
+                                    if (embedSignature)
+                                    {
+                                            enableExport = (!(embedConfig.HasExport)) ? "false" : "true";
+                                            canSaveView = (!(embedConfig.CanSaveView)) ? "false" : "true";
+                                    }
+                            }
+                            else
+                            {
+                                    enableComment = "false";
+                                    enableViews = "false";
+                                    isUserAuthenticated = "false";
+                            }
+                    }
+                    var userId = "@userId";
+                    var userName = "@userName";
+                    var viewId = "@ViewBag.ViewId";
+                    var selectedId = "@selectedId";
+                    var showBackButton = @Json.Serialize(ViewBag.ShowMyReports);
+                    var baseUrl = "@globalAppSettings.SystemSettings.BaseUrl";
+                    var viewerUrl = "@globalAppSettings.SystemSettings.ViewerUrl";
+                    var language = "@language";
+                    var isUserAuthenticated = "@isUserAuthenticated";
+                    var enableComment = '@enableComment';
+                    var enableExport = "false";
+                    var canSaveView = '@canSaveView';
+                    var isReportCommented = '@ViewBag.IsReportCommented';
+                    var canEdit = @Json.Serialize(canEdit);
+                    var editReportUrl = encodeURI("@Url.Action("ReportDesigner", "Designer")" + "/@itemDetail.Id/@itemDetail.CategoryName/@itemDetail.Name");
+                    var filterParameters = JSON.parse('@Json.Serialize(ViewBag.FilterParameters)');
+                    var itemViewShareIframeUrl = "@Url.Action("shareItemView", "items")";
+                    var commentPageUrl = "@Url.Action("CommentPartialView", "Comments")";
+                    var updateViewerUserPreference = "@Url.Action("SaveViewerUserPreference", "User")";
+                    var reportServerHomeUrl = "@Url.Action("Reports", "Reports")";
+                    var getViewParameterUrl = "@Url.Action("GetReportViewParameter", "ReportViews")";
+                    var sharePermissionDialogUrl = "@Url.Action("SharePermissionPartialView", "ReportViews")";
+                    var viewsPageUrl = "@Url.Action("ViewsPartialView", "ReportViews")";
+                    var addViewUrl = { "web": "@Url.Action("OnFilterSave", "ReportViews")", "api": "/items/views/add" };
+                    var deleteViewUrl = { "web": "@Url.Action("DeleteView", "ReportViews")", "api": "/items/views/delete" };
+                    var updateViewUrl = { "web": "@Url.Action("UpdateView", "ReportViews")", "api": "/items/views/edit" };
+                    var getSavedViewUrl = { "web": "@Url.Action("GetViews", "ReportViews")", "api": "/items/views/get-by-item-id" };
+                    var reportServerApiUrl = "@reportServerApiUrl";
+                    var filterQuery = "@filterQuery";
+                    var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
+                    var pageurl = "@requestUrl.LocalPath";
+                    var reportId = "@ViewBag.ItemId.Split('/')[0]";
+                    var reportPath = "@ViewBag.ItemId";
+                    var sameOrigin = true;
+                    var isSubmit = true;
+                    var canHideSaveViewBtn = false;
+                    var embedConfig = @Html.Raw(Json.Serialize(embedConfig));
+                    var reportItemDetail = @Html.Raw(Json.Serialize(itemDetail));
+                    var isAdmin = "@isAdmin";
+                    var ItemType = "@ViewBag.ItemType";
+                    var customFontsName = [];
+                    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+                    var token = "@ViewBag.AccessToken";
+                    var isPublic = "@ViewBag.IsPublic";
+                    var xServerToken = "@ViewBag.XServerToken";
+                    var isViewerV2Enabled = @Json.Serialize(ViewBag.IsViewerV2Enabled);
+                    var canCreateComments = @Json.Serialize(canCreateComments);
+                    var enableViews = @Json.Serialize(enableViews);
+                    var isUserAuthenticatedInCurrentTenant = @Json.Serialize(isUserAuthenticatedInCurrentTenant);
+                    var isMobile = @Json.Serialize(isMobile);
+                    var isMultiTab = true;
+                    var multiTabDashboardDetails = @Html.Raw(Json.Serialize(ViewBag.MultiTabDashboardDetails));
+                    var version = "@ViewBag.VersionNumber"
+        </script>
+        <title>@ViewBag.ItemName - [[[View Report]]] - @globalAppSettings.SystemSettings.OrganizationName</title>
+        <link rel="icon" href="@Url.Content(globalAppSettings.SystemSettings.FavIcon)" onerror="if (this.href != '@Url.Content("~/content/images/application/favicon.png")') this.href = '@Url.Content("~/content/images/application/favicon.png")';" />
+        @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+    </head>
+    <body>
+        @if (ViewBag.ShowMyReports && !ViewBag.IsUrlHasView)
+        {
+            <a class="multi-tab-back" href="@Url.Action("reports", "reports")" title="Back to all reports"><i class="su su-arrow-back"></i></a>
+            <div class="sf-nav-separator"></div>
+        }
+        <div id="multi-tab-dashboard">
+            @if (isMultiTab)
+            {
+                <div class="e-tab-header">
+                    @for (var i = 0; i < ViewBag.childDashboardNames.Count; i++)
+                    {
+                        if (ViewBag.childDashboardNames[i].TabName != "null" && ViewBag.childDashboardNames[i].TabName != null)
+                        {
+                            <div>@ViewBag.childDashboardNames[i].TabName</div>
+                        }
+                        else
+                        {
+                            <div>@ViewBag.childDashboardNames[i].ItemInfo.Name</div>
+                        }
+                    }
+                </div>
+                <div class="e-content" id="multi-tab-content">
+                    @for (var i = 0; i < ViewBag.MultiTabDashboardDetails.Count; i++)
+                    {
+                        <div data-designer-id="@("sync_report_viewer" + i)" class="tab-dashboard" style="width:100%;height:100%">
+                            <div id="@("sync_report_viewer" + i)"></div>
+                        </div>
+                    }
+                </div>
+            }
+            <div id="report_viewer_v2_header">
+                <div class="report_viewer_v2_report_name_div" id="report_viewer_v2_report_name_div">
+                    <span id="report_viewer_v2_report_name" title="@ViewBag.ItemName">@ViewBag.ItemName</span>
+                </div>
+                @if (canEdit)
+                {
+                    <div id="report_viewer_v2_toolbar">
+                        <span class="su-edit-tailwind" id="report_viewer_v2_edit" onclick="editReport()"></span>
+                    </div>
+                }
+            </div>
+            <input id="comment_Type" type="hidden" data-item-id="@ViewBag.DataItemId" data-item-type="@ViewBag.ItemType">
+            <input id="dashboard_Comment" type="hidden" data-item-id="@ViewBag.ItemId" data-category-name="@ViewBag.itemDetail.CategoryName" data-item-name="@ViewBag.itemDetail.Name">
+            <input type="hidden" id="report-filter-query-name" />
+            <input type="hidden" id="report-filter-query-value" />
+            <div id="sync_report_viewer"></div>
+            <script asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+            <environment include="Development,CloudDevelopment">
+                @*<link href="http://cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet">*@
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" />
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.css" />
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-v2.css" />
+                <script src="https://cdn.syncfusion.com/ej2/ej2-navigations/dist/global/ej2-navigations.min.js" type="text/javascript"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/multi-tabbed-report-viewer-v2.js"></script>
+            </environment>
+            <environment exclude="Development,CloudDevelopment">
+                @*<link href="http://cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet">*@
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" />
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-utilities.min.css" />
+                <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-v2.min.css" />
+                <script src="https://cdn.syncfusion.com/ej2/ej2-navigations/dist/global/ej2-navigations.min.js" type="text/javascript"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-ej-dependencies.min.js"></script>
+                <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/multi-tabbed-report-viewer-v2.min.js"></script>
+            </environment>
+            <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+            @if (ServerAppConfig.IsSelfHosted)
+            {
+                <script src="@reportServerResourceUrl/cdn/scripts/localization/v2.0/l10n/ej.localetexts.@string.Concat(language, ".min.js")"></script>
+            }
+            <div id="success-alert" class="custom-bootstrap-styles">
+                <div id="image-container">
+                    <div class="image-holder">
+                        <span class="su su-tick" alt="Success Icon"></span>
+                    </div>
+                </div>
+                <div id="message">
+                    <h1 id="message-header"></h1>
+                    <span id="message-content"></span>
+                </div>
+            </div>
+            <div id="warning-alert" class="custom-bootstrap-styles">
+                <div id="image-container">
+                    <span class="su su-warning-alt" alt="Warning Icon"></span>
+                </div>
+                <div id="message" class="div-close">
+                    <h1 id="message-header"></h1>
+                    <span id="message-content"></span>
+                </div>
+                <div class="close-div">
+                    <span id="close-content">[[[Close]]]</span>
+                </div>
+            </div>
+            <div id="messageBox">
+                <div class="message-header"></div>
+                <div class="message-box-close"></div>
+                <div class="message-content text-center"></div>
+                <div class="message-box-btn-holder"></div>
+            </div>
+            @if (isMobile)
+            {
+                <environment include="Development,CloudDevelopment">
+                    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-mobile-v2.css" />
+                    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-mobile-v2.js"></script>
+                </environment>
+                <environment exclude="Development,CloudDevelopment">
+                    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-viewer-mobile-v2.min.css" />
+                    <script asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-viewer-mobile-v2.min.js"></script>
+                </environment>
+            }
+        </div>
+    </body>
+</html>

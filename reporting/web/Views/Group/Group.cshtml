@@ -17,6 +17,7 @@
     {
         groupImport = customUI?.Profiles[0]?.GroupImport != null ? customUI?.Profiles[0]?.GroupImport[0] : new GroupImport();
     }
+    bool isSingleDB = ViewBag.IsSingleDB;
 }
 
 @section scripts{
@@ -29,6 +30,7 @@
         var groupPageUrl = "@Url.Action("Group", "Group")";
         var deleteFromGroupListUrl = "@Url.Action("DeleteFromGroupList", "Group")";
         var groupPageNonce = "@Context.Items["ScriptNonce"]";
+        var isSingleDB = @isSingleDB.ToString().ToLower();
     </script>
 
     <environment include="Development,CloudDevelopment">
@@ -86,13 +88,13 @@
             <a href="@Url.Action("viewgroup","group")/{{:GroupId}}" title="[[[View]]]" data-bs-toggle="tooltip" data-groupid="{{:GroupId}}">
                 <i class="su su-eye"></i>
             </a>
-            {{if CanDelete}}
-            <a href="#" class="delete user-delete-class prevent-default-action" data-groupid="{{:GroupId}}" title="[[[Delete]]]" data-bs-toggle="tooltip" data-groupname="{{:GroupName}}">
-                <i class="su su-delete"></i>
-            </a>
-            {{else}}
+            {{if GroupName == "System Administrator"}}
             <a href="#" class="user-delete-class prevent-default-action" data-groupid="{{:GroupId}}" title="[[[You cannot delete the administrator group.]]]" data-bs-toggle="tooltip" data-bs-placement="left" data-groupname="{{:GroupName}}">
                 <i class="su su-delete disabled-icon-color"></i>
+            </a>
+            {{else CanDelete}}
+            <a href="#" class="delete user-delete-class prevent-default-action" data-groupid="{{:GroupId}}" title="[[[Delete]]]" data-toggle="tooltip" data-groupname="{{:GroupName}}">
+                <i class="su su-delete"></i>
             </a>
             {{/if}}
         </div>

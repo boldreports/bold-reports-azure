@@ -71,18 +71,20 @@
                     <div class="col-1 no-padding"></div>
                     @if (canCreateCategory)
                     {
-                        <div class="col-7 no-padding dropup">
-                            <select id="CategoryList" class="selectpicker dropup" data-live-search="true" title="[[[Select category]]]" data-size="3" data-dropup-auto="false"></select>
-                            <span class="category-validation-error text"></span>
-                        </div>
-                        <span class="col-1 input-group-btn no-padding" id="add-new-category">
-                            <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                        <div class="col-xs-7 d-flex no-padding dropup move-report">
+                            <input id="CategoryList" style="width:230px; height:10px;" />
+                            <div id="categorylist_validation" class="validation-message text"></div>
+                            <span class="input-group-btn no-padding" id="add-new-category">
+                            <button class="btn btn-default" style="padding:4px 10px; width:38px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
                         </span>
+                        </div>
+                        
                     }
                     else
                     {
-                        <div class="col-8 no-padding dropup">
-                            <select id="CategoryList" class="selectpicker" data-live-search="true" title='[[[Select category]]]' data-size="3"></select>
+                        <div class="col-xs-8 no-padding dropup move-report">
+                            <input id="CategoryList" style="width:257px;height:10px;" />
+                            <div id="categorylist_validation" class="validation-message text"></div>
                         </div>
                     }
 
@@ -135,24 +137,30 @@
     <script nonce="@Model">
         $(document).ready(function() {
             var categories = @Json.Serialize(ViewBag.CategoryDetails);
-            var options = "";
-            var firstOptionSelected = false;
-            for (var t = 0; t < categories.length; t++) {
-                if (categories[t].Id != "@ViewBag.ItemId.ToString()") {
-                    var selected = "";
-                    if (!firstOptionSelected) {
-                        selected = " selected";
-                        firstOptionSelected = true;
-                    }
-                    options += '<option value="' + categories[t].Id + '"' + selected + '>' + categories[t].Name + '</option>';
-                }
+            var className = $(".copy-move-category");
+            if (categories.length < 1) {
+            $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
             }
-            $("#CategoryList").html(options);
-            $("#CategoryList").selectpicker('destroy');
-            $("#CategoryList").selectpicker();
-            $("#CategoryList").parent(".dropdown-menu.show").css("max-height", "140px !important");
-            $("#add-new-category [ data-bs-toggle='tooltip']").tooltip();
+            else {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+            }
+            var dropDownTreeInstance = document.querySelector('#CategoryList');
+            if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                dropDownTreeInstance.ej2_instances[0].destroy();
+            }
+            var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                select: function () { categoryValueChange(className); },
+                value: [categories[0].Id.toString()],
+                destroyPopupOnHide: false,
+                showClearButton: false,
+                placeholder: 'Select category',
+                allowFiltering: true,
+            });
+            DropDownTreeObj.appendTo("#CategoryList");
+            $("#add-new-category [data-toggle='tooltip']").tooltip();
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+            parent.window.IsCopyOrMoveDashboard = true;
         });
     </script>
 </body>

@@ -20,6 +20,7 @@
     var showDelete = schemes?.Delete ?? true;
     var showContextMenu = (schemes?.ContextMenu ?? true) && (showRunNow || showRunHistory || showEdit || showEnable || showDisable || showDownload || showDelete);
     var isHideGuidInUrl = ServerAppConfig.IsHideGuidInUrl;
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
 }
 @model List<ScheduleViewModel>
 
@@ -49,11 +50,12 @@
         var addScheduleUrl = "@Url.Action("AddSchedule", "scheduler")";
         var permissionIframeUrl = "@Url.Action("ItemPermissionView", "items")";
         var getScheduleContentUrl = "@Url.Action("GetScheduleCustomBody", "scheduler")";
-         var scheduleHistory = "@ViewBag.SchedleHistory";
+        var scheduleHistory = "@ViewBag.SchedleHistory";
         var scheduleHistoryScheduleId = "@ViewBag.ScheduleId";
         var scheduleHistoryScheduleName = "@ViewBag.ScheduleName";
         var scheduleHistoryItemType = "@Convert.ToInt32(ItemType.Schedule)";
         var downloadReportUrl = "@Url.Action("DownloadScheduleReport", "items")";
+        var isSandbox = @Json.Serialize(isSandbox);
     </script>
 
     @if (!isMobile)

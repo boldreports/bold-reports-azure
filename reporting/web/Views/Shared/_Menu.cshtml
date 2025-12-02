@@ -3,6 +3,7 @@
 @using Syncfusion.Server.Base.Helpers
 @inject IItemManagement _itemManagement
 @inject ServerPrincipal identityResponse
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 @{
     var globalAppSettings = (GlobalAppSettings)ViewBag.GlobalAppSettings;
@@ -89,6 +90,18 @@
 </environment>
 <script nonce="@Context.Items["ScriptNonce"]">
     var isMasterTenant = @Json.Serialize(isMasterTenant);
+</script>
+@{
+    var defaultMenuKeys = new[] { "Reports", "Data Sources", "Data Hub", "Dataset", "Schedules", "Publish", "Settings", "Users" };
+    var menuTranslations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    foreach (var key in defaultMenuKeys)
+    {
+        var localized = Localizer[key].Value ?? key;
+        menuTranslations[key] = localized;
+    }
+}
+<script nonce="@Context.Items["ScriptNonce"]">
+    window.menuTranslations = @Html.Raw(Json.Serialize(menuTranslations));
 </script>
 
 <aside class="menu-bar" id="app-navigation" ng-controller="CustomMenuCtrl">

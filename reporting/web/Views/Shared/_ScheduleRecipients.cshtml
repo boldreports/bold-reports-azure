@@ -229,6 +229,22 @@
         </div>
         <div id="selected-users-validation">[[[Select a user, group, or type an email address in the external recipient to schedule]]]</div>
         <div id="selected-users-info" class="col-sm-5 col-5 no-margin i-search-fields"></div>
+        <div class="col-sm-12 col-12 reply-to-send-mail-block d-none" style="padding-left:1.2%; margin-top:20px;">
+            <div class="reply-to-inline align-items-center">
+                <label for="reply-to-email"
+                       class="reply-to-label app-checkbox-label normal-font">
+                    [[[Reply To]]]
+                </label>
+
+                <div class="reply-to-input-wrapper inner-addon right-addon has-feedback position-relative">
+                    <input id="reply-to-email"
+                           type="text"
+                           class="form-control"
+                           placeholder="[[[Reply To Email]]] ([[[Email address]]])" />
+                </div>
+            </div>
+            <div class="reply-to-email-validation"></div>
+        </div>
         @if(isSelfHosted)
         {
             <div id="failure-notification" class="col-sm-12 col-12  no-margin">

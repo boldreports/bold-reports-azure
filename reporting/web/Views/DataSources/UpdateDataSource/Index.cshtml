@@ -1,4 +1,4 @@
-﻿@using System.Globalization;
+@using System.Globalization;
 ﻿@using System.Runtime.InteropServices;
 @using Syncfusion.Server.Base.Helpers
 
@@ -125,6 +125,7 @@
         var custombrandName = "@ServerAppConfig.CustomBrandName";
         var customDomain = @Json.Serialize(@ServerAppConfig.AllowCustomHelpLink) ? "@ServerAppConfig.AppSettings.Documentation.BaseUri" : "https://help.boldreports.com";
         var isHideHelpLink = @Json.Serialize(ServerAppConfig.IsHideHelpLink);
+        var isCloudMode = @Json.Serialize(@ViewBag.IsCloudMode);
     </script>
 </head>
 <body ng-app="updateDataSourceApp">

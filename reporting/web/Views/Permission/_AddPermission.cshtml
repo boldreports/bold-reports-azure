@@ -3,7 +3,7 @@
     var isAdmin = _identityResponse.IsAdmin;
 }
 <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog col-lg-12 no-padding" id="popup-container" role="document">
+    <div class="modal-dialog full-width no-padding" id="popup-container" role="document" style="max-width:100%">
             <div class="modal-content col-lg-12" id="add-permission-controller"  ng-app="serverApp" ng-controller="AddPermissionController">
                 <div class="col-lg-12 modal-header">
                     <div class="col-6 no-padding">
@@ -86,32 +86,83 @@
                             <div class="col-4 no-padding scope-div" ng-show="isSpecificResource || isSpecificSettings">
                             <div class="app-textbox-label no-padding modes-head">
                                 <label class="app-textbox-label">[[[Scope]]]</label>
-                                <div class="scope-search-area float-end d-flex align-items-center">
-                                    <input type="text" class="scope-search-box no-margin" ng-model="scopeSearchQuery" ng-init="scopeSearchQuery = ''" ng-focus="isScopeSearchFocus = true" ng-blur="isScopeSearchFocus = false" placeholder="[[[Search Scope]]]" />
-                                    <span class="su su-inner-close no-margin ng-hide" ng-show="scopeSearchQuery != ''" ng-click="onScopeSearchClear()" ng-class="{focus : isScopeSearchFocus}" title="[[[Clear search]]]"></span>
-                                    <span class="su su-search no-margin" ng-show="scopeSearchQuery == ''" ng-class="{focus : isScopeSearchFocus}" title="[[[Search]]]"></span>
+                                <div class="scope-search-area float-end d-flex align-items-center pull-right">
+                                <input type="text" class="scope-search-box pull-left no-margin" ng-model="scopeSearchQuery" ng-init="scopeSearchQuery = ''" ng-focus="isScopeSearchFocus = true" ng-blur="isScopeSearchFocus = false" ng-change="doScopeSearch(entityTypeId)" placeholder="[[[Search Scope]]]" />
+                                    <span class="su su-inner-close pull-left no-margin ng-hide" ng-show="scopeSearchQuery != ''" ng-click="onScopeSearchClear()" ng-class="{focus : isScopeSearchFocus}" title="[[[Clear search]]]"></span>
+                                    <span class="su su-search pull-left no-margin" ng-show="scopeSearchQuery == ''" ng-class="{focus : isScopeSearchFocus}" title="[[[Search]]]"></span>
                                 </div>
                             </div>
-                                <div class="modes-body scope-selection-div" id="scope">
-                                    <ul class="scope-selection-ul modes-body-ul">
-                                        <li ng-show="scopes.length!=0" class="scope-selection-li">
-                                            <ul ng-repeat="(key, value) in scopes | groupBy: 'CategoryName'" ng-show="entityTypeId != 25 && (scopes | filter: filteredScopesAll).length != 0">
-                                                <span ng-if="key!='null' && key!= 'undefined' && filteredScopeAll.length != 0 && noLoader" class="group-head">{{ key }}</span>
-                                                <li ng-show="noLoader" ng-repeat="scope in value | filter: {Name: scopeSearchQuery} as filteredScopeAll" class="scope-selection" id="{{scope.Name}}" data-scope-id="{{scope.Id}}" data-container="body" data-bs-toggle="permission-tooltip" data-original-title="{{scope.Name}}" data-bs-placement="top" data-html="true" ng-class="{'selected': scope.IsSelected}" ng-click="onClickScope(scope)">
-                                                    {{ scope.Name }}
-                                                </li>
-                                            </ul>
-                                            <div class="entity-empty-message-div col-12" ng-show="(scopes | filter: filteredScopesAll).length == 0 && entityTypeId != 25">
+                            <div class="modes-body scope-selection-div" id="scope">
+                                <ul class="scope-selection-ul modes-body-ul">
+                                    <li ng-show="scopes.length!=0" class="scope-selection-li">
+                                    <ul ng-repeat="(key, value) in scopes | groupBy: 'CategoryName'" ng-show="entityTypeId != 25 && entityTypeId != 5 && entityTypeId != 2 && (scopes | filter: filteredScopesAll).length != 0">
+                                            <span ng-if="key!='null' && key!= 'undefined' && filteredScopeAll.length != 0 && noLoader" class="group-head">{{ key }}</span>
+                                            <li ng-show="noLoader" ng-repeat="scope in value | filter: {Name: scopeSearchQuery} as filteredScopeAll" class="scope-selection" id="{{scope.Name}}" data-scope-id="{{scope.Id}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{scope.Name}}" data-placement="top" data-html="true" ng-class="{'selected': scope.IsSelected}" ng-click="onClickScope(scope)">
+                                                {{ scope.Name }}
+                                            </li>
+                                        </ul>
+                                    <ul class="nested-li" ng-show="entityTypeId == 5 || entityTypeId == 2">
+                                            <li ng-repeat="scope in categories" class="nested-li">
+                                                <div class="category-container" ng-class="{'selected': scope.IsSelected}" ng-click="onClickScope(scope)" >
+                                                <span ng-class="{'su su-angle-right': scope.SubCategory.length > 0}" class="arrow-icon" id="arrow-click" ng-click="toggleSubCategory($event)"></span>
+                                                    <div ng-show="noLoader" class="scope-selection category-arrow-icon category-sub-container" id="{{scope.Name}}" data-scope-id="{{scope.Id}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{scope.Name}}" data-placement="top" data-html="true">
+                                                        <span class="category-name">{{ scope.Name }} </span>
+                                                        @* <span class="subcategory-count">
+                                                            ({{ entityTypeId == 5 ? scope.SubCategory.length : scope.LinkedDashboardsCount }})
+                                                        </span> *@
+                                                    </div>
+                                                </div>
+                                                <ul class="nested-li nested-ul">
+                                                    <li ng-repeat="subcategory in scope.SubCategory" class="nested-li">
+                                                        <div class="category-container" ng-class="{'selected': subcategory.IsSelected}" ng-click="onClickScope(subcategory)">
+                                                        <span ng-class="{'su su-angle-right': subcategory.SubCategory.length > 0}" class="arrow-icon sub-parent-category" ng-click="toggleSubCategory($event)"></span>
+                                                            <div ng-show="noLoader" class="scope-selection category-sub-container" id="{{subcategory.Name}}" data-scope-id="{{subcategory.Id}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{subcategory.Name}}" data-placement="top" data-html="true">
+                                                                <span class="category-name">{{ subcategory.Name }}</span>
+                                                                @* <span class="subcategory-count">
+                                                                    ({{ entityTypeId == 5 ? subcategory.SubCategory.length : subcategory.LinkedDashboardsCount }})
+                                                                </span> *@
+                                                            </div>
+                                                        </div>
+                                                        <ul class="nested-li nested-ul">
+                                                            <li ng-repeat="subcategory1 in subcategory.SubCategory" class="nested-li">
+                                                                <div class="category-container" ng-class="{'selected': subcategory1.IsSelected}" ng-click="onClickScope(subcategory1)">
+                                                                    <span ng-class="{'su su-angle-right': subcategory1.SubCategory.length > 0}" class="arrow-icon sub-child-category" ng-click="toggleSubCategory($event)"></span>
+                                                                    <div ng-show="noLoader" class="scope-selection category-sub-container" id="{{subcategory1.Name}}" data-scope-id="{{subcategory1.Id}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{subcategory1.Name}}" data-placement="top" data-html="true">
+                                                                        <span class="category-name">{{ subcategory1.Name }}</span>
+                                                                        @* <span class="subcategory-count">
+                                                                            ({{ entityTypeId == 5 ? subcategory1.SubCategory.length : subcategory1.LinkedDashboardsCount }})
+                                                                        </span> *@
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="nested-li nested-ul">
+                                                                    <li ng-repeat="subcategory2 in subcategory1.SubCategory" class="nested-li">
+                                                                        <div class="category-container" ng-class="{'selected': subcategory2.IsSelected}" ng-click="onClickScope(subcategory2)">
+                                                                            <span ng-class="{'su su-angle-right': subcategory2.SubCategory.length > 0}" class="arrow-icon sub-category" ng-click="toggleSubCategory($event)"></span>
+                                                                            <div ng-show="noLoader" class="scope-selection category-sub-container" id="{{subcategory1.Name}}" data-scope-id="{{subcategory2.Id}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{subcategory2.Name}}" data-placement="top" data-html="true">
+                                                                                <span class="category-name">{{ subcategory2.Name }}</span>
+                                                                                @* <span class="subcategory-count">
+                                                                                    ({{ entityTypeId == 5 ? subcategory2.SubCategory.length : subcategory2.LinkedDashboardsCount }})
+                                                                                </span> *@
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="entity-empty-message-div col-xs-12" ng-show="(scopes | filter: filteredScopesAll).length == 0 && entityTypeId != 25">
+                                            <span class="entity-empty-message">[[[No scopes available to display]]]</span>
+                                        </div>
+                                        <ul ng-show="entityTypeId == 25" class="group-div">
+                                            <li ng-show="noLoader" ng-repeat="scope in scopes | filter: {GroupName: scopeSearchQuery} as filteredScopeGroup" class="scope-selection" id="{{scope.GroupName}}" data-scope-id="{{scope.GroupId}}" data-container="body" data-toggle="permission-tooltip" data-original-title="{{scope.GroupName}}" data-placement="top" data-html="true" ng-class="{'selected': scope.IsSelected}" ng-click="onClickScope(scope)">
+                                                {{scope.GroupName}}
+                                            </li>
+                                            <div class="entity-empty-message-div col-xs-12" ng-show="filteredScopeGroup.length == 0">
                                                 <span class="entity-empty-message">[[[No scopes available to display]]]</span>
                                             </div>
-                                            <ul ng-show="entityTypeId == 25" class="group-div">
-                                                <li ng-show="noLoader" ng-repeat="scope in scopes | filter: {GroupName: scopeSearchQuery} as filteredScopeGroup" class="scope-selection" id="{{scope.GroupName}}" data-scope-id="{{scope.GroupId}}" data-container="body" data-bs-toggle="permission-tooltip" data-original-title="{{scope.GroupName}}" data-bs-placement="top" data-html="true" ng-class="{'selected': scope.IsSelected}" ng-click="onClickScope(scope)">
-                                                    {{scope.GroupName}}
-                                                </li>
-                                                <div class="entity-empty-message-div col-12" ng-show="filteredScopeGroup.length == 0">
-                                                    <span class="entity-empty-message">[[[No scopes available to display]]]</span>
-                                                </div>
-                                            </ul>
                                         </li>
                                         </li>
                                         <div ng-show="scopes.length==0  && noLoader && !noScope" class="select-any-msg-div">
