@@ -4,6 +4,7 @@
     var globalAppSettings = _globalAppSettings;
     var defaultPath = ViewBag.Path;
     var isDisableSchedule = ViewBag.DisableSchedule != null ? ViewBag.DisableSchedule : false;
+    var isEnableDefaultPatameter = ViewBag.isEnableDefaultPatameter != null ? ViewBag.isEnableDefaultPatameter : false;
 }
 <script nonce="@Model" type="text/javascript">
     var exportPathExist = "@Url.Action("CheckExportPathExist", "Administration")";
@@ -47,6 +48,26 @@
                     <div class="dropdown no-caret">
                         <span class="dropdown-toggle text-muted" data-bs-toggle="dropdown" style="cursor:pointer;"><span class="su su-info" title=""></span></span>
                         <div class="dropdown-menu" role="menu">[[[If disabled, this will stop all scheduled tasks from running for this site.]]]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="enable-default-schedule-parameter" class="branding-sub-section admin-page-body">
+        <h3 class="title col-12  sub-section-heading blur-whitelable-content">[[[Schedule parameter]]]</h3>
+        <div class="col-sm-12 col-12">
+            <div class="col-sm-4 col-4">
+                <label class="col-6 app-textbox-label">
+                    [[[Enable Default Parameter]]]
+                </label>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="material-switch">
+                        <input type="checkbox" id="enable-default-patameter" @(isEnableDefaultPatameter ? "checked" : string.Empty) />
+                        <label for="enable-default-patameter" class="label-primary"></label>
+                    </span>
+                    <div class="dropdown no-caret">
+                        <span class="dropdown-toggle text-muted" data-bs-toggle="dropdown" style="cursor:pointer;"><span class="su su-info" title=""></span></span>
+                        <div class="dropdown-menu" role="menu">[[[If enabled, the default value checkbox will be selected automatically when creating a new schedule.]]]</div>
                     </div>
                 </div>
             </div>
