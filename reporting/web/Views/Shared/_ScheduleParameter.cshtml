@@ -12,6 +12,8 @@
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var itemPermission = ViewBag.ItemPermission;
     var isAdmin = _identityResponse.User.IsAdmin;
+    var actionType = ViewBag.ActionType;
+    bool enableDefaultParameter = actionType != "Edit" ? _globalAppSettings?.SystemSettings?.EnableDefaultParameter ?? false : false;
 }
 @using BoldReports.Web
 @model List<ReportParameterInfo>
@@ -203,7 +205,7 @@
                         }
                         else
                         {
-                            @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
+                            @Html.CheckBox(@parameter.Name + "-use-default", (enableDefaultParameter || isParameterHidden), new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
                             @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
                         }
                     </div>
@@ -222,7 +224,7 @@
                         }
                         else
                         {
-                            @Html.CheckBox(@parameter.Name + "-use-default", isParameterHidden, new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
+                            @Html.CheckBox(@parameter.Name + "-use-default", (enableDefaultParameter || isParameterHidden), new { @class = "material-checkbox use-default", @dataAttrId = @parameter.Name, @dataAttrType = @parameter.ElementType, @id = @parameter.Name + "-use-default" })
                             @Html.Label(@parameter.Name + "-use-default", "[[[Use Default]]]", new { @class = "normal-font" })
                         }
                     </div>
