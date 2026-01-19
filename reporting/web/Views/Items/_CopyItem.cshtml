@@ -97,11 +97,11 @@
                             <div class="col-1 no-padding"></div>
                             @if (canCreateCategory)
                             {
-                                <div class="col-xs-6 no-padding d-flex first-block copy-report" id="category-list">
+                                <div class="d-flex copy-report no-padding first-block" id="category-list">
                                     <input id="CategoryList" style="width:230px; height:10px;" />
                                     <div id="categorylist_validation" class="validation-message text"></div>
                                     <span class="input-group-btn no-padding" id="add-new-category">
-                                    <button class="btn btn-default" style="padding:4px 10px;margin-left:-5px;margin-top:-3px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                    <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
                                 </span>
                                 <div class="second-block"> </div>
                                 </div>
@@ -208,12 +208,14 @@
                             <div class="col-1 no-padding"></div>
                             @if (canCreateCategory)
                             {
-                                <div class="col-7 no-padding dropup">
-                                    <input id="CategoryList" style="width:230px;height:10px;" />
+                                <div class="col-10 no-padding" style="width:260px;height:10px;">
+                                    <input id="CategoryList" style="width:260px;height:10px;" />
                                     <div id="categorylist_validation" class="validation-message text"></div>
                                 </div>
                                 <span class="col-1 input-group-btn no-padding" id="add-new-category">
-                                    <button class="btn btn-default" style="padding:4px 10px;margin-left:-5px;margin-top:-3px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                    <button class="btn btn-default" style="padding:4px 10px;margin-left: 23px;height: 35px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip">
+                                        <span class="su-add" style="font-size:12px;"></span>
+                                    </button>
                                 </span>
                             }
                             else
@@ -354,17 +356,6 @@
 
             DropDownTreeObj.appendTo("#CategoryList");
 
-           $("#CopyButton").show();
-           if (canCreateCategory) {
-               $("#add-new-category").remove();
-               $('#add-new-category').find('button').remove();
-               $(".tenant-parent .first-block:first").removeClass("col-7").addClass("col-6");
-               $(".tenant-parent .second-block:first").append(addButton);
-               if (canCreateCategory.toLowerCase() == "false") {
-                   $(".tenant-parent .third-block:first").removeClass("col-7").addClass("col-6");
-                   $(".tenant-parent .fourth-block:first").append(addButton);
-               }
-           }
            $("#add-new-category [data-toggle='tooltip']").tooltip();
            parent.window.IsCopyOrMoveDashboard = true;
             window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");

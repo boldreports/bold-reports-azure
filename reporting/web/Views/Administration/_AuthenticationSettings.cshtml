@@ -379,7 +379,8 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Client ID]]]</label>
                                             <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.oauthClientId.$dirty && oauthSettingsForm.oauthClientId.$invalid) ? 'has-error' : ''">
-                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthClientId" ng-init="oauthClientId='@clientId'" name="oauthClientId" placeholder="[[[Client ID]]]" id="oauth-client-id" data-ng-disabled="!oauthIsEnabled" required />
+                                                <input type="{{showSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="oauthClientId" ng-init="oauthClientId='@clientId'" name="oauthClientId" ng-attr-placeholder="{{oauthIsEnabled ? '●●●●●●●●' : 'Client ID'}}" id="oauth-client-id" data-ng-disabled="!oauthIsEnabled" required />
+                                                <div class="show-hide-password su su-eye"></div>
                                                 <span class="validation-message d-flex" ng-show="oauthSettingsForm.oauthClientId.$error.required && oauthSettingsForm.oauthClientId.$dirty && oauthIsEnabled">[[[Please enter the client ID.]]]</span>
                                             </div>
                                         </div>
@@ -657,7 +658,8 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                         <div class="col-md-6 no-padding no-margin">
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Client ID]]]</label>
                                             <div class="col-md-8 no-margin form-input-field float-end" ng-class="(openidSettingsForm.openidClientId.$dirty && openidSettingsForm.openidClientId.$invalid) ? 'has-error' : ''">
-                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="openidClientId" ng-init="openidClientId='@openIDClientId'" name="openidClientId" placeholder="[[[Client ID]]]" id="openid-client-id" data-ng-disabled="!openidIsEnabled" required />
+                                                <input type="{{showOpenIdSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="openidClientId" ng-init="openidClientId='@openIDClientId'" name="openidClientId" ng-attr-placeholder="{{openidIsEnabled ? '●●●●●●●●' : 'Client ID'}}" id="openid-client-id" data-ng-disabled="!openidIsEnabled" required />
+                                                <div class="show-hide-password su su-eye"></div>
                                                 <span class="validation-message d-flex" ng-show="openidSettingsForm.openidClientId.$error.required && openidSettingsForm.openidClientId.$dirty && openidIsEnabled">[[[Please enter the Client ID.]]]</span>
                                             </div>
                                         </div>
@@ -667,7 +669,7 @@ cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
                                             <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret]]]</label>
                                             <div class="col-md-8 no-margin form-input-field float-end" ng-class="(openidSettingsForm.openidClientSecret.$dirty && openidSettingsForm.openidClientSecret.$invalid) ? 'has-error' : ''">
                                                 <input type="{{showOpenIdSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="openidClientSecret" ng-init="openidClientSecret" name="openidClientSecret" id="openid-client-secret" data-ng-disabled="!openidIsEnabled" ng-attr-placeholder="{{openidIsEnabled ? '●●●●●●●●' : 'Client Secret'}}" required />
-                                                <div class="show-hide-password su su-eye" ng-click="showOpenIdSecret = !showOpenIdSecret"></div>                           
+                                                <div class="show-hide-password su su-eye"></div>
                                                 <span class="validation-message d-flex" ng-show="openidSettingsForm.openidClientSecret.$error.required && openidSettingsForm.openidClientSecret.$dirty && openidIsEnabled">[[[Please enter the client secret.]]]</span>
                                             </div>
                                         </div>

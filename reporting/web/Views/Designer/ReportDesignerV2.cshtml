@@ -21,6 +21,7 @@
     var isAzureApplication = ServerAppConfig.IsAzureApplication;
     var reportUrl = Url.Action("Reports", "Reports");
     var rootUrlAction = reportUrl.TrimEnd('/').Remove(reportUrl.LastIndexOf('/'));
+   
     if (tourCookie != null)
     {
         tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
@@ -462,7 +463,7 @@
         var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
         var isHideGuidInUrl = @Json.Serialize(isHideGuidInUrl);
         var isCloudMode = @Json.Serialize(@ViewBag.IsCloudMode);
-
+        var serverPath = "@ViewBag.ServerPath";
         if(isEdit === "true"){
             isEditReport = true;
         }
@@ -924,7 +925,7 @@
                     if (args['type'] === 'Save') {
                         proxy.saveAsServer(args.name, args.category, args.categoryId, args.description, args.tags, args.callBackInfo);
                     }
-                }, enableCreateCategory, tagInfo );
+                }, enableCreateCategory, tagInfo, '', isDraft === 'true' ? '' : serverPath );
             } else {
                 designer.saveReport();
                 $('#' + controlId + '_designer_header_reportName').val(reportName);

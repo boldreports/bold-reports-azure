@@ -2,19 +2,17 @@
     <form class="col-lg-12 no-padding" id="dialog-container" autocomplete="off">
         <div class="modal-body col-12 no-padding form">
             <div id="deployment-category-container" class="col-12 no-padding deployment-dropdown-container">
-                <label class="col-4 col-lg-4 text-left margin-down no-padding">[[[Source Category]]]<span class="mandatory">*</span></label>
-                <div class="col-6 col-lg-6  no-padding items-name-dropdown pull-right">
-                    <select class="selectpicker form-control select-override-selector" id="select-category" data-size="5" data-live-search="true" title="[[[Select category]]]" data-none-results-text="[[[No results match]]]">
-                        <option value="" selected="selected" disabled="disabled">[[[Select category]]]</option>
-                    </select>
-                    <span id="invalid-category-selector" style="display:none; color:red;" class="display">[[[Please select the category]]]</span>
+                <label class="col-4 col-lg-4 text-left margin-down no-padding" style="width:307px;">[[[Source Category]]]<span class="mandatory">*</span></label>
+                <div class="col-6 col-lg-6 no-padding items-name-dropdown pull-right" style="width:307px;margin-left:-23px;">
+                    <input id="deployment-category-select" style="width: 100%;" />
+                    <div id="deployment-category-validation" class="validation-message text"></div>
                 </div>
             </div>
             <div id="deployment-report-container" class="col-12 no-padding deployment-dropdown-container">
                 <label class="col-4 col-lg-4 text-left margin-down no-padding">[[[Source Report]]]<span class="mandatory">*</span></label>
                 <div class="col-6 col-lg-6 no-padding items-name-dropdown pull-right">
                     <select class="selectpicker form-control select-override-selector" id="select-report" data-size="5" data-live-search="true" title="[[[Select report]]]" data-none-results-text="[[[No results match]]]">
-                        <option value="" selected="selected" disabled="disabled">[[[Select report]]]</option>
+                        
                     </select>
                     <span id="invalid-dashboard-selector" style="display:none; color:red;" class="display">[[[Please select the report]]]</span>
                 </div>

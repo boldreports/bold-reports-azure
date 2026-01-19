@@ -34,11 +34,9 @@
                     <tbody>
                         <tr>
                             <td><div class="margin-bottom sub-category-name">[[[Category Name]]]<span class="mandatory">*</span></div></td>
-                    </tr>
-                    <tr>
                             <td>
                                 <span class="margin-bottom">
-                                    <input type="text" id="sub-category_name" class="popup form-control text-field text" data-maxlength="255" value="" tabindex="1" autofocus name="categoryName">
+                                <input type="text" id="sub-category_name" class="popup form-control text-field text" data-maxlength="255" value="" tabindex="1" autofocus name="categoryName">
                                     <span id="validate-name" class="validation-message text"></span>
                                     <div id="plugin_validation" class="validation-message text"></div>
                                 </span>
@@ -46,12 +44,10 @@
                         </tr>
                         <tr>
                             <td><div class="margin-bottom">[[[Description]]]</div></td>
-                    </tr>
-                    <tr>
                             <td>
                                 <textarea class="form-control text-field text" maxlength="1024" id="category_description" tabindex="2"></textarea>
                                 <span class="help-text">
-                                    <span class="help-text-mandatory">*</span>[[[1024 characters maximum"]]]
+                                    <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
                                 </span>
                             </td>
                         </tr>
@@ -62,8 +58,6 @@
 </div>
 <div id="CreateCategoryPopup" style="display:none">
     <div style="background:white;" class="dialog">
-        @if (ServerAppConfig.EnableSubCategories)
-        {
             <div class="select-create-type">
                 <div class="new-category-select select-database">
                     <input type="radio" id="new-category" class="css-radio" name="categoryType" value="0" checked>
@@ -74,7 +68,6 @@
                     <label for="new-subcategory" class="radio-btn-label app-textbox-label"><span class="text">[[[New Sub Category]]]</span></label>
                 </div>
             </div>
-        }
         
         <form id="create_newcategory_content" class="col-md-12 dialog-body">
             <div id="create-category-section">
@@ -115,8 +108,6 @@
                             <td>
                                 <div class="choose-category category-add-field">[[[Choose Category]]]<span class="mandatory">*</span></div>
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 <span>
                                     <input id="SubCategoryList" style="height:12px;" />
@@ -126,11 +117,9 @@
                         </tr>
                         <tr>
                             <td><div class="category-name category-add-field">[[[Category Name]]]<span class="mandatory">*</span></div></td>
-                        </tr>
-                        <tr>
                             <td>
                                 <span>
-                                    <input type="text" id="create_subcategory_name" autofocus class="form-control text-field sub-category-field" name="categoryName" maxlength="255" value="" tabindex="1" autofocus name="subcategoryName">
+                                    <input type="text" id="create_subcategory_name" class="form-control text-field sub-category-field" maxlength="255" value="" tabindex="1" autofocus name="categoryName">
                                     <span id="validate-name" class="validation-message text"></span>
                                     <div id="plugin_validation" class="validation-message text"></div>
                                 </span>
@@ -138,8 +127,6 @@
                         </tr>
                         <tr>
                             <td><div class="category-description category-add-field">[[[Description]]]</div></td>
-                        </tr>
-                        <tr>
                             <td>
                                 <textarea class="form-control text-field" maxlength="1024" id="create_subcategory_description" tabindex="2"></textarea>
                                 <span class="help-text">

@@ -1,5 +1,4 @@
 import os
-
 import sys
 if sys.platform.startswith("win"):
     os.add_dll_directory("{9}")

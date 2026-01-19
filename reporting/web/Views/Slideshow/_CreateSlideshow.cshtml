@@ -22,8 +22,8 @@
                     $("#select-multitab-category").selectpicker('destroy');
                     $("#select-multitab-category").selectpicker();
                     $("#select-multitab-category").selectpicker('destroy');
-        $("#select-multitab-category").selectpicker();
-                });
+                    $("#select-multitab-category").selectpicker();
+            });
     </script>
     @*    @await Html.PartialAsync("~/Views/Shared/_BaseFontStyleSheet.cshtml")
 *@    <environment include="Development,CloudDevelopment">
@@ -69,9 +69,7 @@
                                 <span class="mandatory">*</span>
                             </span>
                             <span class="form-field col-12">
-                                <select class="selectpicker" id="select-multitab-category" data-size="5" data-live-search="true" style="width: 100%; margin-bottom: 15px;" data-none-results-text="[[[No results match]]]">
-                                    <option value="" selected="selected" disabled="disabled"></option>
-                                </select>
+                                <input id="select-multitab-category" style="width: 100%; margin-bottom: 15px;" />
                                 @*@if (canCreateCategory)
                                 {
                                     <span class="input-group-btn no-padding" style="vertical-align: top" id="add-new-category">
@@ -108,13 +106,14 @@
                                                 </select>
                                             </div>
                                             <div class="form-field col-4 slide-category-dropdown">
-                                                <select class="selectpicker" id="select_category" data-size="5" data-live-search="true" title="[[[Select category]]]" style="width: 100%; margin-bottom: 15px;" data-none-results-text="[[[No results match]]]">
+                                                @* <select class="selectpicker" id="select_category" data-size="5" data-live-search="true" title="[[[Select category]]]" style="width: 100%; margin-bottom: 15px;" data-none-results-text="[[[No results match]]]">
                                                     <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
-                                                </select>
+                                                </select> *@
+                                                <input id="select_category" style="width: 100%; margin-bottom: 15px;" />
                                             </div>
                                             <div class="form-field slide-dashboard-dropdown col-5" style="display: none">
-                                                <select class="selectpicker" id="select_dashboard" data-size="5" data-live-search="true" title="[[[Select dashboard]]]" style="width: 100%; margin-bottom: 15px;" data-none-results-text="[[[No results match]]]">
-                                                    <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select dashboard]]]</option>
+                                                <select class="selectpicker" id="select_dashboard" data-size="5" data-live-search="true" title="[[[Select report]]]" style="width: 100%; margin-bottom: 15px;" data-none-results-text="[[[No results match]]]">
+                                                    <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select report]]]</option>
                                                 </select>
                                             </div>
                                             <div class="form-field slide-childdashboard-dropdown col-4" style="display: none">

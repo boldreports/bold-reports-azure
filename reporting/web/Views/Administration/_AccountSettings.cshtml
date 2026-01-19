@@ -69,10 +69,13 @@
                 </div>
                     <div class="email-activation-container col-lg-12" title="[[[This setting controls whether an email address is required for creating new users or not.]]]">
                     <label class="app-textbox-label col-3  is-email-required">[[[User Email]]]</label>
-                    <div class="email-not-required col-lg-2" id="not-required">
-                        <input type="radio" id="email-not-required" name="email-required" class="css-radio" value="false" @(!globalAppSettings.SystemSettings.IsEmailRequired ? "checked" : string.Empty) @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled" : string.Empty) />
-                        <label for="email-not-required" class="app-textbox-label notransition @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled-lable-color" : string.Empty)" id="label-email-not-required">Not Required</label>
-                    </div>
+                    @if (!ServerAppConfig.Sandbox.Reports.Enabled)
+                    {
+                        <div class="email-not-required col-lg-2" id="not-required">
+                            <input type="radio" id="email-not-required" name="email-required" class="css-radio" value="false" @(!globalAppSettings.SystemSettings.IsEmailRequired ? "checked" : string.Empty) @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled" : string.Empty) />
+                            <label for="email-not-required" class="app-textbox-label notransition @(globalAppSettings.SystemSettings.ActivationType == ActivationType.EmailActivation ? "disabled-lable-color" : string.Empty)" id="label-email-not-required">Not Required</label>
+                        </div>                
+                    }
                     <div class="email-not-required col-lg-4" id="required">
                         <input type="radio" id="email-required" name="email-required" class="css-radio" value="true" @(((int)ViewBag.ActivationType == (int)ActivationType.EmailActivation || globalAppSettings.SystemSettings.IsEmailRequired) ? "checked" : string.Empty) />
                         <label for="email-required" class="app-textbox-label notransition" id="label-email-required">Required</label>

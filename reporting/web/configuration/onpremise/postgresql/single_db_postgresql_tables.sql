@@ -1166,6 +1166,8 @@ INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, 
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (18,4,1)
 ;
+INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (17,5,1)
+;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (1,5,1)
 ;
 INSERT INTO BOLDRS_PermissionAccEntity (PermissionEntityId, PermissionAccessId, IsActive) VALUES (2,5,1)

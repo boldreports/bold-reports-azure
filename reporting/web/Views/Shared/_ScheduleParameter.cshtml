@@ -148,13 +148,13 @@
                     if (isAdmin || itemPermission)
                     {
                         <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px;">
-                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" @(isParameterHidden ? "disabled" : "")>
                         </div>
                     }
                     else
                     {
                         <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px; display:@showHiddenParameter;">
-                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" @(isParameterHidden ? "disabled" : "")>
                         </div>
                     }
                 }

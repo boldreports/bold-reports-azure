@@ -170,9 +170,6 @@
 {
     <script nonce="@Context.Items["ScriptNonce"]">
         var isUploaded = @Json.Serialize(isUploaded);
-        if (isUploaded && $("#file_name").val() != "" && parent.$("#CategoryList_tree .e-list-item[aria-selected='true']").length > 0) {
-            parent.$("#publish_report").removeAttr("disabled");
-        }
         $(function () {
             window.parent.reportUploadComplete(@Json.Serialize(Model), isUploaded);
         });

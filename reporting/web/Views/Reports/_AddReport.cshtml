@@ -102,7 +102,7 @@ var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
                             <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
                                 <div style="width:565px">
                                     <input id="CategoryList" class='form-control bottom-margin30 text' />
-                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                    <div id="categorylist_validation" class="validation-message text" style="color:red;"></div>
                                 </div>
                                 @if (Model.Count == 0)
                                 {
@@ -305,9 +305,7 @@ var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
                     {
                         <input type="button" title="" value="[[[Next]]]" id="map_data" class="btn primary-button app-btn-primary small-right-margin" disabled>
                         
-                        <input type="button" title="" value="[[[Back]]]" id="map_data_back" class="btn primary-button app-btn-primary small-right-margin" style="display:none;">
-
-                        <input type="button" title="" value="[[[Save]]]" id="publish_report" class="btn primary-button app-btn-primary small-right-margin" disabled>
+                        <input type="button" title="" value="[[[Save]]]" id="publish_report" class="btn primary-button app-btn-primary small-right-margin" style="display:none;" disabled>
                     }
                 }                
                 <input type="button" title="" value="[[[Cancel]]]" id="cancel-rdl-add-popup" class="btn secondary-button app-btn-secondary NoStyleCloseClick">
@@ -329,10 +327,12 @@ var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
             if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
                 dropDownTreeInstance.ej2_instances[0].destroy();
             }
+            var defaultCategoryId = (categories && categories.length > 0 && categories[0].Id) ? categories[0].Id.toString() : null;
             var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
                 fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
                 select: function () { addReportCategoryValueChange(className); },
                 placeholder: window.Server.App.LocalizationContent.SelectCategory,
+                value: defaultCategoryId ? [defaultCategoryId] : [],
                 destroyPopupOnHide: false,
                 showClearButton: false,
                 allowFiltering: true,

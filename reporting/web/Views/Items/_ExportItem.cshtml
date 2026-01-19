@@ -41,6 +41,8 @@
 </environment>
 <body class="export-dialog">
     <input type="hidden" value="@ViewBag.Username" id="userName" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.TimeFormat.ToString()" id="timeFormat" />
 
     <div class="col-md-12 dialog-header" style="margin-top:20px;margin-left:5px">
         <div class="col-11 no-padding">

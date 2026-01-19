@@ -317,8 +317,11 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 no-padding no-margin">
                                     <label class="app-textbox-label col-md-4 no-margin">[[[Client Id]]]</label>
-                                    <div class="col-md-8 no-margin form-input-field float-end" ng-class="(azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid) ? 'has-error' : ''">
-                                        <input type="text" class="form-control col-md-6 no-margin" ng-model="azureClientId" name="clientId" ng-init="azureClientId='@ViewBag.AzureADSetting.ClientId'" placeholder="[[[Client Id]]]" id="clientId" required />
+                                    <div class="col-md-8 no-margin form-input-field float-end secrets-field" ng-class="(azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid) ? 'has-error' : ''">
+                                        <input type="text" class="hidden-input" style="display: none;">
+                                        <input style="visibility: hidden; position: absolute; left: -99999px" class="hidden-input" type="password" name="fake_passwordfield_to_turnoff_autocomplete">
+                                        <input type="password" class="form-control col-md-6 no-margin" ng-model="azureClientId" name="clientId" ng-init="azureClientId='@ViewBag.AzureADSetting.ClientId'" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="clientId" required />
+                                        <div class="show-hide-password su su-eye"></div>
                                         <span class="validation-message" ng-show="azureAdSettingsForm.clientId.$dirty && azureAdSettingsForm.clientId.$invalid">[[[Please enter client id]]]</span>
                                     </div>
                                 </div>

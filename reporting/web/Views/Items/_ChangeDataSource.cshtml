@@ -175,7 +175,7 @@
             for (var dataset = 0; dataset < availableSharedDS.length; dataset++) {
                 option += '<option data-key=' + sharedDataSource[dataSource].Name + ' data-id=' + availableSharedDS[dataset].Id + ' value=' + availableSharedDS[dataset].Name + '>' + availableSharedDS[dataset].Name + '</option>';
             }
-            html += option + '</select ></div></div></li>';
+            html += option + '</select><span id="validate_datasource_' + dataSource + '" class="validation-message text"></span><div id="plugin_validation_datasource_' + dataSource + '" class="validation-message text"></div></div></div></li>';
         }
         $("#change_datasource_div").html(html);
         for (var dataSource = 0; dataSource < sharedDataSource.length; dataSource++) {
