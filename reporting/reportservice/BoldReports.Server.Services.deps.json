@@ -1,11 +1,12 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v8.0",
+    "name": ".NETCoreApp,Version=v8.0/win-x64",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v8.0": {
+    ".NETCoreApp,Version=v8.0": {},
+    ".NETCoreApp,Version=v8.0/win-x64": {
       "BoldReports.Server.Services/12.1.12": {
         "dependencies": {
           "Asp.Versioning.Mvc": "8.1.0",
@@ -306,7 +307,6 @@
           "Newtonsoft.Json": "13.0.3",
           "SSH.NET": "2025.0.0",
           "SkiaSharp": "3.116.1",
-          "SkiaSharp.NativeAssets.Linux": "3.116.1",
           "SkiaSharp.Svg": "1.60.0",
           "Syncfusion.Compression.Net.Core": "30.2.4",
           "Syncfusion.DocIO.Net.Core": "30.2.4",
@@ -358,8 +358,7 @@
       },
       "HarfBuzzSharp/8.3.0.1": {
         "dependencies": {
-          "HarfBuzzSharp.NativeAssets.Win32": "8.3.0.1",
-          "HarfBuzzSharp.NativeAssets.macOS": "8.3.0.1"
+          "HarfBuzzSharp.NativeAssets.Win32": "8.3.0.1"
         },
         "runtime": {
           "lib/net8.0/HarfBuzzSharp.dll": {
@@ -368,30 +367,9 @@
           }
         }
       },
-      "HarfBuzzSharp.NativeAssets.macOS/8.3.0.1": {
-        "runtimeTargets": {
-          "runtimes/osx/native/libHarfBuzzSharp.dylib": {
-            "rid": "osx",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "HarfBuzzSharp.NativeAssets.Win32/8.3.0.1": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/libHarfBuzzSharp.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
+        "native": {
           "runtimes/win-x64/native/libHarfBuzzSharp.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/libHarfBuzzSharp.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "0.0.0.0"
           }
         }
@@ -424,6 +402,11 @@
           "lib/net8.0/Microsoft.AnalysisServices.Runtime.Windows.dll": {
             "assemblyVersion": "19.88.3.0",
             "fileVersion": "17.0.9.20"
+          }
+        },
+        "native": {
+          "runtimes/win-x64/native/msasxpress.dll": {
+            "fileVersion": "2025.170.9.20"
           }
         },
         "resources": {
@@ -684,13 +667,6 @@
           },
           "lib/net8.0/zh-Hant/Microsoft.AnalysisServices.Runtime.Core.resources.dll": {
             "locale": "zh-Hant"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/win-x64/native/msasxpress.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "2025.170.9.20"
           }
         }
       },
@@ -1072,7 +1048,7 @@
           "System.Security.Cryptography.Pkcs": "8.0.1"
         },
         "runtime": {
-          "lib/net8.0/Microsoft.Data.SqlClient.dll": {
+          "runtimes/win/lib/net8.0/Microsoft.Data.SqlClient.dll": {
             "assemblyVersion": "6.0.0.0",
             "fileVersion": "6.1.25023.1"
           }
@@ -1117,37 +1093,11 @@
           "lib/net8.0/zh-Hant/Microsoft.Data.SqlClient.resources.dll": {
             "locale": "zh-Hant"
           }
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/net8.0/Microsoft.Data.SqlClient.dll": {
-            "rid": "unix",
-            "assetType": "runtime",
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.1.25023.1"
-          },
-          "runtimes/win/lib/net8.0/Microsoft.Data.SqlClient.dll": {
-            "rid": "win",
-            "assetType": "runtime",
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.1.25023.1"
-          }
         }
       },
       "Microsoft.Data.SqlClient.SNI.runtime/6.0.2": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "6.2.0.0"
-          },
+        "native": {
           "runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "6.2.0.0"
-          },
-          "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "6.2.0.0"
           }
         }
@@ -1348,20 +1298,8 @@
             "fileVersion": "0.16.2.0"
           }
         },
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/msalruntime_arm64.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
+        "native": {
           "runtimes/win-x64/native/msalruntime.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/msalruntime_x86.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "0.0.0.0"
           }
         }
@@ -1497,6 +1435,11 @@
             "fileVersion": "16.0.1000.6"
           }
         },
+        "native": {
+          "runtimes/win-x64/native/SqlServerSpatial160.dll": {
+            "fileVersion": "2022.160.1000.6"
+          }
+        },
         "resources": {
           "lib/netstandard2.1/de/Microsoft.SqlServer.Types.resources.dll": {
             "locale": "de"
@@ -1528,31 +1471,11 @@
           "lib/netstandard2.1/zh-Hant/Microsoft.SqlServer.Types.resources.dll": {
             "locale": "zh-Hant"
           }
-        },
-        "runtimeTargets": {
-          "runtimes/win-x64/native/SqlServerSpatial160.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "2022.160.1000.6"
-          },
-          "runtimes/win-x86/native/SqlServerSpatial160.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "2022.160.1000.6"
-          }
         }
       },
       "Microsoft.Win32.Registry.AccessControl/8.0.0": {
         "runtime": {
-          "lib/net8.0/Microsoft.Win32.Registry.AccessControl.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/Microsoft.Win32.Registry.AccessControl.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -1560,15 +1483,7 @@
       },
       "Microsoft.Win32.SystemEvents/8.0.0": {
         "runtime": {
-          "lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -1639,98 +1554,21 @@
           }
         }
       },
-      "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
-        "runtimeTargets": {
-          "runtimes/linux-arm/native/libSystem.IO.Ports.Native.so": {
-            "rid": "linux-arm",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "runtime.linux-arm64.runtime.native.System.IO.Ports/8.0.0": {
-        "runtimeTargets": {
-          "runtimes/linux-arm64/native/libSystem.IO.Ports.Native.so": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "runtime.linux-x64.runtime.native.System.IO.Ports/8.0.0": {
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/libSystem.IO.Ports.Native.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
         "dependencies": {
-          "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
-          "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
-          "runtime.win-x86.runtime.native.System.Data.SqlClient.sni": "4.4.0"
-        }
-      },
-      "runtime.native.System.IO.Ports/8.0.0": {
-        "dependencies": {
-          "runtime.linux-arm.runtime.native.System.IO.Ports": "8.0.0",
-          "runtime.linux-arm64.runtime.native.System.IO.Ports": "8.0.0",
-          "runtime.linux-x64.runtime.native.System.IO.Ports": "8.0.0",
-          "runtime.osx-arm64.runtime.native.System.IO.Ports": "8.0.0",
-          "runtime.osx-x64.runtime.native.System.IO.Ports": "8.0.0"
-        }
-      },
-      "runtime.osx-arm64.runtime.native.System.IO.Ports/8.0.0": {
-        "runtimeTargets": {
-          "runtimes/osx-arm64/native/libSystem.IO.Ports.Native.dylib": {
-            "rid": "osx-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
-        "runtimeTargets": {
-          "runtimes/osx-x64/native/libSystem.IO.Ports.Native.dylib": {
-            "rid": "osx-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/sni.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "4.6.25512.1"
-          }
+          "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0"
         }
       },
       "runtime.win-x64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
-        "runtimeTargets": {
+        "native": {
           "runtimes/win-x64/native/sni.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "4.6.25512.1"
-          }
-        }
-      },
-      "runtime.win-x86.runtime.native.System.Data.SqlClient.sni/4.4.0": {
-        "runtimeTargets": {
-          "runtimes/win-x86/native/sni.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "4.6.25512.1"
           }
         }
       },
       "SkiaSharp/3.116.1": {
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.116.1",
-          "SkiaSharp.NativeAssets.macOS": "3.116.1"
+          "SkiaSharp.NativeAssets.Win32": "3.116.1"
         },
         "runtime": {
           "lib/net8.0/SkiaSharp.dll": {
@@ -1751,74 +1589,9 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Linux/3.116.1": {
-        "runtimeTargets": {
-          "runtimes/linux-arm/native/libSkiaSharp.so": {
-            "rid": "linux-arm",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-arm/native/libSkiaSharp.so.116.0.0": {
-            "rid": "linux-arm",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-arm64/native/libSkiaSharp.so": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-arm64/native/libSkiaSharp.so.116.0.0": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-musl-x64/native/libSkiaSharp.so": {
-            "rid": "linux-musl-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-musl-x64/native/libSkiaSharp.so.116.0.0": {
-            "rid": "linux-musl-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-x64/native/libSkiaSharp.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-x64/native/libSkiaSharp.so.116.0.0": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.macOS/3.116.1": {
-        "runtimeTargets": {
-          "runtimes/osx/native/libSkiaSharp.dylib": {
-            "rid": "osx",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "SkiaSharp.NativeAssets.Win32/3.116.1": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/libSkiaSharp.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
+        "native": {
           "runtimes/win-x64/native/libSkiaSharp.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/libSkiaSharp.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "0.0.0.0"
           }
         }
@@ -1936,40 +1709,8 @@
             "fileVersion": "30.2.4.0"
           }
         },
-        "runtimeTargets": {
-          "runtimes/linux-arm64/native/libpdfium.so": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-x64/native/libpdfium.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/osx-arm64/native/libpdfium.dylib": {
-            "rid": "osx-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/osx-x64/native/libpdfium.dylib": {
-            "rid": "osx-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-arm64/native/pdfium.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "29.1.0.0"
-          },
+        "native": {
           "runtimes/win-x64/native/pdfium.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "29.1.0.0"
-          },
-          "runtimes/win-x86/native/pdfium.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
             "fileVersion": "29.1.0.0"
           }
         }
@@ -2073,57 +1814,7 @@
       },
       "System.Data.Odbc/8.0.1": {
         "runtime": {
-          "lib/net8.0/System.Data.Odbc.dll": {
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/freebsd/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "freebsd",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/illumos/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "illumos",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/ios/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "ios",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/linux/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "linux",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/osx/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "osx",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/solaris/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "solaris",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
-          "runtimes/tvos/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "tvos",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          },
           "runtimes/win/lib/net8.0/System.Data.Odbc.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.1",
             "fileVersion": "8.0.1024.46610"
           }
@@ -2135,15 +1826,7 @@
           "System.Diagnostics.PerformanceCounter": "8.0.1"
         },
         "runtime": {
-          "lib/net8.0/System.Data.OleDb.dll": {
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Data.OleDb.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.1",
             "fileVersion": "8.0.1024.46610"
           }
@@ -2154,21 +1837,7 @@
           "runtime.native.System.Data.SqlClient.sni": "4.7.0"
         },
         "runtime": {
-          "lib/netcoreapp2.1/System.Data.SqlClient.dll": {
-            "assemblyVersion": "4.6.1.5",
-            "fileVersion": "4.700.22.51706"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll": {
-            "rid": "unix",
-            "assetType": "runtime",
-            "assemblyVersion": "4.6.1.5",
-            "fileVersion": "4.700.22.51706"
-          },
           "runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "4.6.1.5",
             "fileVersion": "4.700.22.51706"
           }
@@ -2184,21 +1853,11 @@
       },
       "System.Diagnostics.EventLog/9.0.2": {
         "runtime": {
-          "lib/net8.0/System.Diagnostics.EventLog.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.225.6610"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "0.0.0.0"
           },
           "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.225.6610"
           }
@@ -2209,15 +1868,7 @@
           "System.Configuration.ConfigurationManager": "9.0.2"
         },
         "runtime": {
-          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.1024.46610"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.1024.46610"
           }
@@ -2225,15 +1876,7 @@
       },
       "System.DirectoryServices/8.0.0": {
         "runtime": {
-          "lib/net8.0/System.DirectoryServices.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.DirectoryServices.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2246,15 +1889,7 @@
           "System.DirectoryServices.Protocols": "8.0.0"
         },
         "runtime": {
-          "lib/net8.0/System.DirectoryServices.AccountManagement.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.DirectoryServices.AccountManagement.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2262,27 +1897,7 @@
       },
       "System.DirectoryServices.Protocols/8.0.0": {
         "runtime": {
-          "lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/linux/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "linux",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          },
-          "runtimes/osx/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "osx",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          },
           "runtimes/win/lib/net8.0/System.DirectoryServices.Protocols.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2336,25 +1951,8 @@
         }
       },
       "System.IO.Ports/8.0.0": {
-        "dependencies": {
-          "runtime.native.System.IO.Ports": "8.0.0"
-        },
         "runtime": {
-          "lib/net8.0/System.IO.Ports.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/net8.0/System.IO.Ports.dll": {
-            "rid": "unix",
-            "assetType": "runtime",
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          },
           "runtimes/win/lib/net8.0/System.IO.Ports.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2365,15 +1963,7 @@
           "System.CodeDom": "9.0.2"
         },
         "runtime": {
-          "lib/net8.0/System.Management.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Management.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2465,15 +2055,7 @@
           "System.Configuration.ConfigurationManager": "9.0.2"
         },
         "runtime": {
-          "lib/net8.0/System.Runtime.Caching.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Runtime.Caching.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2481,15 +2063,7 @@
       },
       "System.Security.Cryptography.Pkcs/8.0.1": {
         "runtime": {
-          "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.1024.46610"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.1024.46610"
           }
@@ -2601,15 +2175,7 @@
           "System.Diagnostics.EventLog": "9.0.2"
         },
         "runtime": {
-          "lib/net8.0/System.ServiceProcess.ServiceController.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.ServiceProcess.ServiceController.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2617,15 +2183,7 @@
       },
       "System.Speech/8.0.0": {
         "runtime": {
-          "lib/net8.0/System.Speech.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Speech.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2634,14 +2192,6 @@
       "System.Text.Encodings.Web/9.0.2": {
         "runtime": {
           "lib/net8.0/System.Text.Encodings.Web.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.225.6610"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll": {
-            "rid": "browser",
-            "assetType": "runtime",
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.225.6610"
           }
@@ -2661,15 +2211,7 @@
       },
       "System.Threading.AccessControl/8.0.0": {
         "runtime": {
-          "lib/net8.0/System.Threading.AccessControl.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Threading.AccessControl.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2726,15 +2268,7 @@
       },
       "System.Windows.Extensions/8.0.0": {
         "runtime": {
-          "lib/net8.0/System.Windows.Extensions.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        },
-        "runtimeTargets": {
           "runtimes/win/lib/net8.0/System.Windows.Extensions.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
           }
@@ -2814,105 +2348,105 @@
     "Bold.Data.Analytics.Base/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wHBJctDRI2DsptQyOhDtKr7M15d7KyrGy9OKd6YtC2Jxt5HnaxyVJKRTpRZBLFSiGc2Y4zqKxg2Vu6+cXDh7yg==",
+      "sha512": "sha512-jsBSRnsGYnP+hMrwR+NWZwAQLgnHQzJgE/ZE+Bbm/76OlCVJ+5CKaaF/x2+bsN2NfqaqwPuysFEnOLBj/khX1g==",
       "path": "bold.data.analytics.base/12.1.12",
       "hashPath": "bold.data.analytics.base.12.1.12.nupkg.sha512"
     },
     "Bold.Licensing/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-SLH5mBm6n4AJrXtmqkzvFoEh40+2TSD7le4ymmCIsCA8v6A7wiRNQ20gr8ev0CHcb9WrJkjFbXomW9IXLsQgYw==",
+      "sha512": "sha512-5cTkXV7ze9yv5S3YE/hjG/2jNNWaVkL1+mJNMbsp3uR/K16ZhJWvYnzFpBpdzKcKEG/OrzoKORa2qkLzUdHejQ==",
       "path": "bold.licensing/12.1.12",
       "hashPath": "bold.licensing.12.1.12.nupkg.sha512"
     },
     "BoldReports.Base.Logger/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-95Xp8u3VU2MdAsDprlxi94EjW80E6F7ppbd4rvRDs2Ble86UgTYLcyBY2ymRGf8Hy7w/GQvoqdIrX8gd01MPgQ==",
+      "sha512": "sha512-KXP+884okOALGaKnIFbFfAYujT2DNLE9PDO9XjmJ78JnR8Z8ON+/GcZLTkqQXNL5JWiIoYF9X+rTm4KomjS0Bg==",
       "path": "boldreports.base.logger/12.1.12",
       "hashPath": "boldreports.base.logger.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.Barcode/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-w64E9Brf374jkClA6WtMGFAjAROgXuY7dfZPgPdDiv2P+9DapVSbKi6IHT8lwyjBOyKqDPi9GTQgBPAQumDdzQ==",
+      "sha512": "sha512-EueKK5e8sGygvKtp7bvuJ7qiwCmQQfNX2xg4hPFxJY/wNJVQr/VL0bvaYJ5UzF5JsoxRER486fp+vUShR7NBKA==",
       "path": "boldreports.cri.barcode/12.1.12",
       "hashPath": "boldreports.cri.barcode.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.Html/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-SKSTARqELVvam69LSzQe10De6vz7p3kBzVM6S+oSMEthhPFu1D780byLFO76fDbg6bcQWNJl5c/G2XP5mbKKSA==",
+      "sha512": "sha512-5ePYzd4M4XRpv+PBfnSfzXjv/BdvMbTR6gbjlo/7L0Jg/noSBif5zFRI4t7K2niMSZVwBAtT49CEk41QZnAm9w==",
       "path": "boldreports.cri.html/12.1.12",
       "hashPath": "boldreports.cri.html.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.Pdf/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CZMkdT8d4XVue3/a8KqbSdgqy/UNpkEc4ESAK3HOJpTL/MRySM+0Lj8F62jmfXXq6kL6mdVNpGR7et90WHZSYg==",
+      "sha512": "sha512-0FdY7DEbeqcBGSzlyOvPeB7MMKMX2fAhuEtDnP2cablS/5999tQgTrG6n1bSSKFMwoIAFiEjCVKaUfTRbLA4PQ==",
       "path": "boldreports.cri.pdf/12.1.12",
       "hashPath": "boldreports.cri.pdf.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.PredictiveAnalytics/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Lf22qZxu/nkpGaxTjUKHfVIED49tyxo0XqBpmbeUjuSOkxd+NwIMYEbzJ048zqz0PlvuPYnwCkTFQo5qMEJMBA==",
+      "sha512": "sha512-n47/Uj364z+DTT09yPW82TyzxpVxk19kcIVGgXVNV0GoO8Ydsu5a5YGLid4UFLweR1wSYu9dPt6BbuehNPkKHA==",
       "path": "boldreports.cri.predictiveanalytics/12.1.12",
       "hashPath": "boldreports.cri.predictiveanalytics.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.Shape/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Tetz7wJiVzgHP9VYbrBFN6Llb39HliApiELg3zdGDPTXnbdtS0hKyc6ySCjX1U7g87yhbgKOhJXL88sj0DIe+A==",
+      "sha512": "sha512-u0fy+c0lTtEQVSzChWa9TyLt8JE0pVmY3RCCBRJyEw2VfvPsK9Dea3HOQ7aPZhCkbOeJTiNx+Jbf7tWGpb0b8A==",
       "path": "boldreports.cri.shape/12.1.12",
       "hashPath": "boldreports.cri.shape.12.1.12.nupkg.sha512"
     },
     "BoldReports.CRI.Signature/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-327WCOLCFoFSyigCLU1O/AYavwWhX4HGcMyQeBQ1viKc7TCcl92XR1LQ9VtxiQtYZFIjVkwyhVweAbAngunfYw==",
+      "sha512": "sha512-9Orfyu3CvIw154ur+PP3oeKqbTlwqdUcFmE8p08dX05NS/Q4C0qJH7pAchSrFyhPKSDDlT7fQ4yw2OZ4XpwJrQ==",
       "path": "boldreports.cri.signature/12.1.12",
       "hashPath": "boldreports.cri.signature.12.1.12.nupkg.sha512"
     },
     "BoldReports.Data.Csv/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-KrlcE97rtOGkbRPWjzjO+pdOXkf5f0uMXri+DB5xFpyunFL+S2eoRHYG0wxdKoyOG5H5+NYPlB3yE21Z7/9tvA==",
+      "sha512": "sha512-f3enYHtHVdlhu5SRy1TM8/PnxTavNPlBrPCdpio//Tdp22SjC39o0qBj8Y8eY0q6AC4UXLLaauPozzF7Fo2dyw==",
       "path": "boldreports.data.csv/12.1.12",
       "hashPath": "boldreports.data.csv.12.1.12.nupkg.sha512"
     },
     "BoldReports.Data.ElasticSearch/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qkkigXr8CAEk4g+sFheS+/NjzoOT/JYKnaSzSVps6CpcAyLClKGzTXu+rC6dnE7XI8PPxyK5jYYMC2Fbvf2r5A==",
+      "sha512": "sha512-BlN84IXtP8KjngdA9C597bjYRRdobdK7AcXrlf4pJzOPPilI2IJxkTUL4unmj+B8pxPpC/djnZATzF3VZ9ZvbQ==",
       "path": "boldreports.data.elasticsearch/12.1.12",
       "hashPath": "boldreports.data.elasticsearch.12.1.12.nupkg.sha512"
     },
     "BoldReports.Data.Excel/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kCcpEHBezUp1uSExLwbIRhY9YRki7ofrWogGCFViRKC6lKvy8vM3f3OVJ5FSx4npSSQXRv1YU7mkBNXIY4u/2g==",
+      "sha512": "sha512-D3V5XNLCKIp1ehye2vI3QMeHy9kcsBjnAeFt2/HUju9YypDx1xkkY306quFvxE8X8S0TAbNLoKAglY3hZs4HrA==",
       "path": "boldreports.data.excel/12.1.12",
       "hashPath": "boldreports.data.excel.12.1.12.nupkg.sha512"
     },
     "BoldReports.Data.SSAS/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-C3gPba7bVvPAjDTVPCbaOkomCwaSYweGRrv1/g/H8Wgibe2fCQqIGQRXag8+78LVtR1nvxkQ/reF1BDiFQL9lA==",
+      "sha512": "sha512-iqae0g3fnVSHgIiFh9rCLxUT6lSO230tkd3aBaMaZXeIh3n6fq5lNWJmEUYTeDqmjlK373vK9oNw3TO4gLq4Zg==",
       "path": "boldreports.data.ssas/12.1.12",
       "hashPath": "boldreports.data.ssas.12.1.12.nupkg.sha512"
     },
     "BoldReports.Data.WebData/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ieJJREDBT7wGWspc5pSmh7v15Bb0d+pzLy8AcJs3HKo5ApM8Ex4RNSRC4pvmhHpvxHWvHNozS6vTfqRWpgV5yA==",
+      "sha512": "sha512-peKQhSowax5f4RdwCh2SE6N468tyKDssb+kXqP/W3F4/hDdyt6dSKgvjwD1p1KtQjmBpSae3bv8yJbUkoOJDPg==",
       "path": "boldreports.data.webdata/12.1.12",
       "hashPath": "boldreports.data.webdata.12.1.12.nupkg.sha512"
     },
     "BoldReports.Net.Core/12.1.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CdwZHQM4r7FC/QnAWM5n+GEBvTjhMJ05TTXgKY2Nzr7jU5r/0OHvghNBznLdmZNDnAsKLsg4YAZTZeKS9ZiaEQ==",
+      "sha512": "sha512-gUKpLrtrmj+vuiGIUTKrjxLmFDWu3YlV/62bxkdICuo0FhOH5R5O3McpcrruQcQLUhRoKOkEM3GNUOfu30IWJQ==",
       "path": "boldreports.net.core/12.1.12",
       "hashPath": "boldreports.net.core.12.1.12.nupkg.sha512"
     },
@@ -2943,13 +2477,6 @@
       "sha512": "sha512-rwLpl+W6uqu0DuvzqNhTMuFcXfy1Vc0uq0YXgPEmtTSfeUSAye1FcARrm2YIPOSiCBwBOGu3cLvMX5Fp6OKe2g==",
       "path": "harfbuzzsharp/8.3.0.1",
       "hashPath": "harfbuzzsharp.8.3.0.1.nupkg.sha512"
-    },
-    "HarfBuzzSharp.NativeAssets.macOS/8.3.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-2o6U05LAmK+rwX7TvmJ2X0anXJG2hSE7kHVmCshhHy0tKfByJ5ykBacvhmmooHchlOwq15KBZeROGafCT8nN+g==",
-      "path": "harfbuzzsharp.nativeassets.macos/8.3.0.1",
-      "hashPath": "harfbuzzsharp.nativeassets.macos.8.3.0.1.nupkg.sha512"
     },
     "HarfBuzzSharp.NativeAssets.Win32/8.3.0.1": {
       "type": "package",
@@ -3378,27 +2905,6 @@
       "path": "puppeteersharp/20.2.2",
       "hashPath": "puppeteersharp.20.2.2.nupkg.sha512"
     },
-    "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-gK720fg6HemDg8sXcfy+xCMZ9+hF78Gc7BmREbmkS4noqlu1BAr9qZtuWGhLzFjBfgecmdtl4+SYVwJ1VneZBQ==",
-      "path": "runtime.linux-arm.runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.linux-arm.runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
-    "runtime.linux-arm64.runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-KYG6/3ojhEWbb3FwQAKgGWPHrY+HKUXXdVjJlrtyCLn3EMcNTaNcPadb2c0ndQzixZSmAxZKopXJr0nLwhOrpQ==",
-      "path": "runtime.linux-arm64.runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.linux-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
-    "runtime.linux-x64.runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Wnw5vhA4mgGbIFoo6l9Fk3iEcwRSq49a1aKwJgXUCUtEQLCSUDjTGSxqy/oMUuOyyn7uLHsH8KgZzQ1y3lReiQ==",
-      "path": "runtime.linux-x64.runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.linux-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -3406,47 +2912,12 @@
       "path": "runtime.native.system.data.sqlclient.sni/4.7.0",
       "hashPath": "runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512"
     },
-    "runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Ee7Sz5llLpTgyKIWzKI/GeuRSbFkOABgJRY00SqTY0OkTYtkB+9l5rFZfE7fxPA3c22RfytCBYkUdAkcmwMjQg==",
-      "path": "runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
-    "runtime.osx-arm64.runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-rbUBLAaFW9oVkbsb0+XSrAo2QdhBeAyzLl5KQ6Oci9L/u626uXGKInsVJG6B9Z5EO8bmplC8tsMiaHK8wOBZ+w==",
-      "path": "runtime.osx-arm64.runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.osx-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
-    "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-IcfB4jKtM9pkzP9OpYelEcUX1MiDt0IJPBh3XYYdEISFF+6Mc+T8WWi0dr9wVh1gtcdVjubVEIBgB8BHESlGfQ==",
-      "path": "runtime.osx-x64.runtime.native.system.io.ports/8.0.0",
-      "hashPath": "runtime.osx-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512"
-    },
-    "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-LbrynESTp3bm5O/+jGL8v0Qg5SJlTV08lpIpFesXjF6uGNMWqFnUQbYBJwZTeua6E/Y7FIM1C54Ey1btLWupdg==",
-      "path": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni/4.4.0",
-      "hashPath": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
-    },
     "runtime.win-x64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-38ugOfkYJqJoX9g6EYRlZB5U2ZJH51UP8ptxZgdpS07FgOEToV+lS11ouNK2PM12Pr6X/PpT5jK82G3DwH/SxQ==",
       "path": "runtime.win-x64.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
-    },
-    "runtime.win-x86.runtime.native.System.Data.SqlClient.sni/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
-      "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
-      "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
     "SkiaSharp/3.116.1": {
       "type": "package",
@@ -3461,20 +2932,6 @@
       "sha512": "sha512-ibDG1+quN86vBd9ztjDAC9wnvS1nRZ6ydTUOSod4NsRHWdLLGzWYn1IOF4Cg9iJh5cQHdpzhUZBQE0JMKznrow==",
       "path": "skiasharp.harfbuzz/3.116.1",
       "hashPath": "skiasharp.harfbuzz.3.116.1.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.Linux/3.116.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-f4OSsrMwe+Ei9KpNc3EMUiMcZkQSYepHCaDuvMyLBaHVQd+9Ywq/rlbmapqztsU6k2iPEVLD8ZuBJm9RDJsAow==",
-      "path": "skiasharp.nativeassets.linux/3.116.1",
-      "hashPath": "skiasharp.nativeassets.linux.3.116.1.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.macOS/3.116.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3KPvpKysDmEMt0NnAZPX5U6KFk0LmG/72/IjAIJemIksIZ0Tjs9pGpr3L+zboVCv1MLVoJLKl3nJDXUG6Jda6A==",
-      "path": "skiasharp.nativeassets.macos/3.116.1",
-      "hashPath": "skiasharp.nativeassets.macos.3.116.1.nupkg.sha512"
     },
     "SkiaSharp.NativeAssets.Win32/3.116.1": {
       "type": "package",
