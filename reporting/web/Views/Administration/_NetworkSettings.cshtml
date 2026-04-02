@@ -1,0 +1,88 @@
+@{
+    var globalAppSettings = _globalAppSettings;
+    var RuleData = (globalAppSettings.SystemSettings.NetworkSettings != null && globalAppSettings.SystemSettings.NetworkSettings.IPWhitelistingRules != null) ? globalAppSettings.SystemSettings.NetworkSettings.IPWhitelistingRules : new List<IPWhitelistingRules>();
+    var currentUserIP = Context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+    var networkSettingsIsEnabled = globalAppSettings.SystemSettings.NetworkSettings != null && globalAppSettings.SystemSettings.NetworkSettings.IsEnabled != null ? globalAppSettings.SystemSettings.NetworkSettings.IsEnabled : false;
+#pragma warning disable SCS0029 //There is no direct user input process for this issue.
+    var ruleDataJson = Html.Raw(Json.Serialize(RuleData));
+#pragma warning restore SCS0029 //There is no direct user input process for this issue.
+}
+
+<script nonce="@Context.Items["ScriptNonce"]">
+    var dataSourceRule = @(RuleData != null ? ruleDataJson : "[]");
+</script>
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="application-edit">
+    <div class="item-header">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-bs-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="edit">
+            <i class="su su-edit"></i>
+        </a>
+    </div>
+</script>
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="application-delete">
+    <div class="item-header">
+        <a href="#" class="tenant-action grid-content"  data-rule-name="{{:RuleName}}" data-ipaddress="{{:IPAddress}}" data-bs-toggle="tooltip" data-ip-type="{{:IPAddressType}}" data-action="delete">
+            <i class="su su-delete"></i>
+        </a>
+    </div>
+</script>
+<script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
+    $(document).ready(function () {
+        $("#rulesgrid").ejGrid({
+            gridLines: ej.Grid.GridLines.None,
+            dataSource: dataSourceRule,
+            allowSorting: true,
+            allowSearching: false,
+            allowPaging: true,
+            enableAltRow: false,
+            allowFiltering: false,
+            pageSettings: { pageSize: 10 },
+            enableHover: true,
+            rowDataBound: function () {
+                $('[data-bs-toggle="tooltip"]').tooltip({ container: $('body') });
+            },
+            dataBound: function () {
+                $('[data-bs-toggle="tooltip"]').tooltip({ container: $('body') });
+            },
+            columns: [
+                { field: 'RuleName', headerText: '[[[Name]]]', width: 90, allowSorting: true, allowFiltering: false },
+                { field: 'IPAddress', headerText: '[[[IP Address]]]', width: 70, allowSorting: true, allowFiltering: false },
+                { field: 'IPAddressType', headerText: '[[[Type]]]', width: 60, allowSorting: true, allowFiltering: false },
+                { headerText: '', width: 10, template: true, templateID: "#application-edit" },
+                { headerText: '', width: 15, template: true, templateID: "#application-delete" },
+            ]
+        });
+    });
+</script>
+
+<div id="network-settings-body" class="admin-page-body">
+    <div class="col-12 no-padding field-container-dashboard">
+        <div class="network-authentication col-12 no-padding">
+            <div class="material-switch rule-info inline-align">
+                <div class="info-label">
+                    @Html.CheckBox("restrict-ipwhitelist-enabled", (bool)@networkSettingsIsEnabled, new { @class = "material-checkbox" })
+                    <label for="restrict-ipwhitelist-enabled" id="restrict-ipwhitelist-label">
+                        [[[Enable IP Allowlisting]]]
+                    </label>
+                </div>
+            </div>
+            <div class="info-message">
+                <span>[[[Enabling this option will permit requests from allowlisted IP addresses. However, activating this feature won't immediately enforce the IP allowlist. Please specify the IP addresses to be allowlisted and then click <b>Save</b> to apply the changes.]]]</span>
+            </div>
+            <div class="whitelisting-info">
+                <div class="ipaddress-info float-start">
+                    <span>@string.Format("[[[Please add your current IP address, {0}, to the allowlist. After adding all required IP addresses, save these changes.]]]", currentUserIP)</span>
+                </div>
+                <div id="create-rule" class="float-end">
+                    <button class="primary-button app-btn-primary float-end" data-bs-toggle="tooltip" id="add-rule-btn" data-bs-placement="top" title="Add new Rule">
+                        <span>[[[Add IP Address]]]</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 no-padding dialog-override">
+        <div id="rulesgrid">
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("_AddRulesDialog")

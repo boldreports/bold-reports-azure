@@ -1,0 +1,359 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+<!DOCTYPE html>
+@{ 
+    Layout = null;
+    var datasetList = ViewData["DatasetList"] as List<ItemDetail>;
+    var selectedDataset = (Guid?)ViewData["SelectedItem"];
+    var canCreateCategory = ViewData["CanCreateCategory"] != null ? Convert.ToBoolean(ViewData["CanCreateCategory"]) : false;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    }
+<html class="report-server">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>
+        [[[Add New Report]]]
+    </title>
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/essentialjs/ej2-dropdowntree.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+            var isItemExistinCategoryUrl = "@Url.Action("IsItemExistInSameCategory", "reports")";
+            var editreportUrl = "@Url.Action("editreport", "reports")";
+            var addsharedrdlreportUrl = "@Url.Action("addsharedrdlreport", "reports")";
+            var addembeddedrdlreportUrl = "@Url.Action("addembeddedrdlreport", "reports")";
+            var deletetemporaryrdlreportUrl = "@Url.Action("deletetemporaryrdlreport", "reports")";
+            var reportselectdatasourceUrl = "@Url.Action("reportselectdatasource", "reports")";
+            var reportselectdatasetUrl = "@Url.Action("reportselectdataset", "reports")";
+            var getCategories = "@Url.Action("RefreshCategoryList", "Reports")";
+            var reportDesignerUrl = "@Url.Action("ReportDesigner", "Reports")";
+            var canCreateCategory = "@canCreateCategory";
+            var tagList = @Json.Serialize(ViewBag.Tag);
+            var addCategoryUrl = "@Url.Action("addcategory", "category")";
+            var addSubCategoryUrl = "@Url.Action("addSubCategory", "category")";
+var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
+            var dashboardUrl = "@Url.Action("Reports", "Reports")";
+            var categoriesList = @Json.Serialize(ViewBag.CategoryDetails);
+            function load() {
+                window.$("#report_popup_wrapper").ejWaitingPopup("hide");
+                $('[data-bs-toggle="tooltip"]').tooltip();
+                if (($(window).width()) > 1400) {
+                    $(".dialog").addClass("iframe");
+                }
+
+                if (($(window).width()) < 1400) {
+                    $(".dialog").removeClass("iframe");
+                }
+            }
+    </script>
+    <link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" type="text/css" />
+
+    <!-- Essential JS 2 Dialog's global script -->
+    <script src="https://cdn.syncfusion.com/ej2/ej2-base/dist/global/ej2-base.min.js" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/ej2-buttons/dist/global/ej2-buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/ej2-popups/dist/global/ej2-popups.min.js" type="text/javascript"></script>
+
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-report.js")" crossorigin="anonymous"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-report.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-report.min.js")" crossorigin="anonymous"></script>
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-report.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
+    </environment>
+</head>
+@await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+<body style="background-color:white">
+
+    <div id="createReportPopupHolder" class="add-report-module dialog">
+        <input type="hidden" name="selectedFolderId" id="selectedFolderId" value="" />
+        <input type="hidden" id="publishedFileName" value="none">
+        <input type="hidden" id="rdl_filename" value="[[[Browse file path]]]">
+        <div class="col-md-12 dialog-header">
+            <span class="su su-report Head-icon"></span>            
+            @{
+                if (ViewBag.Action == "Upload")
+                {
+                    <span class="PopupTitle">[[[Upload Report(s)]]]</span>
+                }
+                else if(ViewBag.Action == "Create")
+                {
+                    <span class="PopupTitle">[[[Create Report]]]</span>
+                }
+            }
+            <a href="#" class="PopupClose close-new-rdl-add-popup" title="[[[Close]]]" data-bs-toggle="tooltip" data-bs-placement="bottom"><span class="su su-close"></span></a>
+        </div>
+        <form id='new_rdl_tab_content' class='dialog-body col-12 no-padding add-report-form' autocomplete="off">
+            <div class='col-12 padding-bottom20 new-rdl-content-holder' id='new_rdl_content_holder'>
+                <table cellspacing='10' cellpadding='0' border='0' width='100%'>
+                    <tr>
+                        <td class="col-2">
+                            <div class="bottom-margin35 float-end">[[[Category]]]<span class="mandatory">*</span></div>
+                        </td>
+                        <td class="col-12">
+                            <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
+                                <div style="width:565px">
+                                    <input id="CategoryList" class='form-control bottom-margin30 text' />
+                                    <div id="categorylist_validation" class="validation-message text" style="color:red;"></div>
+                                </div>
+                                @if (Model.Count == 0)
+                                {
+                                    <span id="emtpyCategoryList" class="validation-messages">* [[[Please create a category to group the report]]]</span>
+                                }
+                                @if (canCreateCategory)
+                                {
+                                    <span class="input-group-btn no-padding" style="vertical-align: top" id="add-new-category" data-target=".add-report-form #CategoryList">
+                                        <button class="btn btn-default" style="padding:4px 10px; height:34px" type="button" title="[[[Add new Category]]]" data-toggle="tooltip"><span class="su-add"></span></button>
+                                    </span>
+                                }
+                            </div>
+                            @if (Model.Count == 0)
+                            {
+                                <span id="emtpyCategoryList" class="validation-messages">* [[[Please create a category to group the report]]]</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-2"><div class="bottom-margin30 float-end">[[[Name]]]<span class="mandatory">*</span></div></td>
+                        <td class="col-12">
+                            <div>
+                                <input type='text' autofocus="" class='form-control bottom-margin30 edit-field text' name='file_name' id='file_name' maxlength="255" />
+                                <span id='report_name_validation_error' class='validation-messages text' style="margin-top: 0px;"></span>
+                                @*<span id="fileNameMessage" class="ErrorMessage hide">Please enter report name</span>*@
+                                <div id="plugin_validation" class="validation-messages text" style="margin-top: 0px;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
+                        <td class="col-12">
+                            <textarea style="resize: none;" id='file-description' class='form-control bottom-margin35 text' maxlength="1024"></textarea>
+                            <span class="notification help-text">
+                                <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
+                            </span>
+                        </td>
+                    </tr>
+                    @{
+                        if (ViewBag.Action == "Upload")
+                        {
+                            <tr>
+                                <td class="col-2"><div class="bottom-margin35 float-end">[[[RDL File(s)]]]<span class="mandatory">*</span></div></td>
+                                <td class="col-12">
+                                    <iframe id="report_upload_iframe" class="bottom-margin30" style="height: 35px" src="@Url.Action("UploadReportView", "Reports", new { allowMultiple = "true", isEditReport = "false" })" scrolling="no" tabindex="-1"></iframe>
+                                    <span id="uploadValidation"></span>
+                                </td>
+                            </tr>
+                        }
+
+                        else if (ViewBag.Action == "Create")
+                        {
+                            <tr>
+                                <td class="col-2">
+                                    <div class="bottom-margin35 float-end">[[[Dataset]]]</div>
+                                </td>
+                                <td class="col-12">
+                                    <div class="dropup">
+                                        <select id="selected-dataset" data-live-search="true" title='[[[Select Dataset]]]' name="dataset-name" class="selectpicker form-control bottom-margin30" data-none-results-text="[[[No results match]]]" data-size="3">
+                                            <option value="" selected="selected">[[[Select Dataset]]]</option>
+                                            @for (var item = 0; item < datasetList.Count; item++)
+                                            {
+                                                var selected = @selectedDataset == @datasetList[item].Id ? "selected" : "";
+                                                //<option value="@datasetList[item].Id" @selected>@datasetList[item].Name</option>
+                                            }
+                                        </select>
+                                        <span id="DatasetMessage" class="ErrorMessage hide">[[[Please select Dataset]]]</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    <tr>
+                        <td class="col-2"><div class="bottom-margin40 float-end">[[[Tag Name]]]</div></td>
+                        <td class="col-12">
+                            <div id="taginfo" class="add-report-page-taginfo" style="border-radius:4px;">
+                                <input type='text' class='form-control dropdown-border' id="taglist" name="taglist" />
+                                <span style="padding-top:25px;" id='tag_name_validation_error' class='validation-messages text'></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
+        <div id="upload-advanced-container" class="col-md-12" style="display: none">
+            <div class="report-list-container col-md-4">
+                <div class="report-list">
+                    <ul class="publish-list" id="report-list">
+                        <!-- Report list items will be populated by JavaScript -->
+                    </ul>
+                    <div id="report-list-empty" class="report-list-empty" style="display: none;">
+                        No reports uploaded yet
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-details-container col-md-8">
+                <div id="report-details-empty" class="report-details-empty">
+                    Select a report from the list to view and edit its details
+                </div>
+                
+                <div id="report-details-content" class='dialog-body col-12' style="display: none;">
+                    <div class='col-12 padding-bottom20 new-rdl-content-holder' id='report-details-holder'>
+                        <table cellspacing='10' cellpadding='0' border='0' width='100%'>
+                            <tr>
+                                <td class="col-2">
+                                    <div class="bottom-margin35 float-end">[[[Category]]]<span class="mandatory">*</span></div>
+                                </td>
+                                <td class="col-12">
+                                    <div class="input-group @(canCreateCategory ? "can-create-category" : "")">
+                                         <input id="report-category-select" class='form-control bottom-margin30 text' />
+                                        @* <select id="report-category-select"
+                                                data-live-search="true"
+                                                title="[[[Select category]]]"
+                                                name="categoryId"
+                                                class="selectpicker form-control bottom-margin30"
+                                                data-none-results-text="[[[No results match]]]"
+                                                data-size="5"
+                                                style="width:100%; margin-bottom:15px;">
+                                            <option value="" selected="selected" class="hide-option" disabled="disabled">[[[Select category]]]</option>
+                                        </select> *@
+                                        @if (canCreateCategory)
+                                        {
+                                            <div class="input-group-btn no-padding" style="vertical-align: top; margin-left: auto" id="add-new-category-advanced" data-target="#report-category-select">
+                                                <button class="btn btn-default"
+                                                        type="button"
+                                                        data-bs-toggle="tooltip"
+                                                        aria-label="Add new Category"
+                                                        title="[[[Add new Category]]]">
+                                                    <span class="su-add"></span>
+                                                </button>
+                                            </div>
+                                        }                                
+                                    </div>
+                                    <span id="report-category-message" class="validation-messages d-none">[[[Please select category]]]</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-2"><div class="bottom-margin30 float-end">[[[Name]]]<span class="mandatory">*</span></div></td>
+                                <td class="col-12">
+                                    <div>
+                                        <input type='text' class='form-control bottom-margin30 edit-field text' name='report_name' id='report-name-input' maxlength="255" />
+                                        <span id='report-name-validation-error' class='validation-messages text' style="margin-top: 0px;"></span>
+                                        <div id="report-plugin-validation" class="validation-messages text" style="margin-top: 0px;"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-2"><div class="bottom-margin30 float-end">[[[Description]]]</div></td>
+                                <td class="col-12">
+                                    <textarea style="resize: none;" id='report-description-input' class='form-control bottom-margin35 text' maxlength="1024"></textarea>
+                                    <span class="notification help-text">
+                                        <span class="help-text-mandatory">*</span>[[[1024 characters maximum]]]
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-2"><div class="bottom-margin40 float-end">[[[Tag Name]]]</div></td>
+                                <td class="col-12">
+                                    <div id="report-taginfo" class="add-report-page-taginfo" style="border-radius:4px;">
+                                        <input type='text' class='form-control dropdown-border' id="report-taglist" name="report-taglist" />
+                                        <span style="padding-top:25px;" id='report-tag-validation-error' class='validation-messages text'></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="col-md-12 DisplayNone no-padding" id="datasource_list">
+                            <h4>[[[Select Data Source(s)]]]</h4>
+                            <table id="datasource_list_table"></table>
+                        </div>
+                        <div class="col-md-12 DisplayNone no-padding" id="dataset_list">
+                            <h4>[[[Select Dataset(s)]]]</h4>
+                            <table id="dataset_list_table"></table>
+                        </div>
+                        <div id="automap-message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="@Url.Action("ReportDesigner", "Reports")" id="create-report-form" method="POST" target="_blank">
+            <input id="report-name" name="reportName" type="hidden" value="">
+            <input id="category-name" name="categoryName" type="hidden" value="">
+            <input id="report-description" name ="description" type="hidden" value = "">
+            <input id="dataset-name" name ="datasetName" type="hidden" value = "">
+            <input id="edit-value" name="isEdit" type="hidden" value="">
+            <input id="dataset-guid" name="datasetId" type="hidden" value="">
+        </form>
+        <div class='col-md-12 dialog-footer new-report-button-holder'>
+            <div class='create-rdl-btns'>
+            @{
+                    if (ViewBag.Action == "Create")
+                    {
+                        <input type="button" title="" value="[[[Create]]]" id="create-report-in-designer" class="btn primary-button app-btn-primary small-right-margin"disabled>
+                    }
+
+                    else if (ViewBag.Action == "Upload")
+                    {
+                        <input type="button" title="" value="[[[Next]]]" id="map_data" class="btn primary-button app-btn-primary small-right-margin" disabled>
+                        
+                        <input type="button" title="" value="[[[Save]]]" id="publish_report" class="btn primary-button app-btn-primary small-right-margin" style="display:none;" disabled>
+                    }
+                }                
+                <input type="button" title="" value="[[[Cancel]]]" id="cancel-rdl-add-popup" class="btn secondary-button app-btn-secondary NoStyleCloseClick">
+            </div>
+        </div>
+    </div>
+    <script nonce="@Model">
+        $(document).ready(function() {
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
+            var className = $(".add-report-form");
+            if (categories.length < 1) {
+            $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+            }
+            else {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+            }
+
+            var dropDownTreeInstance = document.querySelector('#CategoryList');
+            if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                dropDownTreeInstance.ej2_instances[0].destroy();
+            }
+            var defaultCategoryId = (categories && categories.length > 0 && categories[0].Id) ? categories[0].Id.toString() : null;
+            var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                select: function () { addReportCategoryValueChange(className); },
+                placeholder: window.Server.App.LocalizationContent.SelectCategory,
+                value: defaultCategoryId ? [defaultCategoryId] : [],
+                destroyPopupOnHide: false,
+                showClearButton: false,
+                allowFiltering: true,
+                popupWidth: '614px',
+            });
+            DropDownTreeObj.appendTo("#CategoryList");
+            window.parent.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+            function addReportCategoryValueChange(className) {
+            var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+            var selectedElement = $(".e-list-item[aria-selected='true']");
+            var levels = parseInt(selectedElement.attr("aria-level"));
+            var selectedItemsText = [];
+            for (var i = 1; i < levels; i++) {
+                var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+                selectedItemsText.push(text);
+            }
+            selectedItemsText.push(dropDownTreeInstance.currentText)
+            var combinedText = selectedItemsText.join(' / ');
+            className.find("input.e-dropdowntree").val(combinedText);
+        }
+    </script>
+</body>
+</html>

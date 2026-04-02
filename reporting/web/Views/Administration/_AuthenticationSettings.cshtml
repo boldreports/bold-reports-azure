@@ -1,0 +1,979 @@
+﻿@addTagHelper *, Microsoft.FeatureManagement.AspNetCore
+@using System.Runtime.InteropServices;
+@using Syncfusion.Server.Base.Helpers
+@using System.Web;
+
+@{
+    var globalAppSettings = _globalAppSettings;
+    ViewBag.Title = "[[[Authentication Settings]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    var ldapRegEx = @"/(?:ldap|http)s?:\/\/(?:(?!.*\d[\/?:])[a-z0-9\-._~%]+|(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\[[a-z0-9\-._~%!$&'()*+,;=:]+\])(?::\d+)?(?:[\/?][\-A-Z0-9+&@#\/%?=~_|$!:,.;]*)?$/i";
+    var oauthRegEx = @"/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/";
+    List<TenantAuthControl> authControl = null;
+    TenantAuthControl cloudAuthControl = null;
+#if BoldReportsOnPremise
+    authControl = ViewBag.AuthControl as List<TenantAuthControl>;
+    authControl = authControl != null && authControl.Count > 0 ? authControl : null;
+#else
+    cloudAuthControl = ViewBag.AuthControl as TenantAuthControl;
+#endif
+    var enableSigningKeyOptions = false;
+#if BoldReportsOnPremise
+    enableSigningKeyOptions = !string.IsNullOrEmpty(ViewBag.JwtSettings.JWTSettings.SigningKey);
+#endif
+    var isAzureApplication = ServerAppConfig.IsAzureApplication;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var model = ViewBag.GranularPermissions as Dictionary<object, bool>;
+    var isAdmin = _identityResponse.IsAdmin;
+    var isOpenIdIdentityProviderOptionEnabled = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled : false;
+    var isOAuthIdIdentityProviderOptionEnabled = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.IsIdentityProviderInfoOptionEnabled : false;
+    var isOpenIdCustomMailOptionEnabled = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.IsCustomInviteMailOptionEnabled : false;
+    var isOAuthCustomMailOptionEnabled = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.IsCustomInviteMailOptionEnabled : false;
+    var openIdIdentityProviderName = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.IdentityProviderName : string.Empty;
+    var openIdIdentityProviderURL = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.IdentityProviderURL : string.Empty;
+    var oAuthIdentityProviderName = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.IdentityProviderName : string.Empty;
+    var oAuthIdentityProviderURL = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.IdentityProviderURL : string.Empty;
+    var openIdCustomMailContent = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.EmailContent : string.Empty;
+    var oAuthCustomMailContent = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.EmailContent : string.Empty;
+    var openIdSubject = ViewBag.OpendIdentityProviderInfo != null ? ViewBag.OpendIdentityProviderInfo.Subject : string.Empty;
+    var oAuthSubject = ViewBag.OAuthdIdentityProviderInfo != null ? ViewBag.OAuthdIdentityProviderInfo.Subject : string.Empty;
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var authenticationGeneralHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AuthenticationSettings);
+    var authenticationControlHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AuthenticationSettings);
+    var authenticationOAuthHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.OAuthSettings);
+    var authenticationOpenIdHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.OpenIdSettings);
+    var authenticationJWTHelpSiteUrl = helpSiteBaseUrl + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.JWTSettings);
+    var providerName= HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.ProviderName);
+    var authorizationEndPoint = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.AuthorizationEndPoint);
+    var tokenEndPoint = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.TokenEndPoint);
+    var userInfoEndPoint = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoEndPoint);
+    var clientId = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.ClientId);
+    var userInfoEmail = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoEmail);
+    var userInfoFirstname = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoFirstname);
+    var userInfoLastname = HttpUtility.HtmlDecode(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoLastname);
+    var logoutEndPoint = HttpUtility.HtmlDecode((ViewBag.OAuthSettings.OAuthAuthSettings.LogoutEndPoint));
+    var OpenIDProviderName = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.ProviderName);
+    var jwtProviderName = HttpUtility.HtmlDecode(ViewBag.JwtSettings.JWTSettings.Name);
+    var authority = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.Authority);
+    var openIDClientId = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.ClientId);
+    var identifier = HttpUtility.HtmlDecode(ViewBag.OpenIDSettings.OIDCAuthSettings.Identifier);
+    var logoutUrl = HttpUtility.HtmlDecode((ViewBag.OpenIDSettings.OIDCAuthSettings.LogoutUrl));
+    var jwtloginurl = HttpUtility.HtmlDecode(ViewBag.JwtSettings.JWTSettings.LoginUrl);
+    var jwtlogouturl = HttpUtility.HtmlDecode(ViewBag.JwtSettings.JWTSettings.LogOutUrl);
+    var openIdEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ?ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+    var openIdEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ?ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+    var oauthEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ?ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+    var oauthEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ?ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+}
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/site-settings.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/site-settings.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-database-import.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-database-import.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/emaileditor.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/emaileditor.css")" crossorigin="anonymous" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/site-settings.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/site-settings.min.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/user-database-import.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/user-database-import.css")" crossorigin="anonymous" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/emaileditor.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/emaileditor.min.css")" crossorigin="anonymous" />
+    </environment>
+}
+@section scripts {
+    <script nonce="@Context.Items["ScriptNonce"]">
+        serverApp.controller("adSettingsController", ["$scope", function ($scope) {
+            $scope.regex = '^(?!(ftp|https?):\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-]+(\.[a-z]{2,6})?(:\d{1,5})?(\/[a-zA-Z0-9]+[a-zA-Z0-9]*(\.[a-z]{2,8})?)*?$';
+            $scope.distinguishedNameRegex = /^(\w+[=]{1}[a-zA-Z0-9-_\s]+)([\,{1}]\w+[=]{1}[a-zA-Z0-9-_\s]+)*$/;
+            $scope.jwtIsEnabled = jwtEnabled;
+            $scope.openIdEnableGroupClaim = openIdEnableGroupClaim;
+            $scope.openIdEnableRemoveExistGroupMapping = openIdEnableRemoveExistGroupMapping;
+            $scope.oauthEnableGroupClaim = oauthEnableGroupClaim;
+            $scope.oauthEnableRemoveExistGroupMapping = oauthEnableRemoveExistGroupMapping;
+        }]);
+
+    </script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var defaultAuthentication = "";
+        var addUserDirectoryLogUrl = "@Url.Action("AddSystemLogForUserDirectory", "Administration")";
+        var userDirectoryAuthControl = "@authenticationControlHelpSiteUrl";
+        var userDirectoryOauth = "@authenticationOAuthHelpSiteUrl";
+        var userDirectoryOpenid = "@authenticationOpenIdHelpSiteUrl";
+        var userDirectoryJwt = "@authenticationJWTHelpSiteUrl"
+        var updateauthsettingsUrl = "@Url.Action("UpdateAuthenticationSettings", "Administration")";
+        var updateauthcontrolUrl = "@Url.Action("UpdateAuthControl", "Administration")";
+        var updateLoginOptionsUrl = "@Url.Action("UpdateLoginOptions", "Administration")";
+        var defaultauthsettingsUrl = "@Url.Action("UpdateDefaultAuthentication", "Administration")";
+        var dashboardServerResourceUrl = "@globalAppSettings.SystemSettings.CDNLink";
+        var SystemSettingsProperties = @Json.Serialize(ViewBag.SystemSettings);
+        var isAzureApplication = @Json.Serialize(isAzureApplication);
+        var userDirectoryWindows = "@authenticationGeneralHelpSiteUrl";
+        var isOpenIdIdentityProviderOptionEnabled = @Json.Serialize(isOpenIdIdentityProviderOptionEnabled);
+        var isOAuthIdIdentityProviderOptionEnabled = @Json.Serialize(isOAuthIdIdentityProviderOptionEnabled);
+        var isOpenIdCustomMailOptionEnabled = @Json.Serialize(isOpenIdCustomMailOptionEnabled);
+        var isOAuthCustomMailOptionEnabled = @Json.Serialize(isOAuthCustomMailOptionEnabled);
+        var openIdCustomMailContent = @Json.Serialize(openIdCustomMailContent);
+        var oAuthCustomMailContent = @Json.Serialize(oAuthCustomMailContent);
+        var jwtEnabled = @Html.Raw(Json.Serialize((ViewBag.JwtSettings.IsEnabled)));
+        var refreshSigningKeyUrl = "@Url.Action("RegenerateSigningKey", "Administration")";
+        var openIdEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ? ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+        var openIdEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings != null ? ViewBag.OpenIDSettings.OIDCAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+        var oauthEnableGroupClaim = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ? ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.EnableGroupClaims : false));
+        var oauthEnableRemoveExistGroupMapping = @Html.Raw(Json.Serialize(ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings != null ? ViewBag.OAuthSettings.OAuthAuthSettings.GroupClaimsSettings.RemoveExistGroupMapping : false));
+    </script>
+    <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript">
+
+        $(document)
+            .ready(function () {
+                var section = window.location.href;
+                $(".system-settings-sidebar li").hide();
+
+                if (section.toLowerCase().indexOf("groups") > 0 ||
+                    section.toLowerCase().indexOf("users") > 0 ||
+                    section.toLowerCase().indexOf("user-management") > 0) {
+                    $("li[data-current-content='groups'],li[data-current-content='users']").show();
+                } else {
+                    $("li[data-current-content='emailsettings'],li[data-current-content='usersettings'],li[data-current-content='general'],li[data-current-content='activedirectorysettings'],li[data-current-content='notificationsettings'],li[data-current-content='usersettings'],li[data-current-content='databasesettings'],li[data-current-content='licensesettings']").show();
+                }
+                if (section.toLowerCase().indexOf("groups") > 0) {
+                    $("li[data-current-content='groups'] a").addClass('active');
+                } else if (section.toLowerCase().indexOf("users") > 0 ||
+                    section.toLowerCase().indexOf("user-management") > 0) {
+                    $("li[data-current-content='users'] a").addClass('active');
+                } else if (section.toLowerCase().indexOf("e-mail-settings") > 0) {
+                    $("li[data-current-content='emailsettings'] a").addClass('active');
+                    $("#look-and-feel-container, #active-directory-container, #database-settings-container, #user-settings-container").hide();
+                    $("#mail-settings-container").show();
+                } else if (section.toLowerCase().indexOf("user-settings") > 0) {
+                    $("li[data-current-content='usersettings'] a").addClass('active');
+                    $("#look-and-feel-container, #active-directory-container, #database-settings-container, #mail-settings-container").hide();
+                    $("#user-settings-container").show();
+                } else if (section.toLowerCase().indexOf("authentication-settings") > 0) {
+                    $("li[data-current-content='activedirectorysettings'] a").addClass('active');
+                    $("#look-and-feel-container, #mail-settings-container,#database-settings-container, #user-settings-container").hide();
+                    $("#active-directory-container").show();
+                } else if (section.toLowerCase().indexOf("notification-settings") > 0) {
+                    $("li[data-current-content='notificationsettings'] a").addClass('active');
+                } else if (section.toLowerCase().indexOf("database-settings") > 0) {
+                    $("li[data-current-content='databasesettings'] a").addClass('active');
+                } else if (section.toLowerCase().indexOf("license-settings") > 0) {
+                    $("li[data-current-content='licensesettings'] a").addClass('active');
+                    $("#mail-settings-container, #active-directory-container, #user-settings-container").hide();
+                } else {
+                    $("li[data-current-content='general'] a").addClass('active');
+                    $("#look-and-feel-container").show();
+                    $("#mail-settings-container, #active-directory-container, #database-settings-container, #user-settings-container").hide();
+                    addUserDirectoryLog("site");
+                }
+            });
+
+        function addUserDirectoryLog(tabName) {
+            var resultName = "";
+            switch (tabName) {
+                case "site":
+                    resultName = "SiteSettings";
+                    break;
+                case "oauth":
+                    resultName = "UserDirectory.OAuth2";
+                    break;
+                case "openid":
+                    resultName = "UserDirectory.OpenIDConnect";
+                    break;
+                case "auth-control":
+                    resultName = "UserDirectory.AuthControl";
+                    break;
+                default:
+                    resultName = "";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: addUserDirectoryLogUrl,
+                data: { tabName: resultName }
+            });
+        }
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/site-settings.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/site-settings.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/site-settings.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/site-settings.min.js")" crossorigin="anonymous"></script>
+    </environment>
+}
+
+@section MainSection{
+    @await Html.PartialAsync("_AdminMenu")
+    @await Html.PartialAsync("_DialogBox")
+    <div id="active-directory-container" role="tabpanel" class="col-12 admin-page-container @(ViewBag.ThirdPartyLogins ? string.Empty : "unlock-enterprise-features blur-content")" aria-labelledby="active-directory-settings-link" ng-controller="adSettingsController">
+
+        <div class="col-md-12 import-area admin-page-header">
+            <hgroup class="col-md-6 col-sm-6 no-padding">
+                <h1 class="h2 page-title">[[[AUTHENTICATION SETTINGS]]]</h1>
+                <h5 class="page-description">[[[Configure authentication/authorization providers’ information.]]]</h5>
+            </hgroup>
+        </div>
+
+        <div>
+            <ul id="ad-tab-nav" class="nav nav-tabs" role="tablist">
+                @if (ServerAppConfig.IsSelfHosted && isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings])))
+                {
+                    <li role="presentation" class="nav-item">
+                        <a href="#default-authentication-settings-tab" id="default-authentication-settings" class="nav-link active" aria-controls="default-authentication-settings" role="tab" data-bs-toggle="tab">[[[General]]]</a>
+                    </li>
+                }
+                @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings])))
+                {
+                    <li role="presentation" class="nav-item">
+                        <a href="#auth-control-tab" id="auth-control" class="nav-link" aria-controls="auth-control-tab" role="tab" data-bs-toggle="tab">[[[Authentication Control]]]</a>
+                    </li>
+                }
+                @if (ServerAppConfig.IsSelfHosted && isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings])))
+                {
+                    <li role="presentation" class="nav-item">
+                        <a href="#oauth-settings-tab" id="oauth-settings" class="nav-link" aria-controls="oauth-settings-tab" role="tab" data-bs-toggle="tab">[[[OAuth 2.0]]]</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a href="#openid-settings-tab" id="openid-settings" class="nav-link" aria-controls="openid-settings-tab" role="tab" data-bs-toggle="tab">[[[OpenID Connect]]]</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a href="#jwt-settings-tab" id="jwt-settings" class="nav-link" aria-controls="jwt-settings-tab" role="tab" data-bs-toggle="tab">[[[JWT]]]</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="tab-content">
+                @if (ServerAppConfig.IsSelfHosted && isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings])))
+                {
+                    @await Html.PartialAsync("_DefaultAuthentication")
+                }
+
+                @if (isAdmin || (model != null && (model[SettingsScopes.All] || model[SettingsScopes.AuthenticationSettings])))
+                {
+                    @if (ServerAppConfig.IsSelfHosted)
+                    {
+                        <div role="tabpanel" class="tab-pane" id="auth-control-tab">
+                            <div id="auth-control-body" class="col-lg-12 col-md-12 col-sm-12 admin-page-body no-padding">
+                                <form id="auth-control-form" name="authControlForm" class="auth-control-form col-lg-12 col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 no-padding no-margin enable-global-default-label">
+                                            @Html.Label("enable-global-default", "[[[Enable Global Default Authentication]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="hidden" id="default-control-type" value="@AuthType.DefaultAuth">
+                                                    <input type="checkbox" id="enable-global-default" name="enableGlobalDefault" @(authControl == null || (authControl != null && authControl.Where(x => x.AuthType == AuthType.DefaultAuth).FirstOrDefault().IsEnabled) ? "checked" : string.Empty) />
+                                                    <label for="enable-global-default" class="label-primary"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 no-padding no-margin enable-global-oauth-label">
+                                            @Html.Label("enable-global-oauth", "[[[Enable Global OAuth Settings]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="hidden" id="oauth-control-type" value="@AuthType.OAuth">
+                                                    <input type="checkbox" id="enable-global-oauth" name="enableGlobalOauth" @(authControl == null || (authControl != null && authControl.Where(x => x.AuthType == AuthType.OAuth).FirstOrDefault().IsEnabled) ? "checked" : string.Empty) />
+                                                    <label for="enable-global-oauth" class="label-primary"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 no-padding no-margin enable-global-openid-label">
+                                            @Html.Label("enable-global-openid", "[[[Enable Global OpendID Connect Settings]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="hidden" id="openid-control-type" value="@AuthType.OIDC">
+                                                    <input type="checkbox" id="enable-global-openid" name="enableGlobalOpenid" @(authControl == null || (authControl != null && authControl.Where(x => x.AuthType == AuthType.OIDC).FirstOrDefault().IsEnabled) ? "checked" : string.Empty) />
+                                                    <label for="enable-global-openid" class="label-primary"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="oauth-settings-tab">
+                            <div id="oauth-page-body" class="col-12 admin-page-body">
+                                <form id="oauth-setting" name="oauthSettingsForm" class="auth-settings-form form-top-margin no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <input type="hidden" name="oauthAuthenticationProvider" value="@ViewBag.OAuthSettings.AuthProvider">
+                                    <input type="hidden" name="oauthLogo" value="@ViewBag.OAuthSettings.OAuthAuthSettings.Logo">
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin enable-openid-label">
+                                            @Html.Label("enable-oauth", "[[[Enable OAuth 2.0]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    @if ((bool)ViewBag.OAuthSettings.IsEnabled)
+                                                    {
+                                                        <input type="checkbox" id="enable-oauth" name="oauthIsEnabled" ng-model="oauthIsEnabled" ng-init="oauthIsEnabled=true" ng-change="hideValidationMessage(oauthIsEnabled, 'oauth')" ng-checked=true />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="enable-oauth" name="oauthIsEnabled" ng-model="oauthIsEnabled" ng-init="oauthIsEnabled=false" ng-change="hideValidationMessage(oauthIsEnabled, 'oauth')" />
+                                                    }
+                                                    <label for="enable-oauth" class="label-primary"></label>
+                                                </span>
+                                                <span class="validation-message"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Name]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(oauthSettingsForm.oauthProviderName.$dirty && oauthSettingsForm.oauthProviderName.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="oauthProviderName" ng-init="oauthProviderName='@providerName'" name="oauthProviderName" placeholder="[[[Provider Name]]]" id="oauth-provider-name" data-ng-disabled="!oauthIsEnabled" required />
+                                                <span id="oauth-provider-name-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" title="" data-bs-content="[[[Name of the authentication provider to be displayed in the login page.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthProviderName.$error.required && oauthSettingsForm.oauthProviderName.$dirty && oauthIsEnabled">[[[Please enter the OAuth provider name.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Logo]]]</label>
+                                            <div class="col-md-8 logo-container float-end">
+                                                <div id="oauth-image-upload-box" class="auth-image-upload-box">
+                                                    <div class="js-image-preview" style="background-image:{{oauthLogoUrl}}"></div>
+                                                    <div class="upload-options">
+                                                        <label>
+                                                            <span>[[[Change logo]]]</span>
+                                                            <input type="file" class="image-upload" accept="image/png,image/jpeg,image/svg+xml" ng-model="oauthLogoUrl" ng-init="oauthLogoUrl='@ViewBag.OAuthSettings.LogoUrl'" name="oauthLogoUrl" data-ng-disabled="!oauthIsEnabled" required />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <span id="oauth-logo-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title= "" data-bs-content="[[[Logo of the authentication provider to be displayed in the login page.]]]" tabindex="0"></span>
+                                                <span class="validation-message top-padding" ng-show="!oauthSettingsForm.isValidOAuthLogoUrl && oauthIsEnabled"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Authorization Endpoint]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(oauthSettingsForm.oauthAuthorizationEP.$dirty && oauthSettingsForm.oauthAuthorizationEP.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthAuthorizationEP" ng-init="oauthAuthorizationEP='@authorizationEndPoint'" ng-pattern="@oauthRegEx" name="oauthAuthorizationEP" placeholder="[[[Authorization Endpoint]]]" id="oauth-authorization-endpoint" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span id="oauth-auth-endpoint-info"class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[An authorization URL where the resource owner grants authorization to the OAuth client to access protected resources.]]]" tabindex="0"> </span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthAuthorizationEP.$error.required && oauthSettingsForm.oauthAuthorizationEP.$dirty && oauthIsEnabled"> [[[Please enter the authorization endpoint.]]] </span>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthAuthorizationEP.$error.pattern && oauthSettingsForm.oauthAuthorizationEP.$dirty && oauthIsEnabled"> [[[Please enter a valid authorization endpoint.]]] </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Token Endpoint]]]</label>
+
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <select id="token-method-type" class="selectpicker method-type" data-ng-disabled="!oauthIsEnabled">
+                                                    <option class="no-margin-dropdown-ul" value="POST" selected="@(ViewBag.OAuthSettings.OAuthAuthSettings.TokenEndPointMethod == "POST")">[[[POST]]]</option>
+                                                    <option class="no-margin-dropdown-ul" value="GET" selected="@(ViewBag.OAuthSettings.OAuthAuthSettings.TokenEndPointMethod == "GET")">[[[GET]]]</option>
+                                                </select>
+
+                                                <div class="input-with-icon" ng-class="(oauthSettingsForm.oauthTokenEP.$dirty && oauthSettingsForm.oauthTokenEP.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthTokenEP" ng-init="oauthTokenEP='@tokenEndPoint'" ng-pattern="@oauthRegEx" name="oauthTokenEP" placeholder="[[[Token Endpoint]]]" id="oauth-token-endpoint" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span id="oauth-token-endpoint-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[A token request URL where the OAuth client exchanges an authorization grant for an access token.]]]" tabindex="0"></span>
+                                                </div>
+                                                <span class="validation-message d-flex " ng-show="oauthSettingsForm.oauthTokenEP.$error.required && oauthSettingsForm.oauthTokenEP.$dirty && oauthIsEnabled"> [[[Please enter a token endpoint.]]] </span>
+                                                <span class="validation-message d-flex " ng-show="oauthSettingsForm.oauthTokenEP.$error.pattern && oauthSettingsForm.oauthTokenEP.$dirty && oauthIsEnabled">[[[Please enter a valid token endpoint.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[User Information Endpoint]]]</label>
+
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <select id="user-info-method-type" class="selectpicker method-type" data-ng-disabled="!oauthIsEnabled">
+                                                    <option class="no-margin-dropdown-ul" value="GET" selected="@(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoEndPointMethod == "GET")">[[[GET]]]</option>
+                                                    <option class="no-margin-dropdown-ul" value="POST" selected="@(ViewBag.OAuthSettings.OAuthAuthSettings.UserInfoEndPointMethod == "POST")">[[[POST]]]</option>
+                                                </select>
+                                                <div class="input-with-icon" ng-class="(oauthSettingsForm.oauthUserInfoEP.$dirty && oauthSettingsForm.oauthUserInfoEP.$invalid) ? 'has-error' : ''">
+                                                    <input type="text"  class="form-control col-md-6 no-margin" ng-model="oauthUserInfoEP" ng-init="oauthUserInfoEP='@userInfoEndPoint'" ng-pattern="@oauthRegEx" name="oauthUserInfoEP" placeholder="[[[User Information Endpoint]]]" id="oauth-userinfo-endpoint" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span id="oauth-user-info-endpoint-info"class="su su-info info-popup"data-bs-toggle="popover"data-bs-placement="bottom"data-html="true" title="" data-bs-content="[[[URL to retrieve the user information based on the token.]]]" tabindex="0"></span>
+                                                </div>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthUserInfoEP.$error.required && oauthSettingsForm.oauthUserInfoEP.$dirty && oauthIsEnabled"> [[[Please enter the user information endpoint.]]]</span>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthUserInfoEP.$error.pattern && oauthSettingsForm.oauthUserInfoEP.$dirty && oauthIsEnabled"> [[[Please enter a valid user information endpoint.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Client ID]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.oauthClientId.$dirty && oauthSettingsForm.oauthClientId.$invalid) ? 'has-error' : ''">
+                                                <input type="{{showSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="oauthClientId" ng-init="oauthClientId='@clientId'" name="oauthClientId" ng-attr-placeholder="{{oauthIsEnabled ? '●●●●●●●●' : 'Client ID'}}" id="oauth-client-id" data-ng-disabled="!oauthIsEnabled" required />
+                                                <div class="show-hide-password su su-eye"></div>
+                                                <span class="validation-message d-flex" ng-show="oauthSettingsForm.oauthClientId.$error.required && oauthSettingsForm.oauthClientId.$dirty && oauthIsEnabled">[[[Please enter the client ID.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.oauthClientSecret.$dirty && oauthSettingsForm.oauthClientSecret.$invalid) ? 'has-error' : ''">
+                                                <input type="{{showSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="oauthClientSecret" name="oauthClientSecret" id="oauth-client-secret" data-ng-disabled="!oauthIsEnabled" ng-attr-placeholder="{{oauthIsEnabled ? '●●●●●●●●' : 'Client Secret'}}" required />
+                                                <div class="show-hide-password su su-eye"></div>
+                                                <span class="validation-message d-flex" ng-show="oauthSettingsForm.oauthClientSecret.$error.required && oauthSettingsForm.oauthClientSecret.$dirty && oauthIsEnabled">[[[Please enter the client secret.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Scopes]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(oauthSettingsForm.oauthScopes.$dirty && oauthSettingsForm.oauthScopes.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthScopes" ng-init="oauthScopes='@ViewBag.OAuthSettings.OAuthAuthSettings.Scopes'" name="oauthScopes" placeholder="[[[Comma separated scopes]]]" id="oauth-scopes" data-ng-disabled="!oauthIsEnabled" required />
+                                                <span id="oauth-scopes-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes. This information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.oauthScopes.$error.required && oauthSettingsForm.oauthScopes.$dirty && oauthIsEnabled">[[[Please enter comma separated scopes.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Logout URI]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(oauthSettingsForm.oauthLogoutEndpoint.$dirty && oauthSettingsForm.oauthLogoutEndpoint.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="oauthLogoutEndpoint" ng-init="oauthLogoutEndpoint='@logoutEndPoint'" name="oauthLogoutEndpoint" placeholder="[[[Logout Endpoint (Optional)]]]" id="oauth-logout-endpoint" ng-pattern="@oauthRegEx" data-ng-disabled="!oauthIsEnabled" />
+                                                <span id="oauth-logoutendpoint-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[We support logout endpoints that have static request parameters.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center Logout URI" ng-show="oauthSettingsForm.oauthLogoutEndpoint.$error.pattern && oauthSettingsForm.oauthLogoutEndpoint.$dirty && oauthIsEnabled">[[[Please enter a valid logout endpoint.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Redirect URI]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <input id="oauth-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OAuthCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
+                                                <div class="form-control su su-copy text focus" id="oauth-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="no-padding no-margin">
+                                            <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
+                                            <div class="col-md-6 section-info-message-container">
+                                                <span class="su su-info"></span>
+                                                <div class="section-info-message">
+                                                    [[[Once passed the group or equivalent claim in the authentication token this settings allow automatic user and group mapping based on the received claim value. The claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Fill JSON keys with respect to the required details to identify the exact values.]]]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-oauth-group-claim">[[[Enable User and Group mapping]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-oauth-group-claim" name="oauthEnableGroupClaim" ng-model="oauthEnableGroupClaim" ng-checked="oauthEnableGroupClaim" data-ng-disabled="!oauthIsEnabled" />
+                                                    <label for="enable-oauth-group-claim" class="label-primary"></label>
+                                                </span>
+                                                <span id="oauth-enable-group-claims-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-html="true" title=""
+                                                      data-bs-content="[[[Fetch group claim value and process the user and multi-group mapping dynamically during login.]]]" tabindex="0" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-oauth-remove-group-mapping">[[[Un-map Existing Groups of User and map to new group]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-oauth-remove-group-mapping" name="oauthEnableRemoveExistGroupMapping" ng-model="oauthEnableRemoveExistGroupMapping" ng-checked="oauthEnableRemoveExistGroupMapping" ng-disabled="!oauthIsEnabled || !oauthEnableGroupClaim" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <label for="enable-oauth-remove-group-mapping" class="label-primary"></label>
+                                                </span>
+                                                <span id="oauth-enable-remove-group-mapping-info" class="su su-info info-popup"
+                                                      data-bs-toggle="popover" data-bs-placement="right" data-html="true"
+                                                      data-bs-content="[[[When enabled, this option clears all previously assigned groups for the user and map to the group which is received in claim.]]]" tabindex="0" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="oauth-group-claim-name">
+                                                [[[Group Claim Name]]]
+                                            </label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon"
+                                                 ng-class="(oauthSettingsForm.oauthgroupclaimname.$dirty && oauthSettingsForm.oauthgroupclaimname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" name="oauthgroupclaimname" placeholder="[[[Group claim name (Optional)]]]" ng-init="oauthgroupclaimname='@((ViewBag.OAuthSettings?.OAuthAuthSettings?.GroupClaimsSettings?.GroupClaimName ?? "").ToString())'" id="oauth-group-claim-name" ng-disabled="!oauthIsEnabled || !oauthEnableGroupClaim" ng-model="oauthgroupclaimname" />
+                                                <span id="oauth-group-claim-name-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-html="true"
+                                                      data-bs-content="[[[Specify the claim name that contains group identifiers. User and group will be mapped only if the same group name exists in the site.]]]" tabindex="0">
+                                                </span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center ng-hide"
+                                                  ng-show="oauthSettingsForm.oauthgroupclaimname.$error.pattern && oauthSettingsForm.oauthgroupclaimname.$dirty && oauthIsEnabled">
+                                                [[[Please enter a valid group claim name.]]]
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="section-title">
+                                            <span>[[[User data]]]</span>
+                                        </div>
+                                        <div class="col-md-6 section-info-message-container">
+                                            <span class="su su-info"></span>
+                                            <div class="section-info-message">[[[The user information endpoint returns claims about the authenticated user. These claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Fill JSON keys with respect to the required details to identify the exact values.]]]</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Email]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.userInfoEmail.$dirty && oauthSettingsForm.userInfoEmail.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="userInfoEmail" ng-init="userInfoEmail='@userInfoEmail'" name="userInfoEmail" placeholder="[[[Email]]]" id="user-info-email" data-ng-disabled="!oauthIsEnabled" required />
+                                                <span class="validation-message d-flex justify-content-center" ng-show="oauthSettingsForm.userInfoEmail.$error.required && oauthSettingsForm.userInfoEmail.$dirty && oauthIsEnabled">[[[Please enter the value for email.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[First Name]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.userInfoFirstname.$dirty && oauthSettingsForm.userInfoFirstname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="userInfoFirstname" ng-init="userInfoFirstname='@userInfoFirstname'" name="userInfoFirstname" placeholder="[[[First Name]]]" id="user-info-firstname" data-ng-disabled="!oauthIsEnabled" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Last Name]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(oauthSettingsForm.userInfoLastname.$dirty && oauthSettingsForm.userInfoLastname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" ng-model="userInfoLastname" ng-init="userInfoLastname='@userInfoLastname'" name="userInfoLastname" placeholder="[[[Last Name]]]" id="user-info-lastname" data-ng-disabled="!oauthIsEnabled" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-12 form-group">
+                                        <div id="identity-provider-info" class="col-sm-12 col-12">
+                                            <div id="enable-checkbox">
+                                                @if (isOAuthIdIdentityProviderOptionEnabled)
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-oauth-identity-provider-info" name="oauthIdentityProviderInfoIsEnabled" ng-model="oauthIdentityProviderInfoIsEnabled" ng-init="oauthIdentityProviderInfoIsEnabled=true" ng-checked=true />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-oauth-identity-provider-info" name="oauthIdentityProviderInfoIsEnabled" ng-model="oauthIdentityProviderInfoIsEnabled" ng-init="oauthIdentityProviderInfoIsEnabled=false" />
+                                                }
+                                                @Html.Hidden("configure-oauth-identity-provider-info")
+                                                @Html.Label("configure-oauth-identity-provider-info", "[[[Configure identity provider info to add users]]]")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="oauth-identity-provider-info-section" ng-if="oauthIdentityProviderInfoIsEnabled">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Provider Name]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" id="oauth-identity-provider-name" ng-class="(oauthSettingsForm.oauthIdentityProviderName.$dirty && oauthSettingsForm.oauthIdentityProviderName.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" placeholder="[[[Provider Name]]]" name="oauthIdentityProviderName" ng-model="oauthIdentityProviderName" ng-init="oauthIdentityProviderName='@oAuthIdentityProviderName'" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span class="validation-message" id="oauthIPN-validation-message" ng-show="oauthSettingsForm.oauthIdentityProviderName.$error.required && oauthSettingsForm.oauthIdentityProviderName.$dirty && oauthIsEnabled">[[[Please enter the identity provider name.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Provider URL]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" id="oauth-identity-provider-url" ng-class="(oauthSettingsForm.oauthIdentityProviderUrl.$dirty && oauthSettingsForm.oauthIdentityProviderUrl.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" placeholder="[[[Provider URL]]]" name="oauthIdentityProviderUrl" ng-model="oauthIdentityProviderUrl" ng-init="oauthIdentityProviderUrl='@oAuthIdentityProviderURL'" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span class="validation-message" id="oauthIPU-validation-message" ng-show="oauthSettingsForm.oauthIdentityProviderUrl.$error.required && oauthSettingsForm.oauthIdentityProviderUrl.$dirty && oauthIsEnabled">[[[Please enter the identity provider URL.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div id="custom-mail-content" class="col-sm-12 col-12">
+                                            <div id="enable-checkbox">
+                                                @if (isOAuthCustomMailOptionEnabled)
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-oauth-custom-mail-content" name="oauthCustomMailContentIsEnabled" ng-model="oauthCustomMailContentIsEnabled" ng-init="oauthCustomMailContentIsEnabled=true" ng-checked=true />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-oauth-custom-mail-content" name="oauthCustomMailContentIsEnabled" ng-model="oauthCustomMailContentIsEnabled" ng-init="oauthCustomMailContentIsEnabled=false" />
+                                                }
+                                                @Html.Hidden("configure-oauth-custom-mail-content")
+                                                @Html.Label("configure-oauth-custom-mail-content", "[[[Configure custom invite mail]]]")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="oauth-custom-mail-content-section" ng-if="oauthCustomMailContentIsEnabled">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Subject]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" id="oauth-identity-provider-url" ng-class="(oauthSettingsForm.oauthMailSubject.$dirty && oauthSettingsForm.oauthMailSubject.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" placeholder="[[[Subject]]]" name="oauthMailSubject" ng-model="oauthMailSubject" ng-init="oauthMailSubject='@oAuthSubject'" data-ng-disabled="!oauthIsEnabled" required />
+                                                    <span class="validation-message" id="oauthIPU-validation-message" ng-show="oauthSettingsForm.oauthMailSubject.$error.required && oauthSettingsForm.oauthMailSubject.$dirty && oauthIsEnabled">[[[Please enter a subject.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-group oauth-custom-mail-content">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Custom invite mail content]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" id="oauth-email-editor">
+                                                    <textarea class="col-sm-12 col-12 no-padding" id="oauth-custom-mail-content"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </form>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="openid-settings-tab">
+                            <div id="openid-page-body" class="col-lg-12 col-md-12 col-sm-12 admin-page-body no-padding">
+                                <form id="openid-setting" name="openidSettingsForm" class="auth-settings-form col-lg-12 col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <input type="hidden" name="openidAuthenticationProvider" value="@ViewBag.OpenIDSettings.AuthProvider">
+                                    <input type="hidden" name="openidLogo" value="@ViewBag.OpenIDSettings.OIDCAuthSettings.Logo">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin enable-openid-label">
+                                            @Html.Label("enable-openid", "[[[Enable OpenID Connect]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    @if ((bool)ViewBag.OpenIDSettings.IsEnabled)
+                                                    {
+                                                        <input type="checkbox" id="enable-openid" name="openidIsEnabled" ng-model="openidIsEnabled" ng-init="openidIsEnabled=true" ng-change="hideValidationMessage(openidIsEnabled, 'openid')" ng-checked=true />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="enable-openid" name="openidIsEnabled" ng-model="openidIsEnabled" ng-init="openidIsEnabled=false" ng-change="hideValidationMessage(openidIsEnabled, 'openid')" />
+                                                    }
+                                                    <label for="enable-openid" class="label-primary"></label>
+                                                </span>
+                                                <span class="validation-message"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Name]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(openidSettingsForm.openidProviderName.$dirty && openidSettingsForm.openidProviderName.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="openidProviderName" ng-init="openidProviderName='@OpenIDProviderName'" name="openidProviderName" placeholder="[[[Provider Name]]]" id="openid-provider-name" data-ng-disabled="!openidIsEnabled" required />
+                                                <span id="openid-provider-name-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[Name of the authentication provider to be displayed in the login page.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidProviderName.$error.required && openidSettingsForm.openidProviderName.$dirty && openidIsEnabled">[[[Please enter the OpenID provider name.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Logo]]]</label>
+                                            <div class="col-md-8 logo-container float-end">
+                                                <div id="openid-image-upload-box" class="auth-image-upload-box">
+                                                    <div class="js-image-preview" style="background-image:{{openidLogoUrl}}"></div>
+                                                    <div class="upload-options">
+                                                        <label>
+                                                            <span>[[[Change logo]]]</span>
+                                                            <input type="file" class="image-upload" accept="image/png,image/jpeg,image/svg+xml" ng-model="openidLogoUrl" ng-init="openidLogoUrl='@ViewBag.OpenIDSettings.LogoUrl'" name="openidLogoUrl" data-ng-disabled="!openidIsEnabled" required />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <span id="openid-logo-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[Logo of the authentication provider to be displayed in the login page.]]]" tabindex="0"></span>
+                                                <span class="validation-message top-padding" ng-show="!openidSettingsForm.isValidOpenIdLogoUrl && openidIsEnabled"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Authority]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(openidSettingsForm.openidAuthority.$dirty && openidSettingsForm.openidAuthority.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="openidAuthority" ng-init="openidAuthority='@authority'" ng-pattern="@oauthRegEx" name="openidAuthority" placeholder="[[[Authority]]]" id="openid-authority" data-ng-disabled="!openidIsEnabled" required />
+                                                <span id="openid-authority-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[Endpoint to authenticate the user and grant access to the protected resource. It returns the claims about the authenticated user.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidAuthority.$error.required && openidSettingsForm.openidAuthority.$dirty && openidIsEnabled">[[[Please enter the Authority URL.]]]</span>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidAuthority.$error.pattern && openidSettingsForm.openidAuthority.$dirty && openidIsEnabled">[[[Please enter a valid Authority URL.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Client ID]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(openidSettingsForm.openidClientId.$dirty && openidSettingsForm.openidClientId.$invalid) ? 'has-error' : ''">
+                                                <input type="{{showOpenIdSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="openidClientId" ng-init="openidClientId='@openIDClientId'" name="openidClientId" ng-attr-placeholder="{{openidIsEnabled ? '●●●●●●●●' : 'Client ID'}}" id="openid-client-id" data-ng-disabled="!openidIsEnabled" required />
+                                                <div class="show-hide-password su su-eye"></div>
+                                                <span class="validation-message d-flex" ng-show="openidSettingsForm.openidClientId.$error.required && openidSettingsForm.openidClientId.$dirty && openidIsEnabled">[[[Please enter the Client ID.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Client Secret]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end" ng-class="(openidSettingsForm.openidClientSecret.$dirty && openidSettingsForm.openidClientSecret.$invalid) ? 'has-error' : ''">
+                                                <input type="{{showOpenIdSecret ? 'text' : 'password'}}" class="form-control col-md-6 no-margin" ng-model="openidClientSecret" ng-init="openidClientSecret" name="openidClientSecret" id="openid-client-secret" data-ng-disabled="!openidIsEnabled" ng-attr-placeholder="{{openidIsEnabled ? '●●●●●●●●' : 'Client Secret'}}" required />
+                                                <div class="show-hide-password su su-eye"></div>
+                                                <span class="validation-message d-flex" ng-show="openidSettingsForm.openidClientSecret.$error.required && openidSettingsForm.openidClientSecret.$dirty && openidIsEnabled">[[[Please enter the client secret.]]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Identifier]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(openidSettingsForm.openidIdentifier.$dirty && openidSettingsForm.openidIdentifier.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="openidIdentifier" ng-init="openidIdentifier='@identifier'" name="openidIdentifier" placeholder="[[[Identifier]]]" id="openid-identifier" data-ng-disabled="!openidIsEnabled" required />
+                                                <span id="openid-identifier-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[These claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Provide the JSON key to identify the unique identity (email) of the user.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidIdentifier.$error.required && openidSettingsForm.openidIdentifier.$dirty && openidIsEnabled">[[[Please enter the Identifier.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Response Type]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <select id="response-type-dropdown" class="selectpicker form-control" data-ng-disabled="!openidIsEnabled">
+                                                    <option class="no-margin-dropdown-ul" value="id_token" selected="@(ViewBag.OpenIDSettings.OIDCAuthSettings.ResponseType == "id_token")">[[[id_token]]]</option>
+                                                    <option class="no-margin-dropdown-ul" value="code" selected="@(ViewBag.OpenIDSettings.OIDCAuthSettings.ResponseType == "code")">[[[code]]]</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Logout Endpoint]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(openidSettingsForm.openidLogoutUrl.$dirty && openidSettingsForm.openidLogoutUrl.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="openidLogoutUrl" ng-init="openidLogoutUrl='@logoutUrl'" name="openidLogoutUrl" placeholder="[[[Logout Endpoint (Optional)]]]" id="openid-logout-url" ng-pattern="@oauthRegEx" data-ng-disabled="!openidIsEnabled" />
+                                                <span id="openid-logouturl-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[We support logout endpoints that have static request parameters.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="openidSettingsForm.openidLogoutUrl.$error.pattern && openidSettingsForm.openidLogoutUrl.$dirty && openidIsEnabled">[[[Please enter a valid logout endpoint.]]]</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Redirect URI]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end">
+                                                <input id="openid-callback-link" value="@(globalAppSettings.SystemSettings.IDPUrl + AuthenticationConfig.OidcCallabckUrl)" class="form-control col-md-6 no-margin" readonly />
+                                                <div class="form-control su su-copy text focus" id="openid-callback-link-copy" readonly="" data-original-title="[[[Click to copy]]]"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-8 no-padding no-margin">
+                                            <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
+                                            <div class="section-info-message-container">
+                                                <span class="su su-info"></span>
+                                                <div class="section-info-message">
+                                                    [[[Once passed the group or equivalent claim in the authentication token this settings allow automatic user and group mapping based on the received claim value. The claims are normally represented by a JSON object that contains a collection of name and value pairs for each claim. Fill JSON keys with respect to the required details to identify the exact values.]]]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-openid-group-claim">[[[Enable User and Group mapping]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-openid-group-claim" name="openIdEnableGroupClaim"
+                                                           ng-model="openIdEnableGroupClaim" ng-checked="openIdEnableGroupClaim"
+                                                           ng-disabled="!openidIsEnabled" />
+                                                    <label for="enable-openid-group-claim" class="label-primary"></label>
+                                                </span>
+                                                <span id="openid-enable-group-claims-info" class="su su-info info-popup"
+                                                      data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"
+                                                      data-bs-content="[[[Fetch group claim value and process the user and multi-group mapping dynamically during login.]]]" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="enable-openid-remove-group-mapping">[[[Un-map Existing Groups of User and map to new group]]]</label>
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-openid-remove-group-mapping" name="openIdEnableRemoveExistGroupMapping"
+                                                           ng-model="openIdEnableRemoveExistGroupMapping" ng-checked="openIdEnableRemoveExistGroupMapping"
+                                                           ng-disabled="!openidIsEnabled || !openIdEnableGroupClaim" />
+                                                    <label for="enable-openid-remove-group-mapping" class="label-primary"></label>
+                                                </span>
+                                                <span id="openid-enable-remove-group-mapping-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"
+                                                      data-bs-content="[[[When enabled, this option clears all previously assigned groups for the user and map to the group which is received in claim.]]]" style="margin-left: 12px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin" for="openid-group-claim-name">[[[Group Claim Name]]]</label>
+                                            <div class="col-md-8 form-input-field float-end input-with-icon"
+                                                 ng-class="(oauthSettingsForm.openidgroupclaimname.$dirty && oauthSettingsForm.openidgroupclaimname.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" name="openidgroupclaimname" placeholder="[[[Group claim name (Optional)]]]" ng-init="openidgroupclaimname='@((ViewBag.OpenIDSettings?.OIDCAuthSettings?.GroupClaimsSettings?.GroupClaimName ?? "").ToString())'" id="openid-group-claim-name" ng-disabled="!openidIsEnabled || !openIdEnableGroupClaim" ng-model="openidgroupclaimname" />
+                                                <span id="openid-group-claim-name-info" class="su-info info-popup" data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true" data-bs-content="[[[Specify the claim name that contains group identifiers. User and group will be mapped only if the same group name exists in the site.]]]">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-12 form-group">
+                                        <div id="identity-provider-info" class="col-sm-12 col-12s">
+                                            <div id="enable-checkbox">
+                                                @if (isOpenIdIdentityProviderOptionEnabled)
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-openid-identity-provider-info" name="identityproviderInfoiseEnbled" ng-model="openIdIdentityProviderInfoIsEnabled" ng-init="openIdIdentityProviderInfoIsEnabled=true" ng-checked=true />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-openid-identity-provider-info" name="identityproviderInfoiseEnbled" ng-model="openIdIdentityProviderInfoIsEnabled" ng-init="openIdIdentityProviderInfoIsEnabled=false" />
+                                                }
+                                                @Html.Hidden("configure-openid-identity-provider-info")
+                                                @Html.Label("configure-openid-identity-provider-info", "[[[Configure identity provider info to add users]]]")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="openid-identity-provider-info-section" ng-if="openIdIdentityProviderInfoIsEnabled">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Provider Name]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" ng-class="(openidSettingsForm.openIdIdentityProviderName.$dirty && openidSettingsForm.openIdIdentityProviderName.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" name="openIdIdentityProviderName" ng-model="openIdIdentityProviderName" ng-init="openIdIdentityProviderName='@openIdIdentityProviderName'" placeholder="[[[Provider Name]]]" data-ng-disabled="!openidIsEnabled" required />
+                                                    <span class="validation-message" id="opendidIPN-validation-message" ng-show="openidSettingsForm.openIdIdentityProviderName.$error.required && openidSettingsForm.openIdIdentityProviderName.$dirty && openidIsEnabled">[[[Please enter the identity provider name.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Provider URL]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" ng-class="(openidSettingsForm.openIdIdentityProviderURL.$dirty && openidSettingsForm.openIdIdentityProviderURL.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" name="openIdIdentityProviderURL" ng-model="openIdIdentityProviderURL" ng-init="openIdIdentityProviderURL='@openIdIdentityProviderURL'" placeholder="[[[Provider URL]]]" data-ng-disabled="!openidIsEnabled" required />
+                                                    <span class="validation-message" id="opendidIPU-validation-message" ng-show="openidSettingsForm.openIdIdentityProviderURL.$error.required && openidSettingsForm.openIdIdentityProviderURL.$dirty && openidIsEnabled">[[[Please enter the identity provider URL.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div id="custom-mail-content" class="col-sm-12 col-12s">
+                                            <div id="enable-checkbox">
+                                                @if (isOpenIdCustomMailOptionEnabled)
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-openid-custom-mail-content" name="customMailContentiseEnbled" ng-model="openIdCustomMailContentIsEnabled" ng-init="openIdCustomMailContentIsEnabled=true" ng-checked=true />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="material-checkbox" id="configure-openid-custom-mail-content" name="customMailContentiseEnbled" ng-model="openIdCustomMailContentIsEnabled" ng-init="openIdCustomMailContentIsEnabled=false" />
+                                                }
+                                                @Html.Hidden("configure-openid-custom-mail-content")
+                                                @Html.Label("configure-openid-custom-mail-content", "[[[Configure custom invite mail]]]")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="openid-custom-invite-mail-content-section" ng-if="openIdCustomMailContentIsEnabled">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Subject]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" ng-class="(openidSettingsForm.openidMailSubject.$dirty && openidSettingsForm.openidMailSubject.$invalid) ? 'has-error' : ''">
+                                                    <input type="text" class="form-control col-md-6 no-margin" name="openidMailSubject" ng-model="openidMailSubject" ng-init="openidMailSubject='@openIdSubject'" placeholder="[[[Subject]]]" data-ng-disabled="!openidIsEnabled" required />
+                                                    <span class="validation-message" id="opendidIPU-validation-message" ng-show="openidSettingsForm.openidMailSubject.$error.required && openidSettingsForm.openidMailSubject.$dirty && openidIsEnabled">[[[Please enter a subject.]]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-6 no-padding no-margin">
+                                                <label class="app-textbox-label col-md-4 no-margin">[[[Custom invite mail content]]]</label>
+                                                <div class="col-md-8 no-margin form-input-field" id="openid-email-editor">
+                                                    <textarea class="col-sm-12 col-12 no-padding" id="openid-custom-mail-content"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </form>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="jwt-settings-tab" aria-labelledby="jwt-settings-tab-label">
+                            <div id="jwt-page-body" class="col-lg-12 col-md-12 col-sm-12 admin-page-body no-padding">
+                                <form id="jwt-setting" name="jwtSettingsForm" class="auth-settings-form col-lg-12 col-md-12 col-sm-12 no-padding" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <input type="hidden" name="jwtAuthenticationProvider" value="@ViewBag.JwtSettings.AuthProvider">
+                                    <input type="hidden" name="jwtLogo" value="@ViewBag.JwtSettings.JWTSettings.Logo">
+                                 
+                                    <!--Enable JWT Login -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin enable-jwt-label">
+                                            @Html.Label("enable-jwt", "[[[Enable JWT Login]]]", new { @class = "app-textbox-label col-md-4 col-form-label pe-0" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    <input type="checkbox" id="enable-jwt" name="jwtIsEnabled" ng-model="jwtIsEnabled" ng-init="jwtIsEnabled = @(ViewBag.JwtSettings.IsEnabled ? "true" : "false")" ng-change="hideValidationMessage(jwtIsEnabled, 'jwt')" />
+                                                    <label for="enable-jwt" class="label-primary"></label>
+                                                </span>
+                                                <span class="validation-message"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Provider Name -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Name]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(jwtSettingsForm.jwtProviderName.$dirty && jwtSettingsForm.jwtProviderName.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control no-margin" ng-model="jwtProviderName" ng-init="jwtProviderName='@jwtProviderName'" name="jwtProviderName" ng-required="jwtIsEnabled" placeholder="[[[Provider Name]]]" id="jwt-provider-name" data-ng-disabled="!jwtIsEnabled" required />
+                                                <span id="jwt-provider-name-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" title="" data-bs-content="[[[Name of the authentication provider to be displayed on the login page.]]]" tabindex="0"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="jwtSettingsForm.jwtProviderName.$error.required && jwtSettingsForm.jwtProviderName.$dirty && jwtIsEnabled">[[[Please enter the JWT provider name.]]] </span>
+                                        </div>
+                                    </div>
+                                    <!-- Provider Logo -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label class="app-textbox-label col-md-4 no-margin">[[[Provider Logo]]]</label>
+                                            <div class="col-md-8 logo-container float-end">
+                                                <div id="jwt-image-upload-box" class="auth-image-upload-box">
+                                                    <div class="js-image-preview" style="background-image:{{jwtLogoUrl}}"></div>
+                                                    <div class="upload-options">
+                                                        <label>
+                                                            <span>[[[Change logo]]]</span>
+                                                            <input type="file" class="image-upload" name="jwtLogoUrl" accept="image/png,image/jpeg,image/svg+xml" ng-required="jwtIsEnabled" ng-model="jwtLogoUrl" ng-init="jwtLogoUrl='@ViewBag.JwtSettings.LogoUrl'" name="jwtLogoUrl" data-ng-disabled="!jwtIsEnabled" required />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <span id="jwt-settings-tab" class="su su-info info-popup" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-html="true" title="" data-bs-content="[[[Logo of the authentication provider to be displayed on the login page.]]]"></span>
+                                                <span class="validation-message top-padding" ng-show="jwtSettingsForm.jwtLogoUrl.$error.required && jwtSettingsForm.jwtLogoUrl.$dirty && jwtIsEnabled">
+                                                    [[[Please select JWT provider logo]]]
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Remote Login URL -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label for="jwt-login-url" class="app-textbox-label col-md-4 no-margin">[[[Remote Login URL]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(jwtSettingsForm.jwtLoginUrl.$dirty && jwtSettingsForm.jwtLoginUrl.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" id="jwt-login-url" name="jwtLoginUrl" ng-required="jwtIsEnabled" placeholder="[[[Remote Login URL]]]" ng-model="jwtLoginUrl" ng-init="jwtLoginUrl='@ViewBag.JwtSettings?.JWTSettings?.LoginUrl'" ng-pattern="@oauthRegEx" data-ng-disabled="!jwtIsEnabled" required />
+                                                <span class="su su-info info-popup" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" title="" data-bs-content="[[[A remote login URL where the resource owner grants authorization to the client to access protected resources.]]]"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="jwtSettingsForm.jwtLoginUrl.$error.required && jwtSettingsForm.jwtLoginUrl.$dirty && jwtIsEnabled">[[[Please enter the login URL.]]]</span>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="jwtSettingsForm.jwtLoginUrl.$error.pattern && jwtSettingsForm.jwtLoginUrl.$dirty && jwtIsEnabled">[[[Please enter a valid login URL.]]]</span>
+                                        </div>
+                                    </div>
+                                    <!-- Remote Logout URL -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            <label for="jwt-logout-url" class="app-textbox-label col-md-4 col-form-label">[[[Remote Logout URL]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field float-end input-with-icon" ng-class="(jwtSettingsForm.jwtLogoutUrl.$dirty && jwtSettingsForm.jwtLogoutUrl.$invalid) ? 'has-error' : ''">
+                                                <input type="text" class="form-control col-md-6 no-margin" id="jwt-logout-url" name="jwtLogoutUrl" ng-required="jwtIsEnabled" placeholder="[[[Remote Logout URL]]]" ng-model="jwtLogoutUrl" ng-init="jwtLogoutUrl='@ViewBag.JwtSettings?.JWTSettings?.LogOutUrl'" ng-pattern="@oauthRegEx" data-ng-disabled="!jwtIsEnabled" required />
+                                                <span class="su su-info info-popup" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" title="" data-bs-content="[[[We support logout endpoints that have static request parameters.]]]"></span>
+                                            </div>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="jwtSettingsForm.jwtLogoutUrl.$error.required && jwtSettingsForm.jwtLogoutUrl.$dirty && jwtIsEnabled">[[[Please enter the logout URL.]]]</span>
+                                            <span class="validation-message d-flex justify-content-center" ng-show="jwtSettingsForm.jwtLogoutUrl.$error.pattern && jwtSettingsForm.jwtLogoutUrl.$dirty && jwtIsEnabled">[[[Please enter a valid logout URL.]]]</span>
+                                        </div>
+                                    </div>
+                                    <!-- Signing Key -->
+                                    <div class="col-md-12 form-group">
+                                        <div class="row col-md-6 no-padding no-margin">
+                                            <label for="jwt-signing-key" class="app-textbox-label col-md-4 col-form-label">[[[Signing Key]]]</label>
+                                            <div class="col-md-8 no-margin form-input-field input-with-icon">
+                                                <input type="password" id="jwt-signing-key" readonly class="form-control txt-holder validation-padding signing-key-values @(!enableSigningKeyOptions ? "signing-key-width" : string.Empty)" name="jwtSigningKey"
+                                                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" value="@ViewBag.JwtSettings.JWTSettings.SigningKey" style="width:300px !important" />
+                                                <div class="form-control su su-eye text show-hide-password focus" id="show-signing-key" readonly data-bs-toggle="tooltip" title="[[[Show key]]]"></div>
+                                                <div class="form-control su su-copy text focus" id="jwt-signing-key-copy" readonly data-bs-toggle="tooltip" title="[[[Click to copy]]]"></div>
+                                                <div class="form-control su su-synchronize text focus" id="generate-signing-key" ng-disabled="jwtSettingsForm.$invalid" readonly data-bs-toggle="tooltip" title="[[[Regenerate the key]]]"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        @if (ViewBag.ThirdPartyLogins)
+        {
+            <div class="admin-page-actions col-lg-12 col-md-12">
+                <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary float-end" id="cancel-active-dir-settings" title="">[[[Cancel]]]</a>
+                <button type="submit" id="update-defaultauthlogin-settings" class="primary-button app-btn-primary float-end update-defaultauth-settings">[[[Save]]]</button>
+                <button type="submit" id="update-auth-control" class="primary-button app-btn-primary float-end" style="display:none">[[[Save]]]</button>
+                <button type="submit" id="update-oauth-settings" class="primary-button app-btn-primary float-end update-auth-settings" ng-disabled="oauthSettingsForm.$invalid" style="display:none">[[[Save]]]</button>
+                <button type="submit" id="update-openid-settings" class="primary-button app-btn-primary float-end update-auth-settings" ng-disabled="openidSettingsForm.$invalid" style="display:none">[[[Save]]]</button>
+                <button type="submit" id="update-jwt-settings" class="primary-button app-btn-primary float-end update-auth-settings" ng-disabled="jwtSettingsForm.$invalid" style="display:none"> [[[Save]]]</button>
+            </div>
+        }
+        <div id="dialog" class="custom-template"></div>
+        <div id="dlgContent" style="display: none;" class="dialogContent">
+            <span class="dialogText">
+                <span class="su su-warning-alt" id="warning-icon"></span>
+                <span class="dialog-text-text">[[[Beware! Any script or application using this signing key need to be updated.]]]</span>
+            </span>
+            <button id="RegenerateSigningKey" class="e-btn e-primary">[[[Regenerate Signing Key]]]</button>
+        </div>
+
+    </div>
+}

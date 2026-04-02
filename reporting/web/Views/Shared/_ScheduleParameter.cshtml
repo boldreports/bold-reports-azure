@@ -1,0 +1,305 @@
+@using Newtonsoft.Json
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    bool isParameterHidden = false;
+    var hasdependent = "";
+    var hasdependentValue = "";
+    var hasdependentboolValue = "";
+    var showHiddenParameter = "";
+    bool hiddenParameter = false;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var itemPermission = ViewBag.ItemPermission;
+    var isAdmin = _identityResponse.User.IsAdmin;
+}
+@using BoldReports.Web
+@model List<ReportParameterInfo>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<environment include="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleparameter.css")" crossorigin="anonymous" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleparameter.min.css")" crossorigin="anonymous" />
+</environment>
+<body>
+    <input type="hidden" value="@ViewBag.Username" id="userName" />
+    <div class="col-sm-12 col-12 no-padding parameter-popup-body" id="parameters-panel">
+        <div id="parameter-headers" class="d-flex no-padding">
+            <div class="col-sm-2 col-2 parameter-header no-padding fw-bold text-decoration-underline">[[[Parameter]]]</div>
+            <div class="col-sm-4 col-4 parameter-header fw-bold text-decoration-underline">[[[Value/Expression]]]</div>
+            <div class="col-sm-4 col-4 parameter-header fw-bold text-decoration-underline">[[[Source of value]]]</div>
+        </div>
+        @foreach (var parameter in @Model)
+        {
+            foreach (var param in ViewBag.ReportParameter)
+            {
+                if (param.Name == parameter.Name)
+                {
+                    if (isAdmin || itemPermission)
+                    {
+                        isParameterHidden = param.UseDefault;
+                    }
+                    else
+                    {
+                        isParameterHidden = param.Hidden == false ? parameter.Values.Count == 0 ? false : param.UseDefault : param.Hidden;
+                        hiddenParameter = param.Hidden == null ? false : param.Hidden;
+                        showHiddenParameter = hiddenParameter ? "none" : "block";
+
+                    }
+                }
+            }
+            hasdependent = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependent" : "";
+            hasdependentValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentValue" : "";
+            hasdependentboolValue = parameter.RelationInfo != null && parameter.RelationInfo.DependentDatasets.Count > 0 || parameter.RelationInfo.ReferencedDatasets.Count > 0 || parameter.RelationInfo.DependentParameters.Count > 0 || parameter.RelationInfo.ReferencedParameters.Count > 0 ? "hasdependentboolValue" : "";
+            <div class="d-flex align-items-center no-padding">
+                @if (parameter.Prompt == null)
+                {
+                    if (isAdmin || itemPermission)
+                    {
+                        <div class="col-sm-2 col-2 no-padding align-center"><label class="parameter-label">@parameter.Name</label></div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-2 col-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Name</label></div>
+                    }
+
+                }
+                else
+                {
+                    if (isAdmin || itemPermission)
+                    {
+                        <div class="col-sm-2 col-2 no-padding align-center"><label class="parameter-label">@parameter.Prompt</label></div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-2 col-2 no-padding align-center" style="display:@showHiddenParameter;"><label class="parameter-label">@parameter.Prompt</label></div>
+                    }
+                }
+                @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0 || parameter.ElementType == ElementType.ComboBox || parameter.ElementType == ElementType.MultiValue)
+                {
+                    if (isAdmin || itemPermission)
+                    {
+
+                        <div class="col-sm-4 col-4 parameter-input">
+                            <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
+                                @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
+                                {
+                                    foreach (var parameterData in parameter.ReportParameterData)
+                                    {
+                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                            <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                            <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title="Invalid expression. Please enter a valid expression."> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+
+
+                    }
+                    else
+                    {
+
+                        <div class="col-sm-4 col-4 parameter-input" style="display:@showHiddenParameter;">
+                            <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
+                                @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
+                                {
+                                    foreach (var parameterData in parameter.ReportParameterData)
+                                    {
+                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                           <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                           <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+
+                    }
+
+                }
+                else if (parameter.DataType == ParamType.Boolean || parameter.ElementType == ElementType.RadioButton)
+                {
+                    if (isAdmin || itemPermission)
+                    {
+                        <div class="col-sm-4 col-4 boolean parameter-input parameter-boolean">
+                            <div class="col-sm-5 col-5">
+                                <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
+                                <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <input id="false-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="false" @(isParameterHidden ? "disabled" : "")>
+                                <label for="false" class="pointer normal-font notransition">[[[False]]]</label>
+                            </div>
+                        </div>
+
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                            <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                           <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-4 col-4 boolean parameter-input parameter-boolean" style="display:@showHiddenParameter;">
+                            <div class="col-sm-5 col-5">
+                                <input id="true-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="true" @(isParameterHidden ? "disabled" : "")>
+                                <label for="true" class="pointer normal-font notransition">[[[True]]]</label>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <input id="false-@parameter.Name" class="@hasdependentboolValue" type="radio" name="@parameter.Name" value="false" @(isParameterHidden ? "disabled" : "")>
+                                <label for="false" class="pointer normal-font notransition">[[[False]]]</label>
+                            </div>
+                        </div>
+
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                            <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                           <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+
+                    }
+
+                }
+                else if (parameter.DataType == ParamType.DateTime && parameter.ElementType == ElementType.DateTime)
+                {
+                    if (isAdmin || itemPermission)
+                    {
+                        <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px;">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" @(isParameterHidden ? "disabled" : "")>
+                        </div>
+
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                            <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                           <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px; display:@showHiddenParameter;">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" @(isParameterHidden ? "disabled" : "")>
+                        </div>
+
+                        <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                            <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                           <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (parameter.Values != null)
+                    {
+                        if (isAdmin || itemPermission)
+                        {
+                            <div class="col-sm-4 col-4 parameter-input parameter-text">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count> 0? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+
+                            <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                                <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                               <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-4 col-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",", parameter.Values.Count> 0? new List<string>() : parameter.Values.ToList())" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+
+                            <div id="@parameter.Name-expression" class="col-sm-4 col-4 expression-input input-group" style="display:none">
+                                <input type="text" class="hasdependentValue form-control use-expression" id="@parameter.Name-use-expression" name="@parameter.Name" placeholder="=Expression" autocomplete="off">
+                               <span id="@parameter.Name-info-icon" class="expression-input-icon input-group-text text-danger" style="display:none; cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="right" title=""> <i class="su su-info text-danger" style="font-size: 11px !important;"></i> </span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        if (isAdmin || itemPermission)
+                        {
+                            <div class="col-sm-4 col-4 parameter-input parameter-text">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",",  new List<string>() )" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-4 col-4 parameter-input parameter-text" style="display:@showHiddenParameter;">
+                                <input type="text" class="@hasdependentValue form-control" id="@parameter.Name" name="@parameter.Name" dataType="@parameter.DataType" value="@String.Join(",",  new List<string>() )" @(isParameterHidden ? "disabled" : "")>
+                            </div>
+                        }
+                    }
+                }
+                @if (isAdmin || itemPermission)
+                {
+                    <div id="@parameter.Name-select-section" class="page-indent text">
+                    </div>
+                }
+                else
+                {
+                    <div id="@parameter.Name-select-section" class="page-indent text" style="display:@showHiddenParameter;">
+                    </div>
+                }
+
+                @if (isAdmin || itemPermission)
+                {
+                    <div class="col-sm-4 col-4 no-padding validate-error" id="@parameter.Name-error-container">
+                        <div id="@parameter.Name-parameter-validator"></div>
+                    </div>
+                }
+                else
+                {
+
+
+                    <div class="col-sm-4 col-4 no-padding validate-error" id="@parameter.Name-error-container" style="display:@showHiddenParameter;">
+                        <div id="@parameter.Name-parameter-validator"></div>
+                    </div>
+                }
+
+            </div>
+        }
+    </div>
+</body>
+</html>
+<script nonce="@ViewBag.Nonce">
+     var isAdmin=@Json.Serialize(isAdmin);
+     var itemPermission= @Json.Serialize(itemPermission);
+     var reportId = @Json.Serialize(ViewBag.ReportId);
+     window.parameterObj = @Json.Serialize(Model);
+     window.reportparameterObj = @Json.Serialize(ViewBag.ReportParameter);
+     window.defaultValue = @Html.Raw(Json.Serialize(ViewBag.ParameterDefaultValues));
+     window.reportParamType = {
+         Boolean: @((int)ParamType.Boolean),
+         DateTime:  @((int)ParamType.DateTime),
+         Float:  @((int)ParamType.Float),
+         Integer: @((int)ParamType.Integer),
+         String:  @((int)ParamType.String),
+     };
+     window.reportElementType = {
+         MultiValue:  @((int)ElementType.MultiValue),
+         RadioButton: @((int)ElementType.RadioButton),
+         DateTime: @((int)ElementType.DateTime),
+         ComboBox: @((int)ElementType.ComboBox),
+         Textbox: @((int)ElementType.Textbox),
+         Checkbox: @((int)ElementType.Checkbox),
+     };
+     window.reportParameterType = {
+         String: @((int)BoldReports.RDL.DOM.DataTypes.String),
+         Boolean:  @((int)BoldReports.RDL.DOM.DataTypes.Boolean),
+         DateTime:  @((int)BoldReports.RDL.DOM.DataTypes.DateTime),
+         Integer: @((int)BoldReports.RDL.DOM.DataTypes.Integer),
+         Float:  @((int)BoldReports.RDL.DOM.DataTypes.Float),
+         Decimal: @((int)BoldReports.RDL.DOM.DataTypes.Decimal),
+     };
+</script>
+<environment include="Development,CloudDevelopment">
+    <script nonce="@ViewBag.Nonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/scheduleparameter.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@ViewBag.Nonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleparameter.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/scheduleparameter.min.js")" crossorigin="anonymous"></script>
+</environment>

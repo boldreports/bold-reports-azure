@@ -1,0 +1,1249 @@
+﻿@using Newtonsoft.Json
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    var globalAppSettings = _globalAppSettings;
+    ViewBag.Title = "[[[Reports]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ManageReports);
+    var currentUserId = ViewBag.currentUserId;
+    var dashboardUrl = Url.Action("Reports", "Reports");
+    var downloadUrl = dashboardUrl.TrimEnd('/').Remove(dashboardUrl.LastIndexOf('/'));
+    object categories = null;
+    if (ViewBag.Categories != null)
+    {
+        categories = ViewBag.Categories;
+    }
+    var canCreateCategory = ViewBag.CanCreateCategory;
+    var permisions = ViewBag.ItemAddOptions;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var isMobile = new DeviceDetection(Context).IsMobile;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var sortLabel = ViewBag.SortLabel;
+    var sortAttribute = ViewBag.SortAttribute;
+    var sortValue = ViewBag.SortValue;
+    var categorysortLabel = ViewBag.CategorySortLabel;
+    var categorysortAttribute = ViewBag.CategorySortAttribute;
+    var categorysortValue = ViewBag.CategorySortValue;
+    var granularPermissions = ViewBag.GranularPermissions as Dictionary<object, bool>;
+    var isMasterTenant = globalAppSettings.SystemSettings.IsMaster;
+    var isBlob = globalAppSettings.SystemSettings.StorageType;
+    var reportLayoutView = ViewBag.ReportLayoutView;
+    var publicReportsDeprecateHelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.PublicReportsDeprecated);
+    var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
+    var customUI = globalAppSettings.SystemSettings.CustomUI;
+    var iscustomUIProfile = customUI?.Profiles != null && customUI.Profiles[0].Reports != null;
+    var schemes = iscustomUIProfile ? customUI.Schemes.Where(x => x.Name == customUI.Profiles[0].Reports.Scheme).FirstOrDefault() : null;
+    var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+    var hideMenusAndOptions = iscustomUIProfile && !isAdmin && customUI.Profiles[0].Reports.HideMenusAndOptions;
+    var hideAuthorName = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideAuthorName);
+    var hideSortOption = iscustomUIProfile && customUI.Profiles[0].Reports.HideSorting;
+    var hideReportsSearch = iscustomUIProfile && customUI.Profiles[0].Reports.HideReportsSearch;
+    var hideReportsLayout = iscustomUIProfile && customUI.Profiles[0].Reports.HideReportsLayout;
+    var hideCategoryName = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCategoryName);
+    var hideDescription = iscustomUIProfile && customUI.Profiles[0].Reports.HideDescription;
+    var hideModifiedDate = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideModifiedDate);
+    var hideFavorite = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideFavorite || !(schemes?.Favorite ?? true));
+    var hideReportsFiltering = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideReportsFiltering);
+    var hideDownload = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideDownload || !(schemes?.Download ?? true));
+    var hideEdit = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideEdit || !(schemes?.Edit ?? true));
+    var hideMakePublic = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMakePublic || !(schemes?.MakePublic ?? true));
+    var hideMakePrivate = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMakePrivate || !(schemes?.MakePrivate ?? true));
+    var hideGetLink = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideGetLink || !(schemes?.GetLink ?? true));
+    var hideViews = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViews || !(schemes?.Views ?? true));
+    var hideViewSchedules = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViewSchedules || !(schemes?.ViewSchedules ?? true));
+    var hideInfo = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideInfo || !(schemes?.Info ?? true));
+    var hideProcessingOptions = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideProcessingOptions || !(schemes?.ProcessingOptions ?? true));
+    var hideMove = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMove || !(schemes?.Move ?? true));
+    var hideCopy = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCopy || !(schemes?.Copy ?? true));
+    var hideClone = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideClone || !(schemes?.Clone ?? true));
+    var hideCreateSchedule = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCreateSchedule || !(schemes?.CreateSchedule ?? true));
+    var hideVersionHistory = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideVersionHistory || !(schemes?.VersionHistory ?? true));
+    var hideUpdate = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideUpdate || !(schemes?.Update ?? true));
+    var hideEditAsXml = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideEditAsXml || !(schemes?.EditAsXml ?? true));
+    var hideDelete = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideDelete || !(schemes?.Delete ?? true));
+    var hideExport = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideExport || !(schemes?.Export ?? true));
+    var hideShare = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideShare || !(schemes?.Share ?? true));
+    var hideOpen = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideOpen || !(schemes?.Open ?? true));
+    var hidePublish = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HidePublish || !(schemes?.Publish ?? true));
+    var hideContextMenu = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideContextMenu || !(schemes?.ContextMenu ?? true));
+    var hideReportTileFooter = hideAuthorName && hideCategoryName && hideModifiedDate;
+    var targetValue = @ServerAppConfig.SameTabReportRender ? "_self" : "_blank";
+#pragma warning disable SCS0029 //There is no direct user input process for this issue.
+    var schemesJson = Html.Raw(Json.Serialize(schemes));
+#pragma warning restore SCS0029 //There is no direct user input process for this issue.
+    var isHideGuidInUrl = ViewBag.IsHideGuidInUrl;
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tile-dashboards-page.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/tile-dashboards-page.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tile-dashboards-page.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/tile-dashboards-page.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/publish-report.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tile-dashboards-page.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/tile-dashboards-page.min.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tile-dashboards-page.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/tile-dashboards-page.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/publish-report.min.js")" crossorigin="anonymous"></script>
+
+    </environment>
+}
+
+
+@section MainSection{
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var getItemUrl = "@Url.Action("GetItems", "Reports")";
+        var getItemGridUrl = "@Url.Action("GetItemsGrid", "Reports")";
+        var processOptionUrl = "@Url.Action("ProcessOptions", "reports")";
+        var favoriteItemUrl = "@Url.Action("MakeFavorite", "items")";
+        var getCategories = "@Url.Action("RefreshCategoryList", "Reports")";
+        var viewDashboardUrlAction = "@Url.Action("Reports", "Reports")";
+        var editDashboardUrl = "@Url.Action("ReportDesigner", "Designer")";
+        var makePublicUrl = "@Url.Action("makeitempublic", "items")";
+        var removePublicUrl = "@Url.Action("RemovePublic", "items")";
+        var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
+        var viewSchedulesUrl = "@Url.Action("Schedules", "Scheduler")";
+        var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
+        var moveIframeUrl = "@Url.Action("moveviewitem", "items")";
+        var permissionIframeUrl = "@Url.Action("ItemPermissionView", "items")";
+        var getdashboarddetailsUrl = "@Url.Action("getdashboarddetails", "reports")";
+        var getDataSourceDetailsUrl = "@Url.Action("getdatasources", "reports")";
+        var deleteItemUrl = "@Url.Action("deleteitem", "items")";
+        var deleteConfirmationUrl = "@Url.Action("deleteconfirmation", "items")";
+        var getViewsByItemIdUrl = "@Url.Action("GetViewsByItemId", "Items")";
+        var dashboardsUrl = "@Url.Action("reports", "reports")";
+        var editreportviewUrl = "@Url.Action("editreportview", "reports")";
+        var currentUserId = @currentUserId;
+        var isMarkItemsPublic = @Json.Serialize(globalAppSettings.SystemSettings.IsMarkItemsPublic);
+        var isAdmin = @Json.Serialize(isAdmin);
+        var designerInstallationHelpUrl = "@(ServerAppConfig.AppSettings.Documentation.BaseUri + GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DesignerInstallation))";
+        var downloadReportUrl = "@downloadUrl" + "/items/download";
+        var saveSortUrl = "@Url.Action("SaveSort", "Reports")";
+        var saveCategorySortUrl = "@Url.Action("SaveCategorySort", "Reports")";
+        var sortlabel = "@sortLabel";
+        var sortattribute = "@sortAttribute";
+        var sortvalue = "@sortValue";
+        var categorySortlabel = "@categorysortLabel";
+        var categorySortAttribute = "@categorysortAttribute";
+        var categorySortValue = "@categorysortValue";
+        var exportItemUrl = "@Url.Action("GetReportParameter", "Items")";
+        var getdependentparameter = "@Url.Action("getdependentparameter", "scheduler")";
+        var isMaster = @Json.Serialize(globalAppSettings.SystemSettings.IsMaster);
+        var parameterObj;
+        var reportparameterObj;
+        var editReportAsXMLUrl = "@Url.Action("EditReportAsXML", "Designer")";
+        var updateReportLayoutViewUrl = "@Url.Action("UpdateReportLayoutView", "Reports")";
+        var getReportListUrl = "@Url.Action("GetReportPartList", "ReportPart")";
+        var reportPartDeleteUrl = "@Url.Action("DeleteReportPart", "ReportPart")";
+        var fileDeleteUrl = "@Url.Action("DeleteFile", "Files")";
+        var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
+        var getReportsLinkedWithReportPartUrl = "@Url.Action("GetReportsLinkedWithReportPart", "ReportPart")";
+        var getPublicStatusUrl = "@Url.Action("GetPublicStatus", "items")";
+        var reportLayoutView = @reportLayoutView;
+        var categoryList = @Json.Serialize(categories);
+        var canCreateCategory = @Html.Raw(Json.Serialize(canCreateCategory));
+        var granularPermissions = @Json.Serialize(granularPermissions);
+        var isHideIconBasedOnDnsName = @Json.Serialize(isHideIconBasedOnDnsName);
+        var tileReportsPageNonce = "@Context.Items["ScriptNonce"]";
+        var hideAuthorName = @Json.Serialize(hideAuthorName);
+        var hideSortOption = @Json.Serialize(hideSortOption);
+        var hideReportsSearch = @Json.Serialize(hideReportsSearch);
+        var hideReportsLayout = @Json.Serialize(hideReportsLayout);
+        var hideCategoryName = @Json.Serialize(hideCategoryName);
+        var hideDescription = @Json.Serialize(hideDescription);
+        var hideModifiedDate = @Json.Serialize(hideModifiedDate);
+        var hideEdit = @Json.Serialize(hideEdit);
+        var hideMakePublic = @Json.Serialize(hideMakePublic);
+        var hideMakePrivate = @Json.Serialize(hideMakePrivate);
+        var hideGetLink = @Json.Serialize(hideGetLink);
+        var hideViews = @Json.Serialize(hideViews);
+        var hideViewSchedules = @Json.Serialize(hideViewSchedules);
+        var hideInfo = @Json.Serialize(hideInfo);
+        var hideProcessingOptions = @Json.Serialize(hideProcessingOptions);
+        var hideMove = @Json.Serialize(hideMove);
+        var hideCopy = @Json.Serialize(hideCopy);
+        var hideClone = @Json.Serialize(hideClone);
+        var hideCreateSchedule = @Json.Serialize(hideCreateSchedule);
+        var hideVersionHistory = @Json.Serialize(hideVersionHistory);
+        var hideUpdate = @Json.Serialize(hideUpdate);
+        var hideEditAsXml = @Json.Serialize(hideEditAsXml);
+        var hideDelete = @Json.Serialize(hideDelete);
+        var hideExport = @Json.Serialize(hideExport);
+        var hideShare = @Json.Serialize(hideShare);
+        var hideOpen = @Json.Serialize(hideOpen);
+        var hidePublish = @Json.Serialize(hidePublish);
+        var hideDownload = @Json.Serialize(hideDownload);
+        var hideReportsFiltering = @Json.Serialize(hideReportsFiltering);
+        var hideFavorite = @Json.Serialize(hideFavorite);
+        var hideContextMenu = @Json.Serialize(hideContextMenu);
+        var hideReportTileFooter = @Json.Serialize(hideReportTileFooter);
+        var schemesDetails = @schemesJson;
+        var getFilesUrl = "@Url.Action("GetFiles", "Files")";
+        var isHideGuidInUrl = @Json.Serialize(isHideGuidInUrl);
+        var bulkDownloadUrl = "@Url.Action("BulkDownloadReportFile", "Items")";
+        var isSandbox = @Json.Serialize(isSandbox);
+        var resourceCreateLimitUrl = "@Url.Action("ResourceCreateLimit", "Items")";
+        var checkParameterExpressionUrl = "@Url.Action("CheckParameterExpression", "Scheduler")";
+    </script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var dashboardItemCount = "@itemsCount[ItemType.Report]";
+        var sampleReportPartCount = "@itemsCount[ItemType.ReportPart]";
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
+        var targetValue = enableRenderSameTab ? "_self" : "_blank";
+    </script>
+    @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Report) && itemsCount[ItemType.Report] > 0)
+    {
+        <div id="dashboard-page-container" class="admin-page-container no-padding" ng-controller="DashboardCtrl">
+            <div class="mobile-header col-12 ng-hide" ng-show="isMobile" ng-click="expandCategorySection()">
+                <span class="category-icon su" ng-class="activeMenu === @((int)DisplayCategory.AllReports) ? 'su-all-dashboards' : activeMenu === @((int)DisplayCategory.FavouriteItems) ? 'su-dis-favorite' : activeMenu === @((int)DisplayCategory.DraftItems) ? 'su-draft' : 'su-categoried-dashboard'"></span>
+                <span class="mobile-category-title" ng-bind="activeMenuLabel">[[[All Reports]]]</span>
+                <span class="su no-margin mobile-section-expand-collapse" ng-class="expandCatSec ? 'su-vertical-collapse' : 'su-vertical-expand'"></span>
+            </div>
+
+            <div class="col-12 top-header">
+                <span class="dashboard-category-name" ng-bind="activeMenuLabel" data-container="body" data-bs-toggle="dashboard-list-tooltip" data-bs-original-title="{{activeMenuLabel}}" data-bs-placement="bottom">[[[All Reports]]]</span>
+                <span class="dashboard-count ng-hide" ng-show="dashboardDataBindComplete">({{totalDashboardCount}} {{totalDashboardCount == 1 ? "[[[report]]]" : "[[[reports]]]"}})</span>
+                <div class="col-12 top-nav-sec no-padding">
+                    @await Html.PartialAsync("../Shared/_TopMenu")
+                </div>
+            </div>
+
+            <div id="category-panel" ng-show="!isMobile || expandCatSec">
+                <ul class="category-bar-ul">
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.AllReports)}" ng-click="setActive(@((int)DisplayCategory.AllReports), '[[[All Reports]]]', $event)">
+                        <span class="category-icon su su-all-dashboards"></span>
+                        <span class="category-bar-header">[[[All]]]</span>
+                    </li>
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.FavouriteItems)}" ng-click="setActive(@((int)DisplayCategory.FavouriteItems), '[[[Favorites]]]', $event)">
+                        <span class="category-icon su su-dis-favorite"></span>
+                        <span class="category-bar-header">[[[Favorites]]]</span>
+                    </li>
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.DraftItems)}" ng-click="setActive(@((int)DisplayCategory.DraftItems), '[[[Drafts]]]', $event)">
+                        <span class="category-icon su su-draft"></span>
+                        <span class="category-bar-header">[[[Drafts]]]</span>
+                    </li>
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.ReportParts)}" ng-click="setActive(@((int)DisplayCategory.ReportParts), '[[[Report Parts]]]', $event)">
+                        <span class="category-icon su su-report-part"></span>
+                        <span class="category-bar-header">[[[Report Parts]]]</span>
+                    </li>
+                    <li class="category-item" ng-class="{active : activeMenu === @((int)DisplayCategory.Files)}" ng-click="setActive(@((int)DisplayCategory.Files), '[[[Files]]]', $event)">
+                        <span class="category-icon su su-files"></span>
+                        <span class="category-bar-header">[[[Files]]]</span>
+                    </li>
+                    <li class="category-list">
+                        <div class="col-12 no-padding">
+                            <span class="category-icon su su-categoried-dashboard"></span>
+                            <span class="category-bar-header">[[[Categories]]]</span>
+                            <div id="category-sort-dropdown" class="category-filter-sort float-end dropdown" ng-show="filteredCategory.length != 0 || categoryList.length != 0">
+                                <span class="dropdown-bs-toggle" data-bs-toggle="dropdown">
+                                    <span class="su su-sort" data-bs-toggle="tooltip" title="[[[Sort]]]"></span>
+                                </span>
+
+                                <ul class="dropdown-menu category-sort-filter-menu">
+                                    <li ng-class="{selected : selectedCategorySort === 'ModifiedDate' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'ModifiedDate', 'descending')">
+                                        <a class="d-flex align-items-center category-sort-options prevent-default-action" href="#">
+                                            <i class="su su-tick"></i>
+                                            <span class="search-option">[[[Recently Updated]]]</span>
+                                        </a>
+                                    </li>
+                                    <li ng-class="{selected : selectedCategorySort === 'Name' && categorySortDirection == 'ascending'}" ng-click="setSelectedSortCategory($event, 'Name', 'ascending')">
+                                        <a class="d-flex align-items-center category-sort-options prevent-default-action" href="#">
+                                            <i class="su su-tick"></i>
+                                            <span class="search-option">[[[Name (A-Z)]]]</span>
+                                        </a>
+                                    </li>
+                                    <li ng-class="{selected : selectedCategorySort === 'Name' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'Name', 'descending')">
+                                        <a class="d-flex align-items-center category-sort-options prevent-default-action" href="#">
+                                            <i class="su su-tick"></i>
+                                            <span class="search-option">[[[Name (Z-A)]]]</span>
+                                        </a>
+                                    </li>
+                                    <li ng-class="{selected : selectedCategorySort === 'ReportCount' && categorySortDirection == 'ascending'}" ng-click="setSelectedSortCategory($event, 'ReportCount', 'ascending')">
+                                        <a class="d-flex align-items-center category-sort-options prevent-default-action" href="#">
+                                            <i class="su su-tick"></i>
+                                            <span class="search-option">[[[Count (Ascending)]]]</span>
+                                        </a>
+                                    </li>
+                                    <li ng-class="{selected : selectedCategorySort === 'ReportCount' && categorySortDirection == 'descending'}" ng-click="setSelectedSortCategory($event, 'ReportCount', 'descending')">
+                                        <a class="d-flex align-items-center category-sort-options prevent-default-action" href="#">
+                                            <i class="su su-tick"></i>
+                                            <span class="search-option">[[[Count (Descending)]]]</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 no-padding ng-hide category-slide" ng-show="(categoryDataBindComplete || categoryList.length == 0)" style="display: none;">
+                            <div class="category-search-area float-end">
+                                <input type="text" class="category-search-box float-start no-margin" ng-model="categorySearchQuery" ng-init="categorySearchQuery = ''" ng-change="doCategorySearch()" ng-focus="isCategorySearchFocus = true" ng-blur="isCategorySearchFocus = false" placeholder="[[[Search Categories]]]" />
+                                <span class="su close-icon su-inner-close float-start no-margin ng-hide" ng-show="categorySearchQuery != ''" ng-click="onCategorySearchClear()" ng-class="{focus : isCategorySearchFocus}" data-bs-toggle="tooltip" data-container="body" title="[[[Clear search]]]"></span>
+                                <span class="su su-search float-start no-margin" ng-show="categorySearchQuery == ''" ng-class="{focus : isCategorySearchFocus}" title="[[[Search]]]" data-bs-toggle="tooltip"></span>
+                            </div>
+                            <div id="parent-category-scroll-element" style="width: 100% !important;">
+                                <div id="category-scroll-element" class="col-xs-12 no-padding" style="width: 100% !important;">
+                                    <div id="category-scroll-content" class="col-xs-12 no-padding">
+                                        <ul ng-repeat="categoryItem in categoryList" class="col-xs-12 no-padding" category-repeat-directive data-dashboard-id="{{categoryItem.Id}}">
+                                            <li class="category-item nested-li">
+                                                <div class="col-xs-12 no-padding category-item" ng-class="{'active': activeMenu === categoryItem.Id}" ng-click="setActive(categoryItem.Id, categoryItem.Name, $event, 0)" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{categoryItem.Name}}</span></span>{{categoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + categoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{categoryItem.Name}}</span></span>{{categoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + categoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{categoryItem.CreatedDate}}</span></span></span>">
+                                                    <div class="category-container">
+                                                        <div id="category-name-div">
+                                                            <span ng-class="{'su su-angle-right': categoryItem.SubCategory.length > 0}" class="arrow-icon" style="padding-right:10px"></span>
+                                                            <a class="category-name" ng-class="{'category-padding': categoryItem.SubCategory.length <= 0}" id="category-item" href="@Html.Encode(dashboardUrl + "?category={{categoryItem.Name}}")">{{categoryItem.Name}}</a>
+                                                            @* <span class="category-count badge badge-primary badge-pill">{{categoryItem.ReportsCount}}</span> *@
+                                                        </div>
+                                                        <span style="padding-left:10px">
+                                                            <span class="category-count badge badge-primary badge-pill">{{categoryItem.ReportsCount}}</span>
+                                                        </span>
+                                                        <span class="pin-category" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="left" data-bs-placement="left" data-html="true" data-bs-html="true" data-original-title="{{categoryItem.IsPinned ? '[[[Pinned]]]' : ''}}" data-bs-original-title="{{categoryItem.IsPinned ? '[[[Pinned]]]' : ''}}" data-favorite="{{categoryItem.IsPinned}}" ng-class="categoryItem.IsPinned ? 'su-pin' : '' "></span>
+                                                        <ul class="category-settings">
+                                                            <li class="dropdown category-context-menu" ng-if="!isTablet">
+                                                            <span class="dropdown-bs-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                            </span>
+                                                            <ul class="dropdown-menu" role="menu">
+
+                                                                
+                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || canCreateCategory)">
+                                                                    <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(categoryItem.Id, categoryItem.Name, categoryItem.Description)">
+                                                                        <i class="su su-sub-category"></i>
+                                                                        <span>[[[Add Sub Category]]]</span>
+                                                                    </a>
+                                                                </li>
+                                                                
+                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(categoryItem)">
+                                                                        <i class="su su-manage-permission"></i>
+                                                                        <span>[[[Sharing Permissions]]]</span>
+                                                                    </a>
+                                                                    <hr class="no-margin" />
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="togglePin($event)">
+                                                                        <i class="su" ng-class="categoryItem.IsPinned ? 'su-pin_unpin' : 'su-pin'"></i>
+                                                                        <span>{{categoryItem.IsPinned ? '[[[Unpin]]]' : '[[[Pin]]]'}}</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || categoryItem.CanWrite)">
+                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(categoryItem.Id, categoryItem.Name, categoryItem.Description, categoryItem.Id)">
+                                                                        <i class="su su-edit"></i>
+                                                                        <span>[[[Update]]]</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||categoryItem.CanDelete)">
+                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(categoryItem)">
+                                                                        <i class="su su-delete"></i>
+                                                                        <span>[[[Delete]]]</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    </div>
+                                                </div>
+                                                <ul class="nested-li show-sub-category">
+                                                    <li class="category-list-item" ng-repeat="subCategoryItem in categoryItem.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItem.Id}}">
+                                                        <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItem.Id, subCategoryItem.Name, $event, 1)" ng-class="{active : activeMenu === subCategoryItem.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.Name}}</span></span>{{subCategoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.Name}}</span></span>{{subCategoryItem.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItem.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItem.CreatedDate}}</span></span></span>">
+                                                            <div class="sub-category-align">
+                                                                <span ng-class="{'su su-angle-right': subCategoryItem.SubCategory.length > 0}" class="arrow-icon"></span>
+                                                                <a class="category-name" id="sub-category-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItem.Name}}")">{{subCategoryItem.Name}}</a>
+                                                            </div>
+                                                            <ul class="category-settings">
+                                                                <li class="dropdown category-context-menu" ng-if="!isTablet && (canCreateCategory || subCategoryItem.CanDelete || subCategoryItem.CanWrite)">
+                                                                    <span class="dropdown-bs-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                    </span>
+                                                                    <ul class="dropdown-menu" role="menu">
+                                                                       
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || canCreateCategory)">
+                                                                            <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(subCategoryItem.Id, subCategoryItem.Name, subCategoryItem.Description)">
+                                                                                    <i class="su su-sub-category"></i>
+                                                                                    <span>[[[Add Sub Category]]]</span>
+                                                                            </a>
+                                                                        </li>
+                                                                          
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                            <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItem)">
+                                                                                <i class="su su-manage-permission"></i>
+                                                                                <span>[[[Sharing Permissions]]]</span>
+                                                                            </a>
+                                                                            <hr class="no-margin" />
+                                                                        </li>
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || subCategoryItem.CanWrite)">
+                                                                            <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItem.Id, subCategoryItem.Name, subCategoryItem.Description, subCategoryItem.Id)">
+                                                                                <i class="su su-edit"></i>
+                                                                                <span>[[[Update]]]</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||subCategoryItem.CanDelete)">
+                                                                            <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItem)">
+                                                                                <i class="su su-delete"></i>
+                                                                                <span>[[[Delete]]]</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                            <span class="count-container" style="padding-left:10px">
+                                                                <span class="category-count badge badge-primary badge-pill">{{subCategoryItem.ReportsCount}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <ul class="nested-li show-sub-category">
+                                                            <li class="category-list-item" ng-repeat="subCategoryItemTree in subCategoryItem.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItemTree.Id}}">
+                                                                <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItemTree.Id, subCategoryItemTree.Name, $event, 2)" ng-class="{active : activeMenu === subCategoryItemTree.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.Name}}</span></span>{{subCategoryItemTree.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTree.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.Name}}</span></span>{{subCategoryItemTree.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTree.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTree.CreatedDate}}</span></span></span>">
+                                                                    <div class="sub-categorytree-align">
+                                                                        <span ng-class="{'su su-angle-right': subCategoryItemTree.SubCategory.length > 0}" class="arrow-icon"></span>
+                                                                        <a class="category-name" id="sub-categorytree-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItemTree.Name}}")">{{subCategoryItemTree.Name}}</a>
+                                                                    </div>
+                                                                    <ul class="category-settings">
+                                                                        <li class="dropdown category-context-menu" ng-if="!isTablet && (canCreateCategory || subCategoryItemTree.CanDelete || subCategoryItemTree.CanWrite)">
+                                                                            <span class="dropdown-bs-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                            </span>
+                                                                            <ul class="dropdown-menu" role="menu">
+                                                                                
+                                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || canCreateCategory)">
+                                                                                    <a class="EditCategory" href="javascript:void(0)" title="" ng-click="addSubCategory(subCategoryItemTree.Id, subCategoryItemTree.Name, subCategoryItemTree.Description)">
+                                                                                        <i class="su su-sub-category"></i>
+                                                                                        <span>[[[Add Sub Category]]]</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                   
+                                                                                 <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                                    <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItemTree)">
+                                                                                        <i class="su su-manage-permission"></i>
+                                                                                        <span>[[[Sharing Permissions]]]</span>
+                                                                                    </a>
+                                                                                    <hr class="no-margin" />
+                                                                                </li>
+                                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || subCategoryItemTree.CanWrite)">
+                                                                                    <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItemTree.Id, subCategoryItemTree.Name, subCategoryItemTree.Description, subCategoryItemTree.Id)">
+                                                                                        <i class="su su-edit"></i>
+                                                                                        <span>[[[Update]]]</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||subCategoryItemTree.CanDelete)">
+                                                                                    <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItemTree)">
+                                                                                        <i class="su su-delete"></i>
+                                                                                        <span>[[[Delete]]]</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <span class="count-container" style="padding-left:10px">
+                                                                        <span class="category-count badge badge-primary badge-pill">{{subCategoryItemTree.ReportsCount}}</span>
+                                                                    </span>
+                                                                </div>
+                                                                <ul class="nested-li show-sub-category">
+                                                                    <li class="category-list-item" ng-repeat="subCategoryItemTreelast in subCategoryItemTree.SubCategory" category-repeat-directive data-dashboard-id="{{subCategoryItemTreelast.Id}}">
+                                                                        <div class="col-xs-12 no-padding category-item sub-category-panel" ng-click="setActiveSubcategory(subCategoryItemTreelast.Id, subCategoryItemTreelast.Name, $event, 3)" ng-class="{active : activeMenu === subCategoryItemTreelast.Id}" data-toggle="category-list-tooltip" data-bs-toggle="category-list-tooltip" data-placement="right" data-bs-placement="right" data-container="body" data-bs-container="body" data-html="true" data-bs-html="true" data-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]] </span><span class='tooltip-description'>{{subCategoryItemTreelast.Name}}</span></span>{{subCategoryItemTreelast.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTreelast.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedDate}}</span></span></span>" data-bs-original-title="<span class='dashboard-list-tooltip'><span class='tooltip-row'><span class='tooltip-label'>[[[Name]]] </span><span class='tooltip-description'>{{subCategoryItemTreelast.Name}}</span></span>{{subCategoryItemTreelast.Description != '' ? '<span class=\'tooltip-row\'><span class=\'tooltip-label\'>[[[Description]]]: </span><span class=\'tooltip-description\'>' + subCategoryItemTreelast.Description + '</span></span>' : ''}}<span class='tooltip-row'><span class='tooltip-label'>[[[Owner Name]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedByDisplayName}} </span></span><span class='tooltip-row'><span class='tooltip-label'>[[[Added Date]]]: </span><span class='tooltip-description'>{{subCategoryItemTreelast.CreatedDate}}</span></span></span>">
+                                                                            <div class="sub-categorytree-align subcategory-final-level">
+                                                                                <a class="category-name" id="sub-categorytreelast-item" href="@Html.Encode(dashboardUrl + "?category={{subCategoryItemTreelast.Name}}")">{{subCategoryItemTreelast.Name}}</a>
+                                                                            </div>
+                                                                            <ul class="category-settings">
+                                                                                <li class="dropdown category-context-menu" ng-if="!isTablet && (canCreateCategory || subCategoryItemTreelast.CanDelete || subCategoryItemTreelast.CanWrite)">
+                                                                                    <span class="dropdown-bs-toggle no-margin no-padding su su-settings-1" title="[[[Actions]]]" data-bs-placement="top" data-bs-toggle="dropdown">
+                                                                                    </span>
+                                                                                    <ul class="dropdown-menu" role="menu">
+                                                                                        
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || hasCategorySharePermission)">
+                                                                                            <a href="#" class="item-permissions prevent-default-action" title="" ng-click="sharePermission(subCategoryItemTreelast)">
+                                                                                                <i class="su su-manage-permission"></i>
+                                                                                                <span>[[[Sharing Permissions]]]</span>
+                                                                                            </a>
+                                                                                            <hr class="no-margin" />
+                                                                                        </li>
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin || subCategoryItemTreelast.CanWrite)">
+                                                                                            <a class="EditCategory prevent-default-action" href="#" title="" ng-click="editCategory(subCategoryItemTreelast.Id, subCategoryItemTreelast.Name, subCategoryItemTreelast.Description, subCategoryItemTreelast.Id)">
+                                                                                                <i class="su su-edit"></i>
+                                                                                                <span>[[[Update]]]</span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li ng-if="(categoryItem.CreatedById == currentUserId || isAdmin ||subCategoryItemTreelast.CanDelete)">
+                                                                                            <a class="DeleteCategory prevent-default-action" href="#" ng-click="deleteCategory(subCategoryItemTreelast)">
+                                                                                                <i class="su su-delete"></i>
+                                                                                                <span>[[[Delete]]]</span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <span class="count-container" style="padding-left:10px">
+                                                                                <span class="category-count badge badge-primary badge-pill">{{subCategoryItemTreelast.ReportsCount}}</span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                        <div class="category-empty-message-div col-12 ng-hide" ng-show="filteredCategory.length == 0 || categoryList.length == 0">
+                                            <span class="category-empty-message">[[[No categories available to display.]]]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="dashboard-list-panel" ng-show="!isMobile || !expandCatSec">
+                @if (isSandbox)
+                {
+                    <div class="col-xs-12 recent-content-container" id="recent-content-container" style="display: none">
+                        <h4 class="card-title" id="recent-section-title">Recent</h4>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 recent-items" ng-repeat="item in recentItems">
+                                <a class="recent-item-link" href="{{viewDashboardUrl(item.Id, item.CategoryName, item.Name)}}" target="_blank">
+                                    <div class="recent-card">
+                                        <div class="recent-item-image">
+                                            <img ng-src="@reportServerResourceUrl/cdn/css/sample_items/{{item.ImageName | lowercase}}" />
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-title">[[[{{item.Name}}]]]</p>
+                                            <p class="card-text">[[[{{item.Description}}]]]</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="dashboard-action-container col-12 no-padding">
+                    <div class="col-5 col-lg-5 col-md-7 col-sm-10 no-padding category-info-container" ng-show="!isMobile">
+                        <span class="col-12 no-padding report-filter-module" ng-show="!showSearch">
+                            <ul class="report-filter-module ng-scope report-listing-type-list" ng-if="activeMenu !== 9 && activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files) && !hideReportsFiltering">
+                                <div class="dashboard-select-all no-padding no-margin" ng-class="{'grid-check-all-active' : reportLayoutView === @((int)ReportLayoutView.Grid),'card-check-all-active' : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-show="!isTablet && !isMobile && activeMenu !== @((int)DisplayCategory.DraftItems)" style="display:none">
+                                    @Html.CheckBox("dashboard-list-select-all", false, new { @class = "material-checkbox", @autocomplete = "off", ng_if = "activeMenu !== 2 || totalDashboardCount != 0", ng_disabled = "totalDashboardCount == 0" })
+                                    <label for="dashboard-list-select-all" class="dashboard-select-all-checkbox"></label>
+                                </div>
+                                <li class="download-icon selected" ng-click="downloadBulkReport()" style="display:none">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-download"></i>
+                                        <span class="search-option">[[[Download]]]</span>
+                                    </a>
+                                </li>
+                                <label id="action-separator" class="sf-nav-separator action-separator"></label>
+                                <li ng-if="activeMenu !== 2" ng-class="{selected : selectedFilter === @((int)DisplayCategory.AllReports)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.AllReports))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-all-dashboards"></i>
+                                        <span class="search-option">[[[All]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-if="activeMenu !== 2" ng-class="{selected : selectedFilter ===@((int)DisplayCategory.PublicItems)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.PublicItems))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-public"></i>
+                                        <span class="search-option">[[[Public]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-if="activeMenu !== 2" ng-class="{selected : selectedFilter === @((int)DisplayCategory.OwnedByMe)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.OwnedByMe))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-user-1"></i>
+                                        <span class="search-option">[[[Owned by me]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-if="activeMenu !== 2" ng-class="{selected : selectedFilter === @((int)DisplayCategory.SharedWithMe)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.SharedWithMe))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-group-1"></i>
+                                        <span class="search-option">[[[Shared with me]]]</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="report-filter-module ng-scope ng-hide" ng-show="activeMenu == @((int)DisplayCategory.DraftItems)">
+                                <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.DraftItems)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.DraftItems))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-nav-report"></i>
+                                        <span class="search-option">[[[Reports]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{selected : selectedFilter === @((int)DisplayCategory.DraftReportParts)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.DraftReportParts))">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-report-part"></i>
+                                        <span class="search-option">[[[Report Parts]]]</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
+                    <div class="dashboard-dropdown-container col-7 col-lg-7 col-md-5 col-sm-2 no-padding">
+                        <div class="dashboard-view-container ng-hide" id="dashboard-view-dropdown" ng-if="(activeMenu !== @((int)DisplayCategory.ReportParts) && selectedFilter !== @((int)DisplayCategory.DraftReportParts) && activeMenu !== @((int)DisplayCategory.Files)) && !hideReportsLayout" ng-show="!showSearch && !isTablet">
+                            <span id="view-menu-border" class="dropdown-bs-toggle" data-bs-toggle="dropdown">
+                                <span title="Card View" ng-class="{'active-layout-view': reportLayoutView === @((int)ReportLayoutView.Card), 'inactive-layout-view': reportLayoutView !== @((int)ReportLayoutView.Card)}">
+                                    <span class="view-icon su-card"></span>
+                                    <span class="su-dropdown-arrow"></span>
+                                </span>
+                                <span title="Grid View" ng-class="{'active-layout-view': reportLayoutView === @((int)ReportLayoutView.Grid), 'inactive-layout-view': reportLayoutView !== @((int)ReportLayoutView.Grid)}">
+                                    <span class="view-icon su-grid"></span>
+                                    <span class="su-dropdown-arrow"></span>
+                                </span>
+                            </span>
+                            <ul class="dropdown-menu">
+                                <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-click="changeView(@((int)ReportLayoutView.Card))">
+                                    <a class="text prevent-default-action" href="#">
+                                        <span><i class="su-card"></i></span>
+                                        <span class="view-text">[[[Card View]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{selected : reportLayoutView === @((int)ReportLayoutView.Grid)}" ng-click="changeView(@((int)ReportLayoutView.Grid))">
+                                    <a class="text prevent-default-action" href="#">
+                                        <i class="su-grid"></i>
+                                        <span class="view-text">[[[Grid View]]]</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="dashboard-search-div" class="no-padding item-searchbox-container col-5" ng-class="showSearch ? 'search-active' : ''" ng-show="!hideReportsSearch">
+                            <span ng-show="isTablet && !showSearch" ng-init="showSearch=false" ng-click="onMobileSearchClicked()" class="su su-search float-end mobile-dashboard-search ng-hide"></span>
+                            <div ng-show="!isTablet || showSearch" class="col-3 no-padding item-searchbox-container float-end">
+                                <div class="dashboard-search-area">
+                                    <span class="su su-inner-close float-end no-margin ng-hide" ng-show="dashboardSearchQuery != ''" ng-click="onDashboardSearchClear()" ng-class="isFocus ? 'active' : ''" data-bs-html="true" title="<span class='clear-search-tooltip'>[[[Clear search]]]</span>" data-container="body" data-bs-toggle="clear-tooltip" data-bs-placement="bottom"></span>
+                                    <span class="su su-search float-end no-margin" ng-show="dashboardSearchQuery == ''" ng-class="isFocus ? 'active' : ''" title="[[[Search]]]" data-bs-toggle="tooltip" data-container="body"></span>
+                                    <input type="text" id="dashboard-search-items" class="float-start no-margin" ng-change="doDashboardSearch()" ng-model="dashboardSearchQuery" ng-focus="isFocus = true" ng-blur="onSearchFocusOut()" placeholder="[[[Search]]]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dashboard-sort-div" class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
+                                <span class="dashboard-dropdown-label">[[[Sort]]]</span>
+                                <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
+                                    @{
+                                        #pragma warning disable SCS0029
+                                    }
+                                    <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
+                                        <optgroup label="[[[Sort By]]]" data-max-options="1">
+                                            <option value="Name">[[[Name]]]</option>
+                                            <option value="Modified" selected>[[[Modified]]]</option>
+                                        </optgroup>
+                                        <optgroup label="[[[Sort Order]]]" data-max-options="1">
+                                            <option value="Ascending">[[[Ascending]]]</option>
+                                            <option value="Descending" selected>[[[Descending]]]</option>
+                                        </optgroup>
+                                    </select>
+                                    @{
+                                        #pragma warning restore SCS0029
+                                    }
+                                </div>
+                            </div>
+                        <span class="text-right ng-hide" id="order" ng-show="isTablet && !showSearch" data-bs-toggle="modal" data-target="#dashboard-sort-modal" data-container="body" ng-class="sortDirection == 'descending' ? 'descending':'ascending'">
+                            &nbsp;
+                            <span class="su su-sort-left"></span>
+                            <span class="su su-sort-right"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="dashboard-list-container col-12 no-padding">
+                    <div class="col-12 public-dashboard-disabled ng-hide" ng-show="dashboardDataBindComplete && !isMarkItemsPublic && selectedFilter === @((int)DisplayCategory.PublicItems) && activeMenu !== @((int)DisplayCategory.DraftItems) && activeMenu !== @((int)DisplayCategory.FavouriteItems) && activeMenu !== @((int)DisplayCategory.ReportParts) && activeMenu !== @((int)DisplayCategory.Files)">
+                        <span class="bg-warning text-warning" ng-show="isAdmin">[[[ Public reports are disabled in ]]] <a class="app-hyperlink" href="@Url.Action("ReportSettings", "Administration")">[[[report settings.]]]</a></span>
+                        <span class="bg-warning text-warning" ng-show="!isAdmin">[[[Public reports are disabled by the System Administrator. Please contact your System Administrator to enable this.]]]</span>
+                    </div>
+                    <div id="parent-dashboard-scroll-element" ng-class="{'grid-active' : reportLayoutView === @((int)ReportLayoutView.Grid),'card-active' : reportLayoutView === @((int)ReportLayoutView.Card)}" ng-show="totalDashboardCount != 0">
+                        <div id="dashboard-scroll-element" class="col-12 no-padding">
+                            <div id="dashboard-scroll-content" class="col-12 no-padding">
+                                <div class="col-12 no-padding" ng-show="!dashboardDataBindComplete">
+                                    <div class="fd-post">
+                                        <div class="fd-place-holder">
+                                            <div class="fd-divider-1"></div>
+                                            <div class="fd-divider-2"></div>
+                                            <div class="fd-date-time"></div>
+                                            <div class="fd-divider-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="fd-post">
+                                        <div class="fd-place-holder">
+                                            <div class="fd-divider-1"></div>
+                                            <div class="fd-divider-2"></div>
+                                            <div class="fd-date-time"></div>
+                                            <div class="fd-divider-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="fd-post">
+                                        <div class="fd-place-holder">
+                                            <div class="fd-divider-1"></div>
+                                            <div class="fd-divider-2"></div>
+                                            <div class="fd-date-time"></div>
+                                            <div class="fd-divider-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="dashboard-list-section col-12 no-padding ng-hide" ng-if="activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files)" ng-show="dashboardDataBindComplete && (reportLayoutView === @((int)ReportLayoutView.Card) || selectedFilter === @((int)DisplayCategory.DraftReportParts))">
+                                    <li ng-repeat="dashboardItem in dashboardList" class="col-12 no-padding dashboard-tile" my-post-repeat-directive>
+                                        <div ng-if="!dashboardItem.IsDraft" class="col-12 no-padding">
+                                            <div class="dashboard-select-list col-1 no-padding prevent-dashboard-navigation" ng-class="!dashboardItem.IsDraft ? ((dashboardItem.CanDownload && !dashboardItem.IsMultiDashboard) ? '' : 'disable-download-checkbox') : ''" ng-attr-title="{{ dashboardItem.IsMultiDashboard ? 'Multi-tabbed report cannot be selected' : undefined }}">
+                                                @Html.CheckBox("{{dashboardItem.Id}}", false, new { @id = "{{dashboardItem.Id}}", @class = "dashboard-select-individual material-checkbox", @autocomplete = "off"})
+                                                <label for="{{dashboardItem.Id}}" ng-if="!isTablet && !isMobile"></label>
+                                            <span class="su favorite" data-favorite="{{dashboardItem.IsFavorite}}" ng-click="toggleFavorite($event)" ng-class="!dashboardItem.IsDraft ? (dashboardItem.IsFavorite ? 'su-favorite' : 'su-dis-favorite') : ''" ng-if="!hideFavorite"></span>
+                                            </div>
+                                            <div class="col-12 open-link no-padding">
+                                                    <a class="col-12 no-padding" href="{{viewDashboardUrl(dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" target="@targetValue">
+                                                        <div class="col-12 report-details" ng-class="dashboardItem.Description == '' ? 'add-custom-padding' : ''">
+                                                            <span class="dashboard-name no-padding" ng-class="setWidthForDashboardName()">
+                                                                <span>
+                                                                    {{dashboardItem.Name}}
+                                                                </span>
+                                                                <span ng-if="dashboardItem.IsMultiDashboard">
+                                                                    <span class="badge badge-secondary1">[[[Multi-Tab]]]</span>
+                                                                </span>
+                                                                <span ng-if="dashboardItem.Description!='' && !hideDescription" class="author-name col-12 no-padding">
+                                                                    <span>{{dashboardItem.Description}}</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 report-tile-footer" ng-if="!hideReportTileFooter">
+                                                            <div class="footer-category-name float-start col-3 no-padding" title="[[[Category]]]" ng-if="activeMenu === @((int)DisplayCategory.AllReports) && !hideCategoryName">
+                                                                <span class="category-icon su su-categoried-dashboard custom-style"></span>
+                                                                <span class="footer-text no-padding">{{dashboardItem.CategoryName}}</span>
+                                                            </div>
+                                                            <div class="footer-owner-name float-start col-3 no-padding" title="[[[Owner]]]" ng-if="!hideAuthorName">
+                                                                <span class="category-icon su su-created-by custom-style"></span>
+                                                                <span class="footer-text no-padding">{{dashboardItem.CreatedByDisplayName}}</span>
+                                                            </div>
+                                                            <div class="footer-modified-date float-start col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate">
+                                                                <span class="category-icon su su-clock custom-style"></span>
+                                                                <span class="footer-text no-padding" ng-show="!isTablet">
+                                                                    {{dashboardItem.ModifiedDate}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            <div class="dashboard-share" ng-if="!isTablet">
+                                                <a ng-if="!hideOpen" href="{{viewDashboardUrl(dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" target="@targetValue" title="Open">
+                                                    <span class="su su-external-link"></span>
+                                                </a>
+                                                <span ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEdit" ng-click="editDashboard()" class="su su-edit" title="Edit"></span>
+                                                <span class="item-permissions option-click" title="Share" ng-if="(dashboardItem.CreatedById==currentUserId || hasDashboardSharePermission) && !hideShare" ng-click="shareDashboardPermission()" ng-hide="isHideIconBasedOnDnsName">
+                                                    <i class="su su-share"></i>
+                                                </span>
+                                            </div>
+                                            <div class="no-padding options context-menu" ng-if="!hideContextMenu">
+                                                <span class="dropdown-bs-toggle su su-options-menu options-area" data-bs-display="static" data-bs-toggle="dropdown"></span>
+                                                <ul class="dropdown-menu dashboard-options" data-bs-popper="none" role="menu">
+                                                    @if (ServerAppConfig.IsSelfHosted && !ServerAppConfig.EnablePublic)
+                                                    {
+                                                        <li ng-if="dashboardItem.IsPublic && (dashboardItem.CreatedById == currentUserId || isAdmin) && !hideMakePrivate">
+                                                            <span title="" class="remove-public option-click" ng-click="makePrivate()">
+                                                                <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
+                                                                <span>[[[Make Private]]]</span>
+                                                            </span>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                    <li ng-if="(dashboardItem.CreatedById == currentUserId || isAdmin) && ((!dashboardItem.IsPublic && !hideMakePublic) || (dashboardItem.IsPublic && !hideMakePrivate)) && !dashboardItem.IsMultiDashboard">
+                                                        <span ng-if="!dashboardItem.IsPublic && !hideMakePublic" title="" class="make-public option-click" ng-click="makePublic()">
+                                                            <i class="su su-public"></i>
+                                                            <span>[[[Make Public]]]</span>
+                                                        </span>
+                                                        <span ng-if="dashboardItem.IsPublic && !hideMakePrivate" title="" class="remove-public option-click" ng-click="makePrivate()">
+                                                            <i class="su su-remove-public"><span class="su-remove-public path1"></span><span class="su-remove-public path2"></span><span class="su-remove-public path3"></span></i>
+                                                            <span>[[[Make Private]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    }
+                                                    <li ng-if="!hideGetLink && !dashboardItem.IsMultiDashboard">
+                                                        <span title="" class="get-link option-click" ng-click="getItemLink()">
+                                                            <i class="su su-link"></i>
+                                                            <span>[[[Get Link]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanDownload || isAdmin) && !dashboardItem.IsLocked && !hideDownload && !dashboardItem.IsMultiDashboard">
+                                                        <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.ItemType, dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
+                                                            <i class="su su-download"></i>
+                                                            <span>[[[Download Report]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    @if (ServerAppConfig.EnableViewsInReportsMenu)
+                                                    {
+                                                        <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && !isTablet && !hideViews && !dashboardItem.IsMultiDashboard" class="dropdown dashboard-views no-padding" data-load="true">
+                                                            <span href="#" class="dropdown-bs-toggle views prevent-default-action" data-bs-toggle="dropdown" ng-mouseenter="getDashboardViews($event)">
+                                                                <i class="su su-filter"></i>
+                                                                <span>[[[Views]]]</span>
+                                                            </span>
+                                                            <ul class="dropdown-menu item-views no-padding" role="menu">
+                                                                <li>
+                                                                    <span class="view-name prevent-default-action" href="#">
+                                                                        [[[Loading...]]]
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                    <li ng-if="!isTablet && !hideViewSchedules && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
+                                                        <span class="view-schedule option-click" ng-click="viewSchedules()">
+                                                            <i class="su su-nav-schedule"></i>
+                                                            <span>[[[View Schedules]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="!hideInfo">
+                                                        <span class="option-click" title="" ng-click="openInfo()">
+                                                            <i class="su su-info"></i>
+                                                            <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    @if(ServerAppConfig.IsSelfHosted)
+                                                    {
+                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions && !dashboardItem.IsMultiDashboard"></li>
+                                                        <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions && !dashboardItem.IsMultiDashboard">
+                                                            <span title="" class="ProcessOption option-click" ng-click="ProcessOption()">
+                                                                <i class="su su-cache_3"></i>
+                                                                <span>[[[Processing Options]]]</span>
+                                                            </span>
+                                                        </li>
+                                                    }
+                                                    <li ng-if="((dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !dashboardItem.IsMultiDashboard && !(hideMove && hideCopy && hideClone))" role="separator" class="divider"></li>
+                                                    <li ng-if="(dashboardItem.CanMove || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideMove && !dashboardItem.IsMultiDashboard">
+                                                        <span title="" class="moveItem option-click" data-action="Move" ng-click="moveDashboard()">
+                                                            <i class="su su-move"></i>
+                                                            <span>[[[Move]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(dashboardItem.CanCopy || isAdmin) && !isTablet && !hideCopy && !dashboardItem.IsMultiDashboard">
+                                                        <span title="" class="copyItem option-click" data-action="Copy" ng-click="copyDashboard()">
+                                                            <i class="su su-copy"></i>
+                                                            <span>[[[Copy]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    @if (@ServerAppConfig.EnableClone)
+                                                    {
+                                                        <li ng-if="(dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideClone && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
+                                                            <span title="" class="copyItem option-click" data-action="Clone" ng-click="cloneDashboard()">
+                                                                <i class="su su-clone"></i>
+                                                                <span>[[[Clone]]]</span>
+                                                            </span>
+                                                        </li>
+                                                    }                                                    
+                                                    @if(isMasterTenant && ServerAppConfig.IsSelfHosted)
+                                                    {
+                                                        <li ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !hidePublish && !dashboardItem.IsMultiDashboard" ng-hide="schemesDetails != null && !schemesDetails.Publish" ng-hide="isHideIconBasedOnDnsName">
+                                                        <span title="" class="option-click" data-action="Publish" ng-click="getPublishSiteDetailDialog($event)">
+                                                            <i class="su su-publish"></i>
+                                                            <span>[[[Publish]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    }
+                                                    <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin)) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet && !dashboardItem.IsMultiDashboard" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin) && !isTablet && !hideCreateSchedule && !dashboardItem.IsMultiDashboard" ng-hide="isHideIconBasedOnDnsName">
+                                                        <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" ng-click="scheduleDashboard()">
+                                                            <i class="su su-nav-schedule"></i>
+                                                            <span>[[[Create Schedule]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="!isTablet && !hideVersionHistory && !dashboardItem.IsMultiDashboard" role="separator" class="divider"></li>
+                                                    <li ng-if="!isTablet && !hideVersionHistory && !dashboardItem.IsMultiDashboard">
+                                                        <span class="version-button option-click" title="" ng-click="versionHistory()">
+                                                            <i class="su su-versions"></i>
+                                                            <span>[[[Version History]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="((dashboardItem.CanWrite || dashboardItem.CanDelete || isAdmin) && !isTablet && !dashboardItem.IsMultiDashboard && !(hideEditAsXml && hideUpdate && hideDelete))" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsMultiDashboard && dashboardItem.Extension =='.sydx' && '@GlobalAppSettings.Branding' == '@AppBranding.Syncfusion.Identifier'">
+                                                        <span title="" class="item-edit option-click" ng-click="updateDashboard()">
+                                                            <i class="su su-upload"></i>
+                                                            <span>[[[Upload Report]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.Extension == '.sydx' && dashboardItem.CanWrite && !isTablet">
+                                                        <span href="#" title="" class="update-datasource option-click prevent-default-action" ng-click="updateDashboardDataSource()">
+                                                            <i class="su su-nav-datasource"></i>
+                                                            <span>[[[Update Data Source(s)]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEditAsXml && !dashboardItem.IsMultiDashboard">
+                                                        <span class="option-click" title="" ng-click="editRDLInXML()">
+                                                            <i class="su su-embed"></i>
+                                                            <span>[[[Edit as XML]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideUpdate && !dashboardItem.IsMultiDashboard">
+                                                        <span title="" class="item-update option-click" ng-click="updateReport()">
+                                                            <i class="su su-edit"></i>
+                                                            <span>[[[Update]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(dashboardItem.CanDelete || isAdmin) && !isTablet && !hideDelete">
+                                                        <span title="" class="item-delete option-click" ng-click="deleteItem()">
+                                                            <i class="su su-delete"></i>
+                                                            <span>[[[Delete]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="!hideExport && !dashboardItem.IsMultiDashboard">
+                                                        <span class="report-export option-click" title="" ng-click="exportReport()">
+                                                            <i class="su su-upload"></i>
+                                                            <span>[[[Export]]]</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div ng-if="dashboardItem.IsDraft" class="col-12 no-padding">
+                                            <span class="su favorite" data-favorite="{{dashboardItem.IsFavorite}}" ng-click="toggleFavorite()" ng-class="!dashboardItem.IsDraft ? (dashboardItem.IsFavorite ? 'su-favorite' : 'su-dis-favorite') : ''"></span>
+                                            <div class="col-12 open-link no-padding">
+                                                <a class="col-12 no-padding" ng-href="{{isTablet ? '' : (dashboardItem.ItemType == @((int)ItemType.Report) ? editDraftDashboardUrl(dashboardItem.Id, dashboardItem.Name) : editDraftReportPartUrl(dashboardItem.ReportPartId, dashboardItem.Name))}}" href="#" target="@targetValue">
+                                                    <div class="col-12 add-custom-padding">
+                                                        <span class="dashboard-name no-padding" ng-class="isTablet ? 'col-12' : 'col-10'">
+                                                            {{dashboardItem.Name}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 report-tile-footer" ng-if="!(hideAuthorName && hideModifiedDate)">
+                                                        <div class="footer-owner-name col-3 no-padding" title="[[[Owner]]]" ng-if="!hideAuthorName">
+                                                            <span class="category-icon su su-created-by custom-style"></span>
+                                                            <span class="footer-text no-padding">{{dashboardItem.CreatedByDisplayName}}</span>
+                                                        </div>
+                                                        <div class="footer-modified-date col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate">
+                                                            <span class="category-icon su su-clock custom-style"></span>
+                                                            <span class="footer-text no-padding" ng-show="!isTablet">
+                                                                {{dashboardItem.ModifiedDate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="no-padding float-end">
+                                                <div class="options context-menu" ng-if="(dashboardItem.CreatedById==currentUserId || isAdmin) && !isTablet && !hideContextMenu">
+                                                    <div class="dashboard-share" ng-if="!isTablet">
+                                                        <span ng-if="!isTablet && !hideEdit" ng-click="editDraftDashboard()" class="su su-edit" title="Edit"></span>
+                                                    </div>
+                                                    <span class="dropdown-bs-toggle su su-options-menu options-area" data-bs-toggle="dropdown" ng-if="!hideContextMenu"></span>
+                                                    <ul class="dropdown-menu dashboard-options" role="menu">
+                                                        <li ng-if="!hideInfo">
+                                                            <span class="option-click" title="" ng-click="openInfo()">
+                                                                <i class="su su-info"></i>
+                                                                <span>[[[Info]]]</span>
+                                                            </span>
+                                                        </li>
+                                                        <li ng-if="!hideDelete">
+                                                            <span title="" class="item-delete option-click" ng-click="deleteItem()">
+                                                                <i class="su su-delete"></i>
+                                                                <span>[[[Delete]]]</span>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-12 no-padding" ng-show="isAppendLoading">
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div id="item-grid-container" data-grid-name="reports" ng-show="reportLayoutView === @((int)ReportLayoutView.Grid) && totalDashboardCount != 0 && dashboardDataBindComplete && activeMenu !== @((int)DisplayCategory.ReportParts) && selectedFilter !== @((int)DisplayCategory.DraftReportParts)  && activeMenu !== @((int)DisplayCategory.Files)">
+                                    <div class="grid-view">
+                                        <div class="grid-container grid">
+                                            @await Html.PartialAsync("../Reports/_GridLayout")
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="dashboard-list-section col-12 no-padding ng-hide" ng-show="dashboardDataBindComplete && activeMenu === @((int)DisplayCategory.ReportParts)">
+                                    <li ng-repeat="dashboardItem in dashboardList" class="col-12 no-padding dashboard-tile" my-post-repeat-directive>
+                                        <div ng-if="activeMenu === @((int)DisplayCategory.ReportParts)" class="col-12 no-padding">
+                                            <div class="col-12 open-link no-padding">
+                                                <a class="col-12 no-padding">
+                                                    <div class="col-12 report-details" ng-class="dashboardItem.Description == '' ? 'add-custom-padding' : ''">
+                                                        <span class="dashboard-name no-padding" ng-class="setWidthForDashboardName()">
+                                                            <span>
+                                                                {{dashboardItem.Name}}
+                                                            </span>
+                                                            <span ng-if="dashboardItem.Description!='' && !hideDescription" class="author-name col-12 no-padding">
+                                                                <span>{{dashboardItem.Description}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 report-tile-footer" ng-if="!(hideAuthorName && hideModifiedDate)">
+                                                        <div class="footer-owner-name col-3 no-padding" title="[[[Owner]]]" ng-if="!hideAuthorName">
+                                                            <span class="category-icon su su-created-by custom-style"></span>
+                                                            <span class="footer-text no-padding">{{dashboardItem.CreatedByDisplayName}}</span>
+                                                        </div>
+                                                        <div class="footer-modified-date col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate">
+                                                            <span class="category-icon su su-clock custom-style"></span>
+                                                            <span class="footer-text no-padding" ng-show="!isTablet">
+                                                                {{dashboardItem.ModifiedDate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="dashboard-share" ng-if="!isTablet && !hideEdit">
+                                                <span ng-click="editReportPart()" ng-if="!isTablet" class="su su-edit" title="Edit"></span>
+                                            </div>
+                                            <div class="no-padding options context-menu" ng-if="(!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin) && !hideContextMenu">
+                                                <span class="dropdown-bs-toggle su su-options-menu options-area" data-bs-toggle="dropdown"></span>
+                                                <ul class="dropdown-menu dashboard-options" role="menu">
+                                                    <li ng-if="!hideInfo">
+                                                        <span title="" class="option-click" ng-click="openInfo()">
+                                                            <i class="su su-info"></i>
+                                                            <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin) && !hideDelete">
+                                                        <span title="" class="item-delete option-click" ng-click="deleteReportPart()">
+                                                            <i class="su su-delete"></i>
+                                                            <span>[[[Delete]]]</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-12 no-padding" ng-show="isAppendLoading">
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="dashboard-list-section col-12 no-padding ng-hide" ng-show="dashboardDataBindComplete && activeMenu === @((int)DisplayCategory.Files)">
+                                    <li ng-repeat="dashboardItem in dashboardList" class="col-12 no-padding dashboard-tile" my-post-repeat-directive>
+                                        <div ng-if="activeMenu === @((int)DisplayCategory.Files)" class="col-12 no-padding">
+                                            <div class="col-12 open-link no-padding">
+                                                <a class="col-12 no-padding">
+                                                    <div class="col-12 report-details" ng-class="dashboardItem.Description == '' ? 'add-custom-padding' : ''">
+                                                        <span class="dashboard-name no-padding" ng-class="setWidthForDashboardName()">
+                                                            <span>{{dashboardItem.Name}}</span>
+                                                            <span ng-if="dashboardItem.Description!='' && !hideDescription" class="author-name col-12 no-padding">
+                                                                <span>{{dashboardItem.Description}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 report-tile-footer" ng-if="!(hideAuthorName && hideModifiedDate)">
+                                                        <div class="footer-extension float-start col-3 no-padding" title="[[[Extension]]]" ng-if="activeMenu === @((int)DisplayCategory.Files)">
+                                                            <span class="category-icon su su-document custom-style"></span>
+                                                            <span class="footer-text no-padding">{{dashboardItem.Extension}}</span>
+                                                        </div>
+                                                        <div class="footer-owner-name float-start col-3 no-padding" title="[[[Owner]]]" ng-if="!hideAuthorName">
+                                                            <span class="category-icon su su-created-by custom-style"></span>
+                                                            <span class="footer-text no-padding">{{dashboardItem.CreatedByDisplayName}}</span>
+                                                        </div>
+                                                        <div class="footer-modified-date float-start col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate">
+                                                            <span class="category-icon su su-clock custom-style"></span>
+                                                            <span class="footer-text no-padding" ng-show="!isTablet">{{dashboardItem.ModifiedDate}}</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="no-padding options context-menu" ng-if="(!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin) && !hideContextMenu">
+                                                <span class="dropdown-bs-toggle su su-options-menu options-area" data-bs-toggle="dropdown"></span>
+                                                <ul class="dropdown-menu dashboard-options" role="menu">
+                                                    <li ng-if="!hideInfo">
+                                                        <span title="" class="option-click" ng-click="openInfo()">
+                                                            <i class="su su-info"></i>
+                                                            <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="(!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin) && !hideDelete">
+                                                        <span title="" class="item-delete option-click" ng-click="deleteFile()">
+                                                            <i class="su su-delete"></i>
+                                                            <span>[[[Delete]]]</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-12 no-padding" ng-show="isAppendLoading">
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fd-post">
+                                            <div class="fd-place-holder">
+                                                <div class="fd-divider-1"></div>
+                                                <div class="fd-divider-2"></div>
+                                                <div class="fd-date-time"></div>
+                                                <div class="fd-divider-3"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-empty-message-div col-12 ng-hide" ng-show="totalDashboardCount == 0">
+                        <div class="empty-dashboard-image-div">
+                            <img class="empty-dashboard-image" src="@reportServerResourceUrl/cdn/css/images/dashboard-empty-state.svg" style="margin: 0 auto;/*! width: 100%; */">
+                        </div>
+                        <div ng-show="categoryList.length === 0 && activeMenu !== @((int)DisplayCategory.DraftItems)">
+                            <span class="dashboard-empty-message" ng-show="!canCreateDashboard">[[[No reports have been shared with you.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="canCreateDashboard">[[[You don't have any reports and no reports have been shared with you.]]]</span>
+                        </div>
+                        <div ng-show="categoryList.length !== 0 && activeMenu !== @((int)DisplayCategory.DraftItems) && activeMenu !== @((int)DisplayCategory.ReportParts) && activeMenu !== @((int)DisplayCategory.Files) && activeMenu !== @((int)DisplayCategory.FavouriteItems)">
+                            <span class="dashboard-empty-message" ng-show="selectedFilter === @((int)DisplayCategory.AllReports) && dashboardSearchQuery == ''">[[[No reports are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="selectedFilter !== @((int)DisplayCategory.AllReports) || dashboardSearchQuery != ''">[[[No reports match your search. Try modifying your search or filters.]]]</span>
+                        </div>
+                        <div ng-show="categoryList.length !== 0 && activeMenu === @((int)DisplayCategory.FavouriteItems)">
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No reports are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No reports match your search. Try modifying your search or filters.]]]</span>
+                        </div>
+                        <div ng-show="activeMenu === @((int)DisplayCategory.DraftItems)">
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No drafts are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No drafts match your search. Try modifying your search.]]]</span>
+                        </div>
+                        <div ng-show="activeMenu === @((int)DisplayCategory.ReportParts)">
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No report parts are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No report parts match your search. Try modifying your search.]]]</span>
+                        </div>
+                        <div ng-show="activeMenu === @((int)DisplayCategory.Files)">
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery == ''">[[[No files are available to display.]]]</span>
+                            <span class="dashboard-empty-message" ng-show="dashboardSearchQuery != ''">[[[No files match your search. Try modifying your search.]]]</span>
+                        </div>
+                        <div class="create-button" ng-show="(activeMenu !== @((int)DisplayCategory.ReportParts) && activeMenu !== @((int)DisplayCategory.Files))">
+                            <button data-action="create-items" ng-show="canCreateDashboard && !isTablet" class="primary-button app-btn-primary">{{ selectedFilter != @((int)DisplayCategory.DraftReportParts) ? '[[[Create Report]]]' : '[[[Create Report Part]]]' }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay-top" class="custom-overlay"></div>
+        <div id="overlay-bottom" class="custom-overlay"></div>
+        <div id="overlay-left" class="custom-overlay"></div>
+        <div id="overlay-right" class="custom-overlay"></div>
+        <!-- Mobile view-->
+        <div class="modal fade" id="dashboard-sort-modal" role="dialog" ng-controller="MobileViewSortCtrl">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body no-padding">
+                        <ul class="dashboard-sort-filter-menu no-padding">
+                            @*<li ng-class="{selected : selectedSort === 'CreatedDate' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'CreatedDate', 'descending')">
+                                    <a class="dashboard-sort-options" href="#">
+                                        <i class="su su-tick"></i>
+                                        <span class="search-option">[[[Recently Added]]]</span>
+                                    </a>
+                                </li>*@
+                            <li ng-class="{selected : selectedSort === 'ModifiedDate' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'ModifiedDate', 'descending')">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
+                                    <i class="su su-tick"></i>
+                                    <span class="search-option">[[[Recently Updated]]]</span>
+                                </a>
+                            </li>
+                            <li ng-class="{selected : selectedSort === 'Name' && sortDirection === 'ascending'}" ng-click="updateSortSelection($event, 'Name' , 'ascending')">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
+                                    <i class="su su-tick"></i>
+                                    <span class="search-option">[[[Report Name (A-Z)]]]</span>
+                                </a>
+                            </li>
+                            <li ng-class="{selected : selectedSort === 'Name' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'Name', 'descending')">
+                                <a class="dashboard-sort-options prevent-default-action" href="#">
+                                    <i class="su su-tick"></i>
+                                    <span class="search-option">[[[Report Name (Z-A)]]]</span>
+                                </a>
+                            </li>
+                            @*<li ng-class="{selected : selectedSort === 'CreatedByDisplayName' && sortDirection === 'ascending'}" ng-click="updateSortSelection($event, 'CreatedByDisplayName', 'ascending')">
+                                    <a class="dashboard-sort-options" href="#">
+                                        <i class="su su-tick"></i>
+                                        <span class="search-option">[[[Owner Name (A-Z)]]]</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{selected : selectedSort === 'CreatedByDisplayName' && sortDirection === 'descending'}" ng-click="updateSortSelection($event, 'CreatedByDisplayName', 'descending')">
+                                    <a class="dashboard-sort-options" href="#">
+                                        <i class="su su-tick"></i>
+                                        <span class="search-option">[[[Owner Name (Z-A)]]]</span>
+                                    </a>
+                                </li>*@
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="app-button app-primary-button app-btn-primary" data-dismiss="modal" ng-click="onSortApplyClicked()">[[[Apply]]]</button>
+                        <button type="button" class="app-button app-secondary-button app-btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @await Html.PartialAsync("../DefaultPages/DefaultPages", new ViewDataDictionary(ViewData) { { "Permissions", permisions }, { "ItemType", ItemType.Report } })
+    }
+
+    <div id="ReportProcessOption_popup">
+        <iframe id="ReportProcessOption_popup_iframe" class="categoryDialog"></iframe>
+    </div>
+    <div id="ReportProcessOption_schedule_popup">
+        <iframe id="ReportProcessOption_schedule_popup_iframe" class="categoryDialog"></iframe>
+    </div>
+    <div id="popup-container" style="display:none" class="no-padding">
+        <iframe id="scheduler-popup-iframe" class="datasource-popup-frame"></iframe>
+    </div>
+    <div id="export-popup-container" style="display:none;width:100%" class="no-padding">
+        <iframe id="export-popup-iframe" class="datasource-popup-frame"></iframe>
+    </div>
+    <div id="edit-file-popup" style="display:none">
+        <iframe id="edit-file-popup-iframe" class="editDashboardDialog"></iframe>
+    </div>
+    <div id="update-data-source-popup" style="display:none">
+        <iframe id="update-data-source-popup-iframe" class="updateDataSourceDialog"></iframe>
+    </div>
+    <div id="ItemAction" style="display:none" title="[[[Item Actions]]]" class="no-padding"><iframe></iframe></div>
+
+    <div id="make_item_public" class="no-padding float-start" style="display:none"></div>
+
+    <div id="remove_item_public" class="no-padding" style="display:none"></div>
+
+
+    @if (!isMobile)
+    {
+        @await Html.PartialAsync("../Items/_AddItems")
+        @await Html.PartialAsync("../Items/_ItemVersion")
+        @await Html.PartialAsync("../Items/_SharePermission")
+        @await Html.PartialAsync("../Items/_PublishReport")
+        @await Html.PartialAsync("../Items/_GetExternalSites")
+    }
+
+    @await Html.PartialAsync("../Items/_ItemInfo")
+}

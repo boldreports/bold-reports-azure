@@ -1,0 +1,13 @@
+@{
+    var pageHeader = ViewBag.PageHeader != null ? ViewBag.PageHeader : string.Empty ;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+}
+<div id="top-header-section-container" class="col-12 top-nav-header-section justify-content-between align-items-center">
+    <div class="left-section section">
+        <h2 class="page-title col-lg-6">@pageHeader</h2>
+    </div>
+    <div class="right-section section">
+        @await Html.PartialAsync("../Shared/_TopMenu")
+    </div>
+</div>

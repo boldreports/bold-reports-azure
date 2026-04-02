@@ -1,0 +1,44 @@
+<div id="emaillog-info-popup" class="fluent-popup custom-bootstrap-styles custom-server-style" style="display: none" ng-controller="EmailLogInfoCtrl">
+    <div class="fluent-popup-header">
+        <h4 class="popup-title">
+            <span id="info-dialog-header">[[[Details]]]</span>
+            <button id="close-info-dialog" type="button" title="Close" data-toggle="tool-tip" data-container="body" class="close popup-close" ng-click="closeItemInfo()" aria-label="Close">
+                <span class="su su-close"></span>
+            </button>
+        </h4>
+    </div>
+    <div class="fluent-item-popup-body">
+        <span class="email-log-event">
+            <label class="info-label">[[[Event]]]</label> {{EmailLogDetail.Event}}
+        </span>
+        <span class="email-log-date">
+            <label class="info-label">[[[Date]]]</label> {{EmailLogDetail.ModifiedDateString}}
+        </span>
+        <span class="email-log-status">
+            <label class="info-label">[[[Status]]]</label> {{EmailLogDetail.Status}}
+        </span>
+        <span class="email-log-recipient">
+            <label class="info-label">[[[Recipient]]]</label> <span data-toggle="tooltip" data-original-title="{{EmailLogDetail.RecipientEmail}}">{{EmailLogDetail.RecipientEmail}}</span>
+        </span>
+        <span class="email-log-initiated">
+            <label class="info-label">[[[Initiated By]]]</label> <span data-toggle="tooltip" data-original-title="{{EmailLogDetail.InitiatedBy}}">{{EmailLogDetail.InitiatedBy}}</span>
+        </span>
+        <div class="mail-error-message" style="display:none">
+            <label class="info-label">[[[Error Message]]]</label>
+            <div id="mail-error-message" class="form-control" name="text" readonly style="display: flex;justify-content: space-between;align-items: center;">{{EmailLogDetail.StatusMessage}}
+                <span ng-if="EmailLogDetail.StatusMessage=='Mail settings not configured'" style="margin-top:10px">
+                    <a href="@Url.Action("EmailSettings", "Administration")" class="text-primary"><i class="fa fa-cog"></i>Configure</a>
+                </span>
+            </div>
+        </div>
+        <div class="mail-body">
+            <label class="info-label">[[[Email Message]]]</label>
+            <div id="mail-body" class="form-control" name="text" readonly>{{EmailLogDetail.MailBody}}</div>
+        </div>
+    </div>
+    <div class="fluent-popup-footer">
+        <div class="col-xs-12 no-padding">
+            <button class="secondary-button" ng-click="closeItemInfo()" title="">[[[Cancel]]]</button>
+        </div>
+    </div>
+</div>

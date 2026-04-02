@@ -1,0 +1,109 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Syncfusion.Server.Base.Helpers
+@{
+    ViewBag.Title = "EmailActivityLogs";
+    var globalAppSettings = _globalAppSettings;
+    var dashboardServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+@section scripts {
+    <environment include="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@dashboardServerResourceUrl/cdn/scripts/bootstrap.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/bootstrap.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script asp-append-version="true" src="@dashboardServerResourceUrl/cdn/scripts/bootstrap.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/bootstrap.min.js")" crossorigin="anonymous"></script>
+    </environment>
+}
+
+<script type="text/javascript">
+    var filterEmailLogsUrl = "@Url.Action("GetEmailLogs", "Administration")";
+    var emailActivityLogDateFormat = "@ViewBag.DateFormat";
+    var emailActivityLogTimeFormat = "@ViewBag.TimeFormat";
+</script>
+
+<div role="tabpanel" class="tab-pane col-md-12 col-12 float-start col-sm-12 email-page-body" id="logs">
+    <div class="filter-section">
+        <div class="float-start filter-alignment">
+            <div class="col-sm-3 col-3 float-start date-picker no-padding">
+                <input type="text" name="email-log-filter-date-range" class="form-control full-width e-control e-daterangepicker e-lib e-input e-keyboard" id="datePicker" readonly>
+            </div>
+            <div class="dropdown email-settings-drop-down float-start col-12">
+                @Html.DropDownList("emailEvent", ViewBag.EmailEvent  as IEnumerable<SelectListItem>, new { id = "email-event", @class = "selectpicker form-control", data_none_results_text = "[[[No results match]]]", data_size = "10", title = "[[[All Event]]]", data_live_search = "true", data_live_search_placeholder = "[[[Search]]]", })
+            </div>
+            <span>
+                <button type="button" id="apply-button" class="link-button btn float-start">[[[Apply]]]</button>
+            </span>
+            <span id="reset">[[[Clear]]]</span>
+            <span class="separator float-start"></span>
+            <span class="su su-synchronize float-start" id="refresh"></span>
+        </div>
+    </div>
+
+    <div id="emailActivityLogGrid" class="col-lg-12 no-padding dialog-override" style="margin-top: 20px;">
+    </div>
+</div>
+
+<script type="text/x-jsrender" id="options">
+    <span title="[[[View]]]" data-toggle="dropdown">
+        <a href="javascript:void(0);" class="email-log-info" data-email>
+            <span>[[[View]]]</span>
+        </a>
+    </span>
+</script>
+<script>
+    GridLocalization(window.Server.App.LocalizationContent.EmailActivityLogsEmpty);
+    var dataManager = ej.DataManager({ url:"@Url.Action("GetEmailLogs", "Administration")", adaptor: new ej.UrlAdaptor() });
+
+    dataManager.adaptor.beforeSend = function (dm, request) {
+        request.setRequestHeader('X-XSRF-TOKEN', extractXSRFTokenFromCookie());
+    };
+    $("#emailActivityLogGrid").ejGrid({
+        dataSource: dataManager,
+        gridLines: 'None',
+        allowPaging: true,
+        pageSettings: { pageSize: 10 },
+        allowSorting: true,
+        enableAltRow: false,
+        allowSearching: true,
+        enableHover: true,
+        allowSelection: true,
+        allowFiltering: true,
+        filterSettings: { filterType: "menu" },
+        actionBegin: "fnActionBegin",
+        toolbarSettings: { showToolbar: false, toolbarItems: [ej.Grid.ToolBarItems.Search] },
+        selectionSettings: { type: 'Multiple' },
+        rowSelecting: function (e) {
+            this.multiSelectCtrlRequest = true;
+        },
+        dataBound: function () {
+        const tooltipTriggerList = Array.prototype.slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (el) {
+            new bootstrap.Tooltip(el, { container: 'body' 
+            });
+        });
+        },
+        columns: [
+            { field: 'Event', headerText: [[['Event']]], type: "string", width: 120, allowFiltering: false, allowSorting: true },
+            { field: 'ModifiedDateString', headerText: [[['Date']]], type: "string", width: 80, allowFiltering: false, allowSorting: true },
+            { field: 'RecipientEmail', headerText: [[['Recipient']]], type: "string", width: 120, allowFiltering: true, allowSorting: true },
+            { field: 'InitiatedBy', headerText: [[['Initiated By']]], type: "string", width: 120, allowFiltering: false, allowSorting: true },
+            { field: 'Status', headerText: [[['Status']]], type: "string", width: 80, allowFiltering: true, allowSorting: false },
+            {
+                template: true,
+                allowSorting: false,
+                headerText: [[['Actions']]],
+                templateID: "#options",
+                width: 75,
+                allowFiltering: false
+            }
+        ]
+    });
+</script>
+<environment include="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@dashboardServerResourceUrl/cdn/scripts/emailActivityLog.js"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script asp-append-version="true" src="@dashboardServerResourceUrl/cdn/scripts/emailActivityLog.min.js"></script>
+</environment>
