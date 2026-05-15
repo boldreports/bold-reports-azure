@@ -86,7 +86,36 @@
                                 {
                                     foreach (var parameterData in parameter.ReportParameterData)
                                     {
-                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                        bool isSelected = parameterData.IsSelected;
+                                        if (!isSelected && parameter.Values != null)
+                                        {
+                                            foreach (var value in parameter.Values)
+                                            {
+                                                if (value.Equals(parameterData.ValueField, StringComparison.OrdinalIgnoreCase))
+                                                {
+                                                    isSelected = true;
+                                                    break;
+                                                }
+                                                DateTime paramDate;
+                                                DateTime optionDate;
+                                                if (DateTime.TryParse(value, out paramDate) && DateTime.TryParse(parameterData.ValueField, out optionDate))
+                                                {
+                                                    if (paramDate.Date == optionDate.Date)
+                                                    {
+                                                        isSelected = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (isSelected)
+                                        {
+                                            <option value="@parameterData.ValueField" selected>@parameterData.DisplayField</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                        }
                                     }
                                 }
                             </select>
@@ -103,7 +132,36 @@
                                 {
                                     foreach (var parameterData in parameter.ReportParameterData)
                                     {
-                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                        bool isSelected = parameterData.IsSelected;
+                                        if (!isSelected && parameter.Values != null)
+                                        {
+                                            foreach (var value in parameter.Values)
+                                            {
+                                                if (value.Equals(parameterData.ValueField, StringComparison.OrdinalIgnoreCase))
+                                                {
+                                                    isSelected = true;
+                                                    break;
+                                                }
+                                                DateTime paramDate;
+                                                DateTime optionDate;
+                                                if (DateTime.TryParse(value, out paramDate) && DateTime.TryParse(parameterData.ValueField, out optionDate))
+                                                {
+                                                    if (paramDate.Date == optionDate.Date)
+                                                    {
+                                                        isSelected = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (isSelected)
+                                        {
+                                            <option value="@parameterData.ValueField" selected>@parameterData.DisplayField</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
+                                        }
                                     }
                                 }
                             </select>
@@ -148,13 +206,13 @@
                     if (isAdmin || itemPermission)
                     {
                         <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px;">
-                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" dataType="@parameter.DataType" value="@(parameter.Values != null && parameter.Values.Count > 0 ? String.Join(",", parameter.Values) : "")" @(isParameterHidden ? "disabled" : "")>
                         </div>
                     }
                     else
                     {
                         <div class="col-sm-4 col-4 parameter-input parameter-datetime" style="padding-left: 6px; display:@showHiddenParameter;">
-                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name">
+                            <input type="text" class="@hasdependentValue form-control" name="@parameter.Name" id="@parameter.Name" dataType="@parameter.DataType" value="@(parameter.Values != null && parameter.Values.Count > 0 ? String.Join(",", parameter.Values) : "")" @(isParameterHidden ? "disabled" : "")>
                         </div>
                     }
                 }
