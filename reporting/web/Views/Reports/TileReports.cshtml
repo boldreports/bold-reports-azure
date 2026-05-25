@@ -80,11 +80,13 @@
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tile-dashboards-page.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/tile-dashboards-page.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tile-dashboards-page.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/tile-dashboards-page.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/publish-report.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/tile-dashboards-page.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/tile-dashboards-page.min.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/tile-dashboards-page.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/tile-dashboards-page.min.js")" crossorigin="anonymous"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/publish-report.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/publish-report.min.js")" crossorigin="anonymous"></script>
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
 
     </environment>
 }
@@ -104,6 +106,7 @@
         var getLinkDialogViewUrl = "@Url.Action("GetLinkView", "items")";
         var viewSchedulesUrl = "@Url.Action("Schedules", "Scheduler")";
         var copyIframeUrl = "@Url.Action("copyviewitem", "items")";
+        var copyreportIframeUrl = "@Url.Action("CopyViewItems", "items")";
         var moveIframeUrl = "@Url.Action("moveviewitem", "items")";
         var permissionIframeUrl = "@Url.Action("ItemPermissionView", "items")";
         var getdashboarddetailsUrl = "@Url.Action("getdashboarddetails", "reports")";
@@ -137,6 +140,7 @@
         var reportPartDeleteUrl = "@Url.Action("DeleteReportPart", "ReportPart")";
         var fileDeleteUrl = "@Url.Action("DeleteFile", "Files")";
         var reportPartEditUrl = "@Url.Action("ReportPart", "Designer")";
+        var multiReportCopyViewUrl = "@Url.Action("MultiTenantCopy", "items")";
         var getReportsLinkedWithReportPartUrl = "@Url.Action("GetReportsLinkedWithReportPart", "ReportPart")";
         var getPublicStatusUrl = "@Url.Action("GetPublicStatus", "items")";
         var reportLayoutView = @reportLayoutView;
@@ -525,6 +529,12 @@
                                         <span class="search-option">[[[Download]]]</span>
                                     </a>
                                 </li>
+                                <li class="copy-icon selected" ng-click="copyBulkReport()" style="display:none">
+                                    <a class="dashboard-sort-options prevent-default-action" href="#">
+                                        <i class="su su-copy"></i>
+                                        <span class="search-option">[[[Copy]]]</span>
+                                    </a>
+                                </li>
                                 <label id="action-separator" class="sf-nav-separator action-separator"></label>
                                 <li ng-if="activeMenu !== 2" ng-class="{selected : selectedFilter === @((int)DisplayCategory.AllReports)}" ng-click="setSelectedFilter($event, @((int)DisplayCategory.AllReports))">
                                     <a class="dashboard-sort-options prevent-default-action" href="#">
@@ -669,7 +679,7 @@
                                 <ul class="dashboard-list-section col-12 no-padding ng-hide" ng-if="activeMenu !== @((int)DisplayCategory.ReportParts)  && activeMenu !== @((int)DisplayCategory.Files)" ng-show="dashboardDataBindComplete && (reportLayoutView === @((int)ReportLayoutView.Card) || selectedFilter === @((int)DisplayCategory.DraftReportParts))">
                                     <li ng-repeat="dashboardItem in dashboardList" class="col-12 no-padding dashboard-tile" my-post-repeat-directive>
                                         <div ng-if="!dashboardItem.IsDraft" class="col-12 no-padding">
-                                            <div class="dashboard-select-list col-1 no-padding prevent-dashboard-navigation" ng-class="!dashboardItem.IsDraft ? ((dashboardItem.CanDownload && !dashboardItem.IsMultiDashboard) ? '' : 'disable-download-checkbox') : ''" ng-attr-title="{{ dashboardItem.IsMultiDashboard ? 'Multi-tabbed report cannot be selected' : undefined }}">
+                                            <div class="dashboard-select-list col-1 no-padding prevent-dashboard-navigation" ng-class="!dashboardItem.IsDraft ? (((dashboardItem.CanDownload || dashboardItem.CanCopy || isAdmin) && (!hideCopy || !hideDownload) && !isTablet && !dashboardItem.IsMultiDashboard) ? '' : 'disable-download-checkbox') : ''" ng-attr-title="{{ dashboardItem.IsMultiDashboard ? 'Multi-tabbed report cannot be selected' : undefined }}">
                                                 @Html.CheckBox("{{dashboardItem.Id}}", false, new { @id = "{{dashboardItem.Id}}", @class = "dashboard-select-individual material-checkbox", @autocomplete = "off"})
                                                 <label for="{{dashboardItem.Id}}" ng-if="!isTablet && !isMobile"></label>
                                             <span class="su favorite" data-favorite="{{dashboardItem.IsFavorite}}" ng-click="toggleFavorite($event)" ng-class="!dashboardItem.IsDraft ? (dashboardItem.IsFavorite ? 'su-favorite' : 'su-dis-favorite') : ''" ng-if="!hideFavorite"></span>
@@ -1234,7 +1244,6 @@
     <div id="make_item_public" class="no-padding float-start" style="display:none"></div>
 
     <div id="remove_item_public" class="no-padding" style="display:none"></div>
-
 
     @if (!isMobile)
     {

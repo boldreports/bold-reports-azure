@@ -34,3 +34,33 @@ ALTER TABLE {database_name}.BOLDRS_ScheduleDetail ADD COLUMN SkipMail tinyint NU
 ALTER TABLE {database_name}.BOLDRS_ScheduleDetail ADD ScheduleRunStatus varchar(1000) NOT NULL DEFAULT 'Idle';
 ALTER TABLE {database_name}.BOLDRS_ItemView Modify QueryString text NOT NULL
 ;
+
+CREATE TABLE {database_name}.BOLDRS_ReportCopyLog(
+    Id char(38) NOT NULL,
+    BatchId char(38) NULL,
+    IsBulkCopy tinyint NOT NULL,
+    SourceItemId char(38) NOT NULL,
+    SourceItemName varchar(255) NOT NULL,
+    SourceCategoryId char(38) NULL,
+    SourceCategoryName varchar(255) NULL,
+    SourceTenantId char(38) NOT NULL,
+	CopySiteType varchar(255) NULL,
+	ExternalSiteUrl varchar(255) NULL,
+    DestinationTenantId char(38) NOT NULL,
+    DestinationTenantName varchar(255) NOT NULL,
+    DestinationCategoryPath varchar(1000) NOT NULL,
+    DestinationCategoryId char(38) NULL,
+    DestinationItemId char(38) NULL,
+    DestinationItemName varchar(255) NOT NULL,
+    IsOverwrite tinyint NOT NULL,
+    CopiedByUserId int NOT NULL,
+    CopiedAt datetime NOT NULL,
+    Status varchar(50) NOT NULL,
+    FailureReason text NULL,
+    PRIMARY KEY (Id))
+;
+
+ALTER TABLE {database_name}.BOLDRS_ReportCopyLog  ADD FOREIGN KEY(CopiedByUserId) REFERENCES {database_name}.BOLDRS_User (Id)
+;
+ALTER TABLE {database_name}.BOLDRS_ReportCopyLog  ADD FOREIGN KEY(SourceItemId) REFERENCES {database_name}.BOLDRS_Item (Id)
+;

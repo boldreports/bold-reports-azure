@@ -34,3 +34,32 @@ ALTER TABLE [BOLDRS_ScheduleDetail] ADD [ScheduleRunStatus] [nvarchar](1000) NOT
 ;
 
 ALTER TABLE [BOLDRS_ItemView] ALTER COLUMN QueryString [nvarchar](MAX) NOT NULL;
+
+CREATE TABLE [BOLDRS_ReportCopyLog](
+    [Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+    [BatchId] [uniqueidentifier] NULL,
+    [IsBulkCopy] [bit] NOT NULL,
+    [SourceItemId] [uniqueidentifier] NOT NULL,
+    [SourceItemName] [nvarchar](255) NOT NULL,
+    [SourceCategoryId] [uniqueidentifier] NULL,
+    [SourceCategoryName] [nvarchar](255) NULL,
+    [SourceTenantId] [uniqueidentifier] NOT NULL,
+	[CopySiteType] [nvarchar](255) NULL,
+	[ExternalSiteUrl] [nvarchar](255) NULL,
+    [DestinationTenantId] [uniqueidentifier] NOT NULL,
+    [DestinationTenantName] [nvarchar](255) NOT NULL,
+    [DestinationCategoryPath] [nvarchar](1000) NOT NULL,
+    [DestinationCategoryId] [uniqueidentifier] NULL,
+    [DestinationItemId] [uniqueidentifier] NULL,
+    [DestinationItemName] [nvarchar](255) NOT NULL,
+    [IsOverwrite] [bit] NOT NULL,
+    [CopiedByUserId] [int] NOT NULL,
+    [CopiedAt] [datetime] NOT NULL,
+    [Status] [nvarchar](50) NOT NULL,
+    [FailureReason] [nvarchar](max) NULL)
+;
+
+ALTER TABLE [BOLDRS_ReportCopyLog] ADD FOREIGN KEY([CopiedByUserId]) REFERENCES [BOLDRS_User] ([Id])
+;
+ALTER TABLE [BOLDRS_ReportCopyLog] ADD FOREIGN KEY([SourceItemId]) REFERENCES [BOLDRS_Item] ([Id])
+;

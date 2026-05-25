@@ -115,7 +115,7 @@
 </script>
 
 <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="checkbox-row-template">
-    {{if CanDownload && !IsMultiDashboard}}
+    {{if (CanDownload || CanCopy) && (!hideDownload || !hideCopy) && !IsMultiDashboard}}
         <input type="checkbox" class="dashboard-list-section dashboard-select-individual checkbox-row material-checkbox" data-checked-id="{{:Id}}" id="row-check{{:Id}}" />
     {{else}}
         <input type="checkbox" class="dashboard-list-section dashboard-select-individual checkbox-row material-checkbox" data-checked-id="{{:Id}}" id="row-check{{:Id}}" disabled/>
@@ -662,9 +662,16 @@
     function enabledownloadbutton() {
         gridObj = $("#items").data("ejGrid");
         if (objectSelected.length > 0) {
-            $(".download-icon").show();
+            var downloadableCount = objectSelected.filter(function (r) { return r.CanDownload; }).length;
+            if (downloadableCount > 0) {
+                $(".download-icon").show();
+            } else {
+                $(".download-icon").hide();
+            }
+            $(".copy-icon").show();
         } else {
             $(".download-icon").hide();
+            $(".copy-icon").hide();
         }
     }
 

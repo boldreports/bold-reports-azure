@@ -523,6 +523,14 @@
 <div><iframe id="hiddeniframe" src="" style="display:none"></iframe></div>
 <input type="hidden" id="applauncherinputhidden" style="width:0;margin:0;border:0;height:0; display:inherit" />
 
+<!-- Toolbar Button Templates for Grid -->
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="copy-template">
+    <button class="e-toolbar-button" id="copyToolbarButton" title="[[[Copy Reports]]]" onclick="handleBulkCopyButtonClick(); return false;" style="display:none;">
+        <span class="e-button-icon su su-copy"></span>
+        <span class="e-button-text">[[[Copy]]]</span>
+    </button>
+</script>
+
 <script nonce="@Context.Items["ScriptNonce"]" type="text/javascript" language="javascript">
     var gridName = $('#item-grid-container').attr("data-grid-name");
     var toolbarItems = [{ templateID: "#openTemplate" }, { templateID: "#openwithdashboarddesignerTemplate" }, { templateID: "#DownloadTemplate" }, { templateID: "#Separator1" }, { templateID: "#can-edit-template" }, { templateID: "#can-delete-template" }, { templateID: "#separator2" }, { templateID: "#move-template" }, { templateID: "#copy-template" }, { templateID: "#clone-template" }, { templateID: "#separator3" }, { templateID: "#schedule-template" }, { templateID: "#Separator4" }, { templateID: "#VersionTemplate" }];
@@ -558,6 +566,12 @@
                     args.cancel = true;
                 }
             },
+            rowSelected: function (args) {
+                updateCopyButtonVisibility();
+            },
+            rowDeselected: function (args) {
+                updateCopyButtonVisibility();
+            },
             rowDataBound: function () {
                 var height = $(".e-gridcontent").height();
                 if (height != null) {
@@ -569,6 +583,7 @@
                     refreshScroller();
                 }
                 $('[data-bs-toggle="tooltip"]').tooltip();
+                updateCopyButtonVisibility();
             },
             enableRowHover: true,
             columns: [
@@ -666,6 +681,38 @@
                 return inputString.replace(new RegExp("\"", 'g'), '&quot;');
             }
         });
+
+        // Function to update copy button visibility based on grid selection count
+        function updateCopyButtonVisibility() {
+            var gridObj = $("#items").data("ejGrid");
+            var selectedRowIndexes = [];
+            var showButton = false;
+            
+            if (gridObj) {
+                try {
+                    selectedRowIndexes = gridObj.getSelectedRowIndexes();
+                    showButton = selectedRowIndexes && selectedRowIndexes.length >= 1;
+                } catch (ex) {
+                    console.log("Grid selection check error:", ex);
+                    // Fallback to checkbox method if grid method fails
+                    var checkedCount = $("input[type='checkbox']:checked:not('.e-selectall')").length;
+                    showButton = checkedCount >= 1;
+                }
+            } else {
+                // Fallback to checkbox method
+                var checkedCount = $("input[type='checkbox']:checked:not('.e-selectall')").length;
+                showButton = checkedCount >= 1;
+            }
+            
+            var copyButton = $("#copyToolbarButton");
+            if (copyButton.length > 0) {
+                if (showButton) {
+                    copyButton.show();
+                } else {
+                    copyButton.hide();
+                }
+            }
+        }
 
         $(document).on("click", ".prevent-default-action", function (e) {
             e.preventDefault();

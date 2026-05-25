@@ -845,6 +845,30 @@ CREATE TABLE [BOLDRS_EmailActivityLog](
     [IsActive] [bit] NOT NULL)
 ;
 
+CREATE TABLE [BOLDRS_ReportCopyLog](
+    [Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+    [BatchId] [uniqueidentifier] NULL,
+    [IsBulkCopy] [bit] NOT NULL,
+    [SourceItemId] [uniqueidentifier] NOT NULL,
+    [SourceItemName] [nvarchar](255) NOT NULL,
+    [SourceCategoryId] [uniqueidentifier] NULL,
+    [SourceCategoryName] [nvarchar](255) NULL,
+    [SourceTenantId] [uniqueidentifier] NOT NULL,
+	[CopySiteType] [nvarchar](255) NULL,
+	[ExternalSiteUrl] [nvarchar](255) NULL,
+    [DestinationTenantId] [uniqueidentifier] NOT NULL,
+    [DestinationTenantName] [nvarchar](255) NOT NULL,
+    [DestinationCategoryPath] [nvarchar](1000) NOT NULL,
+    [DestinationCategoryId] [uniqueidentifier] NULL,
+    [DestinationItemId] [uniqueidentifier] NULL,
+    [DestinationItemName] [nvarchar](255) NOT NULL,
+    [IsOverwrite] [bit] NOT NULL,
+    [CopiedByUserId] [int] NOT NULL,
+    [CopiedAt] [datetime] NOT NULL,
+    [Status] [nvarchar](50) NOT NULL,
+    [FailureReason] [nvarchar](max) NULL)
+;
+
 
 ---- PASTE INSERT Queries below this section --------
 
@@ -2091,6 +2115,11 @@ ALTER TABLE [BOLDRS_EmailActivityLog]  ADD  FOREIGN KEY([GroupId]) REFERENCES [B
 ALTER TABLE [BOLDRS_EmailActivityLog]  ADD  FOREIGN KEY([ItemId]) REFERENCES [BOLDRS_Item] ([Id])
 ;
 ALTER TABLE [BOLDRS_EmailActivityLog]  ADD FOREIGN KEY([CommentId]) REFERENCES [BOLDRS_Comment] ([Id])
+;
+
+ALTER TABLE [BOLDRS_ReportCopyLog] ADD FOREIGN KEY([CopiedByUserId]) REFERENCES [BOLDRS_User] ([Id])
+;
+ALTER TABLE [BOLDRS_ReportCopyLog] ADD FOREIGN KEY([SourceItemId]) REFERENCES [BOLDRS_Item] ([Id])
 ;
 
 CREATE NONCLUSTERED INDEX [IX_BOLDRS_ScheduleDetail_ScheduleId] ON [BOLDRS_ScheduleDetail]([ScheduleId]) WITH (ONLINE = ON)
