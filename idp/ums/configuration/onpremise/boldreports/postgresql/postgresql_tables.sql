@@ -838,6 +838,29 @@ CREATE TABLE BOLDRS_EmailActivityLog(
     IsActive smallint NOT NULL)
 ;
 
+CREATE TABLE BOLDRS_ReportCopyLog(
+    Id uuid NOT NULL PRIMARY KEY,
+    BatchId uuid NULL,
+    IsBulkCopy smallint NOT NULL,
+    SourceItemId uuid NOT NULL,
+    SourceItemName varchar(255) NOT NULL,
+    SourceCategoryId uuid NULL,
+    SourceCategoryName varchar(255) NULL,
+    SourceTenantId uuid NOT NULL,
+	CopySiteType varchar(255) NULL,
+	ExternalSiteUrl varchar(255) NULL,
+    DestinationTenantId uuid NOT NULL,
+    DestinationTenantName varchar(255) NOT NULL,
+    DestinationCategoryPath varchar(1000) NOT NULL,
+    DestinationCategoryId uuid NULL,
+    DestinationItemId uuid NULL,
+    DestinationItemName varchar(255) NOT NULL,
+    IsOverwrite smallint NOT NULL,
+    CopiedByUserId int NOT NULL,
+    CopiedAt timestamp NOT NULL,
+    Status varchar(50) NOT NULL,
+    FailureReason text NULL)
+;
 	
 ---- PASTE INSERT Queries below this section --------
 
@@ -2097,6 +2120,11 @@ ALTER TABLE BOLDRS_EmailActivityLog  ADD  FOREIGN KEY(GroupId) REFERENCES BOLDRS
 ALTER TABLE BOLDRS_EmailActivityLog  ADD  FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item (Id)
 ;
 ALTER TABLE BOLDRS_EmailActivityLog  ADD FOREIGN KEY(CommentId) REFERENCES BOLDRS_Comment (Id)
+;
+
+ALTER TABLE BOLDRS_ReportCopyLog  ADD  FOREIGN KEY(CopiedByUserId) REFERENCES BOLDRS_User (Id)
+;
+ALTER TABLE BOLDRS_ReportCopyLog  ADD  FOREIGN KEY(SourceItemId) REFERENCES BOLDRS_Item (Id)
 ;
 
 ALTER TABLE BOLDRS_MultiTabReport  ADD FOREIGN KEY(ParentReportId) REFERENCES BOLDRS_Item (Id)

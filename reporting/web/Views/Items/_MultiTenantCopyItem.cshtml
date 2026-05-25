@@ -1,0 +1,379 @@
+@using Newtonsoft.Json
+@using Syncfusion.Server.Base.Helpers
+@model string
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
+    var canCreateCategory = ViewData["CanCreateCategory"] != null ? Convert.ToBoolean(ViewData["CanCreateCategory"]) : false;
+    var siteName = ViewBag.TenantName;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+}
+
+<script nonce="@Model">
+    var copyReportsToTenantsUrl = "@Url.Action("CopyReportsToTenants", "items")";
+    var canCreateCategory = "@canCreateCategory";
+    var tenantItemUrl = "@Url.Action("getcategory", "items")";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var addButton = '<span class="input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
+    var triggeredElementId = '';
+    var siteName = @Json.Serialize(siteName);
+
+    $(document).ready(function () {
+        load();
+    });
+
+    function load() {
+        if (($(parent.window).width()) > 1400) {
+            $(".dialog").addClass("iframe");
+        }
+
+        if (($(parent.window).width()) < 1400) {
+            $(".dialog").removeClass("iframe");
+        }
+    }
+</script>
+
+@await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+<environment include="Development,CloudDevelopment">
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
+</environment>
+
+<body>
+    <div id="PopupContainer" class="dialog">
+
+        <div class="col-md-12 dialog-header">
+            <div class="col-11 no-padding">
+                <span class="su su-copy Head-icon"></span>
+                <span class="PopupTitle">[[[Copy Reports to Multiple Tenants]]]</span>
+            </div>
+            <div class="col-1 no-padding">
+                <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        @if (TempData["ErrorMessage"] == null)
+        {
+            if (isSelfHosted == true)
+            {
+                <form class="dialog-body col-12 no-padding copy-move-category" id="item_action_form">
+                    <div class="tenant-parent" id="tenant-parent-div">
+                        <div class="col-12 padding20 no-bottom-padding" id="action-tenant-division">
+                            <div class="col-3 no-padding text-label"><div class="float-end">[[[Tenant]]]</div></div>
+                            <div class="col-1 no-padding"></div>
+                            <div class="col-7 no-padding copy-dropdown">
+                                <select id="tenantList" class="selectpicker" data-size="5" multiple data-actions-box="true" data-none-results-text="[[[No results match]]]" title="[[[Select Tenants]]]" data-live-search="true">
+                                    <!-- Populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-3 no-padding text-label"><div class="float-end"> [[[Category]]]</div></div>
+                            <div class="col-1 no-padding"></div>
+                            <!-- Multi-tenant category text input (shown when >1 tenant selected) -->
+                            <div id="multiTenantCategoryDiv" style="display:none;">
+                                <div class="col-7 no-padding copy-report">
+                                    <input id="CategoryListText" type="text" placeholder="[[[Enter category name (optional)]]]" style="width:230px; height:32px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                </div>
+                            </div>
+                            <!-- Single-tenant dropdown tree category (shown when 1 tenant selected) -->
+                            <div id="singleTenantCategoryDiv">
+                                @if (canCreateCategory)
+                                {
+                                    <div class="d-flex copy-report no-padding first-block" id="category-list">
+                                        <input id="CategoryList" style="width:230px; height:10px;" />
+                                        <div id="categorylist_validation" class="validation-message text"></div>
+                                        <span class="input-group-btn no-padding" id="add-new-category">
+                                        <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                    </span>
+                                        <div class="second-block"> </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-xs-7 no-padding third-block copy-report">
+                                        <input id="CategoryList" style="width:257px;height:10px;" />
+                                        <div id="categorylist_validation" class="validation-message text"></div>
+                                    </div>
+                                    <div class="fourth-block"></div>
+                                }
+                            </div>
+                        </div>
+                        <!-- NOTE: Report name field is NOT included in multi-report copy dialog -->
+                        <div id="overwrite" class="enable-overwrite-report col-12 padding10 no-bottom-padding bottom-margin30">
+                            <div class="col-4 no-padding"></div>
+                            <div class="col-8 no-padding">
+                                <input type="checkbox" id="overwrite_report">
+                                <label for="overwrite_report" class="toggle-space">
+                                    <span class="checkbox-text">[[[Overwrite]]]</span>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="ItemIdsHidden" value="" />
+                        <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
+                        <input type="hidden" id="tenantHidden" value="@siteName">
+                    </div>
+                </form>
+            }
+            <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division" style="display: flex !important; justify-content: space-between; align-items: center; min-height: 50px;">
+                <div class="col-6" style="display: flex; align-items: center;">
+                    <span class="ErrorMessage text-left"></span>
+                    <span class="SuccessMessage"></span>
+                </div>
+                <div class="col-6 rightAlign" style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <input type="button" title="" id="CopyButton" class="app-button app-primary-button app-btn-primary" value="[[[Copy]]]" />
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[Cancel]]]" />
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="dialog-body col-12 no-padding">
+                <div class="col-12 no-left-padding padding20 no-right-padding bottom-margin30">
+                    <div class="permission-denied">@TempData["ErrorMessage"]</div>
+                </div>
+                <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                    <div class="col-12 no-padding text-center">
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
+                    </div>
+                </div>
+            </div>
+        }
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+    </div>
+
+    <script nonce="@Model">
+        $(document).ready(function () {
+            // Wire up Cancel and Close buttons
+            $('#CancelButton').on('click', function() {
+                if (window.parent && window.parent.$) {
+                    try {
+                        window.parent.$("#ItemAction").ejDialog("close");
+                    } catch (e) {
+                        window.parent.$('#ItemAction').hide();
+                    }
+                } else {
+                    window.close();
+                }
+            });
+            
+            $('.PopupClose').on('click', function(e) {
+                e.preventDefault();
+                if (window.parent && window.parent.$) {
+                    try {
+                        window.parent.$("#ItemAction").ejDialog("close");
+                    } catch (e) {
+                        window.parent.$('#ItemAction').hide();
+                    }
+                }
+            });
+            
+            var className = $(".copy-move-category");
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
+            if (categories.length < 1) {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+            }
+            else {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+            }
+            parent.window.IsCopyOrMoveDashboard = true;
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+        
+        function copyCategoryValueChange(className) {
+            var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+            var selectedElement = $(".e-list-item[aria-selected='true']");
+            var levels = parseInt(selectedElement.attr("aria-level"));
+            var selectedItemsText = [];
+            for (var i = 1; i < levels; i++) {
+                var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+                selectedItemsText.push(text);
+            }
+            selectedItemsText.push(dropDownTreeInstance.currentText)
+            var combinedText = selectedItemsText.join(' / ');
+            className.find("input.e-dropdowntree").val(combinedText);
+        }
+    </script>
+    <script nonce="@Model">
+        $(document).ready(function () {
+            var tenants = @Json.Serialize(ViewBag.Tenant);
+            var siteName = '@siteName';
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
+            
+            // Populate tenant multi-select dropdown
+            var tenantSelect = $('#tenantList');
+            for (var t = 0; t < tenants.length; t++) {
+                var isSelected = tenants[t].TenantName === siteName ? 'selected' : '';
+                tenantSelect.append('<option value="' + tenants[t].TenantName + '" ' + isSelected + '>' + tenants[t].TenantName + '</option>');
+            }
+            
+            // Initialize selectpicker (Bootstrap built-in multi-select)
+            tenantSelect.selectpicker('destroy');
+            tenantSelect.selectpicker();
+            
+            // Wire up change event for tenant selection
+            tenantSelect.on('change', function() {
+                updateCategoryFieldVisibility();
+                loadCategoriesForSelectedTenant();
+            });
+            
+            // If current tenant is pre-selected, trigger loading
+            if (siteName) {
+                loadCategoriesForSelectedTenant();
+            }
+            
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+        
+        function updateCategoryFieldVisibility() {
+            var selectedTenants = $('#tenantList').val();
+            var selectedCount = selectedTenants ? selectedTenants.length : 0;
+            
+            if (selectedCount > 1) {
+                // Multiple tenants selected: show text input, hide dropdown tree and add-new-category button
+                $("#multiTenantCategoryDiv").show();
+                $("#singleTenantCategoryDiv").hide();
+                $("#add-new-category").hide();
+            } else if (selectedCount === 1) {
+                // Single tenant selected: show dropdown tree and add-new-category button if available
+                $("#multiTenantCategoryDiv").hide();
+                $("#singleTenantCategoryDiv").show();
+                if (@Json.Serialize(canCreateCategory)) {
+                    $("#add-new-category").show();
+                }
+            } else {
+                // No tenant selected: show dropdown tree but hide add-new-category button
+                $("#multiTenantCategoryDiv").hide();
+                $("#singleTenantCategoryDiv").show();
+                $("#add-new-category").hide();
+            }
+        }
+        
+        function loadCategoriesForSelectedTenant() {
+            var selectedTenants = $('#tenantList').val();
+            var selectedCount = selectedTenants ? selectedTenants.length : 0;
+            
+            // Only load categories if exactly 1 tenant is selected
+            if (selectedCount === 1) {
+                var tenantName = selectedTenants[0];
+                var categories = @Json.Serialize(ViewBag.CategoryDetails);
+                
+                // Reinitialize the DropDownTree with categories
+                var dropDownTreeInstance = document.querySelector('#CategoryList');
+                if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                    dropDownTreeInstance.ej2_instances[0].destroy();
+                }
+                
+                var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                    fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                    select: function () { copyCategoryValueChange($(".copy-move-category")); },
+                    value: [categories[0].Id.toString()],
+                    destroyPopupOnHide: false,
+                    showClearButton: false,
+                    placeholder: 'Select category',
+                    allowFiltering: true,
+                });
+                
+                DropDownTreeObj.appendTo("#CategoryList");
+                $("#add-new-category [data-toggle='tooltip']").tooltip();
+            }
+        }
+        
+        function clearCategorySelection() {
+            var dropDownTreeInstance = document.querySelector('#CategoryList');
+            if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                dropDownTreeInstance.ej2_instances[0].destroy();
+            }
+            $('#CategoryList').val('');
+        }
+    </script>
+    <script nonce="@Model">
+        // Wire up Copy button for multi-report copy
+        $("#CopyButton").on("click", function () {
+            var itemIds = $("#ItemIdsHidden").val().split(',').filter(function(id) { return id.trim() !== ''; });
+            var userId = $("#userIdHidden").val();
+            var isOverwrite = ($("#overwrite_report").is(":checked"));
+            
+            // Get selected tenants from multi-select dropdown
+            var selectedTenants = $('#tenantList').val() || [];
+            
+            // Validate selection
+            if (selectedTenants.length === 0) {
+                alert('[[[Please select at least one tenant]]]');
+                return;
+            }
+            
+            if (itemIds.length === 0) {
+                alert('[[[Please select at least one report]]]');
+                return;
+            }
+            
+            // Get category based on tenant count
+            var categoryPath = '';
+            if (selectedTenants.length > 1) {
+                categoryPath = $('#CategoryListText').val() || '';
+            } else {
+                // Read the full hierarchical path from the DropDownTree input field.
+                // copyCategoryValueChange() already builds and stores it there as "parent / child / leaf".
+                // Clean up the " / " separators to produce "parent/child/leaf".
+                var inputFieldPath = $('.copy-move-category').find('input.e-dropdowntree').val() || '';
+                if (inputFieldPath) {
+                    categoryPath = inputFieldPath.replace(/\s*\/\s*/g, '/').trim();
+                } else {
+                    // Fallback: use currentText of the DropDownTree instance (leaf name only)
+                    var dropDownTreeInstance = document.querySelector('#CategoryList');
+                    if (dropDownTreeInstance && dropDownTreeInstance.ej2_instances && dropDownTreeInstance.ej2_instances[0]) {
+                        categoryPath = dropDownTreeInstance.ej2_instances[0].currentText || '';
+                    }
+                }
+            }
+            
+            // Prepare targets array
+            var targets = [];
+            for (var i = 0; i < selectedTenants.length; i++) {
+                targets.push({
+                    TenantName: selectedTenants[i],
+                    CategoryPath: categoryPath,
+                    IsOverwrite: isOverwrite
+                });
+            }
+            
+            // Create bulk copy request
+            var bulkCopyRequest = {
+                ItemIds: itemIds,
+                Tenants: targets
+            };
+            
+            $("#ItemAction_wrapper").ejWaitingPopup("show");
+            doAjaxPost("POST", copyReportsToTenantsUrl,
+                JSON.stringify(bulkCopyRequest),
+                function (response) {
+                    $("#ItemAction_wrapper").ejWaitingPopup("hide");
+                    displayMultiTenantCopyResults(response, true); // true for bulk mode
+                    if (response.status) {
+                        setTimeout(function() {
+                            window.parent.$("#ItemAction").ejDialog("close");
+                        }, 2000);
+                    }
+                },
+                function (error) {
+                    $("#ItemAction_wrapper").ejWaitingPopup("hide");
+                    alert('[[[Error during copy: ]]]' + (error.statusText || 'Unknown error'));
+                },
+                null, null, false, "application/json; charset=UTF-8"
+            );
+        });
+    </script>
+</body>

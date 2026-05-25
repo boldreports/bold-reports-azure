@@ -34,3 +34,32 @@ ALTER TABLE BOLDRS_ScheduleDetail ADD ScheduleRunStatus varchar(1000) NOT NULL D
 ;
 ALTER TABLE BOLDRS_ItemView ALTER COLUMN QueryString TYPE TEXT
 ;
+
+CREATE TABLE BOLDRS_ReportCopyLog(
+    Id uuid NOT NULL PRIMARY KEY,
+    BatchId uuid NULL,
+    IsBulkCopy smallint NOT NULL,
+    SourceItemId uuid NOT NULL,
+    SourceItemName varchar(255) NOT NULL,
+    SourceCategoryId uuid NULL,
+    SourceCategoryName varchar(255) NULL,
+    SourceTenantId uuid NOT NULL,
+	CopySiteType varchar(255) NULL,
+	ExternalSiteUrl varchar(255) NULL,
+    DestinationTenantId uuid NOT NULL,
+    DestinationTenantName varchar(255) NOT NULL,
+    DestinationCategoryPath varchar(1000) NOT NULL,
+    DestinationCategoryId uuid NULL,
+    DestinationItemId uuid NULL,
+    DestinationItemName varchar(255) NOT NULL,
+    IsOverwrite smallint NOT NULL,
+    CopiedByUserId int NOT NULL,
+    CopiedAt timestamp NOT NULL,
+    Status varchar(50) NOT NULL,
+    FailureReason text NULL)
+;
+
+ALTER TABLE BOLDRS_ReportCopyLog  ADD  FOREIGN KEY(CopiedByUserId) REFERENCES BOLDRS_User (Id)
+;
+ALTER TABLE BOLDRS_ReportCopyLog  ADD  FOREIGN KEY(SourceItemId) REFERENCES BOLDRS_Item (Id)
+;

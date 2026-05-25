@@ -30,3 +30,31 @@ ALTER TABLE BOLDRS_EmailActivityLog ADD CONSTRAINT fk_emailactivitylog_comment F
 ALTER TABLE BOLDRS_ScheduleDetail ADD SkipAttachment NUMBER(1);
 ALTER TABLE BOLDRS_ScheduleDetail ADD SkipMail NUMBER(1);
 ALTER TABLE BOLDRS_ScheduleDetail  ADD ScheduleRunStatus VARCHAR2(1000) DEFAULT 'Idle' NOT NULL;
+
+CREATE TABLE BOLDRS_ReportCopyLog (
+    Id RAW(16) NOT NULL PRIMARY KEY,
+    BatchId RAW(16) NULL,
+    IsBulkCopy NUMBER(1) NOT NULL,
+    SourceItemId RAW(16) NOT NULL,
+    SourceItemName VARCHAR2(255) NOT NULL,
+    SourceCategoryId RAW(16) NULL,
+    SourceCategoryName VARCHAR2(255) NULL,
+    SourceTenantId RAW(16) NOT NULL,
+    CopySiteType VARCHAR2(255) NULL,
+    ExternalSiteUrl VARCHAR2(255) NULL,
+    DestinationTenantId RAW(16) NOT NULL,
+    DestinationTenantName VARCHAR2(255) NOT NULL,
+    DestinationCategoryPath VARCHAR2(1000) NOT NULL,
+    DestinationCategoryId RAW(16) NULL,
+    DestinationItemId RAW(16) NULL,
+    DestinationItemName VARCHAR2(255) NOT NULL,
+    IsOverwrite NUMBER(1) NOT NULL,
+    CopiedByUserId NUMBER NOT NULL,
+    CopiedAt TIMESTAMP NOT NULL,
+    Status VARCHAR2(50) NOT NULL,
+    FailureReason CLOB NULL
+);
+
+ALTER TABLE BOLDRS_ReportCopyLog ADD CONSTRAINT fk_reportcopylog_user FOREIGN KEY (CopiedByUserId) REFERENCES BOLDRS_User(Id);
+
+ALTER TABLE BOLDRS_ReportCopyLog ADD CONSTRAINT fk_reportcopylog_item FOREIGN KEY (SourceItemId) REFERENCES BOLDRS_Item(Id);
