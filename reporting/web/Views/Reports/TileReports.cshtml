@@ -52,6 +52,7 @@
     var hideViews = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViews || !(schemes?.Views ?? true));
     var hideViewSchedules = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideViewSchedules || !(schemes?.ViewSchedules ?? true));
     var hideInfo = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideInfo || !(schemes?.Info ?? true));
+    var hideSecurity = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideSecurity || !(schemes?.Security ?? true));
     var hideProcessingOptions = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideProcessingOptions || !(schemes?.ProcessingOptions ?? true));
     var hideMove = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideMove || !(schemes?.Move ?? true));
     var hideCopy = iscustomUIProfile && (hideMenusAndOptions || customUI.Profiles[0].Reports.HideCopy || !(schemes?.Copy ?? true));
@@ -112,6 +113,7 @@
         var deleteConfirmationUrl = "@Url.Action("deleteconfirmation", "items")";
         var getViewsByItemIdUrl = "@Url.Action("GetViewsByItemId", "Items")";
         var dashboardsUrl = "@Url.Action("reports", "reports")";
+        var itemSettingsAccessUrl = "@Url.Action("itemsettingsaccess", "reports")";
         var editreportviewUrl = "@Url.Action("editreportview", "reports")";
         var currentUserId = @currentUserId;
         var isMarkItemsPublic = @Json.Serialize(globalAppSettings.SystemSettings.IsMarkItemsPublic);
@@ -159,6 +161,7 @@
         var hideViews = @Json.Serialize(hideViews);
         var hideViewSchedules = @Json.Serialize(hideViewSchedules);
         var hideInfo = @Json.Serialize(hideInfo);
+        var hideSecurity = @Json.Serialize(hideSecurity);
         var hideProcessingOptions = @Json.Serialize(hideProcessingOptions);
         var hideMove = @Json.Serialize(hideMove);
         var hideCopy = @Json.Serialize(hideCopy);
@@ -698,7 +701,7 @@
                                                                 <span class="category-icon su su-created-by custom-style"></span>
                                                                 <span class="footer-text no-padding">{{dashboardItem.CreatedByDisplayName}}</span>
                                                             </div>
-                                                            <div class="footer-modified-date float-start col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate">
+                                                            <div class="footer-modified-date float-start col-3 no-padding" title="[[[Modified Date]]]" ng-if="!hideModifiedDate" style="display:flex; align-items:center; gap:3px;">
                                                                 <span class="category-icon su su-clock custom-style"></span>
                                                                 <span class="footer-text no-padding" ng-show="!isTablet">
                                                                     {{dashboardItem.ModifiedDate}}
@@ -779,6 +782,13 @@
                                                         <span class="option-click" title="" ng-click="openInfo()">
                                                             <i class="su su-info"></i>
                                                             <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li role="separator" class="divider" ng-if="!hideProcessingOptions && !dashboardItem.IsMultiDashboard"></li>
+                                                    <li ng-if="!dashboardItem.IsMultiDashboard && !isTablet && (dashboardItem.CanWrite || isAdmin) && !dashboardItem.IsLocked && !hideSecurity">
+                                                        <span class="option-click" ng-click="getItemSettingsDialog()">
+                                                            <i class="su su-shield"></i>
+                                                            <span>[[[Security]]]</span>
                                                         </span>
                                                     </li>
                                                     @if(ServerAppConfig.IsSelfHosted)
@@ -996,6 +1006,12 @@
                                                         <span title="" class="option-click" ng-click="openInfo()">
                                                             <i class="su su-info"></i>
                                                             <span>[[[Info]]]</span>
+                                                        </span>
+                                                    </li>
+                                                    <li ng-if="!isTablet && !hideVersionHistory">
+                                                        <span class="version-button option-click" title="" ng-click="versionHistoryReportPart()">
+                                                            <i class="su su-versions"></i>
+                                                            <span>[[[Version History]]]</span>
                                                         </span>
                                                     </li>
                                                     <li ng-if="(!isTablet && dashboardItem.CreatedById == currentUserId || isAdmin) && !hideDelete">
@@ -1243,6 +1259,7 @@
         @await Html.PartialAsync("../Items/_SharePermission")
         @await Html.PartialAsync("../Items/_PublishReport")
         @await Html.PartialAsync("../Items/_GetExternalSites")
+        @await Html.PartialAsync("../Items/_ReportSecurity")
     }
 
     @await Html.PartialAsync("../Items/_ItemInfo")

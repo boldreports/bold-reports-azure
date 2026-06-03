@@ -84,8 +84,8 @@
                 <div class="bg-info col-lg-8 col-md-8 col-sm-8" id="default-password-info">
                     [[[Default password creation uses the first and last four characters of your email address.]]]
                 </div>
-                    <div class="bg-info col-lg-8 col-md-8 col-sm-8" id="custom-password-info" style="display:none; width:auto; height:auto; padding:6px 10px;">
-                    [[[Custom passwords apply only to Bold Reports Server users and cannot be used for external recipients.]]]
+                <div class="bg-info col-lg-8 col-md-8 col-sm-8" id="custom-password-info">
+                    [[[For external recipients, password creation supports only Email and Custom Text.]]]
                 </div>
             </div>
         </div>
@@ -96,13 +96,14 @@
                     <div class="i-search-fields">
                         <select data-width="50px" class="select-picker no-padding field-key-position" id="field-key-position" disabled data-size="2"></select>
                     </div>
-                    <div style="width: 110px;">
+                    <div class="numeric-wrapper" style="width: 110px;">
                         @Html.TextBox("field-key-count", "", new { @class = "form-control field-key-count numeric-text-box", disabled = "disabled" })
                     </div>
-                    <label class="app-textbox-label no-margin notransition mb-0">character of</label>
+                    <label class="app-textbox-label no-margin notransition mb-0"  style="width: 90px; margin-left: 5px;">character of</label>
                     <div class="i-search-fields">
                         <select class="select-picker field-key no-padding" id="field-key" disabled data-size="4"></select>
                     </div>
+                    <input type="password" class="form-control custom-text-input" placeholder="Enter custom text" maxlength="8" style="display:none; width:180px;" />
                     <span class="su-add pwd-condition-btn app-textbox-label no-margin no-padding" data-bs-toggle="tooltip" data-bs-placement="right" title="Add New Condition"> </span>
                 </div>
             </div>

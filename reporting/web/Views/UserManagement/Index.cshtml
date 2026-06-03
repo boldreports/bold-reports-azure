@@ -15,9 +15,11 @@
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
     var customUI = _globalAppSettings.SystemSettings.CustomUI;
     var userImport = new UserImport();
+    var userMenu = new UserMenuList();
     if (customUI?.Profiles != null)
     {
         userImport = customUI?.Profiles[0]?.UserImport != null ? customUI?.Profiles[0]?.UserImport[0] : new UserImport();
+        userMenu = customUI?.Profiles[0]?.Users != null ? customUI?.Profiles[0]?.Users : new UserMenuList();
     }
 
     var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
@@ -141,14 +143,16 @@
     </script>
     <script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="options">
         <div class="user-hover-options" data-content="{{:Email}}">
-            {{if Email == "@systemUserEmail"}}
-                <a href="#" class="add-user-to-group" title="[[[You cannot assign the System user to any group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
-                    <i class="su su-group-1 disabled-icon-color"></i>
-                </a>
-            {{else}}
-                <a href="#" class="add-user-to-group" title="[[[Assign Group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
-                    <i class="su su-group-1"></i>
-                </a>
+            {{if ~isProfileRestricted()==false}}
+                {{if Email == "@systemUserEmail"}}
+                    <a href="#" class="add-user-to-group" title="[[[You cannot assign the System user to any group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
+                        <i class="su su-group-1 disabled-icon-color"></i>
+                    </a>
+                {{else}}
+                    <a href="#" class="add-user-to-group" title="[[[Assign Group]]]" data-userid="{{:UserId}}" data-firstname="{{:FirstName}}" data-lastname="{{:LastName}}" data-bs-toggle="tooltip">
+                        <i class="su su-group-1"></i>
+                    </a>
+                {{/if}}
             {{/if}}
             {{if Email == "@systemUserEmail"}}
             @if (isAdmin || permissions[PermissionEntity.AllPermissions] || permissions[PermissionEntity.SpecificPermissions])
@@ -175,26 +179,28 @@
             <a href="@Url.Action("ViewProfile", "UserManagement")?id={{:UserId}}" title="[[[View]]]" data-bs-toggle="tooltip">
                 <i class="su su-eye"></i>
             </a>
-            {{if Email == "@ViewBag.LoggedUser"}}
-            <a href="#" class="prevent-default-action" title="[[[It's You]]]" data-bs-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
-                <i class="su su-delete disabled-icon-color"></i>
-            </a>
-            {{else Email == "@systemUserEmail"}}
-            <a href="#" class="prevent-default-action" title="[[[You cannot delete the System user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
-                <i class="su su-delete disabled-icon-color"></i>
-            </a>
-            {{else Email == "@superAdminUserEmail"}}
-            <a href="#" class="prevent-default-action" title="[[[You cannot delete the Super Admin user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
-                <i class="su su-delete disabled-icon-color"></i>
-            </a>
-            {{else IsAdmin && ~isAdmin() == false}}
-            <a href="#" class="prevent-default-action" title="[[[You cannot delete the System Administrator]]]" data-bs-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
-                <i class="su su-delete disabled-icon-color"></i>
-            </a>
-            {{else}}
-            <a class="delete-class prevent-default-action" href="#" title="[[[Remove Access]]]" data-bs-toggle="tooltip" data-email="{{:Email}}" data-content="{{:UserId}}">
-                <i class="su su-delete"></i>
-            </a>
+            {{if ~isProfileRestricted()==false}}
+                {{if Email == "@ViewBag.LoggedUser"}}
+                <a href="#" class="prevent-default-action" title="[[[It's You]]]" data-bs-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                    <i class="su su-delete disabled-icon-color"></i>
+                </a>
+                {{else Email == "@systemUserEmail"}}
+                <a href="#" class="prevent-default-action" title="[[[You cannot delete the System user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                    <i class="su su-delete disabled-icon-color"></i>
+                </a>
+                {{else Email == "@superAdminUserEmail"}}
+                <a href="#" class="prevent-default-action" title="[[[You cannot delete the Super Admin user]]]" data-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                    <i class="su su-delete disabled-icon-color"></i>
+                </a>
+                {{else IsAdmin && ~isAdmin() == false}}
+                <a href="#" class="prevent-default-action" title="[[[You cannot delete the System Administrator]]]" data-bs-toggle="tooltip" data-content="{{:UserId}}" data-email="{{:Email}}">
+                    <i class="su su-delete disabled-icon-color"></i>
+                </a>
+                {{else}}
+                <a class="delete-class prevent-default-action" href="#" title="[[[Remove Access]]]" data-bs-toggle="tooltip" data-email="{{:Email}}" data-content="{{:UserId}}">
+                    <i class="su su-delete"></i>
+                </a>
+                {{/if}}
             {{/if}}
         </div>
     </script>
@@ -297,6 +303,9 @@
             $.views.helpers({
                 isAdmin: function () {
                     return @isAdmin.ToString().ToLower();
+                },
+                isProfileRestricted: function () {
+                    return @userMenu.RestrictManageProfile.ToString().ToLower();
                 }
             });
 
@@ -323,10 +332,13 @@
                     <div class="col-lg-6 d-flex justify-content-end align-items-start no-padding">
                         <ul class="list-unstyled d-flex flex-wrap justify-content-end align-items-start mb-0 p-0" id="user-management-options">
                            
-                            <li class="flying-add d-flex gap-2 align-items-center" id="add-user-in-group">
-                                <button class="secondary-button app-btn-secondary user-add-group btn btn-outline-secondary fw-semibold" title="[[[Assign a group to selected users]]]"> [[[Assign Group]]] </button>
-                                <button class="critical-action-button app-btn-danger user-delete-button btn btn-danger fw-semibold" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user"> [[[Delete User]]] </button>
-                            </li>
+                            @if (!userMenu.RestrictManageProfile)
+                            {
+                                <li class="flying-add d-flex gap-2 align-items-center" id="add-user-in-group">
+                                    <button class="secondary-button app-btn-secondary user-add-group btn btn-outline-secondary fw-semibold" title="[[[Assign a group to selected users]]]"> [[[Assign Group]]] </button>
+                                    <button class="critical-action-button app-btn-danger user-delete-button btn btn-danger fw-semibold" title="[[[Delete selected users]]]" data-log-user="@ViewBag.LoggedUser" id="delete-user"> [[[Delete User]]] </button>
+                                </li>
+                            }
 
                               @if (((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.AzureAD != null) ||
                            ((ViewBag.ActiveDirectory != null && ServerAppConfig.IsSelfHosted) && ViewBag.CustomDatabaseUserCount != null) ||

@@ -83,6 +83,10 @@
             }
         });
     </script>
+
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
 </head>
 <body style="background-color:white">
     <form name="uploadReportForm" id="upload-form" method="post" action="@Url.Action("UploadDataset", "Datasets")" enctype="multipart/form-data">

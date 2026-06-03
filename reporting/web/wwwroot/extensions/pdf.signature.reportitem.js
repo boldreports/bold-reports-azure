@@ -57,7 +57,7 @@ var EJPDFSignature = (function () {
     EJPDFSignature.prototype.getBackgroundColor = function () {
         return (this.customJSON && this.customJSON.Style && this.customJSON.Style.BackgroundColor
             && this.customJSON.Style.BackgroundColor !== 'Transparent' && this.customJSON.Style.BackgroundColor !== '#00ffffff')
-            ? ej.ReportUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'white';
+            ? ej.ImageUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'white';
     };
     EJPDFSignature.prototype.getPropertyGridItems = function (baseProperties) {
         var itemProperties = [{
@@ -182,7 +182,7 @@ var EJPDFSignature = (function () {
     EJPDFSignature.prototype.undoRedoAction = function (imgInfo) {
         if (imgInfo) {
             if (imgInfo.propertyName && imgInfo.propertyName.toLowerCase() === 'pdfsignature') {
-                ej.ReportUtil.invokeMethod(this, imgInfo.method, [imgInfo.undoRedo, { imageData: imgInfo.imageData }]);
+                ej.WidgetUtil.invokeMethod(this, imgInfo.method, [imgInfo.undoRedo, { imageData: imgInfo.imageData }]);
             }
         }
     };
@@ -676,6 +676,68 @@ EJPDFSignature.Locale['en-US'] = {
         title: 'PDF Signature'
     }
 };
+EJPDFSignature.Locale['el-GR'] = {
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    basicSettingsLabels: {
+        reason: 'Εμφάνιση λόγου',
+        digitalIDFile: 'Αρχείο ψηφιακού αναγνωριστικού',
+        reasonLabel: 'Λόγος',
+        location: 'Εμφάνιση τοποθεσίας',
+        date: 'Εμφάνιση τρέχουσας ημερομηνίας',
+        signatureLabel: 'Υπογραφή',
+        btnText: 'Σχεδίαση',
+        contactInfo: 'Εμφάνιση στοιχείων επικοινωνίας',
+        signedName: 'Εμφάνιση ονόματος υπογράφοντος',
+        reasonTxt: 'Συμφωνώ'
+    },
+    designPanelLabels: {
+        reason: 'Ο λόγος υπογραφής σας',
+        location: 'Η τοποθεσία υπογραφής σας',
+        contactInfo: 'Τα στοιχεία επικοινωνίας σας',
+        signedName: 'Ψηφιακά υπογεγραμμένο από το κοινό σας όνομα',
+        reasonLabel: 'Λόγος',
+        locationLabel: 'Τοποθεσία',
+        contactInfoLabel: 'Επικοινωνία',
+        signedNameLabel: 'Όνομα',
+        dateLabel: 'Ημερομηνία'
+    },
+    toolTip: {
+        requirements: 'Προσθέτει ένα στοιχείο αναφοράς στην περιοχή σχεδίασης.',
+        description: 'Χρησιμοποιείται για την προσθήκη υπογραφής PDF.',
+        title: 'Υπογραφή PDF'
+    }
+};
+EJPDFSignature.Locale['en-GB'] = {
+    categoryBasicSettings: 'Basic Settings',
+    basicSettingsLabels: {
+        reason: 'Show Reason',
+        digitalIDFile: 'Digital ID File',
+        reasonLabel: 'Reason',
+        location: 'Show Location',
+        date: 'Show Current Date',
+        signatureLabel: 'Signature',
+        btnText: 'Draw',
+        contactInfo: 'Show Contact Info',
+        signedName: 'Show Signed Name',
+        reasonTxt: 'I agree'
+    },
+    designPanelLabels: {
+        reason: 'Your signing reason',
+        location: 'Your signing location',
+        contactInfo: 'Your contact info',
+        signedName: 'Digitally signed by your common name',
+        reasonLabel: 'Reason',
+        locationLabel: 'Location',
+        contactInfoLabel: 'Contact',
+        signedNameLabel: 'Name',
+        dateLabel: 'Date'
+    },
+    toolTip: {
+        requirements: 'Add a report item to the designer area.',
+        description: 'This report item is used to add a PDF signature.',
+        title: 'PDF Signature'
+    }
+};
 EJPDFSignature.Locale['en-AU'] = {
     categoryBasicSettings: 'Basic Settings',
     basicSettingsLabels: {
@@ -1108,6 +1170,37 @@ EJPDFSignature.Locale['ru-RU'] = {
         requirements: 'Добавьте элемент отчета в область конструктора.',
         description: 'Этот элемент отчета используется для добавления подписи PDF.',
         title: 'PDF-подпись'
+    }
+};
+EJPDFSignature.Locale['th-TH'] = {
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    basicSettingsLabels: {
+        reason: 'แสดงเหตุผล',
+        digitalIDFile: 'ไฟล์ Digital ID',
+        reasonLabel: 'เหตุผล',
+        location: 'แสดงตำแหน่ง',
+        date: 'แสดงวันที่ปัจจุบัน',
+        signatureLabel: 'ลายเซ็น',
+        btnText: 'วาด',
+        contactInfo: 'แสดงข้อมูลติดต่อ',
+        signedName: 'แสดงชื่อผู้ลงนาม',
+        reasonTxt: 'ฉันยอมรับ'
+    },
+    designPanelLabels: {
+        reason: 'เหตุผลในการลงนามของคุณ',
+        location: 'ตำแหน่งที่คุณลงนาม',
+        contactInfo: 'ข้อมูลติดต่อของคุณ',
+        signedName: 'ลงนามดิจิทัลโดยชื่อที่คุณใช้',
+        reasonLabel: 'เหตุผล',
+        locationLabel: 'ตำแหน่ง',
+        contactInfoLabel: 'ข้อมูลติดต่อ',
+        signedNameLabel: 'ชื่อ',
+        dateLabel: 'วันที่'
+    },
+    toolTip: {
+        requirements: 'เพิ่มรายการรายงานลงในพื้นที่ตัวออกแบบ',
+        description: 'ใช้รายการรายงานนี้เพื่อเพิ่มลายเซ็น PDF',
+        title: 'ลายเซ็น PDF'
     }
 };
 EJPDFSignature.Locale['zh-Hant'] = {

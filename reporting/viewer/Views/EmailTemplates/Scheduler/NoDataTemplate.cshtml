@@ -1,6 +1,7 @@
 ﻿@model Syncfusion.Server.Base.DataClasses.EmailTemplateModel
 @{
     Layout = null;
+    var disclaimerContent = @Model.CustomEmailTemplateEnabled ? @Model.DisclaimerContent : "This is an automatically generated message, please do not reply to this mail. If you have any question, please contact your administrator.";
 }
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml'>
@@ -121,19 +122,22 @@
                                         </td>
                                         <td align='left' valign='top'>
                                         <![endif]-->
-                                        <div class='' style='display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; ' width='50'>
-                                            <table style='border-collapse: separate;width: 100%;' class='' align='left' border='0' cellpadding='0' cellspacing='0'>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style='font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right; height: 40px;vertical-align:bottom;'>
-                                                            <span data-id="hidden">
-                                                                <a href="@Model.BaseUrl/login" target='' style="text-decoration: none; color: #3f3f3f; font-weight: normal;">Sign in</a>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        @if (!Model.HideLoginOption)
+                                        {
+                                            <div class='' style='display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; ' width='50'>
+                                                <table style='border-collapse: separate;width: 100%;' class='' align='left' border='0' cellpadding='0' cellspacing='0'>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style='font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right; height: 40px;vertical-align:bottom;'>
+                                                                <span data-id="hidden">
+                                                                    <a href="@Model.BaseUrl/login" target='' style="text-decoration: none; color: #3f3f3f; font-weight: normal;">Sign in</a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
                                         <!--[if (gte mso 9)|(lte ie 8)]>
                                                 </td>
                                             </tr>
@@ -173,9 +177,18 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td style=' padding-left:20px;padding-right:20px; font-size: 18px; color: #3f3f3f; font-weight:bold; font-family:arial, helvetica, sans-serif;'>
-                                                                    <span data-id="hidden">
-                                                                        No data found for scheduled report.
-                                                                    </span>
+                                                                    @if (Model.CustomEmailTemplateEnabled)
+                                                                    {
+                                                                            <span data-id="hidden">   
+                                                                                @Model.HeaderContent
+                                                                            </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span data-id="hidden">
+                                                                            No data found for scheduled report.
+                                                                        </span>
+                                                                    }
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -343,6 +356,43 @@
                                 }
                                 else
                                 {
+                                    <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table style='text-align:left;width:100%;' cellpadding='0' cellspacing='0'>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style=' padding-left:20px;padding-right:20px; font-size: 18px; color: #3f3f3f; font-weight:bold; font-family:arial, helvetica, sans-serif;'>
+                                                                    @if (Model.CustomEmailTemplateEnabled)
+                                                                    {
+                                                                            <span data-id="hidden">   
+                                                                                @Model.HeaderContent
+                                                                            </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span data-id="hidden">
+                                                                            No data found for scheduled report.
+                                                                        </span>
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
+                                        <tbody>
+                                            <tr>
+                                                <td style='font-size: 1px;' height='30'>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
                                 // Custom Body from the database
                                     <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                                         <tbody>
@@ -511,7 +561,7 @@
                                                 <tr>
                                                     <td style=' line-height:20px; padding-left:20px;padding-right:20px; font-size: 12px; color: #7a7a7a; opacity:0.5; font-family:Arial, Helvetica, sans-serif;'>
                                                         <span data-id="hidden">
-                                                            This is an automatically generated message, please do not reply to this mail. If you have any question, please contact your administrator.
+                                                            @disclaimerContent
                                                         </span>
                                                     </td>
                                                 </tr>

@@ -114,17 +114,25 @@
                         <li>
                                 <a title="" href="@Url.Action("Reports", "Reports")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue"><i class="su su-open"><i class="su-open path1"></i><i class="su-open path2"></i></i><span>[[[Open]]]</span></a>
                             </li>
-                            {{if CanWrite}}
-                            <li>
-                                <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue">
-                                    <i class="su su-edit"></i>
-                                    <span>[[[Edit]]]</span>
-                                </a>
-                            </li>
+                        {{if CanWrite}}
+                        <li>
+                            <a title="[[[Edit]]]" href="@Url.Action("ReportDesigner", "Designer")/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue">
+                                <i class="su su-edit"></i>
+                                <span>[[[Edit]]]</span>
+                            </a>
+                        </li>
                         {{/if}}
                     {{/if}}
                     {{/if}}
-                    {{if CanDownload}}
+                    {{if ItemTypeId == "@((int)ItemType.ReportPart)"}}
+                        <li>
+                            <a title="[[[Edit]]]" href="@Url.Action("ReportPart", "Designer")/{{:ItemId}}/{{:Name}}?v={{:VersionNumber}}" target="@targetValue">
+                                <i class="su su-edit"></i>
+                                <span>[[[Edit]]]</span>
+                            </a>
+                        </li>
+                    {{/if}}
+                    {{if CanDownload && ItemTypeId != "@((int)ItemType.ReportPart)"}}
                     <li>
                         <a href="@Url.Action("Reports", "Reports").TrimEnd('/').Remove(Url.Action("Reports", "Reports").LastIndexOf('/'))/items/download/{{:ItemTypeId}}/{{:ItemId}}/{{:CategoryName}}/{{:Name}}?v={{:VersionNumber}}" id="download-versioned-report">
                             <i class="su su-download"></i>

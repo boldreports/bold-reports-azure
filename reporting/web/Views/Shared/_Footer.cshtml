@@ -10,7 +10,11 @@
     var separatorparagraphClass = (globalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion && globalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "show" : "hide";
     var separatorFooterClass = (globalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion || globalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "show" : "hide";
     var isMobile = new DeviceDetection(Context).IsMobile;
-    var footerLogo = !string.IsNullOrWhiteSpace(globalAppSettings.SystemSettings.FooterLogo) ? globalAppSettings.SystemSettings.FooterLogo : globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + @ServerAppConfig.AppSettings.AppBranding.Identifier + "/footer_logo.svg";
+    var themeAppearance = string.IsNullOrEmpty(_identityResponse?.UserPreference?.ServerFeatures?.ThemeSettings?.Appearance) ? "light" : _identityResponse?.UserPreference?.ServerFeatures?.ThemeSettings?.Appearance;
+    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + themeAppearance + "/" + IconFileNames.FooterLogo;
+    var isDefaultLogo = !string.IsNullOrEmpty(globalAppSettings.SystemSettings.FooterLogo) && globalAppSettings.SystemSettings.FooterLogo.EndsWith(IconFileNames.FooterLogo);
+    var footerLogo = isDefaultLogo ? defaultAppLogo : globalAppSettings.SystemSettings.FooterLogo;
+
     var copyrightInformation = HttpUtility.HtmlDecode(globalAppSettings.SystemSettings.CopyrightInformation);
     }
 

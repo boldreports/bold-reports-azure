@@ -664,6 +664,80 @@ EJQRBarcode.Locale['en-US'] = {
         rotate270degrees: '270'
     }
 };
+EJQRBarcode.Locale['el-GR'] = {
+    barcodeType: 'Τύπος συμβολογίας',
+    barcodeValue: 'Κείμενο',
+    textVisibility: 'Ορατότητα κειμένου',
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    toolTip: {
+        requirements: 'Προβολή οποιουδήποτε τύπου γραμμωτού κώδικα.',
+        description: 'Εμφανίζει τους γραμμωτούς κώδικες.',
+        title: 'QRBarcode'
+    },
+    correctionLabel: 'Επίπεδο διόρθωσης',
+    qrcodeCorrectionLevel: {
+        low: 'Χαμηλό',
+        medium: 'Μέσο',
+        quartile: 'Τεταρτημόριο',
+        high: 'Υψηλό'
+    },
+    pdf417CorrectionLevel: {
+        auto: 'Αυτόματο',
+        level0: 'Επίπεδο0',
+        level1: 'Επίπεδο1',
+        level2: 'Επίπεδο2',
+        level3: 'Επίπεδο3',
+        level4: 'Επίπεδο4',
+        level5: 'Επίπεδο5',
+        level6: 'Επίπεδο6',
+        level7: 'Επίπεδο7',
+        level8: 'Επίπεδο8',
+    },
+    barcodeRotationLabel: 'Περιστροφή',
+    barcodeRotation: {
+        rotationNone: 'Καμία',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    }
+};
+EJQRBarcode.Locale['en-GB'] = {
+    barcodeType: 'Symbology Type',
+    barcodeValue: 'Text',
+    textVisibility: 'Text Visibility',
+    categoryBasicSettings: 'Basic Settings',
+    toolTip: {
+        requirements: 'Display any barcode type.',
+        description: 'Displays the barcodes.',
+        title: 'QRBarcode'
+    },
+    correctionLabel: 'Correction Level',
+    qrcodeCorrectionLevel: {
+        low: 'Low',
+        medium: 'Medium',
+        quartile: 'Quartile',
+        high: 'High'
+    },
+    pdf417CorrectionLevel: {
+        auto: 'Auto',
+        level0: 'Level 0',
+        level1: 'Level 1',
+        level2: 'Level 2',
+        level3: 'Level 3',
+        level4: 'Level 4',
+        level5: 'Level 5',
+        level6: 'Level 6',
+        level7: 'Level 7',
+        level8: 'Level 8',
+    },
+    barcodeRotationLabel: 'Rotation',
+    barcodeRotation: {
+        rotationNone: 'None',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    }
+};
 EJQRBarcode.Locale['fr-FR'] = {
     barcodeType: 'Type de symbologie',
     barcodeValue: 'Texte',
@@ -844,6 +918,43 @@ EJQRBarcode.Locale['ru-RU'] = {
     barcodeRotationLabel: 'Вращение',
     barcodeRotation: {
         rotationNone: 'Нет',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    }
+};
+EJQRBarcode.Locale['th-TH'] = {
+    barcodeType: 'ประเภทสัญลักษณ์',
+    barcodeValue: 'ข้อความ',
+    textVisibility: 'การแสดงข้อความ',
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    toolTip: {
+        requirements: 'แสดงบาร์โค้ดได้ทุกประเภท',
+        description: 'แสดงผลบาร์โค้ด',
+        title: 'บาร์โค้ด QR'
+    },
+    correctionLabel: 'ระดับการแก้ไขข้อผิดพลาด',
+    qrcodeCorrectionLevel: {
+        low: 'ต่ำ',
+        medium: 'ปานกลาง',
+        quartile: 'ควอไทล์',
+        high: 'สูง'
+    },
+    pdf417CorrectionLevel: {
+        auto: 'อัตโนมัติ',
+        level0: 'ระดับ 0',
+        level1: 'ระดับ 1',
+        level2: 'ระดับ 2',
+        level3: 'ระดับ 3',
+        level4: 'ระดับ 4',
+        level5: 'ระดับ 5',
+        level6: 'ระดับ 6',
+        level7: 'ระดับ 7',
+        level8: 'ระดับ 8',
+    },
+    barcodeRotationLabel: 'การหมุน',
+    barcodeRotation: {
+        rotationNone: 'ไม่มี',
         rotate90degrees: '90',
         rotate180degrees: '180',
         rotate270degrees: '270'

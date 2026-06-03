@@ -9,6 +9,10 @@
         var updateCustomAttributeUrl = { "user": "@Url.Action("UpdateUserCustomAttribute", "CustomAttribute")", "group": "@Url.Action("UpdateGroupCustomAttribute", "CustomAttribute")", "site": "@Url.Action("UpdateSiteCustomAttribute", "CustomAttribute")" };
         var removeCustomAttributeUrl = { "user": "@Url.Action("RemoveUserCustomAttribute", "CustomAttribute")", "group": "@Url.Action("RemoveGroupCustomAttribute", "CustomAttribute")", "site": "@Url.Action("RemoveSiteCustomAttribute", "CustomAttribute")" };
     </script>
+
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
 </head>
 <body>
     <div id="custom-attribute-content" style="display:none">

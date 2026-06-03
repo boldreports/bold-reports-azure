@@ -4,6 +4,8 @@
     Layout = null;
     var newComment = Model.NewComment;
     var oldComment = Model.OldComment;
+	var disclaimerContent = @Model.CustomEmailTemplateEnabled ? @Model.DisclaimerContent : "This is an automatically generated message, please do not reply to this mail. If you have any question, please contact your administrator.";
+    var headerContent = @Model.CustomEmailTemplateEnabled ? @Model.HeaderContent : "New comment added";
 }
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml'>
@@ -14,6 +16,10 @@
         /* yahoo, hotmail */
         .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
             line-height: 100%;
+        }
+
+        .im {
+            color: #000000 !important;
         }
 
         /* outlook */
@@ -124,19 +130,22 @@
                                         </td>
                                         <td align='left' valign='top'>
                                         <![endif]-->
-                                        <div class='' style='display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; ' width='50'>
-                                            <table style='border-collapse: separate;width: 100%;' class='' align='left' border='0' cellpadding='0' cellspacing='0'>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style='font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right;height: 40px;vertical-align:bottom;'>
-                                                            <span data-id="hidden">
-                                                                <a href="@Model.BaseUrl/login" target='' style="text-decoration: none; color: #3f3f3f; font-weight: normal;">Sign in</a>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        @if (!Model.HideLoginOption)
+                                        {
+                                            <div class='' style='display: inline-block; vertical-align: top; width: 100%; max-width: 50px;  float: right; ' width='50'>
+                                                <table style='border-collapse: separate;width: 100%;' class='' align='left' border='0' cellpadding='0' cellspacing='0'>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style='font-size: 16px;font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: right;height: 40px;vertical-align:bottom;'>
+                                                                <span data-id="hidden">
+                                                                    <a href="@Model.BaseUrl/login" target='' style="text-decoration: none; color: #3f3f3f; font-weight: normal;">Sign in</a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
                                         <!--[if (gte mso 9)|(lte ie 8)]>
                                                 </td>
                                             </tr>
@@ -173,7 +182,7 @@
                                                 <tr>
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 18px; color: #3f3f3f; font-weight:bold; font-family:arial, helvetica, sans-serif;'>
                                                         <span data-id="hidden">
-                                                            New comment added
+                                                            @headerContent
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -183,7 +192,8 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        @if (!Model.CustomEmailTemplateEnabled)
+                        {
                         <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                             <tbody>
                                 <tr>
@@ -202,7 +212,7 @@
                                                 <tr>
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif;'>
                                                         <span>
-                                                            Hello @Model.DisplayName,<br />
+                                                            Hello @Model.Username,<br />
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -212,7 +222,7 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        }
 
                         <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                             <tbody>
@@ -232,12 +242,43 @@
                                                 <tr>
                                                     <td style=' padding-left:20px;padding-right:20px; font-size: 14px; color: #3f3f3f; font-family:arial, helvetica, sans-serif; line-height: 20px;'>
                                                         <span>
-                                                            @{
-#pragma warning disable SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            @if (Model.CustomEmailTemplateEnabled)
+                                                            {
+                                                               @Html.Raw(
+                                                                    Model.MailHeaderContent
+
+                                                                        .Replace(
+                                                                            "<p><strong>Old Comment:</strong> {:Comments.OldComment}</p>",
+                                                                            "<table width='100%' cellspacing='0' cellpadding='0' style='border:1px solid #e0e0e0;background:#fafafa;margin-top:10px;'>" +
+                                                                                "<tr>" +
+                                                                                    "<td style='padding:10px 20px;font-size:13px;font-family:Arial;color:#000;white-space:nowrap;'>" +
+                                                                                        "<strong>Old Comment:</strong>&nbsp;" +
+                                                                                        "<span style='font-weight:400 !important;white-space:normal;'>" +
+                                                                                            Model.OldComment.Replace("<p>", "").Replace("</p>", "") +
+                                                                                        "</span>" +
+                                                                                    "</td>" +
+                                                                                "</tr>"
+                                                                        )
+
+                                                                        .Replace(
+                                                                            "<p><strong>New Comment:</strong> {:Comments.NewComment}</p>",
+                                                                                "<tr>" +
+                                                                                    "<td style='padding:10px 20px;font-size:13px;font-family:Arial;color:#000;white-space:nowrap;'>" +
+                                                                                        "<strong>New Comment:</strong>&nbsp;" +
+                                                                                        "<span style='font-weight:400 !important;white-space:normal;'>" +
+                                                                                            Model.NewComment.Replace("<p>", "").Replace("</p>", "") +
+                                                                                        "</span>" +
+                                                                                    "</td>" +
+                                                                                "</tr>" +
+                                                                            "</table>"
+                                                                        )
+                                                                )
                                                             }
-                                                            @Html.Raw(Model.MailHeaderContent)<br />
-                                                            @{
-#pragma warning restore SCS0029 //There is no direct user input process for this issue. it will process on based user id from server end.
+                                                            else
+                                                            {
+                                                                @Html.Raw(Model.MailHeaderContent)
+
+                                                                <br />
                                                             }
                                                         </span>
                                                     </td>
@@ -249,7 +290,8 @@
                             </tbody>
                         </table>
 
-
+                        @if (!Model.CustomEmailTemplateEnabled)
+                        {
                         <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                             <tbody>
                                 <tr>
@@ -436,7 +478,7 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        }
 
                         <table style='text-align:left;width:100%;max-width: 550px;background-color: #fff;' width='550' bgcolor='#ffffff' border='0' cellpadding='0' cellspacing='0'>
                             <tbody>
@@ -488,7 +530,7 @@
                                                 <tr>
                                                     <td style=' line-height:20px; padding-left:20px;padding-right:20px; font-size: 12px; color: #7a7a7a; opacity:0.5; font-family:Arial, Helvetica, sans-serif;'>
                                                         <span data-id="hidden">
-                                                            This is an automatically generated message, please do not reply to this mail. If you have any question, please contact your administrator.
+                                                            @disclaimerContent
                                                         </span>
                                                     </td>
                                                 </tr>

@@ -375,6 +375,50 @@ EJHtmlDocument.Locale['en-US'] = {
         title: 'Html'
     }
 };
+EJHtmlDocument.Locale['el-GR'] = {
+    source: 'Πηγή',
+    sourceTypes: {
+        content: 'Περιεχόμενο',
+        url: 'URL',
+        database: 'Βάση δεδομένων',
+        server: 'Διακομιστής'
+    },
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    sizing: 'Διαστασιολόγηση',
+    sizeTypes: {
+        auto: 'Αυτόματο μέγεθος',
+        fit: 'Προσαρμογή',
+        proportional: 'Αναλογική προσαρμογή',
+        clip: 'Αποκοπή'
+    },
+    toolTip: {
+        requirements: 'Προβάλλει οποιαδήποτε σήμανση HTML ή διεύθυνση URL',
+        description: 'Χρησιμοποιείται για την επεξεργασία κειμένου HTML και URL',
+        title: 'HTML'
+    }
+};
+EJHtmlDocument.Locale['en-GB'] = {
+    source: 'Source',
+    sourceTypes: {
+        content: 'Content',
+        url: 'URL',
+        database: 'Database',
+        server: 'Server'
+    },
+    categoryBasicSettings: 'Basic Settings',
+    sizing: 'Sizing',
+    sizeTypes: {
+        auto: 'AutoSize',
+        fit: 'Fit',
+        proportional: 'FitProportional',
+        clip: 'Clip'
+    },
+    toolTip: {
+        requirements: 'Display any Html markup (or) URL',
+        description: 'This report item is used to process the HTML markup text and URL',
+        title: 'Html'
+    }
+};
 EJHtmlDocument.Locale['ar-AE'] = {
     source: 'مصدر',
     sourceTypes: {
@@ -571,6 +615,28 @@ EJHtmlDocument.Locale['tr-TR'] = {
         requirements: 'Herhangi bir HTML işaretlemesi (veya) URL görüntüle',
         description: 'Bu rapor öğesi HTML işaretleme metnini ve URL\'yi işlemek için kullanılır',
         title: 'Html'
+    }
+};
+EJHtmlDocument.Locale['th-TH'] = {
+    source: 'แหล่งที่มา',
+    sourceTypes: {
+        content: 'เนื้อหา',
+        url: 'URL',
+        database: 'ฐานข้อมูล',
+        server: 'เซิร์ฟเวอร์'
+    },
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    sizing: 'การปรับขนาด',
+    sizeTypes: {
+        auto: 'ขนาดอัตโนมัติ',
+        fit: 'พอดี',
+        proportional: 'พอดีแบบรักษาสัดส่วน',
+        clip: 'ตัดส่วนเกิน'
+    },
+    toolTip: {
+        requirements: 'แสดงเครื่องหมาย Html ใด ๆ (หรือ) url',
+        description: 'รายการรายงานนี้ใช้ในการประมวลผลข้อความมาร์กอัป HTML และ URL',
+        title: 'HTML'
     }
 };
 EJHtmlDocument.Locale['zh-Hans'] = {

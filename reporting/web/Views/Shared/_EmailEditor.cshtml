@@ -5,6 +5,7 @@
     Layout = null;
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
 }
 
 <!DOCTYPE html>
@@ -12,9 +13,11 @@
 
 <environment include="Development,CloudDevelopment">
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleemaileditor.css")" crossorigin="anonymous" />
+    <script nonce="@ViewBag.ScriptNonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.js"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleemaileditor.min.css")" crossorigin="anonymous" />
+    <script nonce="@ViewBag.ScriptNonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js"></script>
 </environment>
 
 <head>
@@ -22,13 +25,46 @@
 </head>
 <body>
     <div id="email-editor-panel" class="admin-page-body">
+        @if (isSelfHosted)
+        {
+            <div>
+                <div class="no-padding  align-center choose-template">
+                @Html.Label("email-templates", "[[[Choose a template]]]", new { @class = "enabled-label" })
+            </div>
+            <div class="info-message" style="font-size: 13px; padding-bottom: 5px;">
+                [[[Please select an email template from the list to apply a predefined layout and content for your email.]]]
+            </div>
+            <div class="template-dropdown no-padding" id="select-template">
+                <select id="email-templates" class="selectpicker" data-size="5" title="[[[Select a template]]]" data-hide-disabled="true">
+                </select>
+            </div>
+            <div class="col-sm-12 col-xs-12 no-padding enabled-div email-template-header-placement">
+                <div class="email-header d-flex align-items-center justify-content-between gap-3">
+                    <div class="col-sm-2 col-xs-2 no-padding  align-center">
+                        @Html.Label("enable-schedule-template", "[[[Email Customization]]]", new { @class = "enabled-label" })
+                    </div>
+                    <div class="col-sm-10 col-xs-10 pull-left no-margin enabled-label-div email-template-alignment">
+                        <span class="material-switch text-left">
+                            <input type="checkbox" name="Enable-Schedule-Editor" id="enable-schedule-template"/>
+                            <label class="label-primary" for="enable-schedule-template"></label>
+                        </span>
+                    </div>
+                </div>
+                <div class="info-message col-sm-12 col-xs-12 no-padding Info-alignment" style="font-size: 13px; margin-top:5px !important; ">
+                    [[[Enabling this option allows you to customize the email template content for this particular schedule. You cannot customize the email template when 'Inherit default from settings' option is selected.]]]
+                </div>
+            </div>
+        </div>
+        }
+    
         <div class="sub-text-div-container">
             <div>
-                <spam>[[[Subject]]]</spam>
+                <span>[[[Subject]]]</span>
             </div>
-            <div>
+            <div class="email-subject-text">
                 <input type="text" class="form-control" id="sub_email-text-box" />
             </div>
+            <div class="validate-error" id="email-subject-validation">[[[Please enter the email subject]]]</div>
         </div>
         <div class="sub-body-label">[[[Body]]]</div>
         <div class="col-sm-12 col-12 no-padding" id="selected-users-container">
@@ -49,6 +85,7 @@
         </div>
 
     </div>
+</div>
 </body>
 </html>
 <environment include="Development,CloudDevelopment">
@@ -59,4 +96,10 @@
     <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/scheduleemaileditor.min.js")" crossorigin="anonymous"></script>
     <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecipients.min.js")" crossorigin="anonymous"></script>
 </environment>
+
+<script>
+
+    $("#email-templates").selectpicker();
+
+</script>
 

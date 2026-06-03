@@ -29,7 +29,9 @@
 
     var idPUrl = ServerAppConfig.GetClientServiceUrl(_globalAppSettings.SystemSettings.IDPUrl, Context);
     var isMobile = new DeviceDetection(Context).IsMobile;
-    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.MainLogo;
+    var themeAppearance = _identityResponse.UserPreference.ServerFeatures.ThemeSettings.Appearance;
+    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + themeAppearance + "/" + IconFileNames.MainLogo;
+    var isDefaultLogo = globalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo);
     var appLogo = (globalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo) || globalAppSettings.SystemSettings.MainScreenLogo.EndsWith("main_logo.png")) ? defaultAppLogo : globalAppSettings.SystemSettings.MainScreenLogo;
     var profilePictureUrl = idPUrl + Url.Content("/User/Avatar?id=" + idpreferenceId + "&ImageSize=64");
     var navigationUrl = Url.Action("Index", "Home");
@@ -47,8 +49,8 @@
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
     var etlEndpointPrefix = isSelfHosted ? ServerAppConfig.InternalAppIdpUrl : ServerAppConfig.AppSettings.EndPoints.ETLSiteURL;
-    var etlUrlWithService = ServerAppConfig.GetClientServiceUrl(etlEndpointPrefix.TrimEnd('/'), Context);
-    var navigateETLUrl = etlUrlWithService.TrimEnd('/') + (isSelfHosted ? $"/etlservice/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
+    var etlUrlWithService = ServerAppConfig.GetClientServiceUrl(etlEndpointPrefix?.TrimEnd('/'), Context);
+    var navigateETLUrl = etlUrlWithService?.TrimEnd('/') + (isSelfHosted ? $"/etlservice/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
     var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     var showLicenseWarningIcon = ServerAppConfig.ShowLicenseWarning;
     var customUI = globalAppSettings.SystemSettings.CustomUI;

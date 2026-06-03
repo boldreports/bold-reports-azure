@@ -47,8 +47,8 @@
     var hasOwnedReport = ViewBag.HasOwnedReport;
     var allItemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
     var etlEndpointPrefix = ServerAppConfig.IsSelfHosted ? ServerAppConfig.InternalAppIdpUrl : ServerAppConfig.AppSettings.EndPoints.ETLSiteURL;
-    var etlUrlWithService = ServerAppConfig.GetClientServiceUrl(etlEndpointPrefix.TrimEnd('/'), Context);
-    var navigateETLUrl = etlUrlWithService.TrimEnd('/') + (ServerAppConfig.IsSelfHosted ? $"/{ServerAppConfig.ETLHostName}/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
+    var etlUrlWithService = ServerAppConfig.GetClientServiceUrl(etlEndpointPrefix?.TrimEnd('/'), Context);
+    var navigateETLUrl = etlUrlWithService?.TrimEnd('/') + (ServerAppConfig.IsSelfHosted ? $"/{ServerAppConfig.ETLHostName}/{globalAppSettings.SystemSettings.TenantId.ToString()}" : $"/{globalAppSettings.SystemSettings.TenantId.ToString()}");
     var isHideIconBasedOnDnsName = GlobalAppSettings.IsUrlInDnsList(globalAppSettings.DisplayUri);
     var healthCheckUrl = ServerAppConfig.GetClientServiceUrl(ServerAppConfig.InternalAppIdpUrl.TrimEnd('/'), Context) + "/status";
 
@@ -82,7 +82,9 @@
     var downloadOption = (customMenuOptionList != null && customMenuOptionList.Any(item => item.Key == "Downloads")) ? customMenuOptionList.FirstOrDefault(opt => opt.Key == "Downloads" && !string.IsNullOrEmpty(opt.Value)) : null;
     var customMenusWithoutDownloadsOption = (customMenuOptionList != null && customMenuOptionList.Count != 0) ? customMenuOptionList.Where(x => x.Key != "Downloads").ToList() : null;
 }
-
+@await Html.PartialAsync("_ApplicationThemeStyleSheet.cshtml")
+@await Html.PartialAsync("_BaseThemeStyleSheet.cshtml")
+@await Html.PartialAsync("_BaseFontStyleSheet.cshtml")
 <environment include="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/custom-ui.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/custom-ui.js")" crossorigin="anonymous"></script>
 </environment>
@@ -137,13 +139,6 @@
                                     [[[Online Help]]]
                                 </a>
                             </li>
-                            @if (isAdmin){
-                            <li class="sub-menu-item">
-                                <a class="health-check-link" href="@(healthCheckUrl)" target="_blank"> 
-                                    [[[Health Check]]]
-                                </a>
-                            </li>
-                            }
                         }
                         @if (!ServerAppConfig.IsSelfHosted)
                         {
@@ -169,6 +164,15 @@
                         }
                         else
                         {
+                            @if (isAdmin)
+                            {
+                                <li class="sub-menu-item">
+                                    <a class="health-check-link" href="@(healthCheckUrl)" target="_blank">
+                                        [[[Health Check]]]
+                                    </a>
+                                </li>
+                            }
+
                             @if (!ServerAppConfig.IsHideHelpLink)
                             {
                                 <li class="sf-sub-menu-separator"></li>

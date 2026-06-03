@@ -4,8 +4,14 @@
     var globalAppSettings = _globalAppSettings;
     var tenantAppConfig = new TenantAppConfiguration(globalAppSettings);
     var showSyncfusionBrand = globalAppSettings.SystemSettings.IsShowPoweredBySyncfusion ? "form-group" : "form-group d-none";
-    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + IconFileNames.MainLogo;
+    var themeAppearance = _identityResponse.UserPreference.ServerFeatures.ThemeSettings.Appearance;
+    var defaultAppLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + themeAppearance + "/" + IconFileNames.MainLogo;
+    var isDefaultLogo = globalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo);
     var appLogo = (globalAppSettings.SystemSettings.MainScreenLogo.EndsWith(IconFileNames.MainLogo) || globalAppSettings.SystemSettings.MainScreenLogo.EndsWith("main_logo.png")) ? defaultAppLogo : globalAppSettings.SystemSettings.MainScreenLogo;
+
+    var defaultFooterLogo = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/" + themeAppearance + "/" + IconFileNames.FooterLogo;
+    var isDefaultFooterLogo = !string.IsNullOrEmpty(globalAppSettings.SystemSettings.FooterLogo) && globalAppSettings.SystemSettings.FooterLogo.EndsWith(IconFileNames.FooterLogo);
+    var footerLogo = isDefaultFooterLogo ? defaultFooterLogo : globalAppSettings.SystemSettings.FooterLogo;
     var protocolTypes = new List<SelectListItem>
     {
         new SelectListItem { Text = "http", Value = "http", Selected = !globalAppSettings.SystemSettings.IsSecureConnection },
@@ -15,9 +21,15 @@
     var isWindowsPlatform = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     var copyrightInformation = HttpUtility.HtmlDecode(globalAppSettings.SystemSettings.CopyrightInformation);
     var organizationName = HttpUtility.HtmlDecode(ViewBag.SystemSettings.OrganizationName);
+    var isShowEmailLogo = _globalAppSettings.SystemSettings.IsShowEmailLogo;
+    var isShowLoginLogo = _globalAppSettings.SystemSettings.IsShowLoginLogo;
+    var isShowFooterLogoCopyRightInfo = _globalAppSettings.SystemSettings.IsShowFooterLogoCopyRightInfo;
 }
 <script nonce="@Context.Items["ScriptNonce"]">
     var isSitesPage = "true";
+    var isShowEmailLogo = @Json.Serialize(isShowEmailLogo);
+    var isShowLoginLogo = @Json.Serialize(isShowLoginLogo);
+    var isShowFooterLogoCopyRightInfo = @Json.Serialize(isShowFooterLogoCopyRightInfo);
 </script>
 <div id="look-and-feel-container" class="admin-page-container col-12">
     <div id="organization-block" class="col-12 no-padding">
@@ -268,7 +280,7 @@
                                 <tr width="200">
                                     <td>
                                         <span id="footer-preview-image" class="app-img-container header-icon tooltip-container" data-bs-toggle="tooltip" data-animation="true" data-image="header-logo">
-                                            <img id="powderedby_logo_img" src="@globalAppSettings.SystemSettings.FooterLogo" height="40" alt="[[[Powered by logo]]]" />
+                                            <img id="powderedby_logo_img" src="@footerLogo" height="40" alt="[[[Powered by logo]]]" />
                                         </span>
                                         <div id="footer-preview-image" class="applogo-label">[[[Powered by logo]]]</div>
                                     </td>
@@ -276,6 +288,47 @@
                                 }
                                 </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="blur-whitelable-content col-12 no-padding branding-info">
+                    <div class="branding-configuration-header">
+                        <h3 class="title sub-section-heading">[[[Email Brand Configuration]]]</h3>
+                        <div class="info-message-site-settings">
+                            [[[These branding features will appear in the email to the recipient.]]]
+                        </div>
+                    </div>
+                    <div class="col-12 no-padding">
+                        <div class="form-group no-margin">
+                            <div id="enable-checkbox" class="d-flex align-items-start">
+                                @Html.CheckBox("showemaillogo", new { @class = "material-checkbox ums-inherit-branding", @id = "showemaillogo" })
+                                @Html.Hidden("showemaillogo")
+                                @Html.Label("showemaillogo", "Show Email Logo", new { @class = "app-textbox-label col-2 section-label show-email-logo" })
+                                <div class="col-sm-1 col-1 no-padding info-icon-align">
+                                    <span class="cursor-type"><span data-bs-toggle="tooltip" class="su su-info" data-placement="right" title="[[[Enabling this option will display the email logo in the email template.]]]"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-margin">
+                            <div id="enable-checkbox" class="d-flex align-items-start">
+                                @Html.CheckBox("showloginlink", new { @class = "material-checkbox ums-inherit-branding", @id = "showloginlink" })
+                                @Html.Hidden("showloginlink")
+                                @Html.Label("showloginlink", "Show login link", new { @class = "app-textbox-label col-2 section-label show-login-link" })
+                                <div class="col-sm-1 col-1 no-padding info-icon-align">
+                                    <span class="cursor-type"><span data-bs-toggle="tooltip" class="su su-info" data-placement="right" title="[[[Enabling this option will display login link in the email template.]]]"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-margin">
+                            <div id="enable-checkbox" class="d-flex align-items-start">
+                                @Html.CheckBox("showfooterlogocopyinfo", new { @class = "material-checkbox ums-inherit-branding", @id = "showfooterlogocopyinfo" })
+                                @Html.Hidden("showfooterlogocopyinfo")
+                                @Html.Label("showfooterlogocopyinfo", "Show footer logo and copyright info", new { @class = "app-textbox-label col-3 section-label show-footer-logo" })
+                                <div class="col-sm-1 col-1 no-padding info-icon-align">
+                                    <span class="cursor-type"><span class="su su-info" data-bs-toggle="tooltip" data-placement="right" title="[[[Enabling this option will display the footer logo and copyright information in the email template.]]]"></span></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>   

@@ -30,18 +30,19 @@
         }
     </script>
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/dataset-datasource.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/dataset-datasource.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-datasource.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/dataset-datasource.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/dataset-datasource.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/dataset-datasource.min.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/dataset-datasource.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/dataset-datasource.min.js")" crossorigin="anonymous"></script>
     </environment>
  
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
 </head>
 <body style="background-color:white">
     <div id="PopupContainer" class="col-lg-12 no-padding dialog">
@@ -67,7 +68,6 @@
                     <div id="rdl_new_tab_arrow" class="downArrow"></div>
                 </div>
             </div>
-            <div id='datasource_header_line' class='horizontal-splitline'></div>
             <div id='avl_datasource_tab_content' class='col-md-12 no-top-margin rdl-datasource-tab-contents'>
                 <div class='col-md-12 no-top-margin new-datasource-content-holder'>
                     <div id='available_datasource_table_header' class='col-md-12'>
@@ -90,7 +90,6 @@
                         </table>
                     </div>
                 </div>
-                <div class='horizontal-splitline no-top-margin'></div>
             </div>
 
             <form id='new_datasource_tab_content' class='col-lg-12 no-padding dialog rdl-datasource-tab-contents DisplayNone'>

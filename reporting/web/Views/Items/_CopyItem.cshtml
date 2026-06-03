@@ -449,21 +449,8 @@
     <script nonce="@Model">
         $(document).ready(function () {
             var reportCategoryList = @Json.Serialize(ViewBag.CategoryDetails);
-            
-    @using System.Collections.Generic  
-
-    @{  
-        var dict = ViewBag.ItemReferences as Dictionary<string, object[]> ?? new Dictionary<string, object[]>();  
-    }
-
-    var drillthroughreportReferences = @Html.Raw(Json.Serialize(  
-        dict.ContainsKey("drillthroughreport") ? dict["drillthroughreport"] : System.Array.Empty<object>()  
-    ));  
-
-    var subreportReferences = @Html.Raw(Json.Serialize(  
-        dict.ContainsKey("subreport") ? dict["subreport"] : System.Array.Empty<object>()  
-    ));  
-
+            var drillthroughreportReferences = @Json.Serialize(ViewBag.itemReferences?["drillthroughreport"] ?? new object[0]);
+            var subreportReferences = @Json.Serialize(ViewBag.itemReferences?["subreport"] ?? new object[0]);
    
             if ((drillthroughreportReferences && drillthroughreportReferences.length > 0) || (subreportReferences && subreportReferences.length > 0)) {
                 $("#copyreport_advance_button").css('display', 'block');

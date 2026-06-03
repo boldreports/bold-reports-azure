@@ -46,6 +46,9 @@
     <environment exclude="Development,CloudDevelopment">
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/Comments-page.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/Comments-page.min.js")" crossorigin="anonymous"></script>
     </environment>
+    @await Html.PartialAsync("_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("_BaseFontStyleSheet.cshtml")
 </head>
 <body class="displayNone">
     <div class="d-none">
