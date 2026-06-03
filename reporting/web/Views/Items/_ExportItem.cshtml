@@ -19,10 +19,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
 <environment include="Development,CloudDevelopment">
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleparameter.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleiframe.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerdialog.css")" crossorigin="anonymous" />
@@ -31,7 +34,6 @@
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
 </environment>
 <environment exclude="Development,CloudDevelopment">
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleparameter.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleparameter.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleiframe.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleiframe.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedulerdialog.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedulerdialog.min.css")" crossorigin="anonymous" />
@@ -204,7 +206,7 @@
 
     <div class="modal-footer col-12" style="position:fixed;bottom:0px">
         <div class="col-sm-12 col-12 no-margin">
-            <input id="ExportCancelButton" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" class="secondary-button leftmargin float-end" />
+            <input id="ExportCancelButton" title="[[[Cancel]]]" type="button" value="[[[Cancel]]]" class="btn secondary-button app-btn-secondary leftmargin float-end" />
             <input id="ExportButton" title="[[[Export]]]" type="button" value="[[[Export]]]" class="primary-button float-end app-btn-primary" style="margin-right:15px" />
         </div>
     </div>

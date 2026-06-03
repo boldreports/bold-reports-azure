@@ -1,36 +1,32 @@
-CREATE TABLE BOLDRS_EmailActivityLog(
-    Id  SERIAL PRIMARY KEY NOT NULL,
-    Event varchar(255) NOT NULL,
-    RecipientEmail varchar(255) NOT NULL,
-    SenderEmail varchar(255) NOT NULL,
-    MailSubject varchar(255) NOT NULL,
-    MailBody text NULL,
-    CreatedDate timestamp NOT NULL,
-    ModifiedDate timestamp  NULL,
-    InitiatedBy int NOT NULL,
-    UserId int NULL,
-    GroupId int NULL,
-    ItemId uuid NULL,
-    CommentId int NULL,
-    PermissionId int NULL,
-    Status int NOT NULL,
-    StatusMessage text NULL,
-    IsActive smallint NOT NULL)
+CREATE TABLE BOLDRS_ItemSettings(
+	Id SERIAL primary key NOT NULL,
+	ItemId uuid NOT NULL,
+	ItemConfig varchar(4000) NULL,
+	ModifiedDate timestamp NOT NULL,
+	IsActive smallint NOT NULL)
 ;
 
-ALTER TABLE BOLDRS_EmailActivityLog  ADD  FOREIGN KEY(UserId) REFERENCES BOLDRS_User (Id)
+ALTER TABLE BOLDRS_ItemSettings ADD CONSTRAINT FK_ItemSettings_ItemId FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item (Id)
 ;
-ALTER TABLE BOLDRS_EmailActivityLog  ADD  FOREIGN KEY(GroupId) REFERENCES BOLDRS_Group (Id)
-;
-ALTER TABLE BOLDRS_EmailActivityLog  ADD  FOREIGN KEY(ItemId) REFERENCES BOLDRS_Item (Id)
-;
-ALTER TABLE BOLDRS_EmailActivityLog  ADD FOREIGN KEY(CommentId) REFERENCES BOLDRS_Comment (Id)
-;
+CREATE TABLE BOLDRS_CustomEmailTemplate (
+    Id SERIAL PRIMARY KEY,
+    IsEnabled smallint,
+    DisclaimerContent VARCHAR(255) NOT NULL,
+    HeaderContent VARCHAR(255) NULL,
+    Subject VARCHAR(255),
+    TemplateName VARCHAR(255),
+    MailBody TEXT NOT NULL,
+    CreatedDate TIMESTAMP NOT NULL,
+    ModifiedDate TIMESTAMP,
+    SendEmailAsHTML smallint NOT NULL,
+    CustomVisibilityOptions TEXT NOT NULL,
+    IsActive smallint NOT NULL,
+    TemplateId INTEGER NOT NULL,
+    IsDefaultTemplate smallint NOT NULL,
+    IsSystemDefault smallint NOT NULL,
+    Description VARCHAR(255) NULL,
+    ModifiedBy int NULL
+);
 
--- Add nullable SkipAttachment and SkipMail columns to support no-data options for existing installations
-ALTER TABLE BOLDRS_ScheduleDetail ADD COLUMN SkipAttachment smallint NULL;
-ALTER TABLE BOLDRS_ScheduleDetail ADD COLUMN SkipMail smallint NULL;
-ALTER TABLE BOLDRS_ScheduleDetail ADD ScheduleRunStatus varchar(1000) NOT NULL DEFAULT 'Idle'
-;
-ALTER TABLE BOLDRS_ItemView ALTER COLUMN QueryString TYPE TEXT
+ALTER TABLE BOLDRS_ScheduleDetail ALTER COLUMN ScheduleBucketExportInfo  TYPE TEXT
 ;

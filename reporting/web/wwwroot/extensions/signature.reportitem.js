@@ -26,7 +26,7 @@ var EJSignature = (function () {
     EJSignature.prototype.renderSignature = function () {
         var bgColor = (this.customJSON && this.customJSON.Style && this.customJSON.Style.BackgroundColor
             && this.customJSON.Style.BackgroundColor !== 'Transparent' && this.customJSON.Style.BackgroundColor !== '#00ffffff')
-            ? ej.ReportUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'white';
+            ? ej.ImageUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'white';
         this.customItemDiv = this.buildElement('div', 'customitem e-rptdesigner-customItem-sign', '', { 'id': this.customJSON.Name + '_customItem' }, { 'background-color': bgColor });
         this.canvasTag = this.buildElement('canvas', '', '', { 'id': this.customJSON.Name + '_customItem_canvas' }, { width: '100%', height: '100%' });
         this.customItemDiv.append(this.canvasTag);
@@ -78,7 +78,7 @@ var EJSignature = (function () {
                 width: width
             });
         }
-        this.setSign(imgData, document.getElementById(this.customJSON.Name + '_customItem_canvas'), (this.customJSON.Style.BackgroundColor === 'Transparent' || this.customJSON.Style.BackgroundColor === '#00ffffff') ? 'white' : ej.ReportUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true));
+        this.setSign(imgData, document.getElementById(this.customJSON.Name + '_customItem_canvas'), (this.customJSON.Style.BackgroundColor === 'Transparent' || this.customJSON.Style.BackgroundColor === '#00ffffff') ? 'white' : ej.ImageUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true));
     };
     EJSignature.prototype.customAction = function (paramInfo) {
         var imgData = this.getPropertyVal('SignatureValue');
@@ -194,7 +194,7 @@ var EJSignature = (function () {
         if (imgData) {
             var base64String = imgData.replace('data:image/png;base64,', '');
             this.updatePropertyVal('SignatureValue', base64String);
-            this.setSign(imgData, document.getElementById(this.customJSON.Name + '_customItem_canvas'), (this.customJSON.Style.BackgroundColor === 'Transparent' || this.customJSON.Style.BackgroundColor === '#00ffffff') ? 'white' : ej.ReportUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true));
+            this.setSign(imgData, document.getElementById(this.customJSON.Name + '_customItem_canvas'), (this.customJSON.Style.BackgroundColor === 'Transparent' || this.customJSON.Style.BackgroundColor === '#00ffffff') ? 'white' : ej.ImageUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true));
         }
         else {
             this.clearSign(document.getElementById(this.customJSON.Name + '_customItem_canvas'));
@@ -207,7 +207,7 @@ var EJSignature = (function () {
     EJSignature.prototype.undoRedoAction = function (canvasInfo) {
         if (canvasInfo) {
             if (canvasInfo.propertyName && canvasInfo.propertyName.toLowerCase() === 'signature') {
-                ej.ReportUtil.invokeMethod(this, canvasInfo.method, [canvasInfo.undoRedo, { imageData: canvasInfo.imageData }]);
+                ej.WidgetUtil.invokeMethod(this, canvasInfo.method, [canvasInfo.undoRedo, { imageData: canvasInfo.imageData }]);
             }
         }
     };
@@ -373,6 +373,26 @@ EJSignature.Locale['en-US'] = {
         title: 'Signature'
     }
 };
+EJSignature.Locale['el-GR'] = {
+    btnText: 'Σχεδίαση',
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    signatureLabel: 'Υπογραφή',
+    toolTip: {
+        requirements: 'Προβάλλει οποιαδήποτε ηλεκτρονική υπογραφή για υπογραφή.',
+        description: 'Χρησιμοποιείται για την προσθήκη γραφικής υπογραφής',
+        title: 'Υπογραφή'
+    }
+};
+EJSignature.Locale['en-GB'] = {
+    btnText: 'Draw',
+    categoryBasicSettings: 'Basic Settings',
+    signatureLabel: 'Signature',
+    toolTip: {
+        requirements: 'Display any electronic signature for signing.',
+        description: 'This report item is used to add a graphic signature.',
+        title: 'Signature'
+    }
+};
 EJSignature.Locale['fr-FR'] = {
     signatureLabel: 'Signature',
     btnText: 'Dessiner',
@@ -501,6 +521,16 @@ EJSignature.Locale['ru-RU'] = {
         requirements: 'Показать любую электронную подпись для подписания.',
         description: 'Этот элемент отчета используется для добавления графической подписи',
         title: 'Подпись'
+    }
+};
+EJSignature.Locale['th-TH'] = {
+    btnText: 'วาด',
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    signatureLabel: 'ลายเซ็น',
+    toolTip: {
+        requirements: 'แสดงลายเซ็นอิเล็กทรอนิกส์สำหรับการลงนาม',
+        description: 'ใช้รายการรายงานนี้เพื่อเพิ่มลายเซ็นแบบกราฟิก',
+        title: 'ลายเซ็น'
     }
 };
 EJSignature.Locale['zh-Hant'] = {

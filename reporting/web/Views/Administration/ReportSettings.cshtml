@@ -86,9 +86,9 @@
                 <li role="presentation" class="nav-item">
                     <a href="#schedule-setting-tab" id="schedule-setting" class="nav-link" aria-controls="schedule-setting-tab" role="tab" data-bs-toggle="tab">[[[Schedule]]]</a>
                 </li>
-                <li role="presentation" class="nav-item">
+                @* <li role="presentation" class="nav-item">
                     <a href="#scheduletemplate-setting-tab" id="scheduletemplate-setting" class="nav-link" aria-controls="scheduletemplate-setting-tab" role="tab" data-bs-toggle="tab">[[[Custom Schedule Template]]]</a>
-                </li>
+                </li> *@
                 @if (isMasterSite)
                 {
                     <li role="presentation" class="nav-item">
@@ -130,9 +130,9 @@
                 <div role="tabpanel" class="tab-pane" id="schedule-setting-tab">
                     @await Html.PartialAsync("../Shared/_ScheduleExportFileSettings", reportSettingsPageNonce)
                 </div>
-                <div role="tabpanel" class="tab-pane" id="scheduletemplate-setting-tab">
+                @* <div role="tabpanel" class="tab-pane" id="scheduletemplate-setting-tab">
                     @await Html.PartialAsync("../Shared/_EmailEditor")
-                </div>
+                </div> *@
                 <div role="tabpanel" class="tab-pane" id="show-report-designer-setting-tab">
                     <div id="dashboard-settings-body" class="admin-page-body">
                         <div class="row input-field-wrapper no-padding">

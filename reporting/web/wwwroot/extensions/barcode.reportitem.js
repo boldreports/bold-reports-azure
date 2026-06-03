@@ -363,6 +363,42 @@ EJBarcode.Locale['en-US'] = {
         title: 'Barcode'
     }
 };
+EJBarcode.Locale['en-GB'] = {
+    barcodeValue: 'Text',
+    barcodeType: 'Symbology Type',
+    textVisibility: 'Text Visibility',
+    categoryBasicSettings: 'Basic Settings',
+    barcodeRotationLabel: 'Rotation',
+    barcodeRotation: {
+        rotationNone: 'None',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Display any barcode type.',
+        description: 'Displays the barcodes.',
+        title: 'Barcode'
+    }
+};
+EJBarcode.Locale['el-GR'] = {
+    barcodeValue: 'Κείμενο',
+    barcodeType: 'Τύπος συμβολογίας',
+    textVisibility: 'Ορατότητα κειμένου',
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    barcodeRotationLabel: 'Περιστροφή',
+    barcodeRotation: {
+        rotationNone: 'Καμία',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Προβάλλει οποιονδήποτε τύπο γραμμωτού κώδικα.',
+        description: 'Εμφανίζει γραμμωτούς κώδικες.',
+        title: 'Γραμμωτός κώδικας'
+    }
+};
 EJBarcode.Locale['fr-FR'] = {
     barcodeValue: 'Texte',
     barcodeType: 'Type de symbologie',
@@ -451,6 +487,24 @@ EJBarcode.Locale['ru-RU'] = {
         requirements: 'Отображает любой тип штрихкода.',
         description: 'Отображает штрихкоды.',
         title: 'Штрихкод'
+    }
+};
+EJBarcode.Locale['th-TH'] = {
+    barcodeValue: 'ข้อความ',
+    barcodeType: 'ประเภทสัญลักษณ์',
+    textVisibility: 'การแสดงข้อความ',
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    barcodeRotationLabel: 'การหมุน',
+    barcodeRotation: {
+        rotationNone: 'ไม่มี',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'แสดงบาร์โค้ดได้ทุกประเภท',
+        description: 'แสดงผลบาร์โค้ด',
+        title: 'บาร์โค้ด'
     }
 };
 EJBarcode.Locale['zh-Hans'] = {

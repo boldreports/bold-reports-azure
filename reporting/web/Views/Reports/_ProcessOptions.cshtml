@@ -14,14 +14,12 @@
         [[[Add New Report]]]
     </title>
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-process-options.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-process-options.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-process-options.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-process-options.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-process-options.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-process-options.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
@@ -58,6 +56,11 @@
             });
         });
     </script>
+
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
+
 </head>
 <body style="background-color:white">
 

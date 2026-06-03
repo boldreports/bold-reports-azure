@@ -440,6 +440,25 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            @Html.Label("oauth-enable-create-account", "[[[Enable User Account Creation]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    @if ((bool)ViewBag.OAuthSettings.OAuthAuthSettings.CanCreateAccount)
+                                                    {
+                                                        <input type="checkbox" id="oauth-enable-create-account" name="enableOAuthCreateAccount" ng-model="enableOAuthCreateAccount" ng-init="enableOAuthCreateAccount=true" ng-checked=true data-ng-disabled="!oauthIsEnabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="oauth-enable-create-account" name="enableOAuthCreateAccount" ng-model="enableOAuthCreateAccount" ng-init="enableOAuthCreateAccount=false" data-ng-disabled="!oauthIsEnabled" />
+                                                    }
+                                                    <label for="oauth-enable-create-account" class="label-primary"></label>
+                                                </span>
+                                                <span id="user-account-creation-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content="[[[Create a new user account during login if it does not already exist.]]]" tabindex="0"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
                                         <div class="no-padding no-margin">
                                             <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
                                             <div class="col-md-6 section-info-message-container">
@@ -730,6 +749,25 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 form-group">
+                                        <div class="col-md-6 no-padding no-margin">
+                                            @Html.Label("openid-enable-create-account", "[[[Enable User Account Creation]]]", new { @class = "app-textbox-label col-md-4 no-margin" })
+                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                                <span class="material-switch text-left">
+                                                    @if ((bool)ViewBag.OpenIDSettings.OIDCAuthSettings.CanCreateAccount)
+                                                    {
+                                                        <input type="checkbox" id="openid-enable-create-account" name="enableOPenIdCreateAccount" ng-model="enableOpenIdCreateAccount" ng-init="enableOpenIdCreateAccount=true" ng-checked=true ng-checked=true data-ng-disabled="!openidIsEnabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="openid-enable-create-account" name="enableOpenIdCreateAccount" ng-model="enableOpenIdCreateAccount" ng-init="enableOpenIdCreateAccount=false" data-ng-disabled="!openidIsEnabled" />
+                                                    }
+                                                    <label for="openid-enable-create-account" class="label-primary"></label>
+                                                </span>
+                                                <span id="user-account-creation-info" class="su su-info info-popup" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content="[[[Create a new user account during login if it does not already exist.]]]" tabindex="0"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group">
                                         <div class="col-md-8 no-padding no-margin">
                                             <label class="section-title col-md-4 no-margin">[[[Group Claim Settings]]]</label>
                                             <div class="section-info-message-container">
@@ -868,7 +906,7 @@
                                     <div class="col-md-12 form-group">
                                         <div class="col-md-6 no-padding no-margin enable-jwt-label">
                                             @Html.Label("enable-jwt", "[[[Enable JWT Login]]]", new { @class = "app-textbox-label col-md-4 col-form-label pe-0" })
-                                            <div class="col-md-8 form-input-field float-end switch-align">
+                                            <div class="col-md-8 form-input-field float-end switch-align" style="top:12px">
                                                 <span class="material-switch text-left">
                                                     <input type="checkbox" id="enable-jwt" name="jwtIsEnabled" ng-model="jwtIsEnabled" ng-init="jwtIsEnabled = @(ViewBag.JwtSettings.IsEnabled ? "true" : "false")" ng-change="hideValidationMessage(jwtIsEnabled, 'jwt')" />
                                                     <label for="enable-jwt" class="label-primary"></label>

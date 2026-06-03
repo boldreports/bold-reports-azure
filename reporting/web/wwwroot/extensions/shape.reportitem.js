@@ -25,7 +25,7 @@ var EJShape = (function () {
     };
     EJShape.prototype.initializeShape = function (isTablixCell) {
         var bgColor = (this.customJSON && this.customJSON.Style && this.customJSON.Style.BackgroundColor)
-            ? ej.ReportUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'Transparent';
+            ? ej.ImageUtil.convertColorFormat(this.customJSON.Style.BackgroundColor, true) : 'Transparent';
         this.customItemDiv = ej.buildTag('div.customitem e-rptdesigner-shape', '', {
             'width': '100%', 'height': '100%', 'box-sizing': 'border-box', '-moz-box-sizing': 'border-box', 'background-color': bgColor,
             'border': isTablixCell ? '1px dotted gray' : '1px none gray',
@@ -338,7 +338,7 @@ var EJShape = (function () {
         var shapePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         var targetId = target.attr('id');
         var fillColor = this.hasDesignerInstance(this.instance) ?
-            ej.ReportUtil.convertColorFormat(shapeInfo.fillColor, true) : shapeInfo.fillColor;
+            ej.ImageUtil.convertColorFormat(shapeInfo.fillColor, true) : shapeInfo.fillColor;
         this.setAttributes(svg, {
             'width': shapeInfo.svgWidth + "px", 'height': shapeInfo.svgHeight + "px",
             'viewBox': viewBox, 'id': targetId + "_svg", 'preserveAspectRatio': 'none'
@@ -403,9 +403,9 @@ var EJShape = (function () {
                 this.renderShape(this.customItemDiv, this.customJSON);
                 break;
             case 'fillcolor':
-                if (!ej.ReportUtil.isEmptyString(newValue)) {
+                if (!ej.StringUtil.isEmptyString(newValue)) {
                     this.updatePropertyVal(name, newValue);
-                    this.setAttributes(shapeElement[0], { 'fill': ej.ReportUtil.convertColorFormat(newValue, true) });
+                    this.setAttributes(shapeElement[0], { 'fill': ej.ImageUtil.convertColorFormat(newValue, true) });
                 }
                 break;
             case 'linewidth':
@@ -606,10 +606,10 @@ var EJShape = (function () {
                                 'DisplayName': 'sizetooltip',
                                 'HeaderText': 'linesize',
                                 'Value': shapeInfo.strokeWidth,
-                                'Minimum': ej.ReportUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 0.33),
-                                'Maximum': ej.ReportUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 26.6),
-                                'Interval': ej.ReportUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 0.5),
-                                'decimalPlaces': ej.ReportUtil.getDecimalPlaces(rdlParser.getUnitVal()),
+                                'Minimum': ej.MeasurementUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 0.33),
+                                'Maximum': ej.MeasurementUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 26.6),
+                                'Interval': ej.MeasurementUtil.getPropertyValue(rdlParser.isPixelUnit(), rdlParser.getRDLUnit(), 0.5),
+                                'decimalPlaces': ej.MeasurementUtil.getDecimalPlaces(rdlParser.getUnitVal()),
                                 'UnitType': rdlParser.getUnitVal(),
                                 'ItemType': 'Numeric'
                             }]
@@ -682,7 +682,7 @@ var EJShape = (function () {
         var bottomBorderWidth = 0;
         var borderWidth = 0;
         if (this.hasDesignerInstance(this.instance)) {
-            height = ej.ReportUtil.getPixelVal(customJson.Height.size);
+            height = ej.MeasurementUtil.getPixelVal(customJson.Height.size);
             topBorderWidth = this.getBorderWidth(customJson.Style.TopBorder, true);
             bottomBorderWidth = this.getBorderWidth(customJson.Style.BottomBorder, true);
             borderWidth = this.getBorderWidth(customJson.Style.Border, true);
@@ -702,7 +702,7 @@ var EJShape = (function () {
         var rightBorderWidth = 0;
         var borderWidth = 0;
         if (this.hasDesignerInstance(this.instance)) {
-            width = ej.ReportUtil.getPixelVal(customJson.Width.size);
+            width = ej.MeasurementUtil.getPixelVal(customJson.Width.size);
             leftBorderWidth = this.getBorderWidth(customJson.Style.LeftBorder, true);
             rightBorderWidth = this.getBorderWidth(customJson.Style.RightBorder, true);
             borderWidth = this.getBorderWidth(customJson.Style.Border, true);
@@ -719,7 +719,7 @@ var EJShape = (function () {
     EJShape.prototype.getBorderWidth = function (border, isDesigner) {
         var borderWidth = 0;
         if (isDesigner && border && border.Style && border.Style !== 'None' && border.Style !== 'Default' && border.Width) {
-            borderWidth = ej.ReportUtil.getPixelVal(border.Width.size);
+            borderWidth = ej.MeasurementUtil.getPixelVal(border.Width.size);
         }
         else if (border && border.BorderStyle && border.BorderStyle !== 'None' && border.BorderStyle !== 'Default' && border.Thickness) {
             borderWidth = border.Thickness;
@@ -1044,6 +1044,84 @@ EJShape.Locale['en-US'] = {
     toolTip: {
         requirements: 'Display items in Shapes',
         description: 'Visualize data with customizable shapes.',
+        title: 'Shape'
+    }
+};
+EJShape.Locale['el-GR'] = {
+    basicSettings: {
+        categoryName: 'Βασικές ρυθμίσεις',
+        shapeType: 'Σχήματα',
+        rotationAngle: 'Γωνία περιστροφής',
+        starCount: 'Αριθμός ακτίνων αστέρα',
+        concavity: 'Κοιλότητα',
+        arrowHeight: 'Ύψος βέλους',
+        arrowWidth: 'Πλάτος βέλους',
+        lineStyle: 'Στυλ γραμμής',
+        fillColor: 'Χρώμα πλήρωσης',
+        shapeTypes: {
+            ellipse: 'Έλλειψη',
+            triangle: 'Τρίγωνο',
+            rightAngleTriangle: 'Ορθογώνιο τρίγωνο',
+            rectangle: 'Ορθογώνιο',
+            hexagon: 'Εξάγωνο',
+            pentagon: 'Πεντάγωνο',
+            octagon: 'Οκτάγωνο',
+            star: 'Αστέρι',
+            leftArrow: 'Αριστερό βέλος',
+            rightArrow: 'Δεξί βέλος',
+            upArrow: 'Επάνω βέλος',
+            downArrow: 'Κάτω βέλος'
+        },
+        lineStyles: {
+            dashed: 'Διακεκομμένη',
+            dotted: 'Διάστικτη',
+            dashdotdot: 'Παύλα-Τελεία-Τελεία',
+            dashdot: 'Παύλα-Τελεία',
+            solid: 'Συνεχής'
+        }
+    },
+    toolTip: {
+        requirements: 'Προβάλλει στοιχεία ως σχήματα',
+        description: 'Οπτικοποιήστε δεδομένα με προσαρμόσιμα σχήματα.',
+        title: 'Σχήμα'
+    }
+};
+EJShape.Locale['en-GB'] = {
+    basicSettings: {
+        categoryName: 'Basic Settings',
+        shapeType: 'Shapes',
+        rotationAngle: 'Rotation Angle',
+        starCount: 'Star Count',
+        concavity: 'Concavity',
+        arrowHeight: 'Arrow Height',
+        arrowWidth: 'Arrow Width',
+        lineStyle: 'Line Style',
+        fillColor: 'Fill Colour',
+        shapeTypes: {
+            ellipse: 'Ellipse',
+            triangle: 'Triangle',
+            rightAngleTriangle: 'Right Angle Triangle',
+            rectangle: 'Rectangle',
+            hexagon: 'Hexagon',
+            pentagon: 'Pentagon',
+            octagon: 'Octagon',
+            star: 'Star',
+            leftArrow: 'Left Arrow',
+            rightArrow: 'Right Arrow',
+            upArrow: 'Up Arrow',
+            downArrow: 'Down Arrow'
+        },
+        lineStyles: {
+            dashed: 'Dashed',
+            dotted: 'Dotted',
+            dashdotdot: 'Dash Dot Dot',
+            dashdot: 'Dash Dot',
+            solid: 'Solid'
+        }
+    },
+    toolTip: {
+        requirements: 'Display items in shapes.',
+        description: 'Visualise data with customisable shapes.',
         title: 'Shape'
     }
 };
@@ -1551,6 +1629,45 @@ EJShape.Locale['ru-RU'] = {
         requirements: 'Показать элементы в фигурах',
         description: 'Визуализируйте данные с помощью настраиваемых фигур.',
         title: 'Фигура'
+    }
+};
+EJShape.Locale['th-TH'] = {
+    basicSettings: {
+        categoryName: 'การตั้งค่าพื้นฐาน',
+        shapeType: 'รูปร่าง',
+        rotationAngle: 'มุมการหมุน',
+        starCount: 'จำนวนแฉก',
+        concavity: 'ความเว้า',
+        arrowHeight: 'ความสูงลูกศร',
+        arrowWidth: 'ความกว้างลูกศร',
+        lineStyle: 'รูปแบบเส้น',
+        fillColor: 'สีเติม',
+        shapeTypes: {
+            ellipse: 'วงรี',
+            triangle: 'สามเหลี่ยม',
+            rightAngleTriangle: 'สามเหลี่ยมมุมฉาก',
+            rectangle: 'สี่เหลี่ยมผืนผ้า',
+            hexagon: 'หกเหลี่ยม',
+            pentagon: 'ห้าเหลี่ยม',
+            octagon: 'แปดเหลี่ยม',
+            star: 'ดาว',
+            leftArrow: 'ลูกศรซ้าย',
+            rightArrow: 'ลูกศรขวา',
+            upArrow: 'ลูกศรขึ้น',
+            downArrow: 'ลูกศรลง'
+        },
+        lineStyles: {
+            dashed: 'เส้นประ',
+            dotted: 'เส้นจุด',
+            dashdotdot: 'เส้นประจุดจุด',
+            dashdot: 'เส้นประจุด',
+            solid: 'เส้นทึบ'
+        }
+    },
+    toolTip: {
+        requirements: 'แสดงรายการในรูปแบบรูปร่าง',
+        description: 'แสดงข้อมูลด้วยรูปร่างที่ปรับแต่งได้',
+        title: 'รูปร่าง'
     }
 };
 EJShape.Locale['zh-Hant'] = {

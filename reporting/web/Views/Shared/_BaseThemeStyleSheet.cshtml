@@ -1,0 +1,33 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var dashboardServerResourceUrl = globalAppSettings != null && globalAppSettings.SystemSettings != null ? globalAppSettings.SystemSettings.CDNLink.TrimEnd('/') : ServerAppConfig.IsSelfHosted ? new GlobalAppSettings().HttpPathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink : ServerAppConfig.AppSettings.EndPoints.CdnLink.TrimEnd('/');
+    var url = new Uri(Context.Request.GetDisplayUrl());
+    var dns = url.GetLeftPart(UriPartial.Authority);
+    var themeAppearanceName = string.Empty;
+    var themePreference = _identityResponse.UserPreference.ServerFeatures.ThemeSettings;
+    if (ServerAppConfig.IsSelfHosted)
+    {
+        if (!themePreference.IsInheritFromGlobalLookAndFeelSettings)
+        {
+            themeAppearanceName = themePreference.Appearance;
+        }
+        else
+        {
+            themeAppearanceName = ServerAppConfig.Theme.Appearance;
+        }
+    }
+    else
+    {
+        themeAppearanceName = themePreference.Appearance ?? "light";
+    }
+
+    var themeCss = themeAppearanceName + ".css";
+    var themeMinCss = themeAppearanceName + ".min.css";
+}
+
+<environment include="Development,CloudDevelopment">
+    <link asp-append-version="true" rel="stylesheet" class="theme-ref" href="@dashboardServerResourceUrl/cdn/css/theme/@themeCss" />
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <link asp-append-version="true" rel="stylesheet" class="theme-ref" href="@dashboardServerResourceUrl/cdn/css/theme/@themeMinCss" />
+</environment>

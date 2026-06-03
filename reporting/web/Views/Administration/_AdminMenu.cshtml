@@ -17,7 +17,8 @@
         SettingsScopes.SupportSettings.ToString(),
         SettingsScopes.NotificationSettings.ToString(),
         SettingsScopes.CORSPolicySettings.ToString(),
-        SettingsScopes.Security.ToString()
+        SettingsScopes.Security.ToString(),
+        SettingsScopes.LookAndFeel.ToString()
     };
     var canShowAdminMenu = isAdmin || model[SettingsScopes.All] || model.Select(x => x).Where(x => scopeList.Contains(x.Key.ToString()) && x.Value == true).Count() > 1;
     var requestUrl = new Uri(Context.Request.GetDisplayUrl());
@@ -27,6 +28,7 @@
     var authenticationSettingsUrl = Url.Action("administration", "administration") + "/authentication-settings";
     var adSettingsUrl = Url.Action("administration", "administration") + "/user-directory-settings";
     var emailSettingsUrl = Url.Action("administration", "administration") == null ? string.Empty : Url.Action("administration", "administration") + "/e-mail-settings";
+    var emailConfigureUrl = Url.Action("administration", "administration") == null ? string.Empty : Url.Action("administration", "administration") + "/e-mail-template";
     var notificationSettingsUrl = Url.Action("NotificationSettings", "administration");
     var userSettingsUrl = Url.Action("administration", "administration") + "/user-settings";
     var manageLicenseUrl = Url.Action("LicenseSettings", "Administration") ?? string.Empty;
@@ -89,7 +91,7 @@
                     @if (isAdmin || (model != null && model[SettingsScopes.All] || model[SettingsScopes.Email]))
                     {
                         <li>
-                            <a id="email-settings-link" class="admin-menu-item @(currentUrl.IndexOf(emailSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@emailSettingsUrl" role="tab">
+                            <a id="email-settings-link" class="admin-menu-item @(currentUrl.IndexOf(emailSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 || currentUrl.IndexOf(emailConfigureUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@emailSettingsUrl" role="tab">
                                 <i class="su su-e-mail"></i>
                                 <span>[[[Email]]]</span>
                             </a>

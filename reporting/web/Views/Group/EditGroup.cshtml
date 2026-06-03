@@ -13,6 +13,12 @@
     var passwordPolicy = ServerAppConfig.PasswordPolicy;
     var isSelfHosted = ServerAppConfig.IsSelfHosted;
     bool isSingleDB = ViewBag.IsSingleDB;
+    var customUI = _globalAppSettings.SystemSettings.CustomUI;
+    var userImport = new UserImport();
+    if (customUI?.Profiles != null)
+    {
+        userImport = customUI?.Profiles[0]?.UserImport != null ? customUI?.Profiles[0]?.UserImport[0] : new UserImport();
+    }
 }
 
 @section scripts{
@@ -229,33 +235,36 @@
                     </button>
 
                     <ul class="dropdown-menu manage-group-dropdown multi-level" role="menu" id="dropdown-options">
-                        @if (ViewBag.IsLocalDirectory)
+                        @if (!userImport.HideAddUser)
                         {
-                            <feature name=@FeatureManagement.Yokogawa>
-                                <li id="add-user-button" title="[[[Add user]]]">
-                                    <a href="#" class="dropdown-item prevent-default-action"
-                                       data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="[[[Add user]]]">
-                                        <i class="su su-user-add me-2"></i>
-                                        <span>[[[Add User]]]</span>
-                                    </a>
-                                </li>
+                            @if (ViewBag.IsLocalDirectory)
+                            {
+                                <feature name=@FeatureManagement.Yokogawa>
+                                    <li id="add-user-button" title="[[[Add user]]]">
+                                        <a href="#" class="dropdown-item prevent-default-action"
+                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="[[[Add user]]]">
+                                            <i class="su su-user-add me-2"></i>
+                                            <span>[[[Add User]]]</span>
+                                        </a>
+                                    </li>
+                                </feature>
+                            }
+
+                            <feature name=@FeatureManagement.Yokogawa negate="true">
+                                @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && ViewBag.IsLocalDirectory)
+                                {
+                                    <li id="add-user-button" title="[[[Add user]]]">
+                                        <a href="#" class="dropdown-item prevent-default-action"
+                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="[[[Add user]]]">
+                                            <i class="su su-user-add me-2"></i>
+                                            <span>[[[Add User]]]</span>
+                                        </a>
+                                    </li>
+                                }
                             </feature>
                         }
-
-                        <feature name=@FeatureManagement.Yokogawa negate="true">
-                            @if ((isAdmin || granularPermissions[PermissionEntity.UsersandGroups]) && ViewBag.IsLocalDirectory)
-                            {
-                                <li id="add-user-button" title="[[[Add user]]]">
-                                    <a href="#" class="dropdown-item prevent-default-action"
-                                       data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="[[[Add user]]]">
-                                        <i class="su su-user-add me-2"></i>
-                                        <span>[[[Add User]]]</span>
-                                    </a>
-                                </li>
-                            }
-                        </feature>
 
                         <feature name=@FeatureManagement.Yokogawa>
                             @if (ViewBag.IsLocalDirectory && Convert.ToInt32(Context.Request.Query["groupId"]) != 1)

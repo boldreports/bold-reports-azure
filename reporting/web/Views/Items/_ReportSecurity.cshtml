@@ -1,0 +1,67 @@
+﻿@using Syncfusion.Server.Base.Helpers
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var reportSecurityHelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.AdvancedReportSecurity);
+}
+
+<!DOCTYPE html>
+<head>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var getItemSettingsUrl = "@Url.Action("getitemsettings", "reports")";
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-security.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-security.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-security.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-security.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-security.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-security.min.css")" crossorigin="anonymous" />
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/report-security.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/report-security.min.js")" crossorigin="anonymous"></script>
+    </environment>
+</head>
+<body>
+<div id="itemsettings-dialog-content" style="display:none">
+    @{
+    #pragma warning disable SCS0029
+    }
+    <span class="security-info">
+        [[[Report security options control which websites, IP addresses, and applications can access or embed the report]]].
+        @if (!@ServerAppConfig.IsHideHelpLink)
+        {
+            <a href="@(ServerAppConfig.AppSettings.Documentation.BaseUri + reportSecurityHelpSiteUrl)" target="_blank"> [[[Learn more about report security here]]]</a>
+        }
+    </span>
+    @{
+    #pragma warning restore SCS0029
+    }
+    <div class="item-settings-content-list">
+        <p>[[[Accept embedding requests from these websites:]]]</p>
+        <span id="domain-name-content" class="item-settings-input">
+            <span id="domain-chip-content" class="item-settings-chip"></span>
+            <input id="domain-input-text" autocomplete="off" class="form-control item-settings-content" placeholder="[[[Enter the list of domains separated by commas.]]]" maxlength="253" autofocus>
+        </span>
+        <span class="domain-name-validation" style="display:none"></span>
+    </div>
+    <div class="item-settings-content-list">
+        <p>[[[Allow report access from these IP addresses:]]]</p>
+        <span id="ip-address-content" class="item-settings-input">
+            <span id="ip-chip-content" class="item-settings-chip"></span>
+            <input id="ip-input-text" autocomplete="off" class="form-control item-settings-content" placeholder="[[[Enter the list of IP addresses separated by commas.]]]" maxlength="45">
+        </span>
+        <span class="ip-address-validation" style="display:none"></span>
+    </div>
+    <div id="item-settings-container">
+        <label class="item-settings-label">[[[Apply these settings]]]</label>
+        <div class="center-align">
+            <div class="item-settings-dropdown">
+                <select id="select-option" class="selectpicker full-width">
+                    <option value=@((int)SecuritySettingScope.Always)>[[[Always]]]</option>
+                    <option value=@((int)SecuritySettingScope.Public)>[[[When the report is public and accessed anonymously]]]</option>
+                    <option value=@((int)SecuritySettingScope.Embedded)>[[[When the report is embedded]]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

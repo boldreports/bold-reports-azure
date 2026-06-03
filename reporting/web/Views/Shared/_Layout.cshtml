@@ -69,7 +69,9 @@
     }
 
     @RenderSection("meta", false)
-
+    @await Html.PartialAsync("_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("_BaseFontStyleSheet.cshtml")
     <title>
         @ViewBag.Title
     </title>
@@ -98,67 +100,6 @@
         }
     </style>
 
-    @if (!ServerAppConfig.IsCustomThemeForMenu)
-    {
-        <style>
-            :root {
-                --nav-menu-bg-color: var(--white);
-                --nav-menu-text-color: var(--primary-black);
-                --nav-menu-text-sec-color: var(--grey-700);
-                --nav-menu-content-color: var(--grey-800);
-                --nav-menu-active-color: var(--blue-lighter);
-                --nav-menu-active-text-color: var(--blue);
-                --nav-menu-active-sec-color: var(--blue);
-                --nav-menu-active-content-color: var(--grey-800);
-                --nav-menu-hover-color: var(--grey-300);
-                --nav-menu-hover-text-color: var(--primary-black);
-                --nav-menu-hover-text-sec-color: var(--grey-700);
-                --nav-menu-hover-content-color: var(--grey-800);
-                --nav-menu-create-icon-bgcolor: var(--blue);
-                --nav-menu-separtor-icon-color: var(--grey-400);
-                --item-menu-hover-bg-color: var(--white);
-                --item-menu-hover-border-color: var(--blue);
-                --item-menu-section-bg-color: var(--blue-lighten);
-                --item-menu-bg-color: var(--nav-menu-bg-color);
-                --item-menu-title-color: var(--nav-menu-text-color);
-                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
-                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
-                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
-                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
-                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
-                --nav-notification-heading-text-color: var(--nav-menu-text-color);
-                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
-                --nav-notification-content-text-color: var(--nav-menu-content-color);
-                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
-                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
-                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
-            }
-        </style>
-    }
-    else
-    {
-        <style>
-            :root {
-            @ServerAppConfig.ThemeStyle
-                --item-menu-bg-color: var(--nav-menu-bg-color);
-                --item-menu-section-bg-color: var(--nav-menu-bg-color);
-                --item-menu-title-color: var(--nav-menu-text-color);
-                --item-menu-descrip-color: var(--nav-menu-text-sec-color);
-                --item-menu-hover-bg-color: var( --nav-menu-hover-color);
-                --item-menu-hover-border-color: var( --nav-menu-hover-color);
-                --item-menu-hover-title-color: var(--nav-menu-hover-text-color);
-                --item-menu-hover-descrip-color: var(--nav-menu-hover-text-sec-color);
-                --nav-notification-menu-bg-color: var(--nav-menu-bg-color);
-                --nav-notification-items-hover-bg-color: var(--nav-menu-hover-color);
-                --nav-notification-heading-text-color: var(--nav-menu-text-color);
-                --nav-notification-sub-heading-text-color: var(--nav-menu-text-sec-color);
-                --nav-notification-content-text-color: var(--nav-menu-content-color);
-                --nav-notification-time-text-color: var(--nav-menu-text-sec-color);
-                --nav-notification-content-hover-text-color: var(--nav-menu-hover-content-color);
-                --nav-notification-time-hover-text-color: var(--nav-menu-hover-text-sec-color);
-            }
-        </style>
-    }
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
 
@@ -242,16 +183,14 @@
     }
 <environment include="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-server-tour.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-server-tour.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
 </environment>
 <environment exclude="Development,CloudDevelopment">
     <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/layout.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/layout.min.css")" crossorigin="anonymous" />
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-server-tour.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-server-tour.min.css")" crossorigin="anonymous" />
+    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/report-server-tour.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/report-server-tour.min.css")" crossorigin="anonymous" />
     <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
 </environment>
 
@@ -460,7 +399,7 @@
             <div id="success-alert">
                 <div id="image-container">
                     <div class="image-holder">
-                        <span class="su su-tick" alt="[[[Success Icon]]]"></span>
+                        <img src="@cdnLink/cdn/images/success-toast.svg" class="toast-image-container" />
                     </div>
                 </div>
                 <div id="message">
@@ -468,12 +407,12 @@
                     <span id="message-content"></span>
                 </div>
                 <div class="close-div">
-                    <span id="close-content">[[[Close]]]</span>
+                    <span id="close-content" class="su su-close"></span>
                 </div>
             </div>
             <div id="warning-alert">
                 <div id="image-container">
-                    <span class="su su-warning-alt" alt="[[[Warning Icon]]]"></span>
+                    <img src="@cdnLink/cdn/images/warning-toast.svg" class="toast-image-container" />
                 </div>
                 <div id="message" class="div-close">
                     <h1 id="message-header"></h1>

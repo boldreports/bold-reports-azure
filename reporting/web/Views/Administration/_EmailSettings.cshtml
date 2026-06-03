@@ -32,6 +32,7 @@
     var mailSettingsSESAccessKey = HttpUtility.HtmlDecode(ViewBag.SystemSettings.MailSettings.MailSettingsSESAccessKey ?? "");
     var mailSettingsSESSecretKey = HttpUtility.HtmlDecode(ViewBag.SystemSettings.MailSettings.MailSettingsSESSecretKey ?? "");
     var isLogsTab = (Context.Request.Query["tab"].ToString().ToLower() == "logs") ? "active" : string.Empty;
+    var isCustomEmailTab = (Context.Request.Query["tab"].ToString().ToLower() == "custom-email-template") ? "active" : string.Empty;
     var isSettingsTab = (string.IsNullOrWhiteSpace(Context.Request.Query["tab"]) || Context.Request.Query["tab"].ToString().ToLower() == "email-settings") || (!string.IsNullOrWhiteSpace(Context.Request.Query["tab"]) && string.IsNullOrWhiteSpace(isLogsTab)) ? "active" : string.Empty;
     var AwsRegion = Amazon.RegionEndpoint.EnumerableAllRegions.Select(s => new SelectListItem
             {
@@ -87,6 +88,9 @@
             <ul id="email-settings-tab-nav" class="nav nav-tabs ms-4" role="tablist">
                 <li role="presentation" class="nav-item">
                     <a href="#email-settings" id="email-settings-tab" class="nav-link active" aria-controls="email-settings-tab" role="tab" data-bs-toggle="tab">[[[Settings]]]</a>
+                </li>
+                <li role="presentation" class="nav-item">
+                    <a href="#custom-email-template" id="custom-email" class="nav-link" aria-controls="custom-email-template" role="tab" data-bs-toggle="tab">[[[Template]]]</a>
                 </li>
                 <li role="presentation" class="nav-item">
                     <a href="#logs" id="email-logs-tab" class="nav-link" aria-controls="email-activity-logs-tab" role="tab" data-bs-toggle="tab">[[[Logs]]]</a>
@@ -282,6 +286,9 @@
                 @await Html.PartialAsync("_EmailActivityLog")
         </div>
         @await Html.PartialAsync("_EmailLogInfo")  
+        <div role="tabpanel" class="tab-pane col-md-12 col-12 col-sm-12 reports-page-body @isCustomEmailTab" id="custom-email-template">
+            @await Html.PartialAsync("_CustomizeEmailContent")
+        </div>  
     </div>
     <environment include="Development,CloudDevelopment">
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/email-configuration.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/email-configuration.js")" crossorigin="anonymous"></script>

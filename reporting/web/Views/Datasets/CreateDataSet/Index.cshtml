@@ -23,12 +23,10 @@
     {
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/essentialjs/v2.0/tailwind-light/bold.report-designer.min.css" />
         <environment include="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
         <environment exclude="Development,CloudDevelopment">
-            <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/create-dataset-dependent.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/create-dataset-dependent.min.css")" crossorigin="anonymous" />
             <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         </environment>
@@ -87,6 +85,9 @@
             });
         });
     </script>
+    @await Html.PartialAsync("../../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../../Shared/_BaseFontStyleSheet.cshtml")
 </head>
 <body ng-app="createDataSetApp">
     <div class="cds-container" ng-controller="createDataSetCtrl">

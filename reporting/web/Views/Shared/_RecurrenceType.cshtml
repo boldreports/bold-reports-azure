@@ -6,7 +6,9 @@
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
-    var scheduleTimeInterval = ServerAppConfig.ScheduleTimeInterval;
+    var scheduleTimeInterval = ServerAppConfig.ScheduleTimeInterval != 0
+        ? ServerAppConfig.ScheduleTimeInterval
+        : 10;
 }
 <!DOCTYPE html>
 <html class="dashboard-server">

@@ -11,6 +11,10 @@
     }
 <html class="report-server">
 <head>
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
     <title>
@@ -56,14 +60,12 @@ var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
     <script src="https://cdn.syncfusion.com/ej2/ej2-popups/dist/global/ej2-popups.min.js" type="text/javascript"></script>
 
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-report.js")" crossorigin="anonymous"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-report.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/add-report.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/add-report.min.js")" crossorigin="anonymous"></script>
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/add-report.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/add-report.min.css")" crossorigin="anonymous" />
@@ -71,7 +73,7 @@ var addmultiplerdlreportUrl = "@Url.Action("AddMultipleRdlReport", "reports")";
     </environment>
 </head>
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
-<body style="background-color:white">
+<body>
 
     <div id="createReportPopupHolder" class="add-report-module dialog">
         <input type="hidden" name="selectedFolderId" id="selectedFolderId" value="" />

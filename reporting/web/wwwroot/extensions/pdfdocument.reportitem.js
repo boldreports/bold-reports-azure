@@ -323,6 +323,44 @@ EJPdfDocument.Locale['en-US'] = {
         title: 'PDF'
     }
 };
+EJPdfDocument.Locale['el-GR'] = {
+    source: 'Πηγή',
+    sourceTypes: {
+        url: 'URL',
+        database: 'Βάση δεδομένων',
+        server: 'Διακομιστής'
+    },
+    categoryBasicSettings: 'Βασικές ρυθμίσεις',
+    sizing: 'Διαστασιολόγηση',
+    sizeTypes: {
+        auto: 'Αυτόματο μέγεθος',
+        fitPage: 'Προσαρμογή στο μέγεθος σελίδας'
+    },
+    toolTip: {
+        requirements: 'Προβάλλει οποιοδήποτε αρχείο PDF',
+        description: 'Εμφανίζει το περιεχόμενο εγγράφου PDF στην αναφορά',
+        title: 'PDF'
+    }
+};
+EJPdfDocument.Locale['en-GB'] = {
+    source: 'Source',
+    sourceTypes: {
+        url: 'URL',
+        database: 'Database',
+        server: 'Server'
+    },
+    categoryBasicSettings: 'Basic Settings',
+    sizing: 'Sizing',
+    sizeTypes: {
+        auto: 'AutoSize',
+        fitPage: 'FitToPageSize'
+    },
+    toolTip: {
+        requirements: 'Display any PDF file.',
+        description: 'Display the PDF document content in the report.',
+        title: 'PDF'
+    }
+};
 EJPdfDocument.Locale['ar-AE'] = {
     source: 'مصدر',
     sourceTypes: {
@@ -586,6 +624,25 @@ EJPdfDocument.Locale['ru-RU'] = {
     toolTip: {
         requirements: 'Показать любой PDF-файл',
         description: 'Показать содержимое PDF-документа в отчете',
+        title: 'PDF'
+    }
+};
+EJPdfDocument.Locale['th-TH'] = {
+    source: 'แหล่งที่มา',
+    sourceTypes: {
+        url: 'URL',
+        database: 'ฐานข้อมูล',
+        server: 'เซิร์ฟเวอร์'
+    },
+    categoryBasicSettings: 'การตั้งค่าพื้นฐาน',
+    sizing: 'การปรับขนาด',
+    sizeTypes: {
+        auto: 'ขนาดอัตโนมัติ',
+        fitPage: 'พอดีกับหน้ากระดาษ'
+    },
+    toolTip: {
+        requirements: 'แสดงไฟล์ PDF ได้',
+        description: 'แสดงเนื้อหาเอกสาร PDF ในรายงาน',
         title: 'PDF'
     }
 };

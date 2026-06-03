@@ -33,6 +33,7 @@
     var designerServiceUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(ServerAppConfig.InternalAppDataServiceUrl, _globalAppSettings, Context);
 #endif
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
+
     if (!string.IsNullOrWhiteSpace(ViewBag.categoryName) && !string.IsNullOrWhiteSpace(ViewBag.reportName))
     {
         categoryName = HttpUtility.HtmlDecode(ViewBag.categoryName);

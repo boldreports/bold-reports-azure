@@ -19,19 +19,20 @@
     </script>
 
     <environment include="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/addsamplereportparts.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/addsamplereportparts.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/addsamplereportpart.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/addsamplereportpart.js")" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development,CloudDevelopment">
-        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/theme/light.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/theme/light.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/addsamplereportparts.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/addsamplereportparts.min.css")" crossorigin="anonymous" />
         <link rel="stylesheet" asp-append-version="true" href="@ServerAppConfig.CustomFontUrl(globalAppSettings?.SystemSettings?.FontPreference, reportServerResourceUrl)" />
         <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/addsamplereportpart.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/addsamplereportpart.min.js")" crossorigin="anonymous"></script>
     </environment>
 
     @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
 </head>
 <body class="overflow-none sample-report-part-popup" id="sample-report-part-container">
     <div class="modal no-padding" tabindex="-1" role="dialog">

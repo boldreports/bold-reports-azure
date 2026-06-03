@@ -29,8 +29,13 @@
         }
     }
 </script>
-
 @await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+<head>
+    @await Html.PartialAsync("../Shared/_ApplicationThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseThemeStyleSheet.cshtml")
+    @await Html.PartialAsync("../Shared/_BaseFontStyleSheet.cshtml")
+</head>
 
 <environment include="Development,CloudDevelopment">
     <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>

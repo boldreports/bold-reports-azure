@@ -1,36 +1,34 @@
-CREATE TABLE [BOLDRS_EmailActivityLog](
-    [Id] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [Event] [nvarchar](255) NOT NULL,
-    [RecipientEmail] [nvarchar](255) NOT NULL,
-    [SenderEmail] [nvarchar](255) NOT NULL,
-    [MailSubject] [nvarchar](255) NOT NULL,
-    [MailBody] [nvarchar](max) NULL,
+CREATE TABLE [BOLDRS_ItemSettings](
+	[Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[ItemId] [uniqueidentifier] NOT NULL,
+	[ItemConfig] [nvarchar](4000) NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL)
+;
+
+ALTER TABLE [BOLDRS_ItemSettings] ADD CONSTRAINT FK_ItemSettings_ItemId FOREIGN KEY([ItemId]) REFERENCES [BOLDRS_Item] ([Id])
+;
+
+
+CREATE TABLE [BOLDRS_CustomEmailTemplate](
+    [Id] [int] IDENTITY(1,1) primary key NOT NULL,
+    [IsEnabled] [bit] NULL,
+    [DisclaimerContent] [nvarchar](255) NOT NULL,
+    [HeaderContent] [nvarchar](255) NULL,
+    [Subject] [nvarchar](255) NULL,
+    [TemplateName] [nvarchar](255) NULL,
+    [MailBody] [nvarchar](max) NOT NULL,
     [CreatedDate] [datetime] NOT NULL,
     [ModifiedDate] [datetime] NULL,
-    [InitiatedBy] int NOT NULL,
-    [UserId] [int] NULL,
-    [GroupId] [int] NULL,
-    [ItemId] [uniqueidentifier] NULL,
-    [CommentId] [int] NULL,
-    [PermissionId] [int] NULL,
-    [Status] [int] NOT NULL,
-    [StatusMessage] [nvarchar](max) NULL,
-    [IsActive] [bit] NOT NULL)
+    [SendEmailAsHTML] [bit] NOT NULL,
+    [CustomVisibilityOptions] [nvarchar](max) NOT NULL,
+    [IsActive] [bit] NOT NULL,
+    [TemplateId] [int] NOT NULL,
+    [IsDefaultTemplate][bit] NOT NULL,
+    [IsSystemDefault][bit] NOT NULL,
+    [Description][nvarchar](255) NULL,
+    [ModifiedBy][int] NOT NULL)
 ;
 
-ALTER TABLE [BOLDRS_EmailActivityLog]  ADD  FOREIGN KEY([UserId]) REFERENCES [BOLDRS_User] ([Id])
+ALTER TABLE [BOLDRS_ScheduleDetail] ALTER COLUMN [ScheduleBucketExportInfo] [nvarchar](max) NULL
 ;
-ALTER TABLE [BOLDRS_EmailActivityLog]  ADD  FOREIGN KEY([GroupId]) REFERENCES [BOLDRS_Group] ([Id])
-;
-ALTER TABLE [BOLDRS_EmailActivityLog]  ADD  FOREIGN KEY([ItemId]) REFERENCES [BOLDRS_Item] ([Id])
-;
-ALTER TABLE [BOLDRS_EmailActivityLog]  ADD FOREIGN KEY([CommentId]) REFERENCES [BOLDRS_Comment] ([Id])
-;
-
--- Add nullable SkipAttachment and SkipMail columns to support no-data options for existing installations
-ALTER TABLE [BOLDRS_ScheduleDetail] ADD [SkipAttachment] [bit] NULL;
-ALTER TABLE [BOLDRS_ScheduleDetail] ADD [SkipMail] [bit] NULL;
-ALTER TABLE [BOLDRS_ScheduleDetail] ADD [ScheduleRunStatus] [nvarchar](1000) NOT NULL DEFAULT 'Idle'
-;
-
-ALTER TABLE [BOLDRS_ItemView] ALTER COLUMN QueryString [nvarchar](MAX) NOT NULL;

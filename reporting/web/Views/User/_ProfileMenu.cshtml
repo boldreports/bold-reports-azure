@@ -7,6 +7,7 @@
     var personalAccessTokenPageUrl = Url.Action("PersonalAccessToken", "User");
     var connectedAccountPageUrl = Url.Action("ConnectedAccounts", "User");
     var supportTicketsUrl = Url.Action("TicketList", "Support");
+    var lookAndFeelSettingsUrl = Url.Action("LookAndFeel", "User");
 }
 
 <div class="top-header-sticky">
@@ -32,6 +33,16 @@
                 <span>[[[Personal Access Token]]]</span>
             </a>
         </li>
+        @if (ServerAppConfig.ShowThemeSettings)
+        {
+            <li class="mobile-hidden">
+                <a id="look-and-feel-settings-link" class="admin-menu-item @(currentUrl.IndexOf(lookAndFeelSettingsUrl, StringComparison.CurrentCultureIgnoreCase) > -1 ? "active" : string.Empty)" href="@lookAndFeelSettingsUrl">
+                    <i class="su su-look-and-feel"></i>
+                    <span>[[[Look and Feel]]]</span>
+                </a>
+            </li>
+        }
+
         @if (!ServerAppConfig.IsSelfHosted)
         {
             <li>
