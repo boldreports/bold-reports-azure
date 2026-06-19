@@ -13,7 +13,7 @@
 #else
     var designerServiceUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(ServerAppConfig.InternalAppDataServiceUrl, _globalAppSettings, Context);
 #endif
-    var reportServerApiUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(), _globalAppSettings, Context);
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;

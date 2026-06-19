@@ -4,7 +4,7 @@
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
     var globalAppSettings = _globalAppSettings;
     var language = CultureInfo.CurrentCulture.Name;
-    var boldReportsApiUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(), _globalAppSettings, Context);
+    var boldReportsApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(); 
     var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
 #if (BoldReportsCloud)

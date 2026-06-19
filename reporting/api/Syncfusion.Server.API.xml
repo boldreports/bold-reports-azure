@@ -643,6 +643,15 @@
             <param name="serverPath">Category path</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ItemsController.PublishReportItemV5(Syncfusion.Server.Base.DataClasses.ApiPublishReportItemV5)">
+            <summary>
+            Publishes a report item to one or more target sites (v5).
+            Supports an optional ItemVersion to publish a specific version of the report.
+            When ItemVersion is 0 or not provided, the latest version is published.
+            </summary>
+            <param name="publishReportItem">Publish request containing ItemId, TargetSiteDetails, and optional ItemVersion.</param>
+            <returns>ApiResponse indicating success or failure.</returns>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.ItemsController.AddSampleReportsByNameJson(Syncfusion.Server.Base.DataClasses.ApiSampleReportAdd)">
             <summary> Add a new sample report to the server </summary>
             <remarks> Users who have create access for reports, can add a new category to the server by providing respective category details in the request body. </remarks>

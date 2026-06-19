@@ -14,7 +14,7 @@
     var tenantAppConfiguration = new TenantAppConfiguration(globalAppSettings);
     var language = CultureInfo.CurrentCulture.Name;
     var baseUrl = ServerAppConfig.GetClientServiceUrl(globalAppSettings.SystemSettings.BaseUrl, Context);
-    var reportServerApiUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(), _globalAppSettings, Context);
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     var tourCookie = Context.Request.Cookies["syncfusion.reports.designer.tour"];
     var tourObj = new TourCookie();
     var isSelfHosted = ServerAppConfig.IsSelfHosted;

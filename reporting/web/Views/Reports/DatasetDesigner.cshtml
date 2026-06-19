@@ -11,8 +11,7 @@
     var datasourceName = string.Empty;
     var globalAppSettings = _globalAppSettings;
     var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
-    var reportServerApiUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(), _globalAppSettings, Context);
-
+    var reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
     if (!string.IsNullOrWhiteSpace(ViewBag.datasourceName))
     {
         datasourceName = HttpUtility.HtmlDecode(ViewBag.datasourceName);

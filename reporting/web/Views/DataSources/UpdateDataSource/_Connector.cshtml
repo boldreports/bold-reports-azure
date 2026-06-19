@@ -23,7 +23,7 @@
 #else
                             string serviceURL = ServerAppConfig.GetDesignerServiceEndPointUrl(ServerAppConfig.InternalAppDataServiceUrl, _globalAppSettings, Context) +"/api/Designer";
 #endif
-                            string reportServerApiUrl = ServerAppConfig.GetDesignerServiceEndPointUrl(new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(), _globalAppSettings, Context);
+                            string reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
                             string isAzureApplication = ServerAppConfig.IsAzureApplication.ToString().ToLower();
                         }
                         <div class="data-designer-container">
