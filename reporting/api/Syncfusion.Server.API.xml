@@ -1238,6 +1238,14 @@
             <param name="reportParameter">Parameter Values provided by user</param>
             <returns></returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.AddScheduleReportParameter(System.Guid,System.Collections.Generic.List{BoldReports.RDL.DOM.ReportParameter},System.Collections.Generic.List{Syncfusion.Server.Base.DataClasses.ApiReportParameter})">
+            <summary>
+            Stores schedule report parameters. When <paramref name="apiReportParameters"/> is provided,
+            the <c>UseDefault</c> flag from each API request entry is applied to the corresponding
+            <see cref="T:Syncfusion.Server.Base.Scheduler.ScheduleReportParameter"/> before serialisation so that the scheduler respects
+            the caller's preference at execution time.
+            </summary>
+        </member>
         <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.SubscribeUsers(System.Guid,System.Collections.Generic.List{System.String},System.Int32)">
             <summary>
             Adding subscribed users to the table.
