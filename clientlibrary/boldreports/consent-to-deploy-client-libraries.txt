@@ -1,0 +1,39 @@
+Consent to deploy client libraries 
+
+By giving consent to install client libraries to connect with Oracle, PostgreSQL, MySQL, Snowflake, GoogleBigQuery, MongoDB you can use the following libraries in Bold Reports. Bold Reports uses these client libraries to connect with their respective SQL database variants. Read about the licenses of each library to give consent for usage.
+---
+Snowflake.data - Apache License, Version 2.0 [https://github.com/snowflakedb/snowflake-connector-net/blob/master/LICENSE]
+Snowflake
+---
+Oracle.ManagedDataAccess - Oracle License [https://www.oracle.com/downloads/licenses/distribution-license.html]
+Oracle
+Amazon RDS
+---
+Npgsql 8.0.3 - PostgreSQL License [https://github.com/npgsql/npgsql/blob/main/LICENSE]
+PostgreSQL
+Google Cloud
+Amazon Aurora
+Amazon RDS
+Amazon Redshift
+---
+MySQLConnector 1.1.0- MIT License [https://github.com/mysql-net/MySqlConnector/blob/master/LICENSE]
+MySQL
+MemSQL
+MariaDB
+Google Cloud
+Amazon Aurora
+Amazon RDS
+---
+Google.Cloud.BigQuery.V2 3.10.0 Apache License, Version 2.0 [https://github.com/googleapis/google-cloud-dotnet/blob/main/LICENSE]
+GoogleBigQuery
+---
+MongoDB.Driver 3.2.1 Apache License, Version 2.0 [https://github.com/mongodb/mongo-csharp-driver/blob/main/LICENSE.md]
+MongoDB
+---
+
+Command to install client libraries from kudu console:
+
+Find the names of client libraries which needs to be passed as a comma separated string for an arguement in install-optional.libs.sh.
+
+e.g.
+.\install-optional-libs.ps1 -ClientLibraries "oracle,postgresql,mysql,snowflake,googlebigquery,mongodb"

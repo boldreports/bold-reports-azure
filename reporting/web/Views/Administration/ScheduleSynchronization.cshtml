@@ -1,0 +1,284 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+@{
+    var globalAppSettings = _globalAppSettings;
+    ViewBag.Title = "[[[Schedule Synchronization]]] - " + globalAppSettings.SystemSettings.OrganizationName;
+    ViewBag.MessageBox = false;
+    ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.ADSyncSchedule);
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var isSandbox = ServerAppConfig.Sandbox.Reports.Enabled;
+}
+@section styles{
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedule-synchronization.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedule-synchronization.css")" crossorigin="anonymous" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+        <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/schedule-synchronization.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/schedule-synchronization.min.css")" crossorigin="anonymous" />
+    </environment>
+}
+
+@section scripts{
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedule-synchronization.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedule-synchronization.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedule-synchronization.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedule-synchronization.min.js")" crossorigin="anonymous"></script>
+    </environment>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var getScheduleInfoUrl = "@Url.Action("GetScheduleInfo", "Administration")";
+        var getRecurrenceTypeUrl = "@Url.Action("GetRecurrenceType", "Administration")";
+        var updateAdScheduleUrl = "@Url.Action("UpdateActiveDirectorySchedule", "Administration")";
+        var isSandbox = @Json.Serialize(isSandbox);
+    </script>
+}
+@section MainSection{
+   @await Html.PartialAsync("_AdminMenu")
+    <input type="hidden" value="@globalAppSettings.SystemSettings.TimeFormat.ToString()" id="timeFormat" />
+    <input type="hidden" value="@globalAppSettings.SystemSettings.DateFormat" id="dateFormat" />
+    <div id="schedule-synchronization-container" class="admin-page-container">
+        <div id="schedule-header" class="col-md-12 import-area admin-page-header float-end">
+            <a href="@Url.Action("Administration","Administration")/user-directory-settings" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" title="[[[Active Directory Settings]]]" class="back-button float-start">
+                <i class="su su-arrow-back back-navigaion img-size"> </i>
+            </a>
+            <hgroup>
+                <h2 class="page-title">[[[ACTIVE DIRECTORY SYNCHRONIZATION SCHEDULE]]]</h2>
+                <h5 class="page-description">[[[Schedule to synchronize users and groups with Active Directory]]]</h5>
+            </hgroup>
+        </div>
+
+        <div class="col-sm-12 col-12 no-padding schedule-info no-margin">
+            <div id="enable-checkbox" class="pad-enable display-inline">
+                @Html.CheckBox("enable-schedule", new { @class = "material-checkbox  float-end" })
+                @Html.Label("enable-schedule", "[[[Enable Active Directory Scheduled Synchronization]]]", new { @id = "schedule-label" })
+            </div>
+            <div id="recursion" class="next-schedule-container display-inline float-end">
+                <div class="next-schedule-label text-right">
+                    @Html.Label("[[[Next Schedule]]] : ")
+                    <span id="next-schedule">
+                        [[[Schedule not started.]]]
+                    </span>
+                </div>
+                <div class="col-lg-12  col-sm-12 no-padding no-margin recurrence-information">
+                </div>
+            </div>
+        </div>
+
+        <div id="schedule-panel" class="admin-page-body col-lg-12">
+            <div class="row col-sm-12 no-padding align-items-center">
+                <div class="col-sm-2 col-2">
+                    @Html.Label("", "[[[Type]]]", new { @class = "app-textbox-label display label-font" })
+                </div>
+                <div class="col-sm-4 col-4">
+                    <select id="recurrence-type" class="select-picker schedule-dropdown schedule-type" title="[[[Select Recurrence Type]]]"></select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-12 no-padding no-margin display" id="daily-schedule-option">
+                <div class="col-sm-12 col-12 no-padding no-margin">
+                    <div class="row align-items-center">
+                        <div class="col-sm-2 col-2">
+                            @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
+                        </div>
+                        <div class="col-sm-10 col-10">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <div class="d-flex align-items-center col-sm-2 col-2 no-padding no-margin">
+                                    @Html.RadioButton("daily-recurrence-type", " ", new { @class = "css-radio", @checked = "checked", id = "daily-every-x-days" })
+                                    @Html.Label("daily-every-x-days", "[[[Every]]]", new { @class = "app-radio-label normal-font ms-2 me-2" })
+                                    <div class="me-2" style="width: 200px;">
+                                        @Html.TextBox("every-x-days", null, new { @class = "form-control numeric-text-box text-center" })
+                                    </div>
+                                    @Html.Label("daily-week-days", "[[[day(s)]]]", new { @class = "app-textbox-label" })
+                                </div>
+                                <div class="d-flex align-items-center col-2 ms-5">
+                                    @Html.RadioButton("daily-recurrence-type", " ", new { @class = "css-radio", id = "daily-week-days" })
+                                    @Html.Label("daily-week-days", "[[[Every weekday]]]", new { @class = "app-radio-label normal-font ms-2" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 no-padding cls-options" id="weekly-schedule-option">
+                <div class="col-12 no-padding no-margin">
+                    <div class="row align-items-center">
+                        <div class="col-sm-2 col-2">
+                            @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
+                        </div>
+                        <div class="col-sm-10 col-10">
+                            <div class="d-flex flex-wrap align-items-center w-100">
+                                <label class="app-textbox-label me-2">[[[Every]]]</label>
+                                <div class="monthly-select week-margin">
+                                    <input type="text" class="form-control numeric-text-box" id="every-x-weeks">
+                                </div>
+                                <label class="app-textbox-label flex-shrink-1 left-margin">[[[week(s)]]]</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-12 no-padding">
+                    <div class="col-sm-2 col-2"></div>
+                    <div class="col-sm-10 col-10" id="days-check-box">
+                        <div class="d-flex flex-wrap mb-2">
+                            <div id="enable-sunday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("sun", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("sun", "[[[Sunday]]]", new { @class = "clspadleft app-checkbox-label normal-font" })
+                            </div>
+                            <div id="enable-monday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("mon", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("mon", "[[[Monday]]]", new { @class = "app-checkbox-label normal-font ms-2" })
+                            </div>
+                            <div id="enable-tuesday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("tues", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("tues", "[[[Tuesday]]]", new { @class = "app-checkbox-label normal-font ms-2" })
+                            </div>
+                            <div id="enable-wednesday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("wed", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("wed", "[[[Wednesday]]]", new { @class = "app-checkbox-label normal-font ms-2" })
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap mb-2">
+                            <div id="enable-thursday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("thu", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("thu", "[[[Thursday]]]", new { @class = "app-checkbox-label normal-font" })
+                            </div>
+                            <div id="enable-friday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("fri", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("fri", "[[[Friday]]]", new { @class = "app-checkbox-label normal-font ms-2" })
+                            </div>
+                            <div id="enable-saturday" class="col-sm-2 col-xs-2 no-padding no-margin">
+                                @Html.CheckBox("sat", false, new { @class = "material-checkbox schedule-checkbox" })
+                                @Html.Label("sat", "[[[Saturday]]]", new { @class = "app-checkbox-label normal-font ms-2" })
+                            </div>
+                        </div>
+                        <div class="validation-message" id="weekly-day-error-container">
+                            <div id="weekly-days-validator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 no-padding cls-options" id="monthly-schedule-option">
+                <div class="row align-items-center mb-2">
+                    <div class="col-sm-2 col-2">
+                        @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
+                    </div>
+                    <div class="col-sm-10 col-10">
+                        <div class="d-flex flex-wrap align-items-center w-100">
+                            <div class="me-3 d-flex align-items-center">
+                                @Html.RadioButton("monthly", "day", new { @class = "css-radio", @checked = "checked", id = "monthly" })
+                                @Html.Label("monthly", "[[[Day]]]", new { @class = "app-radio-label ms-2 normal-font" })
+                            </div>
+                            <div class="me-3">
+                                @Html.TextBox("monthly-date", null, new { @class = "form-control numeric-text-box text-center" })
+                            </div>
+                            <label class="app-textbox-label me-2">[[[of every]]]</label>
+                            <div class="me-3">
+                                @Html.TextBox("monthly-every-x-months", null, new { @class = "form-control numeric-text-box text-center" })
+                            </div>
+                            <label class="app-textbox-label">[[[month(s)]]]</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-sm-2 col-2"></div>
+                    <div class="col-sm-10 col-10">
+                        <div class="d-flex flex-wrap align-items-center w-100">
+                            <div class="me-3 d-flex align-items-center">
+                                @Html.RadioButton("monthly", "the", new { @class = "css-radio", id = "monthly-dow" })
+                                @Html.Label("monthly-dow", "[[[The]]]", new { @class = "app-radio-label ms-2 normal-font" })
+                            </div>
+                            <div class="i-search-fields  float-end daybox-width">
+                                <select id="monthly-dow-week" data-width="110px" class="select-picker schedule schedule-dropdown monthly-select" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+                            <div class="i-search-fields  float-end monthbox-width">
+                                <select id="monthly-dow-day" data-width="160px" class="select-picker schedule schedule-dropdown monthly-select" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+                            <div class="float-end">
+                                @Html.Label("monthly-dow", "[[[of every]]]", new { @class = "clspad float-end month-margin app-textbox-label" })
+                                <div class="monthly-select float-end">
+                                    @Html.TextBox("monthly-dow-every-x-months", null, new { @class = "numeric-text-box float-end" })
+                                </div>
+                                @Html.Label("monthly-dow", "[[[month(s)]]]", new { @class = "clspad float-end month-margin app-textbox-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 no-padding cls-options" id="yearly-schedule-option">
+                <div class="row align-items-center mb-2">
+                    <div class="col-sm-2 col-2">
+                        @Html.Label("", "[[[Recurs]]]", new { @class = "app-textbox-label display label-font" })
+                    </div>
+                    <div class="col-sm-10 col-10">
+                        <div class="d-flex flex-wrap align-items-center w-100">
+                            <label class="app-textbox-label me-2">[[[Every]]]</label>
+                            <div class="monthly-select float-end">
+                                @Html.TextBox("every-x-years", null, new { @class = "form-control numeric-text-box" })
+                            </div>
+                            @Html.Label(" ", "[[[year(s)]]]", new { @class = "clspad float-end app-textbox-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center mb-2">
+                    <div class="col-sm-2 col-2"></div>
+                    <div class="col-sm-10 col-10">
+                        <div class="d-flex flex-wrap align-items-center w-100">
+                            <div class="me-3 d-flex align-items-center">
+                                @Html.RadioButton("yearly", " ", new { @class = "css-radio", @checked = "checked", id = "yearly" })
+                                @Html.Label("yearly", "[[[The]]]", new { @class = "float-end app-radio-label normal-font" })
+                            </div>
+                            <div class="float-end">
+                                <select id="yearly-month" class="select-picker schedule schedule-dropdown monthly-select no-padding left-margin monthbox-width" data-width="160px" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+                            <div class="monthly-select left-margin float-end">
+                                @Html.TextBox("yearly-day", null, new { @class = "form-control float-end numeric-text-box" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-2 col-2"></div>
+                    <div class="col-sm-10 col-10">
+                        <div class="d-flex flex-wrap align-items-center w-100">
+                            <div class="me-3 d-flex align-items-center">
+                              @Html.RadioButton("yearly", " ", new { @class = "css-radio", id = "yearly-dow" })
+                              @Html.Label("yearly-dow", "[[[The]]]", new { @class = "float-end app-radio-label normal-font" })
+                      </div>
+                            <div class="i-search-fields  float-end yearbox-width">
+                                <select id="yearly-dow-week" data-width="110px" class="select-picker schedule schedule-dropdown monthly-select" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+
+                            <div class="i-search-fields  float-end yearbox-width">
+                                <select id="yearly-dow-day" data-width="160px" class="select-picker schedule schedule-dropdown monthly-select" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+
+                            <label class="app-textbox-label me-2">[[[of]]]</label>
+
+                            <div class="i-search-fields  float-end yearbox-width">
+                                <select id="yearly-dow-month" data-width="160px" class="select-picker schedule schedule-dropdown monthly-select" data-size="5" data-dropup-auto="false"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-sm-12 no-padding  align-items-center mb-2 time">
+                <div class="col-sm-2 col-2">@Html.Label("", "[[[Time]]]", new { @class = "app-textbox-label display label-font" })</div>
+                <div class="col-sm-10 col-10">
+                    <div>@Html.TextBox("start-date", null, new { @class = "form-control time-width" })</div>
+                </div>
+                <div class="col-sm-12 col-12 validation-message" id="start-date-error-container">
+                    <div class="col-sm-2 col-2"></div>
+                    <div class="col-sm-8 col-8 no-margin" id="start-date-validator"></div>
+                </div>
+            </div>
+        </div>
+        <div class="admin-page-actions col-12 col-md-12">
+            <a href="@Url.Action("Index","Home")" class="secondary-button app-btn-secondary float-end" id="cancel-schedule-synchronization" title="">[[[Cancel]]]</a>
+            <input type="button" title="" id="update-schedule-synchronization-bottom" class="primary-button app-btn-primary float-end" value="[[[Save]]]" />
+        </div>
+    </div>
+
+}

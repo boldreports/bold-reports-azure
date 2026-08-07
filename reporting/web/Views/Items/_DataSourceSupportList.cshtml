@@ -1,0 +1,10 @@
+﻿@{ var model = Model as List<string>; }
+
+<div id="datasource-dropdown">
+    <select id="datasource-type" class="selectpicker no-padding form-control" data-live-search='true' data-size="5" title="[[[Select Data Source]]]" style="width:100%" tabindex="3" data-none-results-text="[[[No results match]]]">
+        @foreach (var dataSource in model)
+        {
+            <option value="@dataSource">@(dataSource.ToLower().Equals("sql") ? "Microsoft SQL" : dataSource)</option>
+        }
+    </select>
+</div>

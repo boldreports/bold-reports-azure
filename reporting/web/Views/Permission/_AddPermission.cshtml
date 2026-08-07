@@ -1,0 +1,107 @@
+﻿@{
+    var groupIdValue = ViewBag.groupId;
+    var isAdmin = _identityResponse.IsAdmin;
+}
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog full-width no-padding" id="popup-container" role="document" style="max-width:100%">
+            <div class="modal-content col-lg-12" id="add-permission-controller">
+                <div class="col-lg-12 modal-header">
+                    <div class="col-6 no-padding">
+                        <span class="popup-title modal-title">[[[Add Permission]]]</span>
+                    </div>
+                    <div class="col-6 no-padding">
+                    <a href="#" class="popup-close float-end prevent-default-action"><span class="su su-close"></span></a>
+                    </div>
+                </div>
+                <div class="modal-body col-12">
+                    <div class="col-12 no-padding header-content">@(groupIdValue != null ? "Select the permission to add to the group" : "Select the permission to add to the user")</div>
+                    <div class="col-12 radio-btn-div">
+                        <div class="all-permission select-permission all-permission-resource">
+                            <input type="radio" id="all-permission" class="css-radio permission-type-radio" value="all-permission" name="permissionType" checked="checked" data-action="onClickAllResource">
+                            <label for="all-permission" class="app-textbox-label radio-label"><span class="text">[[[All Resources]]]</span></label>
+                        </div>
+                        <div class="specific-permission select-permission specific-permission-resource">
+                            <input type="radio" id="specific-permission" class="css-radio permission-type-radio" value="specific-permission" name="permissionType" data-action="onClickSpecificResource">
+                            <label for="specific-permission" class="app-textbox-label radio-label"><span class="text">[[[Specific Resources]]]</span></label>
+                        </div>
+                    @if (isAdmin && ServerAppConfig.IsSelfHosted)
+                    {
+                                <div class="all-permission select-permission all-permission-settings">
+                                    <input type="radio" id="all-permission-settings" class="css-radio permission-type-radio" value="all-permission-settings" name="permissionType" data-action="onClickAllSettings">
+                                    <label for="all-permission-settings" class="app-textbox-label radio-label"><span class="text">[[[All Settings]]]</span></label>
+                                </div>
+                                <div class="specific-permission select-permission specific-permission-settings">
+                                    <input type="radio" id="specific-permission-settings" class="css-radio permission-type-radio" value="specific-permission-settings" name="permissionType" data-action="onClickSpecificSettings">
+                                    <label for="specific-permission-settings" class="app-textbox-label radio-label"><span class="text">[[[Specific Settings]]]</span></label>
+                                </div>
+                    }
+                    </div>
+                    <div class="permission-modes-parent-div">
+                        <div class="d-flex align-items-center col-12 no-padding all-permission-div permission-modes">
+                            <div class="col-4 no-padding entity-div">
+                                <div class="app-textbox-label no-padding modes-head">
+                                    <label class="app-textbox-label">[[[Entity]]]</label>
+                                <div class="entity-search-area float-end d-flex align-items-center">
+                                    <input type="text" id="entity-search-box" class="entity-search-box float-start" placeholder="[[[Search Entity]]]" />
+                                    <span class="su su-inner-close no-margin entity-search-clear" style="display:none;" title="[[[Clear search]]]"></span>
+                                    <span class="su su-search no-margin entity-search-icon" title="[[[Search]]]"></span>
+                                    </div>
+                                </div>
+                                <div class="no-padding modes-body entity-selection-div">
+                                    <ul id="all-resource-entity-ul" class="no-margin modes-body-ul" style="display:block;">
+                                        <!-- Entities will be rendered by JS -->
+                                    </ul>
+                                    <ul id="all-settings-entity-ul" class="no-margin modes-body-ul" style="display:none;">
+                                        <!-- Entities will be rendered by JS -->
+                                    </ul>
+                                    <ul id="specific-resource-entity-ul" class="no-margin modes-body-ul no-padding" style="display:none;">
+                                        <!-- Entities will be rendered by JS -->
+                                    </ul>
+                                    <ul id="specific-settings-entity-ul" class="no-margin modes-body-ul no-padding" style="display:none;">
+                                        <!-- Entities will be rendered by JS -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-4 no-padding scope-div" style="display:none;">
+                            <div class="app-textbox-label no-padding modes-head">
+                                <label class="app-textbox-label">[[[Scope]]]</label>
+                                <div class="scope-search-area float-end d-flex align-items-center pull-right">
+                                <input type="text" id="scope-search-box" class="scope-search-box pull-left no-margin" placeholder="[[[Search Scope]]]" />
+                                    <span class="su su-inner-close pull-left no-margin scope-search-clear" style="display:none;" title="[[[Clear search]]]"></span>
+                                    <span class="su su-search pull-left no-margin scope-search-icon" title="[[[Search]]]"></span>
+                                </div>
+                            </div>
+                            <div class="modes-body scope-selection-div" id="scope">
+                                <ul class="scope-selection-ul modes-body-ul">
+                                    <!-- Scopes will be rendered by JS -->
+                                </ul>
+                            </div>
+                            </div>
+                            <div class="col-4 no-padding access-div">
+                                <div class="app-textbox-label no-padding modes-head access-mode-head">
+                                    <label class="app-textbox-label">[[[Access Mode]]]</label>
+                                </div>
+                                <div class="modes-body access-selection-div">
+                                    <ul class="modes-body-ul" id="access-selection-ul">
+                                        <!-- Access modes will be rendered by JS -->
+                                    </ul>
+                                </div>
+                            </div>                          
+                        </div>
+                    <div id="error-specific" class="col-12 warning-div" style="display:none;">
+                        [[[Please select at least one entity, scope and access mode.]]]
+                    </div>
+                    <div id="error-general" class="col-12 warning-div" style="display:none;">
+                        [[[Please select at least one entity and access mode.]]]
+                    </div>
+                    </div>
+                </div>
+                <div class="col-12 modal-footer">
+                    <div class="col-7 buttons-area float-end no-padding">
+                        <input type="button" name="Save" value="[[[Add]]]" class="primary-button app-btn-primary" id="save-permission" />
+                        <input type="button" id="cancel-group" class="secondary-button app-btn-secondary popup-close" value="[[[Cancel]]]" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
