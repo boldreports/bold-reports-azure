@@ -1,0 +1,44 @@
+﻿@using System.Globalization;
+@{
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var language = CultureInfo.CurrentCulture.Name;
+}
+<script nonce="@Context.Items["ScriptNonce"]">
+    var saveURL = "@Url.Action("Save", "DataSources")";
+</script>
+<div class="cd-connector-container">
+
+    <div class="dc-container">
+        <div class="dc-scroller-container rs-scroller">
+            <div class="dc-scroller">
+            <div class="dc-header-container">
+                <div class="dc-header"></div>
+                <div class="dc-description-img su-help"></div>
+            </div>
+                <div class="dc-config-container">
+                    <div class="dc-config">
+                        @{
+#if (BoldReportsCloud)
+                            var serviceURL = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/') + "/api/Designer";
+#else
+                            string serviceURL = ServerAppConfig.GetDesignerServiceEndPointUrl(ServerAppConfig.InternalAppDataServiceUrl, _globalAppSettings, Context) +"/api/Designer";
+#endif
+                            string reportServerApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl();
+                            string isAzureApplication = ServerAppConfig.IsAzureApplication.ToString().ToLower();
+                        }
+                        <div class="data-designer-container">
+                            <div id="dataDesigner" style="display: block;">
+                                <div class="dataContainer e-reportdesigner-designer-configuration"></div>
+                            </div>
+                            <div class="dc-dataset-form-container" style="display: none;">
+                                @{ await Html.RenderPartialAsync("~/Views/Items/_DataSetForm.cshtml"); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ await Html.RenderPartialAsync("~/Views/DataSources/CreateDataSource/_Footer.cshtml"); }
+</div>

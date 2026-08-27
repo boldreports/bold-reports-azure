@@ -1,0 +1,15 @@
+ej.DataTileConfiguration.Locale['en-CA'] = {
+    searchBoxPlaceholder: 'Search Connector',
+    category: {
+        databases: 'Databases',
+        files: 'Files',
+        services: 'Services'
+    },
+    enableAllCheckbox: 'Enable All',
+    selectedText: ' of {count} selected',
+    noDataText: 'No data sources found',
+    alertHeaderText: 'ReportDesigner',
+    saveAlertContent: 'Failed to save the connection list details.',
+    chooseAlertContent: 'Please select minimum one connection.',
+    failedAlertContent: 'Failed to update connection info.'
+};

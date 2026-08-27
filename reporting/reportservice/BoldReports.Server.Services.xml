@@ -1,0 +1,1343 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BoldReports.Server.Services</name>
+    </assembly>
+    <members>
+        <member name="M:BoldReports.Server.Service.ActionFilters.CustomAuthorizationFilter.ForceValidateRequest(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            Method to verify whether the request needs to force validate the token. 
+            This is added to ensure that the reports load action revalidated the token to avoid unauthorized access to the reports in mobile application
+            </summary>
+            <param name="actionContext"> The request context object</param>
+            <returns>Boolean that represents whether to validate the token or not</returns>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Id">
+            <summary>
+            Holds the Publis ID of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Version">
+            <summary>s
+            Holds the version of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Name">
+            <summary>
+            Holds the Name of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.SharedDataSetName">
+            <summary>
+            Holds the name of the shared data set
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.SharedDataSourceName">
+            <summary>
+            Holds the name of the data source referring to shared dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.SharedDataSourceId">
+            <summary>
+            Holds the ID of the data source referring to shared dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.Description">
+            <summary>
+            Holds the Description of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.CanEdit">
+            <summary>
+            Holds the can edit value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.FileContent">
+            <summary>
+            Holds the file content of the dataset file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.IsLocked">
+            <summary>
+            Holds the is locked value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.RefreshSchedule">
+            <summary>
+            Holds the RefreshSchedule value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.DestinationId">
+            <summary>
+            Holds the Destination Id value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasetDetail.IsPublishedWithTimestamp">
+            <summary>
+            Holds the Is Published With Timestamp value of the dataset
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Id">
+            <summary>
+            Holds the Publis ID of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Version">
+            <summary>
+            Holds the version of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Name">
+            <summary>
+            Holds the Name of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.SharedDataSourceName">
+            <summary>
+            Holds the name of the shared data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.Description">
+            <summary>
+            Holds the Description of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.CanEdit">
+            <summary>
+            Holds the can edit value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.FileContent">
+            <summary>
+            Holds the file content of the data source file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.IsLocked">
+            <summary>
+            Holds the is locked value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.RefreshSchedule">
+            <summary>
+            Holds the RefreshSchedule value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.DestinationId">
+            <summary>
+            Holds the Destination Id value of the data source
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Service.Models.DatasourceDetail.IsPublishedWithTimestamp">
+            <summary>
+            Holds the Is Published With Timestamp value of the data source
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Controllers.ConfigurationController">
+            <summary>
+            Controller for Data Connectors.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Services.CacheManager">
+            <summary>
+            Manages the caching of data in memory
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.AddToCache(System.String,System.Object)">
+            <summary>
+            Adds an entry in the cache that will have a sliding expiration of 10 minutes.
+            </summary>
+            <param name="key">Unique key for the cache entry</param>
+            <param name="cacheModel">Object to be cached</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.AddToPermanantCache(System.String,System.Object)">
+            <summary>
+            Adds an object in the cache that will have an absolute expiration of one year.
+            </summary>
+            <param name="key">Unique key for the cache entry</param>
+            <param name="cacheModel">Object to be cached</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.RemoveFromCache(System.String)">
+            <summary>
+            Removes the cached object from memory.
+            </summary>
+            <param name="key">Unique key to be removed</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.IsInCache(System.String)">
+            <summary>
+            Checks whether there is an entry in cache
+            </summary>
+            <param name="key">Unique key</param>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.CacheManager.GetFromCache(System.String)">
+            <summary>
+            Gets the cached object. If key is not present will return null
+            </summary>
+            <param name="key">Key of the object to be returned</param>
+            <returns>Cached object</returns>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Token">
+            <summary>
+            Gets or sets the current user's access token used for authenticate.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Email">
+            <summary>
+            Gets or sets the current user name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.FullName">
+            <summary>
+            Gets or sets the current user name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.ExpiresIn">
+            <summary>
+            Gets or sets the current token expiration time 
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.UserId">
+            <summary>
+            Gets or sets the current user id.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Filter">
+            <summary>
+            Gets or sets the data source level filter to be applied to the dashboard in embed mode.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.Domain">
+            <summary>
+            Gets or sets the current user domain.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Services.Cache.CacheModel.TokenType">
+            <summary>
+            Gets or sets the Token Type.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Draft.DraftHelper.ParseIso8601toDateTime(System.String)">
+            <summary>
+            Get datetime object from iso8601 string.
+            </summary>
+            <param name="iso8601String"></param>
+            <returns>DateTime object</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper">
+            <summary>
+            Get and update the connections from server
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.GetConnections(BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Method to fetch connection list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.UpdateConnections(BoldReports.Server.RequestHelpers.ConnectionDetails,BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Method to update connection list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.DataConfigurationHelpers.DataConfigurationHelper.GetConfigurationList(BoldReports.Server.Report.ApiHelper.ServerApiHelper)">
+            <summary>
+            Common method to get configuration list from server
+            </summary>
+            <returns>Configuration list</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.Helper.RateLimitHelper">
+            <summary>
+            Provides rate limiting functionality with automatic memory cleanup to prevent memory leaks.
+            Tracks request limits per user and action, automatically removing unused limiters.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Helper.RateLimitHelper.#cctor">
+            <summary>
+            Initializes the rate limit helper and starts automatic cleanup timer.
+            Runs once when the class is first accessed.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Helper.RateLimitHelper.IsRateLimitExceeded(System.String,System.String,System.String,BoldReports.Server.Services.HttpContextModel)">
+            <summary>
+            Checks if a request should be allowed or blocked based on rate limiting rules.
+            Sets response headers for rate limit information.
+            </summary>
+            <param name="actionName">The action being performed</param>
+            <param name="tenant">Tenant name of the current request.</param>
+            <param name="userId">The user making the request (falls back to IP if empty)</param>
+            <param name="contextModel">Current HTTP request context for setting headers</param>
+            <returns>True if request is allowed, false if rate limit exceeded</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Helper.RateLimitHelper.SetRateLimitHeaders(BoldReports.Server.Services.HttpContextModel,System.Int32,System.Int32,System.Int64,System.Boolean)">
+            <summary>
+            Sets standard rate limiting headers in the HTTP response.
+            Includes limit, remaining requests, reset time, and retry-after if blocked.
+            </summary>
+            <param name="contextModel">Current HTTP context to set headers on</param>
+            <param name="permitLimit">Maximum requests allowed in the window</param>
+            <param name="remaining">Number of requests remaining in current window</param>
+            <param name="resetSeconds">Seconds until the rate limit window resets</param>
+            <param name="isAcquired">Whether the current request was allowed</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Helper.RateLimitHelper.CleanupExpiredLimiters(System.Object)">
+            <summary>
+            Removes inactive rate limiters from memory to prevent memory leaks.
+            Runs automatically every 30 minutes via timer. Tests each limiter and removes unused ones.
+            </summary>
+            <param name="state">Timer state parameter (not used)</param>
+        </member>
+        <member name="T:BoldReports.Server.Services.Helper.RateLimitSettings">
+            <summary>
+            Represents configuration settings for rate limiting
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Services.StorageType">
+            <summary>
+            Enum representing the types of storage available.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.StorageType.FileStorage">
+            <summary>
+            File system storage.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.StorageType.AzureBlob">
+            <summary>
+            Microsoft Azure Blob storage.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.StorageType.Redis">
+            <summary>
+            Redis cache storage.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.StorageType.AmazonS3">
+            <summary>
+            Amazon Web Services S3 storage.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.StorageType.OCIObjectStorage">
+            <summary>
+            Oracle Cloud Infrastructure Object Storage.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Services.Storage.Providers.StorageItemInfo">
+            <summary>
+            Represents a blob item with its name and last modified time.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Services.Storage.Providers.StorageProvider">
+            <summary>
+            Defines a common abstraction for storage operations across all providers (Local, Azure, S3, OCI)
+            and exposes a static factory method to resolve the active provider from a
+            <see cref="T:BoldReports.Server.Services.StorageAPIResponse"/>.
+            </summary>
+        </member>
+        <member name="F:BoldReports.Server.Services.Storage.Providers.StorageProvider.RootFolderName">
+            <summary>
+            Gets the root folder name for the cloud storage provider.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.CreateProvider(BoldReports.Server.Services.StorageType,BoldReports.Server.Services.StorageAPIResponse)">
+            <summary>
+            Creates the active storage provider using the specified storage API response.
+            </summary>
+            <param name="storageType">The type of storage to create.</param>
+            <param name="storageResponse">The storage API response containing provider configuration.</param>
+            <returns>The resolved <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageProvider"/> instance, or <c>null</c> for file-system storage.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetLastModifiedTime(System.String)">
+            <summary>
+            Gets the last modified time of the specified blob.
+            </summary>
+            <param name="blobName">The name or path of the blob.</param>
+            <returns>The <see cref="T:System.DateTime"/> when the blob was last modified.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.UploadFrombyteArray(System.Byte[],System.String,System.DateTime)">
+            <summary>
+            Uploads the provided byte array to storage using the given blob name and associates it with a report time.
+            </summary>
+            <param name="value">The data to upload.</param>
+            <param name="blobName">The target blob name or path.</param>
+            <param name="reportTime">The report time to associate with the uploaded item.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.DownloadToText(System.String)">
+            <summary>
+            Downloads the content of the specified blob and returns it as a text string.
+            </summary>
+            <param name="sourceBlobName">The name or path of the source blob.</param>
+            <returns>The blob content as a string.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.DownloadToStream(System.String)">
+            <summary>
+            Downloads the content of the specified blob as a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="sourceBlobName">The name or path of the source blob.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> containing the blob data.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.UploadFromStream(System.IO.Stream,System.String)">
+            <summary>
+            Uploads the content of the specified stream to the object storage.
+            </summary>
+            <param name="stream">The stream containing the data to upload.</param>
+            <param name="destinationBlobName">The object key where the content will be stored.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.DownloadToByteArray(System.String)">
+            <summary>
+            Downloads the content of the specified blob and returns it as a byte array.
+            </summary>
+            <param name="blobName">The name or path of the blob.</param>
+            <returns>The blob content as a byte array.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.DeleteBlobItem(System.String)">
+            <summary>
+            Deletes the specified blob item from storage.
+            </summary>
+            <param name="blobPath">The name or path of the blob to delete.</param>
+            <returns><c>true</c> if the blob was deleted; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetBlobItems(System.String)">
+            <summary>
+            Gets a list of blob items under the specified prefix, including their names and last modified times.
+            </summary>
+            <param name="prefix">The prefix to filter blobs.</param>
+            <returns>A list of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageItemInfo"/> objects.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetAppDataFolderPath">
+            <summary>
+            Gets the application data folder path based on storage type.
+            </summary>
+            <returns>The application data folder path.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetConfigJsonPath">
+            <summary>
+            Gets the configuration JSON file path.
+            </summary>
+            <returns>The configuration JSON path.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetProductJsonPath">
+            <summary>
+            Gets the product JSON file path.
+            </summary>
+            <returns>The product JSON path.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetReportingConfigPath">
+            <summary>
+            Gets the reporting configuration folder path.
+            </summary>
+            <returns>The reporting configuration path.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetPrivateKeyPath">
+            <summary>
+            Gets the private key file path.
+            </summary>
+            <returns>The private key path.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.StorageProvider.GetResourcePath">
+            <summary>
+            Gets the resource folder path.
+            </summary>
+            <returns>The resource path.</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider">
+            <summary>
+            Implementation of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageProvider"/> for Azure Blob Storage.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.#ctor(BoldReports.Server.Services.StorageAPIAzureBlob)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider"/> class
+            with the specified Azure Blob storage configuration.
+            </summary>
+            <param name="azureBlobSettings">The Azure Blob settings.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.GetLastModifiedTime(System.String)">
+            <summary>
+            Gets the last modified time for the specified blob. If a custom metadata
+            value named <c>LastModifiedTime</c> exists it will be parsed and returned;
+            otherwise the blob's <c>LastModified</c> property is returned.
+            </summary>
+            <param name="blobName">The name or path of the blob.</param>
+            <returns>The last modified <see cref="T:System.DateTime"/> in UTC, or <see cref="F:System.DateTime.MinValue"/> if not found.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.UploadFrombyteArray(System.Byte[],System.String,System.DateTime)">
+            <summary>
+            Uploads the specified byte array to Azure Blob Storage at the given blob name
+            and attempts to set a metadata entry for the provided report time.
+            </summary>
+            <param name="value">The data to upload.</param>
+            <param name="blobName">The target blob name or path.</param>
+            <param name="reportTime">The report time to store in metadata.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.DownloadToText(System.String)">
+            <summary>
+            Downloads the blob content identified by <paramref name="sourceBlobName"/> and returns it as a string.
+            </summary>
+            <param name="sourceBlobName">The name or path of the source blob.</param>
+            <returns>The blob content as a string, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.DownloadToStream(System.String)">
+            <summary>
+            Downloads the blob content identified by <paramref name="sourceBlobName"/> and returns it as a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="sourceBlobName">The name or path of the source blob.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> containing the blob data, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.UploadFromStream(System.IO.Stream,System.String)">
+            <summary>
+            Uploads the content of the specified stream to Azure Blob Storage at the given blob name.
+            </summary>
+            <param name="stream">The stream containing the data to upload.</param>
+            <param name="destinationBlobName">The target blob name or path.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.DownloadToByteArray(System.String)">
+            <summary>
+            Downloads the blob content identified by <paramref name="blobName"/> and returns it as a byte array.
+            </summary>
+            <param name="blobName">The name or path of the blob.</param>
+            <returns>The blob content as a byte array, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.DeleteBlobItem(System.String)">
+            <summary>
+            Deletes the blob identified by <paramref name="blobPath"/> from the container.
+            </summary>
+            <param name="blobPath">The name or path of the blob to delete.</param>
+            <returns><c>true</c> if the blob was deleted; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.AzureBlobStorageProvider.GetBlobItems(System.String)">
+            <summary>
+            Gets a list of blob items under the specified prefix, including their names and last modified times.
+            </summary>
+            <param name="prefix">The prefix to filter blobs.</param>
+            <returns>A list of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageItemInfo"/> objects.</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.Storage.Providers.OciStorageProvider">
+            <summary>
+            Implementation of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageProvider"/> for OCI Object Storage.
+            NOTE: OCI provider stub - full implementation requires OCI SDK at runtime.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.#ctor(BoldReports.Server.Services.StorageAPIOCIObject)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BoldReports.Server.Services.Storage.Providers.OciStorageProvider"/> class
+            with the specified OCI Object Storage settings.
+            </summary>
+            <param name="ociObjectSettings">The OCI Object Storage settings.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.GetLastModifiedTime(System.String)">
+            <summary>
+            Gets the last modified time for the specified OCI object.
+            </summary>
+            <param name="blobName">The object name in the OCI bucket.</param>
+            <returns>The last modified <see cref="T:System.DateTime"/> in UTC, or <see cref="F:System.DateTime.MinValue"/> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.UploadFrombyteArray(System.Byte[],System.String,System.DateTime)">
+            <summary>
+            Uploads the provided byte array to OCI Object Storage using the configured namespace and bucket.
+            This implementation uses a dynamic client and attempts to call a synchronous PutObject method.
+            </summary>
+            <param name="value">The bytes to upload.</param>
+            <param name="blobName">The target object name.</param>
+            <param name="reportTime">The report time (currently not persisted in OCI metadata by this stub).</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.CreateObject(System.String)">
+            <summary>
+            Creates a folder marker (empty blob with trailing slash) in OCI Object Storage.
+            </summary>
+            <param name="folderPath">The folder path to create.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.IsObjectExists(System.String)">
+            <summary>
+            Checks if the specified OCI object exists in the configured bucket.
+            </summary>
+            <param name="key">The object key to check.</param>
+            <returns><c>true</c> if the object exists; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.DownloadToText(System.String)">
+            <summary>
+            Downloads the specified OCI object and returns its content as a string.
+            </summary>
+            <param name="sourceBlobName">The object name to download.</param>
+            <returns>The object content as text, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.DownloadToStream(System.String)">
+            <summary>
+            Downloads the specified OCI object and returns its content as a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="sourceBlobName">The object name to download.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> containing the object data, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.UploadFromStream(System.IO.Stream,System.String)">
+            <summary>
+            Uploads the content of the specified stream to the object storage.
+            </summary>
+            <param name="stream">The stream containing the data to upload.</param>
+            <param name="destinationBlobName">The object key where the content will be stored.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.DownloadToByteArray(System.String)">
+            <summary>
+            Downloads the specified OCI object and returns its content as a byte array.
+            </summary>
+            <param name="blobName">The object name to download.</param>
+            <returns>The object content as a byte array, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.DeleteBlobItem(System.String)">
+            <summary>
+            Deletes the specified object from OCI Object Storage.
+            </summary>
+            <param name="blobPath">The object name to delete.</param>
+            <returns><c>true</c> if the deletion succeeded; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.OciStorageProvider.GetBlobItems(System.String)">
+            <summary>
+            Gets a list of blob items under the specified prefix, including their names and last modified times.
+            </summary>
+            <param name="prefix">The prefix to filter objects.</param>
+            <returns>A list of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageItemInfo"/> objects.</returns>
+        </member>
+        <member name="T:BoldReports.Server.Services.Storage.Providers.S3StorageProvider">
+            <summary>
+            Implementation of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageProvider"/> for Amazon S3 storage.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.#ctor(BoldReports.Server.Services.StorageAPIAmazonS3)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BoldReports.Server.Services.Storage.Providers.S3StorageProvider"/> class
+            with the specified Amazon S3 settings.
+            </summary>
+            <param name="amazonS3Settings">The Amazon S3 settings.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.GetLastModifiedTime(System.String)">
+            <summary>
+            Gets the last modified time for the specified S3 object.
+            </summary>
+            <param name="blobName">The key or path of the S3 object.</param>
+            <returns>The last modified <see cref="T:System.DateTime"/> in UTC, or <see cref="F:System.DateTime.MinValue"/> if not found.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.UploadFrombyteArray(System.Byte[],System.String,System.DateTime)">
+            <summary>
+            Uploads the provided byte array to the configured S3 bucket at the specified key.
+            Optionally stores a metadata entry for the report time.
+            </summary>
+            <param name="value">The bytes to upload.</param>
+            <param name="blobName">The S3 key to upload to.</param>
+            <param name="reportTime">The report time to include in metadata (optional).</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.CreateObject(System.String)">
+            <summary>
+            Creates a folder marker (empty blob with trailing slash) in S3.
+            </summary>
+            <param name="folderPath">The folder path to create.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.IsObjectExists(System.String)">
+            <summary>
+            Checks if the specified S3 object exists in the configured bucket.
+            </summary>
+            <param name="key">The S3 key of the object to check.</param>
+            <returns><c>true</c> if the object exists; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.DownloadToText(System.String)">
+            <summary>
+            Downloads the object identified by <paramref name="sourceBlobName"/> and returns its content as a string.
+            </summary>
+            <param name="sourceBlobName">The S3 key of the object to download.</param>
+            <returns>The object content as text, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.DownloadToStream(System.String)">
+            <summary>
+            Downloads the object identified by <paramref name="sourceBlobName"/> and returns its content as a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="sourceBlobName">The S3 key of the object to download.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> with the object's data, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.UploadFromStream(System.IO.Stream,System.String)">
+            <summary>
+            Uploads the content of the specified stream to the object storage.
+            </summary>
+            <param name="stream">The stream containing the data to upload.</param>
+            <param name="destinationBlobName">The object key where the content will be stored.</param>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.DownloadToByteArray(System.String)">
+            <summary>
+            Downloads the object as a byte array.
+            </summary>
+            <param name="blobName">The S3 key of the object to download.</param>
+            <returns>The object content as a byte array, or <c>null</c> if not found or on error.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.DeleteBlobItem(System.String)">
+            <summary>
+            Deletes the specified object from the S3 bucket.
+            </summary>
+            <param name="blobPath">The S3 key of the object to delete.</param>
+            <returns><c>true</c> if deletion succeeded; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.Storage.Providers.S3StorageProvider.GetBlobItems(System.String)">
+            <summary>
+            Gets a list of blob items under the specified prefix, including their names and last modified times.
+            </summary>
+            <param name="prefix">The prefix to filter objects.</param>
+            <returns>A list of <see cref="T:BoldReports.Server.Services.Storage.Providers.StorageItemInfo"/> objects.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.ServiceUtil.GetStorageDetailsFromEnv">
+            <summary>
+            Builds a storage API response using storage-related environment variables.
+            </summary>
+            <returns>
+            The storage API response, or null if the required environment variables are not set.
+            </returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.ServiceUtil.GetStorageDetailsFromIdpApi">
+            <summary>
+            Retrieves the storage details from the IDP API.
+            </summary>
+            <returns>The storage API response, or null if the request fails.</returns>
+        </member>
+        <member name="M:BoldReports.Server.Services.ServiceUtil.InvokeIdpApiRequest(System.String)">
+            <summary>
+            Invokes the IDP API with the specified URL.
+            </summary>
+            <param name="requestUrl">The full URL to request.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanRead">
+            <summary>
+            Specifies the read permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanWrite">
+            <summary>
+            Specifies the write permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanDelete">
+            <summary>
+            Specifies the delete permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanSchedule">
+            <summary>
+            Specifies the schedule permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanOpen">
+            <summary>
+            Specifies the open permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanMove">
+            <summary>
+            Specifies the move permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanCopy">
+            <summary>
+            Specifies the copy permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanClone">
+            <summary>
+            Specifies the clone permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CanCreateItem">
+            <summary>
+            Specifies the create permission of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.Id">
+            <summary>
+            Item ID
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ItemType">
+            <summary>
+            Item type
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.Name">
+            <summary>
+            Item name
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ReportPartId">
+            <summary>
+            ReportPart ID
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ReportPartType">
+            <summary>
+            ReportPart PartType
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.Description">
+            <summary>
+            Item description
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CreatedById">
+            <summary>
+            Specifies the user ID of the item creator
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CreatedByDisplayName">
+            <summary>
+            Specifies the display name of the user who created the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ModifiedById">
+            <summary>
+            Specifies the user ID of the item modifier
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ModifiedByFullName">
+            <summary>
+            Specifies the full name of the user who modified the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ModifiedByDisplayName">
+            <summary>
+            Specifies the full name of the user who modified the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CategoryId">
+            <summary>
+            Category ID
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CategoryName">
+            <summary>
+            Category name
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.CreatedDate">
+            <summary>
+            Date created of item in string format
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ModifiedDate">
+            <summary>
+            Date modified of item in string format
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ItemModifiedDate">
+            <summary>
+            Date modified of item in date format
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.ItemCreatedDate">
+            <summary>
+            Date created of item in date format
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemDetail.Extension">
+            <summary>
+            Gets or sets the file extension as a string
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.ApiStatus">
+            <summary>
+            Returns the status of the API.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.Status">
+            <summary>
+            Returns status of the API request.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.StatusMessage">
+            <summary>
+            Returns the status message from the API.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.Message">
+            <summary>
+            Returns the status message from the API.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.StatusCode">
+            <summary>
+            Returns the StatusCode from the API.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiItemResponse.PublishedItemId">
+            <summary>
+            Returns the ID of the published item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.Name">
+            <summary>
+            Name of the DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.Description">
+            <summary>
+            Decription of the DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.ItemType">
+            <summary>
+            Provide the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.ServerPath">
+            <summary>
+            Path of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.DataSourceMappingInfo">
+            <summary>
+            Mapping information of DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetAdd.ItemContent">
+            <summary>
+            Provide the item as in stream of bytes
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.AvailableItem.ItemType">
+            <summary>
+            Provide the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.AvailableItem.ItemName">
+            <summary>
+            Provide the ItemName of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.AvailableItem.ServerPath">
+            <summary>
+            Provide the Server Path of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ConnectionList.Configuration">
+            <summary>
+            Data sources connection list
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.Name">
+            <summary>
+            Name of the DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.Description">
+            <summary>
+            Decription of the Report
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ReportPartType">
+            <summary>
+            Type of the Report Part
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ItemType">
+            <summary>
+            Provide the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.CategoryId">
+            <summary>
+            Id of the Category
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ServerPath">
+            <summary>
+            Path of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.IsPublic">
+            <summary>
+            Assign true to set the item as public
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.DataSetMappingInfo">
+            <summary>
+            Mapping information of DataSet
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.DataSourceMappingInfo">
+            <summary>
+            Mapping information of DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ReportPartMappingInfo">
+            <summary>
+            Mapping information of Report Part
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ItemContent">
+            <summary>
+            Provide the item as in stream of bytes
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.Tags">
+            <summary>
+            Contains details about tags
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportAdd.ParentId">
+            <summary>
+            Id of the Category
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ItemId">
+            <summary>
+            Id of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.Name">
+            <summary>
+            Name of the Report
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.Description">
+            <summary>
+            Decription of the Report
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ReportPartType">
+            <summary>
+            Type of the Report Part
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.VersionComment">
+            <summary>
+            Can add comments while updating the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ItemType">
+            <summary>
+            signifies the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.CategoryId">
+            <summary>
+            Id of the Category
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ServerPath">
+            <summary>
+            Path of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.IsPublic">
+            <summary>
+            Mark true to set the item as public
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.DataSetMappingInfo">
+            <summary>
+            Mapping information of DataSet
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.DataSourceMappingInfo">
+            <summary>
+            Mapping information of DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ReportPartMappingInfo">
+            <summary>
+            Mapping information of Report Parts
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.ItemContent">
+            <summary>
+            Provide the item as in stream of bytes
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportUpdate.Tags">
+            <summary>
+            Contains details about tags
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportFont.FontName">
+            <summary>
+            Mapping information of DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.ItemId">
+            <summary>
+            Id of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.Name">
+            <summary>
+            Name of the DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.Description">
+            <summary>
+            Decription of the DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.VersionComment">
+            <summary>
+            Can add comments while updating the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.ItemType">
+            <summary>
+            signifies the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSourceUpdate.ServerPath">
+            <summary>
+            Relative Path of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.ItemId">
+            <summary>
+            Id of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.DataSetName">
+            <summary>
+            Name of the mapping DataSet
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.Name">
+            <summary>
+            Name of the Report DataSet Name
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.Description">
+            <summary>
+            Decription of the DataSet
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.VersionComment">
+            <summary>
+            Can add comments while updating the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.ItemType">
+            <summary>
+            Signifies the type of item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.ServerPath">
+            <summary>
+            Relative Path of the item
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.DataSourceMappingInfo">
+            <summary>
+            Mapping information of DataSource
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.ItemContent">
+            <summary>
+            Provide the item as in stream of bytes
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.ApiReportDataSetUpdate.IsPublishedWithTimestamp">
+            <summary>
+            Holds the Is Published With Timestamp value of the dataset
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Report.Model.IRequestContext">
+            <summary>
+            Represents the authorization context for a request.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.IRequestContext.AuthorizationToken">
+            <summary>
+            Gets or sets the authorization token.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.IRequestContext.EmbedToken">
+            <summary>
+            Gets or sets the embed token.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.Report.Model.RequestContext">
+            <summary>
+            Provides a concrete implementation of <see cref="T:BoldReports.Server.Report.Model.IRequestContext"/>.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.RequestContext.AuthorizationToken">
+            <summary>
+            Gets or sets the authorization token.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.Report.Model.RequestContext.EmbedToken">
+            <summary>
+            Gets or sets the embed token.
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.Report.ApiHelper.CustomHttpClient.SupressCertificateErrors(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            Supresses the certificate errors in SSL 
+            </summary>
+            <param name="sender"></param>
+            <param name="certificate"></param>
+            <param name="chain"></param>
+            <param name="sslPolicyErrors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeHelper">
+            <summary>
+            Custom attribute helper class used for custom attribute value processing for data qurey and connection string properties
+            </summary>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.#ctor(BoldReports.Server.Services.HttpContextModel,System.Boolean)">
+            <summary>Custom Attribute helper constructor</summary>
+            <param name="httpContextModel">Represents the httpcontext from httprequest</param>
+            <param name="isIgnoreCache">Represents to get the attributes value from cache</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.GetCustomAttributes(System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>Method to decide to update the attribute value from cache or from server</summary>
+            <param name="authToken">Represents the serviceauthorization token for making server request.</param>
+            <param name="serverUrl">Represents the base server url.</param>
+            <param name="userid">Represents the userid</param>
+            <param name="attributes">Represents the attribute list in the input string</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.GetServerAttributes(System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>Method to remove cache and get custom attribute values</summary>
+            <param name="cacheKey">Represents the cache key name.</param>
+            <param name="authToken">Represents the serviceauthorization token for making server request.</param>
+            <param name="serverUrl">Represents the base server url.</param>
+            <param name="attributes">Represents the list of custom attribute used in custom query.</param>
+            <param name="userid">Represents the userid</param>
+        </member>
+        <member name="M:BoldReports.Server.AttributeHelper.CustomAttributeHelper.ConvertToDictionary(System.Collections.Generic.List{BoldReports.Server.AttributeHelper.CustomAttributeField})">
+            <summary>Method to update the custom query with the attribute values</summary>
+            <param name="attributeInfo">Represents the list of current custom attribute of the query query along with values.</param>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeField">
+            <summary>
+            Custom attribute field model class used for deserializing the custom attribute response got from server request
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeField.Name">
+            <summary>
+            Gets or sets the name string value.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeField.Value">
+            <summary>
+            Gets or sets the value string value.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.AttributeHelper.CustomAttributeRequest">
+            <summary>
+            Custom attribute request model class used for server request
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeRequest.EncryptedString">
+            <summary>
+            Gets or sets the encrypted string value.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.AttributeHelper.CustomAttributeRequest.AttributeNames">
+            <summary>
+            Gets or sets the list of custom attribute name.
+            </summary>
+        </member>
+        <member name="T:BoldReports.Server.PublishHelpers.DownloadUploadHelper">
+            <summary>
+            Download upload helper class used for Download/Upload for data source and Report file
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.SiteIdentifier">
+            <summary>
+            Holds the Site Identifier of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.TenantId">
+            <summary>
+            Holds the Tenant Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.UserId">
+            <summary>
+            Holds the User Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.IdpReferenceId">
+            <summary>
+            Holds the Idp Reference Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.PublishItem">
+            <summary>
+            Holds the Publish Item of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.Datasources">
+            <summary>
+            Holds the Datasources of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.Datasets">
+            <summary>
+            Holds the Datasets of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.JobId">
+            <summary>
+            Holds the Job Id of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TargetSiteDetail.PublishType">
+            <summary>
+            Holds the Publish Type of the target Site
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Status">
+            <summary>
+            Gets or sets a value indicating whether status.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.StatusMessage">
+            <summary>
+            Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Token">
+            <summary>
+            Gets or sets the Token.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.ExpiresIn">
+            <summary>
+            Gets or sets the token expiration time.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserDisplayName">
+            <summary>
+            Gets or sets the Current User name.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserId">
+            <summary>
+            Gets or sets the Current User Id.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.ErrorCode">
+            <summary>
+            Gets or sets the Error codes when exception is thrown.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Email">
+            <summary>
+            Gets or sets the Email.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.UserDomain">
+            <summary>
+            Gets or sets the UserDomain.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.Filter">
+            <summary>
+            Gets or sets the data source level filter to be applied to the dashboard in embed mode.
+            </summary>
+        </member>
+        <member name="P:BoldReports.Server.RequestHelpers.TokenResponse.TokenType">
+            <summary>
+            Gets or sets the Token Type.
+            </summary>
+        </member>
+    </members>
+</doc>
