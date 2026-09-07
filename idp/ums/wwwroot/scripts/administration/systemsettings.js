@@ -450,21 +450,6 @@ $(document).ready(function () {
         var openAiApiKey = aiModel == openai ? $("#open-ai-api-key").val().trim() : "";
         var azureAiApiKey = aiModel == azureai ? $("#azureai-apikey").val().trim() : "";
         var anthropicApiKey = aiModel == anthropic ? $("#anthropic-api-key").val().trim() : "";
-        var openAiMaskedValue = $("#open-ai-api-key").attr("data-masked-value") || "";
-        var azureAiMaskedValue = $("#azureai-apikey").attr("data-masked-value") || "";
-        var anthropicMaskedValue = $("#anthropic-api-key").attr("data-masked-value") || "";
-
-        if (openAiApiKey !== "" && openAiApiKey === openAiMaskedValue) {
-            openAiApiKey = "";
-        }
-
-        if (azureAiApiKey !== "" && azureAiApiKey === azureAiMaskedValue) {
-            azureAiApiKey = "";
-        }
-
-        if (anthropicApiKey !== "" && anthropicApiKey === anthropicMaskedValue) {
-            anthropicApiKey = "";
-        }
 
         if (aiModel == boldaiservice) {
             aiModel = "0";

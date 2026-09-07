@@ -114,32 +114,32 @@
                 </div>
             </div>
             <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="user-username-template">
-                        ${if (InitiatedDisplayName !== "")}
-                        <span class="grid-content user-event-name" title="${InitiatedDisplayName}">${InitiatedDisplayName}</span>
-                        ${else}
-                        ${if (AppType === "@ApplicationPath.API" && AppSource === "@SiteType.BI")}
-                        <span class="grid-content" title="Dashboard Server API">"@GlobalAppSettings.GetDescription(Source.DashboardServerAPI)"</span>
-                        ${else}
-                        ${if (AppType === "@ApplicationPath.API" && AppSource === "@SiteType.UMS")}
-                        <span class="grid-content" title="Identity Provider API">@GlobalAppSettings.GetDescription(Source.IdentityProviderAPI)</span>
-                        ${/if}
-                        ${if (AppType === "@ApplicationPath.Jobs" && AppSource === "@SiteType.BI")}
-                        <span class="grid-content" title="Jobs Server">@GlobalAppSettings.GetDescription(Source.DashboardServerJobs)</span>
-                        ${/if}
-                        ${/if}
-                        ${/if}
-                        <br />
-                        <span class="grid-content" title="${EventDateformat}">${EventDateformat}</span>
+                ${if (InitiatedDisplayName !== "")}
+                <span class="grid-content user-event-name" title="${InitiatedDisplayName}">${InitiatedDisplayName}</span>
+                ${else}
+                ${if (AppType === "@ApplicationPath.API" && AppSource === "@SiteType.BI")}
+                <span class="grid-content" title="Dashboard Server API">"@GlobalAppSettings.GetDescription(Source.DashboardServerAPI)"</span>
+                ${else}
+                ${if (AppType === "@ApplicationPath.API" && AppSource === "@SiteType.UMS")}
+                <span class="grid-content" title="Identity Provider API">@GlobalAppSettings.GetDescription(Source.IdentityProviderAPI)</span>
+                ${/if}
+                ${if (AppType === "@ApplicationPath.Jobs" && AppSource === "@SiteType.BI")}
+                <span class="grid-content" title="Jobs Server">@GlobalAppSettings.GetDescription(Source.DashboardServerJobs)</span>
+                ${/if}
+                ${/if}
+                ${/if}
+                <br />
+                <span class="grid-content" title="${EventDateformat}">${EventDateformat}</span>
             </script>
             <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="initiated-display-name">
-                        <span class="grid-content initiate-display-name" title="${Summary}">${Summary}</span>
+                <span class="grid-content initiate-display-name" title="${Summary}">${Summary}</span>
             </script>
             <script type="text/x-jsrender" nonce="@Context.Items["ScriptNonce"]" id="activity-user-log-options">
-                        <span title="View" data-bs-toggle="dropdown">
-                        <a href="#" class="text-decoration-none activity-log-info" data-email>
-                        <span>@T["View"]</span>
-                        </a>
-                        </span>
+                <span title="View" data-bs-toggle="dropdown">
+                <a href="#" class="text-decoration-none activity-log-info" data-email>
+                <span>@T["View"]</span>
+                </a>
+                </span>
             </script>
         </div>
         @await Html.PartialAsync("../Shared/_FooterOnPremise")

@@ -1,14 +1,5 @@
 ﻿@{
     var isSettingsTab = (string.IsNullOrWhiteSpace(Context.Request.Query["view"]) || Context.Request.Query["view"] == "ai-settings") ? "active" : string.Empty;
-    string GetCompactMaskedValue(string apiKey)
-    {
-        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Length < 6)
-        {
-            return string.Empty;
-        }
-
-        return string.Concat(apiKey.Substring(0, 3), new string('.', 112), apiKey.Substring(apiKey.Length - 3));
-    }
     var aiProviders = new List<SelectListItem>
     {
         new SelectListItem { Value = $"{GlobalAppSettings.GetDescription(AIModel.BoldAIService)}", Text = T[$"{GlobalAppSettings.GetDescription(AIModel.BoldAIService)}"].Value, Selected = ViewBag.AIModel == (int)AIModel.BoldAIService },
@@ -20,9 +11,6 @@
     var openAi = aiCredentials != null && aiCredentials.AIModel == (int)AIModel.OpenAI ? aiCredentials.OpenAI : new OpenAI();
     var azureAI = aiCredentials != null && aiCredentials.AIModel == (int)AIModel.AzureAI ? aiCredentials.AzureAI : new AzureAI();
     var anthropicAI = aiCredentials != null && aiCredentials.AIModel == (int)AIModel.Anthropic ? aiCredentials.Anthropic : new Anthropic();
-    var openAiDisplayKey = GetCompactMaskedValue(openAi?.OpenAiApiKey);
-    var azureAiDisplayKey = GetCompactMaskedValue(azureAI?.AzureAiApiKey);
-    var anthropicDisplayKey = GetCompactMaskedValue(anthropicAI?.AnthropicApiKey);
     var enableAiFeature = GlobalAppSettings.SystemSettings.AI.EnableAiFeature != null && (bool)GlobalAppSettings.SystemSettings.AI.EnableAiFeature;
     var isAiSummariesEnabledGlobally = GlobalAppSettings.SystemSettings.AI.IsAiSummariesEnabledGlobally != null && (bool)GlobalAppSettings.SystemSettings.AI.IsAiSummariesEnabledGlobally;
     var aimodelContent = await HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.AiModel);
@@ -111,7 +99,7 @@
                                 })
                             </div>
                             <div>
-                                <input type="text" id="open-ai-api-key" class="form-control mail-settings-fields" name="openai_apikey" placeholder="@T["Open AI API Key"]" value="@openAiDisplayKey" data-masked-value="@openAiDisplayKey" autocomplete="off" />
+                                <input type="text" id="open-ai-api-key" class="form-control mail-settings-fields" name="openai_apikey" placeholder="@T["Open AI API Key"]" value="@openAi.OpenAiApiKey" />
                                 <span class="validation-errors"></span>
                             </div>
                         </div>
@@ -124,7 +112,7 @@
                                 })
                             </div>
                             <div>
-                                <input type="text" id="anthropic-api-key" class="form-control mail-settings-fields" name="anthropic_apikey" placeholder="@T["Anthropic Api Key"]" value="@anthropicDisplayKey" data-masked-value="@anthropicDisplayKey" autocomplete="off" />
+                                <input type="text" id="anthropic-api-key" class="form-control mail-settings-fields" name="anthropic_apikey" placeholder="@T["Anthropic Api Key"]" value="@anthropicAI.AnthropicApiKey" />
                                 <span class="validation-errors"></span>
                             </div>
                         </div>
@@ -177,7 +165,7 @@
                                 })
                             </div>
                             <div>
-                                <input type="text" id="azureai-apikey" class="form-control mail-settings-fields" name="azureai_apikey" placeholder="@T["Azure AI API Key"]" value="@azureAiDisplayKey" data-masked-value="@azureAiDisplayKey" autocomplete="off" />
+                                <input type="text" id="azureai-apikey" class="form-control mail-settings-fields" name="azureai_apikey" placeholder="@T["Azure AI API Key"]" value="@azureAI.AzureAiApiKey" />
                                 <span class="validation-errors"></span>
                             </div>
                         </div>

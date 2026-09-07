@@ -90,24 +90,9 @@
                             <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
                                 @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
                                 {
-                                    @if (parameter.MultiValue)
+                                    foreach (var parameterData in parameter.ReportParameterData)
                                     {
-                                        // For multi-value parameters, show all values
-
-                                        var distinctValues = parameter.ReportParameterData.GroupBy(x => x.ValueField).Select(g => g.First()).ToList();
-                                        foreach (var parameterData in distinctValues)
-                                        {
-                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // For single-value parameters, show only unique values to prevent duplicates
-                                        var distinctValues = parameter.ReportParameterData.GroupBy(x => x.ValueField).Select(g => g.First()).ToList();
-                                        foreach (var parameterData in distinctValues)
-                                        {
-                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
-                                        }
+                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
                                     }
                                 }
                             </select>
@@ -136,24 +121,9 @@
                             <select id="@parameter.Name" class="@hasdependent selectpicker form-control adjust parameter-name" size="5" title="[[[Select value]]]" @(parameter.MultiValue ? "multiple" : "") dataType="@parameter.DataType" @(isParameterHidden ? "disabled" : "") data-actions-box="true">
                                 @if (parameter.ReportParameterData != null && parameter.ReportParameterData.Count > 0)
                                 {
-                                    @if (parameter.MultiValue)
+                                    foreach (var parameterData in parameter.ReportParameterData)
                                     {
-
-                                        var distinctValues = parameter.ReportParameterData.GroupBy(x => x.ValueField).Select(g => g.First()).ToList();
-                                        // For multi-value parameters, show all values
-                                        foreach (var parameterData in distinctValues)
-                                        {
-                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // For single-value parameters, show only unique values to prevent duplicates
-                                        var distinctValues = parameter.ReportParameterData.GroupBy(x => x.ValueField).Select(g => g.First()).ToList();
-                                        foreach (var parameterData in distinctValues)
-                                        {
-                                            <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
-                                        }
+                                        <option value="@parameterData.ValueField">@parameterData.DisplayField</option>
                                     }
                                 }
                             </select>

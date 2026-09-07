@@ -2,8 +2,7 @@
 @using Syncfusion.Server.Base
 @using Syncfusion.Server.Base.DataClasses
 @{
-    var poweredByImageLink = (ViewBag.PoweredByLogo != null) ? await GlobalAppSettings.GetClientServiceUrl(ViewBag.PoweredByLogo, Context) : $"{CloudAppConfig.TenantManagementUrl(Context).TrimEnd('/')}/logos?type=poweredby";
-    var poweredByImageSrc = $"{poweredByImageLink}?logoType=footer";
+    var poweredByImageSrc = (ViewBag.PoweredByLogo != null) ? await GlobalAppSettings.GetClientServiceUrl(ViewBag.PoweredByLogo, Context) : $"{CloudAppConfig.TenantManagementUrl(Context).TrimEnd('/')}/logos?type=poweredby";
     var poweredbyClass = GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion ? "d-block" : "d-none";
     var copyrightClass = GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo ? "d-block" : "d-none";
     var separatorparagraphClass = (GlobalAppSettings.SystemSettings.IsEnablePoweredBySyncfusion && GlobalAppSettings.SystemSettings.IsEnableCopyrightInfo) ? "d-block" : "d-none";
