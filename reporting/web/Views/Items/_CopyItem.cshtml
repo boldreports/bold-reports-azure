@@ -205,8 +205,7 @@
                                     <span class="checkbox-text">[[[Overwrite]]]</span>
                                 </label>
                                 <div class="copy-overwrite-warning d-flex align-items-start" style="margin-top:8px;padding-top:2px;">
-                                    <span class="su su-warning-alt" style="color:#d97706; margin-right:8px; padding-top:2px;"></span>
-                                    <div style="color: #806b75;border-radius: 2px;padding: 2px;border: solid 1px #e8e4e4;line-height: normal;font-size: x-small;width: 265px;">
+                                    <div class="bg-warning" style="font-size: small;">
                                         [[[When enabled, any existing report, dataset, or data source with the same name in the target site will be replaced. This may also affect other reports that depend on the current dataset or data source in the target site.]]]
                                     </div>
                                 </div>
@@ -313,8 +312,7 @@
                                         <span class="checkbox-text">[[[Overwrite]]]</span>
                                     </label>
                                     <div class="copy-overwrite-warning d-flex align-items-start" style="margin-top:8px;padding-top:2px;">
-                                        <span class="su su-warning-alt" style="color:#d97706; margin-right:8px;padding-top:2px;"></span>
-                                        <div style="color: #806b75;border-radius: 2px;padding: 2px;border: solid 1px #e8e4e4;line-height: normal;font-size: x-small;width: 265px;">
+                                        <div class="bg-warning" style="font-size: small;">
                                             [[[When enabled, any existing report, dataset, or data source with the same name in the target site will be replaced. This may also affect other reports that depend on the current dataset or data source in the target site.]]]
                                         </div>
                                     </div>
@@ -447,6 +445,27 @@
             }
             else {
                 $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+            }
+            if(!isSelfHosted)
+            {
+                // Reinitialize the DropDownTree with categories
+                var dropDownTreeInstance = document.querySelector('#CategoryList');
+                if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                    dropDownTreeInstance.ej2_instances[0].destroy();
+                }
+
+                var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                    fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                    select: function() { copyCategoryValueChange($(".copy-move-category")); },
+                    value: [categories[0].Id.toString()],
+                    destroyPopupOnHide: false,
+                    showClearButton: false,
+                    placeholder: 'Select category',
+                    allowFiltering: true,
+                });
+
+                DropDownTreeObj.appendTo("#CategoryList");
+                $("#add-new-category [data-toggle='tooltip']").tooltip();
             }
 
             // Category initialization is now handled by the tenant selection change event
@@ -779,8 +798,8 @@
     <script nonce="@Model">
         $(document).ready(function () {
             var reportCategoryList = @Json.Serialize(ViewBag.CategoryDetails);
-            var drillthroughreportReferences = @Json.Serialize(ViewBag.itemReferences?["drillthroughreport"] ?? new object[0]);
-            var subreportReferences = @Json.Serialize(ViewBag.itemReferences?["subreport"] ?? new object[0]);
+            var drillthroughreportReferences = @Json.Serialize((ViewBag.itemReferences.Count != 0 && ViewBag.itemReferences?["drillthroughreport"] != null) ? ViewBag.itemReferences["drillthroughreport"] : new object[0]);
+            var subreportReferences = @Json.Serialize((ViewBag.itemReferences.Count != 0 && ViewBag.itemReferences?["subreport"] != null) ? ViewBag.itemReferences["subreport"] : new object[0]);
    
             if ((drillthroughreportReferences && drillthroughreportReferences.length > 0) || (subreportReferences && subreportReferences.length > 0)) {
                 $("#copyreport_advance_button").css('display', 'block');

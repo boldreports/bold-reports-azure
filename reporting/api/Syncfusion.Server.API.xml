@@ -731,6 +731,16 @@
             <param name="reportPartId">Item ID of Report Part</param>
             <returns>The response is sent as ApiResponse object</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ReportServer.ReportControlApiController.Data(Syncfusion.Server.Base.DataClasses.ApiReportData)">
+            <summary>
+            Get data from provided report name
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Server.API.Controllers.ReportServer.ReportControlApiController.Schema(Syncfusion.Server.Base.DataClasses.ApiReportData)">
+            <summary>
+            Get schema from provided report name
+            </summary>
+        </member>
         <member name="M:Syncfusion.Server.API.Controllers.ReportServer.ReportServerApiController.DownloadDataSource(Syncfusion.Server.Base.DataClasses.ItemRequest)">
             <summary>
             The method will get the data source location and convert the xml to bytes
@@ -1284,6 +1294,16 @@
             <param name="itemRequest">item request class object</param>
             <returns>Class type ItemResponse</returns>
         </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.ReportData.GetReportData(Syncfusion.Server.Base.DataClasses.ApiReportData,System.Boolean)">
+            <summary>
+            Get the report data from provided Report ID or Report Name 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ReportServer.ReportData.ReportServerData(Syncfusion.Server.Base.DataClasses.ApiReportData)">
+            <summary>
+            Retrieving the ReportHelper Information from report server
+            </summary>
+        </member>
         <member name="M:Syncfusion.Server.API.Models.SchedulerManagementModel.ValidateNoDataOptions(Syncfusion.Server.Base.DataClasses.ApiUpdateScheduleRequestV5)">
             <summary>
             Validate no-data options for update requests (V5).
@@ -1347,6 +1367,26 @@
             </summary>
             <param name="scheduleId">Schedule ID</param>
             <returns>Returns success response as ApiResponse object</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ScheduleValidationHelper.ExportTypesValidation(System.Collections.Generic.List{System.String})">
+            <summary>
+            Validates the list of export types provided in the ExportTypes property of the schedule request.
+            Each element is parsed case-insensitively against the ExportType enum. Empty, whitespace, null
+            or duplicate entries are rejected with the offending element reported in the log.
+            </summary>
+            <param name="exportTypes">List of export types to validate.</param>
+            <returns>The validated list of export types.</returns>
+        </member>
+        <member name="M:Syncfusion.Server.API.Models.ScheduleValidationHelper.ExportTypeValidation(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Validates the export type selection of a schedule request where the singular ExportType property
+            and the plural ExportTypes property are mutually exclusive. When both are provided the request is
+            rejected, when only the plural list is provided each element is validated, and when only the
+            singular value is provided it is validated. When neither is provided the request is rejected.
+            </summary>
+            <param name="exportType">Singular export type provided in the request.</param>
+            <param name="exportTypes">Plural export types provided in the request.</param>
+            <returns>The validated list of export types.</returns>
         </member>
         <member name="M:Syncfusion.Server.API.Models.UserManagementModel.GetDataTableFromCsvFile(System.String)">
             <summary>

@@ -16,6 +16,8 @@
     var categoryName = HttpUtility.HtmlDecode(itemDetails.CategoryName);
     var categoryId = itemDetails.CategoryId;
     var isDraft = itemDetails.IsDraft;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
     var CanWrite = permissionDetails != null ? permissionDetails[0].CanWrite : false;
 #if (BoldReportsCloud)
     var designerServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
@@ -84,6 +86,7 @@
         createXmlToolbar("toolbar");
         var toolbar = document.getElementById("toolbar").ej2_instances[0];
         toolbar.enableItems([0, 1], false);
+        var rootUrl = "@baseUrl";
 
         window.addEventListener("beforeunload", function (e) {
             if (shouldRunBeforeUnload) {
@@ -107,6 +110,25 @@
             editor.setOption("readOnly", "nocursor");
             toolbar.disable(true);
             ejs.popups.showSpinner(document.getElementById('editor-container'));
+            var headers = {
+                'reportDesignerToken': reportDesignerToken,
+                'ServerUrl': "@reportServerApiUrl",
+                'ReportId': "@itemId"
+            };
+
+            if (@isSelfHosted.ToString().ToLower()) {
+                publishRequest(headers, editedXmlContent);
+            } else {
+                getAccessToken(function (token) {
+                    if (token) {
+                        headers.serviceAuthorizationToken = token;
+                    }
+                    publishRequest(headers, editedXmlContent);
+                });
+            }
+        }
+
+        function publishRequest(headers, editedXmlContent) {
             $.ajax({
                 url: "@reportServiceUrl",
                 type: 'POST',
@@ -114,11 +136,7 @@
                 crossDomain: true,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                headers: {
-                    'reportDesignerToken': reportDesignerToken,
-                    'ServerUrl': "@reportServerApiUrl",
-                    'ReportId': "@itemId"
-                },
+                headers: headers,
                 data: JSON.stringify({
                     designerAction: "saveServerReport",
                     reportInfo: reportInfo,
@@ -152,6 +170,23 @@
             });
         }
 
+        function getAccessToken(callback) {
+            var urlBase = typeof rootUrl !== 'undefined' && rootUrl ? rootUrl.replace(/\/+$/, '') : '';
+            var tokenUrl = urlBase + '/v1.0/auth/access-token';
+            fetch(tokenUrl, { credentials: 'include', cache: 'no-store' })
+                .then(function (resp) {
+                    if (resp.ok) {
+                        return resp.json();
+                    }
+                    throw resp;
+                })
+                .then(function (data) {
+                    callback(data && data.access_token ? data.access_token : '');
+                })
+                .catch(function () {
+                    callback('');
+                });
+        }
 
         function getDataSourceMap(xmlString) {
             let mappingInfo = [];

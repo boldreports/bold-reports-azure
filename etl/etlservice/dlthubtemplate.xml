@@ -1116,7 +1116,7 @@ plugins:
   extractors:
     # Please add below lines in your python script to move dataframe data into table and upload the script in the extractor
     # pipeline.run(yourdataframename, table_name="yourtablename")
-    - name: pyscript1
+    - name: PythonScript
       #Json Response only supported
       connectorname: PythonScript
       config:
@@ -1452,6 +1452,7 @@ plugins:
         workspace_id: <>
         project_id: <>
         task_id: <>
+        opt_fields: 
       select:
         - tablename
       ]]>

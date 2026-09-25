@@ -375,6 +375,28 @@ EJHtmlDocument.Locale['en-US'] = {
         title: 'Html'
     }
 };
+EJHtmlDocument.Locale['lt-LT'] = {
+    source: 'Šaltinis',
+    sourceTypes: {
+        content: 'Turinys',
+        url: 'URL',
+        database: 'Duomenų bazė',
+        server: 'Serveris'
+    },
+    categoryBasicSettings: 'Pagrindiniai nustatymai',
+    sizing: 'Dydžio nustatymas',
+    sizeTypes: {
+        auto: 'Automatinis dydis',
+        fit: 'Pritaikyti',
+        proportional: 'Proporcingai pritaikyti',
+        clip: 'Apkarpyti'
+    },
+    toolTip: {
+        requirements: 'Rodo HTML turinį arba URL adresą.',
+        description: 'Šis ataskaitos elementas naudojamas HTML turiniui arba URL adresui apdoroti ir rodyti.',
+        title: 'HTML dokumentas'
+    }
+};
 EJHtmlDocument.Locale['fi-FI'] = {
     source: 'Lähde',
     sourceTypes: {
@@ -639,6 +661,28 @@ EJHtmlDocument.Locale['it-IT'] = {
         title: 'Html'
     }
 };
+EJHtmlDocument.Locale['id-ID'] = {
+    source: 'Sumber',
+    sourceTypes: {
+        content: 'Konten',
+        url: 'URL',
+        database: 'Database',
+        server: 'Server'
+    },
+    categoryBasicSettings: 'Pengaturan Dasar',
+    sizing: 'Ukuran',
+    sizeTypes: {
+        auto: 'Ukuran Otomatis',
+        fit: 'Sesuaikan',
+        proportional: 'Sesuaikan Proporsional',
+        clip: 'Potong'
+    },
+    toolTip: {
+        requirements: 'Tampilkan markup HTML atau URL apa pun',
+        description: 'Item laporan ini digunakan untuk memproses teks markup HTML dan URL',
+        title: 'HTML'
+    }
+};
 EJHtmlDocument.Locale['fr-CA'] = {
     source: 'Source',
     sourceTypes: {
@@ -749,6 +793,28 @@ EJHtmlDocument.Locale['he-IL'] = {
         title: 'HTML'
     }
 };
+EJHtmlDocument.Locale['hu-HU'] = {
+    source: 'Forrás',
+    sourceTypes: {
+        content: 'Tartalom',
+        url: 'URL',
+        database: 'Adatbázis',
+        server: 'Kiszolgáló'
+    },
+    categoryBasicSettings: 'Alapbeállítások',
+    sizing: 'Méretezés',
+    sizeTypes: {
+        auto: 'Automatikus méretezés',
+        fit: 'Igazítás',
+        proportional: 'Arányos igazítás',
+        clip: 'Levágás'
+    },
+    toolTip: {
+        requirements: 'Bármilyen HTML-jelölés vagy URL megjelenítése.',
+        description: 'Ez a jelentéselem HTML-jelölésből származó szöveg vagy URL feldolgozására és megjelenítésére szolgál.',
+        title: 'HTML'
+    }
+};
 EJHtmlDocument.Locale['ja-JP'] = {
     source: 'ソース',
     sourceTypes: {
@@ -769,6 +835,28 @@ EJHtmlDocument.Locale['ja-JP'] = {
         requirements: '任意のHTMLマークアップまたはURLを表示',
         description: 'このレポート項目はHTMLマークアップテキストとURLを処理します',
         title: 'Html'
+    }
+};
+EJHtmlDocument.Locale['lv-LV'] = {
+    source: 'Avots',
+    sourceTypes: {
+        content: 'Saturs',
+        url: 'URL',
+        database: 'Datu bāze',
+        server: 'Serveris'
+    },
+    categoryBasicSettings: 'Pamata iestatījumi',
+    sizing: 'Izmēru pielāgošana',
+    sizeTypes: {
+        auto: 'Automātisks izmērs',
+        fit: 'Pielāgot',
+        proportional: 'Proporcionāli pielāgot',
+        clip: 'Apgriezt'
+    },
+    toolTip: {
+        requirements: 'Attēlo jebkādu HTML marķējumu vai URL',
+        description: 'Šis pārskata elements tiek izmantots HTML marķējuma teksta un URL apstrādei',
+        title: 'HTML'
     }
 };
 EJHtmlDocument.Locale['pt-PT'] = {
@@ -879,5 +967,49 @@ EJHtmlDocument.Locale['et-EE'] = {
         requirements: 'Kuvab mis tahes HTML-i (või) URL-i',
         description: 'Seda aruandeüksust kasutatakse HTML-i ja URL-i töötlemiseks',
         title: 'HTML'
+    }
+};
+EJHtmlDocument.Locale['ko-KR'] = {
+    source: '소스',
+    sourceTypes: {
+        content: '콘텐츠',
+        url: 'URL',
+        database: '데이터베이스',
+        server: '서버'
+    },
+    categoryBasicSettings: '기본 설정',
+    sizing: '크기',
+    sizeTypes: {
+        auto: '자동 크기',
+        fit: '맞추기',
+        proportional: '비례 맞추기',
+        clip: '잘라내기'
+    },
+    toolTip: {
+        requirements: '모든 HTML 태그(또는) URL을 표시합니다.',
+        description: '이 보고서 항목은 HTML 태그 텍스트와 URL을 처리하는 데 사용됩니다.',
+        title: 'Html'
+    }
+};
+EJHtmlDocument.Locale['nb-NO'] = {
+    source: 'Kilde',
+    sourceTypes: {
+        content: 'Innhold',
+        url: 'URL',
+        database: 'Database',
+        server: 'Server'
+    },
+    categoryBasicSettings: 'Grunnleggende innstillinger',
+    sizing: 'Størrelse',
+    sizeTypes: {
+        auto: 'Automatisk størrelse',
+        fit: 'Tilpass',
+        proportional: 'Tilpass proporsjonalt',
+        clip: 'Klipp ut'
+    },
+    toolTip: {
+        requirements: 'Vis hvilken som helst HTML-markering (eller) URL',
+        description: 'Dette rapportelementet brukes til å behandle HTML-markeringstekst og URL',
+        title: 'Html'
     }
 };

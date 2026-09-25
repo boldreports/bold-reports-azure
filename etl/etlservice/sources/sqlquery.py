@@ -5,14 +5,19 @@ from dlt.sources.credentials import ConnectionStringCredentials
 from dlt.common import pendulum
 from sqlalchemy import create_engine
 from sql_database import sql_database, sql_table
+from sql_database.helpers import engine_from_credentials
 from urllib.parse import quote_plus
 def load_standalone_table_resource() -> None:
  
     pipeline = dlt.pipeline(
         pipeline_name="{0}base", destination='{3}', dataset_name="{0}"
     )
-    password = quote_plus("{12}")
-    engine = create_engine(f"{1}"{10}, echo=True)
+    password = quote_plus({12})
+    credentials = f"{1}"
+    if "oracle+oracledb://" in credentials and "(DESCRIPTION=" in credentials:
+        engine = engine_from_credentials(credentials)
+    else:
+        engine = create_engine(f"{1}"{10}, echo=True)
     isincremental = {11}
     query = ""
     if isincremental:
@@ -34,7 +39,7 @@ def load_standalone_table_resource() -> None:
        
 
   
-        load_info = pipeline.run(map(lambda row: dict(row._mapping), rows), table_name="{7}")
+        load_info = pipeline.run({13}, table_name="{7}")
         print(load_info)
 
 if __name__ == "__main__":

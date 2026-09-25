@@ -36,6 +36,8 @@
     var profilePictureUrl = idPUrl + Url.Content("/User/Avatar?id=" + idpreferenceId).TrimEnd('/');
     var imageUrl = idPUrl;
     var healthCheckUrl = idPUrl + "/status";
+    var upgradeCenterUrl = idPUrl.TrimEnd('/') + "/upgrade-center";
+    var showUpgradeCenterMenu = GlobalAppSettings.IsUpgradeCenterEnabled();
     var showLicenseWarningIcon = GlobalAppSettings.SystemSettings.ShowLicenseWarning;
     var isConsoleLogEnabled = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(BoldServicesEnvironmentVariables.IsConsoleLogEnabled)) ? Convert.ToBoolean(Environment.GetEnvironmentVariable(BoldServicesEnvironmentVariables.IsConsoleLogEnabled)): false;
 }
@@ -81,6 +83,14 @@
                                     @T["Health check"]
                                 </a>
                             </li>
+                            @if (showUpgradeCenterMenu)
+                            {
+                                <li class="top-menu-item">
+                                    <a href="@upgradeCenterUrl" class="text-decoration-none">
+                                        @T["Check for Updates"]
+                                    </a>
+                                </li>
+                            }
                             <li class="top-menu-item-title">
                                 <div>@T["About"]</div>
                             </li>

@@ -1279,6 +1279,52 @@ EJShape.Locale['en-US'] = {
         title: 'Shape'
     }
 };
+EJShape.Locale['lt-LT'] = {
+    basicSettings: {
+        categoryName: 'Pagrindiniai nustatymai',
+        shapeType: 'Figūros',
+        rotationAngle: 'Pasukimo kampas',
+        starCount: 'Žvaigždės spindulių skaičius',
+        concavity: 'Įgaubtumas',
+        arrowHeight: 'Rodyklės aukštis',
+        arrowWidth: 'Rodyklės plotis',
+        lineStyle: 'Linijos stilius',
+        fillColor: 'Užpildo spalva',
+        shapeTypes: {
+            ellipse: 'Elipsė',
+            triangle: 'Trikampis',
+            rightAngleTriangle: 'Statusis trikampis',
+            rectangle: 'Stačiakampis',
+            hexagon: 'Šešiakampis',
+            pentagon: 'Penkiakampis',
+            octagon: 'Aštuoniakampis',
+            star: 'Žvaigždė',
+            leftArrow: 'Rodyklė kairėn',
+            rightArrow: 'Rodyklė dešinėn',
+            upArrow: 'Rodyklė aukštyn',
+            downArrow: 'Rodyklė žemyn',
+            plus: 'Pliusas',
+            minus: 'Minusas',
+            multiply: 'Daugyba',
+            division: 'Dalyba',
+            parallelogram: 'Lygiagretainis',
+            trapezoid: 'Trapecija',
+            equation: 'Lygtis'
+        },
+        lineStyles: {
+            dashed: 'Brūkšninė',
+            dotted: 'Taškinė',
+            dashdotdot: 'Brūkšnys taškas taškas',
+            dashdot: 'Brūkšnys taškas',
+            solid: 'Ištisinė'
+        }
+    },
+    toolTip: {
+        requirements: 'Rodo įvairias figūras.',
+        description: 'Vizualizuoja informaciją naudojant tinkinamas figūras.',
+        title: 'Figūra'
+    }
+};
 EJShape.Locale['fi-FI'] = {
     basicSettings: {
         categoryName: 'Perusasetukset',
@@ -1785,6 +1831,52 @@ EJShape.Locale['fr-FR'] = {
         title: 'Forme'
     }
 };
+EJShape.Locale['id-ID'] = {
+    basicSettings: {
+        categoryName: 'Pengaturan Dasar',
+        shapeType: 'Bentuk',
+        rotationAngle: 'Sudut Rotasi',
+        starCount: 'Jumlah Bintang',
+        concavity: 'Kecekungan',
+        arrowHeight: 'Tinggi Panah',
+        arrowWidth: 'Lebar Panah',
+        lineStyle: 'Gaya Garis',
+        fillColor: 'Warna Isian',
+        shapeTypes: {
+            ellipse: 'Elips',
+            triangle: 'Segitiga',
+            rightAngleTriangle: 'Segitiga Siku-Siku',
+            rectangle: 'Persegi Panjang',
+            hexagon: 'Heksagon',
+            pentagon: 'Pentagon',
+            octagon: 'Oktagon',
+            star: 'Bintang',
+            leftArrow: 'Panah Kiri',
+            rightArrow: 'Panah Kanan',
+            upArrow: 'Panah Atas',
+            downArrow: 'Panah Bawah',
+            plus: 'Tambah',
+            minus: 'Kurang',
+            multiply: 'Kali',
+            division: 'Bagi',
+            parallelogram: 'Jajar Genjang',
+            trapezoid: 'Trapesium',
+            equation: 'Persamaan'
+        },
+        lineStyles: {
+            dashed: 'Putus-Putus',
+            dotted: 'Bertitik',
+            dashdotdot: 'Garis Titik Titik',
+            dashdot: 'Garis Titik',
+            solid: 'Solid'
+        }
+    },
+    toolTip: {
+        requirements: 'Tampilkan item dalam Bentuk',
+        description: 'Visualisasikan data dengan bentuk yang dapat dikustomisasi.',
+        title: 'Bentuk'
+    }
+};
 EJShape.Locale['it-IT'] = {
     basicSettings: {
         categoryName: 'Impostazioni di base',
@@ -1968,6 +2060,52 @@ EJShape.Locale['he-IL'] = {
         title: 'צורה'
     }
 };
+EJShape.Locale['hu-HU'] = {
+    basicSettings: {
+        categoryName: 'Alapbeállítások',
+        shapeType: 'Alakzatok',
+        rotationAngle: 'Elforgatási szög',
+        starCount: 'Csúcsok száma',
+        concavity: 'Homorúság',
+        arrowHeight: 'Nyíl magassága',
+        arrowWidth: 'Nyíl szélessége',
+        lineStyle: 'Vonalstílus',
+        fillColor: 'Kitöltőszín',
+        shapeTypes: {
+            ellipse: 'Ellipszis',
+            triangle: 'Háromszög',
+            rightAngleTriangle: 'Derékszögű háromszög',
+            rectangle: 'Téglalap',
+            hexagon: 'Hatszög',
+            pentagon: 'Ötszög',
+            octagon: 'Nyolcszög',
+            star: 'Csillag',
+            leftArrow: 'Balra mutató nyíl',
+            rightArrow: 'Jobbra mutató nyíl',
+            upArrow: 'Felfelé mutató nyíl',
+            downArrow: 'Lefelé mutató nyíl',
+            plus: 'Plusz',
+            minus: 'Mínusz',
+            multiply: 'Szorzás',
+            division: 'Osztás',
+            parallelogram: 'Paralelogramma',
+            trapezoid: 'Trapéz',
+            equation: 'Egyenlet'
+        },
+        lineStyles: {
+            dashed: 'Szaggatott',
+            dotted: 'Pontozott',
+            dashdotdot: 'Szaggatott-pont-pont',
+            dashdot: 'Szaggatott-pont',
+            solid: 'Folytonos'
+        }
+    },
+    toolTip: {
+        requirements: 'Alakzatok megjelenítése.',
+        description: 'Adatok megjelenítése testreszabható alakzatok segítségével.',
+        title: 'Alakzat'
+    }
+};
 EJShape.Locale['ja-JP'] = {
     basicSettings: {
         categoryName: '基本設定',
@@ -2012,6 +2150,52 @@ EJShape.Locale['ja-JP'] = {
         requirements: '図形内の項目を表示',
         description: 'カスタマイズ可能な図形でデータを可視化します。',
         title: '図形'
+    }
+};
+EJShape.Locale['lv-LV'] = {
+    basicSettings: {
+        categoryName: 'Pamata iestatījumi',
+        shapeType: 'Formas',
+        rotationAngle: 'Pagriešanas leņķis',
+        starCount: 'Zvaigznes staru skaits',
+        concavity: 'Ieliekums',
+        arrowHeight: 'Bultiņas augstums',
+        arrowWidth: 'Bultiņas platums',
+        lineStyle: 'Līnijas stils',
+        fillColor: 'Aizpildījuma krāsa',
+        shapeTypes: {
+            ellipse: 'Elipse',
+            triangle: 'Trijstūris',
+            rightAngleTriangle: 'Taisnleņķa trijstūris',
+            rectangle: 'Taisnstūris',
+            hexagon: 'Sešstūris',
+            pentagon: 'Piecstūris',
+            octagon: 'Astoņstūris',
+            star: 'Zvaigzne',
+            leftArrow: 'Bultiņa pa kreisi',
+            rightArrow: 'Bultiņa pa labi',
+            upArrow: 'Bultiņa uz augšu',
+            downArrow: 'Bultiņa uz leju',
+            plus: 'Pluss',
+            minus: 'Mīnuss',
+            multiply: 'Reizināšana',
+            division: 'Dalīšana',
+            parallelogram: 'Paralelograms',
+            trapezoid: 'Trapecveida forma',
+            equation: 'Vienādojums'
+        },
+        lineStyles: {
+            dashed: 'Pārtraukta',
+            dotted: 'Punktota',
+            dashdotdot: 'Svītra punkts punkts',
+            dashdot: 'Svītra punkts',
+            solid: 'Vienlaidu'
+        }
+    },
+    toolTip: {
+        requirements: 'Attēlo elementus dažādās formās.',
+        description: 'Vizualizējiet datus ar pielāgojamām formām.',
+        title: 'Forma'
     }
 };
 EJShape.Locale['pt-PT'] = {
@@ -2288,5 +2472,97 @@ EJShape.Locale['et-EE'] = {
         requirements: 'Kuvab kujundites üksusi',
         description: 'Andmete visualiseerimine kohandatavate kujunditega.',
         title: 'Kujund'
+    }
+};
+EJShape.Locale['ko-KR'] = {
+    basicSettings: {
+        categoryName: '기본 설정',
+        shapeType: '도형',
+        rotationAngle: '회전 각도',
+        starCount: '별 개수',
+        concavity: '오목함',
+        arrowHeight: '화살표 높이',
+        arrowWidth: '화살표 너비',
+        lineStyle: '선 스타일',
+        fillColor: '채우기 색',
+        shapeTypes: {
+            ellipse: '타원',
+            triangle: '삼각형',
+            rightAngleTriangle: '직각 삼각형',
+            rectangle: '사각형',
+            hexagon: '육각형',
+            pentagon: '오각형',
+            octagon: '팔각형',
+            star: '별',
+            leftArrow: '왼쪽 화살표',
+            rightArrow: '오른쪽 화살표',
+            upArrow: '위쪽 화살표',
+            downArrow: '아래쪽 화살표',
+            plus: '더하기',
+            minus: '빼기',
+            multiply: '곱하기',
+            division: '나누기',
+            parallelogram: '평행사변형',
+            trapezoid: '사다리꼴',
+            equation: '방정식'
+        },
+        lineStyles: {
+            dashed: '파선',
+            dotted: '점선',
+            dashdotdot: '일점쇄선(이중 점)',
+            dashdot: '일점쇄선',
+            solid: '실선'
+        }
+    },
+    toolTip: {
+        requirements: '도형으로 항목을 표시합니다.',
+        description: '사용자 지정 가능한 도형으로 데이터를 시각화합니다.',
+        title: '도형'
+    }
+};
+EJShape.Locale['nb-NO'] = {
+    basicSettings: {
+        categoryName: 'Grunnleggende innstillinger',
+        shapeType: 'Figurer',
+        rotationAngle: 'Rotasjonsvinkel',
+        starCount: 'Antall stjerner',
+        concavity: 'Konkavitet',
+        arrowHeight: 'Pilhøyde',
+        arrowWidth: 'Pilbredde',
+        lineStyle: 'Linjestil',
+        fillColor: 'Fyllfarge',
+        shapeTypes: {
+            ellipse: 'Ellipse',
+            triangle: 'Trekant',
+            rightAngleTriangle: 'Rettvinklet trekant',
+            rectangle: 'Rektangel',
+            hexagon: 'Heksagon',
+            pentagon: 'Femkant',
+            octagon: 'Oktagon',
+            star: 'Stjerne',
+            leftArrow: 'Venstrepil',
+            rightArrow: 'Høyrepil',
+            upArrow: 'Opp-pil',
+            downArrow: 'Ned-pil',
+            plus: 'Pluss',
+            minus: 'Minus',
+            multiply: 'Multiplikasjon',
+            division: 'Divisjon',
+            parallelogram: 'Parallellogram',
+            trapezoid: 'Trapes',
+            equation: 'Ligning'
+        },
+        lineStyles: {
+            dashed: 'Stiplet',
+            dotted: 'Prikket',
+            dashdotdot: 'Strek-prikk-prikk',
+            dashdot: 'Strek-prikk',
+            solid: 'Heltrukket'
+        }
+    },
+    toolTip: {
+        requirements: 'Vis elementer i figurer',
+        description: 'Visualiser data med tilpassbare figurer.',
+        title: 'Figur'
     }
 };

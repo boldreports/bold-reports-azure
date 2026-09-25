@@ -373,6 +373,16 @@ EJSignature.Locale['en-US'] = {
         title: 'Signature'
     }
 };
+EJSignature.Locale['lt-LT'] = {
+    btnText: 'Piešti',
+    categoryBasicSettings: 'Pagrindiniai nustatymai',
+    signatureLabel: 'Parašas',
+    toolTip: {
+        requirements: 'Rodo elektroninį parašą pasirašymui.',
+        description: 'Šis ataskaitos elementas naudojamas grafiniam parašui pridėti.',
+        title: 'Parašas'
+    }
+};
 EJSignature.Locale['fi-FI'] = {
     btnText: 'Piirrä',
     categoryBasicSettings: 'Perusasetukset',
@@ -473,6 +483,16 @@ EJSignature.Locale['es-ES'] = {
         title: 'Firma'
     }
 };
+EJSignature.Locale['id-ID'] = {
+    btnText: 'Gambar',
+    categoryBasicSettings: 'Pengaturan Dasar',
+    signatureLabel: 'Tanda Tangan',
+    toolTip: {
+        requirements: 'Tampilkan tanda tangan elektronik untuk penandatanganan.',
+        description: 'Item laporan ini digunakan untuk menambahkan tanda tangan grafis',
+        title: 'Tanda Tangan'
+    }
+};
 EJSignature.Locale['it-IT'] = {
     signatureLabel: 'Firma',
     categoryBasicSettings: 'Impostazioni di base',
@@ -523,6 +543,16 @@ EJSignature.Locale['he-IL'] = {
         title: 'חתימה'
     }
 };
+EJSignature.Locale['hu-HU'] = {
+    btnText: 'Rajzolás',
+    categoryBasicSettings: 'Alapbeállítások',
+    signatureLabel: 'Aláírás',
+    toolTip: {
+        requirements: 'Bármilyen elektronikus aláírás megjelenítése aláíráshoz.',
+        description: 'Ez a jelentéselem grafikus aláírás hozzáadására szolgál.',
+        title: 'Aláírás'
+    }
+};
 EJSignature.Locale['ja-JP'] = {
     btnText: '描画',
     categoryBasicSettings: '基本設定',
@@ -531,6 +561,16 @@ EJSignature.Locale['ja-JP'] = {
         requirements: '署名用の電子署名を表示します。',
         description: 'このレポート項目はグラフィック署名を追加するために使用されます',
         title: '署名'
+    }
+};
+EJSignature.Locale['lv-LV'] = {
+    btnText: 'Zīmēt',
+    categoryBasicSettings: 'Pamata iestatījumi',
+    signatureLabel: 'Paraksts',
+    toolTip: {
+        requirements: 'Attēlo elektronisku parakstu parakstīšanai.',
+        description: 'Šis pārskata elements tiek izmantots grafiska paraksta pievienošanai.',
+        title: 'Paraksts'
     }
 };
 EJSignature.Locale['pt-PT'] = {
@@ -591,5 +631,25 @@ EJSignature.Locale['et-EE'] = {
         requirements: 'Kuvab elektroonilise allkirja allkirjastamiseks.',
         description: 'Seda aruandeüksust kasutatakse graafilise allkirja lisamiseks',
         title: 'Allkiri'
+    }
+};
+EJSignature.Locale['ko-KR'] = {
+    btnText: '그리기',
+    categoryBasicSettings: '기본 설정',
+    signatureLabel: '서명',
+    toolTip: {
+        requirements: '서명을 위한 전자 서명을 표시합니다.',
+        description: '이 보고서 항목은 그래픽 서명을 추가하는 데 사용됩니다.',
+        title: '서명'
+    }
+};
+EJSignature.Locale['nb-NO'] = {
+    btnText: 'Tegn',
+    categoryBasicSettings: 'Grunnleggende innstillinger',
+    signatureLabel: 'Signatur',
+    toolTip: {
+        requirements: 'Vis enhver elektronisk signatur for signering.',
+        description: 'Dette rapportelementet brukes til å legge til en grafisk signatur',
+        title: 'Signatur'
     }
 };

@@ -10,18 +10,14 @@
 
 <!DOCTYPE html>
 <html>
-
-<environment include="Development,CloudDevelopment">
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleemaileditor.css")" crossorigin="anonymous" />
-    <script nonce="@ViewBag.ScriptNonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.js"></script>
-</environment>
-<environment exclude="Development,CloudDevelopment">
-    <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/scheduleemaileditor.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/scheduleemaileditor.min.css")" crossorigin="anonymous" />
-    <script nonce="@ViewBag.ScriptNonce" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js"></script>
-</environment>
-
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecipients.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecipients.min.js")" crossorigin="anonymous"></script>
+    </environment>
 </head>
 <body>
     <div id="email-editor-panel" class="admin-page-body">
@@ -64,7 +60,7 @@
             <div class="email-subject-text">
                 <input type="text" class="form-control" id="sub_email-text-box" />
             </div>
-            <div class="validate-error" id="email-subject-validation">[[[Please enter the email subject]]]</div>
+            <div class="validate-error" id="email-subject-validation" style="display:none">[[[Please enter the email subject]]]</div>
         </div>
         <div class="sub-body-label">[[[Body]]]</div>
         <div class="col-sm-12 col-12 no-padding" id="selected-users-container">
@@ -73,7 +69,7 @@
                 <textarea id="temp" class="d-none"></textarea>
                 <div id="toRemoveCulture"></div>
             </div>
-            <div class="var-drop-box col-12" style="width:230px;top:5px;">
+            <div class="var-drop-box" style="width:230px;top:5px;">
                 <select id="variable-drop-box" data-live-search="true" title='[[[variables]]]' name="" class="selectpicker" style="width:183px;" size="7" data-none-results-text="[[[No results match]]]">
                     @foreach (CustomEmailTemplate val in Enum.GetValues(typeof(CustomEmailTemplate)))
                     {
@@ -85,17 +81,8 @@
         </div>
 
     </div>
-</div>
 </body>
 </html>
-<environment include="Development,CloudDevelopment">
-    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/scheduleemaileditor.js")" crossorigin="anonymous"></script>
-    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecipients.js")" crossorigin="anonymous"></script>
-</environment>
-<environment exclude="Development,CloudDevelopment">
-    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/scheduleemaileditor.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/scheduleemaileditor.min.js")" crossorigin="anonymous"></script>
-    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/schedulerrecipients.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/schedulerrecipients.min.js")" crossorigin="anonymous"></script>
-</environment>
 
 <script>
 

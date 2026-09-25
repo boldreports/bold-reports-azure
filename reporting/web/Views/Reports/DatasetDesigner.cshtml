@@ -199,6 +199,7 @@
         var _key = _CryptoAES.enc.Utf8.parse(_keyCode);
         var _iv = _CryptoAES.enc.Utf8.parse(_ivCode);
         var encryptionKey = "@ViewBag.EncryptionKey";
+        var rootUrlAction = "@baseUrl";
         isEdit = isEdit.toLowerCase();
 
 		if(isEdit === "true"){
@@ -250,7 +251,16 @@
                 encryptData: encryptData,
                 decryptData: decryptData
             };
-            var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
+            if (@isSelfHosted.ToString().ToLower()) {
+                var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
+            } else {
+                getAccessToken(function (token) {
+                    if (token) {
+                        designerModel.serviceAuthorizationToken = token;
+                    }
+                    var designer = new boldReportQueryDesigner($('#' + ctrlId), designerModel);
+                });
+            }
         }
 
         function controlInitialization(args) {
@@ -261,6 +271,24 @@
             } else {
                 newDataSet(datasource);
             }
+        }
+
+        function getAccessToken(callback) {
+            var urlBase = typeof rootUrlAction !== 'undefined' && rootUrlAction ? rootUrlAction.replace(/\/+$/, '') : '';
+            var tokenUrl = urlBase + '/v1.0/auth/access-token';
+            fetch(tokenUrl, { credentials: 'include', cache: 'no-store' })
+                .then(function (resp) {
+                    if (resp.ok) {
+                        return resp.json();
+                    }
+                    throw resp;
+                })
+                .then(function (data) {
+                    callback(data && data.access_token ? data.access_token : '');
+                })
+                .catch(function () {
+                    callback('');
+                });
         }
 
         function renderEJ2ToolbarItems(args) {
@@ -527,6 +555,16 @@
         }
 
         function doAjaxPost(url, jsonObj, callBack) {
+            if (@isSelfHosted.ToString().ToLower()) {
+                sendRequest(null, url, jsonObj, callBack);
+            } else {
+                getAccessToken(function (token) {
+                    sendRequest(token || null, url, jsonObj, callBack);
+                });
+            }
+        }
+
+        function sendRequest(token, url, jsonObj, callBack) {
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -537,16 +575,19 @@
                 data: jsonObj,
                 beforeSend: function (req) {
                     req.setRequestHeader('ServerUrl', '@reportServerApiUrl');
+                    if (token) {
+                        req.setRequestHeader('serviceAuthorizationToken', token);
+                    }
                     if (callBack && callBack.indicator && callBack.indicator.length > 0) {
                         ej.WidgetUtil.invokeCallBack(callBack.indicator[0], {});
                     }
                     _setRequestHeader(req);
                 },
                 success: function (data) {
-                    if (data && typeof (data.Data) !== 'undefined') {
-                        data = data.Data;
-                    }
                     var jsonData = data;
+                    if (data && typeof (data.Data) !== 'undefined') {
+                        jsonData = data.Data;
+                    }
                     if (callBack) {
                         if (callBack.indicator && callBack.indicator.length > 0) {
                             ej.WidgetUtil.invokeCallBack(callBack.indicator[1], {});
@@ -556,7 +597,7 @@
                         }
                     }
                 },
-                error: function (msg, textStatus, errorThrown) {
+                error: function () {
                     if (callBack && callBack.indicator && callBack.indicator.length > 0) {
                         ej.WidgetUtil.invokeCallBack(callBack.indicator[1], {});
                     }

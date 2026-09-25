@@ -859,7 +859,8 @@ function onDatbaseChange(args) {
             $("#existing-db").prop("checked", true).trigger("change");
             var databaseNameDiv = document.getElementById('simple_tab_db_name');
             var serviceNameDiv = document.getElementById('service-name');
-            sslDiv.classList.add("visually-hidden");
+            sslDiv.classList.add("d-block");
+            sslDiv.classList.remove("visually-hidden");
             document.getElementById("schema-name").ej2_instances[0].value = "";
             //databaseNameDiv.classList.add('visually-hidden');
             serviceNameDiv.classList.remove('d-none');
@@ -1237,4 +1238,3 @@ function resetTheDbSubmitButton() {
     existingDBbutton.classList.remove("d-block");
     existingDBbutton.classList.remove("visually-hidden");
 }
-

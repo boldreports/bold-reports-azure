@@ -24,6 +24,7 @@ import os
 ELASTICSEARCH_HOST = '{0}:{1}'
 INDEX_NAME = '{2}'
 API_KEY = '{3}'
+SQL_QUERY = '{14}'
 {10}
 # Function to fetch data from Elasticsearch with pagination and load into DataFrame
 def fetch_data_and_load_into_dataframe(scroll_size={4}):
@@ -67,7 +68,53 @@ def fetch_data_and_load_into_dataframe(scroll_size={4}):
         conn.execute("{13}")
     print("Data fetched successfully")
 
-# Call function to fetch data and load into DataFrame
-fetch_data_and_load_into_dataframe()
+# Function to fetch data from Elasticsearch using SQL query
+def fetch_data_via_sql(sql_query):
+    es = Elasticsearch([ELASTICSEARCH_HOST], {11})
+
+    all_records = []
+    cursor = None
+    columns = None
+
+    while True:
+        if cursor is None:
+            print("Executing SQL query")
+            res = es.sql.query(body={{"query": sql_query, "fetch_size": {4}}})
+        else:
+            print("Fetching next page using cursor")
+            res = es.sql.query(body={{"cursor": cursor}})
+
+        if columns is None:
+            columns = [col["name"] for col in res.get("columns", [])]
+            
+        rows = res.get("rows", [])
+
+        if not rows:
+            break
+
+        for row in rows:
+            all_records.append(dict(zip(columns, row)))
+
+        cursor = res.get("cursor")
+        if not cursor:
+            break
+
+    print("Total records count:", len(all_records))
+    temp_file = tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.json', dir="{7}")
+    json.dump(all_records, temp_file)
+    temp_file.close()
+    print(format(temp_file.name))
+    conn = duckdb.connect('{5}')
+    conn.execute("CREATE SCHEMA IF NOT EXISTS {6}")
+    if len(all_records) > 0:
+        conn.execute("{8}".format(temp_file.name))
+    print("Data fetched successfully via SQL query")
+    
+# Route to the appropriate fetch function based on whether a SQL query is provided
+if 'SQL_QUERY' in dir() and SQL_QUERY:
+    fetch_data_via_sql(SQL_QUERY)
+else:
+    # Call function to fetch data and load into DataFrame
+    fetch_data_and_load_into_dataframe()
 
 # Display DataFrame

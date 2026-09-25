@@ -35,7 +35,7 @@
         var newproxy = "@protocol";
     </script>
 
-    <script>
+    <script nonce="@Context.Items["ScriptNonce"]">
         $(function () {
           var $cbUpdate = $('#update-only-matching');
           var $cbForce  = $('#force-all-sites');
@@ -63,7 +63,7 @@
           $warning.toggle($cbForce.prop('checked'));
         });
     </script>
-    <script>
+    <script nonce="@Context.Items["ScriptNonce"]">
         $(function () {
           var $cb = $('#lock-site-url');
           var $info = $('.lock-site-url-info-message');
@@ -76,7 +76,7 @@
         });
     </script>
     
-    <script>
+    <script nonce="@Context.Items["ScriptNonce"]">
         $(function () {
             var $protocolSelect = $('#enable-ssl');
             var $siteInput = $('#site_url');

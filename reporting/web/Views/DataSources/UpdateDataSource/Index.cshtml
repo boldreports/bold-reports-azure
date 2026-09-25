@@ -20,6 +20,7 @@
     var isDesignerV2Enabled = ViewBag.IsDesignerV2Enabled;
     var language = CultureInfo.CurrentCulture.Name;
     var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
     var enableRenderSameTab = @ServerAppConfig.SameTabReportRender.ToString().ToLower();
 }
 
@@ -108,6 +109,7 @@
 		var isAzureApplication = @Json.Serialize(@ViewBag.isAzureApplication);
         var isWindows = @Json.Serialize(@isWindowsPlatform);
         var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+        var rootUrl = "@baseUrl";
         var ivCode = "@ViewBag.IvCode";
         var keyCode = "@ViewBag.KeyCode";
         var encryptionKey = "@ViewBag.EncryptionKey";

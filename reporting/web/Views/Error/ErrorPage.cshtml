@@ -91,7 +91,7 @@
                     @if (ViewBag.ErrorType == "access_denied")
                     {
                         <span class="error-page-cursor">
-                            <a class="error-to-beck-text-color" href="@(new Uri(globalAppSettings.SystemSettings.BaseUrl.TrimEnd('/')+ "/accounts/logout"))">[[[Try a different account]]]</a>
+                            <a class="error-to-beck-text-color" href="@Url.Action("Logout", "Accounts")">[[[Try a different account]]]</a>
                         </span>
                     }
                     else if (ViewBag.ErrorType == "http_error_404")

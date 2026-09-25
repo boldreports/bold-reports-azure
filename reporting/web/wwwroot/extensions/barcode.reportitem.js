@@ -363,6 +363,24 @@ EJBarcode.Locale['en-US'] = {
         title: 'Barcode'
     }
 };
+EJBarcode.Locale['lt-LT'] = {
+    barcodeValue: 'Tekstas',
+    barcodeType: 'Brūkšninio kodo tipas',
+    textVisibility: 'Teksto matomumas',
+    categoryBasicSettings: 'Pagrindiniai nustatymai',
+    barcodeRotationLabel: 'Pasukimas',
+    barcodeRotation: {
+        rotationNone: 'Nėra',
+        rotate90degrees: '90°',
+        rotate180degrees: '180°',
+        rotate270degrees: '270°'
+    },
+    toolTip: {
+        requirements: 'Rodo įvairių tipų brūkšninius kodus.',
+        description: 'Rodo brūkšninius kodus.',
+        title: 'Brūkšninis kodas'
+    }
+};
 EJBarcode.Locale['fi-FI'] = {
     barcodeValue: 'Teksti',
     barcodeType: 'Symbologiatyyppi',
@@ -379,6 +397,24 @@ EJBarcode.Locale['fi-FI'] = {
         requirements: 'Näytä mikä tahansa viivakoodityyppi.',
         description: 'Näyttää viivakoodin.',
         title: 'Viivakoodi'
+    }
+};
+EJBarcode.Locale['id-ID'] = {
+    barcodeValue: 'Teks',
+    barcodeType: 'Jenis Simbologi',
+    textVisibility: 'Visibilitas Teks',
+    categoryBasicSettings: 'Pengaturan Dasar',
+    barcodeRotationLabel: 'Rotasi',
+    barcodeRotation: {
+        rotationNone: 'Tidak Ada',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Tampilkan jenis barcode apa pun.',
+        description: 'Menampilkan barcode.',
+        title: 'Barcode'
     }
 };
 EJBarcode.Locale['da-DK'] = {
@@ -489,6 +525,24 @@ EJBarcode.Locale['he-IL'] = {
         title: 'ברקוד'
     }
 };
+EJBarcode.Locale['hu-HU'] = {
+    barcodeValue: 'Szöveg',
+    barcodeType: 'Vonalkód típusa',
+    textVisibility: 'Szöveg megjelenítése',
+    categoryBasicSettings: 'Alapbeállítások',
+    barcodeRotationLabel: 'Elforgatás',
+    barcodeRotation: {
+        rotationNone: 'Nincs',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Bármilyen vonalkódtípus megjelenítése.',
+        description: 'Vonalkódok megjelenítése.',
+        title: 'Vonalkód'
+    }
+};
 EJBarcode.Locale['ja-JP'] = {
     barcodeValue: 'テキスト',
     barcodeType: 'シンボロジータイプ',
@@ -505,6 +559,24 @@ EJBarcode.Locale['ja-JP'] = {
         requirements: 'すべてのバーコードタイプを表示します。',
         description: 'バーコードを表示します。',
         title: 'バーコード'
+    }
+};
+EJBarcode.Locale['lv-LV'] = {
+    barcodeValue: 'Teksts',
+    barcodeType: 'Simboloģijas tips',
+    textVisibility: 'Teksta redzamība',
+    categoryBasicSettings: 'Pamata iestatījumi',
+    barcodeRotationLabel: 'Pagriešana',
+    barcodeRotation: {
+        rotationNone: 'Nav',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Attēlo jebkura veida svītrkodu.',
+        description: 'Parāda svītrkodus.',
+        title: 'Svītrkods'
     }
 };
 EJBarcode.Locale['pt-PT'] = {
@@ -631,5 +703,41 @@ EJBarcode.Locale['et-EE'] = {
         requirements: 'Kuvab mis tahes vöötkoodi tüübi.',
         description: 'Kuvab vöötkoodid.',
         title: 'Vöötkood'
+    }
+};
+EJBarcode.Locale['ko-KR'] = {
+    barcodeValue: '텍스트',
+    barcodeType: '심볼로지 유형',
+    textVisibility: '텍스트 표시',
+    categoryBasicSettings: '기본 설정',
+    barcodeRotationLabel: '회전',
+    barcodeRotation: {
+        rotationNone: '없음',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: '모든 바코드 유형을 표시합니다.',
+        description: '바코드를 표시합니다.',
+        title: '바코드'
+    }
+};
+EJBarcode.Locale['nb-NO'] = {
+    barcodeValue: 'Tekst',
+    barcodeType: 'Symbolologitype',
+    textVisibility: 'Tekstsynlighet',
+    categoryBasicSettings: 'Grunnleggende innstillinger',
+    barcodeRotationLabel: 'Rotasjon',
+    barcodeRotation: {
+        rotationNone: 'Ingen',
+        rotate90degrees: '90',
+        rotate180degrees: '180',
+        rotate270degrees: '270'
+    },
+    toolTip: {
+        requirements: 'Vis enhver strekkodetype.',
+        description: 'Viser strekkodene.',
+        title: 'Strekkode'
     }
 };

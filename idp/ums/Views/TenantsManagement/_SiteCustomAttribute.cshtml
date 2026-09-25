@@ -2,13 +2,13 @@
 @{
     var activeTab = (!string.IsNullOrWhiteSpace(Context.Request.Query["tab"]) && Context.Request.Query["tab"] == "attributes") ? "active" : string.Empty;
 }
-<script type="text/x-jsrender" id="attribute-name-template">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="attribute-name-template">
     <span class="grid-content" title="${Name}">${Name}</span>
 </script>
-<script type="text/x-jsrender" id="attribute-description-template">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="attribute-description-template">
     <span class="grid-content" title="${Description}">${Description}</span>
 </script>
-<script type="text/x-jsrender" id="attribute-value-template">
+<script nonce="@Context.Items["ScriptNonce"]" type="text/x-jsrender" id="attribute-value-template">
     <span class="grid-content" title="${Value}">${Value}</span>
 </script>
 @*<link rel="stylesheet" href="~/bundles/css/custom-attribute.css" asp-append-version="true" />*@

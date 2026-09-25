@@ -4,6 +4,8 @@
     ViewBag.HelpSiteUrl = GlobalAppSettings.GetHelpSiteUrl(HelpSiteUrlNames.DataConnectors);
     var globalAppSettings = _globalAppSettings;
     var language = CultureInfo.CurrentCulture.Name;
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
     var boldReportsApiUrl = new ReportServerApiEndPoints(globalAppSettings).ReportServerApiUrl(); 
     var isAdmin = Context.Session.GetString("IsAdmin") != null && Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
@@ -20,6 +22,8 @@
     <meta name="report_server:url" content="@boldReportsApiUrl" />
     <meta name="user:is_admin" content="@isAdmin.ToString()" />
     <meta name="designer_service:url" content="@reportServiceUrl" />
+    <meta name="designer_service:rooturl" content="@baseUrl" />
+    <meta name="designer_service:selfhosted" content="@isSelfHosted.ToString().ToLower()" />
     <meta name="designer_service:isazureapp" content="@isAzureApplication.ToString().ToLower()" />
     <meta name="designer_service:iscloudmode" content=@Json.Serialize(@ViewBag.IsCloudMode) />
     <environment include="Development,CloudDevelopment">

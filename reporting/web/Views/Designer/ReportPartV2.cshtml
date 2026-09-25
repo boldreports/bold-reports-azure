@@ -389,6 +389,7 @@
         var isEditReport = false;
         var relativeDateTimer = null;
         var reportPartNameTooltip = null;
+        var rootUrl = "@baseUrl";
         var reportPartId = "@ViewBag.ReportPartId";
         var reportPartName = decodeHtmlAsString("@reportPartName");
         var datasetName = "@ViewBag.datasetId";
@@ -445,7 +446,29 @@
             loadCustomFonts();
             renderDesignerHeader();
             refreshReportDesignerFooter();
-            renderDesigner();
+
+            if (!@isSelfHosted.ToString().ToLower())
+            {
+                var urlBase = typeof rootUrl !== 'undefined' && rootUrl ? rootUrl.replace(/\/+$/, '') : '';
+                var tokenUrl = urlBase + '/v1.0/auth/access-token';
+                fetch(tokenUrl, { credentials: 'include', cache: 'no-store' })
+                    .then(function (resp) {
+                        if (resp.ok) {
+                            return resp.json();
+                        }
+                        throw resp;
+                    })
+                    .then(function (data) {
+                        var token = data && data.access_token ? data.access_token : '';
+                        renderDesigner(token);
+                    })
+                    .catch(function () {
+                        renderDesigner(null);
+                    });
+            } else {
+                renderDesigner(null);
+            }
+
             $(window).resize(refreshReportDesignerFooter);
         });
 
@@ -457,7 +480,7 @@
             $("#container").width($(window).width());
         }
 
-        function renderDesigner() {
+        function renderDesigner(token) {
             $(document.body).bind('submit', $.proxy(this.formSubmit, this));
             $(window).bind('beforeunload', $.proxy(this.windowUnload, this));
             var datasetPermission = noPermission;
@@ -545,6 +568,10 @@
                 enableParameterOperator: enableParameterOperator
             };
 
+            if (token)
+            {
+                designerModel.serviceAuthorizationToken = token;
+            }
             var designer = new boldReportDesigner($('#' + controlId), designerModel);
         }
 

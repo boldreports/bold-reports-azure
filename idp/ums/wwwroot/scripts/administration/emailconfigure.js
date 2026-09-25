@@ -80,7 +80,8 @@ $(document).ready(function () {
             }
             textArea.style.display = 'none';
             htmlPreview.style.display = 'block';
-            htmlPreview.innerHTML = marked(customEmailEditRTE.contentModule.getEditPanel().value);
+            // marked v4+ exposes the parser as marked.parse() rather than a callable export
+            htmlPreview.innerHTML = marked.parse(customEmailEditRTE.contentModule.getEditPanel().value);
             mdsource.parentElement.title = 'Code View';
         }
     }

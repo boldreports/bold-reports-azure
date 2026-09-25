@@ -2,6 +2,8 @@
 @{
     var globalAppSettings = _globalAppSettings;
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var baseUrl = globalAppSettings.SystemSettings.BaseUrl;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
     var language = CultureInfo.CurrentCulture.Name;
 }
 <script nonce="@Context.Items["ScriptNonce"]">

@@ -311,3 +311,77 @@ window.ClosePipelinePanel = () => {
     }
 
 }
+
+window.scheduleComponentRef = null;
+window.navMenuRef = null;
+
+window.registerScheduleComponent = function(dotNetRef) {
+    try {
+        if (dotNetRef) {
+            window.scheduleComponentRef = dotNetRef;
+        }
+    } catch (error) {
+        console.error('[JS] Error registering schedule component:', error);
+    }
+};
+
+window.registerNavMenu = function(dotNetRef) {
+    try {
+        if (dotNetRef) {
+            window.navMenuRef = dotNetRef;
+        }
+    } catch (error) {
+        console.error('[JS] Error registering NavMenu:', error);
+    }
+};
+
+window.checkAndInterceptNavigationAsync = async function(section) {
+    try {
+        if (!window.scheduleComponentRef) {
+            if (window.navMenuRef) {
+                await window.navMenuRef.invokeMethodAsync('ProceedWithNavigation', section);
+            }
+            return;
+        }
+
+        try {
+            const isEditing = await window.scheduleComponentRef.invokeMethodAsync('CheckScheduleEditing');
+            
+            if (isEditing) {
+                await window.scheduleComponentRef.invokeMethodAsync('InterceptNavigation', section);
+            } else {
+                if (window.navMenuRef) {
+                    await window.navMenuRef.invokeMethodAsync('ProceedWithNavigation', section);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking schedule editing state:', error);
+            if (window.navMenuRef) {
+                await window.navMenuRef.invokeMethodAsync('ProceedWithNavigation', section);
+            }
+        }
+    } catch (error) {
+        console.error('Error in checkAndInterceptNavigationAsync:', error);
+    }
+};
+
+window.proceedNavigationAfterConfirmation = async function(section) {
+    try {
+        if (window.navMenuRef) {
+            await window.navMenuRef.invokeMethodAsync('ProceedWithNavigation', section);
+        }
+    } catch (error) {
+        console.error('Error proceeding with navigation after confirmation:', error);
+    }
+};
+
+window.setNavbarDisabled = function(isDisabled) {
+    const navbar = document.querySelector('.navbar-custom');
+    if (navbar) {
+        if (isDisabled) {
+            navbar.classList.add('navbar-disabled');
+        } else {
+            navbar.classList.remove('navbar-disabled');
+        }
+    }
+};

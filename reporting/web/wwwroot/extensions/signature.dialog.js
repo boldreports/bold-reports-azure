@@ -689,6 +689,19 @@ SignatureDialog.Locale['en-US'] = {
     ariaLabelCrop: 'Crop the signature',
     ariaLabelClear: 'Clear the signature'
 };
+SignatureDialog.Locale['lt-LT'] = {
+    cancel: 'Atšaukti',
+    closeToolTip: 'Uždaryti',
+    clear: 'Išvalyti',
+    ok: 'GERAI',
+    title: 'Parašas',
+    strokeColor: 'Linijos spalva',
+    strokeWidth: 'Linijos storis',
+    crop: 'Apkarpyti',
+    ariaLabelCanvas: 'Piešimo sritis parašui įvesti',
+    ariaLabelCrop: 'Apkarpyti parašą',
+    ariaLabelClear: 'Išvalyti parašą'
+};
 SignatureDialog.Locale['fi-FI'] = {
     cancel: 'Peruuta',
     closeToolTip: 'Sulje',
@@ -779,6 +792,19 @@ SignatureDialog.Locale['fr-FR'] = {
     ariaLabelCanvas: 'Zone de toile pour dessiner votre signature',
     ariaLabelCrop: 'Rogner la signature',
     ariaLabelClear: 'Effacer la signature'
+};
+SignatureDialog.Locale['id-ID'] = {
+    cancel: 'Batal',
+    closeToolTip: 'Tutup',
+    clear: 'Bersihkan',
+    ok: 'OK',
+    title: 'Tanda Tangan',
+    strokeColor: 'Warna Goresan',
+    strokeWidth: 'Lebar Goresan',
+    crop: 'Pangkas',
+    ariaLabelCanvas: 'Area kanvas untuk menggambar tanda tangan Anda',
+    ariaLabelCrop: 'Pangkas tanda tangan',
+    ariaLabelClear: 'Bersihkan tanda tangan'
 };
 SignatureDialog.Locale['de-DE'] = {
     cancel: 'Abbrechen',
@@ -897,6 +923,19 @@ SignatureDialog.Locale['he-IL'] = {
     ariaLabelCrop: 'חתוך את החתימה',
     ariaLabelClear: 'נקה את החתימה'
 };
+SignatureDialog.Locale['hu-HU'] = {
+    cancel: 'Mégse',
+    closeToolTip: 'Bezárás',
+    clear: 'Törlés',
+    ok: 'OK',
+    title: 'Aláírás',
+    strokeColor: 'Vonal színe',
+    strokeWidth: 'Vonalvastagság',
+    crop: 'Körülvágás',
+    ariaLabelCanvas: 'Rajzolóterület az aláírás elkészítéséhez',
+    ariaLabelCrop: 'Az aláírás körülvágása',
+    ariaLabelClear: 'Az aláírás törlése'
+};
 SignatureDialog.Locale['ja-JP'] = {
     cancel: 'キャンセル',
     closeToolTip: '閉じる',
@@ -909,6 +948,19 @@ SignatureDialog.Locale['ja-JP'] = {
     ariaLabelCanvas: '署名を描くキャンバス領域',
     ariaLabelCrop: '署名を切り抜く',
     ariaLabelClear: '署名をクリア'
+};
+SignatureDialog.Locale['lv-LV'] = {
+    cancel: 'Atcelt',
+    closeToolTip: 'Aizvērt',
+    clear: 'Notīrīt',
+    ok: 'Labi',
+    title: 'Paraksts',
+    strokeColor: 'Līnijas krāsa',
+    strokeWidth: 'Līnijas biezums',
+    crop: 'Apgriezt',
+    ariaLabelCanvas: 'Audekla apgabals paraksta zīmēšanai',
+    ariaLabelCrop: 'Apgriezt parakstu',
+    ariaLabelClear: 'Notīrīt parakstu'
 };
 SignatureDialog.Locale['pt-PT'] = {
     cancel: 'Cancelar',
@@ -987,4 +1039,30 @@ SignatureDialog.Locale['et-EE'] = {
     ariaLabelCanvas: 'Lõuendala piirkond allkirja joonestamiseks',
     ariaLabelCrop: 'Kärbi allkiri',
     ariaLabelClear: 'Puhasta allkiri'
+};
+SignatureDialog.Locale['ko-KR'] = {
+    cancel: '취소',
+    closeToolTip: '닫기',
+    clear: '지우기',
+    ok: '확인',
+    title: '서명',
+    strokeColor: '선 색',
+    strokeWidth: '선 두께',
+    crop: '자르기',
+    ariaLabelCanvas: '서명을 그릴 캔버스 영역',
+    ariaLabelCrop: '서명 자르기',
+    ariaLabelClear: '서명 지우기'
+};
+SignatureDialog.Locale['nb-NO'] = {
+    cancel: 'Avbryt',
+    closeToolTip: 'Lukk',
+    clear: 'Tøm',
+    ok: 'OK',
+    title: 'Signatur',
+    strokeColor: 'Strekfarge',
+    strokeWidth: 'Strektykkelse',
+    crop: 'Beskjær',
+    ariaLabelCanvas: 'Lerretsområde for å tegne signaturen din',
+    ariaLabelCrop: 'Beskjær signaturen',
+    ariaLabelClear: 'Tøm signaturen'
 };
