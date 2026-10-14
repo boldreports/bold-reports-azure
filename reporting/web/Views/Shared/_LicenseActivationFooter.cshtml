@@ -1,0 +1,13 @@
+﻿@{
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.HttpPathBase + ServerAppConfig.AppSettings.EndPoints.CdnLink;
+    reportServerResourceUrl = reportServerResourceUrl.TrimEnd('/');
+    var headerLogo = reportServerResourceUrl + "/cdn/images/application/boldreports/deployment_header_logo.svg";
+    
+}
+
+<header class="startup-header">
+    <div class="startup-header-container">
+        <img class="boldreports-logo" src='@headerLogo' />
+    </div>
+</header>

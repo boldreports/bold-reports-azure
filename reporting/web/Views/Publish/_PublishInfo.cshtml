@@ -1,0 +1,42 @@
+<div id="publish-info-popup" class="fluent-popup custom-bootstrap-styles custom-server-style" style="display: none">
+    <div class="fluent-popup-header col-12 no-padding">
+        <h4 class="popup-title">
+            <span class="su su-info"></span>
+            <span id="info-dialog-header">[[[Publishing Info]]]</span>
+            <button id="close-info-dialog" type="button" title="[[[Close]]]" data-bs-toggle="tool-tip" data-container="body" class="btn-close popup-close" onclick="closeItemInfo()" aria-label="Close">
+                <span class="su su-close"></span>
+            </button>
+        </h4>
+    </div>
+    <div class="fluent-item-popup-body col-12">
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Name:]]]</label><span class="col-xs-8 no-padding" id="publish-item-name"></span>
+        </span>
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Description:]]]</label><span class="col-xs-8 no-padding" id="publish-item-description"></span>
+        </span>
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Category Name:]]]</label><span class="col-xs-8 no-padding" id="publish-item-category"></span>
+        </span>
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Published Site:]]]</label><span class="col-xs-8 no-padding" id="publish-item-tenant"></span>
+        </span>
+        <span id="publish-allow-editing-enabled" class="item-info-created col-12 no-padding" style="display: none">
+            <label class="info-label col-4 no-padding">[[[Allow Report Editing:]]]</label><span class="col-xs-8 no-padding"> [[[Enabled]]]</span>
+        </span>
+        <span id="publish-allow-editing-disabled" class="item-info-created col-12 no-padding" style="display: none">
+            <label class="info-label col-4 no-padding">[[[Allow Report Editing:]]]</label><span class="col-xs-8 no-padding">[[[Disabled]]]</span>
+        </span>
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Created By:]]]</label><span class="col-xs-8 no-padding" id="publish-item-display-name"></span>
+        </span>
+        <span class="item-info-created col-12 no-padding">
+            <label class="info-label col-4 no-padding">[[[Created Date:]]]</label><span class="col-xs-8 no-padding" id="publish-item-created-date"></span>
+        </span>
+    </div>
+    <div class="fluent-popup-footer col-12">
+        <div class="col-12">
+            <button class="app-button app-secondary-button btn secondary-button app-btn-secondary" onclick="closeItemInfo()" title="Close">[[[Close]]]</button>
+        </div>
+    </div>
+</div>

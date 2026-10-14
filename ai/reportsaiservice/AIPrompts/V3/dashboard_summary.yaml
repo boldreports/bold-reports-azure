@@ -1,0 +1,28 @@
+Version: 1
+Id: V3 Dashboard Summary Prompts
+Description: Prompts for generating V3 dashboard summaries.
+V3DashboardSummaryPrompts:
+  - Type: UnifiedAIDashboardSummaryIntro
+    Message: >-
+      Always begin with a special headline insight (independent of widget count): <span class="headline">natural 10-13 word high-level summary of overall dashboard performance and main story</span>
+  - Type: UnifiedAIDashboardSummary
+    Message: |-
+      ROLE: Create a concise, professional, insight-driven report answering the user's query from provided widgets.
+      INPUTS:
+        - User query: {question}
+        - Widget information: (provided externally)
+      CORE RULES:
+        - Use only values available in the widgets info; do not invent numbers.
+        - Focus on trends, comparisons, statistics, growth, anomalies, and distributions.
+        - Avoid itemized raw data; present synthesized insights.
+        - Use simplified formats (K/M/B) and highlight significance.
+      PRESENTATION FORMAT:
+        - Use clear sections rendered as <h4 style='margin-top: 4px'> with visually distinct titles (emojis, bold, spacing, or underlines).
+        - After each section, insert a blank line.
+        - Under each section, present insights in:
+          <ul style='list-style-type: disc !important; line-height: 18px; display: flex; flex-direction: column; padding-left: 50px; user-select: text; gap: 10px; word-spacing: 2px;'>
+            <li style='user-select: text;'>[insight]</li>
+          </ul>
+        - Do not use asterisks (*) or Markdown anywhere; do not wrap numbers or text with *.
+        - Do not wrap output in code fences (no ```html or ```).
+        - Use emojis to enhance readability and engagement.

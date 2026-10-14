@@ -1,0 +1,62 @@
+﻿@{
+    string targetValue = @ServerAppConfig.SameTabReportRender ? "_self" : "_blank";
+}
+<div id="item-info-popup" class="fluent-popup custom-bootstrap-styles custom-server-style" style="display: none">
+    <div class="fluent-popup-header">
+        <h4 class="popup-title">
+            <span class="su su-info"></span>
+            <span id="info-dialog-header">[[[Info]]]</span>
+            <button id="close-info-dialog" type="button" title="[[[Close]]]" data-bs-toggle="tool-tip" data-container="body" class="btn-close popup-close" onclick="ItemInfoModule.closeItemInfo()" aria-label="Close">
+                <span class="su su-close"></span>
+            </button>
+        </h4>
+    </div>
+    <div class="fluent-item-popup-body">
+        <p class="item-info-name" id="info-item-name"></p>
+        <p class="item-info-description" id="info-item-description" style="display: none"></p>
+        <span class="item-info-created">
+            <label class="info-label" id="info-id-label"></label> <span id="info-item-id"></span>
+        </span>
+        <span class="item-info-created capitalize-text" id="info-report-part-type-span" style="display: none">
+            <label class="info-label">[[[Report Part Type:]]]</label> <span id="info-report-part-type"></span>
+        </span>
+        <span class="item-info-created capitalize-text" id="info-file-extension-span" style="display: none">
+            <label class="info-label">[[[File Extension:]]]</label> <span id="info-file-extension"></span>
+        </span>
+        <span class="item-info-created">
+            <label class="info-label">[[[Created by:]]]</label> <span id="info-created-by"></span>
+        </span>
+        <span class="item-info-created">
+            <label class="info-label">[[[Created on:]]]</label> <span id="info-created-on"></span>
+        </span>
+        <span class="item-info-modified">
+            <label class="info-label">[[[Last modified by:]]]</label> <span id="info-modified-by"></span>
+        </span>
+        <span class="item-info-modified" id="info-modified-on-span">
+            <label class="info-label">[[[Last modified on:]]]</label> <span id="info-modified-on"></span>
+        </span>
+        <span class="item-info-modified" id="info-category-span" style="display: none">
+            <label class="info-label">[[[Category: ]]]</label> <span id="info-category"></span>
+        </span>
+        <span class="item-info-linked-reports" id="info-linked-reports-span" style="display: none">
+            <label class="info-label">[[[Linked Reports: ]]]</label><span class="app-hyperlink" id="show-linked-reports-link" onclick="ItemInfoModule.getReportsLinkedWithReportPart()">[[[Show]]]</span><span id="linked-reports"></span>
+        </span>
+        @*Below lines for datasource and dataset info feature*@
+        @*<span class="item-info-modified">
+            <label class="info-label">[[[Data Source: ]]]</label>
+            <span id="info-data-source"></span>
+        </span>
+        <span class="item-info-modified">
+            <label class="info-label">[[[Data Set: ]]]</label>
+            <span id="info-data-set"></span>
+        </span>*@
+    </div>
+    <div class="fluent-popup-footer">
+        <div class="col-12" id="info-footer-link-div" style="display: none">
+            <a id="info-footer-link" href="#" class="link-button app-btn-link" target="@targetValue"></a>
+        </div>
+        <div class="col-12" id="info-footer-close-div" style="display: none">
+            <button class="secondary-button app-btn-secondary" onclick="ItemInfoModule.closeItemInfo()" title="">[[[Close]]]</button>
+        </div>
+    </div>
+</div>

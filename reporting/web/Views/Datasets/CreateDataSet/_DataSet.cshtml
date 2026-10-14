@@ -1,0 +1,32 @@
+﻿<script nonce="@Context.Items["ScriptNonce"]">
+    var getDataSources = "@Url.Action("GetItems", "DataSources")";
+</script>
+<div class="ds-dataset-container">
+    <div class="ds-dataset">
+        <div class="ds-scroller-container rs-scroller">
+            <div class="ds-scroller">
+                <div class="ds-config-container">
+                    <div class="ds-config">
+                        <div class="ds-container">
+                            <div class="ds-datasource-list-container" style="display:none">
+                                <div class="ds-filter-autocomplete-container">
+                                    <span class="e-input-group e-control-wrapper dc-filter-autocomplete">
+                                        <input type="text" id="search-datasource" class="e-autocomplete e-control e-lib e-input" placeholder="[[[Search Data Source]]]">
+                                        <span class="ds-search"></span>
+                                    </span>
+                                </div>
+                                <div class="ds-datasource-lists rs-scroller">
+                                    <div class="ds-datasource-list-empty">[[[No records to display]]]</div>
+                                </div>
+                            </div>
+                            <div class="ds-dataset-form-container" style="display:none">
+                                @{ await Html.RenderPartialAsync("~/Views/Items/_DataSetForm.cshtml"); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ await Html.RenderPartialAsync("~/Views/Datasets/CreateDataSet/_Footer.cshtml"); }
+</div>

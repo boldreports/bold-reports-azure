@@ -1,0 +1,587 @@
+@using Syncfusion.Server.Base.Helpers
+@{
+    ViewBag.Title = "[[[AI Assistant]]] - " + _globalAppSettings.SystemSettings.OrganizationName;
+    var reportServerResourceUrl = _globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+
+@section styles{
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-base/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-interactive-chat/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-inputs/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-buttons/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-navigations/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-lists/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-notifications/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-popups/styles/tailwind3.css" rel="stylesheet" />
+    <link href="https://cdn.syncfusion.com/ej2/34.1.29/ej2-dropdowns/styles/tailwind3.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.38/system.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/34.1.29/dist/ej2.min.js" type="text/javascript"></script>
+    <script src="systemjs.config.js"></script>
+    <style>
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        #base-footer-div {
+            display: none !important;
+        }
+        .reporting-ai-assist-shell {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .reporting-ai-assist-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 54px;
+            padding: 0 16px;
+            border-bottom: 1px solid #dee2e6;
+            flex: 0 0 auto;
+            background: #fff;
+        }
+        .reporting-ai-assist-header .header-icon {
+            font-size: 18px;
+        }
+        .reporting-ai-assist-header .header-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .reporting-ai-assist-body {
+            display: flex;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .thread-pane {
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #fff;
+        }
+        .thread-pane-content {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: auto;
+            padding: 8px;
+        }
+        .thread-pane-content .new-thread-btn {
+            width: 100%;
+            text-align: left;
+            border: none;
+        }
+        .thread-pane-content .new-thread-btn .e-icons {
+            margin-right: 8px;
+        }
+        #conversation-list,
+        #conversation-list.e-listview,
+        #conversation-list .e-list-parent {
+            border: none !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            margin-top: 8px;
+        }
+        #conversation-list.e-listview .e-list-item,
+        #conversation-list .e-list-item,
+        #conversation-list .e-list-item.e-active,
+        #conversation-list.e-listview .e-list-item.e-active,
+        #conversation-list .e-list-item.e-focused,
+        #conversation-list.e-listview .e-list-item.e-focused,
+        #conversation-list.e-listview .e-list-item:focus,
+        #conversation-list.e-listview .e-list-item:active {
+            border: none !important;
+            border-radius: 6px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            color: #374151 !important;
+            margin-bottom: 2px;
+            cursor: pointer;
+            outline: none !important;
+            box-shadow: none !important;
+            transition: background-color 0.15s ease;
+        }
+        /* Hover: subtle light highlight on any item */
+        #conversation-list.e-listview .e-list-item:hover,
+        #conversation-list.e-listview .e-list-item.e-hover,
+        #conversation-list .e-list-item:hover,
+        #conversation-list .e-list-item.e-hover {
+            background-color: #f3f4f6 !important;
+            color: #111827 !important;
+        }
+        /* Active thread: only highlighted when user actively asks input */
+        #conversation-list.e-listview .e-list-item.active-thread,
+        #conversation-list .e-list-item.active-thread {
+            background-color: #f3f4f6 !important;
+            color: #111827 !important;
+            font-weight: 500;
+        }
+        #conversation-list .e-list-item .e-list-text,
+        #conversation-list.e-listview .e-list-item .e-list-text,
+        #conversation-list.e-listview .e-list-item.e-active .e-list-text {
+            color: #374151 !important;
+            font-size: 13.5px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #conversation-list.e-listview .e-list-item.active-thread .e-list-text,
+        #conversation-list .e-list-item.active-thread .e-list-text {
+            color: #111827 !important;
+            font-weight: 500;
+        }
+        #conversation-list .e-text-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 4px 8px;
+        }
+        #conversation-list .delete-icon {
+            cursor: pointer;
+            flex: 0 0 auto;
+            color: #9ca3af !important;
+            font-size: 14px;
+        }
+        #conversation-list .delete-icon:hover {
+            color: #ef4444 !important;
+        }
+        .ai-model {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        #reporting-ai-assist-placeholder {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        #reporting-ai-assist-placeholder .e-aiassistview {
+            border: none;
+            border-radius: 0;
+            height: 100%;
+        }
+        #reporting-ai-assist-placeholder .e-aiassist-thinking-toggle .e-spinner-pane,
+        #reporting-ai-assist-placeholder .e-aiassist-thinking-timeline .e-stage-spinner .e-spinner-pane {
+            background-color: transparent !important;
+        }
+        #reporting-ai-assist-placeholder .e-aiassist-thinking-toggle .e-spinner-inner svg circle,
+        #reporting-ai-assist-placeholder .e-aiassist-thinking-toggle .e-spinner-inner svg path {
+            fill: var(--primary-color, #0565ff) !important;
+            stroke: var(--primary-color, #0565ff) !important;
+        }
+        #reporting-ai-assist-placeholder .e-view-content {
+            height: calc(100% - 72px) !important;
+        }
+        .reports-ai-usage-popup {
+            width: 360px;
+            max-width: calc(100vw - 32px);
+            padding: 16px;
+            border: 1px solid #d7dce3;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            z-index: 10000;
+        }
+        .reports-ai-usage-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .reports-ai-usage-header strong {
+            font-size: 14px;
+            color: #1f2937;
+        }
+        .reports-ai-usage-loading {
+            font-size: 12px;
+            color: #667085;
+        }
+        .reports-ai-usage-list {
+            margin: 0;
+        }
+        .reports-ai-usage-list > div {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 0;
+            border-top: 1px solid #eef0f3;
+        }
+        .reports-ai-usage-list dt,
+        .reports-ai-usage-list dd {
+            margin: 0;
+            font-size: 13px;
+        }
+        .reports-ai-usage-list dd {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .reports-ai-usage-list .remaining dd {
+            color: var(--primary-color, #4f46e5);
+        }
+        .reports-ai-usage-error {
+            font-size: 13px;
+            color: #d92d20;
+        }
+        #reporting-ai-assist-placeholder .e-banner-view {
+            align-items: center;
+            display: flex;
+            flex: 1 1 auto;
+            justify-content: center;
+            margin-left: 0;
+            min-height: 0;
+            width: 100%;
+        }
+        #reporting-ai-assist-placeholder .banner-content {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .e-assistview-icon::before {
+            font-size: 35px;
+        }
+        #reporting-ai-assist-placeholder .banner-content h3 {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        #reporting-ai-assist-placeholder .banner-content i {
+            color: #5f6f82;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        #reporting-ai-assist-placeholder .banner-content .activation-warning-msg {
+            color: #d9383a;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0;
+        }
+        #reporting-ai-assist-placeholder .banner-content .session-error-msg {
+            color: #d9383a;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0;
+            max-width: 640px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-error {
+            align-items: center;
+            background-color: #fff5f5;
+            border: 1px solid #d9383a;
+            border-radius: 4px;
+            display: flex;
+            gap: 16px;
+            max-width: 640px;
+            padding: 20px 24px;
+            text-align: left;
+            width: calc(100% - 48px);
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-error-icon {
+            color: #d9383a;
+            flex: 0 0 auto;
+            font-size: 28px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-error-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-error-content strong {
+            color: #b42318;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-error-content span {
+            color: #344054;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-success {
+            align-items: center;
+            background-color: #f0fdf4;
+            border: 1px solid #12b76a;
+            border-radius: 4px;
+            display: flex;
+            gap: 16px;
+            max-width: 640px;
+            padding: 20px 24px;
+            text-align: left;
+            width: calc(100% - 48px);
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-success-icon {
+            color: #039855;
+            flex: 0 0 auto;
+            font-size: 28px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-success-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-success-content strong {
+            color: #027a48;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-success-content span,
+        #reporting-ai-assist-placeholder .banner-content .license-admin-guidance {
+            color: #344054;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .ai-license-actions .activated-license-btn:disabled {
+            background-color: #12b76a;
+            border-color: #12b76a;
+            color: #fff;
+            cursor: default;
+            opacity: 1;
+        }
+        #reporting-ai-assist-placeholder .banner-content .manage-license-link {
+            color: #4f46e5;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        #reporting-ai-assist-placeholder .banner-content .manage-license-link:hover {
+            text-decoration: underline;
+        }
+        #reporting-ai-assist-placeholder .banner-content .activate-action-link {
+            color: #0565ff;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+        #reporting-ai-assist-placeholder .banner-content .activate-action-link:hover {
+            color: #044ec4;
+        }
+        .reporting-ai-mention.e-popup {
+            border-radius: 10px;
+            background-color: #f8f9fc;
+            border: 1px solid #dde1ea;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.13);
+            overflow: hidden;
+        }
+        .reporting-ai-mention.e-popup .e-list-parent {
+            padding: 6px 0;
+            margin: 0;
+            background-color: #f8f9fc;
+        }
+        .reporting-ai-mention.e-popup .e-list-item {
+            padding: 8px 16px;
+            height: auto;
+            line-height: 1.5;
+            border-left: none !important;
+            background-color: transparent;
+            color: #1e293b;
+            font-size: 13.5px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .reporting-ai-mention.e-popup .e-list-item:hover,
+        .reporting-ai-mention.e-popup .e-list-item.e-active,
+        .reporting-ai-mention.e-popup .e-list-item.e-hover {
+            background-color: #ede9fb;
+            color: #1e293b;
+        }
+        /* Category name (before the dot) rendered in purple */
+        .reporting-ai-mention.e-popup .e-list-item .e-mention-category {
+            color: #6d28d9;
+            font-weight: 600;
+        }
+        /* Report name (dot + name) rendered in dark gray */
+        .reporting-ai-mention.e-popup .e-list-item .e-mention-report-name {
+            color: #374151;
+            font-weight: 400;
+        }
+        /* Beta badge next to the AI Assistant header title */
+        .ai-beta-badge {
+            display: inline-block;
+            margin-left: 7px;
+            padding: 1px 7px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #6d28d9;
+            background-color: #ede9fb;
+            border: 1px solid #c4b5fd;
+            border-radius: 20px;
+            vertical-align: middle;
+            line-height: 1.6;
+        }
+        /* Dataset name rendered in teal/green to distinguish from reports */
+        .reporting-ai-mention.e-popup .e-list-item .e-mention-dataset-name {
+            color: #374151;
+            font-weight: 500;
+        }
+        /* No results message */
+        .reporting-ai-mention.e-popup .e-no-data {
+            padding: 8px 16px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        .reporting-ai-mention-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+        .reporting-ai-mention-item .e-assist-file-format-icon {
+            flex: 0 0 auto;
+            font-size: 16px;
+        }
+        .reporting-ai-mention-item-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #1e293b;
+            font-size: 13.5px;
+        }
+        #reporting-ai-assist-placeholder .e-mention-chip {
+            display: inline-block;
+            max-width: 100%;
+            padding: 0 6px;
+            border-radius: 4px;
+            background-color: rgba(5, 101, 255, 0.12);
+            color: var(--primary-color, #0565ff);
+            font-weight: 500;
+            line-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+        }
+        /* Smooth fade transition on placeholder text change */
+        .e-assist-textarea::placeholder {
+            transition: opacity 0.4s ease;
+        }
+        .e-assist-textarea.placeholder-fade::placeholder {
+            opacity: 0;
+        }
+        /* Prevent the Mention component from adding extra borders/height to the AI textarea */
+        .e-assist-textarea.e-mention {
+            border: none !important;
+            min-height: unset !important;
+            resize: none !important;
+        }
+        /* Hide the invisible host div used to mount the Mention component */
+        .reporting-ai-mention-host {
+            height: 0;
+            overflow: hidden;
+            position: absolute;
+        }
+        @@media screen and (max-width: 680px) {
+            .reporting-ai-assist-body {
+                display: block;
+            }
+            .thread-pane {
+                width: 100%;
+                min-width: 0;
+                max-width: none;
+                border-right: none;
+                border-bottom: 1px solid #dee2e6;
+            }
+            .ai-model {
+                height: calc(100vh - 280px);
+            }
+        }
+    </style>
+}
+
+@section scripts{
+    <script nonce="@Context.Items["ScriptNonce"]" src="https://cdn.syncfusion.com/ej2/34.1.29/dist/ej2.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]">
+        ej.base.registerLicense('Ngo9BigBOggjHTQxAR8/V1JAaF5cXGhAd1p/WGJbYl1xZFdFallYTnNWSV9jS3hTfkRrWHhacnZURWRYWU91Ww==');
+        window.reportingAiAssistConfig = {
+            reportsChatUrl: "@ViewBag.AiAssistChatBaseUrl" + "/v1.0-beta/reports/chat",
+            sessionStartUrl: "@ViewBag.AiAssistChatBaseUrl" + "/v1.0-beta/reports/chat/session/start",
+            sessionEndUrl: "@ViewBag.AiAssistChatBaseUrl" + "/v1.0-beta/reports/chat/session/end",
+            promptSuggestionUrl: "@ViewBag.AiAssistChatBaseUrl" + "/v1.0-beta/reports/chat/suggestions",
+            licenseActivationUrl: "@Url.Action("ActivateLicense", "ReportingAi")",
+            usageUrl: "@Url.Action("GetAiUsage", "ReportingAi")",
+            saveConversationUrl: "@Url.Action("SaveConversation", "ReportingAi")",
+            getConversationsUrl: "@Url.Action("GetConversations", "ReportingAi")",
+            getConversationUrl: "@Url.Action("GetConversation", "ReportingAi", new { conversationId = "__conversationId__" })",
+            deleteConversationUrl: "@Url.Action("DeleteConversation", "ReportingAi", new { conversationId = "__conversationId__" })",
+            isBoldAiProvider: @Json.Serialize(ViewBag.AiAssistIsBoldAiProvider),
+            isAdmin: @Json.Serialize(ViewBag.AiAssistIsAdmin),
+            manageLicenseUrl: @Json.Serialize(ViewBag.AiAssistManageLicenseUrl),
+            token: "@ViewBag.AiAssistToken",
+            baseUrl: "@ViewBag.AiAssistBaseUrl",
+            siteUrl: "@ViewBag.AiAssistSiteUrl",
+            siteId: "@_globalAppSettings.SystemSettings.TenantId",
+            clientId: "@ViewBag.AiAssistClientId",
+            environment: "@ViewBag.AiAssistEnvironment",
+            productVersion: "@ViewBag.AiAssistProductVersion",
+            userId: "@ViewBag.AiAssistUserId",
+            userEmail: "@ViewBag.AiAssistUserEmail",
+            userName: "@ViewBag.AiAssistUserName",
+            dataSetId: "@ViewBag.DataSetId",
+            reportList: @Json.Serialize(ViewBag.ReportList),
+            mentionReportList: @Json.Serialize(ViewBag.MentionReportList),
+            mentionDatasetList: @Json.Serialize(ViewBag.MentionDatasetList)
+        };
+    </script>
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <h3>AI Assistance <span class='ai-beta-badge'>Beta</span></h3>
+            <i>To get started, provide input or choose a suggestion.</i>
+        </div>
+    </script>
+    <script nonce="@Context.Items["ScriptNonce"]" src="https://cdn.syncfusion.com/ej2/34.1.29/ej2-lists/dist/global/ej2-lists.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]" src="https://cdn.syncfusion.com/ej2/34.1.29/ej2-interactive-chat/dist/global/ej2-interactive-chat.min.js"></script>
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/assist-chat.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/assist-chat.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/assist-chat.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/assist-chat.min.js")" crossorigin="anonymous"></script>
+    </environment>
+}
+
+@section MainSection{
+    <div class="reporting-ai-assist-shell">
+        @* <div class="reporting-ai-assist-header">
+            <span class="header-icon e-icons e-assistview-icon"></span>
+            <span class="header-title">AI Assistant</span>
+        </div> *@
+        <div class="reporting-ai-assist-body">
+            <div class="thread-pane">
+                <div class="thread-pane-content">
+                    <button id="newthreadbtn" class="e-control e-btn e-lib new-thread-btn" type="button">
+                        <span class="e-btn-icon e-icons e-plus e-icon-left"></span>
+                        New Thread
+                    </button>
+                    <div id="conversation-list"></div>
+                </div>
+            </div>
+            <div class="ai-model">
+                <div id="reporting-ai-assist-placeholder" aria-busy="true" aria-label="Loading AI assistant"></div>
+            </div>
+        </div>
+    </div>
+    @* Invisible host elements for the Mention components (popups render in document.body) *@
+    <div id="reporting-ai-mention-host" class="reporting-ai-mention-host" aria-hidden="true"></div>
+    <div id="reporting-ai-dataset-mention-host" class="reporting-ai-mention-host" aria-hidden="true"></div>
+}

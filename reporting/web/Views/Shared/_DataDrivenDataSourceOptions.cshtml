@@ -1,0 +1,64 @@
+﻿<div class="data-driven-datasource-popup" id="Datasource-selection">
+    <div id="data-driven-dataset-info" class="schedule-type-card" aria-selected="false">
+        <span class="su su-info" title=""></span>
+        <div>
+            <span class="data-driven-dataset-info-description">Each unique row identified in the selected dataset will trigger the generation of an individual report. Ensure your datasource is filtered to include only intended recipients.</span>
+        </div>
+    </div>
+    <div class="datasource-configured-section">
+        <div class="datasource-dataset-selection">
+            <!-- DATASOURCE -->
+            <div class="datasource-field">
+                <label>[[[Select data source]]]<span class="mandatory">*</span></label>
+                @{
+                    var datasourceItems = ViewBag.ConfiguredDatasources as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+                }
+                <input type="hidden" id="configured-datasource-dropdown-value" value="" />
+                <select id="configured-datasource-dropdown" style="display:none;">
+                    <option value="">[[[Select datasource]]]</option>
+                    @foreach (var item in datasourceItems)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <div class="validation-message data-driven-validation-message" id="configured-datasource-error"></div>
+            </div>
+
+            <!-- DATASET -->
+            <div class="datasource-field">
+                <label>[[[Select dataset]]]<span class="mandatory">*</span></label>
+                <input type="hidden" id="configured-dataset-dropdown-value" value="" />
+                <select id="configured-dataset-dropdown" style="display:none;" disabled="disabled">
+                    <option value="">[[[Select dataset]]]</option>
+                </select>
+                <div class="validation-message data-driven-validation-message" id="configured-dataset-error"></div>
+            </div>
+        </div>
+        
+        <!-- PREVIEW DATA -->
+        <div class="datasource-field load-data-action-row">
+            <button id="load-datasource-data-btn" type="button" class="btn btn-primary load-data-btn" disabled="disabled">
+                <span class="su su-refresh load-data-btn-icon"></span>
+                [[[Preview Data]]]
+            </button>
+            <span id="load-data-spinner" class="load-data-spinner" style="display:none;">
+                <div class="loader-blue loader-icon">
+                    <svg class="circular">
+                        <circle class="path" cx="27" cy="27" r="13" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+                    </svg>
+                </div>
+            </span>
+        </div>
+
+        <!-- DATA PREVIEW GRID -->
+        <div id="load-data-preview-section" class="datasource-field load-data-preview-section" style="display:none;">
+            <div class="load-data-preview-header">
+                <span class="load-data-preview-title">[[[Data Preview]]]</span>
+                <span class="load-data-preview-subtitle">[[[Showing last 5 rows]]]</span>
+            </div>
+            <div class="load-data-grid-wrapper">
+                <div id="load-data-preview-grid"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+
+    // Helper: masked display of API keys
+    string GetCompactMaskedValue(string apiKey)
+    {
+        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Length < 6)
+        {
+            return string.Empty;
+        }
+
+        return string.Concat(apiKey.Substring(0, 3), new string('.', 112), apiKey.Substring(apiKey.Length - 3));
+    }
+
+    dynamic aiCredentials = ViewBag.AICredentials;
+    var isSettingsTab = "active"; // Single tab, always active
+
+    // AI providers dropdown
+    var aiProviders = new List<SelectListItem>
+    {
+        new SelectListItem { Value = ((int)AIModel.BoldAIService).ToString(), Text = "[[[Bold AI Service]]]", Selected = (int?)ViewBag.AIModel == (int)AIModel.BoldAIService },
+        new SelectListItem { Value = ((int)AIModel.OpenAI).ToString(), Text = "[[[Open AI]]]", Selected = (int?)ViewBag.AIModel == (int)AIModel.OpenAI },
+        new SelectListItem { Value = ((int)AIModel.AzureAI).ToString(), Text = "[[[Azure AI]]]", Selected = (int?)ViewBag.AIModel == (int)AIModel.AzureAI },
+        new SelectListItem { Value = ((int)AIModel.Anthropic).ToString(), Text = "[[[Anthropic]]]", Selected = (int?)ViewBag.AIModel == (int)AIModel.Anthropic }
+    };
+
+    var enableAiFeature = (bool)(ViewBag.EnableAiFeature ?? false);
+    var isAiSummariesEnabledGlobally = (bool)(ViewBag.IsAiSummariesEnabledGlobally ?? true);
+
+    // Masked display keys (simplified: read directly from ViewBag)
+    var openAiDisplayKey = GetCompactMaskedValue((string)aiCredentials?.OpenAI?.OpenAiApiKey);
+    var azureAiDisplayKey = GetCompactMaskedValue((string)aiCredentials?.AzureAI?.AzureAiApiKey);
+    var anthropicDisplayKey = GetCompactMaskedValue((string)aiCredentials?.AnthropicAI?.AnthropicApiKey);
+
+    // Azure AI non-sensitive fields (pre-populate from saved credentials)
+    var azureModelName = (string)(aiCredentials?.AzureAI?.ModelName ?? "");
+    var azureResourceName = (string)(aiCredentials?.AzureAI?.ResourceName ?? "");
+    var azureDeploymentName = (string)(aiCredentials?.AzureAI?.DeploymentName ?? "");
+
+    // TODO: In future, fetch dynamically from HelpSiteManager.GetHelpSiteUrl(HelpSiteUrlNames.AiModel)
+    var aimodelContent = "";
+}
+
+<div id="ai-settings-container" class="col-12 admin-page-container" style="padding-top: 50px;">
+    <div class="col-12 admin-page-header">
+        <hgroup>
+            <h1 class="h2 page-title">
+                [[[AI SETTINGS]]]
+            </h1>
+            <h5 class="page-description">
+                [[[Configuration for AI settings.]]]
+            </h5>
+        </hgroup>
+    </div>
+    <div class="admin-page-body">
+        <form id="ai-setting-form" autocomplete="off">
+            @Html.AntiForgeryToken()
+
+            @* Not required now, will be implemented in future *@
+            @* Checkbox: Enable AI Agent and AI Copilot
+            <div class="col-12 float-start no-padding enable-csp">
+                <div class="col-12 float-start no-padding">
+                    <div class="info-label">
+                        @Html.CheckBox("aimodel-enable-switch", enableAiFeature, new { @class = "material-checkbox" })
+                        @Html.Hidden("aimodel-enable-switch")
+                        <label for="aimodel-enable-switch">[[[Enable AI Agent and AI Copilot]]]</label>
+                    </div>
+                    <div class="enable-ai-info-message col-12 float-start">
+                        [[[The AI assistant uses metadata to process your queries while ensuring your data remains private and secure. This assistant will be available on the dashboard page, allowing you to interact seamlessly for contextual guidance and support.]]]
+                    </div>
+                </div>
+            </div>
+            *@
+
+            @* Checkbox: Enable Widget Insights and Dashboard Summary
+            <div class="col-12 float-start no-padding enable-csp">
+                <div class="col-12 float-start no-padding">
+                    <div class="info-label">
+                        @Html.CheckBox("ai-concent", isAiSummariesEnabledGlobally, new { @class = "material-checkbox" })
+                        @Html.Hidden("ai-concent")
+                        <label for="ai-concent">[[[Enable Widget Insights and Dashboard Summary]]]</label>
+                    </div>
+                    <div class="enable-ai-info-message col-12 float-start">
+                        [[[By enabling this feature, you consent to processing both metadata and summarized data through the configured AI services. This enables contextual insights, helping you make informed, data-driven decisions. These insights will be displayed on the dashboard page, giving you direct access to AI-powered summaries and recommendations.]]]
+                    </div>
+                </div>
+            </div>
+            *@
+
+            @* Dropdown: AI Provider *@
+            <div class="row mb-3">
+                @Html.Label("ai-providers", "[[[AI Provider]]]", new { @class = "app-textbox-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownList("ai_providers_type", aiProviders, new { @class = "selectpicker form-control", id = "ai-providers", data_live_search = "false" })
+                    <span class="validation-errors"></span>
+                </div>
+            </div>
+
+            @* OpenAI API Key *@
+            <div class="row mb-3 openai-field" style="display: none;">
+    @Html.Label("open-ai-api-key", "[[[Open AI API Key]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="open-ai-api-key" class="form-control mail-settings-fields" name="openai_apikey" placeholder="[[[Open AI API Key]]]" value="@openAiDisplayKey" data-masked-value="@openAiDisplayKey" autocomplete="off" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+            @* Anthropic API Key *@
+<div class="row mb-3 anthropic-field" style="display: none;">
+    @Html.Label("anthropic-api-key", "[[[Anthropic API Key]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="anthropic-api-key" class="form-control mail-settings-fields" name="anthropic_apikey" placeholder="[[[Anthropic API Key]]]" value="@anthropicDisplayKey" data-masked-value="@anthropicDisplayKey" autocomplete="off" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+            @* Azure AI: Model Name *@
+<div class="row mb-3 azureai-field" style="display: none;">
+    @Html.Label("azure-model-name", "[[[Model Name]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="azure-model-name" class="form-control txt-holder validation-padding mail-settings-fields" name="azure_model_name" placeholder="[[[Model Name]]]" value="@azureModelName" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+            @* Azure AI: Resource Name *@
+<div class="row mb-3 azureai-field" style="display: none;">
+    @Html.Label("resource-name", "[[[Resource Name]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="resource-name" class="form-control txt-holder validation-padding mail-settings-fields" name="resource_name" placeholder="[[[Resource Name]]]" value="@azureResourceName" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+            @* Azure AI: Deployment Name *@
+<div class="row mb-3 azureai-field" style="display: none;">
+    @Html.Label("deployment-name", "[[[Deployment Name]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="deployment-name" class="form-control mail-settings-fields" name="deployment_name" placeholder="[[[Deployment Name]]]" value="@azureDeploymentName" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+           @* Azure AI: API Key *@
+<div class="row mb-3 azureai-field secrets-field-pwsd" style="display: none;">
+    @Html.Label("azureai-apikey", "[[[Azure AI API Key]]]", new { @class = "app-textbox-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" id="azureai-apikey" class="form-control mail-settings-fields" name="azureai_apikey" placeholder="[[[Azure AI API Key]]]" value="@azureAiDisplayKey" data-masked-value="@azureAiDisplayKey" autocomplete="off" />
+        <span class="validation-errors"></span>
+    </div>
+</div>
+
+            <div class="row ai-privacy-policy-row">
+                <div class="col-12 col-md-10 offset-md-2">
+                    <aside class="ai-privacy-policy" aria-label="[[[Privacy and data use policy]]]">
+                        <p>
+                            [[[Read our Privacy and Data use policy for more information.]]]
+                            <a href="https://www.boldreports.com/legal/privacy/" target="_blank" rel="noopener noreferrer">[[[View Full Policy]]]</a>.
+                        </p>
+                    </aside>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="admin-page-actions col-lg-12 col-md-12 no-margin">
+        <a href="@Url.Action("Index", "Home")" class="secondary-button app-btn-secondary float-end" id="cancel-settings" title="">[[[Cancel]]]</a>
+        <button type="button" title="" id="UpdateAiSettings" name="UpdateAiSettings" class="primary-button app-btn-primary float-end">
+            <span>[[[Save]]]</span>
+        </button>
+    </div>
+</div>
+
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/ai-settings.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/ai-settings.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/ai-settings.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/ai-settings.min.js")" crossorigin="anonymous"></script>
+    </environment>

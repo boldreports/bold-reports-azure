@@ -1,0 +1,118 @@
+@{
+    var pageHeader = ViewBag.PageHeader != null ? ViewBag.PageHeader : string.Empty ;
+    var itemsCount = ViewBag.ItemsCount as Dictionary<ItemType, int>;
+    var helpSiteBaseUrl = ServerAppConfig.AppSettings.Documentation.BaseUri;
+    var groupDetails = ViewBag.groupDetails;
+}
+<div id="top-header-section-container" class="col-12 top-nav-header-section justify-content-between align-items-center">
+    <div class="left-section section">
+        <hgroup class="col-12 no-padding header-group @(ViewBag.PageDescription == null ? "header-group-without-description" : string.Empty)">
+            @if (ViewBag.IsUserSyncPage != null && ViewBag.IsUserSyncPage == "true")
+            {
+                <h1 class="col-12 no-padding section-heading page-title header" id="user-title-with-count">
+                    @if (ViewBag.BackIconRedirectionUrl != null)
+                    {
+                        <a class="back-button float-start" href="@ViewBag.BackIconRedirectionUrl" data-bs-toggle="tooltip" data-placement="bottom" data-container="body" title="@(ViewBag.BackIconTitle != null ? ViewBag.BackIconTitle : "")">
+                            <i class="su su-arrow-back back-navigaion img-size"> </i>
+                        </a>
+                    }
+                    @{
+#pragma warning disable SCS0029
+                    }
+                    @ViewBag.PageHeader - @Html.Raw(String.Format("Users {0}", "<span id='total-record-count'></span>"))
+                    @{
+#pragma warning restore SCS0029
+                    }
+                </h1>
+            }
+            else
+            {
+                <h1 class="col-12 no-padding section-heading page-title header" id="@(ViewBag.IsViewUserProfile != null && ViewBag.IsViewUserProfile == "true" ? "display-name" : string.Empty)">
+                    @if (ViewBag.BackIconRedirectionUrl != null)
+                    {
+                        <a class="back-button float-start" href="@ViewBag.BackIconRedirectionUrl" data-bs-toggle="tooltip" data-placement="bottom" data-container="body" title="@(ViewBag.BackIconTitle != null ? ViewBag.BackIconTitle : "")">
+                            <i class="su su-arrow-back back-navigaion img-size"> </i>
+                        </a>
+                    }
+                    @if (ViewBag.UserCount != null && ViewBag.IsUsersPage != null && ViewBag.IsUsersPage == "true")
+                    {
+                        <input type="hidden" id="user-count-text" value="@ViewBag.UserCount">
+                        @ViewBag.PageHeader @(Html.Raw("<span id=\"user-count\" value=\"" + ViewBag.UserCount + "\"> (" + ViewBag.UserCount + ")</span>"))
+                    }
+                    else if (ViewBag.EmailTemplateName != null)
+                    {
+                        <input type="hidden" data-unique-id ="@ViewBag.UniqueId" id="email-template-name" value="@ViewBag.UserCount">
+                        @ViewBag.PageHeader
+                    }
+                    else if (ViewBag.groupCount != null && !(ViewBag.IsUserManagementHeader != null && ViewBag.IsUserManagementHeader == true))
+                    {
+                        @if (ViewBag.IsGroupSyncPage != null && ViewBag.IsGroupSyncPage == "true")
+                        {
+                            <span>
+                                @{
+#pragma warning disable SCS0029
+                                }
+                                @ViewBag.PageHeader - @Html.Raw(String.Format("Groups {0}", "(<span id='group-count'>" + ViewBag.groupCount + "</span>)"))
+                                @{
+#pragma warning restore SCS0029
+                                }
+                            </span>
+                        }
+                        else
+                        {
+                            @ViewBag.PageHeader @(Html.Raw("<span id=\"group-count\" value=\"" + ViewBag.groupCount + "\"> (" + ViewBag.groupCount + ")</span>"))
+                            <span class="tool-tip-description">
+                                <span class="dropdown-toggle" data-bs-toggle="dropdown"><span class="su su-info" title=""></span></span>
+                                <span class="dropdown-menu" role="menu">
+                                    [[[You can use groups to create and assign a set of permissions and custom attributes to multiple users without re-creating them for each user.]]]
+                                    @if (!@ServerAppConfig.IsHideHelpLink)
+                                    {
+                                        <span>
+                                            @{
+#pragma warning disable SCS0029
+                                            }
+                                            @Html.Raw(String.Format("Click {0}here{1} to learn how to use groups.", "<a class='app-hyperlink' href='" + (helpSiteBaseUrl) + "' target='_blank'>", "</a>"))
+                                            @{
+#pragma warning restore SCS0029
+                                            }
+                                        </span>
+                                    }
+                                </span>
+                            </span>
+                            <input type="hidden" id="azureadgroup-count-text" value="@ViewBag.AzureADGroupCount">
+                        }
+                        <input type="hidden" name="GroupCount" id="group-count-text" value="@ViewBag.groupCount" />
+                    }
+                    else if (ViewBag.IsViewGroupProfile != null && ViewBag.IsViewGroupProfile == "true")
+                    {
+                        <span title="@groupDetails.GroupName">@groupDetails.GroupName</span>
+                    }
+                    else
+                    {
+                        @if (ViewBag.DisplayNameInHeader != null)
+                        {
+                            <span>
+                                @ViewBag.PageHeader <span title="@ViewBag.DisplayNameInHeader"> - @ViewBag.DisplayNameInHeader</span>
+                            </span>
+                        }
+                        else
+                        {
+                            @ViewBag.PageHeader
+                        }
+                        @if (itemsCount != null && itemsCount.ContainsKey(ItemType.Datasource) && itemsCount[ItemType.Datasource] > 0)
+                        {
+                            <span style="display: none" id="data-source-text">(<span id="data-source-count"></span>) </span>
+                        }
+                    }
+                </h1>
+            }
+            @if (ViewBag.PageDescription != null)
+            {
+                <h6 class="col-12 page-description">@ViewBag.PageDescription</h6>
+            }
+        </hgroup>
+    </div>
+    <div class="right-section section">
+        @await Html.PartialAsync("../Shared/_TopMenu")
+    </div>
+</div>

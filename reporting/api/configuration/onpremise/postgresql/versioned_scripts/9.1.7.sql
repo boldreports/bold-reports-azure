@@ -1,0 +1,2 @@
+ALTER TABLE BOLDRS_ItemLog ALTER COLUMN AdditionalLogInfo TYPE TEXT
+;

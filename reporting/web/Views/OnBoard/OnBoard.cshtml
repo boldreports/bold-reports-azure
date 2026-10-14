@@ -1,0 +1,392 @@
+@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var brandImagePath = reportServerResourceUrl + "/cdn/images/application/" + ServerAppConfig.AppSettings.AppBranding.Identifier + "/";
+    var illustrationPath = reportServerResourceUrl + "/cdn/images/static/onboarding/v1/pixel-perfect-reporting.svg";
+    var faviconLogo = ServerAppConfig.GetClientServiceUrl(globalAppSettings.SystemSettings.FavIcon, Context);
+    var reportsUrl = Url.Action("Reports", "Reports");
+
+    @* Values are the keys posted to the server (see OnBoardRequest); labels are what the user reads.
+       Pending sign-off before release:
+       [VERIFY: embed platform list matches help.boldreports.com — product]
+       [VERIFY: viewer bands align with the viewer bands on /pricing/ — sales ops]
+       [VERIFY: connector display names: "Azure SQL", "Amazon OpenSearch", "MemSQL (SingleStore)", "Azure SQL Data Warehouse (Azure Synapse)" — product]
+       [VERIFY: a preloaded sample exists for every report type — product] *@
+
+    // Step 1 — About you
+    var roles = new[] { "Developer / engineer", "Report designer / author", "Data or BI analyst", "IT administrator / DevOps", "Product manager / owner", "Partner, reseller, or consultant", "Business user", "Manager / executive" };
+    var industries = new[] { "Software & IT services", "Banking & financial services", "Insurance", "Healthcare & life sciences", "Manufacturing", "Retail & e-commerce", "Logistics & supply chain", "Education", "Government & public sector", "Telecommunications", "Energy & utilities", "Real estate & construction", "Media & entertainment", "Professional services & consulting", "Non-profit", "Other" };
+    var currentTools = new[]
+    {
+        new { Value = "ssrs", Label = "SSRS" },
+        new { Value = "pbirs", Label = "Power BI Report Server / Power BI paginated reports" },
+        new { Value = "crystal", Label = "Crystal Reports (desktop or BI platform)" },
+        new { Value = "crystal-vs", Label = "Crystal Reports for Visual Studio (.NET runtime)" },
+        new { Value = "telerik", Label = "Telerik Reporting" },
+        new { Value = "devexpress", Label = "DevExpress Reporting" },
+        new { Value = "stimulsoft", Label = "Stimulsoft" },
+        new { Value = "activereports", Label = "ActiveReports" },
+        new { Value = "jasper", Label = "JasperReports / Jaspersoft" },
+        new { Value = "fastreport", Label = "FastReport" },
+        new { Value = "excel", Label = "Excel or spreadsheets" },
+        new { Value = "custom", Label = "Custom / in-house tool" },
+        new { Value = "none", Label = "Nothing yet" },
+        new { Value = "other", Label = "Other" }
+    };
+    var existingReports = new[]
+    {
+        new { Value = "rdl", Label = "Yes, RDL or RDLC files" },
+        new { Value = "rpt", Label = "Yes, Crystal Reports .rpt files" },
+        new { Value = "otherTool", Label = "Yes, from another tool" },
+        new { Value = "notNow", Label = "Not right now" }
+    };
+    var reportCounts = new[] { "1–25", "26–100", "101–500", "More than 500", "Not sure" };
+
+    // Step 2 — Your reporting goals
+    var audiences = new[]
+    {
+        new { Value = "internal", Label = "Our own teams", Desc = "Internal reporting: publish, schedule, and share reports across your organization" },
+        new { Value = "embedded", Label = "Our customers, inside our software", Desc = "Embedded reporting: show reports inside your own application" },
+        new { Value = "both", Label = "Both", Desc = "Internal reporting plus reports inside your application" }
+    };
+    var platforms = new[]
+    {
+        new { Value = "JavaScript", Label = "JavaScript" },
+        new { Value = "Angular", Label = "Angular" },
+        new { Value = "React", Label = "React" },
+        new { Value = "ASP.NET Core", Label = "ASP.NET Core" },
+        new { Value = "Blazor", Label = "Blazor" },
+        new { Value = "ASP.NET MVC", Label = "ASP.NET MVC" },
+        new { Value = "ASP.NET", Label = "ASP.NET" },
+        new { Value = "other", Label = "Other" },
+        new { Value = "notSure", Label = "Not sure yet" }
+    };
+    var tenants = new[] { "Just one (single deployment)", "2–10", "11–100", "More than 100", "Not sure yet" };
+    var viewers = new[] { "Up to 50", "51–250", "251–1,000", "1,001–5,000", "More than 5,000", "Not sure" };
+    var deployments = new[]
+    {
+        new { Value = "cloud", Label = "Cloud", Desc = "Hosted by Bold Reports" },
+        new { Value = "private", Label = "Managed Private Cloud", Desc = "Dedicated environment hosted by Bold Reports" },
+        new { Value = "selfHosted", Label = "Our own servers or private cloud", Desc = "Windows, Linux, Docker, Kubernetes, or Azure" },
+        new { Value = "airgapped", Label = "Air-gapped or offline environment", Desc = "No internet access from the reporting servers" },
+        new { Value = "undecided", Label = "Not decided yet", Desc = "We are still evaluating hosting options" }
+    };
+    var reportTypes = new[]
+    {
+        new { Value = "financial", Label = "Financial statements" },
+        new { Value = "billing", Label = "Invoices, statements & billing documents" },
+        new { Value = "orders", Label = "Purchase orders & delivery documents" },
+        new { Value = "operational", Label = "Operational reports" },
+        new { Value = "sales", Label = "Sales & revenue reports" },
+        new { Value = "inventory", Label = "Inventory & supply chain" },
+        new { Value = "hr", Label = "HR & payroll" },
+        new { Value = "regulatory", Label = "Regulatory & compliance filings" },
+        new { Value = "healthcare", Label = "Healthcare & patient records" },
+        new { Value = "labels", Label = "Labels & barcodes" },
+        new { Value = "letters", Label = "Letters & mail-merge documents" },
+        new { Value = "other", Label = "Other" }
+    };
+
+    // Step 3 — Data & first goal
+    var primaryDataSources = new[] { "Microsoft SQL Server", "Azure SQL", "Oracle", "MySQL", "PostgreSQL", "Snowflake", "Excel or CSV files", "Web API / REST" };
+    var moreDataSourceGroups = new[]
+    {
+        new { Title = "More databases", Items = new[] { "SQL Server Analysis Services", "MariaDB", "MongoDB", "Amazon Redshift", "Amazon Aurora", "Amazon RDS", "Azure SQL Data Warehouse (Azure Synapse)", "Google BigQuery", "Google Cloud SQL", "Elasticsearch", "Amazon OpenSearch", "MemSQL (SingleStore)", "Trino", "CData" } },
+        new { Title = "Files & services", Items = new[] { "JSON", "XML", "OData" } },
+        new { Title = "Generic drivers", Items = new[] { "ODBC", "OLE DB" } }
+    };
+    var dataSourceExits = new[]
+    {
+        new { Value = "other", Label = "Other" },
+        new { Value = "notSure", Label = "Not sure yet" }
+    };
+    var firstGoals = new[]
+    {
+        new { Value = "design", Label = "Design and preview my first report" },
+        new { Value = "embed", Label = "Embed the report viewer or designer in my app" },
+        new { Value = "openRdl", Label = "Open my existing RDL reports" },
+        new { Value = "crystalHelp", Label = "Get help migrating Crystal Reports" },
+        new { Value = "schedule", Label = "Schedule and email reports automatically" },
+        new { Value = "admin", Label = "Set up users, permissions, and tenants" },
+        new { Value = "explore", Label = "Just exploring" }
+    };
+}
+<!DOCTYPE html>
+<html class="dashboard-server" lang="@globalAppSettings.SystemSettings.Language">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>[[[Getting started]]] | @globalAppSettings.SystemSettings.OrganizationName</title>
+    <link rel="icon" href="@faviconLogo" />
+    @await Html.PartialAsync("_OGPContent", new ViewDataDictionary(ViewData) { { "PageTitle", "Getting started" }, { "OrganizationName", globalAppSettings.SystemSettings.OrganizationName }, { "Logo", globalAppSettings.SystemSettings.LoginLogo } })
+    <environment include="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/onboard.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/onboard.css")" crossorigin="anonymous" />
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <link rel="stylesheet" asp-append-version="true" href="@reportServerResourceUrl/cdn/css/onboard.min.css" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/css/onboard.min.css")" crossorigin="anonymous" />
+    </environment>
+</head>
+<body class="ob-body">
+    <div class="ob-page">
+        <aside class="ob-aside">
+            <img class="ob-logo" src="@(brandImagePath + "login_logo.svg")" alt="@GlobalAppSettings.BrandingDisplayName" />
+
+            <div class="ob-art">
+                <img src="@illustrationPath" alt="[[[Bold Reports sales performance report in the viewer]]]" />
+            </div>
+
+            <div class="ob-pitch">
+                <h3>[[[Pixel-perfect reports, built your way.]]]</h3>
+                <p>[[[Design, preview and share reports that look right on every page size.]]]</p>
+            </div>
+
+            <div class="ob-progress">
+                <div class="ob-progress-track" role="presentation">
+                    <span class="ob-progress-bar is-active" data-rail-step="1"></span>
+                    <span class="ob-progress-bar" data-rail-step="2"></span>
+                    <span class="ob-progress-bar" data-rail-step="3"></span>
+                </div>
+                <span class="ob-progress-label" id="ob-rail-label">[[[Step 1 of 3]]] &#183; [[[About you]]]</span>
+            </div>
+        </aside>
+
+        <section class="ob-main">
+
+            <div class="ob-panel" id="ob-wizard" data-save-url="@Url.Action("SaveOnBoarding", "OnBoard")" data-redirect-url="@reportsUrl">
+                <div class="ob-head" data-step-panel="1">
+                    <h2>[[[Welcome! Let's set up your reporting workspace.]]]</h2>
+                    <p>[[[It takes about 2 minutes to share a few details.]]]</p>
+                </div>
+                <div class="ob-head" data-step-panel="2" hidden>
+                    <h2>[[[Your reporting goals]]]</h2>
+                    <p>[[[This decides where your trial starts.]]]</p>
+                </div>
+                <div class="ob-head" data-step-panel="3" hidden>
+                    <h2>[[[Data & first goal]]]</h2>
+                    <p>[[[Last step: where your data lives and what you want to do first.]]]</p>
+                </div>
+
+                <div class="ob-steps" id="ob-steps">
+
+                    @* Step 1 — About you *@
+                    <div class="ob-step" data-step-panel="1">
+                        <div class="ob-field" data-question="role">
+                            <span class="ob-label">[[[What best describes your role?]]] <span class="ob-req" aria-hidden="true">*</span></span>
+                            <div class="ob-chips" data-field="role">
+                                @foreach (var item in roles)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                }
+                            </div>
+                            <span class="ob-field-error" role="alert" hidden>[[[Please choose your role.]]]</span>
+                        </div>
+
+                        <div class="ob-field ob-field--tight" data-question="industry">
+                            <label class="ob-label" for="ob-industry">[[[Which industry is your company in?]]] <span class="ob-label-note">[[[(optional)]]]</span></label>
+                            <select class="ob-select" id="ob-industry" data-input="industry">
+                                <option value="">[[[Select an industry]]]</option>
+                                @foreach (var item in industries)
+                                {
+                                    <option value="@item">[[[@item]]]</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="ob-field" data-question="currentTools">
+                            <span class="ob-label">[[[What do you use for reporting today?]]] <span class="ob-req" aria-hidden="true">*</span> <span class="ob-label-note">[[[select all that apply]]]</span></span>
+                            <div class="ob-chips" data-field="currentTools">
+                                @foreach (var option in currentTools)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                            <input type="text" class="ob-input ob-reveal" data-other="currentTools" maxlength="90" placeholder="[[[Which tool?]]]" hidden />
+                            <span class="ob-field-error" role="alert" hidden>[[[Please choose at least one option, or "Nothing yet".]]]</span>
+                        </div>
+
+                        <div class="ob-field ob-reveal" data-question="existingReports" id="ob-existing-field" hidden>
+                            <span class="ob-label">[[[Do you have existing reports you want to bring into Bold Reports?]]]</span>
+                            <div class="ob-chips" data-field="existingReports">
+                                @foreach (var option in existingReports)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="ob-field ob-reveal" data-question="reportCount" id="ob-count-field" hidden>
+                            <span class="ob-label">[[[Roughly how many reports?]]]</span>
+                            <div class="ob-chips" data-field="reportCount">
+                                @foreach (var item in reportCounts)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Step 2 — Your reporting goals *@
+                    <div class="ob-step" data-step-panel="2" hidden>
+                        <div class="ob-field" data-question="audience">
+                            <span class="ob-label">[[[Who will read the reports you build?]]] <span class="ob-req" aria-hidden="true">*</span></span>
+                            <div class="ob-cards" data-field="audience">
+                                @foreach (var option in audiences)
+                                {
+                                    <button type="button" class="ob-option" data-value="@option.Value" aria-pressed="false">
+                                        <span class="ob-option-box" aria-hidden="true"></span>
+                                        <span class="ob-option-text">
+                                            <span class="ob-option-title">[[[@option.Label]]]</span>
+                                            <span class="ob-option-desc">[[[@option.Desc]]]</span>
+                                        </span>
+                                    </button>
+                                }
+                            </div>
+                            <span class="ob-field-error" role="alert" hidden>[[[Please choose who will read your reports.]]]</span>
+                        </div>
+
+                        <div class="ob-field ob-reveal" data-question="platforms" id="ob-platforms-field" hidden>
+                            <span class="ob-label">[[[Which platform will you embed reports in?]]] <span class="ob-label-note">[[[select all that apply]]]</span></span>
+                            <div class="ob-chips" data-field="platforms">
+                                @foreach (var option in platforms)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                            <input type="text" class="ob-input ob-reveal" data-other="platforms" maxlength="90" placeholder="[[[Which platform?]]]" hidden />
+                        </div>
+
+                        <div class="ob-field ob-reveal" data-question="tenants" id="ob-tenants-field" hidden>
+                            <span class="ob-label">[[[How many customer organizations will use reports in your app?]]]</span>
+                            <div class="ob-chips" data-field="tenants">
+                                @foreach (var item in tenants)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="ob-field" data-question="viewers">
+                            <span class="ob-label">[[[About how many people will view reports?]]]</span>
+                            <span class="ob-help" id="ob-viewer-hint">[[[Include everyone who will open or receive reports.]]]</span>
+                            <div class="ob-chips" data-field="viewers">
+                                @foreach (var item in viewers)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="ob-field" data-question="deployment">
+                            <span class="ob-label">[[[Where will you run Bold Reports in production?]]] <span class="ob-req" aria-hidden="true">*</span></span>
+                            <div class="ob-cards" data-field="deployment">
+                                @foreach (var option in deployments)
+                                {
+                                    <button type="button" class="ob-option" data-value="@option.Value" aria-pressed="false">
+                                        <span class="ob-option-box" aria-hidden="true"></span>
+                                        <span class="ob-option-text">
+                                            <span class="ob-option-title">[[[@option.Label]]]</span>
+                                            <span class="ob-option-desc">[[[@option.Desc]]]</span>
+                                        </span>
+                                    </button>
+                                }
+                            </div>
+                            <span class="ob-field-error" role="alert" hidden>[[[Please choose an option, or "Not decided yet".]]]</span>
+                        </div>
+
+                        <div class="ob-field" data-question="reportTypes">
+                            <span class="ob-label">[[[What kinds of reports do you need?]]] <span class="ob-label-note" id="ob-report-type-count">[[[pick up to 3]]]</span></span>
+                            <div class="ob-chips" data-field="reportTypes">
+                                @foreach (var option in reportTypes)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                            <input type="text" class="ob-input ob-reveal" data-other="reportTypes" maxlength="90" placeholder="[[[What kind of report?]]]" hidden />
+                        </div>
+                    </div>
+
+                    @* Step 3 — Data & first goal *@
+                    <div class="ob-step" data-step-panel="3" hidden>
+                        <div class="ob-field ob-field--groups" data-question="dataSources">
+                            <span class="ob-label">[[[Where does your data live?]]] <span class="ob-label-note">[[[select all that apply]]]</span></span>
+                            <div class="ob-chips" data-field="dataSources">
+                                @foreach (var item in primaryDataSources)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                }
+                            </div>
+                            <button type="button" class="ob-more" id="ob-more-sources" aria-expanded="false" aria-controls="ob-more-sources-list">[[[Show more data sources]]]</button>
+                            <div class="ob-field ob-field--groups ob-reveal" id="ob-more-sources-list" hidden>
+                                @foreach (var group in moreDataSourceGroups)
+                                {
+                                    <div class="ob-group">
+                                        <span class="ob-group-title">[[[@group.Title]]]</span>
+                                        <div class="ob-chips" data-field="dataSources">
+                                            @foreach (var item in group.Items)
+                                            {
+                                                <button type="button" class="ob-chip" data-value="@item" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@item]]]</button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="ob-chips" data-field="dataSources">
+                                @foreach (var option in dataSourceExits)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                            <input type="text" class="ob-input ob-reveal" data-other="dataSources" maxlength="90" placeholder="[[[Where does your data live?]]]" hidden />
+                        </div>
+
+                        <div class="ob-field" data-question="firstGoal">
+                            <span class="ob-label">[[[What do you want to do first in your trial?]]] <span class="ob-req" aria-hidden="true">*</span></span>
+                            <div class="ob-chips" data-field="firstGoal">
+                                @foreach (var option in firstGoals)
+                                {
+                                    <button type="button" class="ob-chip" data-value="@option.Value" aria-pressed="false"><span class="ob-chip-check" aria-hidden="true">&#10003;</span>[[[@option.Label]]]</button>
+                                }
+                            </div>
+                            <span class="ob-field-error" role="alert" hidden>[[[Please choose where you want to start.]]]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ob-foot">
+                    <span class="ob-step-count" id="ob-step-count">[[[Step 1 of 3]]]</span>
+                    <div class="ob-actions">
+                        <span class="ob-error" id="ob-save-error" role="alert" hidden>[[[We couldn't save your answers. Please try again.]]]</span>
+                        <button type="button" class="ob-btn" id="ob-skip">[[[Skip]]]</button>
+                        <button type="button" class="ob-btn" id="ob-back" hidden>[[[Back]]]</button>
+                        <button type="button" class="ob-btn ob-btn--primary" id="ob-next">[[[Continue]]]</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script nonce="@Context.Items["ScriptNonce"]">
+        var onBoardText = {
+            stepCount: "[[[Step {0} of 3]]]",
+            railTitles: ["[[[About you]]]", "[[[Your reporting goals]]]", "[[[Data & first goal]]]"],
+            continueLabel: "[[[Continue]]]",
+            finishLabel: "[[[Finish]]]",
+            pickUpTo: "[[[pick up to 3]]]",
+            pickedCount: "[[[{0} of 3 selected]]]",
+            showMoreSources: "[[[Show more data sources]]]",
+            showFewerSources: "[[[Show fewer data sources]]]",
+            viewerHint: "[[[Include everyone who will open or receive reports.]]]",
+            viewerHintEmbedded: "[[[Count everyone who will open or receive reports, including users across all your customers.]]]"
+        };
+    </script>
+    <environment include="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/onboard.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/onboard.js")" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development,CloudDevelopment">
+        <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/onboard.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/onboard.min.js")" crossorigin="anonymous"></script>
+    </environment>
+</body>
+</html>

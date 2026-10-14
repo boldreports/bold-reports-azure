@@ -1,0 +1,324 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    var schemaList = ViewBag.SchemaList as List<object> ?? new List<object>();
+
+    var datasetFieldOptions = new List<SelectListItem>();
+    foreach (var schema in schemaList)
+    {
+        dynamic schemaObj = schema;
+        string columnName = schemaObj.Name ?? schemaObj.ToString();
+        datasetFieldOptions.Add(new SelectListItem { Text = columnName, Value = columnName });
+    }
+
+	var mailOptionsFields = new[]
+    {
+        new { Key = "EmailContent", Label = "[[[Email Content]]]", Type = "template", Placeholder = "Enter email content" },
+        new { Key = "RecipientMail", Label = "[[[Recipient Email]]]", Type = "text", Placeholder = "Enter recipient email" },
+        new { Key = "ReplyTo", Label = "[[[Reply To]]]", Type = "text", Placeholder = "Enter reply-to email" }
+    };
+
+    var localStorageFields = new[]
+    {
+	    new { Key = "Path", Label = "[[[Path]]]", Type = "text", Placeholder = "Enter path" },
+        new { Key = "FileOverwrite", Label = "[[[File Overwrite]]]", Type = "bool", Placeholder = "" },
+        new { Key = "NotifyRecipients", Label = "[[[Notify Recipients]]]", Type = "bool", Placeholder = "" },
+        new { Key = "SaveAsRecipientMail", Label = "[[[Recipient Email]]]", Type = "text", Placeholder = "Enter recipient email" },
+        new { Key = "MaxReportCount", Label = "[[[Max Report Count]]]", Type = "number", Placeholder = "Enter number" }
+    };
+
+    var attachmentFields = new[]
+    {
+        new { Key = "FileFormat", Label = "[[[File Format]]]", Type = "text", Placeholder = "Enter file format" },
+        new { Key = "ExportFileName", Label = "[[[Export File Name]]]", Type = "text", Placeholder = "Enter file name" },
+        new { Key = "AttachmentName", Label = "[[[Attachment Name]]]", Type = "text", Placeholder = "Enter attachment name" }
+    };
+
+    var s3StorageFields = new[]
+    {
+        new { Key = "AccessKey",  Label = "[[[Access Key]]]",  Type = "text",     Placeholder = ""          },
+        new { Key = "SecretKey",  Label = "[[[Secret Key]]]",  Type = "password", Placeholder = ""          },
+        new { Key = "BucketName", Label = "[[[Bucket Name]]]", Type = "text",     Placeholder = ""          },
+        new { Key = "Region",     Label = "[[[Region]]]",      Type = "text",     Placeholder = "us-east-1" }
+    };
+
+    var ftpStorageFields = new[]
+    {
+        new { Key = "FtpHost",     Label = "[[[Host]]]",     Type = "text",     Placeholder = "" },
+        new { Key = "FtpUsername", Label = "[[[Username]]]", Type = "text",     Placeholder = "" },
+        new { Key = "FtpPassword", Label = "[[[Password]]]", Type = "password", Placeholder = "" }
+    };
+}
+
+<div class="delivery-options-wrapper delivery-settings-shell" id="Delivery-Option-body">
+    <div class="delivery-settings-layout">
+        <section class="delivery-method-panel">
+            <div class="delivery-method-title">[[[Delivery Method]]]</div>
+	        <label class="delivery-method-option" for="delivery-method-saveas">
+                <input type="radio" name="delivery-method" id="delivery-method-saveas" value="SaveAs" checked="checked" />
+                <span class="delivery-method-copy">
+                    <span class="delivery-method-name">[[[Save to location]]]</span>
+                    <span class="delivery-method-description">[[[Save reports to a shared location]]]</span>
+                </span>
+            </label>
+            <label class="delivery-method-option" for="delivery-method-mail">
+                <input type="radio" name="delivery-method" id="delivery-method-mail" value="Mail" />
+                <span class="delivery-method-copy">
+                    <span class="delivery-method-name">[[[Email]]]</span>
+                    <span class="delivery-method-description">[[[Send reports as email attachments]]]</span>
+                </span>
+            </label>
+            <div class="delivery-storage-selector d-none">
+                <div class="delivery-row" data-row-key="FileStorageType">
+                    <label class="col-form-label">[[[File Storage Type]]]</label>
+                    <div>
+                        <select id="storage-type-select" name="storage-type-select" class="storage-type-select">
+                            <option value="SaveAs">[[[Local File]]]</option>
+                            <option value="Mail">[[[Mail]]]</option>
+                        </select>
+                        <span class="text-danger error-message"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="delivery-settings-content">
+            <section class="delivery-config-card delivery-content-card storage-option Mail d-none" data-delivery-panel="Mail">
+                <div class="delivery-card-title">[[[Email Settings]]]</div>
+                @foreach (var field in mailOptionsFields)
+                {
+                    <div class="delivery-row delivery-card-row" data-row-key="@field.Key">
+                        <label class="delivery-field-label col-form-label">@Html.Raw(field.Label)</label>
+                        <div class="delivery-field-controls">
+                            <div class="sourcetype delivery-source-type">
+                                <select id="@(field.Key)_Source" name="@(field.Key)_Source" class="source-select" data-default="dataset">
+                                    <option value="dataset">Choose field from dataset</option>
+                                    <option value="value">Enter value</option>
+                                </select>
+                            </div>
+                            <div class="dataset-field delivery-input-slot">
+                                <select id="@(field.Key)_Field" name="@(field.Key)_Field" class="dataset-dropdown" data-row-key="@field.Key">
+                                    @foreach (var opt in datasetFieldOptions)
+                                    {
+                                        <option value="@opt.Value">@opt.Text</option>
+                                    }
+                                </select>
+                                <span class="text-danger error-message"></span>
+                            </div>
+                            <div class="value-field d-none delivery-input-slot">
+                                @if (field.Type == "template")
+                                {
+                                    <select id="@(field.Key)_Value" name="@(field.Key)_Value" class="value-input">
+                                        <option value="">[[[Select]]]</option>
+                                        <option value="Default">[[[EmailDefaultTemplate]]]</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <input type="@field.Type" class="form-control value-input" placeholder="@field.Placeholder" />
+                                }
+                                <span class="text-danger error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+            <section class="delivery-config-card delivery-content-card storage-option SaveAs" data-delivery-panel="SaveAs">
+                <div class="delivery-card-title">[[[Save to location Settings]]]</div>
+                @foreach (var field in localStorageFields)
+                {
+                    <div class="delivery-row delivery-card-row" data-row-key="@field.Key">
+                        <label class="delivery-field-label col-form-label">@Html.Raw(field.Label)</label>
+                        <div class="delivery-field-controls">
+                            <div class="sourcetype delivery-source-type">
+                                <select id="@(field.Key)_Source" name="@(field.Key)_Source" class="source-select" data-default="dataset">
+                                    <option value="dataset">Choose field from dataset</option>
+                                    <option value="value">Enter value</option>
+                                </select>
+                            </div>
+                            <div class="dataset-field delivery-input-slot">
+                                <select id="@(field.Key)_Field" name="@(field.Key)_Field" class="dataset-dropdown" data-row-key="@field.Key">
+                                    @foreach (var opt in datasetFieldOptions)
+                                    {
+                                        <option value="@opt.Value">@opt.Text</option>
+                                    }
+                                </select>
+                                <span class="text-danger error-message"></span>
+                            </div>
+                            <div class="value-field d-none delivery-input-slot">
+                                @if (field.Type == "bool")
+                                {
+                                    <select id="@(field.Key)_Value" name="@(field.Key)_Value" class="value-input">
+                                        <option value="true">[[[True]]]</option>
+                                        <option value="false">[[[False]]]</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <input type="@field.Type" class="form-control value-input" placeholder="@field.Placeholder" />
+                                }
+                                <span class="text-danger error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+	    <section class="delivery-config-card advanced-options-card">
+            <div class="delivery-card-title">[[[Advanced Options]]]</div>
+            <div class="delivery-advanced-toggle-group">
+                <div class="delivery-advanced-toggle">
+                    <label class="delivery-advanced-check" for="advanced-compression-toggle">
+                        <input type="checkbox" id="advanced-compression-toggle" class="delivery-advanced-checkbox" />
+                        <span>[[[Compression Enabled]]]</span>
+                    </label>
+                </div>
+                <div class="delivery-advanced-hidden-value d-none">
+                    <select id="IsCompressionEnabled_Value" name="IsCompressionEnabled_Value" class="value-input">
+                        <option value="true">[[[True]]]</option>
+                        <option value="false" selected="selected">[[[False]]]</option>
+                    </select>
+                </div>
+	        </div>
+            <div class="delivery-advanced-toggle-group d-none" data-advanced-target="password-protected">
+                <div class="delivery-advanced-toggle">
+                    <label class="delivery-advanced-check" for="advanced-password-toggle">
+                        <input type="checkbox" id="advanced-password-toggle" class="delivery-advanced-checkbox" />
+                        <span>[[[Password Protected]]]</span>
+                    </label>
+                </div>
+	                <div class="delivery-advanced-hidden-value d-none">
+                    <select id="IsPasswordProtected_Value" name="IsPasswordProtected_Value" class="value-input">
+                        <option value="true">[[[True]]]</option>
+                        <option value="false" selected="selected">[[[False]]]</option>
+                    </select>
+                </div>
+                <div class="delivery-advanced-field d-none" data-advanced-target="password">
+                    <div class="delivery-row delivery-card-row" data-row-key="Password">
+                        <label class="delivery-field-label col-form-label">[[[Password]]]</label>
+                        <div class="delivery-field-controls">
+                            <div class="sourcetype delivery-source-type">
+                                <select id="Password_Source" name="Password_Source" class="source-select" data-default="dataset">
+                                    <option value="dataset">Choose field from dataset</option>
+                                    <option value="value">Enter value</option>
+                                </select>
+                            </div>
+                            <div class="dataset-field delivery-input-slot">
+                                <select id="Password_Field" name="Password_Field" class="dataset-dropdown" data-row-key="Password">
+                                    @foreach (var opt in datasetFieldOptions)
+                                    {
+                                        <option value="@opt.Value">@opt.Text</option>
+                                    }
+                                </select>
+                                <span class="text-danger error-message"></span>
+                            </div>
+                            <div class="value-field d-none delivery-input-slot">
+                                <input type="text" class="form-control value-input" placeholder="Enter password" />
+                                <span class="text-danger error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="delivery-advanced-toggle-group">
+                <div class="delivery-advanced-toggle">
+                    <label class="delivery-advanced-check" for="advanced-no-data-toggle">
+                        <input type="checkbox" id="advanced-no-data-toggle" class="delivery-advanced-checkbox" />
+                        <span>[[[No Data Enabled]]]</span>
+                    </label>
+                </div>
+                <div class="delivery-advanced-hidden-value d-none">
+                    <select id="IsNoDataEnabled_Value" name="IsNoDataEnabled_Value" class="value-input">
+                        <option value="true">[[[True]]]</option>
+                        <option value="false" selected="selected">[[[False]]]</option>
+                    </select>
+                </div>
+                <div class="delivery-advanced-field d-none" data-advanced-target="nodata">
+                    <div class="delivery-row no-data-action-row d-none" data-row-key="NoDataActionOption">
+                        <label class="delivery-field-label col-form-label">[[[No Data Action]]]</label>
+                        <div class="delivery-field-controls">
+                            <div class="dataset-field delivery-input-slot">
+                                <select id="NoDataActionOption_Value" name="NoDataActionOption_Value" class="no-data-action-select">
+                                    <option value="SkipAttachment">[[[Skip Attachment]]]</option>
+                                    <option value="SkipMail">[[[Skip Mail]]]</option>
+                                </select>
+                                <span class="text-danger error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="delivery-advanced-toggle-group">
+                <div class="delivery-row delivery-card-row owner-failure-notification-section" data-row-key="OwnerFailureNotification">
+                    <label class="delivery-field-label col-form-label">[[[Owner Failure Notification]]]</label>
+                    <div class="delivery-field-controls">
+                        <div class="sourcetype delivery-source-type">
+                            <select id="OwnerFailureNotification_Source" name="OwnerFailureNotification_Source" class="source-select" data-default="dataset">
+                                <option value="dataset">Choose field from dataset</option>
+                                <option value="value">Enter value</option>
+                            </select>
+                        </div>
+                        <div class="dataset-field delivery-input-slot">
+                            <select id="OwnerFailureNotification_Field" name="OwnerFailureNotification_Field" class="dataset-dropdown" data-row-key="OwnerFailureNotification">
+                                @foreach (var opt in datasetFieldOptions)
+                                {
+                                    <option value="@opt.Value">@opt.Text</option>
+                                }
+                            </select>
+                            <span class="text-danger error-message"></span>
+                        </div>
+                        <div class="value-field d-none delivery-input-slot">
+                            <select id="OwnerFailureNotification_Value" name="OwnerFailureNotification_Value" class="value-input">
+                                <option value="true">[[[True]]]</option>
+                                <option value="false" selected="selected">[[[False]]]</option>
+                            </select>
+                            <span class="text-danger error-message"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="delivery-hidden-rows d-none" aria-hidden="true">
+                <div class="delivery-row row d-none" data-row-key="RecipientFailureNotification">
+                    <label class="col-form-label">[[[Recipient Failure Notification]]]</label>
+                    <div class="value-field">
+                        <select id="RecipientFailureNotification_Value" name="RecipientFailureNotification_Value" class="value-input">
+                            <option value="true">[[[True]]]</option>
+                            <option value="false" selected="selected">[[[False]]]</option>
+                        </select>
+                        <span class="text-danger error-message"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="delivery-config-card attachment-settings-card">
+        <div class="delivery-card-title">[[[Attachment Settings]]]</div>
+        <div class="attachment-settings-container">
+            @foreach (var field in attachmentFields)
+            {
+                <div class="delivery-row delivery-card-row" data-row-key="@field.Key">
+                    <label class="delivery-field-label col-form-label">@Html.Raw(field.Label)</label>
+                    <div class="delivery-field-controls">
+                        <div class="sourcetype delivery-source-type">
+                            <select id="@(field.Key)_Source" name="@(field.Key)_Source" class="source-select" data-default="dataset">
+                                <option value="dataset">Choose field from dataset</option>
+                                <option value="value">Enter value</option>
+                            </select>
+                        </div>
+                        <div class="dataset-field delivery-input-slot">
+                            <select id="@(field.Key)_Field" name="@(field.Key)_Field" class="dataset-dropdown" data-row-key="@field.Key">
+                                @foreach (var opt in datasetFieldOptions)
+                                {
+                                    <option value="@opt.Value">@opt.Text</option>
+                                }
+                            </select>
+                            <span class="text-danger error-message"></span>
+                        </div>
+                        <div class="value-field d-none delivery-input-slot">
+                            <input type="@field.Type" class="form-control value-input" placeholder="@field.Placeholder" />
+                            <span class="text-danger error-message"></span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>

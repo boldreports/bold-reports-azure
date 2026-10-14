@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Syncfusion.Server.Viewer</name>
+    </assembly>
+    <members>
+        <member name="M:Syncfusion.Server.Viewer.Extensions.ApplicationBuilderExtensions.DefaultLicenseInitializationForViewerAndDesigner">
+            <summary>
+            License validation from Build team
+            Note: Whenever license checking needed, Copy - paste the below method in the same assembly where your validation happens. Since, moving this method to base and reusing will result in issues due to build team checking assembly signing.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Server.Viewer.Middlewares.EmbedTokenMiddleware">
+            <summary>
+            Extracts and validates embed_user_token from query string or Authorization header
+            for cross-origin iframe private reports. Sets a flag in HttpContext.Items so that
+            CustomAuthorizeAttribute and downstream code can recognize token-authenticated requests
+            without depending on cookies (which don't work in cross-origin iframe scenarios).
+            </summary>
+        </member>
+        <member name="T:Syncfusion.Server.Viewer.Middlewares.PublicReportAuthBypassMiddleware">
+            <summary>
+            Middleware to bypass cookie authentication for public report requests.
+            CustomAuthorizeAttribute checks the Items["IsPublicReportRequest"] flag FIRST
+            (before querying ServerPrincipal) and allows the request without touching any
+            real-user data, so downstream code never receives a broken user context.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Server.Viewer.Startup.IsLocalUrl(System.String)">
+            <summary>
+            Validates that a URL is local to prevent open redirect attacks.
+            </summary>
+            <param name="url">The URL to validate</param>
+            <returns>True if the URL is a local URL, false otherwise</returns>
+        </member>
+    </members>
+</doc>

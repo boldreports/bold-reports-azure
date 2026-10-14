@@ -1,0 +1,937 @@
+﻿@using Newtonsoft.Json
+@using Syncfusion.Server.Base.Helpers
+@model string
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+    var identityResponse = Context.RequestServices.GetRequiredService<ServerPrincipal>();
+    var canCreateCategory = ViewData["CanCreateCategory"] != null ? Convert.ToBoolean(ViewData["CanCreateCategory"]) : false;
+    var siteName = ViewBag.TenantName;
+    var isSelfHosted = ServerAppConfig.IsSelfHosted;
+}
+
+<script nonce="@Model">
+    var copyItemUrl = "@Url.Action("copyitem", "items")";
+    var cloneItemUrl = "@Url.Action("cloneitem", "items")";
+    var canCreateCategory = "@canCreateCategory";
+    var tenantItemUrl = "@Url.Action("getcategory", "items")";
+    var tenantCopyItemUrl = "@Url.Action("tenantcopy","items")";
+    var getItemUrl = "@Url.Action("GetItems", "Reports")";
+    var copyReportToTenantsUrl = "@Url.Action("CopyReportToTenants", "items")";
+    var copyReportsToTenantsUrl = "@Url.Action("CopyReportsToTenants", "items")";
+    var multiReportCopyViewUrl = "@Url.Action("MultiTenantCopy", "items")";
+    var copyIframeUrl = "@Url.Action("CopyViewItem", "items")";
+    var getExternalSitesUrl = "@Url.Action("GetExternalSites", "Publish")";
+    var addExternalSitesUrl = "@Url.Action("AddExternalSites", "Publish")";
+    var isSiteNameExistsUrl = "@Url.Action("IsExternalSiteNameExists", "Publish")";
+    var publishReportUrl = "@Url.Action("PublishReportItem", "Publish")";
+    var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
+    var addButton = '<span class="input-group-btn no-padding" id="add-new-category"><button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button> </span>';
+    var triggeredElementId = '';
+    var siteName = @Json.Serialize(siteName);
+    var isBulkCopyMode = @Json.Serialize(ViewBag.IsBulk ?? false);
+    var selectedItemIds = [];
+    var itemIds = @Json.Serialize(ViewBag.ItemIds ?? "");   
+    const PublishTypeEnum = {
+        Internal: @((int)PublishType.Internal),
+        External: @((int)PublishType.External)
+    };
+
+    $(document).ready(function () {
+        // Initialize bulk copy mode based on ViewBag data from server
+        if (isBulkCopyMode && itemIds) {
+            selectedItemIds = itemIds.split(',').filter(function(id) { return id.length > 0; });
+            // Populate the hidden field with all selected item IDs for bulk copy
+            $("#ItemIdsHidden").val(itemIds);
+        } else {
+            // Single item mode - use ItemIdHidden
+            var singleId = "@Html.Raw(ViewBag.ItemId ?? "")";
+            if (singleId) {
+                selectedItemIds = [singleId];
+                $("#ItemIdHidden").val(singleId);
+            }
+        }
+
+        // Hide/show report name field based on bulk mode
+        if (isBulkCopyMode && selectedItemIds.length > 1) {
+            $(".copy-report-name-field").hide();
+            $(".copy-report-name-value").hide();
+        } else {
+            $(".copy-report-name-field").show();
+            $(".copy-report-name-value").show();
+        }
+
+        load();
+    });
+
+    function load() {
+        if (($(parent.window).width()) > 1400) {
+            $(".dialog").addClass("iframe");
+        }
+
+        if (($(parent.window).width()) < 1400) {
+            $(".dialog").removeClass("iframe");
+        }
+    }
+</script>
+
+@await Html.PartialAsync("~/Views/Shared/_LoaderIcon.cshtml")
+
+
+<environment include="Development,CloudDevelopment">
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@Model" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/itemaction.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/itemaction.min.js")" crossorigin="anonymous"></script>
+</environment>
+
+<body>
+    <div id="PopupContainer" class="dialog">
+
+        <div class="col-md-12 dialog-header">
+            <div class="col-11 no-padding">
+                @{
+                    if (ViewBag.Action == "Copy")
+                    {
+                        <span class="su su-copy Head-icon"></span>
+                    }
+                    else if (ViewBag.Action == "Clone")
+                    {
+                        <span class="su su-clone Head-icon"></span>
+                    }
+                }
+                @{
+                    if (ViewBag.Action == "Copy")
+                    {
+                        <span class="PopupTitle">[[[Copy Report]]]</span>
+                    }
+                    else if (ViewBag.Action == "Clone")
+                    {
+                        <span class="PopupTitle">[[[Clone Report]]]</span>
+                    }
+                }
+                <div class="copy-report-name-value report-name padding10 no-left-padding no-top-padding ellipsis" title="@ViewBag.FullItemName">@ViewBag.FullItemName</div>
+            </div>
+            <div class="col-1 no-padding">
+                <a href="#" title="[[[Close]]]" class="PopupClose close-dialog prevent-default-action"><span class="su su-close"></span></a>
+            </div>
+        </div>
+        @if (TempData["ErrorMessage"] == null)
+        {
+            if (isSelfHosted == true && ViewBag.Action == "Copy")
+            {
+                <form class="dialog-body col-12 no-padding copy-move-category" id="item_action_form">
+                    <div class="tenant-parent" id="tenant-parent-div">
+                        <div class="col-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-3 no-padding text-label"><div class="float-end">[[[Publish]]]</div></div>
+                            <div class="col-1 no-padding"></div>
+                            <div class="col-7 no-padding">
+                                <select id="publishSite" class="selectpicker" data-dropup-auto="false" data-size="3" title='[[[Select publish site type]]]' style="width:230px">
+                                    <option value="@((int)PublishType.Internal)" selected>[[[Internal Site]]]</option>
+                                    <option value="@((int)PublishType.External)">[[[External Site]]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 padding20 no-bottom-padding" id="action-tenant-division">
+                            <div class="col-3 no-padding text-label"><div class="float-end">[[[Tenant]]]</div></div>
+                            <div class="col-1 no-padding"></div>
+                            <div class="col-7 no-padding">
+                                <div class="d-flex align-items-center copy-dropdown">
+                                    <div style="flex:1 1 auto; min-width:0;">
+                                        <select id="tenantList" class="selectpicker" data-size="5" multiple data-actions-box="true" data-none-results-text="[[[No results match]]]" title="[[[Select Tenants]]]" data-live-search="true">
+                                            <!-- Populated by JavaScript -->
+                                        </select>
+                                    </div>
+                                    <span class="input-group-btn no-padding" id="add-external-sites-copy" style="display:none; flex-shrink:0;">
+                                        <button class="btn btn-default" id="get-external-sites-detail-copy" type="button" data-bs-placement="right" title="[[[Add external site]]]" data-toggle="tooltip">
+                                            <span class="su-add"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <span id="tenant-validation-error" class="validation-error text" style="margin-top:0px !important"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 padding20 no-bottom-padding" id="action-category-division">
+                            <div class="col-3 no-padding text-label"><div class="float-end"> [[[Category]]]</div></div>
+                            <div class="col-1 no-padding"></div>
+                            <!-- Multi-tenant category text input (shown when >1 tenant selected) -->
+                            <div id="multiTenantCategoryDiv" style="display:none;">
+                                <div class="col-7 no-padding">
+                                    <input id="CategoryListText" type="text" placeholder="[[[Enter category name]]]" class="form-control site-orgname-fields text" />
+                                    <span id="multi-tenant-category-error" class="validation-error text" style="margin-top:0px !important"></span>
+                                </div>
+                            </div>
+                            <!-- Single-tenant dropdown tree category (shown when 1 tenant selected) -->
+                            <div id="singleTenantCategoryDiv">
+                                @if (canCreateCategory)
+                                {
+                                    <div class="d-flex copy-report no-padding first-block" id="category-list">
+                                        <input id="CategoryList" style="width:230px; height:10px;" />
+                                        <div id="categorylist_validation" class="validation-message text"></div>
+                                        <span class="input-group-btn no-padding" id="add-new-category">
+                                            <button class="btn btn-default" style="padding:4px 10px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip"><span class="su-add" style="font-size:12px;"></span></button>
+                                        </span>
+                                        <div class="second-block"> </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-xs-7 no-padding third-block copy-report">
+                                        <input id="CategoryList" style="width:257px;height:10px;" />
+                                        <div id="categorylist_validation" class="validation-message text"></div>
+                                    </div>
+                                    <div class="fourth-block"></div>
+                                }
+                            </div>
+                        </div>
+                        <div class="copy-report-name-field col-12 padding20 no-bottom-padding" id="item-name-division">
+                            <div class="col-3 no-padding text-label">
+                                <div class="float-end">[[[Report name]]]<span class="mandatory"></span></div>
+                            </div>
+                            <div class=" no-padding col-1"></div>
+                            <div class="col-7 no-padding">
+                                <input type="text" id="item_name" name="itemName" maxlength="255" value="@ViewBag.FullItemName" class="form-control site-orgname-fields text" />
+                                <span id="report-name-validation-error" class="validation-error text" style="margin-top:0px !important"></span>
+                            </div>
+                        </div>
+                        <div id="overwrite" class="enable-overwrite-report col-12 padding10 no-bottom-padding bottom-margin30">
+                            <div class="col-4 no-padding"></div>
+                            <div class="col-8 no-padding">
+                                <input type="checkbox" id="overwrite_report">
+                                @*@Html.CheckBox("overwrite_report", new { @class = "material-checkbox" })*@
+                                <label for="overwrite_report" class="toggle-space">
+                                    <span class="checkbox-text">[[[Overwrite]]]</span>
+                                </label>
+                                <div class="copy-overwrite-warning d-flex align-items-start" style="margin-top:8px;padding-top:2px;">
+                                    <span class="su su-warning-alt" style="color:#d97706; margin-right:8px; padding-top:2px;"></span>
+                                    <div style="color: #806b75;border-radius: 2px;padding: 2px;border: solid 1px #e8e4e4;line-height: normal;font-size: x-small;width: 265px;">
+                                        [[[When enabled, any existing report, dataset, or data source with the same name in the target site will be replaced. This may also affect other reports that depend on the current dataset or data source in the target site.]]]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="copyreport_advance_option" style="display:none;">
+                            <div id="copyreport_shared_dataset">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-datasource-label-division">
+                                    <hr id="report_dataset_separator" />
+                                    <div id="dataset_info">[[[This report is designed with shared dataset. You can change the dataset and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-label">[[[Dataset Name]]]</label>
+                                    <label class="col-3 text-label" id="select_dataset_label">[[[Select Dataset]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="shared_dataset_list"></ul>
+                            </div>
+                            <div id="copyreport_shared_datasource">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-ds-label-division">
+                                    <hr id="report_datasource_separator" />
+                                    <div id="datasource_info">[[[This report is designed with shared data source. You can change the data source and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
+                                    <label class="col-4 text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="shared_datasource_list"></ul>
+                            </div>
+                            <div id="copyreport_subreport">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappedsubreports-label-divisions">
+                                    <hr id="report_mappedsubreports_separator" />
+                                    <div id="subreport_info">[[[This report is designed with subreport. You can change the subreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped SubReport]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_subreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_subreports">[[[Report]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="change_subreport_list"></ul>
+                            </div>
+                            <div id="copyreport_drillthroughreport">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappeddrillthroughreports-label-divisions">
+                                    <hr id="report_mappeddrillthroughreports_separator" />
+                                    <div id="drillthrough_info">[[[This report is designed with drillthroughreport. You can change the drillthroughreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Mapped Drillthrough Report]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_drillthroughreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_drillthroughreports">[[[Report]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="change_drillthroughreport_list"></ul>
+                            </div>
+                        </div>
+                        <input type="hidden" id="ItemIdHidden" value="@(ViewBag.ItemId ?? Context.Request.Form["itemId"].ToString())" />
+                        <input type="hidden" id="ItemIdsHidden" value="@(ViewBag.ItemIds ?? "")" />
+                        <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
+                        <input type="hidden" id="tenantHidden" value="@siteName">
+                    </div>
+                </form>
+            }
+            else if (isSelfHosted == false || ViewBag.Action == "Clone")
+            {
+                <form class="dialog-body col-12 no-padding copy-move-category" id="item_action_form">
+                    <div>
+                        <div class="col-12 padding20 no-bottom-padding" id="item-name-division">
+                            <div class="col-3 no-padding text-label">
+                                <div class="float-end">[[[Name]]]<span class="mandatory">*</span></div>
+                            </div>
+                            <div class="col-1 no-padding"></div>
+                            <div class="col-8 no-padding">
+                                <input type="text" id="item_name" name="itemName" maxlength="255" value="@ViewBag.FullItemName" class="form-control site-orgname-fields bottom-margin30 text" />
+                                <span id="report-name-validation-error" class="validation-error text"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 padding20 no-bottom-padding no-top-padding @(ViewBag.Action == "Clone" ? "bottom-margin30" : "no-bottom-margin") " id="action-category-division">
+                            @if (ViewBag.Action == "Clone")
+                            {
+                                <div class="col-3 no-padding text-right text-label">[[[Clone to Category]]]*</div>
+                            }
+                            @if (ViewBag.Action == "Copy")
+                            {
+                                <div class="col-3 no-padding text-right text-label">[[[Copy to Category]]]*</div>
+                            }
+                            <div class="col-1 no-padding"></div>
+                            @if (canCreateCategory)
+                            {
+                                <div class="col-10 no-padding" style="width:260px;height:10px;">
+                                    <input id="CategoryList" style="width:260px;height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                </div>
+                                <span class="col-1 input-group-btn no-padding" id="add-new-category">
+                                    <button class="btn btn-default" style="padding:4px 10px;margin-left: 23px;height: 35px;" type="button" title="[[[Add new Category]]]" data-bs-toggle="tooltip">
+                                        <span class="su-add" style="font-size:12px;"></span>
+                                    </button>
+                                </span>
+                            }
+                            else
+                            {
+                                <div class="col-8 no-padding dropup">
+                                    <input id="CategoryList" style="width:257px;height:10px;" />
+                                    <div id="categorylist_validation" class="validation-message text"></div>
+                                </div>
+                            }
+                        </div>
+                        @if (ViewBag.Action == "Copy")
+                        {
+                            <div class="enable-overwrite-report col-12 padding10 no-bottom-padding bottom-margin30">
+                                <div class="col-4 no-padding"></div>
+                                <div class="col-8 no-padding">
+                                    @Html.CheckBox("overwrite_report")
+                                    <label for="overwrite_report" class="toggle-space">
+                                        <span class="checkbox-text">[[[Overwrite]]]</span>
+                                    </label>
+                                    <div class="copy-overwrite-warning d-flex align-items-start" style="margin-top:8px;padding-top:2px;">
+                                        <span class="su su-warning-alt" style="color:#d97706; margin-right:8px;padding-top:2px;"></span>
+                                        <div style="color: #806b75;border-radius: 2px;padding: 2px;border: solid 1px #e8e4e4;line-height: normal;font-size: x-small;width: 265px;">
+                                            [[[When enabled, any existing report, dataset, or data source with the same name in the target site will be replaced. This may also affect other reports that depend on the current dataset or data source in the target site.]]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div id="copyreport_advance_option" style="display:none;">
+                            <div id="copyreport_shared_dataset">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-datasource-label-division">
+                                    <hr id="copy_report_dataset_separator" />
+                                    <div id="dataset_info">[[[This report is designed with shared dataset. You can change the dataset and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-right text-label">[[[Dataset Name]]]</label>
+                                    <label class="col-3 text-right text-label" id="select_dataset_label">[[[Select Dataset]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="shared_dataset_list"></ul>
+                            </div>
+
+                            <div id="copyreport_shared_datasource">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-ds-label-division">
+                                    <hr id="copy_report_datasource_separator" />
+                                    <div id="datasource_info">[[[This report is designed with shared data source. You can change the data source and save the copy of it.]]]</div>
+                                    <label class="col-3 no-padding text-right text-label">[[[Data Source Name]]]</label>
+                                    <label class="col-4 text-label" id="select_datasource_label">[[[Select Data Source]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="shared_datasource_list"></ul>
+                            </div>
+                            <div id="copyreport_subreport">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappedsubreports-label-divisions">
+                                    <hr id="copy_report_mappedsubreports_separator" />
+                                    <div id="subreport_info">[[[This report is designed with subreport. You can change the subreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[SubReport]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_subreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_subreports">[[[Report]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="change_subreport_list"></ul>
+                            </div>
+                            <div id="copyreport_drillthroughreport">
+                                <div class="col-12 padding20 no-bottom-padding no-top-padding" id="action-mappeddrillthroughreports-label-divisions">
+                                    <hr id="copy_report_mappeddrillthroughreports_separator" />
+                                    <div id="drillthrough_info">[[[This report is designed with drillthroughreport. You can change the drillthroughreport and save the copy of it.]]]</div>
+                                    <label class="col-3 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label">[[[Drillthrough]]]</label>
+                                    <label class="col-5 no-left-padding text-left text-label" id="select_Category_label_drillthroughreports">[[[Category]]]</label>
+                                    <label class="col-4 no-left-padding text-left text-label" id="select_Report_label_drillthroughreports">[[[Report]]]</label>
+                                </div>
+                                <ul class="list-unstyled" id="change_drillthroughreport_list"></ul>
+                            </div>
+                            <input type="hidden" id="ItemIdHidden" value="@(ViewBag.ItemId ?? Context.Request.Form["itemId"].ToString())" />
+                            <input type="hidden" id="ItemIdsHidden" value="@(ViewBag.ItemIds ?? "")" />
+                            <input type="hidden" id="userIdHidden" value="@identityResponse.User.UserId" />
+                        </div>
+                </form>
+            }
+            <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division" style="display: flex !important; justify-content: space-between; align-items: center; min-height: 50px;">
+                <div class="col-6" style="display: flex; align-items: center;">
+                    <span class="ErrorMessage text-left"></span>
+                    <span class="SuccessMessage"></span>
+                    @{ if (ViewBag.Action == "Copy")
+                        {
+                            <input type="button" id="copyreport_advance_button" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[Advanced]]]" style="margin-right: 5px;" />
+                        }
+                    }
+                </div>
+                    <div class="col-6 rightAlign" style="display: flex; justify-content: flex-end; gap: 10px;">
+                    @{
+                        if (ViewBag.Action == "Copy")
+                        {
+                            <input type="button" title="" id="CopyButton" class="app-button app-primary-button app-btn-primary" value="[[[Copy]]]" />
+                        }
+                        else if (ViewBag.Action == "Clone")
+                        {
+                            <input type="button" id="CloneButton" title="" class="app-button app-primary-button app-btn-primary" value="[[[Clone]]]" />
+                        }
+                    }
+                    <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[Cancel]]]" />
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="dialog-body col-12 no-padding">
+                <div class="col-12 no-left-padding padding20 no-right-padding bottom-margin30">
+                    <div class="permission-denied">@TempData["ErrorMessage"]</div>
+                </div>
+                <div class="col-12 dialog-footer no-right-padding no-left-padding dialog-footer-position" id="action-button-division">
+                    <div class="col-12 no-padding text-center">
+                        <input type="button" id="CancelButton" title="" class="app-button app-secondary-button app-btn-secondary" value="[[[OK]]]" />
+                    </div>
+                </div>
+            </div>
+        }
+        <environment include="Development,CloudDevelopment">
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+        <environment exclude="Development,CloudDevelopment">
+            <script nonce="@Model" asp-append-version="true" src="~/js/localizationcontent.js?c=@System.Globalization.CultureInfo.CurrentCulture"></script>
+        </environment>
+    </div>
+
+    <script nonce="@Model">
+        $(document).ready(function () {
+            // Wire up Cancel and Close buttons
+            $('#CancelButton').on('click', function() {
+                if (window.parent && window.parent.$) {
+                    try {
+                        window.parent.$("#ItemAction").ejDialog("close");
+                    } catch (e) {
+                        // Fallback: just hide the dialog
+                        window.parent.$('#ItemAction').hide();
+                    }
+                } else {
+                    window.close();
+                }
+            });
+
+            $('.PopupClose').on('click', function(e) {
+                e.preventDefault();
+                if (window.parent && window.parent.$) {
+                    try {
+                        window.parent.$("#ItemAction").ejDialog("close");
+                    } catch (e) {
+                        window.parent.$('#ItemAction').hide();
+                    }
+                }
+            });
+            var className = $(".copy-move-category");
+            var categories = @Json.Serialize(ViewBag.CategoryDetails);
+            if (categories && categories.length > 0) {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', false);
+            }
+            else {
+                $('.select-create-type input[name=categoryType][value="1"]').prop('disabled', true);
+            }
+
+            // Category initialization is now handled by the tenant selection change event
+            window.IsCopyOrMoveDashboard = true;
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+        function copyCategoryValueChange(className) {
+            var dropDownTreeInstance = document.querySelector('.e-dropdowntree').ej2_instances[0];
+            var selectedElement = $(".e-list-item[aria-selected='true']");
+            var levels = parseInt(selectedElement.attr("aria-level"));
+            var selectedItemsText = [];
+            for (var i = 1; i < levels; i++) {
+                var text = selectedElement.closest(".e-list-item[aria-level='" + i + "']").find(".e-list-text")[0].innerText;
+                selectedItemsText.push(text);
+            }
+            selectedItemsText.push(dropDownTreeInstance.currentText)
+            var combinedText = selectedItemsText.join(' / ');
+            className.find("input.e-dropdowntree").val(combinedText);
+        }
+    </script>
+    <script nonce="@Model">
+        // Internal tenants loaded from server
+        var internalTenants = @Json.Serialize(ViewBag.Tenant);
+
+        $(document).ready(function () {
+            var siteName = '@siteName';
+
+            // Initialize the tenant dropdown with internal tenants by default
+            populateTenantDropdown(internalTenants, siteName);
+
+            // Wire up publishSite (Internal/External) change
+            $('#publishSite').on('change', function () {
+                onPublishSiteTypeChange();
+            });
+
+            // Initialize selectpicker for publishSite
+            $('#publishSite').selectpicker('destroy');
+            $('#publishSite').selectpicker();
+
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+
+        function onPublishSiteTypeChange() {
+            var siteType = parseInt($('#publishSite').val());
+            if (siteType === PublishTypeEnum.External) {
+                // Show "+" add button
+                $('#add-external-sites-copy').show();
+                // Force text-input category for external sites — never call GetCategory
+                // $('#multiTenantCategoryDiv').show();
+                // $('#singleTenantCategoryDiv').hide();
+                // $('#add-new-category').hide();
+                // Load external sites into tenant dropdown
+                loadExternalSitesIntoTenantDropdown();
+                updateCategoryFieldVisibility();
+            } else {
+                // Hide "+" add button, reload internal tenants
+                $('#add-external-sites-copy').hide();
+                populateTenantDropdown(internalTenants, '');
+                updateCategoryFieldVisibility();
+            }
+        }
+
+        function loadExternalSitesIntoTenantDropdown() {
+            $.ajax({
+                type: 'GET',
+                url: getExternalSitesUrl,
+                success: function (result) {
+                    if (result.Status && result.Result) {
+                        // Map external sites: use ClientId as value so backend can match externalSite.ClientId == site.TenantId
+                        var externalTenants = result.Result.map(function (s) {
+                            return { TenantName: s.Name, TenantId: s.ClientId };
+                        });
+                        populateTenantDropdown(externalTenants, '');
+                    } else {
+                        // No external sites yet — clear list so user knows to add one
+                        populateTenantDropdown([], '');
+                    }
+                },
+                error: function () {
+                    populateTenantDropdown([], '');
+                }
+            });
+        }
+
+        function populateTenantDropdown(tenants, preSelectName) {
+            var tenantSelect = $('#tenantList');
+            tenantSelect.selectpicker('destroy');
+            tenantSelect.empty();
+
+            if (tenants && tenants.length > 0) {
+                for (var t = 0; t < tenants.length; t++) {
+                    var isSelected = tenants[t].TenantName === preSelectName ? 'selected' : '';
+                    tenantSelect.append('<option value="' + tenants[t].TenantName + '" ' + isSelected + '>' + tenants[t].TenantName + '</option>');
+                }
+            }
+
+            tenantSelect.selectpicker();
+
+            // Wire up change event for tenant selection (re-attach after rebuild)
+            tenantSelect.off('change.copyitem').on('change.copyitem', function () {
+                updateCategoryFieldVisibility();
+                loadCategoriesForSelectedTenant();
+            });
+
+            loadCategoriesForSelectedTenant();
+        }
+
+        // Dialog for adding a new External Site (Copy-specific, isolated from global dialog)
+        var _copyExternalSiteDialogBound = false;
+        var _copyExternalSiteDialogInstance = null;
+        function openAddExternalSiteDialog() {
+            if (!_copyExternalSiteDialogBound) {
+                // Use innerHTML as string content — more reliable than DOM element ref
+                var formHtml = document.getElementById('get-external-site-content').innerHTML;
+
+                var container = document.createElement('div');
+                container.id = 'copy-external-site-dialog-host';
+                document.body.appendChild(container);
+
+                var dialog = new ejs.popups.Dialog({
+                    header: '[[[Add External Site]]]',
+                    content: formHtml,
+                    buttons: [
+                        {
+                            click: function () { saveCopyExternalSite(dialog); },
+                            buttonModel: { isPrimary: true, content: '[[[Save]]]' }
+                        },
+                        {
+                            click: function () {
+                                clearAddExternalSiteForm();
+                                dialog.hide();
+                            },
+                            buttonModel: { content: '[[[Cancel]]]' }
+                        }
+                    ],
+                    animationSettings: { effect: 'Zoom' },
+                    width: '600px',
+                    showCloseIcon: true,
+                    isModal: true,
+                    beforeClose: function() { clearAddExternalSiteForm(); }
+                });
+                dialog.appendTo(container);
+                _copyExternalSiteDialogBound = true;
+                _copyExternalSiteDialogInstance = dialog;
+            }
+            if (_copyExternalSiteDialogInstance) {
+                _copyExternalSiteDialogInstance.show();
+            }
+        }
+
+        function clearAddExternalSiteForm() {
+            var dlg = document.getElementById('get-external-site-content');
+            if (!dlg) { return; }
+            $(dlg).find('#external-site-name, #external-client-id, #external-client-secret, #external-site-url').val('');
+            $(dlg).find('.name-validation-message, .clientid-validation-message, .client-secret-validation-message, .site-url-validation-message').html('');
+            $(dlg).find('input').removeClass('has-error');
+            $(dlg).find('.form-input-field').removeClass('has-error');
+        }
+
+        function saveCopyExternalSite(dialog) {
+            // Scope selectors to the dialog container (form content is inside dialog, not main DOM)
+            var dlg = $('#get-external-site-content');
+            var requestData = {
+                Name: $('#external-site-name').val().trim(),
+                ClientId: $('#external-client-id').val().trim(),
+                ClientSecret: $('#external-client-secret').val().trim(),
+                SiteURL: $('#external-site-url').val().trim()
+            };
+            if (!requestData.Name || !requestData.ClientId || !requestData.ClientSecret || !requestData.SiteURL) {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: addExternalSitesUrl,
+                data: { externalSite: requestData },
+                success: function (result) {
+                    if (result.Status) {
+                        if (result.Data) {
+                            dlg.find('.name-validation-message').html(window.Server.App.LocalizationContent.SiteNameExist || 'Site name already exists.');
+                            return;
+                        }
+                        if (!result.Result) {
+                            var errMsg = result.IsInValidSitecredential
+                                ? (window.Server.App.LocalizationContent.InValidExternalSite || 'Invalid site credentials.')
+                                : result.IsSiteAlreadyExist
+                                    ? (window.Server.App.LocalizationContent.ExternalSiteExist || 'External site already exists.')
+                                    : (window.Server.App.LocalizationContent.ExternalSiteUnavailable || 'External site unavailable.');
+                            dlg.find('.site-url-validation-message').html(errMsg);
+                            return;
+                        }
+                        clearAddExternalSiteForm();
+                        dialog.hide();
+                        loadExternalSitesIntoTenantDropdown();
+                    }
+                }
+            });
+        }
+        
+        function updateCategoryFieldVisibility() {
+            var selectedTenants = $('#tenantList').val();
+            var selectedCount = selectedTenants ? selectedTenants.length : 0;
+            
+            if (selectedCount > 1) {
+                // Multiple tenants selected: show text input, hide dropdown tree and add-new-category button
+                $("#multiTenantCategoryDiv").show();
+                $("#singleTenantCategoryDiv").hide();
+                $("#add-new-category").hide();
+            } else if (selectedCount === 1) {
+                // Single tenant selected: show dropdown tree and add-new-category button if available
+                $("#multiTenantCategoryDiv").hide();
+                $("#singleTenantCategoryDiv").show();
+                if (@Json.Serialize(canCreateCategory)) {
+                    $("#add-new-category").show();
+                }
+            } else {
+                // No tenant selected: show dropdown tree but hide add-new-category button
+                $("#multiTenantCategoryDiv").hide();
+                $("#singleTenantCategoryDiv").show();
+                $("#add-new-category").hide();
+            }
+        }
+        
+        function loadCategoriesForSelectedTenant() {
+            var selectedTenants = $('#tenantList').val();
+            var selectedCount = selectedTenants ? selectedTenants.length : 0;
+            
+            // Only load categories if exactly 1 tenant is selected
+            if (selectedCount === 1) {
+                var tenantName = selectedTenants[0];
+                var categories = @Json.Serialize(ViewBag.CategoryDetails);
+                
+                // Reinitialize the DropDownTree with categories
+                var dropDownTreeInstance = document.querySelector('#CategoryList');
+                if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                    dropDownTreeInstance.ej2_instances[0].destroy();
+                }
+                
+                var DropDownTreeObj = new ejs.dropdowns.DropDownTree({
+                    fields: { dataSource: categories, value: 'Id', text: 'Name', child: 'SubCategory' },
+                    select: function () { copyCategoryValueChange($(".copy-move-category")); },
+                    value: [categories[0].Id.toString()],
+                    destroyPopupOnHide: false,
+                    showClearButton: false,
+                    placeholder: 'Select category',
+                    allowFiltering: true,
+                });
+                
+                DropDownTreeObj.appendTo("#CategoryList");
+                $("#add-new-category [data-toggle='tooltip']").tooltip();
+            }
+        }
+        
+        function clearCategorySelection() {
+            var dropDownTreeInstance = document.querySelector('#CategoryList');
+            if (dropDownTreeInstance != undefined && dropDownTreeInstance != null && dropDownTreeInstance.ej2_instances != undefined) {
+                dropDownTreeInstance.ej2_instances[0].destroy();
+            }
+            $('#CategoryList').val('');
+        }
+    </script>
+    <script nonce="@Model">
+        $(document).ready(function () {
+            var sharedDataSet = @Json.Serialize(ViewBag.SharedDataset);
+            var availableSharedDS = @Json.Serialize(ViewBag.AvailableSharedDS);
+            var sharedDataSource = @Json.Serialize(ViewBag.SharedDataSource);
+            var availableSharedDataSource = @Json.Serialize(ViewBag.AvailableSharedDataSource);
+            if ((sharedDataSet && sharedDataSet.length > 0) || (sharedDataSource && sharedDataSource.length > 0)) {
+                $("#copyreport_advance_button").css('display', 'block');
+            }
+            if (sharedDataSet && sharedDataSet.length > 0) {
+                renderSharedDataset(sharedDataSet, availableSharedDS);
+            }
+            if (sharedDataSource && sharedDataSource.length > 0) {
+                renderSharedDataSource(sharedDataSource, availableSharedDataSource);
+            }
+            var itemIdsRaw = $("#ItemIdsHidden").val();
+        var allItemIds = itemIdsRaw
+            ? itemIdsRaw.split(',').filter(function (id) { return id.trim() !== ''; })
+            : (itemId ? [itemId] : []);
+
+            if (allItemIds.length > 1) {
+            
+            $("#copyreport_advance_button").css('display', 'none');
+            }
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+
+        function renderSharedDataset(mappedDS, availableDS) {
+            var html = "";
+            for (var dataSet = 0; dataSet < mappedDS.length; dataSet++) {
+                html += '<li class="copy-report-dataset"><div class="col-12 padding20" id="shared_dataset_division"><div class="col-3 no-padding text-right text-label">' + mappedDS[dataSet].DataSetName + '</div>' +
+                    '<div class="col-1 no-padding"></div><div class="col-8 no-padding dropup"><select class="dataset-picker" id="sharedDataSetList_' + dataSet + '" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:230px" data-size="3" title="' + 'Select DataSet' + '">';
+                var option = "<option data-hidden='true'>Select DataSet</option>";
+                if (availableDS && availableDS.length > 0) {
+                    for (var dataSource = 0; dataSource < availableDS.length; dataSource++) {
+                        option += '<option data-key=' + mappedDS[dataSet].DataSetName + ' data-id=' + availableDS[dataSource].Id + ' value=' + availableDS[dataSource].Name + '>' + availableDS[dataSource].Name + '</option>';
+                    }
+                }
+                html += option + '</select ></div></div></li>';
+            }
+            $("#shared_dataset_list").html(html);
+            for (var dataSet = 0; dataSet < mappedDS.length; dataSet++) {
+                $("#sharedDataSetList_" + dataSet).selectpicker('destroy');
+                $("#sharedDataSetList_" + dataSet).selectpicker();
+            }
+            $("#copyreport_shared_dataset").css('display', 'block');
+        }
+
+        function renderSharedDataSource(mappedDS, availableDS) {
+            var html = "";
+            for (var dataSet = 0; dataSet < mappedDS.length; dataSet++) {
+                html += '<li class="copy-report-datasource"><div class="col-12 padding20" id="shared_datasource_division"><div class="col-3 no-padding text-right text-label">' + mappedDS[dataSet].DataSourceName + '</div>' +
+                    '<div class="col-1 no-padding"></div><div class="col-8 no-padding dropup"><select class="datasource-picker" id="sharedDataSourceList_' + dataSet + '" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:230px" data-size="3" title="' + 'Select Data Source' + '">';
+                var option = "<option data-hidden='true'>Select Data Source</option>";
+                if (availableDS && availableDS.length > 0) {
+                    for (var dataSource = 0; dataSource < availableDS.length; dataSource++) {
+                        option += '<option data-key=' + mappedDS[dataSet].DataSourceName + ' data-id=' + availableDS[dataSource].Id + ' value=' + availableDS[dataSource].Name + '>' + availableDS[dataSource].Name + '</option>';
+                    }
+                }
+                html += option + '</select ></div></div></li>';
+            }
+            $("#shared_datasource_list").html(html);
+            for (var dataSet = 0; dataSet < mappedDS.length; dataSet++) {
+                $("#sharedDataSourceList_" + dataSet).selectpicker('destroy');
+                $("#sharedDataSourceList_" + dataSet).selectpicker();
+            }
+            $("#copyreport_shared_datasource").css('display', 'block');
+        }
+    </script>
+    <script nonce="@Model">
+        $(document).ready(function () {
+            var reportCategoryList = @Json.Serialize(ViewBag.CategoryDetails);
+            var drillthroughreportReferences = @Json.Serialize(ViewBag.itemReferences?["drillthroughreport"] ?? new object[0]);
+            var subreportReferences = @Json.Serialize(ViewBag.itemReferences?["subreport"] ?? new object[0]);
+   
+            if ((drillthroughreportReferences && drillthroughreportReferences.length > 0) || (subreportReferences && subreportReferences.length > 0)) {
+                $("#copyreport_advance_button").css('display', 'block');
+            }
+
+            if (subreportReferences && subreportReferences.length > 0) {
+                renderSubreportList(reportCategoryList, subreportReferences);
+            }
+
+            if (drillthroughreportReferences && drillthroughreportReferences.length > 0) {
+                renderDrillthroughreportList(reportCategoryList, drillthroughreportReferences);
+            }
+
+            window.$('#ItemAction_wrapper').ejWaitingPopup("hide");
+        });
+
+        function renderSubreportList(reportCategoryList, itemReferences) {
+            var copySubreportHtml = "";
+
+            for (var itemReference = 0; itemReference < itemReferences.length; itemReference++) {
+
+                copySubreportHtml += '<li class="copy-report-subreport"><div class="col-12 padding20 no-bottom-padding no-top-padding" id="mapped_subreports_division"><div class="col-2 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label ellipsis">' + itemReferences[itemReference].ReferenceItemName + '</div>' +
+                    '<div class="col-1 no-padding"></div><div class="col-4 no-padding dropup" id=' + itemReferences[itemReference].Name + '><span style="display: none;">' + itemReferences[itemReference].Name + '</span><select class="subreportcategory-picker" id="subreport_category_' + itemReference + '_select" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:50px" data-size="3" title="' + 'Select' + '">';
+                var option = "";
+                option += '<option  data-key=' + itemReferences[itemReference].ReferenceItemName + 'data-hidden=true>' + 'Select' + '</option>';
+                for (var category = 0; category < reportCategoryList.length; category++) {
+                    option += '<option  data-key=' + itemReferences[itemReference].ReferenceItemName + '>' + reportCategoryList[category].Name + '</option>';
+                }
+                copySubreportHtml += option + '</select ></div><div class="col-1 no-padding"></div><div class="col-4 padding20 no-left-padding no-top-padding no-right-padding dropup" id=' + itemReferences[itemReference].Name + ' ><select class="subreport-picker" id="subreportname_' + itemReference + '_select" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:50px" data-size="3" disabled title="' + 'Select' + '">';
+                var option = "";
+                option += '<option data-key=' + itemReferences[itemReference].ReferenceItemName + ' data-hidden=true>' + "" + '</option>';
+                copySubreportHtml += option + '</select></div></div></li>';
+            }
+
+            $("#change_subreport_list").html(copySubreportHtml);
+
+            for (var itemReference = 0; itemReference < itemReferences.length; itemReference++) {
+                $("#subreport_category_" + itemReference + "_select").selectpicker('destroy');
+                $("#subreport_category_" + itemReference + "_select").selectpicker();
+                $("#subreportname_" + itemReference + "_select").selectpicker('destroy');
+                $("#subreportname_" + itemReference + "_select").selectpicker();
+            }
+
+            $("#copyreport_subreport").css('display', 'block');
+
+            $('.subreportcategory-picker').on('change', function () {
+
+                if (this.selectedIndex) {
+                    triggeredElementId = this.id;
+                    $('#subreportname_' + triggeredElementId.split("_")[2] + '_select').find('option').remove().end().prepend($('<option></option>').html('Loading...'));
+                    $("#subreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker('destroy');
+                    $("#subreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker();
+                    var filerSettings = [{ 'PropertyName': "CategoryName", 'FilterType': "equal", 'FilterKey': this[this.selectedIndex].innerText }];
+                    doAjaxPost("POST", getItemUrl,
+                    {
+                        filterCollection: filerSettings,
+                        isPagination: false
+                    },
+                    function (data, result) {
+                        var categoryItems = data.result;
+                        var option = '';
+                        var options = '<option data-hidden=true >Select</option>';
+                        var referredReportName = $('#' + triggeredElementId)[0].parentNode.querySelector('span').innerText;
+
+                        if (categoryItems != null && categoryItems.length > 0) {
+                            $('#subreportname_' + triggeredElementId.split("_")[2] + '_select')[0].disabled = false;
+                        }
+
+                        for (var categoryItem = 0; categoryItem < categoryItems.length; categoryItem++) {
+                            if (categoryItems[categoryItem].Name == referredReportName) {
+                                options = '<option>' + categoryItems[categoryItem].Name + '</option>';
+                            } else {
+                                option += '<option>' + categoryItems[categoryItem].Name + '</option>';
+                            }
+                        }
+
+                        options += option;
+                        $('#subreportname_' + triggeredElementId.split("_")[2] + '_select').find('option').remove().end().append(options);
+                        $("#subreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker('destroy');
+                        $("#subreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker();
+                    });
+                }
+            });
+        }
+
+        function renderDrillthroughreportList(reportCategoryList, itemReferences) {
+            var copyDrillthroughreportHtml = "";
+
+            for (var itemReference = 0; itemReference < itemReferences.length; itemReference++) {
+                copyDrillthroughreportHtml += '<li class="copy-report-drillthroughreport"><div class="col-12 padding20 no-bottom-padding no-top-padding" id="mapped_drillthroughreports_division"><div class="col-2 padding20 no-bottom-padding no-top-padding no-right-padding text-left text-label ellipsis">' + itemReferences[itemReference].ReferenceItemName + '</div>' +
+                    '<div class="col-1 no-padding" ></div><div class="col-4 padding20 no-left-padding no-top-padding no-right-padding dropup" id=' + itemReferences[itemReference].Name + ' ><span style="display: none;">' + itemReferences[itemReference].Name + '</span><select class="drillthroughreportcategory-picker" id="drillthroughreport_category_' + itemReference + '_select" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:50px;" data-size="3" title="' + 'Select' + '">';
+                var option = "";
+                option += '<option  data-key=' + itemReferences[itemReference].ReferenceItemName + ' data-hidden=true >' + 'Select' + '</option>';
+                for (var category = 0; category < reportCategoryList.length; category++) {
+                    option += '<option  data-key=' + itemReferences[itemReference].ReferenceItemName + '>' + reportCategoryList[category].Name + '</option>';
+                }
+                copyDrillthroughreportHtml += option + '</select ></div><div class="col-1 no-padding"></div><div class="col-4 padding20 no-left-padding no-top-padding no-right-padding dropup" id=' + itemReferences[itemReference].Name + ' ><select class="drillthroughreport-picker" id="drillthroughreportname_' + itemReference + '_select" class="selectpicker" data-dropup-auto="false" data-live-search="true" style="width:50px" data-size="3"  disabled title="' + 'Select' + '">';
+                var option = "";
+                option += '<option data-key=' + itemReferences[itemReference].ReferenceItemName + ' data-hidden=true>' + "" + '</option>';
+                copyDrillthroughreportHtml += option + '</select ></div></div></li>';
+            }
+
+            $("#change_drillthroughreport_list").html(copyDrillthroughreportHtml);
+
+            for (var itemReference = 0; itemReference < itemReferences.length; itemReference++) {
+                $("#drillthroughreport_category_" + itemReference + "_select").selectpicker('destroy');
+                $("#drillthroughreport_category_" + itemReference + "_select").selectpicker();
+                $("#drillthroughreportname_" + itemReference + "_select").selectpicker('destroy');
+                $("#drillthroughreportname_" + itemReference + "_select").selectpicker();
+            }
+
+            $("#copyreport_drillthroughreport").css('display', 'block');
+
+            $('.drillthroughreportcategory-picker').on('change', function () {
+
+                if (this.selectedIndex) {
+                    triggeredElementId = this.id;
+                    $('#drillthroughreportname_' + triggeredElementId.split("_")[2] + '_select').find('option').remove().end().prepend($('<option></option>').html('Loading...'));
+                    $("#drillthroughreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker('destroy');
+                    $("#drillthroughreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker();
+                    var filerSettings = [{ 'PropertyName': "CategoryName", 'FilterType': "equal", 'FilterKey': this[this.selectedIndex].innerText }];
+                    doAjaxPost("POST", getItemUrl,
+                    {
+                        filterCollection: filerSettings,
+                        isPagination: false
+                    },
+                    function (data, result) {
+                        var categoryItems = data.result;
+                        var option = '';
+                        var options = '<option data-hidden=true >Select</option>';
+                        var referredReportName = $('#' + triggeredElementId)[0].parentNode.querySelector('span').innerText;
+
+                        if (categoryItems != null && categoryItems.length > 0) {
+                            $("#drillthroughreportname_" + triggeredElementId.split("_")[2] + "_select")[0].disabled = false;
+                        }
+
+                        for (var categoryItem = 0; categoryItem < categoryItems.length; categoryItem++) {
+                            if (categoryItems[categoryItem].Name == referredReportName) {
+                                options = '<option>' + categoryItems[categoryItem].Name + '</option>';
+                            } else {
+                                option += '<option>' + categoryItems[categoryItem].Name + '</option>';
+                            }
+                        }
+
+                        options += option;
+                        $('#drillthroughreportname_' + triggeredElementId.split("_")[2] + '_select').find('option').remove().end().append(options);
+                        $("#drillthroughreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker('destroy');
+                        $("#drillthroughreportname_" + triggeredElementId.split("_")[2] + "_select").selectpicker();
+                    });
+                }
+            });
+        }
+    </script>
+</body>

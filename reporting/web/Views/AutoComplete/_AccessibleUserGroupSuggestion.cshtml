@@ -1,0 +1,20 @@
+﻿@using Syncfusion.Server.Base.Helpers
+
+@{
+    Layout = null;
+    var globalAppSettings = _globalAppSettings;
+    var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
+}
+
+<script nonce="@Context.Items["ScriptNonce"]">
+    var shareItemSuggestionListUrl = "@Url.Action("ShareItemSuggestionList", "items")";
+</script>
+<input type="text" id="user-group-search-hidden-input" hidden />
+<input type="text" id="user-group-search-input" class="form-control" />
+
+<environment include="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/item-user-group-suggestion.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/item-user-group-suggestion.js")" crossorigin="anonymous"></script>
+</environment>
+<environment exclude="Development,CloudDevelopment">
+    <script nonce="@Context.Items["ScriptNonce"]" asp-append-version="true" src="@reportServerResourceUrl/cdn/scripts/item-user-group-suggestion.min.js" integrity="@IntegrityTagHelper.GetIntegrity("wwwroot/cdn/scripts/item-user-group-suggestion.min.js")" crossorigin="anonymous"></script>
+</environment>
