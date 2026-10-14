@@ -139,7 +139,7 @@
             "WEBSITE_DYNAMIC_CACHE": "0",
             "WEBSITE_LOAD_USER_PROFILE": "1",
             "ApplicationUrl": "[concat('https://', parameters('WebAppName'), '.azurewebsites.net')]",
-            "ServiceStartupOrder": "idp_web, idp_api, idp_ums, reporting_web, reporting_api, reporting_jobs, reporting_viewer, reporting_reportservice, etl_service"
+            "ServiceStartupOrder": "idp_web, idp_api, idp_ums, reporting_web, reporting_api, reporting_jobs, reporting_viewer, reporting_reportservice, etl_service, reportsai, reportsmcp"
           }
         },
         {
@@ -168,7 +168,9 @@
               { "virtualPath": "/reporting/jobs", "physicalPath": "site\\wwwroot\\reporting\\jobs" },
               { "virtualPath": "/reporting/viewer", "physicalPath": "site\\wwwroot\\reporting\\viewer" },
               { "virtualPath": "/reporting/reportservice", "physicalPath": "site\\wwwroot\\reporting\\reportservice" },
-              { "virtualPath": "/etlservice", "physicalPath": "site\\wwwroot\\etl\\etlservice" }
+              { "virtualPath": "/etlservice", "physicalPath": "site\\wwwroot\\etl\\etlservice" },
+              { "virtualPath": "/reportsai", "physicalPath": "site\\wwwroot\\ai\\reportsaiservice" },
+              { "virtualPath": "/reportsmcp", "physicalPath": "site\\wwwroot\\ai\\reportsmcpservice" }
             ],
             "http20Enabled": true
           }
@@ -184,7 +186,7 @@
           ],
           "properties": {
             "RepoUrl": "https://github.com/boldreports/bold-reports-azure.git",
-            "branch": "v14.1.18",
+            "branch": "v15.1.10",
             "IsManualIntegration": true
           }
         }
