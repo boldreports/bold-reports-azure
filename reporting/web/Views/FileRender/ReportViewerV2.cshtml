@@ -49,9 +49,8 @@
     {
         canEdit = false;
     }
-
+    var customFontFolderPath = ViewBag.CustomFontFolder;
     var isUseFontsFromDirectory = ViewBag.IsUseFontsFromDirectory;
-    var fontPaths = isUseFontsFromDirectory ? ViewBag.Fonts : null;
     var GoogleTagManagerHeadScript = ServerAppConfig.GoogleTagManagerHeadScript;
     var GoogleTagManagerBodyScript = ServerAppConfig.GoogleTagManagerBodyScript;
     var decryptedExtendedAttributes = ViewBag.DecryptedExtendedAttributes;
@@ -406,7 +405,7 @@
             }
             else if (isUseFontsFromDirectory)
             {
-                var fonts = fontPaths;
+                var fonts = _globalAppSettings.IsCloudStorage() ? _globalAppSettings.StorageHelper.GetStorageObjectListForRelativePath(customFontFolderPath) : System.IO.Directory.GetFiles(customFontFolderPath, "*.ttf");
                 foreach (var fontPath in fonts)
                 {
                     if (System.IO.Path.GetExtension(fontPath) == ".ttf")
