@@ -66,7 +66,6 @@
     var GoogleTagManagerHeadScript = ServerAppConfig.GoogleTagManagerHeadScript;
     var GoogleTagManagerBodyScript = ServerAppConfig.GoogleTagManagerBodyScript;
     var favicon = ServerAppConfig.GetClientServiceUrl(globalAppSettings.SystemSettings.FavIcon, Context);
-    var fontPaths = isUseFontsFromDirectory ? ViewBag.Fonts : null;
 }
 
 <html lang="en" style="height:100%;width:100%">
@@ -633,7 +632,7 @@
             }
             else if (isUseFontsFromDirectory)
             {
-                var fonts = fontPaths;
+                var fonts = _globalAppSettings.IsCloudStorage() ? _globalAppSettings.StorageHelper.GetStorageObjectListForRelativePath(customFontFolderPath) : System.IO.Directory.GetFiles(customFontFolderPath, "*.ttf");
                 foreach (var fontPath in fonts)
                 {
                     if (System.IO.Path.GetExtension(fontPath) == ".ttf")
